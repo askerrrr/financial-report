@@ -13,5 +13,6 @@ app.use(express.static(join(__dirname, "../public")));
 app.use(require("./middleware/mongoose/index"));
 
 app.use("/", require("./routes/root/index"));
+app.use("/updoad", require("./routes/uploadFile/index"));
 
 app.use(require("./middleware/errHandler/errorHandler"));
