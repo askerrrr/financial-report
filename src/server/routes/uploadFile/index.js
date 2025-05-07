@@ -1,5 +1,6 @@
 var multer = require("multer");
 var { Router } = require("express");
+var singleUpload = require("./controllers/singleUpload");
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -10,6 +11,10 @@ var storage = multer.diskStorage({
   },
 });
 
+var updoad = multer({ storage });
+
 var router = Router();
+
+router.post("/", updoad.single("xlsx-report"), singleUpload);
 
 module.exports = router;
