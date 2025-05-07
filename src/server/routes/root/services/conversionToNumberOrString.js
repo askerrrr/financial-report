@@ -1,11 +1,4 @@
-var conversionToNumberOrString = (data) => {
-  if (data.every((i) => typeof +i == "number")) {
-    var numData = data.map((i) => +i);
-
-    return numData;
-  }
-
-  return data;
-};
+var conversionToNumberOrString = (data) =>
+  data.map((i) => (isNaN(+i) ? i : +i));
 
 module.exports = conversionToNumberOrString;

@@ -1,5 +1,5 @@
-var getColumnData = require("./getColumnData");
 var Exceljs = require("exceljs");
+var getColumnData = require("./getColumnData");
 
 var getXLSXData = async (filePath) => {
   try {
@@ -7,25 +7,34 @@ var getXLSXData = async (filePath) => {
 
     await wb.xlsx.readFile(filePath);
 
-    var ws = wb.getWorksheet("Sheet1");
+    var ws = wb.getWorksheet("Sheet1" || "Лист1");
 
-    var item = await getColumnData(1, ws);
+    var itemName = await getColumnData(1, ws);
 
     var article = await getColumnData(2, ws);
+
     var WBSalesAmount = await getColumnData(3, ws);
+
     var qty = await getColumnData(4, ws);
+
     var buyoutPrice = await getColumnData(5, ws);
+
     var deliveryCost = await getColumnData(6, ws);
+
     var refundCost = await getColumnData(7, ws);
+
     var numberOfReturns = await getColumnData(8, ws);
+
     var fines = await getColumnData(9, ws);
+
     var allowances = await getColumnData(10, ws);
 
-    var totalAmount = await getColumnData(11, ws, true);
+    var summaryData = await getColumnData(11, ws, true);
+
     var averageCost = await getColumnData(12, ws);
 
     return {
-      item,
+      itemName,
       article,
       WBSalesAmount,
       qty,
@@ -35,7 +44,7 @@ var getXLSXData = async (filePath) => {
       numberOfReturns,
       fines,
       allowances,
-      totalAmount,
+      summaryData,
       averageCost,
     };
   } catch (e) {

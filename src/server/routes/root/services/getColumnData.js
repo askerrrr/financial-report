@@ -1,20 +1,22 @@
-const conversionToNumberOrString = require("./conversionToNumberOrString");
+var getSimpleData = require("./getSimpleData");
 var deleteColumnTitle = require("./deleteColumnTitle");
-var getTotalSumColumnData = require("./getTotalSumColumnData");
+var getSummaryColumnData = require("./getSummaryColumnData");
+var conversionToNumberOrString = require("./conversionToNumberOrString");
 
-var getSimpleData = (arr) => arr.slice(0, -4);
-
-var getColumnData = async (colNum, ws, isTotalSum = false) => {
+var getColumnData = async (colNum, ws, summaryData = false) => {
   var column = ws.getColumn(colNum);
 
   var data = [];
 
   column.eachCell((e) => data.push(e.text ?? ""));
 
-  data = deleteColumnTitle(data);
-  data = conversionToNumberOrString(data);
+  var columnDataWithoutTitle = deleteColumnTitle(data);
 
-  return isTotalSum ? getTotalSumColumnData(data) : getSimpleData(data);
+  var convertedData = conversionToNumberOrString(columnDataWithoutTitle);
+
+  return summaryData
+    ? getSummaryColumnData(convertedData)
+    : getSimpleData(convertedData);
 };
 
 module.exports = getColumnData;
