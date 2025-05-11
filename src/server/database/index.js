@@ -2,7 +2,7 @@ var collection = require("./connection/index");
 
 var createUser = require("./services/createUser");
 
-var userCollectionServices = (collection) => {
+var userCollectionServices = () => {
   return {
     createUser: (data) => createUser(collection, data),
   };
