@@ -1,3 +1,4 @@
+var { join } = require("node:path");
 var JWT = require("jsonwebtoken");
 
 var verifyJWTToken = async (req, res, next) => {
