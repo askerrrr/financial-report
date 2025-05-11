@@ -11,7 +11,8 @@
   <body id="main">
    <form enctype="multipart/form-data" id="upload-form">
     <label for="fileinput" class="input-file" >
-      <input type="file" name="file" id="fileinput" multiple><span>Загрузить отчёт</span>
+      <input type="file" name="file" id="fileinput" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+      <span>Загрузить отчёт</span>
     </label>
    </form>
     <table id="reports-info">
@@ -22,5 +23,6 @@
       </thead>
     </table>
     <table id="reports-content"></tbody></table>
+    <script src="/js/upload/uploadHandler.js" type="module"></script>
   </body>
 </html>

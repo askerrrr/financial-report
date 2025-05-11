@@ -1,9 +1,5 @@
 var singleUpload = async (req, res, next) => {
-  try {
-    return res.send("success upload");
-  } catch (e) {
-    next(e);
-  }
+  return res.status(200).json({ msg: "success upload" });
 };
 
 module.exports = singleUpload;

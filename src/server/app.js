@@ -1,11 +1,14 @@
 var express = require("express");
 var { join } = require("node:path");
+var { mkdir } = require("node:fs/promises");
 var cookieParser = require("cookie-parser");
 var userCollectionServices = require("./database/index");
 
 var app = express();
 
 (async () => {
+  await mkdir("/var/report_uploads/", { recursive: true });
+
   app.locals.userCollectionServices = userCollectionServices;
 
   app.listen(5000, "127.0.0.1", () => console.log("server running"));
@@ -25,7 +28,7 @@ app.use(cookieParser());
 app.use(require("./middleware/verifyJWTToken"));
 
 app.use("/", require("./routes/root/index"));
-app.use("/updoad", require("./routes/uploadFile/index"));
+app.use("/upload", require("./routes/uploadFile/index"));
 
 app.all(/.*/, require("./middleware/notFoundHandler/notFoundHandler"));
 
