@@ -22,6 +22,6 @@ app.use("/reg", require("./routes/registration/index"));
 app.use("/", require("./routes/root/index"));
 app.use("/updoad", require("./routes/uploadFile/index"));
 
-app.use(require("./middleware/errHandler/errorHandler"));
+app.all(/.*/, require("./middleware/notFoundHandler/notFoundHandler"));
 
-app.use("*", require("./middleware/notFoundHandler/notFoundHandler"));
+app.use(require("./middleware/errHandler/errorHandler"));
