@@ -22,4 +22,5 @@ var verifyJWTToken = async (req, res, next) => {
     next(e);
   }
 };
-export default verifyJWTToken;
+
+module.exports = verifyJWTToken;
