@@ -1,3 +1,5 @@
+var JWT = require("jsonwebtoken");
+
 var createUser = async (req, res, next) => {
   var { createUser, getUser } = req.app.locals.userCollectionServices();
 
@@ -14,7 +16,13 @@ var createUser = async (req, res, next) => {
   if (!successCreate) {
   }
 
-  return res.status(200).json({ redirectUrl: "/" });
+  var payload = { login: userData.login, role: "user" };
+
+  var token = JWT.sign(payload, "secretkey", { expiresIn: "2h" });
+
+  return res
+    .cookie("token", token, { httpOny: true, maxAge: 2000 * 60 * 60 })
+    .json({ redirectUrl: "/" });
 };
 
 module.exports = createUser;
