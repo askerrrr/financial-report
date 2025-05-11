@@ -1,5 +1,5 @@
 var sendAuthData = async (data) => {
-  var res = await fetch("/auth/admin/check", {
+  var res = await fetch("/auth/check", {
     method: "POST",
     body: JSON.stringify(data),
     headers: {
@@ -23,10 +23,14 @@ var authFormHandler = async () => {
         formData[key] = value;
       });
 
-      var res = await sendAuthData(form);
+      var res = await sendAuthData(formData);
 
-      if (!res.ok) {
-        return;
+      if (res.status == 404) {
+        return alert(`Нет пользователя c ником  ${formData.login}`);
+      }
+
+      if (res.status == 403) {
+        return alert("Введены неправильные данные");
       }
 
       var { redirectUrl } = await res.json();
