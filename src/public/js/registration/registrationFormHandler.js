@@ -1,3 +1,5 @@
+import checkFormData from "./services/checkFormData.js";
+
 var sendRegistationData = async (data) => {
   var res = await fetch("/reg/new", {
     method: "POST",
@@ -20,6 +22,12 @@ var registrationFormHandler = async () => {
       new FormData(form).forEach((value, key) => {
         formData[key] = value;
       });
+
+      var validData = await checkFormData(formData);
+
+      if (!validData) {
+        return;
+      }
 
       var res = await sendRegistationData(formData);
 
