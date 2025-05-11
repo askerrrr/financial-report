@@ -11,7 +11,7 @@ var verifyJWTToken = async (req, res, next) => {
       );
     }
 
-    var user = JWT.verify(token, env.secretKey);
+    var user = JWT.verify(token, "secretkey");
 
     if (user.role == "user") {
       return next();
