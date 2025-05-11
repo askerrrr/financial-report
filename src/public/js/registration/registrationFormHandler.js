@@ -10,29 +10,27 @@ var sendRegistationData = async (data) => {
 
 var registrationFormHandler = async () => {
   try {
-    return document
-      .getElementById("reg-form")
-      .addEventListener("submit", async (e) => {
-        e.preventDefault();
+    var form = document.getElementById("reg-form");
 
-        var formData = {};
+    return form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-        var form = document.getElementById("reg-form");
+      var formData = {};
 
-        new FormData(form).forEach((value, key) => {
-          formData[key] = value;
-        });
-
-        var res = await sendRegistationData(formData);
-
-        if (res.status == 409) {
-          return alert(`Пользователь с ником ${formData.login} уже существует`);
-        }
-
-        var { redirectUrl } = await res.json();
-
-        window.location.href = redirectUrl;
+      new FormData(form).forEach((value, key) => {
+        formData[key] = value;
       });
+
+      var res = await sendRegistationData(formData);
+
+      if (res.status == 409) {
+        return alert(`Пользователь с ником ${formData.login} уже существует`);
+      }
+
+      var { redirectUrl } = await res.json();
+
+      window.location.href = redirectUrl;
+    });
   } catch (e) {}
 };
 
