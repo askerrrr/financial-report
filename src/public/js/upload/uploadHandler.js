@@ -16,6 +16,10 @@ var uploadHandler = async () => {
 
       var uploadFormData = new FormData();
 
+      if (uploadInput.files.length > 10) {
+        return alert("Одновременно можно загрузить не больше 10 файлов");
+      }
+
       for (var file of uploadInput.files) {
         uploadFormData.append("file", file);
       }
