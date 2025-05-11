@@ -1,5 +1,5 @@
-var sendUploadFile = async (files) => {
-  var res = await fetch("/upload/file", {
+var sendUploadFile = async (files, url) => {
+  var res = await fetch(url, {
     method: "POST",
     body: files,
   });
@@ -19,7 +19,11 @@ var uploadHandler = async () => {
       for (var file of uploadInput.files) {
         uploadFormData.append("file", file);
       }
-      var res = await sendUploadFile(uploadFormData);
+
+      var uploadUrl =
+        uploadInput.files.length == 1 ? "/upload/file" : "/upload/files";
+
+      var res = await sendUploadFile(uploadFormData, uploadUrl);
 
       if (!res.ok) {
         return alert("Произошла ошибка при загрузке документа");
