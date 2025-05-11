@@ -1,10 +1,14 @@
 var express = require("express");
 var { join } = require("node:path");
+var userCollectionServices = require("./database/index");
 
 var app = express();
 
-(async () =>
-  app.listen(5000, "127.0.0.1", () => console.log("server running")))();
+(async () => {
+  app.locals.userCollectionServices = userCollectionServices;
+
+  app.listen(5000, "127.0.0.1", () => console.log("server running"));
+})();
 
 app.use(express.urlencoded());
 app.use(express.json());
