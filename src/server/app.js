@@ -1,5 +1,6 @@
 var express = require("express");
 var { join } = require("node:path");
+var cookieParser = require("cookie-parser");
 var userCollectionServices = require("./database/index");
 
 var app = express();
@@ -18,6 +19,8 @@ app.use(require("./middleware/mongoose/index"));
 
 app.use("/auth", require("./routes/auth/index"));
 app.use("/reg", require("./routes/registration/index"));
+
+app.use(cookieParser());
 
 app.use("/", require("./routes/root/index"));
 app.use("/updoad", require("./routes/uploadFile/index"));

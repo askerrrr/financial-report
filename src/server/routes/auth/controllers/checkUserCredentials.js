@@ -1,3 +1,5 @@
+var JWT = require("jsonwebtoken");
+
 var checkCredentials = require("../services/checkCredentials");
 
 var checkUserCredentials = async (req, res, next) => {
@@ -17,7 +19,13 @@ var checkUserCredentials = async (req, res, next) => {
     return res.sendStatus(403);
   }
 
-  return res.status(200).json({ redirectUrl: "/" });
+  var payload = { login: userData.login, role: "user" };
+
+  var token = JWT.sign(payload, "secretkey", { expiresIn: "2h" });
+
+  return res
+    .cookie("token", token, { httpOny: true, maxAge: 2000 * 60 * 60 })
+    .json({ redirectUrl: "/" });
 };
 
 module.exports = checkUserCredentials;
