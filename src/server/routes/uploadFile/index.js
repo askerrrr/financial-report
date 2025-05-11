@@ -15,6 +15,6 @@ var updoad = multer({ storage });
 
 var router = Router();
 
-router.post("/", updoad.single("file"), singleUpload);
+router.post("/file", updoad.single("file"), singleUpload);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 var sendUploadFile = async (files) => {
-  var res = await fetch("/upload", {
+  var res = await fetch("/upload/file", {
     method: "POST",
     body: files,
   });
