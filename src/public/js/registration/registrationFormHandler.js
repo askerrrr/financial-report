@@ -9,23 +9,25 @@ var sendRegistationData = async (data) => {
 };
 
 var registrationFormHandler = async () => {
-  return document
-    .getElementById("reg-form")
-    .addEventListener("submit", async (e) => {
-      e.preventDefault();
+  try {
+    return document
+      .getElementById("reg-form")
+      .addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-      var formData = {};
+        var formData = {};
 
-      new FormData(form).forEach((value, key) => {
-        formData[key] = value;
+        new FormData(form).forEach((value, key) => {
+          formData[key] = value;
+        });
+
+        var res = await sendRegistationData(formData);
+
+        var { redirectUrl } = await res.json();
+
+        window.location.href = redirectUrl;
       });
-
-      var res = await sendRegistationData(formData);
-
-      var { redirectUrl } = await res.json();
-
-      window.location.href = redirectUrl;
-    });
+  } catch (e) {}
 };
 
 registrationFormHandler();
