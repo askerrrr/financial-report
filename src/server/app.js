@@ -22,6 +22,8 @@ app.use("/reg", require("./routes/registration/index"));
 
 app.use(cookieParser());
 
+app.use(require("./middleware/verifyJWTToken"));
+
 app.use("/", require("./routes/root/index"));
 app.use("/updoad", require("./routes/uploadFile/index"));
 
