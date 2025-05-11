@@ -1,11 +1,11 @@
 var createUser = async (req, res, next) => {
-  var { createUser, checkUserExists } = req.app.locals.userCollectionServices();
+  var { createUser, getUser } = req.app.locals.userCollectionServices();
 
   var userData = req.body;
 
-  var userIsExists = await checkUserExists(userData.login);
+  var user = await getUser(userData.login);
 
-  if (userIsExists) {
+  if (user) {
     return res.sendStatus(409);
   }
 
