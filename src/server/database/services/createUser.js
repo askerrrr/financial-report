@@ -1,6 +1,6 @@
-var createUser = async (collection, { login, passwd }) => {
+var createUser = async (collection, { login, passwd, userId }) => {
   try {
-    var user = await collection.insertOne({ login, passwd });
+    var user = await collection.insertOne({ login, passwd, userId });
 
     var result = await user.save();
 
