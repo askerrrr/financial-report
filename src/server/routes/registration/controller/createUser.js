@@ -1,4 +1,5 @@
 var JWT = require("jsonwebtoken");
+var { randomBytes } = require("node:crypto");
 
 var createUser = async (req, res, next) => {
   var { createUser, getUser } = req.app.locals.userCollectionServices();
@@ -11,12 +12,16 @@ var createUser = async (req, res, next) => {
     return res.sendStatus(409);
   }
 
+  var userId = randomBytes(10).toString("hex");
+
+  userData.userId = userId;
+
   var successCreate = await createUser(userData);
 
   if (!successCreate) {
   }
 
-  var payload = { login: userData.login, role: "user" };
+  var payload = { login: userData.login, userId, role: "user" };
 
   var token = JWT.sign(payload, "secretkey", { expiresIn: "2h" });
 
