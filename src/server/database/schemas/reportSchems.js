@@ -24,7 +24,7 @@ var reportSchema = new Schema({
   refundCost: numOptions,
   numberOfReturns: numOptions,
   files: numOptions,
-  allowances,
+  allowances: numOptions,
   summaryData: {
     totalSum: { type: Number, required: true },
     storageCost: { type: Number, required: true },
