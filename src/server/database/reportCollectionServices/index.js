@@ -3,7 +3,7 @@ var { reportCollection } = require("../connection/index");
 var createReport = require("./services/createReport");
 var createReportsEntity = require("./services/createReportsEntity");
 
-var reportCollectionServices = async () => {
+var reportCollectionServices = () => {
   return {
     createReport: (userId, report) =>
       createReport(reportCollection, userId, report),
