@@ -1,6 +1,8 @@
 var getXLSXData = require("../services/getXLSXData");
 
 var writeReport = async (req, res, next) => {
+  var userId = req.app.locals.userId;
+
   var { createReport } = req.app.locals.userCollectionServices();
 
   if (req.file) {
