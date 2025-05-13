@@ -12,3 +12,5 @@ var reportCollectionServices = async () => {
       createReportsEntity(reportCollection, userId),
   };
 };
+
+module.exports = reportCollectionServices;
