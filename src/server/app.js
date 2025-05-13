@@ -12,6 +12,8 @@ var app = express();
 
   app.locals.userCollectionServices = userCollectionServices;
 
+  app.locals.reportCollectionServices = reportCollectionServices;
+
   app.listen(5000, "127.0.0.1", () => console.log("server running"));
 })();
 
