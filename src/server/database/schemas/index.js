@@ -13,4 +13,4 @@ var reportSchema = new Schema({
   reports: { type: [reportSchema], required: false },
 });
 
-module.exports = reportSchema;
+module.exports = { userSchema, reportSchema };
