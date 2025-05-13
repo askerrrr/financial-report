@@ -1,3 +1,3 @@
-import { reportCollection } from "../connection/index";
+var { reportCollection } = require("../connection/index");
 
 var reportCollectionServices = async () => {};
