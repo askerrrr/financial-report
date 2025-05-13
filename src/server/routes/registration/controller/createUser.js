@@ -21,7 +21,7 @@ var createUser = async (req, res, next) => {
   if (!successCreate) {
   }
 
-  var payload = { login: userData.login, userId, role: "user" };
+  var payload = { userId, role: "user" };
 
   var token = JWT.sign(payload, "secretkey", { expiresIn: "2h" });
 

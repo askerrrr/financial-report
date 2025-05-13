@@ -21,7 +21,6 @@ var checkUserCredentials = async (req, res, next) => {
 
   var payload = {
     role: "user",
-    login: userData.login,
     userId: userDataFromDB.userId,
   };
 
