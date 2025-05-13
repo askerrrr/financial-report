@@ -1,4 +1,4 @@
-var { userCollection, reportCollection } = require("./connection/index");
+var { userCollection, reportCollection } = require("../connection/index");
 
 var getUser = require("./services/getUser");
 var createUser = require("./services/createUser");
