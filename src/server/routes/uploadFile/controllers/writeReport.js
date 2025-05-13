@@ -3,10 +3,7 @@ var getXLSXData = require("../services/getXLSXData");
 var writeReport = async (req, res, next) => {
   var userId = req.app.locals.userId;
 
-  var { createReport, createReportsEntity } =
-    req.app.locals.reportCollectionServices();
-
-  await createReportsEntity(userId);
+  var { createReport } = req.app.locals.userCollectionServices();
 
   if (req.file) {
     var data = await getXLSXData(req.file.path);
