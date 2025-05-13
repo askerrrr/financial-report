@@ -3,6 +3,7 @@ var { randomBytes } = require("node:crypto");
 
 var createUser = async (req, res, next) => {
   var { createUser, getUser } = req.app.locals.userCollectionServices();
+  var { createReportsEntity } = req.app.locals.reportCollectionServices();
 
   var userData = req.body;
 
