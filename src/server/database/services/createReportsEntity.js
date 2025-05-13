@@ -5,3 +5,6 @@ var createReportsEntity = async (collection, userId) => {
 
   return (result = reportsEntity);
 };
+
+module.exports = createReportsEntity;
+``
