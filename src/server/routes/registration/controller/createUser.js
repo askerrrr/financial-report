@@ -17,6 +17,8 @@ var createUser = async (req, res, next) => {
 
   userData.userId = userId;
 
+  await createReportsEntity(userId);
+
   var successCreate = await createUser(userData);
 
   if (!successCreate) {
