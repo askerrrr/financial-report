@@ -6,9 +6,10 @@ var createReport = require("./services/createReport");
 
 var userCollectionServices = () => {
   return {
-    createUser: (data) => createUser(collection, data),
-    getUser: (login) => getUser(collection, login),
-    createReport: (userId, report) => createReport(collection, userId, report),
+    createUser: (data) => createUser(userCollection, data),
+    getUser: (login) => getUser(userCollection, login),
+    createReport: (userId, report) =>
+      createReport(reportCollection, userId, report),
   };
 };
 
