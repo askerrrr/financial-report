@@ -14,7 +14,7 @@ var strOptions = [
   },
 ];
 
-var reportSchema = new Schema({
+var reportDetailSchema = new Schema({
   itemName: strOptions,
   article: strOptions,
   WBSalesAmount: numOptions,
@@ -35,4 +35,4 @@ var reportSchema = new Schema({
   averageCost: numOptions,
 });
 
-module.exports = reportSchema;
+module.exports = reportDetailSchema;
