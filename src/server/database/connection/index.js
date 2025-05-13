@@ -1,8 +1,8 @@
 var mongoose = require("mongoose");
-var schema = require("../schemas/index");
+var reportSchema = require("../schemas/index");
 
 var reportDB = mongoose.createConnection("mongodb://127.0.0.1:27017/reports");
 
-var reportCollection = reportDB.model("Report", schema);
+var reportCollection = reportDB.model("Report", reportSchema);
 
 module.exports = reportCollection;
