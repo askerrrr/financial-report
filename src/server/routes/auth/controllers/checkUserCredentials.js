@@ -22,7 +22,7 @@ var checkUserCredentials = async (req, res, next) => {
   var payload = {
     role: "user",
     login: userData.login,
-    userId: userData.userId,
+    userId: userDataFromDB.userId,
   };
 
   var token = JWT.sign(payload, "secretkey", { expiresIn: "2h" });
