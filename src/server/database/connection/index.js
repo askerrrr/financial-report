@@ -7,4 +7,4 @@ var userCollection = reportDB.model("User", userSchema);
 
 var reportCollection = reportDB.model("Report", reportSchema);
 
-module.exports = reportCollection;
+module.exports = { userCollection, reportCollection };
