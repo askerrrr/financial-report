@@ -1,4 +1,3 @@
-var argon2 = require("argon2");
 var JWT = require("jsonwebtoken");
 var { randomBytes } = require("node:crypto");
 
