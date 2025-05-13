@@ -1,9 +1,11 @@
+var argon2 = require("argon2");
+
 var checkCredentials = async (userData, userDataFromDB) => {
-  if (userData.login !== userDataFromDB.login) {
+  if (!(await argon2.verify(userDataFromDB.login, userData.login))) {
     return;
   }
 
-  return userData.passwd == userDataFromDB.passwd;
+  return await argon2.verify(userDataFromDB.passwd, userData.passwd);
 };
 
 module.exports = checkCredentials;
