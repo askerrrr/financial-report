@@ -7,4 +7,3 @@ var createReportsEntity = async (collection, userId) => {
 };
 
 module.exports = createReportsEntity;
-``;
