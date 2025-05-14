@@ -1,6 +1,7 @@
 var multer = require("multer");
 var { Router } = require("express");
 var writeReport = require("./controllers/writeReport");
+var fileFilter = require("./services/fileFilter");
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -11,7 +12,7 @@ var storage = multer.diskStorage({
   },
 });
 
-var updoad = multer({ storage });
+var updoad = multer({ storage, fileFilter });
 
 var router = Router();
 
