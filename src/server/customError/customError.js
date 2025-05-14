@@ -6,4 +6,4 @@ class FileMimeTypeError extends Error {
   }
 }
 
-exports = { FileMimeTypeError };
+module.exports = { FileMimeTypeError };
