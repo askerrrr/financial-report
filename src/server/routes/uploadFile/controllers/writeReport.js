@@ -15,9 +15,7 @@ var writeReport = async (req, res, next) => {
     var reportSuccessfullyRecorded = await createReport(userId, data);
 
     if (!reportSuccessfullyRecorded) {
-      return res
-        .status(500)
-        .json({ msg: "Возникла ошибка при загрузке файла" });
+      return res.sendStatus(500);
     }
 
     res.status(200).json({ msg: "success upload" });
