@@ -1,8 +1,6 @@
 var getXLSXData = require("../services/getXLSXData");
 
 var writeReport = async (req, res, next) => {
-  console.log("req.fileMimeTypeIsValid: ", req.fileMimeTypeIsValid);
-
   if (!req.fileMimeTypeIsValid) {
     return res.sendStatus(500);
   }
