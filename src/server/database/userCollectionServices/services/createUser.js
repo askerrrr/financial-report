@@ -5,7 +5,8 @@ var createUser = async (collection, userData) => {
   try {
     var userId = userData.userId;
     var login = userData.login;
-    var passwd = await argon2.hash(userData.passwd, "secret");
+
+    var passwd = await argon2.hash(userData.passwd + "", "secret");
 
     var user = await collection.insertOne({ login, passwd, userId });
 
