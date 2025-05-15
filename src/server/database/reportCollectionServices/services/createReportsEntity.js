@@ -3,7 +3,7 @@ var createReportsEntity = async (collection, userId) => {
 
   var result = await reportsEntity.save();
 
-  return (result = reportsEntity);
+  return result == reportsEntity;
 };
 
 module.exports = createReportsEntity;
