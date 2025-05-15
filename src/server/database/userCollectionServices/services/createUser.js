@@ -12,7 +12,9 @@ var createUser = async (collection, userData) => {
     var result = await user.save();
 
     return result == user;
-  } catch (e) {}
+  } catch (e) {
+    throw new DatabaseError(userId, e);
+  }
 };
 
 module.exports = createUser;
