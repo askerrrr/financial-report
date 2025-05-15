@@ -1,3 +1,5 @@
+var { DatabaseError } = require("../../../customError/customError");
+
 var createReport = async (collection, userId, report) => {
   try {
     var result = await collection.updateOne(
@@ -10,7 +12,9 @@ var createReport = async (collection, userId, report) => {
     );
 
     return result.acknowledged;
-  } catch (e) {}
+  } catch (e) {
+    throw new DatabaseError(userId, e);
+  }
 };
 
 module.exports = createReport;
