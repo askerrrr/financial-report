@@ -17,13 +17,13 @@ var createUser = async (req, res, next) => {
 
   userData.userId = userId;
 
+  var reportsEntityObjectId = await createReportsEntity(userId);
+
   var successCreate = await createUser(userData);
 
   if (!successCreate) {
     return res.status(500).json({ msg: "cannot create user" });
   }
-
-  await createReportsEntity(userId);
 
   var payload = { userId, role: "user" };
 
