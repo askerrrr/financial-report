@@ -7,7 +7,7 @@ var writeReport = async (req, res, next) => {
 
   var userId = req.app.locals.userId;
 
-  var { createReport } = req.app.locals.userCollectionServices();
+  var { createReport } = req.app.locals.reportCollectionServices();
 
   if (req.file) {
     var data = await getReportDataXLSX(req.file.path);
