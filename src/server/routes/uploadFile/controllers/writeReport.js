@@ -1,4 +1,4 @@
-var getXLSXData = require("../services/getXLSXData");
+var getReportDataXLSX = require("../services/getReportDataXLSX");
 
 var writeReport = async (req, res, next) => {
   if (!req.fileMimeTypeIsValid) {
@@ -10,7 +10,7 @@ var writeReport = async (req, res, next) => {
   var { createReport } = req.app.locals.userCollectionServices();
 
   if (req.file) {
-    var data = await getXLSXData(req.file.path);
+    var data = await getReportDataXLSX(req.file.path);
 
     var reportSuccessfullyRecorded = await createReport(userId, data);
 
