@@ -6,7 +6,8 @@ var getReportsByUserId = require("./services/getReportsByUserId");
 
 var userCollectionServices = () => {
   return {
-    createUser: (data) => createUser(userCollection, data),
+    createUser: (data, reportsEntityObjectId) =>
+      createUser(userCollection, data, reportsEntityObjectId),
     getUser: (login) => getUser(userCollection, login),
     getReportsByUserId: (userId) => getReportsByUserId(userCollection, userId),
   };

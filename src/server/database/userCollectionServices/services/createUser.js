@@ -1,7 +1,7 @@
 var argon2 = require("argon2");
 var { DatabaseError } = require("../../../customError/customError");
 
-var createUser = async (collection, userData) => {
+var createUser = async (collection, userData, reportsEntityObjectId) => {
   try {
     var userId = userData.userId;
     var login = userData.login;
