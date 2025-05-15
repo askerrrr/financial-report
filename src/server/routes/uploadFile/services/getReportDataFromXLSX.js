@@ -1,7 +1,7 @@
 var Exceljs = require("exceljs");
 var getColumnData = require("./getColumnData");
 
-var getReportDataXLSX = async (filePath) => {
+var getReportDataFromXLSX = async (filePath) => {
   try {
     var wb = new Exceljs.Workbook();
 
@@ -52,4 +52,4 @@ var getReportDataXLSX = async (filePath) => {
   }
 };
 
-module.exports = getReportDataXLSX;
+module.exports = getReportDataFromXLSX;
