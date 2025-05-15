@@ -9,6 +9,10 @@ var errorHandler = async (e, req, res, next) => {
     return res.sendStatus(500);
   }
 
+  if (e instanceof DatabaseError) {
+    return res.sendStatus(500 );
+  }
+
   console.log("AppError: ", e);
 };
 
