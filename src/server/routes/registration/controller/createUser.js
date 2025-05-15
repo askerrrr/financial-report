@@ -20,6 +20,7 @@ var createUser = async (req, res, next) => {
   var successCreate = await createUser(userData);
 
   if (!successCreate) {
+    return res.status(500).json({ msg: "cannot create user" });
   }
 
   await createReportsEntity(userId);
