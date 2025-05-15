@@ -15,6 +15,7 @@ var strOptions = [
 ];
 
 var reportDetailSchema = new Schema({
+  id: numOptions,
   itemName: strOptions,
   article: strOptions,
   WBSalesAmount: numOptions,
