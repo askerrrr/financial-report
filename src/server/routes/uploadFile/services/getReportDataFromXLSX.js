@@ -1,5 +1,6 @@
 var Exceljs = require("exceljs");
 var getColumnData = require("./getColumnData");
+var { randomBytes } = require("crypto");
 
 var getReportDataFromXLSX = async (filePath) => {
   try {
@@ -33,7 +34,10 @@ var getReportDataFromXLSX = async (filePath) => {
 
     var averageCost = await getColumnData(12, ws);
 
+    var id = randomBytes(10).toString("hex");
+
     return {
+      id,
       itemName,
       article,
       WBSalesAmount,
