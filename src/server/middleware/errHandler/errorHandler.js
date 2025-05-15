@@ -1,4 +1,5 @@
 var multer = require("multer");
+var { DatabaseError } = require("../../customError/customError");
 
 var errorHandler = async (e, req, res, next) => {
   console.log("e: ", e);
