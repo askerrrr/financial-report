@@ -8,6 +8,7 @@ var userCollectionServices = () => {
   return {
     createUser: (data) => createUser(userCollection, data),
     getUser: (login) => getUser(userCollection, login),
+    getReportsByUserId: (userId) => getReportsByUserId(userCollection, userId),
   };
 };
 
