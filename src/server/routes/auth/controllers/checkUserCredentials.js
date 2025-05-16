@@ -26,6 +26,8 @@ var checkUserCredentials = async (req, res, next) => {
 
   var token = JWT.sign(payload, "secretkey", { expiresIn: "2h" });
 
+  var userId = userDataFromDB.userId;
+
   return res
     .cookie("token", token, { httpOnly: true, maxAge: 2000 * 60 * 60 })
     .cookie("userId", userId, { httpOnly: false, maxAge: 2000 * 60 * 60 })
