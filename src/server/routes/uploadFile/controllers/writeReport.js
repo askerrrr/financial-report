@@ -1,3 +1,4 @@
+var getReportDate = require("../services/getReportDate");
 var getReportDataFromXLSX = require("../services/getReportDataFromXLSX");
 
 var writeReport = async (req, res, next) => {
