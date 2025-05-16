@@ -13,6 +13,8 @@ var writeReport = async (req, res, next) => {
   if (req.file) {
     var data = await getReportDataFromXLSX(req.file.path);
 
+    data.date = await getReportDate(req.file.filename);
+
     var reportSuccessfullyRecorded = await createReport(userId, data);
 
     if (!reportSuccessfullyRecorded) {
