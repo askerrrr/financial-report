@@ -2,12 +2,12 @@ var JWT = require("jsonwebtoken");
 var { randomBytes } = require("node:crypto");
 
 var createUser = async (req, res, next) => {
-  var { createUser, getUser } = req.app.locals.userCollectionServices();
+  var { createUser, getUserByLogin } = req.app.locals.userCollectionServices();
   var { createReportsEntity } = req.app.locals.reportCollectionServices();
 
   var userData = req.body;
 
-  var user = await getUser(userData.login);
+  var user = await getUserByLogin(userData.login);
 
   if (user) {
     return res.sendStatus(409);
