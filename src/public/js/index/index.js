@@ -4,6 +4,10 @@ var getReportsData = async () => {
   return res;
 };
 
-var showReportsTable = async () => {};
+var showReportsTable = async () => {
+  var res = await getReportsData();
+
+  var json = await res.json();
+};
 
 showReportsTable();
