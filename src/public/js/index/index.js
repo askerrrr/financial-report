@@ -1,3 +1,3 @@
-var getUserReports = async () => {};
+var showReportsTable = async () => {};
 
-getUserReports();
+showReportsTable();
