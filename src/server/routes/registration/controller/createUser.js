@@ -30,7 +30,7 @@ var createUser = async (req, res, next) => {
   var token = JWT.sign(payload, "secretkey", { expiresIn: "2h" });
 
   return res
-    .cookie("token", token, { httpOny: true, maxAge: 2000 * 60 * 60 })
+    .cookie("token", token, { httpOnly: true, maxAge: 2000 * 60 * 60 })
     .json({ redirectUrl: "/" });
 };
 
