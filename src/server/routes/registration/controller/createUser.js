@@ -31,6 +31,7 @@ var createUser = async (req, res, next) => {
 
   return res
     .cookie("token", token, { httpOnly: true, maxAge: 2000 * 60 * 60 })
+    .cookie("userId", userId, { httpOnly: false, maxAge: 2000 * 60 * 60 })
     .json({ redirectUrl: "/" });
 };
 
