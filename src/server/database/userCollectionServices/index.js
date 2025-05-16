@@ -1,6 +1,6 @@
 var { userCollection } = require("../connection/index");
 
-var getUser = require("./services/getUser");
+var getUserByLogin = require("./services/getUserByLogin");
 var createUser = require("./services/createUser");
 var getUserById = require("./services/getUserByUserId");
 
@@ -9,7 +9,7 @@ var userCollectionServices = () => {
     createUser: (data, reportsEntityObjectId) =>
       createUser(userCollection, data, reportsEntityObjectId),
 
-    getUser: (login) => getUser(userCollection, login),
+    getUserByLogin: (login) => getUserByLogin(userCollection, login),
 
     getUserById: (userId) => getUserById(userCollection, userId),
   };
