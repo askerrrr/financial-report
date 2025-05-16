@@ -33,7 +33,7 @@ app.use(require("./middleware/verifyJWTToken"));
 app.use("/", require("./routes/root/index"));
 app.use("/upload", require("./routes/uploadFile/index"));
 
-app.use("/reports", require("./routes/xlsx/index"));
+app.use("/reports", require("./routes/reports/index"));
 
 app.all(/.*/, require("./middleware/notFoundHandler/notFoundHandler"));
 
