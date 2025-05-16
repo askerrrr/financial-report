@@ -5,7 +5,6 @@ var userSchema = new Schema({
   userId: { type: String, required: true },
   login: { type: String, required: true },
   passwd: { type: String, required: true },
-  reports: { type: [reportDetailSchema], required: false },
 });
 
 var reportSchema = new Schema({
