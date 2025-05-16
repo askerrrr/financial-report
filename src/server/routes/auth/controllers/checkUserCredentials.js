@@ -3,11 +3,11 @@ var JWT = require("jsonwebtoken");
 var checkCredentials = require("../services/checkCredentials");
 
 var checkUserCredentials = async (req, res, next) => {
-  var { getUser } = req.app.locals.userCollectionServices();
+  var { getUserByLogin } = req.app.locals.userCollectionServices();
 
   var userData = req.body;
 
-  var userDataFromDB = await getUser(userData.login);
+  var userDataFromDB = await getUserByLogin(userData.login);
 
   if (!userDataFromDB) {
     return res.sendStatus(404);
