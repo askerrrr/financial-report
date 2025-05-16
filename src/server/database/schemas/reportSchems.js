@@ -17,6 +17,7 @@ var strOptions = [
 var reportDetailSchema = new Schema(
   {
     id: { type: String, required: true },
+    date: strOptions,
     itemName: strOptions,
     article: strOptions,
     WBSalesAmount: numOptions,
