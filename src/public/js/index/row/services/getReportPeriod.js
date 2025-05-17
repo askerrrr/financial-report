@@ -5,3 +5,5 @@ var getReportPeriod = async (period) => {
 
   return td;
 };
+
+export default getReportPeriod;
