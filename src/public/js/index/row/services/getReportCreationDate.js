@@ -1,6 +1,8 @@
+import createLinkToTheReport from "./createLinkToTheReport.js";
+
 var td = document.createElement("td");
 
-var getReportCreationDate = async (date) => {
+var getReportCreationDate = async (id, date) => {
   td.append(date);
 
   return td;
