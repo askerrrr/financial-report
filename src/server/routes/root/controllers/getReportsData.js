@@ -1,3 +1,5 @@
+var getReportsDto = require("../services/getReportsDto");
+
 var getReportsData = async (req, res, next) => {
   var userId = req.app.locals.userId;
 
