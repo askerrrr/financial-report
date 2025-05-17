@@ -15,6 +15,10 @@ var createRowForReports = async (reports) => {
 
     tbody.append(tr);
   }
+
+  table.append(tbody);
+
+  return table;
 };
 
 export default createRowForReports;
