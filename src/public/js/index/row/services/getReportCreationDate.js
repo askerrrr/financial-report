@@ -5,3 +5,5 @@ var getReportCreationDate = async (date) => {
 
   return td;
 };
+
+export default getReportCreationDate;
