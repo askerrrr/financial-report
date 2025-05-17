@@ -8,9 +8,11 @@ var createRowForReports = async (reports) => {
   for (var report of reports) {
     var tr = document.createElement("tr");
 
+    var { id, date, period } = report;
+
     tr.append(
-      await getReportPeriod(""),
-      await getReportCreationDate(report.id, report.date)
+      await getReportPeriod(period),
+      await getReportCreationDate(id, date)
     );
 
     tbody.append(tr);
