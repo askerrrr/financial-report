@@ -3,10 +3,10 @@ import getReportCreationDate from "./services/getReportCreationDate.js";
 
 var table = document.getElementById("reports");
 var tbody = document.createElement("tbody");
-var tr = document.createElement("tr");
 
 var createRowForReports = async (reports) => {
   for (var report of reports) {
+    var tr = document.createElement("tr");
   }
 };
 
