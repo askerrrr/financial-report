@@ -5,7 +5,9 @@ var getReportsData = async () => await fetch("/api/" + userId);
 var showReportsTable = async () => {
   var res = await getReportsData();
 
-  var json = await res.json();
+  var data = await res.json();
+
+  var { reports } = data;
 };
 
 showReportsTable();
