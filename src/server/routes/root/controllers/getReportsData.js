@@ -7,7 +7,9 @@ var getReportsData = async (req, res, next) => {
 
   var reports = await getReportsByUserId(userId);
 
-  return res.json({ reports });
+  var reportsDto = await getReportsDto(reports);
+
+  return res.json({ reports: reportsDto });
 };
 
 module.exports = getReportsData;
