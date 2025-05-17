@@ -1,3 +1,4 @@
+import getReportPeriod from "./services/getReportPeriod.js";
 import createLinkToTheReport from "./services/createLinkToTheReport.js";
 
 var table = document.getElementById("reports");
