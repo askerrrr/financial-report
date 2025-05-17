@@ -12,6 +12,8 @@ var createRowForReports = async (reports) => {
       await getReportPeriod(""),
       await getReportCreationDate(report.id, report.date)
     );
+
+    tbody.append(tr);
   }
 };
 
