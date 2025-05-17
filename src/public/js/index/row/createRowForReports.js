@@ -7,6 +7,11 @@ var tbody = document.createElement("tbody");
 var createRowForReports = async (reports) => {
   for (var report of reports) {
     var tr = document.createElement("tr");
+
+    tr.append(
+      await getReportPeriod(""),
+      await getReportCreationDate(report.id, report.date)
+    );
   }
 };
 
