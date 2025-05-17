@@ -12,3 +12,5 @@ var createLinkToTheReport = async (id) => {
 
   return td;
 };
+
+export default createLinkToTheReport;
