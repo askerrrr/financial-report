@@ -1,10 +1,6 @@
 var userId = document.cookie.split("=")[1];
 
-var getReportsData = async () => {
-  var res = await fetch("/api");
-
-  return res;
-};
+var getReportsData = async () => await fetch("/api/" + userId);
 
 var showReportsTable = async () => {
   var res = await getReportsData();
