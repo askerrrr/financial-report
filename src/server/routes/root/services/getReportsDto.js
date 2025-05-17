@@ -9,5 +9,7 @@ var getReportsDto = async (reports) => {
     });
   }
 
-  return data;  
+  return data;
 };
+
+module.exports = getReportsDto;
