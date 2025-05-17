@@ -18,6 +18,7 @@ var reportDetailSchema = new Schema(
   {
     id: { type: String, required: true },
     date: { type: String, required: true },
+    period: { type: String, required: true, default: "" },
     itemName: strOptions,
     article: strOptions,
     WBSalesAmount: numOptions,
