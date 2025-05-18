@@ -17,7 +17,7 @@ var getReportData = async () => {
 
   var data = await res.json();
 
-  return data;
+  return data.report;
 };
 
 var showReport = async () => {};
