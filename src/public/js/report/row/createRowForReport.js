@@ -4,6 +4,8 @@ var pathParts = window.location.pathname.split("/");
 
 var reportId = pathParts.at(-1);
 
-var getReportData = async (id) => await fetch();
+var url = "/reports/" + userId + "/" + reportId;
+
+var getReportData = async (id) => await fetch(url);
 
 var createRowForReport = async (report) => {};
