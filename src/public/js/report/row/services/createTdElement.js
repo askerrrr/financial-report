@@ -5,3 +5,5 @@ var createTdElement = async (data) => {
 
   return td;
 };
+
+export default createTdElement;
