@@ -27,7 +27,7 @@ var reportDetailSchema = new Schema(
     deliveryCost: numOptions,
     refundCost: numOptions,
     numberOfReturns: numOptions,
-    files: numOptions,
+    fines: { type: Number, required: false, default: 0 },
     allowances: numOptions,
     summaryData: {
       totalSum: { type: Number, required: true },
