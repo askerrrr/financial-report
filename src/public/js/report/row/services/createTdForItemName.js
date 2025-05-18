@@ -1,1 +1,0 @@
-var createTdForItemName = async (itemName) => {};
