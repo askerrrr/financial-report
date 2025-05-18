@@ -20,4 +20,7 @@ var getReportData = async () => {
   return data.report;
 };
 
-var showReport = async () => {};
+var showReport = async () => {
+  var report = await getReportData();
+
+};
