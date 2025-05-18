@@ -22,6 +22,8 @@ var getReportData = async () => {
 
 var showReport = async () => {
   var report = await getReportData();
+
+  console.log(report);
 };
 
 showReport();

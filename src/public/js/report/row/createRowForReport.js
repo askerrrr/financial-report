@@ -1,4 +1,4 @@
-import createTdElement from "./services/createTdElement";
+import createTdElement from "./services/createTdElement.js";
 
 var table = document.getElementById("report");
 
