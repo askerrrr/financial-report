@@ -7,3 +7,5 @@ var reportId = pathParts.at(-1);
 var url = "/reports/" + userId + "/" + reportId;
 
 var getReportData = async () => await fetch(url);
+
+var showReport = async () => {};
