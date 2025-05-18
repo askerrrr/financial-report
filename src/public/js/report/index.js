@@ -8,6 +8,16 @@ var reportId = pathParts.at(-1);
 
 var url = "/reports/" + userId + "/" + reportId;
 
-var getReportData = async () => await fetch(url);
+var getReportData = async () => {
+  var res = await fetch(url);
+
+  if (!res.ok) {
+    return alert("Ошибка при получении отчета");
+  }
+
+  var data = await res.json();
+
+  return data;
+};
 
 var showReport = async () => {};
