@@ -22,5 +22,6 @@ var getReportData = async () => {
 
 var showReport = async () => {
   var report = await getReportData();
-
 };
+
+showReport();
