@@ -1,3 +1,3 @@
 var createRowForReport = async (report) => {};
 
-createRowForReport();
+export default createRowForReport;

@@ -1,3 +1,5 @@
+
+
 var userId = document.cookie.split("=")[1];
 
 var pathParts = window.location.pathname.split("/");
