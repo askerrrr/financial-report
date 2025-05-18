@@ -1,11 +1,9 @@
-var userId = document.cookie.split("=")[1];
+var createRowForReport = async () => {
+  var res = await getReportData();
 
-var pathParts = window.location.pathname.split("/");
+  var data = await res.json();
 
-var reportId = pathParts.at(-1);
+  console.log(data);
+};
 
-var url = "/reports/" + userId + "/" + reportId;
-
-var getReportData = async () => await fetch(url);
-
-var createRowForReport = async (report) => {};
+createRowForReport();
