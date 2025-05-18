@@ -1,6 +1,7 @@
 var table = document.getElementById("report");
-var tbody = document.createElement("tbody");
 
-var createRowForReport = async (report) => {};
+var createRowForReport = async (report) => {
+  var tbody = document.createElement("tbody");
+};
 
 export default createRowForReport;
