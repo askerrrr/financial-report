@@ -1,4 +1,4 @@
-
+import createRowForReport from "./row/createRowForReport.js";
 
 var userId = document.cookie.split("=")[1];
 

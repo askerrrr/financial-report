@@ -1,5 +1,5 @@
 var getReport = async (req, res, next) => {
-  var { userId, id } = req.pamams;
+  var { userId, id } = req.params;
 
   var { getReportById } = req.app.locals.reportCollectionServices();
 
