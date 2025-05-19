@@ -4,6 +4,72 @@ var table = document.getElementById("report");
 
 var createRowForReport = async (report) => {
   var tbody = document.createElement("tbody");
+
+  for (var item of report.items) {
+    var tr = document.createElement("tr");
+
+    var itemName = await createTdElement(item.itemName);
+    var qty = await createTdElement(item.qty);
+    var article = await createTdElement(item.article);
+    var fines = await createTdElement(item.fines);
+    var refundCost = await createTdElement(item.refundCost);
+    var allowances = await createTdElement(item.allowances);
+    var averageCost = await createTdElement(item.averageCost);
+    var buyoutPrice = await createTdElement(item.buyoutPrice);
+    var deliveryCost = await createTdElement(item.deliveryCost);
+    var WBSalesAmount = await createTdElement(item.WBSalesAmount);
+    var numberOfReturns = await createTdElement(item.numberOfReturns);
+    var payoutsPerProduct = await createTdElement(item.payoutsPerProduct);
+
+    var totalGoogs = await createTdElement("Продано всего");
+    var costPrice = await createTdElement("costPrice");
+    var retailPrice = await createTdElement("retailPrices");
+    var differentDeductions = await createTdElement("differentDeductions");
+    var storageCost = await createTdElement("storageCost");
+    var averageStorageCost = await createTdElement("averageStorageCost");
+
+    var paymentsMinusAllСommissions = await createTdElement(
+      "paymentsMinusAllСommissions"
+    );
+
+    var averagePaymentsMinusAllСommissions = await createTdElement(
+      "averagePaymentsMinusAllСommissions"
+    );
+
+    var averageСostPerPieceMinusCostPrice = await createTdElement(
+      "averageСostPerPieceMinusCostPrice"
+    );
+
+    var averageSellingPrice = await createTdElement("averageSellingPrice");
+
+    var netProfitAsAPercentagePerUnit = await createTdElement("%");
+
+    tr.append(
+      itemName,
+      article,
+      qty,
+      totalGoogs,
+      costPrice,
+      retailPrice,
+      payoutsPerProduct,
+      differentDeductions,
+      fines,
+      storageCost,
+      averageStorageCost,
+      paymentsMinusAllСommissions,
+      averagePaymentsMinusAllСommissions,
+      averageСostPerPieceMinusCostPrice,
+      WBSalesAmount,
+      averageSellingPrice,
+      netProfitAsAPercentagePerUnit
+    );
+
+    tbody.append(tr);
+  }
+
+  table.append(tbody);
+
+  return table;
 };
 
 export default createRowForReport;
