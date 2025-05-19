@@ -3,3 +3,5 @@ var extractSummaryFields = async (data) => {
 
   return { ...rest, ...summaryData };
 };
+
+module.exports = extractSummaryFields;
