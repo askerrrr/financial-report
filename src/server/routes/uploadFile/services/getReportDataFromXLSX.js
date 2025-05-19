@@ -55,6 +55,8 @@ var getReportDataFromXLSX = async (filePath) => {
       averageCost,
     };
 
+    data = await sumProductQuantities(data);
+
     var report = await extractSummaryFields(data);
 
     report = await transformReportStructure(report);
