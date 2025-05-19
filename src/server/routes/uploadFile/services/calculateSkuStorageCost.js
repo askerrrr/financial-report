@@ -9,3 +9,5 @@ var calculateSkuStorageCost = async (data) => {
 
   return data;
 };
+
+module.exports = calculateSkuStorageCost;
