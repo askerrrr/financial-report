@@ -13,6 +13,7 @@ var transformReportStructure = async (data) => {
       buyoutPrice: data.buyoutPrice[i],
       deliveryCost: data.deliveryCost[i],
       WBSalesAmount: data.WBSalesAmount[i],
+      skuStorageCost: data.skuStorageCost[i],
       numberOfReturns: data.numberOfReturns[i],
       payoutsPerProduct: data.payoutsPerProduct[i],
     });
