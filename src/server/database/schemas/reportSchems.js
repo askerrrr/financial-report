@@ -36,6 +36,7 @@ var reportDetailSchema = new Schema(
     totalSum: numOptions,
     totalProducts: numOptions,
     storageCost: numOptions,
+    skuStorageCost: numOptions,
     differentDeductions: numOptions,
     paidAcceptanceOfGoods: numOptions,
     items: [{ type: itemsSchema, required: true }],
