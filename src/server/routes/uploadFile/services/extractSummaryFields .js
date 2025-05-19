@@ -1,1 +1,5 @@
-var extractSummaryFields = async (data) => {};
+var extractSummaryFields = async (data) => {
+  var { summaryData, ...rest } = data;
+
+  return { ...rest, ...summaryData };
+};
