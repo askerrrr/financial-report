@@ -37,7 +37,7 @@ var getReportDataFromXLSX = async (filePath) => {
 
     var id = randomBytes(10).toString("hex");
 
-    return {
+    var data = {
       id,
       itemName,
       article,
@@ -52,6 +52,8 @@ var getReportDataFromXLSX = async (filePath) => {
       summaryData,
       averageCost,
     };
+
+    var report = await extractSummaryFields(data);
   } catch (e) {
     throw e;
   }
