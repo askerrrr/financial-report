@@ -4,6 +4,7 @@ var { randomBytes } = require("crypto");
 var extractSummaryFields = require("./extractSummaryFields ");
 var transformReportStructure = require("./transformReportStructure");
 var sumProductQuantities = require("./sumProductQuantities");
+var calculateSkuStorageCost = require("./calculateSkuStorageCost");
 
 var getReportDataFromXLSX = async (filePath) => {
   try {
