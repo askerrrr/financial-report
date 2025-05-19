@@ -34,6 +34,7 @@ var reportDetailSchema = new Schema(
     date: { type: String, default: "" },
     period: { type: String, default: "" },
     totalSum: numOptions,
+    totalProducts: numOptions,
     storageCost: numOptions,
     differentDeductions: numOptions,
     paidAcceptanceOfGoods: numOptions,
