@@ -1,42 +1,43 @@
 var { Schema } = require("mongoose");
 
-var numOptions = [
-  {
-    type: Number,
-    required: true,
-  },
-];
+var numOptions = {
+  type: Number,
+  required: true,
+};
 
-var strOptions = [
+var strOptions = {
+  type: String,
+  required: true,
+};
+
+var itemsSchema = new Schema(
   {
-    type: String,
-    required: true,
+    qty: numOptions,
+    fines: numOptions,
+    article: strOptions,
+    itemName: strOptions,
+    refundCost: numOptions,
+    allowances: numOptions,
+    averageCost: numOptions,
+    buyoutPrice: numOptions,
+    deliveryCost: numOptions,
+    WBSalesAmount: numOptions,
+    numberOfReturns: numOptions,
+    payoutsPerProduct: numOptions,
   },
-];
+  { _id: false }
+);
 
 var reportDetailSchema = new Schema(
   {
-    id: { type: String, required: true },
-    date: { type: String, required: true },
-    period: { type: String, required: true, default: "" },
-    itemName: strOptions,
-    article: strOptions,
-    WBSalesAmount: numOptions,
-    qty: numOptions,
-    buyoutPrice: numOptions,
-    deliveryCost: numOptions,
-    refundCost: numOptions,
-    numberOfReturns: numOptions,
-    fines: { type: Number, required: false, default: 0 },
-    allowances: numOptions,
-    summaryData: {
-      totalSum: { type: Number, required: true },
-      storageCost: { type: Number, required: true },
-      payoutsPerProduct: numOptions,
-      differentDeductions: { type: Number, required: true },
-      paidAcceptanceOfGoods: { type: Number, required: true },
-    },
-    averageCost: numOptions,
+    id: strOptions,
+    date: { type: String, default: "" },
+    period: { type: String, default: "" },
+    totalSum: numOptions,
+    storageCost: numOptions,
+    differentDeductions: numOptions,
+    paidAcceptanceOfGoods: numOptions,
+    items: [{ type: itemsSchema, required: true }],
   },
   { _id: false }
 );
