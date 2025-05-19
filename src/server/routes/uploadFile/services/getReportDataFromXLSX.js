@@ -3,6 +3,7 @@ var getColumnData = require("./getColumnData");
 var { randomBytes } = require("crypto");
 var extractSummaryFields = require("./extractSummaryFields ");
 var transformReportStructure = require("./transformReportStructure");
+var sumProductQuantities = require("./sumProductQuantities");
 
 var getReportDataFromXLSX = async (filePath) => {
   try {
