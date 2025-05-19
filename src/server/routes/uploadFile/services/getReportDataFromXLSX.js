@@ -58,6 +58,8 @@ var getReportDataFromXLSX = async (filePath) => {
 
     data = await sumProductQuantities(data);
 
+    data = await calculateSkuStorageCost(data);
+
     var report = await extractSummaryFields(data);
 
     report = await transformReportStructure(report);
