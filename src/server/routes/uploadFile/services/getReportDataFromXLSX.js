@@ -1,7 +1,7 @@
 var Exceljs = require("exceljs");
 var getColumnData = require("./getColumnData");
 var { randomBytes } = require("crypto");
-var extractSummaryFields = require("./extractSummaryFields");
+var extractSummaryFields = require("./extractSummaryFields ");
 
 var getReportDataFromXLSX = async (filePath) => {
   try {
