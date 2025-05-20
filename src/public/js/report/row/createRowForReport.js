@@ -11,7 +11,6 @@ var createRowForReport = async (report) => {
     var itemName = await createTdElement(item.itemName);
     var qty = await createTdElement(item.qty);
     var article = await createTdElement(item.article);
-    var fines = await createTdElement(item.fines);
     var refundCost = await createTdElement(item.refundCost);
     var allowances = await createTdElement(item.allowances);
     var averageCost = await createTdElement(item.averageCost);
@@ -21,11 +20,9 @@ var createRowForReport = async (report) => {
     var numberOfReturns = await createTdElement(item.numberOfReturns);
     var payoutsPerProduct = await createTdElement(item.payoutsPerProduct);
 
-    var totalGoogs = await createTdElement("Продано всего");
     var costPrice = await createTdElement("costPrice");
     var retailPrice = await createTdElement("retailPrices");
     var differentDeductions = await createTdElement("differentDeductions");
-    var storageCost = await createTdElement("storageCost");
     var averageStorageCost = await createTdElement("averageStorageCost");
 
     var paymentsMinusAllСommissions = await createTdElement(
@@ -48,13 +45,10 @@ var createRowForReport = async (report) => {
       itemName,
       article,
       qty,
-      totalGoogs,
       costPrice,
       retailPrice,
       payoutsPerProduct,
       differentDeductions,
-      fines,
-      storageCost,
       averageStorageCost,
       paymentsMinusAllСommissions,
       averagePaymentsMinusAllСommissions,
