@@ -41,6 +41,8 @@ var createRowForReport = async (report) => {
 
     var netProfitAsAPercentagePerUnit = await createTdElement("%");
 
+    var totalForTheProduct = await createTdElement("Всего");
+
     tr.append(
       itemName,
       article,
@@ -55,7 +57,8 @@ var createRowForReport = async (report) => {
       averageСostPerPieceMinusCostPrice,
       WBSalesAmount,
       averageSellingPrice,
-      netProfitAsAPercentagePerUnit
+      netProfitAsAPercentagePerUnit,
+      totalForTheProduct
     );
 
     tbody.append(tr);
