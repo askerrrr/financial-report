@@ -13,7 +13,7 @@ var calculateSkuStorageCost = async (data) => {
     return cost;
   });
 
-  data.skuStorageCost = skuStorageCost;
+  data.skuStorageCost = +skuStorageCost;
 
   return data;
 };

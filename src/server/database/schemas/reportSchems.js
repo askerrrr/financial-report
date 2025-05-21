@@ -22,6 +22,7 @@ var itemsSchema = new Schema(
     buyoutPrice: numOptions,
     deliveryCost: numOptions,
     WBSalesAmount: numOptions,
+    skuStorageCost: numOptions,
     numberOfReturns: numOptions,
     payoutsPerProduct: numOptions,
     costPrice: { type: Number, required: false, default: 0 },
