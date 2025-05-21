@@ -1,4 +1,5 @@
 import createTdElement from "./services/createTdElement.js";
+import createInputField from "./services/createInputField.js";
 
 var table = document.getElementById("report");
 
@@ -20,9 +21,13 @@ var createRowForReport = async (report) => {
     var numberOfReturns = await createTdElement(item.numberOfReturns);
     var payoutsPerProduct = await createTdElement(item.payoutsPerProduct);
 
-    var costPrice = await createTdElement("costPrice");
+    var inputFieldByCostPrice = await createInputField("costPrice");
+    var costPrice = await createTdElement(inputFieldByCostPrice);
+
     var retailPrice = await createTdElement("retailPrices");
+
     var differentDeductions = await createTdElement("differentDeductions");
+
     var averageStorageCost = await createTdElement("averageStorageCost");
 
     var paymentsMinusAllСommissions = await createTdElement(
