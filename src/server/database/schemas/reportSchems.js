@@ -24,6 +24,7 @@ var itemsSchema = new Schema(
     WBSalesAmount: numOptions,
     numberOfReturns: numOptions,
     payoutsPerProduct: numOptions,
+    costPrice: { type: Number, required: false, default: 0 },
   },
   { _id: false }
 );
