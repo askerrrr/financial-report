@@ -6,7 +6,7 @@ var table = document.getElementById("report");
 var createRowForReport = async (report) => {
   var tbody = document.createElement("tbody");
 
-  for (var item of report.items) {
+  for (var [index, item] of Object.entries(report.items)) {
     var tr = document.createElement("tr");
 
     var itemName = await createTdElement(item.itemName);
