@@ -10,10 +10,10 @@ var calculateSkuStorageCost = async (data) => {
 
     var cost = shorteningStr(result);
 
-    return cost;
+    return +cost;
   });
 
-  data.skuStorageCost = +skuStorageCost;
+  data.skuStorageCost = skuStorageCost;
 
   return data;
 };
