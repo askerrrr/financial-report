@@ -32,7 +32,7 @@ var createRowForReport = async (report) => {
 
     var differentDeductions = await createTdElement("differentDeductions");
 
-    var averageStorageCost = await createTdElement("averageStorageCost");
+    var averageStorageCost = await createTdElement(item.skuStorageCost);
 
     var paymentsMinusAllСommissions = await createTdElement(
       "paymentsMinusAllСommissions"
