@@ -25,9 +25,9 @@ var openModal = async (data, index, fieldName, valueDisplay) => {
   saveButton.addEventListener("click", async () => {
     valueDisplay.textContent = input.value;
 
-    await sendChangedData(data, index, fieldName);
+    await sendChangedData(input.value, index, fieldName);
 
-    document.body.removeChild(modal);
+    return document.body.removeChild(modal);
   });
 
   var cancelButton = document.createElement("button");
