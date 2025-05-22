@@ -21,12 +21,12 @@ var createRowForReport = async (report) => {
     var numberOfReturns = await createTdElement(item.numberOfReturns);
     var payoutsPerProduct = await createTdElement(item.payoutsPerProduct);
 
-    var inputFieldByCostPrice = await createInputField(
+    var inputFieldForCostPrice = await createInputField(
       item.costPrice,
       index,
       "costPrice"
     );
-    var costPrice = await createTdElement(inputFieldByCostPrice);
+    var costPrice = await createTdElement(inputFieldForCostPrice);
 
     var retailPrice = await createTdElement("retailPrices");
 
