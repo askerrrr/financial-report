@@ -1,9 +1,7 @@
-var getCookieByName = async (data) => {
-  var cookies = "userId=fe6576b643636ad76bdc; reportId=b3fd995d25d575b641b2";
+var getCookieByName = async (name) => {
+  var cookies = document.cookie.split(";").map((e) => e.trim());
 
-  cookies = cookies.split(";").map((e) => e.trim());
-
-  var cookie = cookies.find((e) => e.startsWith(data));
+  var cookie = cookies.find((e) => e.startsWith(name));
 
   var cookieValue = cookie.split("=")[1];
 
