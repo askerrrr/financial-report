@@ -1,3 +1,5 @@
+import sendChangedData from "./sendChangedData.js";
+
 var openModal = async (data, index, fieldName, valueDisplay) => {
   var modal = document.createElement("div");
   modal.className = "modal-overlay";
