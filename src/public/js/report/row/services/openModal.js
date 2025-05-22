@@ -1,4 +1,4 @@
-var openModal = async (data, valueDisplay) => {
+var openModal = async (data, index, fieldName, valueDisplay) => {
   var modal = document.createElement("div");
   modal.className = "modal-overlay";
 
