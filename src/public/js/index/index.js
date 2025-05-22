@@ -1,6 +1,7 @@
+import getCookieByName from "./services/getCookieByName.js";
 import createRowForReports from "./row/createRowForReports.js";
 
-var userId = document.cookie.split("=")[1];
+var userId = await getCookieByName("userId");
 
 var getReportsData = async () => await fetch("/api/" + userId);
 

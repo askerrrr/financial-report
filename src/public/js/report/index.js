@@ -1,10 +1,9 @@
+import getCookieByName from "../index/services/getCookieByName.js";
 import createRowForReport from "./row/createRowForReport.js";
 
-var userId = document.cookie.split("=")[1];
+var userId = await getCookieByName("userId");
 
-var pathParts = window.location.pathname.split("/");
-
-var reportId = pathParts.at(-1);
+var reportId = await getCookieByName("reportId");
 
 var url = "/reports/" + userId + "/" + reportId;
 
