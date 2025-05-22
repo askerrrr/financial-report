@@ -22,8 +22,11 @@ var openModal = async (data, index, fieldName, valueDisplay) => {
   var saveButton = document.createElement("button");
   saveButton.className = "modal-button modal-button-save";
   saveButton.textContent = "Сохранить";
-  saveButton.addEventListener("click", () => {
+  saveButton.addEventListener("click", async () => {
     valueDisplay.textContent = input.value;
+
+    await sendChangedData(data, index, fieldName);
+
     document.body.removeChild(modal);
   });
 
