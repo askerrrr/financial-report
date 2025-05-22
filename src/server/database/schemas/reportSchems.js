@@ -26,6 +26,7 @@ var itemsSchema = new Schema(
     numberOfReturns: numOptions,
     payoutsPerProduct: numOptions,
     costPrice: { type: Number, required: false, default: 0 },
+    retailPrice: { type: Number, required: false, default: 0 },
   },
   { _id: false }
 );
