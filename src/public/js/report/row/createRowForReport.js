@@ -41,8 +41,12 @@ var createRowForReport = async (report) => {
 
     var averageStorageCost = await createTdElement(item.skuStorageCost);
 
-    var paymentsMinusAllСommissions = await createTdElement(
-      "paymentsMinusAllСommissions"
+    var paymentsMinusAllСommissions = await calcPaymentsMinusAllСommissions(
+      item
+    );
+
+    var paymentsMinusAllСommissionsTD = await createTdElement(
+      paymentsMinusAllСommissions
     );
 
     var averagePaymentsMinusAllСommissions = await createTdElement(
@@ -68,7 +72,7 @@ var createRowForReport = async (report) => {
       payoutsPerProduct,
       differentDeductions,
       averageStorageCost,
-      paymentsMinusAllСommissions,
+      paymentsMinusAllСommissionsTD,
       averagePaymentsMinusAllСommissions,
       averageСostPerPieceMinusCostPrice,
       WBSalesAmount,
