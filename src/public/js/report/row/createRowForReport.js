@@ -3,6 +3,7 @@ import createTdElement from "./services/createTdElement.js";
 import createInputField from "./services/createInputField.js";
 import calcAverageSellingPrice from "./services/calcAverageSellingPrice.js";
 import calcPaymentsMinusAllСommissions from "./services/calcPaymentsMinusAllСommissions.js";
+import calcNetProfitAsAPercentagePerUnit from "./services/calcNetProfitAsAPercentagePerUnit.js";
 import calcAveragePaymentsMinusAllСommissions from "./services/calcAveragePaymentsMinusAllСommissions.js";
 
 var table = document.getElementById("report");
@@ -76,7 +77,14 @@ var createRowForReport = async (report) => {
 
     var averageSellingPriceTD = await createTdElement(averageSellingPrice);
 
-    var netProfitAsAPercentagePerUnit = await createTdElement("%");
+    var netProfitAsAPercentagePerUnit = await calcNetProfitAsAPercentagePerUnit(
+      netProfit,
+      item.costPrice
+    );
+
+    var netProfitAsAPercentagePerUnitTD = await createTdElement(
+      netProfitAsAPercentagePerUnit
+    );
 
     var totalForTheProduct = await createTdElement("Всего");
 
@@ -94,7 +102,7 @@ var createRowForReport = async (report) => {
       netProfitTD,
       WBSalesAmount,
       averageSellingPriceTD,
-      netProfitAsAPercentagePerUnit,
+      netProfitAsAPercentagePerUnitTD,
       totalForTheProduct
     );
 
