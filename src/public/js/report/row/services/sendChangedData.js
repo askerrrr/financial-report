@@ -1,7 +1,7 @@
 import getCookieByName from "../../../index/services/getCookieByName.js";
 
 var userId = await getCookieByName("userId");
-var reportId = await getCookieByName("reportId");
+var reportId = window.location.pathname.split("/").at(-1); // await getCookieByName("reportId");
 
 var url = "/reports/" + userId + "/" + reportId;
 

@@ -5,7 +5,7 @@ var getReport = async (req, res, next) => {
 
   var report = await getReportById(userId, id);
 
-  res.cookie("reportId", id).json({ report });
+  res.json({ report });
 };
 
 module.exports = getReport;
