@@ -3,3 +3,5 @@ var calcPaymentsMinusAllСommissions = async (
   storageCost,
   finesCost
 ) => payoutsPerProduct - storageCost - finesCost;
+
+export default calcPaymentsMinusAllСommissions;
