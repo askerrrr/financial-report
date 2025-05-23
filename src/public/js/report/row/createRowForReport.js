@@ -1,6 +1,7 @@
 import createTdElement from "./services/createTdElement.js";
 import createInputField from "./services/createInputField.js";
 import calcPaymentsMinusAllСommissions from "./services/calcPaymentsMinusAllСommissions.js";
+import calcAveragePaymentsMinusAllСommissions from "./services/calcAveragePaymentsMinusAllСommissions.js";
 
 var table = document.getElementById("report");
 
