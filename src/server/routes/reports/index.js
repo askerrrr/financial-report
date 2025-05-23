@@ -6,6 +6,6 @@ router.get("/:id", require("./controllers/getReportHTML"));
 
 router.get("/:userId/:id", require("./controllers/getReport"));
 
-router.post("/:userId/:id", require("./controllers/changeReportDetail"));
+router.post("/change", require("./controllers/changeReportDetail"));
 
 module.exports = router;
