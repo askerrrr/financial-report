@@ -3,7 +3,9 @@ import createRowForReport from "./row/createRowForReport.js";
 
 var userId = await getCookieByName("userId");
 
-var reportId = await getCookieByName("reportId");
+var pathParts = window.location.pathname.split("/");
+
+var reportId = pathParts.at(-1);
 
 var url = "/reports/" + userId + "/" + reportId;
 
