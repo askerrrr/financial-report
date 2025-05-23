@@ -62,7 +62,7 @@ var getReportDataFromXLSX = async (filePath) => {
 
     var report = await extractSummaryFields(data);
 
-    report = await transformReportStructure(report);
+    report = await transformReportStructure(report, userId);
 
     return report;
   } catch (e) {

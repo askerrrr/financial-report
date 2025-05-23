@@ -1,4 +1,4 @@
-var transformReportStructure = async (data) => {
+var transformReportStructure = async (data, userId) => {
   var transformedReportFields = [];
 
   for (var i = 0; i < data.qty.length; i++) {
@@ -22,6 +22,7 @@ var transformReportStructure = async (data) => {
   var report = {};
 
   report.id = data.id;
+  report.userId = userId;
   report.totalSum = data.totalSum;
   report.totalProducts = data.totalProducts;
   report.storageCost = data.storageCost;
