@@ -6,7 +6,7 @@ var transformReportStructure = require("./transformReportStructure");
 var sumProductQuantities = require("./sumProductQuantities");
 var calculateSkuStorageCost = require("./calculateSkuStorageCost");
 
-var getReportDataFromXLSX = async (filePath) => {
+var getReportDataFromXLSX = async (filePath, userId) => {
   try {
     var wb = new Exceljs.Workbook();
 
