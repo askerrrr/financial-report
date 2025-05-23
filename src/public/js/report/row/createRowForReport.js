@@ -1,6 +1,7 @@
 import calcNetProfit from "./services/calcNetProfit.js";
 import createTdElement from "./services/createTdElement.js";
 import createInputField from "./services/createInputField.js";
+import calcAverageSellingPrice from "./services/calcAverageSellingPrice.js";
 import calcPaymentsMinusAllСommissions from "./services/calcPaymentsMinusAllСommissions.js";
 import calcAveragePaymentsMinusAllСommissions from "./services/calcAveragePaymentsMinusAllСommissions.js";
 
@@ -68,7 +69,12 @@ var createRowForReport = async (report) => {
 
     var netProfitTD = await createTdElement(netProfit);
 
-    var averageSellingPrice = await createTdElement("averageSellingPrice");
+    var averageSellingPrice = await calcAverageSellingPrice(
+      item.WBSalesAmount,
+      item.qty
+    );
+
+    var averageSellingPriceTD = await createTdElement(averageSellingPrice);
 
     var netProfitAsAPercentagePerUnit = await createTdElement("%");
 
@@ -87,7 +93,7 @@ var createRowForReport = async (report) => {
       averagePaymentsMinusAllСommissionsTD,
       netProfitTD,
       WBSalesAmount,
-      averageSellingPrice,
+      averageSellingPriceTD,
       netProfitAsAPercentagePerUnit,
       totalForTheProduct
     );
