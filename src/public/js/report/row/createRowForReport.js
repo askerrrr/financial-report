@@ -60,9 +60,7 @@ var createRowForReport = async (report) => {
       averagePaymentsMinusAllСommissions
     );
 
-    var averageСostPerPieceMinusCostPrice = await createTdElement(
-      "averageСostPerPieceMinusCostPrice"
-    );
+    var netProfitTD = await createTdElement("netProfitTD");
 
     var averageSellingPrice = await createTdElement("averageSellingPrice");
 
@@ -81,7 +79,7 @@ var createRowForReport = async (report) => {
       averageStorageCost,
       paymentsMinusAllСommissionsTD,
       averagePaymentsMinusAllСommissionsTD,
-      averageСostPerPieceMinusCostPrice,
+      netProfitTD,
       WBSalesAmount,
       averageSellingPrice,
       netProfitAsAPercentagePerUnit,
