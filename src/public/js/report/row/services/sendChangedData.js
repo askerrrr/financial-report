@@ -5,10 +5,10 @@ var reportId = window.location.pathname.split("/").at(-1); // await getCookieByN
 
 var url = "/reports/change";
 
-var sendChangedData = async (data, index, fieldName) => {
+var sendChangedData = async (value, index, fieldName) => {
   var res = await fetch(url, {
     method: "POST",
-    body: JSON.stringify({ userId, reportId, data, index, fieldName }),
+    body: JSON.stringify({ userId, reportId, value, index, fieldName }),
     headers: { "Content-Type": "application/json" },
   });
 
