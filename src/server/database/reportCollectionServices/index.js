@@ -19,6 +19,9 @@ var reportCollectionServices = () => {
 
     getReportsByUserId: (userId) =>
       getReportsByUserId(reportCollection, userId),
+
+    updateItems: (userId, reportId, items) =>
+      updateItems(reportCollection, userId, reportId, items),
   };
 };
 
