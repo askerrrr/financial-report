@@ -1,5 +1,6 @@
 var { reportCollection } = require("../connection/index");
 
+var updateItems = require("./services/updateItems");
 var createReport = require("./services/createReport");
 var getReportById = require("./services/getReportById");
 var createReportsEntity = require("./services/createReportsEntity");
