@@ -7,3 +7,5 @@ var changeElementInArray = async (items, { index, value, fieldName }) => {
 
   return items;
 };
+
+module.exports = changeElementInArray;
