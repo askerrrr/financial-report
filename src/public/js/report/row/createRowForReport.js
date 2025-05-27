@@ -70,7 +70,7 @@ var createRowForReport = async (report) => {
     );
 
     var netProfitTD = await createTdElement(netProfit);
-    console.log(netProfit * item.qty);
+
     var averageSellingPrice = await calcAverageSellingPrice(
       item.WBSalesAmount,
       item.qty
@@ -80,7 +80,7 @@ var createRowForReport = async (report) => {
 
     var netProfitAsAPercentagePerUnit = await calcNetProfitAsAPercentagePerUnit(
       netProfit,
-      item.costPrice
+      item.retailPrice
     );
 
     var netProfitAsAPercentagePerUnitTD = await createTdElement(
