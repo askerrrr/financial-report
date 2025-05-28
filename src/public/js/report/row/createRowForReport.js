@@ -7,6 +7,8 @@ import calcPaymentsMinusAllСommissions from "./services/calcPaymentsMinusAllСo
 import calcNetProfitAsAPercentagePerUnit from "./services/calcNetProfitAsAPercentagePerUnit.js";
 import calcAveragePaymentsMinusAllСommissions from "./services/calcAveragePaymentsMinusAllСommissions.js";
 
+var url = "/reports/change";
+
 var table = document.getElementById("report");
 
 var createRowForReport = async (report) => {
@@ -30,14 +32,16 @@ var createRowForReport = async (report) => {
     var inputFieldForCostPrice = await createInputField(
       item.costPrice,
       index,
-      "costPrice"
+      "costPrice",
+      url
     );
     var costPrice = await createTdElement(inputFieldForCostPrice);
 
     var inputFieldForRetailPrice = await createInputField(
       item.retailPrice,
       index,
-      "retailPrice"
+      "retailPrice",
+      url
     );
 
     var retailPrice = await createTdElement(inputFieldForRetailPrice);

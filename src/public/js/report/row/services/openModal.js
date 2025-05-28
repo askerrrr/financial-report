@@ -1,6 +1,6 @@
 import sendChangedData from "./sendChangedData.js";
 
-var openModal = async (data, index, fieldName, valueDisplay) => {
+var openModal = async (data, index, fieldName, valueDisplay, url) => {
   var modal = document.createElement("div");
   modal.className = "modal-overlay";
 
@@ -27,7 +27,12 @@ var openModal = async (data, index, fieldName, valueDisplay) => {
 
     document.body.removeChild(modal);
 
-    var successResponse = await sendChangedData(input.value, index, fieldName);
+    var successResponse = await sendChangedData(
+      input.value,
+      index,
+      fieldName,
+      url
+    );
 
     console.log(successResponse);
   });

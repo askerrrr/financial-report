@@ -1,6 +1,6 @@
 import openModal from "./openModal.js";
 
-var createInputField = async (data, index, fieldName) => {
+var createInputField = async (data, index, fieldName, url) => {
   var container = document.createElement("div");
   container.className = "editable-field";
 
@@ -15,7 +15,7 @@ var createInputField = async (data, index, fieldName) => {
 
   button.addEventListener("click", async (e) => {
     e.preventDefault();
-    await openModal(data, index, fieldName, valueDisplay);
+    await openModal(data, index, fieldName, valueDisplay, url);
   });
 
   container.append(valueDisplay, button);

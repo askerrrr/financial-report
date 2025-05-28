@@ -5,7 +5,7 @@ var changeReportDetail = async (req, res, next) => {
     req.app.locals.reportCollectionServices();
 
   var { userId, reportId } = req.body;
-
+  console.log(req.body);
   var { items } = await getReportById(userId, reportId);
 
   var changedItems = await changeElementInArray(items, req.body);
