@@ -5,6 +5,7 @@ var createReport = require("./services/createReport");
 var getReportById = require("./services/getReportById");
 var createReportsEntity = require("./services/createReportsEntity");
 var getReportsByUserId = require("./services/getReportsByUserId");
+var updateReportPeriod = require("./services/updateReportPeriod");
 
 var reportCollectionServices = () => {
   return {
@@ -22,6 +23,9 @@ var reportCollectionServices = () => {
 
     updateItems: (userId, reportId, items) =>
       updateItems(reportCollection, userId, reportId, items),
+
+    updateReportPeriod: (userId, reportId, period) =>
+      updateReportPeriod(reportCollection, userId, reportId, period),
   };
 };
 
