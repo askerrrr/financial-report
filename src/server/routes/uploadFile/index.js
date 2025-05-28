@@ -1,6 +1,7 @@
 var multer = require("multer");
 var { Router } = require("express");
 var writeReport = require("./controllers/writeReport");
+var writeReports = require("./controllers/writeReports");
 var fileFilter = require("./services/fileFilter");
 
 var storage = multer.diskStorage({
@@ -18,6 +19,6 @@ var router = Router();
 
 router.post("/file", updoad.single("file"), writeReport);
 
-router.post("/files", updoad.array("file", 10), writeReport);
+router.post("/files", updoad.array("file", 10), writeReports);
 
 module.exports = router;
