@@ -5,16 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/index.css" type="text/css" />
     <link rel="stylesheet" href="/css/upload.css" type="text/css" />
+    <link rel="stylesheet" href="/css/modalWindow.css" type="text/css" />
     <title>Отчёты</title>
     <link rel="icon" href="/image/favicon.ico" type="image/x-icon" />
   </head>
   <body id="main">
-   <form enctype="multipart/form-data" id="upload-form">
-    <label for="fileinput" class="input-file" >
-      <input type="file" name="file" id="fileinput" multiple accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
-      <span>Загрузить отчёт</span>
-    </label>
-   </form>
+    <form enctype="multipart/form-data" id="upload-form">
+      <label for="fileinput" class="input-file">
+        <input
+          type="file"
+          name="file"
+          id="fileinput"
+          multiple
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        />
+        <span>Загрузить отчёт</span>
+      </label>
+    </form>
     <table id="reports">
       <thead>
         <tr>
@@ -23,7 +30,7 @@
         </tr>
       </thead>
     </table>
-    
+
     <script src="/js/upload/uploadHandler.js" type="module"></script>
     <script src="/js/index/index.js" type="module"></script>
   </body>
