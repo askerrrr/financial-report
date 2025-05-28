@@ -1,14 +1,17 @@
-/* Стили для редактируемого поля */
 .editable-field {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 8px;
   padding: 8px;
+  min-width: 150px;
+  max-width: 150px;
+  margin-left: auto;
 }
 
 .editable-field-value {
   font-weight: bold;
-  text-align: center;
+
+  flex-grow: 1;
 }
 
 .editable-field-button {
@@ -20,13 +23,13 @@
   cursor: pointer;
   font-size: 12px;
   transition: background-color 0.3s;
+  white-space: nowrap;
 }
 
 .editable-field-button:hover {
   background-color: #45a049;
 }
 
-/* Стили для модального окна */
 .modal-overlay {
   position: fixed;
   top: 0;
