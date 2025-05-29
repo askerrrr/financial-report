@@ -17,7 +17,8 @@ var createRowForReports = async (reports) => {
       period,
       index,
       "period",
-      url
+      url,
+      id
     );
 
     var period = await getReportPeriod(inputFieldForPeriod);

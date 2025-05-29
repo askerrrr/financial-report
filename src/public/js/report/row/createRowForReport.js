@@ -14,6 +14,8 @@ var table = document.getElementById("report");
 var createRowForReport = async (report) => {
   var tbody = document.createElement("tbody");
 
+  var { id } = report;
+
   for (var [index, item] of Object.entries(report.items)) {
     var tr = document.createElement("tr");
 
@@ -33,7 +35,8 @@ var createRowForReport = async (report) => {
       item.costPrice,
       index,
       "costPrice",
-      url
+      url,
+      id
     );
     var costPrice = await createTdElement(inputFieldForCostPrice);
 
@@ -41,7 +44,8 @@ var createRowForReport = async (report) => {
       item.retailPrice,
       index,
       "retailPrice",
-      url
+      url,
+      id
     );
 
     var retailPrice = await createTdElement(inputFieldForRetailPrice);

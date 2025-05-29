@@ -1,6 +1,6 @@
 import sendChangedData from "./sendChangedData.js";
 
-var openModal = async (data, index, fieldName, valueDisplay, url) => {
+var openModal = async (data, index, fieldName, valueDisplay, url, id) => {
   var modal = document.createElement("div");
   modal.className = "modal-overlay";
 
@@ -31,7 +31,8 @@ var openModal = async (data, index, fieldName, valueDisplay, url) => {
       input.value,
       index,
       fieldName,
-      url
+      url,
+      id
     );
 
     console.log(successResponse);
