@@ -1,3 +1,4 @@
+import sendPeriodDate from "./sendPeriodDate.js";
 import validateReportPeriod from "./validateReportPeriod.js";
 
 var openReportPeriodModal = async () => {
@@ -34,17 +35,23 @@ var openReportPeriodModal = async () => {
     document.body.removeChild(modal);
 
     var dateFrom = dateFromInput.value;
-    var dateFromIsValid = await validateReportPeriod(dateFrom);
+    var validDateFrom = await validateReportPeriod(dateFrom);
 
-    if (!dateFromIsValid) {
+    if (!validDateFrom) {
       return alert("Начало периода введено некорректно");
     }
 
     var dateTo = dateToInput.value;
-    var dateToIsValid = await validateReportPeriod(dateTo);
+    var validDateTo = await validateReportPeriod(dateTo);
 
-    if (!dateToIsValid) {
+    if (!validDateTo) {
       return alert("Конец периода введен некорректно");
+    }
+
+    var successSaveReport = await sendPeriodDate(validDateFrom, validDateTo);
+
+    if (!successSaveReport) {
+      return alert("cannot save report ");
     }
   });
 
