@@ -3,6 +3,7 @@ var { join } = require("node:path");
 var { mkdir } = require("node:fs/promises");
 var cookieParser = require("cookie-parser");
 var userCollectionServices = require("./database/userCollectionServices/index");
+var tokenCollectionServices = require("./database/tokenCollectionService/index");
 var reportCollectionServices = require("./database/reportCollectionServices/index");
 
 var app = express();
@@ -13,6 +14,8 @@ var app = express();
   app.locals.userCollectionServices = userCollectionServices;
 
   app.locals.reportCollectionServices = reportCollectionServices;
+
+  app.locals.tokenCollectionServices = tokenCollectionServices;
 
   app.listen(5000, "127.0.0.1", () => console.log("server running"));
 })();
