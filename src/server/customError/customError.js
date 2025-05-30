@@ -9,4 +9,13 @@ class DatabaseError extends Error {
   }
 }
 
-module.exports = { DatabaseError };
+class WBAPIError extends Error {
+  constructor(userId, status, message) {
+    super(message);
+    this.userId = userId;
+    this.status = status;
+    this.message = message;
+  }
+}
+
+module.exports = { DatabaseError, WBAPIError };
