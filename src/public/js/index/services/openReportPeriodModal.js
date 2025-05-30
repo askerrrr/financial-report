@@ -35,9 +35,6 @@ var openReportPeriodModal = async () => {
     var dateTo = dateToInput.value;
 
     console.log(dateFrom, dateTo);
-    var successSaveToken = await sendWBAuthToken(token);
-
-    console.log(successSaveToken);
   });
 
   var cancelButton = document.createElement("button");
