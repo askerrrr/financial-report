@@ -1,3 +1,5 @@
+import validateReportPeriod from "./validateReportPeriod.js";
+
 var openReportPeriodModal = async () => {
   var modal = document.createElement("div");
   modal.className = "modal-overlay";
@@ -32,9 +34,18 @@ var openReportPeriodModal = async () => {
     document.body.removeChild(modal);
 
     var dateFrom = dateFromInput.value;
-    var dateTo = dateToInput.value;
+    var dateFromIsValid = await validateReportPeriod(dateFrom);
 
-    console.log(dateFrom, dateTo);
+    if (!dateFromIsValid) {
+      return alert("Начало периода введено некорректно");
+    }
+
+    var dateTo = dateToInput.value;
+    var dateToIsValid = await validateReportPeriod(dateTo);
+
+    if (!dateToIsValid) {
+      return alert("Конец периода введен некорректно");
+    }
   });
 
   var cancelButton = document.createElement("button");
