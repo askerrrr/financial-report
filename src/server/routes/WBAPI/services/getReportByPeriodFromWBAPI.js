@@ -2,7 +2,7 @@ var url =
   "https://statistics-api.wildberries.ru/api/v5/supplier/reportDetailByPeriod?";
 
 var getReportByPeriodFromWBAPI = async (dateFrom, dateTo, token) => {
-  var dateFromParam = "dateFrom=" + dateFrom;
+  var dateFromParam = "dateFrom=" + dateFrom + "&";
   var dateToParam = "dateTo=" + dateTo;
 
   var res = await fetch(url + dateFromParam + dateToParam, {
