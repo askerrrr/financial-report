@@ -22,7 +22,7 @@ var validateReportPeriod = async (date) => {
     day = "0" + day;
   }
 
-  return [year, mounth, day].join(".");
+  return [year, mounth, day].join("-");
 };
 
 export default validateReportPeriod;
