@@ -1,0 +1,3 @@
+var reportPeriodHander = async () => {};
+
+reportPeriodHander();
