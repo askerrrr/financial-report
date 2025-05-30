@@ -1,5 +1,5 @@
 var multer = require("multer");
-var { DatabaseError } = require("../../customError/customError");
+var { DatabaseError, WBAPIError } = require("../../customError/customError");
 
 var errorHandler = async (e, req, res, next) => {
   console.log("e: ", e);
@@ -10,7 +10,11 @@ var errorHandler = async (e, req, res, next) => {
   }
 
   if (e instanceof DatabaseError) {
-    return res.sendStatus(500 );
+    return res.sendStatus(500);
+  }
+
+  if (e instanceof WBAPIError) {
+    res.status(e.status).json({ msg: e.message });
   }
 
   console.log("AppError: ", e);
