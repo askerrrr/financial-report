@@ -8,6 +8,7 @@ var openTokenEditModal = async () => {
   modalContent.className = "modal-content";
 
   var title = document.createElement("h3");
+  title.append("Введите токен");
   title.className = "modal-title";
 
   var input = document.createElement("input");
