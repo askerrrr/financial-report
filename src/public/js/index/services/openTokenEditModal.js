@@ -1,6 +1,6 @@
 import sendWBAuthToken from "./sendToken.js";
 
-var openModal = async () => {
+var openTokenEditModal = async () => {
   var modal = document.createElement("div");
   modal.className = "modal-overlay";
 
@@ -52,4 +52,4 @@ var openModal = async () => {
   });
 };
 
-export default openModal;
+export default openTokenEditModal;
