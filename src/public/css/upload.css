@@ -1,6 +1,6 @@
 .input-file {
   position: fixed;
-  top: 80px;
+  top: 120px;
   right: 20px;
   z-index: 1000;
 }
@@ -51,8 +51,15 @@
 }
 
 .token-button {
-  position: fixed; /* Фиксированное позиционирование */
-  top: 20px; /* Отступ сверху */
-  right: 20px; /* Отступ справа */
-  z-index: 1000; /* Чтобы кнопка была поверх других элементов */
+  position: fixed;
+  top: 40px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.period-button {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1000;
 }
