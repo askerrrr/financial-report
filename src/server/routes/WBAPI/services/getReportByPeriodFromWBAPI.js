@@ -1,7 +1,9 @@
+var { WBAPIError } = require("../../../customError/customError");
+
 var url =
   "https://statistics-api.wildberries.ru/api/v5/supplier/reportDetailByPeriod?";
 
-var getReportByPeriodFromWBAPI = async (dateFrom, dateTo, token) => {
+var getReportByPeriodFromWBAPI = async (dateFrom, dateTo, token, userId) => {
   var dateFromParam = "dateFrom=" + dateFrom + "&";
   var dateToParam = "dateTo=" + dateTo;
 
@@ -11,7 +13,7 @@ var getReportByPeriodFromWBAPI = async (dateFrom, dateTo, token) => {
   });
 
   if (!res.ok) {
-    return res.status;
+    throw new WBAPIError(userId, res.status, res.statusText);
   }
 
   var report = await res.json();

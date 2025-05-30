@@ -7,7 +7,12 @@ var gettingReriodDateFromClient = async (req, res, next) => {
 
   var token = await getWBTokenByUserId(userId);
 
-  var report = await getReportByPeriodFromWBAPI(dateFrom, dateTo, token);
+  var report = await getReportByPeriodFromWBAPI(
+    dateFrom,
+    dateTo,
+    token,
+    userId
+  );
 
   req.report = report;
 
