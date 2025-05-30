@@ -37,6 +37,9 @@ app.use("/", require("./routes/root/index"));
 app.use("/upload", require("./routes/uploadFile/index"));
 
 app.use("/token", require("./routes/WBToken/index"));
+
+app.use("/wbapi", require("./routes/WBAPI/index"));
+
 app.use("/reports", require("./routes/reports/index"));
 
 app.all(/.*/, require("./middleware/notFoundHandler/notFoundHandler"));
