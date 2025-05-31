@@ -1,7 +1,7 @@
 var getSummaryColumnData = (data) => {
   var payoutsPerProduct = data.slice(0, -4);
 
-  var totalSum = data.at(-1);
+  var totalRevenue = data.at(-1);
 
   var storageCost = data.at(-4);
 
@@ -10,7 +10,7 @@ var getSummaryColumnData = (data) => {
   var paidAcceptanceOfGoods = data.at(-3);
 
   return {
-    totalSum,
+    totalRevenue,
     storageCost,
     payoutsPerProduct,
     differentDeductions,
