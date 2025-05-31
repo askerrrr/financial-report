@@ -1,4 +1,4 @@
-var getReportByPeriodFromWBAPI = require("../services/getReportByPeriodFromWBAPI");
+var getReportByPeriodFromWBAPI = require("../../WBAPI/services/getReportByPeriodFromWBAPI");
 
 var getReportFromWBAPI = async (req, res, next) => {
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices();
