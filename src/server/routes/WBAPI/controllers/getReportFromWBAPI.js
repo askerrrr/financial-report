@@ -1,6 +1,6 @@
 var getReportByPeriodFromWBAPI = require("../services/getReportByPeriodFromWBAPI");
 
-var gettingReriodDateFromClient = async (req, res, next) => {
+var getReportFromWBAPI = async (req, res, next) => {
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices();
 
   var { userId, dateFrom, dateTo } = req.body;
@@ -19,4 +19,4 @@ var gettingReriodDateFromClient = async (req, res, next) => {
   next();
 };
 
-module.exports = gettingReriodDateFromClient;
+module.exports = getReportFromWBAPI;
