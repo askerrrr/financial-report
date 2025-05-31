@@ -1,5 +1,5 @@
 var calcTotalFines = async (data) => {
-  var totalFines = data.reduce((acc, i) => acc + i, 0);
+  var totalFines = data.fines.reduce((acc, i) => acc + i, 0);
 
   return totalFines;
 };
