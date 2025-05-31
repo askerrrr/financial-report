@@ -1,5 +1,5 @@
-var getReportDate = require("../services/getReportDate");
-var getReportDataFromXLSX = require("../services/getReportDataFromXLSX");
+var getReportDate = require("../services/writeAndCalcReportDataServices/getReportDate");
+var getReportDataFromXLSX = require("../services/writeAndCalcReportDataServices/getReportDataFromXLSX");
 
 var writeReports = async (req, res, next) => {
   var userId = req.app.locals.userId;

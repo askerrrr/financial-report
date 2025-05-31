@@ -25,7 +25,9 @@ var uploadHandler = async () => {
       }
 
       var uploadUrl =
-        uploadInput.files.length == 1 ? "/upload/file" : "/upload/files";
+        uploadInput.files.length == 1
+          ? "/reports/upload/file"
+          : "/reports/upload/files";
 
       var res = await sendUploadFile(uploadFormData, uploadUrl);
 

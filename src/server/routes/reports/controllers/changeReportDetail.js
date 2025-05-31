@@ -1,4 +1,4 @@
-var changeElementInArray = require("../services/changeElementInArray");
+var changeElementInArray = require("../services/differentServices/changeElementInArray");
 
 var changeReportDetail = async (req, res, next) => {
   var { updateItems, getReportById } =

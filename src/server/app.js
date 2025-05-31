@@ -34,7 +34,6 @@ app.use(cookieParser());
 app.use(require("./middleware/verifyJWTToken"));
 
 app.use("/", require("./routes/root/index"));
-app.use("/upload", require("./routes/uploadFile/index"));
 
 app.use("/token", require("./routes/WBToken/index"));
 
