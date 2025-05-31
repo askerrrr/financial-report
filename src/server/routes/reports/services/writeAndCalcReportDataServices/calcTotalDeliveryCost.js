@@ -3,3 +3,5 @@ var calcTotalDeliveryCost = async (data) => {
 
   return totalDeliveryCost;
 };
+
+module.exports = calcTotalDeliveryCost;
