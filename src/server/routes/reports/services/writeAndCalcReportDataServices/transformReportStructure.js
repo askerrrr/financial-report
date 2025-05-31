@@ -25,7 +25,7 @@ var transformReportStructure = async (data, userId) => {
   report.userId = userId;
   report.totalSum = data.totalSum;
   report.totalProducts = data.totalProducts;
-  report.storageCost = data.storageCost;
+  report.totalStorageCost = data.totalStorageCost;
   report.differentDeductions = data.differentDeductions;
   report.paidAcceptanceOfGoods = data.paidAcceptanceOfGoods;
   report.items = transformedReportFields;
