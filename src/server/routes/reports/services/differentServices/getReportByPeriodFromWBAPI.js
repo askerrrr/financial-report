@@ -1,4 +1,4 @@
-var { WBAPIError } = require("../../../customError/customError");
+var { WBAPIError } = require("../../../../customError/customError");
 
 var url =
   "https://statistics-api.wildberries.ru/api/v5/supplier/reportDetailByPeriod?";
