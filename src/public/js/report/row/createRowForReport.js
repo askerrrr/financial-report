@@ -55,27 +55,15 @@ var createRowForReport = async (report) => {
     var averageStorageCost = await createTdElement(item.skuStorageCost);
 
     var paymentsMinusAllСommissions = await calcPaymentsMinusAllСommissions(
-      item
+      item.payoutsPerProduct,
+      item.qty
     );
 
     var paymentsMinusAllСommissionsTD = await createTdElement(
       paymentsMinusAllСommissions
     );
 
-    var averagePaymentsMinusAllСommissions =
-      await calcAveragePaymentsMinusAllСommissions(
-        paymentsMinusAllСommissions,
-        item.qty
-      );
-
-    var averagePaymentsMinusAllСommissionsTD = await createTdElement(
-      averagePaymentsMinusAllСommissions
-    );
-
-    var netProfit = await calcNetProfit(
-      averagePaymentsMinusAllСommissions,
-      item.costPrice
-    );
+    var netProfit = await calcNetProfit(item.costPrice);
 
     var netProfitTD = await createTdElement(netProfit);
 
@@ -108,7 +96,6 @@ var createRowForReport = async (report) => {
       differentDeductions,
       averageStorageCost,
       paymentsMinusAllСommissionsTD,
-      averagePaymentsMinusAllСommissionsTD,
       netProfitTD,
       WBSalesAmount,
       averageSellingPriceTD,
