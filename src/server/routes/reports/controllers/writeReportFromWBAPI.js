@@ -10,6 +10,14 @@ var writeReportFromWBAPI = async (req, res, next) => {
   var parsedReport = await parseReport(report, dateFrom, dateTo);
 
   var successfullWrite = await createReport(userId, parsedReport);
+
+  if (successfullWrite) {
+    var { reportId } = parsedReport;
+
+    return res.status(200).json({ reportId, dateFrom, dateTo });
+  }
+
+  return res.sendStatus(500);
 };
 
 module.exports = writeReportFromWBAPI;
