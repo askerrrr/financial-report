@@ -1,4 +1,4 @@
-var getQuantityPerItem = async (data, itemName) => {
+var calcQuantityPerItem = async (data, itemName) => {
   var items = data.filter((e) => e.sa_name == itemName);
 
   var qty = items.reduce((acc, i) => acc + i.quantity, 0);
@@ -6,4 +6,4 @@ var getQuantityPerItem = async (data, itemName) => {
   return qty;
 };
 
-module.exports = getQuantityPerItem;
+module.exports = calcQuantityPerItem;
