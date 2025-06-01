@@ -14,7 +14,7 @@ var getReportFromWBAPI = async (req, res, next) => {
     userId
   );
 
-  req.report = report;
+  req.reportData = { report, dateFrom, dateTo };
 
   next();
 };

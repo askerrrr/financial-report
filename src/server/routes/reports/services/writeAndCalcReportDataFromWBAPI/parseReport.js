@@ -13,7 +13,7 @@ var calcAverageNetProfitPerItem = require("./calcAverageNetProfitPerItem");
 var calcAverageRetailPricePerItem = require("./calcAverageRetailPricePerItem");
 var calcAverageStorageCostPerItem = require("./calcAverageStorageCostPerItem");
 
-var parseReport = async (report) => {
+var parseReport = async (report, dateFrom, dateTo) => {
   var itemsName = await getItemsName(report);
   var totalFines = await calcTotalFines(report);
   var totalRevenue = await calcTotalRevenue(report);
@@ -70,6 +70,8 @@ var parseReport = async (report) => {
 
   return {
     reportId,
+    dateFrom,
+    dateTo,
     totalRevenue,
     totalDeliveryCost,
     totalStorageCost,
