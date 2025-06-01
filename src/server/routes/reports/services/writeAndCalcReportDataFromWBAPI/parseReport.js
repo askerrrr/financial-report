@@ -72,6 +72,7 @@ var parseReport = async (report, dateFrom, dateTo) => {
     reportId,
     dateFrom,
     dateTo,
+    totalFines,
     totalRevenue,
     totalDeliveryCost,
     totalStorageCost,
