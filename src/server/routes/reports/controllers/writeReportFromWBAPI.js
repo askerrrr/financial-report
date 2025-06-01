@@ -9,7 +9,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   var parsedReport = await parseReport(report, dateFrom, dateTo);
 
-  var successfullWrite = await createReport(userId, report);
+  var successfullWrite = await createReport(userId, parsedReport);
 };
 
 module.exports = writeReportFromWBAPI;
