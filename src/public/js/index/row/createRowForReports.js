@@ -1,31 +1,20 @@
 import getReportPeriod from "./services/getReportPeriod.js";
-import getReportCreationDate from "./services/getReportCreationDate.js";
-import createInputField from "../../report/row/services/createInputField.js";
+import getReportLink from "./services/getReportLink.js";
 
 var table = document.getElementById("reports");
 var tbody = document.createElement("tbody");
 
-var url = "/reports/period";
-
 var createRowForReports = async (reports) => {
-  for (var [index, report] of Object.entries(reports)) {
+  for (var report of reports) {
     var tr = document.createElement("tr");
 
-    var { id, date, period } = report;
+    var { reportId, dateFrom, dateTo } = report;
 
-    var inputFieldForPeriod = await createInputField(
-      period,
-      index,
-      "period",
-      url,
-      id
-    );
+    var period = await getReportPeriod(dateFrom, dateTo);
 
-    var period = await getReportPeriod(inputFieldForPeriod);
+    var reportLink = await getReportLink(reportId);
 
-    var reportCreationDate = await getReportCreationDate(id, date);
-
-    tr.append(period, reportCreationDate);
+    tr.append(period, reportLink);
 
     tbody.append(tr);
   }

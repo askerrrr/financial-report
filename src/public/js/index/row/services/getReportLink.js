@@ -1,13 +1,13 @@
 import createLinkToTheReport from "./createLinkToTheReport.js";
 
-var getReportCreationDate = async (id, date) => {
+var getReportLink = async (reportId) => {
   var td = document.createElement("td");
 
-  var linkToTheReport = await createLinkToTheReport(id, date);
+  var linkToTheReport = await createLinkToTheReport(reportId);
 
   td.append(linkToTheReport);
 
   return td;
 };
 
-export default getReportCreationDate;
+export default getReportLink;

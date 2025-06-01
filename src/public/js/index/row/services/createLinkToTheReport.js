@@ -1,11 +1,11 @@
-var createLinkToTheReport = async (id, reportCreationDate) => {
+var createLinkToTheReport = async (reportId) => {
   var button = document.createElement("button");
   var form = document.createElement("form");
 
-  button.append(reportCreationDate);
+  button.append("Открыть отчет");
 
   form.append(button);
-  form.action = "/reports/" + id;
+  form.action = "/reports/" + reportId;
 
   return form;
 };
