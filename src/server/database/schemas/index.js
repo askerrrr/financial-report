@@ -1,15 +1,17 @@
 var { Schema } = require("mongoose");
-var reportDetailSchema = require("./reportSchems");
+var reportSchema = require("./report");
+
+var strOptions = { type: String, required: true };
 
 var userSchema = new Schema({
-  userId: { type: String, required: true },
-  login: { type: String, required: true },
-  passwd: { type: String, required: true },
+  userId: strOptions,
+  login: strOptions,
+  passwd: strOptions,
 });
 
 var reportSchema = new Schema({
-  userId: { type: String, required: true },
-  reports: { type: [reportDetailSchema], required: false },
+  userId: strOptions,
+  reports: { type: [reportSchema], required: false },
 });
 
 module.exports = { userSchema, reportSchema };
