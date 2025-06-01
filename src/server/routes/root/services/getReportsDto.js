@@ -3,9 +3,9 @@ var getReportsDto = async (reports) => {
 
   for (var report of reports) {
     data.push({
-      id: report.id,
-      date: report.date,
-      period: report.period ?? "",
+      id: report.reportId,
+      dateFrom: report.dateFrom,
+      dateTo: report.dateTo,
     });
   }
 
