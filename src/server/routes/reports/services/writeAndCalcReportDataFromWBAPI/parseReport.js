@@ -1,3 +1,4 @@
+var { randomBytes } = require("crypto");
 var getItemsName = require("./getItemsName");
 var calcTotalSold = require("./calcTotalSold");
 var calcTotalFines = require("./calcTotalFines");
@@ -65,7 +66,10 @@ var parseReport = async (report) => {
     });
   }
 
+  var reportId = randomBytes(10).toString("hex");
+
   return {
+    reportId,
     totalRevenue,
     totalDeliveryCost,
     totalStorageCost,
