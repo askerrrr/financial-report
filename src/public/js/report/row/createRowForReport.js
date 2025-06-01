@@ -21,7 +21,6 @@ var createRowForReport = async (report) => {
 
     var itemName = await createTdElement(item.itemName);
     var qty = await createTdElement(item.qty);
-    var article = await createTdElement(item.article);
     var refundCost = await createTdElement(item.refundCost);
     var allowances = await createTdElement(item.allowances);
     var averageCost = await createTdElement(item.averageCost);
@@ -88,7 +87,6 @@ var createRowForReport = async (report) => {
 
     tr.append(
       itemName,
-      article,
       qty,
       costPrice,
       retailPrice,
