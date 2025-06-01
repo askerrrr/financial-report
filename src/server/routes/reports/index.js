@@ -27,7 +27,11 @@ router.post("/upload/file", updoad.single("file"), writeReport);
 
 router.post("/upload/files", updoad.array("file", 10), writeReports);
 
-router.post("/wbapi", require("./controllers/getReportFromWBAPI"));
+router.post(
+  "/wbapi",
+  require("./controllers/getReportFromWBAPI"),
+  require("./controllers/writeReportFromWBAPI")
+);
 
 router.post("/change", require("./controllers/changeReportDetail"));
 
