@@ -23,11 +23,15 @@ var openTokenEditModal = async () => {
   saveButton.textContent = "Сохранить";
 
   saveButton.addEventListener("click", async () => {
-    document.body.removeChild(modal);
+    if (input.value.length < 1) {
+      return alert("Нельзя отправить пустое поле");
+    }
 
     var token = input.value;
 
     var successSaveToken = await sendWBAuthToken(token);
+
+    document.body.removeChild(modal);
 
     if (successSaveToken) {
       return alert("Токен успешно сохранен");
