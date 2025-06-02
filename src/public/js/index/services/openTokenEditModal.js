@@ -29,7 +29,11 @@ var openTokenEditModal = async () => {
 
     var successSaveToken = await sendWBAuthToken(token);
 
-    console.log(successSaveToken);
+    if (successSaveToken) {
+      return alert("Токен успешно сохранен");
+    }
+
+    return alert("Не удалось сохранить токен");
   });
 
   var cancelButton = document.createElement("button");
