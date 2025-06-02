@@ -1,5 +1,5 @@
-var checkWBTokenExists = async (userId) => {
-  var res = await fetch("/token/exist/" + userId);
+var checkWBTokenExists = async () => {
+  var res = await fetch("/token/exist");
 
   var { tokenIsExists } = await res.json();
 
