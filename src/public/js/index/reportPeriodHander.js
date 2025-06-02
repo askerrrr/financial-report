@@ -1,3 +1,4 @@
+import checkWBTokenExists from "./services/checkWBTokenExists.js";
 import openReportPeriodModal from "./services/openReportPeriodModal.js";
 
 var reportPeriodHander = async () => {
@@ -5,6 +6,14 @@ var reportPeriodHander = async () => {
 
   button.addEventListener("click", async (e) => {
     e.preventDefault();
+
+    var tokenIsExists = await checkWBTokenExists();
+
+    if (!tokenIsExists) {
+      return alert(
+        "В первую очередь нужно загрузить токен личного кабинета WB"
+      );
+    }
 
     await openReportPeriodModal();
   });

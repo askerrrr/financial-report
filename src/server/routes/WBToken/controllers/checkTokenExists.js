@@ -1,7 +1,7 @@
 var checkTokenExists = async (req, res, next) => {
   var userId = req.app.locals.userId;
 
-  var { getWBTokenByUserId } = req.app.local.tokenCollectionServices();
+  var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices();
 
   var token = await getWBTokenByUserId(userId);
 
