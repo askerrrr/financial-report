@@ -1,12 +1,18 @@
-var updateWBToken = async (collection, userId, token) => {
-  var result = await collection.updateOne(
-    { userId },
-    {
-      $set: { token },
-    }
-  );
+var { DatabaseError } = require("../../../customError/customError");
 
-  return result.modifiedCount;
+var updateWBToken = async (collection, userId, token) => {
+  try {
+    var result = await collection.updateOne(
+      { userId },
+      {
+        $set: { token },
+      }
+    );
+
+    return result.modifiedCount;
+  } catch (e) {
+    throw new DatabaseError(userId, e);
+  }
 };
 
 module.exports = updateWBToken;

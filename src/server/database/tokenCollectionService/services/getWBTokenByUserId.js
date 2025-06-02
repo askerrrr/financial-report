@@ -1,7 +1,13 @@
-var getWBTokenByUserId = async (collection, userId) => {
-  var user = await collection.findOne({ userId });
+const { DatabaseError } = require("../../../customError/customError");
 
-  return user.token;
+var getWBTokenByUserId = async (collection, userId) => {
+  try {
+    var user = await collection.findOne({ userId });
+
+    return user.token;
+  } catch (e) {
+    throw new DatabaseError(userId, e);
+  }
 };
 
 module.exports = getWBTokenByUserId;
