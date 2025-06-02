@@ -1,9 +1,15 @@
+var { DatabaseError } = require("../../../customError/customError");
+
 var getReportById = async (collection, userId, id) => {
-  var data = await collection.findOne({ userId, "reports.reportId": id });
+  try {
+    var data = await collection.findOne({ userId, "reports.reportId": id });
 
-  var report = data.reports.find((report) => report.reportId == id);
+    var report = data.reports.find((report) => report.reportId == id);
 
-  return report;
+    return report;
+  } catch (e) {
+    throw new DatabaseError(userId, e);
+  }
 };
 
 module.exports = getReportById;

@@ -1,9 +1,15 @@
+var { DatabaseError } = require("../../../customError/customError");
+
 var createReportsEntity = async (collection, userId) => {
-  var reportsEntity = await collection.insertOne({ userId });
+  try {
+    var reportsEntity = await collection.insertOne({ userId });
 
-  var result = await reportsEntity.save();
+    var result = await reportsEntity.save();
 
-  return result._id;
+    return result._id;
+  } catch (e) {
+    throw new DatabaseError(userId, e);
+  }
 };
 
 module.exports = createReportsEntity;

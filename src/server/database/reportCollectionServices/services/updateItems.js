@@ -1,14 +1,20 @@
-var updateItems = async (collection, userId, reportId, items) => {
-  var result = await collection.updateOne(
-    { userId, "reports.id": reportId },
-    {
-      $set: {
-        "reports.$.items": items,
-      },
-    }
-  );
+var { DatabaseError } = require("../../../customError/customError");
 
-  return result.modifiedCount;
+var updateItems = async (collection, userId, reportId, items) => {
+  try {
+    var result = await collection.updateOne(
+      { userId, "reports.id": reportId },
+      {
+        $set: {
+          "reports.$.items": items,
+        },
+      }
+    );
+
+    return result.modifiedCount;
+  } catch (e) {
+    throw new DatabaseError(userId, e);
+  }
 };
 
 module.exports = updateItems;
