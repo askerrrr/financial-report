@@ -9,7 +9,13 @@ var sendPeriodDate = async (dateFrom, dateTo) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  return res.ok;
+  if (res.ok) {
+    var reportData = await res.json();
+
+    return reportData;
+  }
+
+  return;
 };
 
 export default sendPeriodDate;
