@@ -1,5 +1,6 @@
 import sendPeriodDate from "./sendPeriodDate.js";
 import validateReportPeriod from "./validateReportPeriod.js";
+import insertReportDataToTop from "./insertReportDataToTop.js";
 
 var openReportPeriodModal = async () => {
   var modal = document.createElement("div");
@@ -53,6 +54,10 @@ var openReportPeriodModal = async () => {
     if (!successSaveReport) {
       return alert("cannot save report ");
     }
+
+    await insertReportDataToTop(successSaveReport);
+
+    return alert("Отчет успешно сохранен");
   });
 
   var cancelButton = document.createElement("button");

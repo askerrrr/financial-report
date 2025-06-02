@@ -19,6 +19,8 @@ var createRowForReports = async (reports) => {
     tbody.append(tr);
   }
 
+  tbody.id = "tbody";
+
   table.append(tbody);
 
   return table;
