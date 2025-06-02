@@ -3,7 +3,9 @@ var updateToken = async (req, res, next) => {
 
   var { userId, token } = req.body;
 
-  await updateWBToken(userId, token);
+  var successUpdateToken = await updateWBToken(userId, token);
+
+  return successUpdateToken ? res.sendStatus(200) : res.sendStatus(403);
 };
 
 module.exports = updateToken;
