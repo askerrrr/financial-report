@@ -6,7 +6,7 @@ var createReport = async (collection, userId, report) => {
       { userId },
       {
         $push: {
-          reports: { ...report },
+          reports: { $each: [report], $position: 0 },
         },
       }
     );
