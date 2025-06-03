@@ -3,7 +3,7 @@ var calcTotalRevenuePerItem = async (data, itemName) => {
 
   var totalRevenuePerItem = item.reduce((acc, i) => acc + i.ppvz_for_pay, 0);
 
-  return totalRevenuePerItem;
+  return Math.round(totalRevenuePerItem);
 };
 
 module.exports = calcTotalRevenuePerItem;

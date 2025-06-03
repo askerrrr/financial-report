@@ -5,7 +5,7 @@ var calcAverageRetailPricePerItem = async (data, quantity, itemName) => {
 
   var averageRetailPrice = retailPrices / quantity;
 
-  return averageRetailPrice;
+  return Math.round(averageRetailPrice);
 };
 
 module.exports = calcAverageRetailPricePerItem;

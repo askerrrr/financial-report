@@ -3,10 +3,14 @@ var calcNetProfitPerItem = async (
   averageRetailPrice,
   averageStorageCost,
   totalFinesPerItem
-) =>
-  totalRevenuePerItem -
-  averageRetailPrice -
-  averageStorageCost -
-  totalFinesPerItem;
+) => {
+  var netProfitPerItem =
+    totalRevenuePerItem -
+    averageRetailPrice -
+    averageStorageCost -
+    totalFinesPerItem;
+
+  return netProfitPerItem;
+};
 
 module.exports = calcNetProfitPerItem;

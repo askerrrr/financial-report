@@ -1,4 +1,7 @@
-var calcFinalNetProfitPerItem = async (averageNetProfitPerItem, costPrice) =>
-  averageNetProfitPerItem - costPrice;
+var calcFinalNetProfitPerItem = async (averageNetProfitPerItem, costPrice) => {
+  var finalNetProfitPerItem = averageNetProfitPerItem - costPrice;
+
+  return Math.round(finalNetProfitPerItem);
+};
 
 module.exports = calcFinalNetProfitPerItem;

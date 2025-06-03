@@ -5,7 +5,7 @@ var calcTotalNetProfitMargin = async (totalRevenue, totalNetProfit) => {
 
   var totalNetProfitMargin = (totalNetProfit * 100) / totalRevenue;
 
-  return totalNetProfitMargin;
+  return Math.round(totalNetProfitMargin);
 };
 
 module.exports = calcTotalNetProfitMargin;
