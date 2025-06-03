@@ -32,7 +32,7 @@ var changeReportDetail = async (req, res, next) => {
     });
   }
 
-  res.sendStatus(200);
+  res.sendStatus(304);
 };
 
 module.exports = changeReportDetail;
