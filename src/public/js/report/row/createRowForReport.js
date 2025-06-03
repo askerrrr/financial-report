@@ -8,7 +8,7 @@ var table = document.getElementById("report");
 var createRowForReport = async (report) => {
   var tbody = document.createElement("tbody");
 
-  var { id } = report;
+  var { reportId } = report;
 
   for (var [index, item] of Object.entries(report.items)) {
     var tr = document.createElement("tr");
@@ -22,7 +22,7 @@ var createRowForReport = async (report) => {
       index,
       "costPrice",
       url,
-      id
+      reportId
     );
 
     var costPrice = await createTdElement(costPriceInputField);
