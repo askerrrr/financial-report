@@ -9,7 +9,13 @@ var sendChangedData = async (value, index, fieldName, url, reportId) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  return res.status;
+  if (!res.ok) {
+    return alert("Не удалось изменить данные");
+  }
+
+  var data = await res.json();
+
+  return data;
 };
 
 export default sendChangedData;
