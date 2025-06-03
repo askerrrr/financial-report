@@ -7,7 +7,7 @@ body {
 }
 
 table {
-  width: 80%;
+  width: 95%;
   margin: 110px auto;
   border-collapse: collapse;
   font-size: 14px;
@@ -17,7 +17,7 @@ table {
 
 th,
 td {
-  padding: 8px;
+  padding: 20px;
   text-align: left;
   border: 1px solid #495057;
   text-align: center;

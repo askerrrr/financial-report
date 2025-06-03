@@ -1,11 +1,5 @@
-import calcNetProfit from "./services/calcNetProfit.js";
 import createTdElement from "./services/createTdElement.js";
 import createInputField from "./services/createInputField.js";
-import calcTotalForTheProduct from "./services/calcTotalForTheProduct.js";
-import calcAverageSellingPrice from "./services/calcAverageSellingPrice.js";
-import calcPaymentsMinusAllСommissions from "./services/calcPaymentsMinusAllСommissions.js";
-import calcNetProfitAsAPercentagePerUnit from "./services/calcNetProfitAsAPercentagePerUnit.js";
-import calcAveragePaymentsMinusAllСommissions from "./services/calcAveragePaymentsMinusAllСommissions.js";
 
 var url = "/reports/change";
 
@@ -20,85 +14,61 @@ var createRowForReport = async (report) => {
     var tr = document.createElement("tr");
 
     var itemName = await createTdElement(item.itemName);
-    var qty = await createTdElement(item.qty);
-    var refundCost = await createTdElement(item.refundCost);
-    var allowances = await createTdElement(item.allowances);
-    var averageCost = await createTdElement(item.averageCost);
-    var buyoutPrice = await createTdElement(item.buyoutPrice);
-    var deliveryCost = await createTdElement(item.deliveryCost);
-    var WBSalesAmount = await createTdElement(item.WBSalesAmount);
-    var numberOfReturns = await createTdElement(item.numberOfReturns);
-    var payoutsPerProduct = await createTdElement(item.payoutsPerProduct);
 
-    var inputFieldForCostPrice = await createInputField(
+    var qty = await createTdElement(item.qty);
+
+    var costPriceInputField = await createInputField(
       item.costPrice,
       index,
       "costPrice",
       url,
       id
     );
-    var costPrice = await createTdElement(inputFieldForCostPrice);
 
-    var inputFieldForRetailPrice = await createInputField(
-      item.retailPrice,
+    var costPrice = await createTdElement(costPriceInputField);
+
+    var retailPrice = await createTdElement(item.averageRetailPrice);
+
+    var fines = await createTdElement(item.finesPerItem);
+
+    var averageStorageCost = await createTdElement(item.averageStorageCost);
+
+    var netProfitPerItem = await createTdElement(item.netProfitPerItem);
+
+    var averageNetProfitPerItem = await createTdElement(
+      item.averageNetProfitPerItem
+    );
+
+    var averageFinalNetProfitPerItem = await createTdElement(
+      item.averageFinalNetProfitPerItem,
       index,
-      "retailPrice",
-      url,
-      id
+      "averageFinalNetProfitPerItem"
     );
 
-    var retailPrice = await createTdElement(inputFieldForRetailPrice);
-
-    var differentDeductions = await createTdElement(item.fines);
-
-    var averageStorageCost = await createTdElement(item.skuStorageCost);
-
-    var paymentsMinusAllСommissions = await calcPaymentsMinusAllСommissions(
-      item.payoutsPerProduct,
-      item.qty
+    var netProfitMargin = await createTdElement(
+      item.netProfitMargin,
+      index,
+      "netProfitMargin"
     );
 
-    var paymentsMinusAllСommissionsTD = await createTdElement(
-      paymentsMinusAllСommissions
+    var finalNetProfitPerItem = await createTdElement(
+      item.finalNetProfitPerItem,
+      index,
+      "finalNetProfitPerItem"
     );
-
-    var netProfit = await calcNetProfit(item.costPrice);
-
-    var netProfitTD = await createTdElement(netProfit);
-
-    var averageSellingPrice = await calcAverageSellingPrice(
-      item.WBSalesAmount,
-      item.qty
-    );
-
-    var averageSellingPriceTD = await createTdElement(averageSellingPrice);
-
-    var netProfitAsAPercentagePerUnit = await calcNetProfitAsAPercentagePerUnit(
-      netProfit,
-      item.retailPrice
-    );
-
-    var netProfitAsAPercentagePerUnitTD = await createTdElement(
-      netProfitAsAPercentagePerUnit
-    );
-
-    var totalForTheProduct = await calcTotalForTheProduct(netProfit, item.qty);
-    var totalForTheProductTD = await createTdElement(totalForTheProduct);
 
     tr.append(
       itemName,
       qty,
       costPrice,
       retailPrice,
-      payoutsPerProduct,
-      differentDeductions,
+      fines,
       averageStorageCost,
-      paymentsMinusAllСommissionsTD,
-      netProfitTD,
-      WBSalesAmount,
-      averageSellingPriceTD,
-      netProfitAsAPercentagePerUnitTD,
-      totalForTheProductTD
+      netProfitPerItem,
+      averageNetProfitPerItem,
+      averageFinalNetProfitPerItem,
+      netProfitMargin,
+      finalNetProfitPerItem
     );
 
     tbody.append(tr);
