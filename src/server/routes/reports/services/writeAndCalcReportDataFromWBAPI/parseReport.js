@@ -9,6 +9,7 @@ var calcTotalStorageCost = require("./calcTotalStorageCost");
 var calcTotalFinesPerItem = require("./calcTotalFinesPerItem");
 var caclTotalDeliveryCost = require("./caclTotalDeliveryCost");
 var calcTotalRevenuePerItem = require("./calcTotalRevenuePerItem");
+var calcDeliveryCostPerItem = require("./calcDeliveryCostPerItem");
 var calcAverageNetProfitPerItem = require("./calcAverageNetProfitPerItem");
 var calcAverageRetailPricePerItem = require("./calcAverageRetailPricePerItem");
 var calcAverageStorageCostPerItem = require("./calcAverageStorageCostPerItem");
@@ -54,6 +55,8 @@ var parseReport = async (report, dateFrom, dateTo) => {
       qty
     );
 
+    var deliveryCostPerItem = await calcDeliveryCostPerItem(report, itemName);
+
     items.push({
       itemName,
       qty,
@@ -62,6 +65,7 @@ var parseReport = async (report, dateFrom, dateTo) => {
       averageRetailPrice,
       averageStorageCost,
       netProfitPerItem,
+      deliveryCostPerItem,
       averageNetProfitPerItem,
     });
   }
