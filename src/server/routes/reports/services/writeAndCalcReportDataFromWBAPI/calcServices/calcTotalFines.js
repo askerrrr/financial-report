@@ -1,7 +1,7 @@
 var calcTotalFines = async (data) => {
-  var totalFiles = data.reduce((acc, i) => acc + i.penalty, 0);
+  var totalFines = data.reduce((acc, i) => acc + i.penalty, 0);
 
-  return totalFiles;
+  return totalFines;
 };
 
 module.exports = calcTotalFines;
