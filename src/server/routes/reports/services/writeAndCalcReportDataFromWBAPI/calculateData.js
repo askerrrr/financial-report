@@ -7,7 +7,7 @@ var calcQuantityPerItem = require("./calcServices/calcQuantityPerItem");
 var calcTotalStorageCost = require("./calcServices/calcTotalStorageCost");
 var calcNetProfitPerItem = require("./calcServices/calcNetProfitPerItem");
 var calcTotalFinesPerItem = require("./calcServices/calcTotalFinesPerItem");
-var caclTotalDeliveryCost = require("./calcServices/caclTotalDeliveryCost");
+var calcTotalDeliveryCost = require("./calcServices/calcTotalDeliveryCost");
 var calcTotalRevenuePerItem = require("./calcServices/calcTotalRevenuePerItem");
 var calcDeliveryCostPerItem = require("./calcServices/calcDeliveryCostPerItem");
 var calcTotalNetProfitMargin = require("./calcServices/calcTotalNetProfitMargin");
@@ -44,7 +44,7 @@ var calc = {
 
   totalNetProfit: (data) => calcTotalNetProfit(data),
 
-  totalDeliveryCost: (data) => caclTotalDeliveryCost(data),
+  totalDeliveryCost: (data) => calcTotalDeliveryCost(data),
 
   totalStorageCost: (data) => calcTotalStorageCost(data),
 
