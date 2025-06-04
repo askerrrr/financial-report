@@ -3,7 +3,7 @@ var calcDeliveryCostPerItem = async (data, itemName) => {
 
   var deliveryCostPerItem = items.reduce((acc, i) => acc + i.delivery_rub, 0);
 
-  return Math.round(deliveryCostPerItem);
+  return deliveryCostPerItem;
 };
 
 module.exports = calcDeliveryCostPerItem;

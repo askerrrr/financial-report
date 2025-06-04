@@ -1,7 +1,7 @@
 var calcAverageNetProfitPerItem = async (netProfitPerItem, qty) => {
   var averageNetProfitPerItem = netProfitPerItem / qty;
 
-  return Math.round(averageNetProfitPerItem);
+  return averageNetProfitPerItem;
 };
 
 module.exports = calcAverageNetProfitPerItem;

@@ -3,6 +3,6 @@ var calcTotalRevenue = async (data) => {
 
   var totalRevenue = items.reduce((acc, item) => acc + item, 0);
 
-  return Math.round(totalRevenue);
+  return totalRevenue;
 };
 module.exports = calcTotalRevenue;

@@ -3,6 +3,6 @@ var caclTotalDeliveryCost = async (data) => {
 
   var totalDeliveryCost = items.reduce((acc, item) => acc + item, 0);
 
-  return Math.round(totalDeliveryCost);
+  return totalDeliveryCost;
 };
 module.exports = caclTotalDeliveryCost;

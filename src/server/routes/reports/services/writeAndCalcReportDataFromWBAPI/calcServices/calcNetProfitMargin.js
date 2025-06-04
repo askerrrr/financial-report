@@ -5,7 +5,7 @@ var calcNetProfitMargin = async (revenuePerItem, finalNetProfitPerItem) => {
 
   var netProfitMargin = (finalNetProfitPerItem * 100) / revenuePerItem;
 
-  return Math.round(netProfitMargin);
+  return netProfitMargin;
 };
 
 module.exports = calcNetProfitMargin;

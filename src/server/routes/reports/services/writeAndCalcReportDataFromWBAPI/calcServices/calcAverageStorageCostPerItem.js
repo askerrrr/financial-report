@@ -5,7 +5,7 @@ var calcAverageStorageCostPerItem = async (
 ) => {
   var averageStorageCostPerItem = (totalStorageCost / totalSold) * qty;
 
-  return Math.round(averageStorageCostPerItem);
+  return averageStorageCostPerItem;
 };
 
 module.exports = calcAverageStorageCostPerItem;
