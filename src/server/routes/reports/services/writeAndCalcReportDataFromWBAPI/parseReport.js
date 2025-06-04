@@ -1,61 +1,49 @@
+var calc = require("./calculateData");
 var { randomBytes } = require("crypto");
 var getItemsName = require("./getItemsName");
-var calcTotalSold = require("./calcTotalSold");
-var calcTotalFines = require("./calcTotalFines");
-var calcTotalRevenue = require("./calcTotalRevenue");
-var calcQuantityPerItem = require("./calcQuantityPerItem");
-var calcNetProfitPerItem = require("./calcNetProfitPerItem");
-var calcTotalStorageCost = require("./calcTotalStorageCost");
-var calcTotalFinesPerItem = require("./calcTotalFinesPerItem");
-var caclTotalDeliveryCost = require("./caclTotalDeliveryCost");
-var calcTotalRevenuePerItem = require("./calcTotalRevenuePerItem");
-var calcDeliveryCostPerItem = require("./calcDeliveryCostPerItem");
-var calcAverageNetProfitPerItem = require("./calcAverageNetProfitPerItem");
-var calcAverageRetailPricePerItem = require("./calcAverageRetailPricePerItem");
-var calcAverageStorageCostPerItem = require("./calcAverageStorageCostPerItem");
 
 var parseReport = async (report, dateFrom, dateTo) => {
   var itemsName = await getItemsName(report);
-  var totalFines = await calcTotalFines(report);
-  var totalRevenue = await calcTotalRevenue(report);
-  var totalSold = await calcTotalSold(report, itemsName);
-  var totalStorageCost = await calcTotalStorageCost(report);
-  var totalDeliveryCost = await caclTotalDeliveryCost(report);
+  var totalFines = await calc.totalFines(report);
+  var totalRevenue = await calc.totalRevenue(report);
+  var totalSold = await calc.totalSold(report, itemsName);
+  var totalStorageCost = await calc.totalStorageCost(report);
+  var totalDeliveryCost = await calc.totalDeliveryCost(report);
 
   var items = [];
 
   for (var i = 0; i < itemsName.length; i++) {
     var itemName = itemsName[i];
 
-    var qty = await calcQuantityPerItem(report, itemName);
-    var finesPerItem = await calcTotalFinesPerItem(report, itemName);
-    var revenuePerItem = await calcTotalRevenuePerItem(report, itemName);
+    var qty = await calc.quantityPerItem(report, itemName);
+    var finesPerItem = await calc.totalFinesPerItem(report, itemName);
+    var revenuePerItem = await calc.totalRevenuePerItem(report, itemName);
 
-    var averageRetailPrice = await calcAverageRetailPricePerItem(
+    var averageRetailPrice = await calc.averageRetailPricePerItem(
       report,
       qty,
       itemName
     );
 
-    var averageStorageCost = await calcAverageStorageCostPerItem(
+    var averageStorageCost = await calc.averageStorageCostPerItem(
       totalStorageCost,
       totalSold,
       qty
     );
 
-    var netProfitPerItem = await calcNetProfitPerItem(
+    var netProfitPerItem = await calc.netProfitPerItem(
       revenuePerItem,
       averageRetailPrice,
       averageStorageCost,
       finesPerItem
     );
 
-    var averageNetProfitPerItem = await calcAverageNetProfitPerItem(
+    var averageNetProfitPerItem = await calc.averageNetProfitPerItem(
       netProfitPerItem,
       qty
     );
 
-    var deliveryCostPerItem = await calcDeliveryCostPerItem(report, itemName);
+    var deliveryCostPerItem = await calc.deliveryCostPerItem(report, itemName);
 
     items.push({
       itemName,
