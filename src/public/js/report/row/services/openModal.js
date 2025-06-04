@@ -1,4 +1,5 @@
 import sendChangedData from "./sendChangedData.js";
+import updateCalculatedTableFields from "./updateCalculatedTableFields.js";
 
 var openModal = async (data, index, fieldName, valueDisplay, url, id) => {
   var modal = document.createElement("div");
@@ -27,15 +28,9 @@ var openModal = async (data, index, fieldName, valueDisplay, url, id) => {
 
     document.body.removeChild(modal);
 
-    var successResponse = await sendChangedData(
-      input.value,
-      index,
-      fieldName,
-      url,
-      id
-    );
+    var data = await sendChangedData(input.value, index, fieldName, url, id);
 
-    console.log(successResponse);
+    await updateCalculatedTableFields(data);
   });
 
   var cancelButton = document.createElement("button");
