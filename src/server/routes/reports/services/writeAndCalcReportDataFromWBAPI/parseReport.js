@@ -1,6 +1,7 @@
 var calc = require("./calculateData");
 var { randomBytes } = require("crypto");
 var getItemsName = require("./getItemsName");
+var truncateItemsNums = require("./truncateItemsNums");
 
 var parseReport = async (report, dateFrom, dateTo) => {
   var itemsName = await getItemsName(report);
@@ -59,6 +60,8 @@ var parseReport = async (report, dateFrom, dateTo) => {
   }
 
   var reportId = randomBytes(10).toString("hex");
+
+  items = await truncateItemsNums(items);
 
   return {
     reportId,
