@@ -29,6 +29,8 @@ var createRowForReport = async (report) => {
 
     var retailPrice = await createTdElement(item.averageRetailPrice);
 
+    var deliveryCost = await createTdElement(item.deliveryCostPerItem);
+
     var fines = await createTdElement(item.finesPerItem);
 
     var averageStorageCost = await createTdElement(item.averageStorageCost);
@@ -62,6 +64,7 @@ var createRowForReport = async (report) => {
       qty,
       costPrice,
       retailPrice,
+      deliveryCost,
       fines,
       averageStorageCost,
       netProfitPerItem,
