@@ -32,9 +32,11 @@ var parseReport = async (report, dateFrom, dateTo) => {
       qty
     );
 
+    var deliveryCostPerItem = await calc.deliveryCostPerItem(report, itemName);
+
     var netProfitPerItem = await calc.netProfitPerItem(
       revenuePerItem,
-      averageRetailPrice,
+      deliveryCostPerItem,
       averageStorageCost,
       finesPerItem
     );
@@ -43,8 +45,6 @@ var parseReport = async (report, dateFrom, dateTo) => {
       netProfitPerItem,
       qty
     );
-
-    var deliveryCostPerItem = await calc.deliveryCostPerItem(report, itemName);
 
     items.push({
       itemName,

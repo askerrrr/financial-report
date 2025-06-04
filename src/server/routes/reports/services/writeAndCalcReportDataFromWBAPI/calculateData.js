@@ -27,13 +27,13 @@ var calc = {
 
   netProfitPerItem: (
     totalRevenuePerItem,
-    averageRetailPrice,
+    deliveryCostPerItem,
     averageStorageCost,
     totalFinesPerItem
   ) =>
     calcNetProfitPerItem(
       totalRevenuePerItem,
-      averageRetailPrice,
+      deliveryCostPerItem,
       averageStorageCost,
       totalFinesPerItem
     ),

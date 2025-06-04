@@ -1,12 +1,12 @@
 var calcNetProfitPerItem = async (
   totalRevenuePerItem,
-  averageRetailPrice,
+  deliveryCostPerItem,
   averageStorageCost,
   totalFinesPerItem
 ) => {
   var netProfitPerItem =
     totalRevenuePerItem -
-    averageRetailPrice -
+    deliveryCostPerItem -
     averageStorageCost -
     totalFinesPerItem;
 
