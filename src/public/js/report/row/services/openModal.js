@@ -10,7 +10,7 @@ var openModal = async (data, index, fieldName, valueDisplay, url, id) => {
 
   var title = document.createElement("h3");
   title.className = "modal-title";
-  title.textContent = `Изменить ${data}`;
+  title.textContent = "Изменить себестоимость";
 
   var input = document.createElement("input");
   input.className = "modal-input";
