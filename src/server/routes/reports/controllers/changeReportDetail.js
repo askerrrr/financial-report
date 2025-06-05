@@ -22,10 +22,13 @@ var changeReportDetail = async (req, res, next) => {
 
   var successUpdate = await updateItems(userId, reportId, changedItems);
 
-  var { netProfitMargin, finalNetProfitPerItem, averageFinalNetProfitPerItem } =
-    itemWithCalculatedParams;
-
   if (successUpdate) {
+    var {
+      netProfitMargin,
+      finalNetProfitPerItem,
+      averageFinalNetProfitPerItem,
+    } = itemWithCalculatedParams;
+
     return res.status(200).json({
       netProfitMargin,
       finalNetProfitPerItem,

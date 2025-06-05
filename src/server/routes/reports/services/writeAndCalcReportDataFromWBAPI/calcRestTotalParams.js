@@ -7,4 +7,3 @@ var calcRestTotalParams = async (rest, items) => {
 };
 
 module.exports = calcRestTotalParams;
-``;
