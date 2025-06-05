@@ -1,35 +1,5 @@
-import createThElement from "./services/createThElement.js";
 import createTdElement from "./services/createTdElement.js";
-
-var createTotalTableHead = async () => {
-  var totalSoldTh = await createThElement("Всего продано шт.");
-
-  var totalDeliveryCostTh = await createThElement("Доставка");
-
-  var totalFinesTh = await createThElement("Удержания");
-
-  var totalStorageCostTh = await createThElement("Хранение");
-
-  var totalNetProfitMarginTh = await createThElement("Общая выручка %");
-
-  var totalFinalNetProfitTh = await createThElement("Всего");
-
-  var tr = document.createElement("tr");
-
-  tr.append(
-    totalSoldTh,
-    totalDeliveryCostTh,
-    totalFinesTh,
-    totalStorageCostTh,
-    totalNetProfitMarginTh,
-    totalFinalNetProfitTh
-  );
-
-  var thead = document.createElement("thead");
-  thead.append(tr);
-
-  return thead;
-};
+import createTotalTableHead from "./services/createTotalTableHead.js";
 
 var table = document.createElement("table");
 table.id = "totals-table";
