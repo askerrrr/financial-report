@@ -1,12 +1,5 @@
+import createThElement from "./services/createThElement.js";
 import createTdElement from "./services/createTdElement.js";
-
-var createThElement = async (data) => {
-  var th = document.createElement("th");
-
-  th.append(data);
-
-  return th;
-};
 
 var createTotalTableHead = async () => {
   var totalSoldTh = await createThElement("Всего продано шт.");
