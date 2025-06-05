@@ -1,7 +1,7 @@
 var calcTotalFinalNetProfit = require("./calcServices/calcTotalFinalNetProfit");
 
 var calcRestTotalParams = async (rest, items) => {
-  rest.totalFInalNetProfit = await calcTotalFinalNetProfit(items);
+  rest.totalFinalNetProfit = await calcTotalFinalNetProfit(items);
 
   return { ...rest, items };
 };
