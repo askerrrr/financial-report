@@ -1,13 +1,14 @@
 var changeElementInArray = require("../services/differentServices/changeElementInArray");
+var calcRestTotalParams = require("../services/writeAndCalcReportDataFromWBAPI/calcRestTotalParams");
 var calcRemainingParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/calcRemainingParams");
 
 var changeReportDetail = async (req, res, next) => {
-  var { updateItems, getReportById } =
+  var { updateReport, getReportById } =
     req.app.locals.reportCollectionServices();
 
   var { userId, reportId } = req.body;
 
-  var { items } = await getReportById(userId, reportId);
+  var { items, ...rest } = await getReportById(userId, reportId);
 
   var changedItems = await changeElementInArray(items, req.body);
 
@@ -20,7 +21,9 @@ var changeReportDetail = async (req, res, next) => {
 
   changedItems[req.body.index] = itemWithCalculatedParams;
 
-  var successUpdate = await updateItems(userId, reportId, changedItems);
+  var updatedReport = await calcRestTotalParams(rest, changedItems);
+
+  var successUpdate = await updateReport(userId, reportId, updatedReport);
 
   if (successUpdate) {
     var {
@@ -29,9 +32,12 @@ var changeReportDetail = async (req, res, next) => {
       averageFinalNetProfitPerItem,
     } = itemWithCalculatedParams;
 
+    var { totalFinalNetProfit } = updateReport;
+
     return res.status(200).json({
       netProfitMargin,
       finalNetProfitPerItem,
+      totalFinalNetProfit,
       averageFinalNetProfitPerItem,
       index: req.body.index,
     });

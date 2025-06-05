@@ -22,7 +22,7 @@ var reportCollectionServices = () => {
     getReportsByUserId: (userId) =>
       getReportsByUserId(reportCollection, userId),
 
-    updateReport: () =>
+    updateReport: (userId, reportId, report) =>
       updateReport(reportCollection, userId, reportId, report),
 
     updateItems: (userId, reportId, items) =>
