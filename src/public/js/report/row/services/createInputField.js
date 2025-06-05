@@ -15,7 +15,7 @@ var createInputField = async (data, index, fieldName, url, id) => {
 
   button.addEventListener("click", async (e) => {
     e.preventDefault();
-    await openModal(data, index, fieldName, valueDisplay, url, id);
+    await openModal(index, fieldName, valueDisplay, url, id);
   });
 
   container.append(valueDisplay, button);

@@ -1,7 +1,7 @@
 import sendChangedData from "./sendChangedData.js";
 import updateCalculatedTableFields from "./updateCalculatedTableFields.js";
 
-var openModal = async (data, index, fieldName, valueDisplay, url, id) => {
+var openModal = async (index, fieldName, valueDisplay, url, id) => {
   var modal = document.createElement("div");
   modal.className = "modal-overlay";
 
