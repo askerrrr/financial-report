@@ -5,7 +5,7 @@ var url = "/reports/change";
 
 var table = document.getElementById("report");
 
-var createRowForReport = async (report) => {
+var createReportTable = async (report) => {
   var tbody = document.createElement("tbody");
 
   var { reportId } = report;
@@ -82,4 +82,4 @@ var createRowForReport = async (report) => {
   return table;
 };
 
-export default createRowForReport;
+export default createReportTable;
