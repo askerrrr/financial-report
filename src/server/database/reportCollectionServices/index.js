@@ -1,6 +1,7 @@
 var { reportCollection } = require("../connection/index");
 
 var updateItems = require("./services/updateItems");
+var updateReport = require("./services/updateReport");
 var createReport = require("./services/createReport");
 var getReportById = require("./services/getReportById");
 var createReportsEntity = require("./services/createReportsEntity");
@@ -20,6 +21,9 @@ var reportCollectionServices = () => {
 
     getReportsByUserId: (userId) =>
       getReportsByUserId(reportCollection, userId),
+
+    updateReport: () =>
+      updateReport(reportCollection, userId, reportId, report),
 
     updateItems: (userId, reportId, items) =>
       updateItems(reportCollection, userId, reportId, items),
