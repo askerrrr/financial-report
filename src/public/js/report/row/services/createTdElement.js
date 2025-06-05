@@ -1,9 +1,14 @@
-var createTdElement = async (data, index, fieldName) => {
+var createTdElement = async (data, fieldName, index) => {
   var td = document.createElement("td");
 
-  if (index && fieldName) {
+  if (fieldName && index) {
     td.id = [fieldName, index].join("-");
   }
+
+  if (fieldName && !index) {
+    td.id = fieldName;
+  }
+
   td.append(data ?? "");
 
   return td;

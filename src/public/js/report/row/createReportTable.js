@@ -43,20 +43,20 @@ var createReportTable = async (report) => {
 
     var averageFinalNetProfitPerItem = await createTdElement(
       item.averageFinalNetProfitPerItem,
-      index,
-      "averageFinalNetProfitPerItem"
+      "averageFinalNetProfitPerItem",
+      index
     );
 
     var netProfitMargin = await createTdElement(
       item.netProfitMargin,
-      index,
-      "netProfitMargin"
+      "netProfitMargin",
+      index
     );
 
     var finalNetProfitPerItem = await createTdElement(
       item.finalNetProfitPerItem,
-      index,
-      "finalNetProfitPerItem"
+      "finalNetProfitPerItem",
+      index
     );
 
     tr.append(
