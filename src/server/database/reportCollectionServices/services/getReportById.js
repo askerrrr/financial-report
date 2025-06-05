@@ -6,7 +6,7 @@ var getReportById = async (collection, userId, id) => {
 
     var report = data.reports.find((report) => report.reportId == id);
 
-    return report;
+    return report.toObject();
   } catch (e) {
     throw new DatabaseError(userId, e);
   }
