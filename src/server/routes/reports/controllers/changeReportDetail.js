@@ -32,7 +32,7 @@ var changeReportDetail = async (req, res, next) => {
       averageFinalNetProfitPerItem,
     } = itemWithCalculatedParams;
 
-    var { totalFinalNetProfit } = updateReport;
+    var { totalFinalNetProfit } = updatedReport;
 
     return res.status(200).json({
       netProfitMargin,
