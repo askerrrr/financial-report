@@ -16,7 +16,10 @@ var createTotalsTable = async (report) => {
     report.items.reduce((acc, i) => acc + i.netProfitMargin, 0) /
     report.items.length;
 
-  var totalNetProfitMarginTd = await createTdElement(totalNetProfitMargin);
+  var totalNetProfitMarginTd = await createTdElement(
+    totalNetProfitMargin,
+    "totalNetProfitMargin"
+  );
 
   var totalSoldTd = await createTdElement(report.totalSold);
   var totalFinesTd = await createTdElement(report.totalFines);
@@ -26,7 +29,10 @@ var createTotalsTable = async (report) => {
     0
   );
 
-  var totalFinalNetProfitTd = await createTdElement(totalFinalNetProfit);
+  var totalFinalNetProfitTd = await createTdElement(
+    totalFinalNetProfit,
+    "totalFinalNetProfit"
+  );
 
   tr.append(
     totalSoldTd,
