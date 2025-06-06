@@ -47,7 +47,10 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
       finesPerItem
     );
 
-    var storageCostPerItem =await getStorageCostPerItem(itemName, storageDataFromPaidStorageReport)
+    var storageCostPerItem = await getStorageCostPerItem(
+      itemName,
+      storageDataFromPaidStorageReport
+    );
 
     var averageNetProfitPerItem = await calc.averageNetProfitPerItem(
       netProfitPerItem,
@@ -72,17 +75,18 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
   items = await truncateItemsNums(items);
 
   return {
-    reportId,
-    dateFrom,
+    items,
     dateTo,
+    reportId,
+    totalSold,
+    dateFrom,
     totalFines,
     totalRevenue,
-    totalRetailAmount,
     totalTaxAmount,
-    totalDeliveryCost,
     totalStorageCost,
-    totalSold,
-    items,
+    totalDeliveryCost,
+    totalRetailAmount,
+    storageCostPerItem,
   };
 };
 
