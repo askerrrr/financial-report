@@ -2,8 +2,10 @@ var calc = require("./calculateData");
 var { randomBytes } = require("crypto");
 var getItemsName = require("./getItemsName");
 var truncateItemsNums = require("./truncateItemsNums");
+var getStorageCostPerItem = require("./getStorageCostPerItem");
+var parsePaidStorageReport = require("./parsePaidStorageReport");
 
-var parseReport = async (report, dateFrom, dateTo) => {
+var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
   var itemsName = await getItemsName(report);
   var totalFines = await calc.totalFines(report);
   var totalRevenue = await calc.totalRevenue(report);
@@ -12,6 +14,10 @@ var parseReport = async (report, dateFrom, dateTo) => {
   var totalDeliveryCost = await calc.totalDeliveryCost(report);
   var totalRetailAmount = await calc.totalRetailAmount(report);
   var totalTaxAmount = await calc.totalTaxAmount(totalRetailAmount);
+
+  var storageDataFromPaidStorageReport = await parsePaidStorageReport(
+    paidStorageReport
+  );
 
   var items = [];
 
@@ -40,6 +46,8 @@ var parseReport = async (report, dateFrom, dateTo) => {
       averageStorageCost,
       finesPerItem
     );
+
+    var storageCostPerItem =await getStorageCostPerItem(itemName, storageDataFromPaidStorageReport)
 
     var averageNetProfitPerItem = await calc.averageNetProfitPerItem(
       netProfitPerItem,
