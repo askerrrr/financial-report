@@ -35,4 +35,9 @@ router.post(
 
 router.post("/change", require("./controllers/changeReportDetail"));
 
+router.post(
+  "/delete/:userId/:reportId",
+  require("./controllers/deleteReportController")
+);
+
 module.exports = router;
