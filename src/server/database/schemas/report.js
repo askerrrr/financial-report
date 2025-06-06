@@ -36,6 +36,8 @@ var reportSchema = new Schema(
     totalNetProfitMargin: numOptions,
     totalStorageCost: numOptions,
     totalDeliveryCost: numOptions,
+    taxAmount: numOptions,
+    taxRate: { type: Number, default: 6 },
     items: [{ type: itemsSchema, required: true }],
   },
   { _id: false }
