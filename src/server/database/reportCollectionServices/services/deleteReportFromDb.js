@@ -1,4 +1,4 @@
-var deleteReport = async (collection, userId, reportId) => {
+var deleteReportFromDb = async (collection, userId, reportId) => {
   var result = await collection.updateOne(
     { userId },
     {
@@ -9,4 +9,4 @@ var deleteReport = async (collection, userId, reportId) => {
   return result.modifiedCount;
 };
 
-module.exports = deleteReport;
+module.exports = deleteReportFromDb;
