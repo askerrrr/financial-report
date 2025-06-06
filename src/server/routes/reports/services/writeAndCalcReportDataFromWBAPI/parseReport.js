@@ -15,9 +15,7 @@ var parseReport = async (report, dateFrom, dateTo) => {
 
   var items = [];
 
-  for (var i = 0; i < itemsName.length; i++) {
-    var itemName = itemsName[i];
-
+  for (var itemName of itemsName) {
     var qty = await calc.quantityPerItem(report, itemName);
     var finesPerItem = await calc.totalFinesPerItem(report, itemName);
     var revenuePerItem = await calc.totalRevenuePerItem(report, itemName);
