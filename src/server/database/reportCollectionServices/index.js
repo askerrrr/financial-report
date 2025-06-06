@@ -1,6 +1,7 @@
 var { reportCollection } = require("../connection/index");
 
 var updateItems = require("./services/updateItems");
+var deleteReport = require("./services/deleteReport");
 var updateReport = require("./services/updateReport");
 var createReport = require("./services/createReport");
 var getReportById = require("./services/getReportById");
@@ -30,6 +31,9 @@ var reportCollectionServices = () => {
 
     updateReportPeriod: (userId, reportId, period) =>
       updateReportPeriod(reportCollection, userId, reportId, period),
+
+    deleteReport: (userId, reportId) =>
+      deleteReport(reportCollection, userId, reportId),
   };
 };
 
