@@ -16,6 +16,7 @@ var itemsSchema = new Schema(
     netProfitPerItem: numOptions,
     netProfitMargin: numOptions,
     deliveryCostPerItem: numOptions,
+    storageCostPerItem: numOptions,
     finalNetProfitPerItem: numOptions,
     averageFinalNetProfitPerItem: numOptions,
     averageNetProfitPerItem: numOptions,
