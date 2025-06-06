@@ -8,4 +8,4 @@ var deleteReportController = async (req, res, next) => {
   return successDeleteReport ? res.sendStatus(200) : res.sendStatus(304);
 };
 
-module.exports = deleteReportFromDb;
+module.exports = deleteReportController;
