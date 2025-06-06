@@ -40,7 +40,7 @@ var calc = {
       totalFinesPerItem
     ),
 
-  quantityPerItem: (ata, itemName) => calcQuantityPerItem(ata, itemName),
+  quantityPerItem: (data, itemName) => calcQuantityPerItem(data, itemName),
 
   totalRevenue: (data) => calcTotalRevenue(data),
 
