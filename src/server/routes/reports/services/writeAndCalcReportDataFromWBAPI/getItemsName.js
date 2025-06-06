@@ -5,9 +5,9 @@ var getItemsName = async (data) => {
 
   var result = [];
 
-  for (var i = 0; i < itemsName.length; i++) {
-    if (!result.includes(itemsName[i])) {
-      result.push(itemsName[i]);
+  for (var name of itemsName) {
+    if (!result.includes(name)) {
+      result.push(name);
     }
   }
 
