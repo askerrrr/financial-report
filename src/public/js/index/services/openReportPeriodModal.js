@@ -52,7 +52,7 @@ var openReportPeriodModal = async () => {
     var successSaveReport = await sendPeriodDate(validDateFrom, validDateTo);
 
     if (!successSaveReport) {
-      return alert("cannot save report ");
+      return;
     }
 
     await insertReportDataToTop(successSaveReport);
