@@ -1,3 +1,5 @@
+var { WBAPIError } = require("../../../../customError/customError");
+
 var getPaidStorageReportByTaskIdFromWBAPI = async (taskId, token, userId) => {
   var url = `https://seller-analytics-api.wildberries.ru/api/v1/paid_storage/tasks/${taskId}/download?`;
 
