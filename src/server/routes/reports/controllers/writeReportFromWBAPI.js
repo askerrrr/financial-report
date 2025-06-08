@@ -3,11 +3,11 @@ var parseReport = require("../services/writeAndCalcReportDataFromWBAPI/parseRepo
 var writeReportFromWBAPI = async (req, res, next) => {
   var { createReport } = req.app.locals.reportCollectionServices();
 
-  var { report, dateFrom, dateTo } = req.reportData;
+  var { report, paidStorageReport, dateFrom, dateTo } = req.reportData;
 
   var userId = req.app.locals.userId;
 
-  var parsedReport = await parseReport(report, dateFrom, dateTo);
+  var parsedReport = await parseReport(report, paidStorageReport, dateFrom, dateTo);
 
   var successfullWrite = await createReport(userId, parsedReport);
 

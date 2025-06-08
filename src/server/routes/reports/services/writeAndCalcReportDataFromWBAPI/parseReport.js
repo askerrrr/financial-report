@@ -66,6 +66,7 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
       averageStorageCost,
       netProfitPerItem,
       deliveryCostPerItem,
+      storageCostPerItem,
       averageNetProfitPerItem,
     });
   }
@@ -86,7 +87,6 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
     totalStorageCost,
     totalDeliveryCost,
     totalRetailAmount,
-    storageCostPerItem,
   };
 };
 

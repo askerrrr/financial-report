@@ -1,7 +1,7 @@
-var getStorageCostPerItem = async (itemName, storageDataFromPaidStorageReport) => {
-  var item = storageDataFromPaidStorageReport.find((e) => e.name == itemName);
+var getStorageCostPerItem = async (itemName, storageData) => {
+  var item = storageData.find((e) => e.name == itemName);
 
-  return item.storageDataFromPaidStorageReport;
+  return item.itemStorageCost;
 };
 
 module.exports = getStorageCostPerItem;

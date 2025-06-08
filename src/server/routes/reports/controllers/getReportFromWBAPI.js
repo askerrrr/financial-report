@@ -1,6 +1,7 @@
 var getReportByPeriodFromWBAPI = require("../services/differentServices/getReportByPeriodFromWBAPI");
 var createPaidStorageReportTask = require("../services/differentServices/createPaidStorageReportTask");
 var getPaidStorageReportByTaskIdFromWBAPI = require("../services/differentServices/getPaidStorageReportByTaskIdFromWBAPI");
+var checkPaidStorageReportCreationStatus = require("../services/differentServices/checkPaidStorageReportCreationStatus");
 
 var getReportFromWBAPI = async (req, res, next) => {
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices();
@@ -15,6 +16,12 @@ var getReportFromWBAPI = async (req, res, next) => {
     token,
     userId
   );
+
+  var statusIsDone = await checkPaidStorageReportCreationStatus(taskId, token);
+
+  if (!statusIsDone) {
+    return res.sendStatus(304);
+  }
 
   var paidStorageReport = await getPaidStorageReportByTaskIdFromWBAPI(
     taskId,
