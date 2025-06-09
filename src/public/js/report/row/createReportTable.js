@@ -33,7 +33,7 @@ var createReportTable = async (report) => {
 
     var fines = await createTdElement(item.finesPerItem);
 
-    var averageStorageCost = await createTdElement(item.storageCostPerItem);
+    var storageCostPerItem = await createTdElement(item.storageCostPerItem);
 
     var netProfitPerItem = await createTdElement(item.netProfitPerItem);
 
@@ -66,7 +66,7 @@ var createReportTable = async (report) => {
       retailPrice,
       deliveryCost,
       fines,
-      averageStorageCost,
+      storageCostPerItem,
       netProfitPerItem,
       averageNetProfitPerItem,
       averageFinalNetProfitPerItem,
