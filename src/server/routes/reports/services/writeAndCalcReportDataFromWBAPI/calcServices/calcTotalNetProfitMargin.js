@@ -1,9 +1,9 @@
-var calcTotalNetProfitMargin = async (totalRevenue, totalNetProfit) => {
+var calcTotalNetProfitMargin = async (totalRetailAmount, totalNetProfit) => {
   if (typeof totalNetProfit !== "number" || totalNetProfit == 0) {
     return "Расчет только после ввода себестоимости";
   }
 
-  var totalNetProfitMargin = (totalNetProfit * 100) / totalRevenue;
+  var totalNetProfitMargin = (totalNetProfit * 100) / totalRetailAmount;
 
   return totalNetProfitMargin;
 };
