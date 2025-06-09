@@ -4,7 +4,7 @@ import getReportLink from "./services/getReportLink.js";
 var table = document.getElementById("reports");
 var tbody = document.createElement("tbody");
 
-var createRowForReports = async (reports) => {
+var createReportsTable = async (reports) => {
   for (var report of reports) {
     var tr = document.createElement("tr");
 
@@ -26,4 +26,4 @@ var createRowForReports = async (reports) => {
   return table;
 };
 
-export default createRowForReports;
+export default createReportsTable;
