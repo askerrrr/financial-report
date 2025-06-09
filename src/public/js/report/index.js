@@ -1,6 +1,7 @@
 import getCookieByName from "../index/services/getCookieByName.js";
 import createReportTable from "./row/createReportTable.js";
 import createTotalsTable from "./row/createTotalsTable.js";
+import getReportInfo from "./row/services/getReportInfo.js";
 
 var userId = await getCookieByName("userId");
 
@@ -25,6 +26,7 @@ var getReportData = async () => {
 var showReport = async () => {
   var report = await getReportData();
 
+  await await getReportInfo(report);
   await createReportTable(report);
   await createTotalsTable(report);
 };

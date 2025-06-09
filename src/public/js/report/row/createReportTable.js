@@ -1,6 +1,5 @@
 import createTdElement from "./services/createTdElement.js";
 import createInputField from "./services/createInputField.js";
-import getReportInfo from "./services/getReportInfo.js";
 
 var url = "/reports/change";
 
@@ -9,9 +8,7 @@ var table = document.getElementById("report");
 var createReportTable = async (report) => {
   var tbody = document.createElement("tbody");
 
-  var { reportId, dateFrom, dateTo } = report;
-
-  await getReportInfo(dateFrom, dateTo);
+  var { reportId } = report;
 
   for (var [index, item] of Object.entries(report.items)) {
     var tr = document.createElement("tr");

@@ -1,4 +1,4 @@
-var getReportInfo = async (dateFrom, dateTo) => {
+var getReportInfo = async ({ dateFrom, dateTo }) => {
   var div = document.createElement("div");
   div.id = "report-info";
 
