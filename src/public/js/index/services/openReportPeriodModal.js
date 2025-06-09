@@ -2,35 +2,75 @@ import sendPeriodDate from "./sendPeriodDate.js";
 import validateReportPeriod from "./validateReportPeriod.js";
 import insertReportDataToTop from "./insertReportDataToTop.js";
 
-var openReportPeriodModal = async () => {
+var createModal = async (className) => {
   var modal = document.createElement("div");
-  modal.className = "modal-overlay";
+  modal.className = className;
 
-  var modalContent = document.createElement("div");
-  modalContent.className = "modal-content";
+  return modal;
+};
 
+var createTitle = async () => {
   var title = document.createElement("h3");
   title.append("Введите период отчета");
   title.className = "modal-title";
 
-  var dateFromInput = document.createElement("input");
-  dateFromInput.id = "dateFromInput";
-  dateFromInput.className = "modal-input";
-  dateFromInput.type = "text";
-  dateFromInput.placeholder = "начало в формате гг.мм.дд - 2025.04.20";
+  return title;
+};
 
-  var dateToInput = document.createElement("input");
-  dateToInput.id = "dateToInput";
-  dateToInput.className = "modal-input";
-  dateToInput.type = "text";
-  dateToInput.placeholder = "конец в формате гг.мм.дд - 2025.04.27";
+var createInputField = async (id, placeholder) => {
+  var input = document.createElement("input");
+  input.id = id;
+  input.type = "text";
+  input.placeholder = placeholder;
+  input.className = "modal-input";
 
-  var buttonsContainer = document.createElement("div");
-  buttonsContainer.className = "modal-buttons";
+  return input;
+};
 
-  var saveButton = document.createElement("button");
-  saveButton.className = "modal-button modal-button-save";
-  saveButton.textContent = "Сохранить";
+var createButtonsContainer = async () => {
+  var div = document.createElement("div");
+  div.className = "modal-buttons";
+
+  return div;
+};
+
+var createSaveButton = async () => {
+  var button = document.createElement("button");
+  button.className = "modal-button modal-button-save";
+  button.textContent = "Сохранить";
+
+  return button;
+};
+
+var createCancelButton = async () => {
+  var button = document.createElement("button");
+  button.className = "modal-button modal-button-cancel";
+  button.textContent = "Отмена";
+
+  return button;
+};
+
+var openReportPeriodModal = async () => {
+  var modal = await createModal("modal-overlay");
+
+  var modalContent = await createModal("modal-content");
+
+  var title = await createTitle();
+
+  var dateFromPlacaholder = "начало в формате гг.мм.дд - 2025.04.20";
+
+  var dateFromInput = await createInputField(
+    "dateFromInput",
+    dateFromPlacaholder
+  );
+
+  var dateToPlaceholder = "конец в формате гг.мм.дд - 2025.04.27";
+
+  var dateToInput = await createInputField("dateToInput", dateToPlaceholder);
+
+  var buttonsContainer = await createButtonsContainer();
+
+  var saveButton = await createSaveButton();
 
   saveButton.addEventListener("click", async () => {
     document.body.removeChild(modal);
@@ -60,16 +100,18 @@ var openReportPeriodModal = async () => {
     return alert("Отчет успешно сохранен");
   });
 
-  var cancelButton = document.createElement("button");
-  cancelButton.className = "modal-button modal-button-cancel";
-  cancelButton.textContent = "Отмена";
+  var cancelButton = await createCancelButton();
+
   cancelButton.addEventListener("click", () => {
     document.body.removeChild(modal);
   });
 
   buttonsContainer.append(cancelButton, saveButton);
+
   modalContent.append(title, dateFromInput, dateToInput, buttonsContainer);
+
   modal.append(modalContent);
+
   document.body.append(modal);
 
   dateFromInput.focus();
