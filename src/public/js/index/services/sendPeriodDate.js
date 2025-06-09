@@ -12,12 +12,12 @@ var sendPeriodDate = async (dateFrom, dateTo) => {
   if (!res.ok) {
     var { msg } = await res.json();
 
-    alert(msg);
-
-    return;
+    return alert(msg);
   }
 
-  return true;
+  var reportData = await res.json();
+
+  return reportData;
 };
 
 export default sendPeriodDate;
