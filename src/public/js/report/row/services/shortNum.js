@@ -1,4 +1,4 @@
-var shortNum = (num) => {
+var shortNum = async (num) => {
   var str = num + "";
 
   var [start, end] = str.split(".");
