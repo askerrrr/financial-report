@@ -1,5 +1,6 @@
 import createTdElement from "./services/createTdElement.js";
 import createTotalTableHead from "./services/createTotalTableHead.js";
+import calcTotalFinalNetProfit from "./services/calcTotalFinalNetProfit.js";
 import calcTotalNetProfitMargin from "./services/calcTotalNetProfitMargin.js";
 
 var table = document.createElement("table");
@@ -26,10 +27,7 @@ var createTotalsTable = async (report) => {
   var totalSoldTd = await createTdElement(report.totalSold);
   var totalFinesTd = await createTdElement(report.totalFines);
 
-  var totalFinalNetProfit = report.items.reduce(
-    (acc, i) => acc + i.finalNetProfitPerItem,
-    0
-  );
+  var totalFinalNetProfit = await calcTotalFinalNetProfit(report.items);
 
   var totalFinalNetProfitTd = await createTdElement(
     totalFinalNetProfit,
