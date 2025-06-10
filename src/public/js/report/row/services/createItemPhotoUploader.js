@@ -1,6 +1,6 @@
 var createInputElement = async (id, name) => {
   var input = document.createElement("input");
-  input.id = id;
+  input.id = "input-" + id + "-" + name;
   input.name = name;
   input.type = "file";
   input.multiple = false;
@@ -10,18 +10,18 @@ var createInputElement = async (id, name) => {
   return input;
 };
 
-var createLabelElement = async (id) => {
+var createLabelElement = async (id, name) => {
   var label = document.createElement("label");
-  label.htmlFor = id;
+  label.htmlFor = "input-" + id + "-" + name;
   label.className = "item-photo-uploader";
 
   return label;
 };
 
-var createFormElement = async (id) => {
+var createFormElement = async (id, name) => {
   var form = document.createElement("form");
-  form.id = id;
-  form.enctype = "multifpath/form-data";
+  form.id = id + "-" + name;
+  form.enctype = "multipart/form-data";
   form.style.display = "inline";
 
   return form;
@@ -29,21 +29,57 @@ var createFormElement = async (id) => {
 
 var createSpanElement = async () => {
   var span = document.createElement("span");
-  span.textContent = "Загрузить фото";
+  span.textContent = "Загрузить";
   span.style.display = "none";
 
   return span;
 };
 
-var createItemPhotoUploader = async (id, name) => {
+var createPhotoElement = async (imgData) => {
+  var img = document.createElement("img");
+  img.src = imgData || "placeholder.jpg";
+  img.alt = "Фото";
+  img.className = "cell-photo";
+  img.style.maxWidth = "100%";
+  img.style.maxHeight = "80px";
+  img.style.borderRadius = "4px";
+
+  return img;
+};
+
+var createMenuButton = async () => {
+  var button = document.createElement("button");
+  button.className = "cell-menu-btn";
+  button.innerHTML = "&hellip;";
+  button.style.position = "absolute";
+  button.style.top = "5px";
+  button.style.right = "5px";
+  button.style.background = "none";
+  button.style.border = "none";
+  button.style.cursor = "pointer";
+
+  return button;
+};
+
+var createItemPhotoUploader = async (id, name, imgData) => {
   var input = await createInputElement(id, name);
   var span = await createSpanElement();
+  var img = await createPhotoElement(imgData);
+  var menuBtn = await createMenuButton();
 
-  var label = await createLabelElement(id);
-  label.append(input, span);
+  if (imgData) {
+    img.style.display = "block";
+    span.style.display = "none";
+  } else {
+    img.style.display = "none";
+    span.style.display = "block";
+  }
 
-  var form = await createFormElement(id);
-  form.append(label);
+  var label = await createLabelElement(id, name);
+  label.append(input, img, span);
+
+  var form = await createFormElement(id, name);
+  form.append(label, menuBtn);
 
   return form;
 };
