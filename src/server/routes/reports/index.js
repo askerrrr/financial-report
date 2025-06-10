@@ -37,6 +37,7 @@ router.post("/change", require("./controllers/changeReportDetail"));
 
 router.post(
   "/item-photo-upload/:reportId",
+  updoad.single("item-photo"),
   require("./controllers/itemPhotoUpload")
 );
 
