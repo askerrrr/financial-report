@@ -5,7 +5,7 @@ var createInputElement = async (id, name) => {
   input.type = "file";
   input.multiple = false;
   input.accept = ".jpg, .jpeg, .png";
-  input.style.display = "none"; 
+  input.style.display = "none";
 
   return input;
 };
@@ -13,7 +13,7 @@ var createInputElement = async (id, name) => {
 var createLabelElement = async (id) => {
   var label = document.createElement("label");
   label.htmlFor = id;
-  label.class = "item-photo-uploader";
+  label.className = "item-photo-uploader";
 
   return label;
 };
