@@ -21,6 +21,8 @@ var createLabelElement = async (id) => {
 var createFormElement = async (id) => {
   var form = document.createElement("form");
   form.id = id;
+  form.enctype = "multifpath/form-data";
+  form.style.display = "inline";
 
   return form;
 };
