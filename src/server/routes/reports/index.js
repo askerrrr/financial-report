@@ -4,7 +4,7 @@ var writeReport = require("./controllers/writeReport");
 var writeReports = require("./controllers/writeReports");
 var fileFilter = require("./services/downloadFileServices/fileFilter");
 
-var storage = multer.diskStorage({
+var reportStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "/var/report_uploads/");
   },
@@ -13,7 +13,7 @@ var storage = multer.diskStorage({
   },
 });
 
-var updoad = multer({ storage, fileFilter });
+var updoadReports = multer({ storage: reportStorage, fileFilter });
 
 var router = Router({ caseSensitive: true, strict: true });
 
@@ -23,9 +23,9 @@ router.get("/:userId/:id", require("./controllers/getReport"));
 
 router.post("/period", require("./controllers/changeReportPeriod"));
 
-router.post("/upload/file", updoad.single("file"), writeReport);
+router.post("/upload/file", updoadReports.single("file"), writeReport);
 
-router.post("/upload/files", updoad.array("file", 10), writeReports);
+router.post("/upload/files", updoadReports.array("file", 10), writeReports);
 
 router.post(
   "/wbapi",
@@ -37,7 +37,7 @@ router.post("/change", require("./controllers/changeReportDetail"));
 
 router.post(
   "/item-photo-upload/:reportId",
-  updoad.single("item-photo"),
+  // updoad.single("item-photo"),
   require("./controllers/itemPhotoUpload")
 );
 
