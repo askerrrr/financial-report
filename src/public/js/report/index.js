@@ -26,7 +26,7 @@ var getReportData = async () => {
 var showReport = async () => {
   var report = await getReportData();
 
-  await await getReportInfo(report);
+  await getReportInfo(report);
   await createReportTable(report);
   await createTotalsTable(report);
 };
