@@ -1,4 +1,5 @@
 var parseReport = require("../services/writeAndCalcReportDataFromWBAPI/parseReport");
+var createReportItemPhotosFolder = require("../services/differentServices/createReportItemPhotosFolder");
 
 var writeReportFromWBAPI = async (req, res, next) => {
   var { createReport } = req.app.locals.reportCollectionServices();
@@ -7,12 +8,19 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   var userId = req.app.locals.userId;
 
-  var parsedReport = await parseReport(report, paidStorageReport, dateFrom, dateTo);
+  var parsedReport = await parseReport(
+    report,
+    paidStorageReport,
+    dateFrom,
+    dateTo
+  );
 
   var successfullWrite = await createReport(userId, parsedReport);
 
   if (successfullWrite) {
     var { reportId } = parsedReport;
+
+    await createReportItemPhotosFolder(reportId);
 
     return res.status(200).json({ reportId, dateFrom, dateTo });
   }
