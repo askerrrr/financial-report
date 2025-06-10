@@ -1,5 +1,6 @@
-var createTdElement = async (data, fieldName, index) => {
+var createTdElement = async (data, fieldName, index, className = "") => {
   var td = document.createElement("td");
+  td.className = className;
 
   if (fieldName && index) {
     td.id = [fieldName, index].join("-");
