@@ -29,6 +29,8 @@ var createFormElement = async (id) => {
 
 var createSpanElement = async () => {
   var span = document.createElement("span");
+  span.textContent = "Загрузить фото";
+  span.style.display = "none";
 
   return span;
 };
