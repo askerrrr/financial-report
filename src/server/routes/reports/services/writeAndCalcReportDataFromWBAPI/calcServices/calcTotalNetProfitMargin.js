@@ -1,3 +1,5 @@
+var shortNum = require("../shortNum");
+
 var calcTotalNetProfitMargin = async (totalRetailAmount, totalNetProfit) => {
   if (typeof totalNetProfit !== "number" || totalNetProfit == 0) {
     return "Расчет только после ввода себестоимости";
@@ -5,7 +7,7 @@ var calcTotalNetProfitMargin = async (totalRetailAmount, totalNetProfit) => {
 
   var totalNetProfitMargin = (totalNetProfit * 100) / totalRetailAmount;
 
-  return totalNetProfitMargin;
+  return await shortNum(totalNetProfitMargin);
 };
 
 module.exports = calcTotalNetProfitMargin;
