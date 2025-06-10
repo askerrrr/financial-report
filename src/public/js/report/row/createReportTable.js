@@ -1,5 +1,6 @@
 import createTdElement from "./services/createTdElement.js";
 import createInputField from "./services/createInputField.js";
+import createItemPhotoUploader from "./services/createItemPhotoUploader.js";
 
 var url = "/reports/change";
 
@@ -12,6 +13,19 @@ var createReportTable = async (report) => {
 
   for (var [index, item] of Object.entries(report.items)) {
     var tr = document.createElement("tr");
+
+    var itemPhotoUploader = await createItemPhotoUploader(
+      reportId,
+      item.itemName,
+      null
+    );
+
+    var itemPhotoUploaderTd = await createTdElement(
+      itemPhotoUploader,
+      "photo-cell",
+      index,
+      "photo-cell"
+    );
 
     var itemName = await createTdElement(item.itemName);
 
@@ -60,6 +74,7 @@ var createReportTable = async (report) => {
     );
 
     tr.append(
+      itemPhotoUploaderTd,
       itemName,
       qty,
       costPrice,
