@@ -9,4 +9,12 @@ module.exports = (req, file, cb) => {
       ? cb(null, (req.fileMimeTypeIsValid = true))
       : cb(null, (req.fileMimeTypeIsValid = false));
   }
+
+  if (req.path == "/item-photo-upload") {
+    validMimeType = [".jpg", ".jpeg", ".png"];
+
+    return validMimeType.includes(file.mimetype)
+      ? cb(null, (req.fileMimeTypeIsValid = true))
+      : cb(null, (req.fileMimeTypeIsValid = false));
+  }
 };
