@@ -13,7 +13,17 @@ var reportStorage = multer.diskStorage({
   },
 });
 
+var itemsPhotoStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "/var/report_photos/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
 var updoadReports = multer({ storage: reportStorage, fileFilter });
+var uploadItemPhotos = multer({ storage: itemsPhotoStorage, fileFilter });
 
 var router = Router({ caseSensitive: true, strict: true });
 
@@ -37,7 +47,7 @@ router.post("/change", require("./controllers/changeReportDetail"));
 
 router.post(
   "/item-photo-upload/:reportId",
-  // updoad.single("item-photo"),
+  uploadItemPhotos.single("item-photo"),
   require("./controllers/itemPhotoUpload")
 );
 
