@@ -35,7 +35,10 @@ router.post(
 
 router.post("/change", require("./controllers/changeReportDetail"));
 
-router.post("/item-photo-upload", require("./controllers/itemPhotoUpload"));
+router.post(
+  "/item-photo-upload/:reportId",
+  require("./controllers/itemPhotoUpload")
+);
 
 router.post(
   "/delete/:userId/:reportId",
