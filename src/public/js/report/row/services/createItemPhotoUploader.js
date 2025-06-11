@@ -60,8 +60,9 @@ var createSpanElement = async () => {
   return span;
 };
 
-var createPhotoElement = async (base64) => {
+var createPhotoElement = async (base64, index) => {
   var img = document.createElement("img");
+  img.id = "img-" + index;
   img.src = `data:image/png=;base64,${base64}`;
   img.alt = "Фото";
   img.className = "cell-photo";
@@ -89,7 +90,7 @@ var createMenuButton = async () => {
 var createItemPhotoUploader = async (id, name, index, imgData) => {
   var input = await createInputElement(id, name, index);
   var span = await createSpanElement();
-  var img = await createPhotoElement(imgData);
+  var img = await createPhotoElement(imgData, index);
   var menuBtn = await createMenuButton();
 
   if (imgData) {
