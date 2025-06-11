@@ -11,7 +11,7 @@ var sendItemPhoto = async (reportId, itemName, imgData) => {
   alert("Изображение сохранено");
 };
 
-var createInputElement = async (id, name) => {
+var createInputElement = async (id, name, index) => {
   var input = document.createElement("input");
   input.id = "input-" + id + "-" + name;
   input.name = "item-photo";
@@ -26,6 +26,8 @@ var createInputElement = async (id, name) => {
     var uploadFormData = new FormData();
 
     uploadFormData.append("item-photo", input.files[0]);
+
+    name = [index, name].join("-");
 
     await sendItemPhoto(id, name, uploadFormData);
   });
@@ -84,8 +86,8 @@ var createMenuButton = async () => {
   return button;
 };
 
-var createItemPhotoUploader = async (id, name, imgData) => {
-  var input = await createInputElement(id, name);
+var createItemPhotoUploader = async (id, name, index, imgData) => {
+  var input = await createInputElement(id, name, index);
   var span = await createSpanElement();
   var img = await createPhotoElement(imgData);
   var menuBtn = await createMenuButton();

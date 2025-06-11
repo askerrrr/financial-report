@@ -17,6 +17,7 @@ var createReportTable = async (report) => {
     var itemPhotoUploader = await createItemPhotoUploader(
       reportId,
       item.itemName,
+      index,
       null
     );
 
