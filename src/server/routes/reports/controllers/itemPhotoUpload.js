@@ -1,13 +1,13 @@
-var moveFileToReportFolder = require("../services/differentServices/moveFileToReportFolder");
+var moveFileToUserFolder = require("../services/differentServices/moveFileToUserFolder");
 
 var itemPhotoUpload = async (req, res, next) => {
-  var { reportId, itemname } = req.params;
+  var { itemname } = req.params;
 
   var userId = req.app.locals.userId;
 
   var filePath = req.file.path;
 
-  await moveFileToReportFolder(reportId, itemname, filePath);
+  await moveFileToUserFolder(userId, itemname, filePath);
 
   return res.sendStatus(200);
 };
