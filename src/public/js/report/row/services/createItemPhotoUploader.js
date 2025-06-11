@@ -52,8 +52,9 @@ var createFormElement = async (id, name) => {
   return form;
 };
 
-var createSpanElement = async () => {
+var createSpanElement = async (index) => {
   var span = document.createElement("span");
+  span.id = "span-" + index;
   span.textContent = "Загрузить";
   span.style.display = "none";
 
@@ -89,7 +90,7 @@ var createMenuButton = async () => {
 
 var createItemPhotoUploader = async (id, name, index, imgData) => {
   var input = await createInputElement(id, name, index);
-  var span = await createSpanElement();
+  var span = await createSpanElement(index);
   var img = await createPhotoElement(imgData, index);
   var menuBtn = await createMenuButton();
 
