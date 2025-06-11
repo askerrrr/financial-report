@@ -4,9 +4,8 @@ var itemPhotoUpload = async (req, res, next) => {
   var { reportId, itemname } = req.params;
 
   var filePath = req.file.path;
-  var fileName = req.file.originalname;
 
-  await moveFileToReportFolder(reportId, itemname, fileName, filePath);
+  await moveFileToReportFolder(reportId, itemname, filePath);
 
   return res.sendStatus(200);
 };
