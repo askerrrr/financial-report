@@ -43,11 +43,11 @@ var createInputElement = async (id, name, index) => {
 
     uploadFormData.append("item-photo", input.files[0]);
 
-    name = [index, name].join("-");
+    var itemName = [index, name].join("-");
 
     await insertImageInImgTag(e, index);
 
-    await sendItemPhoto(id, name, uploadFormData);
+    await sendItemPhoto(id, itemName, uploadFormData);
   });
 
   return input;
