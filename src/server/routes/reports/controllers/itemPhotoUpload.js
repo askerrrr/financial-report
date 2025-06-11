@@ -3,6 +3,8 @@ var moveFileToReportFolder = require("../services/differentServices/moveFileToRe
 var itemPhotoUpload = async (req, res, next) => {
   var { reportId, itemname } = req.params;
 
+  var userId = req.app.locals.userId;
+
   var filePath = req.file.path;
 
   await moveFileToReportFolder(reportId, itemname, filePath);
