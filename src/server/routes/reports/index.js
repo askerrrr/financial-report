@@ -13,9 +13,9 @@ var reportStorage = multer.diskStorage({
   },
 });
 
-var itemsPhotoStorage = multer.diskStorage({
+var temporaryItemsPhotoStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "/var/report_photos/");
+    cb(null, "/var/temporary-photo-storage/");
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -23,7 +23,10 @@ var itemsPhotoStorage = multer.diskStorage({
 });
 
 var updoadReports = multer({ storage: reportStorage, fileFilter });
-var uploadItemPhotos = multer({ storage: itemsPhotoStorage, fileFilter });
+var uploadItemPhotos = multer({
+  storage: temporaryItemsPhotoStorage,
+  fileFilter,
+});
 
 var router = Router({ caseSensitive: true, strict: true });
 
