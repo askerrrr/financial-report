@@ -1,5 +1,6 @@
 var JWT = require("jsonwebtoken");
 var { randomBytes } = require("node:crypto");
+var createUserReportPhotosFolder = require("../services/createUserReportPhotosFolder");
 
 var createUser = async (req, res, next) => {
   var { createUser, getUserByLogin } = req.app.locals.userCollectionServices();
@@ -22,6 +23,7 @@ var createUser = async (req, res, next) => {
   var reportsEntityObjectId = await createReportsEntity(userId);
 
   await createTokenCollectionEntity(userId);
+  await createUserReportPhotosFolder(userId);
 
   var successCreate = await createUser(userData, reportsEntityObjectId);
 
