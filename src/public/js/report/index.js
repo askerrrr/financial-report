@@ -2,6 +2,7 @@ import getCookieByName from "../index/services/getCookieByName.js";
 import createReportTable from "./row/createReportTable.js";
 import createTotalsTable from "./row/createTotalsTable.js";
 import getReportInfo from "./row/services/getReportInfo.js";
+import injectBase64IntoImgTags from "./row/services/injectBase64IntoImgTags.js";
 
 var userId = await getCookieByName("userId");
 
@@ -20,14 +21,15 @@ var getReportData = async () => {
 
   var data = await res.json();
 
-  return data.report;
+  return data;
 };
 
 var showReport = async () => {
-  var report = await getReportData();
+  var { report, imageCollection } = await getReportData();
 
   await getReportInfo(report);
   await createReportTable(report);
+  await injectBase64IntoImgTags(imageCollection);
   await createTotalsTable(report);
 };
 
