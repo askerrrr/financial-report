@@ -11,7 +11,7 @@ module.exports = (req, file, cb) => {
   }
 
   if (req.path.startsWith("/item-photo-upload/")) {
-    validMimeType = [".jpg", ".jpeg", ".png"];
+    validMimeType = ["image/jpg", "image/jpeg", "image/png"];
 
     return validMimeType.includes(file.mimetype)
       ? cb(null, (req.fileMimeTypeIsValid = true))

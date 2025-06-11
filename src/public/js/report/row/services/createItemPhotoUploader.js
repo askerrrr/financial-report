@@ -4,7 +4,7 @@ var createInputElement = async (id, name) => {
   input.name = "item-photo";
   input.type = "file";
   input.multiple = false;
-  input.accept = ".jpg, .jpeg, .png";
+  input.accept = "image/jpg, image/jpeg, image/png";
   input.style.display = "none";
 
   return input;
