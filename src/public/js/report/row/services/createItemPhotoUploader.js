@@ -58,9 +58,9 @@ var createSpanElement = async () => {
   return span;
 };
 
-var createPhotoElement = async (imgData) => {
+var createPhotoElement = async (base64) => {
   var img = document.createElement("img");
-  img.src = imgData || "placeholder.jpg";
+  img.src = `data:image/png=;base64,${base64}`;
   img.alt = "Фото";
   img.className = "cell-photo";
   img.style.maxWidth = "100%";
