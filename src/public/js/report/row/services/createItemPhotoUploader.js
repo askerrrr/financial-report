@@ -27,9 +27,9 @@ var insertImageInImgTag = async (event, index) => {
   });
 };
 
-var createInputElement = async (id, name, index) => {
+var createInputElement = async (id, itemName, index) => {
   var input = document.createElement("input");
-  input.id = "input-" + id + "-" + name;
+  input.id = "input-" + id + "-" + itemName;
   input.name = "item-photo";
   input.type = "file";
   input.multiple = false;
@@ -42,8 +42,6 @@ var createInputElement = async (id, name, index) => {
     var uploadFormData = new FormData();
 
     uploadFormData.append("item-photo", input.files[0]);
-
-    var itemName = [index, name].join("-");
 
     await insertImageInImgTag(e, index);
 
