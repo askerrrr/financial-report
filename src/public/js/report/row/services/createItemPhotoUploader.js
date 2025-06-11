@@ -11,6 +11,22 @@ var sendItemPhoto = async (reportId, itemName, imgData) => {
   alert("Изображение сохранено");
 };
 
+var insertImageInImgTag = async (event, index) => {
+  var file = event.target.files[0];
+
+  var reader = new FileReader();
+
+  reader.readAsDataURL(file);
+  reader.addEventListener("load", (e) => {
+    var span = document.getElementById("span-" + index);
+    span.style.display = "none";
+
+    var img = document.getElementById("img-" + index);
+    img.style.display = "block";
+    img.src = e.target.result;
+  });
+};
+
 var createInputElement = async (id, name, index) => {
   var input = document.createElement("input");
   input.id = "input-" + id + "-" + name;
@@ -28,6 +44,8 @@ var createInputElement = async (id, name, index) => {
     uploadFormData.append("item-photo", input.files[0]);
 
     name = [index, name].join("-");
+
+    await insertImageInImgTag(e, index);
 
     await sendItemPhoto(id, name, uploadFormData);
   });
