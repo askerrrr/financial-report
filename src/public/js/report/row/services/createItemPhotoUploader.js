@@ -1,5 +1,5 @@
-var sendItemPhoto = async (reportId, itemName, imgData) => {
-  var res = await fetch(`/reports/item-photo-upload/${reportId}/${itemName}`, {
+var sendItemPhoto = async (itemName, imgData) => {
+  var res = await fetch(`/reports/item-photo-upload/${itemName}`, {
     method: "POST",
     body: imgData,
   });
@@ -45,7 +45,7 @@ var createInputElement = async (id, itemName, index) => {
 
     await insertImageInImgTag(e, itemName);
 
-    await sendItemPhoto(id, itemName, uploadFormData);
+    await sendItemPhoto(itemName, uploadFormData);
   });
 
   return input;
