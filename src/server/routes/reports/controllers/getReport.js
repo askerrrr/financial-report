@@ -1,3 +1,5 @@
+var collectImagesAsBase64 = require("../services/differentServices/collectImagesAsBase64");
+
 var getReport = async (req, res, next) => {
   var { userId, id } = req.params;
 
@@ -5,7 +7,9 @@ var getReport = async (req, res, next) => {
 
   var report = await getReportById(userId, id);
 
-  res.json({ report });
+  var imageCollection = await collectImagesAsBase64(userId, report.items);
+
+  res.json({ report, imageCollection });
 };
 
 module.exports = getReport;
