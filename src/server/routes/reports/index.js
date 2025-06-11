@@ -46,7 +46,7 @@ router.post(
 router.post("/change", require("./controllers/changeReportDetail"));
 
 router.post(
-  "/item-photo-upload/:reportId",
+  "/item-photo-upload/:reportId/:itemname",
   uploadItemPhotos.single("item-photo"),
   require("./controllers/itemPhotoUpload")
 );
