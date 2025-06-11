@@ -11,17 +11,17 @@ var sendItemPhoto = async (reportId, itemName, imgData) => {
   alert("Изображение сохранено");
 };
 
-var insertImageInImgTag = async (event, index) => {
+var insertImageInImgTag = async (event, itemName) => {
   var file = event.target.files[0];
 
   var reader = new FileReader();
 
   reader.readAsDataURL(file);
   reader.addEventListener("load", (e) => {
-    var span = document.getElementById("span-" + index);
+    var span = document.getElementById("span-" + itemName);
     span.style.display = "none";
 
-    var img = document.getElementById("img-" + index);
+    var img = document.getElementById("img-" + itemName);
     img.style.display = "block";
     img.src = e.target.result;
   });
@@ -43,7 +43,7 @@ var createInputElement = async (id, itemName, index) => {
 
     uploadFormData.append("item-photo", input.files[0]);
 
-    await insertImageInImgTag(e, index);
+    await insertImageInImgTag(e, itemName);
 
     await sendItemPhoto(id, itemName, uploadFormData);
   });
@@ -68,9 +68,9 @@ var createFormElement = async (id, name) => {
   return form;
 };
 
-var createSpanElement = async (index) => {
+var createSpanElement = async (itemName) => {
   var span = document.createElement("span");
-  span.id = "span-" + index;
+  span.id = "span-" + itemName;
   span.textContent = "Загрузить";
   span.style.display = "none";
 
@@ -106,7 +106,7 @@ var createMenuButton = async () => {
 
 var createItemPhotoUploader = async (id, name, index, imgData) => {
   var input = await createInputElement(id, name, index);
-  var span = await createSpanElement(index);
+  var span = await createSpanElement(name);
   var img = await createPhotoElement(imgData, name);
   var menuBtn = await createMenuButton();
 
