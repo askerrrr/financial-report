@@ -27,7 +27,7 @@ var insertImageInImgTag = async (event, itemName) => {
   });
 };
 
-var createInputElement = async (id, itemName, index) => {
+var createInputElement = async (id, itemName) => {
   var input = document.createElement("input");
   input.id = "input-" + id + "-" + itemName;
   input.name = "item-photo";
@@ -105,7 +105,7 @@ var createMenuButton = async () => {
 };
 
 var createItemPhotoUploader = async (id, name, index, imgData) => {
-  var input = await createInputElement(id, name, index);
+  var input = await createInputElement(id, name);
   var span = await createSpanElement(name);
   var img = await createPhotoElement(imgData, name);
   var menuBtn = await createMenuButton();
