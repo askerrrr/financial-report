@@ -1,5 +1,4 @@
 var calc = require("./calculateData");
-var { randomBytes } = require("crypto");
 var getItemsName = require("./getItemsName");
 var truncateItemsNums = require("./truncateItemsNums");
 var getStorageCostPerItem = require("./getStorageCostPerItem");
@@ -71,14 +70,11 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
     });
   }
 
-  var reportId = randomBytes(10).toString("hex");
-
   items = await truncateItemsNums(items);
 
   return {
     items,
     dateTo,
-    reportId,
     totalSold,
     dateFrom,
     totalFines,

@@ -26,7 +26,7 @@ var itemsSchema = new Schema(
 
 var reportSchema = new Schema(
   {
-    reportId: strOptions,
+    reportId: numOptions,
     dateFrom: strOptions,
     dateTo: strOptions,
     totalRevenue: numOptions,

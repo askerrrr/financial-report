@@ -14,11 +14,13 @@ var writeReportFromWBAPI = async (req, res, next) => {
     dateTo
   );
 
+  var reportId = report[0].realizationreport_id;
+
+  parsedReport.reportId = reportId;
+
   var successfullWrite = await createReport(userId, parsedReport);
 
   if (successfullWrite) {
-    var { reportId } = parsedReport;
-
     return res.status(200).json({ reportId, dateFrom, dateTo });
   }
 
