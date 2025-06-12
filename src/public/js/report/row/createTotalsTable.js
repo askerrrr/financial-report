@@ -34,6 +34,10 @@ var createTotalsTable = async (report) => {
     "totalFinalNetProfit"
   );
 
+  if (+totalFinalNetProfit < 0) {
+    totalFinalNetProfitTd.style.color = "red";
+  }
+
   tr.append(
     totalSoldTd,
     totalDeliveryCostTd,
