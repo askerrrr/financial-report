@@ -2,7 +2,7 @@ var updateReport = async (collection, userId, reportId, report) => {
   var result = await collection.updateOne(
     { userId, "reports.reportId": reportId },
     {
-      $set: { reports: report },
+      $set: { "reports.$": report },
     }
   );
 
