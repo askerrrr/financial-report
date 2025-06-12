@@ -21,7 +21,11 @@ var writeReportFromWBAPI = async (req, res, next) => {
   var successfullWrite = await createReport(userId, parsedReport);
 
   if (successfullWrite) {
-    return res.status(200).json({ reportId, dateFrom, dateTo });
+    var { totalFinalNetProfit } = parsedReport;
+
+    return res
+      .status(200)
+      .json({ reportId, dateFrom, dateTo, totalFinalNetProfit });
   }
 
   return res.sendStatus(500);
