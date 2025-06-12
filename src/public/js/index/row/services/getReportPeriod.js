@@ -1,9 +1,15 @@
 var getReportPeriod = async (dateFrom, dateTo) => {
   var td = document.createElement("td");
 
-  var period = "с " + dateFrom + " по " + dateTo;
+  var dateFromDiv = document.createElement("div");
+  var dateToDiv = document.createElement("div");
 
-  td.append(period);
+  dateFromDiv.append("с ", dateFrom);
+  dateToDiv.append("по ", dateTo);
+
+  var br = document.createElement("br");
+
+  td.append(dateFromDiv, br, dateToDiv);
 
   return td;
 };
