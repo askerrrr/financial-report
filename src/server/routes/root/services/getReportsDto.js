@@ -6,6 +6,7 @@ var getReportsDto = async (reports) => {
       id: report.reportId,
       dateFrom: report.dateFrom,
       dateTo: report.dateTo,
+      totalFinalNetProfit: report.totalFinalNetProfit,
     });
   }
 
