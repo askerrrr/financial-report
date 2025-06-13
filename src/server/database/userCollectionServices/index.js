@@ -4,15 +4,13 @@ var getUserByLogin = require("./services/getUserByLogin");
 var createUser = require("./services/createUser");
 var getUserById = require("./services/getUserByUserId");
 
-var userCollectionServices = () => {
-  return {
-    createUser: (data, reportsEntityObjectId) =>
-      createUser(userCollection, data, reportsEntityObjectId),
+var userCollectionServices = {
+  createUser: (data, reportsEntityObjectId) =>
+    createUser(userCollection, data, reportsEntityObjectId),
 
-    getUserByLogin: (login) => getUserByLogin(userCollection, login),
+  getUserByLogin: (login) => getUserByLogin(userCollection, login),
 
-    getUserById: (userId) => getUserById(userCollection, userId),
-  };
+  getUserById: (userId) => getUserById(userCollection, userId),
 };
 
 module.exports = userCollectionServices;

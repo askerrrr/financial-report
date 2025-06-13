@@ -3,7 +3,7 @@ var JWT = require("jsonwebtoken");
 var checkCredentials = require("../services/checkCredentials");
 
 var checkUserCredentials = async (req, res, next) => {
-  var { getUserByLogin } = req.app.locals.userCollectionServices();
+  var { getUserByLogin } = req.app.locals.userCollectionServices;
 
   var userData = req.body;
 

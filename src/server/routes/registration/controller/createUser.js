@@ -3,7 +3,7 @@ var { randomBytes } = require("node:crypto");
 var createUserReportPhotosFolder = require("../services/createUserReportPhotosFolder");
 
 var createUser = async (req, res, next) => {
-  var { createUser, getUserByLogin } = req.app.locals.userCollectionServices();
+  var { createUser, getUserByLogin } = req.app.locals.userCollectionServices;
   var { createReportsEntity } = req.app.locals.reportCollectionServices;
   var { createTokenCollectionEntity } = req.app.locals.tokenCollectionServices;
 
