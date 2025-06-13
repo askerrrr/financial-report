@@ -54,9 +54,9 @@ router.post(
   require("./controllers/itemPhotoUpload")
 );
 
-router.post(
+router.delete(
   "/delete/:userId/:reportId",
-  require("./controllers/deleteReportController")
+  require("./controllers/deleteReport")
 );
 
 module.exports = router;
