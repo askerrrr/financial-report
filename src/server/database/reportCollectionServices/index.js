@@ -10,32 +10,28 @@ var createReportsEntity = require("./services/createReportsEntity");
 var getReportsByUserId = require("./services/getReportsByUserId");
 var updateReportPeriod = require("./services/updateReportPeriod");
 
-var reportCollectionServices = () => {
-  return {
-    createReport: (userId, report) =>
-      createReport(reportCollection, userId, report),
+var reportCollectionServices = {
+  createReport: (userId, report) =>
+    createReport(reportCollection, userId, report),
 
-    getReportById: (userId, reportId) =>
-      getReportById(reportCollection, userId, reportId),
+  getReportById: (userId, reportId) =>
+    getReportById(reportCollection, userId, reportId),
 
-    createReportsEntity: (userId) =>
-      createReportsEntity(reportCollection, userId),
+  createReportsEntity: (userId) =>
+    createReportsEntity(reportCollection, userId),
 
-    getReportsByUserId: (userId) =>
-      getReportsByUserId(reportCollection, userId),
+  getReportsByUserId: (userId) => getReportsByUserId(reportCollection, userId),
 
-    updateReport: (userId, reportId, report) =>
-      updateReport(reportCollection, userId, reportId, report),
+  updateReport: (userId, reportId, report) =>
+    updateReport(reportCollection, userId, reportId, report),
 
-    updateItems: (userId, reportId, items) =>
-      updateItems(reportCollection, userId, reportId, items),
+  updateItems: (userId, reportId, items) =>
+    updateItems(reportCollection, userId, reportId, items),
 
-    updateReportPeriod: (userId, reportId, period) =>
-      updateReportPeriod(reportCollection, userId, reportId, period),
+  updateReportPeriod: (userId, reportId, period) =>
+    updateReportPeriod(reportCollection, userId, reportId, period),
 
-    deleteReportFromDb: (userId, reportId) =>
-      deleteReportFromDb(reportCollection, userId, reportId),
-  };
+  deleteReportFromDb: (userId, reportId) =>
+    deleteReportFromDb(reportCollection, userId, reportId),
 };
-
 module.exports = reportCollectionServices;

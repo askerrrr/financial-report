@@ -1,5 +1,5 @@
 var changeReportPeriod = async (req, res, next) => {
-  var { updateReportPeriod } = req.app.locals.reportCollectionServices();
+  var { updateReportPeriod } = req.app.locals.reportCollectionServices;
 
   var { userId, reportId, value } = req.body;
 

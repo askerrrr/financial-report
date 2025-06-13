@@ -4,7 +4,7 @@ var calcRemainingParams = require("../services/writeAndCalcReportDataFromWBAPI/c
 
 var changeReportDetail = async (req, res, next) => {
   var { updateReport, getReportById } =
-    req.app.locals.reportCollectionServices();
+    req.app.locals.reportCollectionServices
 
   var { userId, reportId } = req.body;
 

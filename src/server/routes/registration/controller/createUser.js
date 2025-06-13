@@ -4,7 +4,7 @@ var createUserReportPhotosFolder = require("../services/createUserReportPhotosFo
 
 var createUser = async (req, res, next) => {
   var { createUser, getUserByLogin } = req.app.locals.userCollectionServices();
-  var { createReportsEntity } = req.app.locals.reportCollectionServices();
+  var { createReportsEntity } = req.app.locals.reportCollectionServices;
   var { createTokenCollectionEntity } =
     req.app.locals.tokenCollectionServices();
 

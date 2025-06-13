@@ -3,7 +3,7 @@ var collectImagesAsBase64 = require("../services/differentServices/collectImages
 var getReport = async (req, res, next) => {
   var { userId, id } = req.params;
 
-  var { getReportById } = req.app.locals.reportCollectionServices();
+  var { getReportById } = req.app.locals.reportCollectionServices;
 
   var report = await getReportById(userId, id);
 

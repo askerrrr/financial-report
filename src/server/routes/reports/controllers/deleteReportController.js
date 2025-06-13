@@ -1,5 +1,5 @@
 var deleteReportController = async (req, res, next) => {
-  var { deleteReportFromDb } = req.app.locals.reportCollectionServices();
+  var { deleteReportFromDb } = req.app.locals.reportCollectionServices;
 
   var { userId, reportId } = req.params;
 

@@ -4,7 +4,7 @@ var getReportDataFromXLSX = require("../services/writeAndCalcReportDataServices/
 var writeReports = async (req, res, next) => {
   var userId = req.app.locals.userId;
 
-  var { createReport } = req.app.locals.reportCollectionServices();
+  var { createReport } = req.app.locals.reportCollectionServices;
 
   var count = 0;
 
