@@ -4,7 +4,7 @@ var getPaidStorageReportByTaskIdFromWBAPI = require("../services/differentServic
 var checkPaidStorageReportCreationStatus = require("../services/differentServices/checkPaidStorageReportCreationStatus");
 
 var getReportFromWBAPI = async (req, res, next) => {
-  var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices();
+  var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
 
   var { userId, dateFrom, dateTo } = req.body;
 
