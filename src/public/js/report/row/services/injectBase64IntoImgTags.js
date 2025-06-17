@@ -1,8 +1,6 @@
 var injectBase64IntoImgTags = async (imageCollection) => {
-  for (var data of imageCollection) {
-    var { itemName, base64 } = data;
-
-    var imgTagId = "img-" + itemName;
+  for (var { skuName, base64 } of imageCollection) {
+    var imgTagId = "img-" + skuName;
 
     var src = `data:image/png=;base64,${base64}`;
 
@@ -10,7 +8,7 @@ var injectBase64IntoImgTags = async (imageCollection) => {
     img.style.display = "block";
     img.src = src;
 
-    var spanTagId = "span-" + itemName;
+    var spanTagId = "span-" + skuName;
     var span = document.getElementById(spanTagId);
     span.style.display = "none";
   }

@@ -1,32 +1,30 @@
 var shortNum = require("../shortNum");
 var calcNetProfitMargin = require("./netProfitMargin");
-var calcFinalNetProfitPerItem = require("./finalNetProfitPerItem");
-var calcAverageFinalNetProfitPerItem = require("./averageFinalNetProfitPerItem");
+var calcFinalNetProfitPerSKU = require("./finalNetProfitPerSKU");
+var calcAverageFinalNetProfitPerSKU = require("./averageFinalNetProfitPerSKU");
 
-var calcRemainingParams = async (item, costPrice) => {
-  var finalNetProfitPerItem = await calcFinalNetProfitPerItem(
-    item.netProfitPerItem,
-    item.qty,
+var calcRemainingParams = async (sku, costPrice) => {
+  var finalNetProfitPerSKU = await calcFinalNetProfitPerSKU(
+    sku.netProfitPerSKU,
+    sku.qty,
     costPrice
   );
 
   var netProfitMargin = await calcNetProfitMargin(
-    item.revenuePerItem,
-    finalNetProfitPerItem
+    sku.revenuePerSKU,
+    finalNetProfitPerSKU
   );
 
-  var averageFinalNetProfitPerItem = await calcAverageFinalNetProfitPerItem(
-    item.qty,
-    finalNetProfitPerItem
+  var averageFinalNetProfitPerSKU = await calcAverageFinalNetProfitPerSKU(
+    sku.qty,
+    finalNetProfitPerSKU
   );
 
-  item.netProfitMargin = await shortNum(netProfitMargin);
-  item.finalNetProfitPerItem = await shortNum(finalNetProfitPerItem);
-  item.averageFinalNetProfitPerItem = await shortNum(
-    averageFinalNetProfitPerItem
-  );
+  sku.netProfitMargin = await shortNum(netProfitMargin);
+  sku.finalNetProfitPerSKU = await shortNum(finalNetProfitPerSKU);
+  sku.averageFinalNetProfitPerSKU = await shortNum(averageFinalNetProfitPerSKU);
 
-  return item;
+  return sku;
 };
 
 module.exports = calcRemainingParams;

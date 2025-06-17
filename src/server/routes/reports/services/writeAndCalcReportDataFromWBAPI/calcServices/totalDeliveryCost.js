@@ -1,9 +1,9 @@
 var shortNum = require("../shortNum");
 
 var calcTotalDeliveryCost = async (data) => {
-  var items = data.map((e) => e.delivery_rub);
+  var skus = data.map((e) => e.delivery_rub);
 
-  var totalDeliveryCost = items.reduce((acc, item) => acc + item, 0);
+  var totalDeliveryCost = skus.reduce((acc, item) => acc + item, 0);
 
   return await shortNum(totalDeliveryCost);
 };

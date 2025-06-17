@@ -9,31 +9,31 @@ var table = document.getElementById("report");
 var createReportTable = async (report) => {
   var tbody = document.createElement("tbody");
 
-  var { reportId } = report;
+  var { reportId, skus } = report;
 
-  for (var [index, item] of Object.entries(report.items)) {
+  for (var [index, sku] of Object.entries(skus)) {
     var tr = document.createElement("tr");
 
-    var itemPhotoUploader = await createItemPhotoUploader(
+    var SKUPhotoUploader = await createItemPhotoUploader(
       reportId,
-      item.itemName,
+      sku.skuName,
       index,
       null
     );
 
-    var itemPhotoUploaderTd = await createTdElement(
-      itemPhotoUploader,
+    var SKUPhotoUploaderTd = await createTdElement(
+      SKUPhotoUploader,
       "photo-cell",
       index,
       "photo-cell"
     );
 
-    var itemName = await createTdElement(item.itemName);
+    var skuName = await createTdElement(sku.skuName);
 
-    var qty = await createTdElement(item.qty);
+    var qty = await createTdElement(sku.qty);
 
     var costPriceInputField = await createInputField(
-      item.costPrice,
+      sku.costPrice,
       index,
       "costPrice",
       url,
@@ -42,52 +42,52 @@ var createReportTable = async (report) => {
 
     var costPrice = await createTdElement(costPriceInputField);
 
-    var retailPrice = await createTdElement(item.averageRetailPrice);
+    var retailPrice = await createTdElement(sku.averageRetailPrice);
 
-    var deliveryCost = await createTdElement(item.deliveryCostPerItem);
+    var deliveryCost = await createTdElement(sku.deliveryCostPerSKU);
 
-    var fines = await createTdElement(item.finesPerItem);
+    var fines = await createTdElement(sku.finesPerSKU);
 
-    var storageCostPerItem = await createTdElement(item.storageCostPerItem);
+    var storageCostPerSKU = await createTdElement(sku.storageCostPerSKU);
 
-    var netProfitPerItem = await createTdElement(item.netProfitPerItem);
+    var netProfitPerSKU = await createTdElement(sku.netProfitPerSKU);
 
-    var averageNetProfitPerItem = await createTdElement(
-      item.averageNetProfitPerItem
+    var averageNetProfitPerSKU = await createTdElement(
+      sku.averageNetProfitPerSKU
     );
 
-    var averageFinalNetProfitPerItem = await createTdElement(
-      item.averageFinalNetProfitPerItem,
-      "averageFinalNetProfitPerItem",
+    var averageFinalNetProfitPerSKU = await createTdElement(
+      sku.averageFinalNetProfitPerSKU,
+      "averageFinalNetProfitPerSKU",
       index
     );
 
     var netProfitMargin = await createTdElement(
-      item.netProfitMargin,
+      sku.netProfitMargin,
       "netProfitMargin",
       index
     );
 
-    var finalNetProfitPerItem = await createTdElement(
-      item.finalNetProfitPerItem,
-      "finalNetProfitPerItem",
+    var finalNetProfitPerSKU = await createTdElement(
+      sku.finalNetProfitPerSKU,
+      "finalNetProfitPerSKU",
       index
     );
 
     tr.append(
-      itemPhotoUploaderTd,
-      itemName,
+      SKUPhotoUploaderTd,
+      skuName,
       qty,
       costPrice,
       retailPrice,
       deliveryCost,
       fines,
-      storageCostPerItem,
-      netProfitPerItem,
-      averageNetProfitPerItem,
-      averageFinalNetProfitPerItem,
+      storageCostPerSKU,
+      netProfitPerSKU,
+      averageNetProfitPerSKU,
+      averageFinalNetProfitPerSKU,
       netProfitMargin,
-      finalNetProfitPerItem
+      finalNetProfitPerSKU
     );
 
     tbody.append(tr);

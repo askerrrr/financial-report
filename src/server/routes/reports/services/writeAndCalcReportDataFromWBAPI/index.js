@@ -1,10 +1,10 @@
 var calc = require("./calcServices/index");
-var getItemsName = require("./getItemsName");
+var getSkuNames = require("./getSkuNames");
 var truncateItemsNums = require("./truncateItemsNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 
 var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
-  var skuNames = await getItemsName(report);
+  var skuNames = await getSkuNames(report);
   var totalFines = await calc.totalFines(report);
   var totalRevenue = await calc.totalRevenue(report);
   var totalSold = await calc.totalSold(report, skuNames);

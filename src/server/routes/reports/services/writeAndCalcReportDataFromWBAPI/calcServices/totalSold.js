@@ -1,10 +1,10 @@
-var calcTotalSold = async (data, itemsName) => {
+var calcTotalSold = async (data, skuNames) => {
   var totalSold = [];
 
-  for (var i = 0; i < itemsName.length; i++) {
-    var items = data.filter((e) => e.sa_name == itemsName[i]);
+  for (var i = 0; i < skuNames.length; i++) {
+    var skus = data.filter((e) => e.sa_name == skuNames[i]);
 
-    totalSold.push(...items);
+    totalSold.push(...skus);
   }
 
   return totalSold.reduce((acc, i) => acc + i.quantity, 0);

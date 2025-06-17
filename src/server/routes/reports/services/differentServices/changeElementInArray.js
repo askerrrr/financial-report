@@ -1,11 +1,11 @@
-var changeElementInArray = async (items, { index, value, fieldName }) => {
-  var item = items[index];
+var changeElementInArray = async (skus, { index, value, fieldName }) => {
+  var sku = skus[index];
 
-  item[fieldName] = value;
+  sku[fieldName] = value;
 
-  items[index] = item;
+  skus[index] = sku;
 
-  return items;
+  return skus;
 };
 
 module.exports = changeElementInArray;

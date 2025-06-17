@@ -1,13 +1,13 @@
 var { join } = require("node:path");
 var getImageToBase64 = require("./getImageToBase64");
 
-var collectImagesAsBase64 = async (userId, items) => {
+var collectImagesAsBase64 = async (userId, skus) => {
   var array = [];
 
-  for (var item of items) {
-    var { itemName } = item;
+  for (var sku of skus) {
+    var { skuName } = sku;
 
-    var fileName = itemName + ".png";
+    var fileName = skuName + ".png";
 
     var userDir = "userId_" + userId;
 
@@ -15,7 +15,7 @@ var collectImagesAsBase64 = async (userId, items) => {
 
     var base64 = await getImageToBase64(filePath);
 
-    array.push({ itemName, base64 });
+    array.push({ skuName, base64 });
   }
 
   return array;

@@ -1,5 +1,5 @@
 var calcTotalPaidAcceptance = async (report) => {
-  var acceptance = report.filter((item) => item.acceptance);
+  var acceptance = report.filter((sku) => sku.acceptance);
 
   var totalPaidAcceptance = acceptance.reduce(
     (acc, i) => acc + i.acceptance,
