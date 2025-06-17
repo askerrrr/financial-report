@@ -1,4 +1,5 @@
 var calcTotalSold = require("./calcTotalSold");
+var calcTaxPerSKU = require("./calcTaxPerSKU");
 var calcTotalFines = require("./calcTotalFines");
 var calcTotalRevenue = require("./calcTotalRevenue");
 var calcTotalTaxAmount = require("./calcTotalTaxAmount");
@@ -51,6 +52,8 @@ var calc = {
       averageStorageCost,
       totalFinesPerItem
     ),
+
+  taxPerSKU: (retailAmount) => calcTaxPerSKU(retailAmount),
 
   quantityPerItem: (data, itemName) => calcQuantityPerItem(data, itemName),
 
