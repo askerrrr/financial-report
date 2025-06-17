@@ -1,5 +1,5 @@
-var calcTotalFinalNetProfit = require("./calcServices/calcTotalFinalNetProfit");
-var calcTotalNetProfitMargin = require("./calcServices/calcTotalNetProfitMargin");
+var calcTotalFinalNetProfit = require("./calcTotalFinalNetProfit");
+var calcTotalNetProfitMargin = require("./calcTotalNetProfitMargin");
 
 var calcRestTotalParams = async (rest, items) => {
   rest.totalFinalNetProfit = await calcTotalFinalNetProfit(items);
