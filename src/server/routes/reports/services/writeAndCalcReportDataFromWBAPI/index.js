@@ -1,7 +1,6 @@
 var calc = require("./calcServices/index");
 var getItemsName = require("./getItemsName");
 var truncateItemsNums = require("./truncateItemsNums");
-var getStorageCostPerItem = require("./getStorageCostPerItem");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 
 var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
@@ -47,7 +46,7 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
       finesPerItem
     );
 
-    var storageCostPerItem = await getStorageCostPerItem(
+    var storageCostPerItem = await calc.storageCostPerItem(
       itemName,
       storageDataFromPaidStorageReport
     );
