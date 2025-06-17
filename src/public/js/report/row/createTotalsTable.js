@@ -27,6 +27,8 @@ var createTotalsTable = async (report) => {
   var totalSoldTd = await createTdElement(report.totalSold);
   var totalFinesTd = await createTdElement(report.totalFines);
 
+  var totalTaxAmountTd = await createTdElement(report.totalTaxAmount);
+
   var totalFinalNetProfit = await calcTotalFinalNetProfit(report.skus);
 
   var totalFinalNetProfitTd = await createTdElement(
@@ -43,6 +45,7 @@ var createTotalsTable = async (report) => {
     totalDeliveryCostTd,
     totalFinesTd,
     totalStorageCostTd,
+    totalTaxAmountTd,
     totalNetProfitMarginTd,
     totalFinalNetProfitTd
   );

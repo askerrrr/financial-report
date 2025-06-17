@@ -9,6 +9,8 @@ var createTotalTableHead = async () => {
 
   var totalStorageCostTh = await createThElement("Хранение");
 
+  var totalTaxAmount = await createThElement("Налоги");
+
   var totalNetProfitMarginTh = await createThElement("Общая выручка %");
 
   var totalFinalNetProfitTh = await createThElement("Всего");
@@ -20,6 +22,7 @@ var createTotalTableHead = async () => {
     totalDeliveryCostTh,
     totalFinesTh,
     totalStorageCostTh,
+    totalTaxAmount,
     totalNetProfitMarginTh,
     totalFinalNetProfitTh
   );
