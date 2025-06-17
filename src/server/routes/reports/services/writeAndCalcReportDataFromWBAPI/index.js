@@ -39,6 +39,8 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
 
     var retailAmountPerItem = await calc.retailAmountPerItem(itemName, report);
 
+    var taxPerSKU = await calc.taxPerSKU(retailAmountPerItem);
+
     var deliveryCostPerItem = await calc.deliveryCostPerItem(report, itemName);
 
     var acceptancePerItem = await calc.acceptance(itemName, report);
@@ -63,6 +65,7 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
     items.push({
       qty,
       itemName,
+      taxPerSKU,
       finesPerItem,
       revenuePerItem,
       netProfitPerItem,
