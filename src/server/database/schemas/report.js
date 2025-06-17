@@ -20,6 +20,7 @@ var itemsSchema = new Schema(
     acceptancePerItem: numOptions,
     finalNetProfitPerItem: numOptions,
     averageFinalNetProfitPerItem: numOptions,
+    retailAmountPerItem: numOptions,
     averageNetProfitPerItem: numOptions,
   },
   { _id: false }
