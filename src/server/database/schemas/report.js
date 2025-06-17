@@ -18,6 +18,7 @@ var itemsSchema = new Schema(
     deliveryCostPerItem: numOptions,
     storageCostPerItem: numOptions,
     acceptancePerItem: numOptions,
+    taxPerSKU: numOptions,
     finalNetProfitPerItem: numOptions,
     averageFinalNetProfitPerItem: numOptions,
     retailAmountPerItem: numOptions,
