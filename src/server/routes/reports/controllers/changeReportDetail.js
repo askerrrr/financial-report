@@ -17,7 +17,7 @@ var changeReportDetail = async (req, res, next) => {
 
   changedSKUs[req.body.index] = skuWithCalculatedParams;
 
-  var updatedReport = await calcRestTotalParams(rest, changedItems);
+  var updatedReport = await calcRestTotalParams(rest, changedSKUs);
 
   var successUpdate = await updateReport(userId, reportId, updatedReport);
 
