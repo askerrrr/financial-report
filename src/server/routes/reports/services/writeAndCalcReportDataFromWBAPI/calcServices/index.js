@@ -15,6 +15,7 @@ var calcTotalPaidAcceptance = require("./calcTotalPaidAcceptance");
 var calcTotalRevenuePerItem = require("./calcTotalRevenuePerItem");
 var calcDeliveryCostPerItem = require("./calcDeliveryCostPerItem");
 var calcTotalNetProfitMargin = require("./calcTotalNetProfitMargin");
+var calcPaidAcceptancePerItem = require("./calcPaidAcceptancePerItem");
 var calcFinalNetProfitPerItem = require("./calcFinalNetProfitPerItem");
 var calcAverageNetProfitPerItem = require("./calcAverageNetProfitPerItem");
 var calcAverageRetailPricePerItem = require("./calcAverageRetailPricePerItem");
@@ -31,6 +32,8 @@ var calc = {
 
   storageCostPerItem: (itemName, storageData) =>
     calcStorageCostPerItem(itemName, storageData),
+
+  acceptance: (itemName, report) => calcPaidAcceptancePerItem(itemName, report),
 
   netProfitPerItem: (
     totalRevenuePerItem,
