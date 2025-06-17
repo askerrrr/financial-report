@@ -1,6 +1,6 @@
 var changeElementInArray = require("../services/differentServices/changeElementInArray");
-var calcRestTotalParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/calcRestTotalParams");
-var calcRemainingParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/calcRemainingParams");
+var calcRestTotalParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/restTotalParams");
+var calcRemainingParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/remainingParams");
 
 var changeReportDetail = async (req, res, next) => {
   var { updateReport, getReportById } = req.app.locals.reportCollectionServices;

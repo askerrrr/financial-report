@@ -1,5 +1,5 @@
 var getItemsNameFromPaidStorageReport = require("./getItemsNameFromPaidStorageReport");
-var calcItemStorageCostFromPaidStorageReport = require("./calcServices/calcItemStorageCostFromPaidStorageReport");
+var calcItemStorageCostFromPaidStorageReport = require("./calcServices/itemStorageCostFromPaidStorageReport");
 
 var parsePaidStorageReport = async (report) => {
   var itemsName = await getItemsNameFromPaidStorageReport(report);

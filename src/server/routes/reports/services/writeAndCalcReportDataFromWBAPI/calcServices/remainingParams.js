@@ -1,7 +1,7 @@
 var shortNum = require("../shortNum");
-var calcNetProfitMargin = require("./calcNetProfitMargin");
-var calcFinalNetProfitPerItem = require("./calcFinalNetProfitPerItem");
-var calcAverageFinalNetProfitPerItem = require("./calcAverageFinalNetProfitPerItem");
+var calcNetProfitMargin = require("./netProfitMargin");
+var calcFinalNetProfitPerItem = require("./finalNetProfitPerItem");
+var calcAverageFinalNetProfitPerItem = require("./averageFinalNetProfitPerItem");
 
 var calcRemainingParams = async (item, costPrice) => {
   var finalNetProfitPerItem = await calcFinalNetProfitPerItem(
