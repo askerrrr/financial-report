@@ -50,6 +50,8 @@ var createReportTable = async (report) => {
 
     var storageCostPerSKU = await createTdElement(sku.storageCostPerSKU);
 
+    var acceptancePerSKU = await createTdElement(sku.acceptancePerSKU);
+
     var netProfitPerSKU = await createTdElement(sku.netProfitPerSKU);
 
     var averageNetProfitPerSKU = await createTdElement(
@@ -83,6 +85,7 @@ var createReportTable = async (report) => {
       deliveryCost,
       fines,
       storageCostPerSKU,
+      acceptancePerSKU,
       netProfitPerSKU,
       averageNetProfitPerSKU,
       averageFinalNetProfitPerSKU,
