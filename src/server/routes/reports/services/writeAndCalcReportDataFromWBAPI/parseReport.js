@@ -1,4 +1,4 @@
-var calc = require("./calculateData");
+var calc = require("./calcServices/index");
 var getItemsName = require("./getItemsName");
 var truncateItemsNums = require("./truncateItemsNums");
 var getStorageCostPerItem = require("./getStorageCostPerItem");
