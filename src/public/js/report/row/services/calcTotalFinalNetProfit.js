@@ -1,8 +1,8 @@
 import shortNum from "./shortNum.js";
 
-var calcTotalFinalNetProfit = async (items) => {
-  var totalFinalNetProfit = items.reduce(
-    (acc, i) => acc + i.finalNetProfitPerItem,
+var calcTotalFinalNetProfit = async (skus) => {
+  var totalFinalNetProfit = skus.reduce(
+    (acc, sku) => acc + sku.finalNetProfitPerSKU,
     0
   );
 

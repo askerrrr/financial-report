@@ -2,7 +2,7 @@ var shortNum = require("../shortNum");
 
 var calcTotalFinalNetProfit = async (skus) => {
   var totalFInalNetProfit = skus.reduce(
-    (acc, i) => acc + i.finalNetProfitPerItem,
+    (acc, sku) => acc + sku.finalNetProfitPerItem,
     0
   );
 

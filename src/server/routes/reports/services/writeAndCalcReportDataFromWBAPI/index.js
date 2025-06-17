@@ -1,6 +1,6 @@
 var calc = require("./calcServices/index");
 var getSkuNames = require("./getSkuNames");
-var truncateItemsNums = require("./truncateItemsNums");
+var truncateSKUNums = require("./truncateSKUNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 
 var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
@@ -24,42 +24,41 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
     var skuFilteredReport = report.filter((sku) => sku.sa_name === skuName);
 
     var qty = await calc.quantityPerSKU(skuFilteredReport);
-    var finesPerSKU = await calc.totalFinesPerItem(report, skuName);
-    var revenuePerSKU = await calc.totalRevenuePerItem(report, skuName);
+    var finesPerSKU = await calc.totalFinesPerSKU(skuFilteredReport);
+    var revenuePerSKU = await calc.totalRevenuePerSKU(skuFilteredReport);
 
-    var averageRetailPrice = await calc.averageRetailPricePerItem(
-      report,
+    var averageRetailPrice = await calc.averageRetailPricePerSKU(
       qty,
-      skuName
+      skuFilteredReport
     );
 
-    var averageStorageCost = await calc.averageStorageCostPerItem(
+    var averageStorageCost = await calc.averageStorageCostPerSKU(
       totalStorageCost,
       totalSold,
       qty
     );
 
-    var retailAmountPerSKU = await calc.retailAmountPerItem(skuName, report);
+    var retailAmountPerSKU = await calc.retailAmountPerSKU(skuFilteredReport);
 
     var taxPerSKU = await calc.taxPerSKU(retailAmountPerSKU);
 
-    var deliveryCostPerSKU = await calc.deliveryCostPerItem(report, skuName);
+    var deliveryCostPerSKU = await calc.deliveryCostPerSKU(skuFilteredReport);
 
-    var acceptancePerSKU = await calc.acceptance(skuName, report);
+    var acceptancePerSKU = await calc.acceptance(skuFilteredReport);
 
-    var netProfitPerSKU = await calc.netProfitPerItem(
+    var netProfitPerSKU = await calc.netProfitPerSKU(
       revenuePerSKU,
       deliveryCostPerSKU,
       averageStorageCost,
       finesPerSKU
     );
 
-    var storageCostPerSKU = await calc.storageCostPerItem(
+    var storageCostPerSKU = await calc.storageCostPerSKU(
       skuName,
       storageDataFromPaidStorageReport
     );
 
-    var averageNetProfitPerSKU = await calc.averageNetProfitPerItem(
+    var averageNetProfitPerSKU = await calc.averageNetProfitPerSKU(
       netProfitPerSKU,
       qty
     );
@@ -81,7 +80,7 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
     });
   }
 
-  skus = await truncateItemsNums(skus);
+  skus = await truncateSKUNums(skus);
 
   return {
     skus,
