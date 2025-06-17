@@ -1,6 +1,6 @@
 var calcAverageFinalNetProfitPerSKU = async (qty, finalNetProfitPerSKU) => {
-  if (typeof finalNetProfitPerSKU !== "number" || finalNetProfitPerSKU == 0) {
-    return "Расчет только после ввода себестоимости";
+  if (finalNetProfitPerSKU == 0) {
+    return 0;
   }
 
   var averageFinalNetProfitPerSKU = finalNetProfitPerSKU / qty;

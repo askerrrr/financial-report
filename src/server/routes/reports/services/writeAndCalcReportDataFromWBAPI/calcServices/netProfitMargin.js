@@ -1,6 +1,6 @@
 var calcNetProfitMargin = async (revenuePerItem, finalNetProfitPerItem) => {
-  if (typeof finalNetProfitPerItem !== "number" || finalNetProfitPerItem == 0) {
-    return "Расчет только после ввода себестоимости";
+  if (finalNetProfitPerItem === 0) {
+    return 0;
   }
 
   var netProfitMargin = (finalNetProfitPerItem * 100) / revenuePerItem;
