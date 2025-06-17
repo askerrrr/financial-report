@@ -5,7 +5,7 @@ var calcTotalRevenue = require("./calcTotalRevenue");
 var calcTotalTaxAmount = require("./calcTotalTaxAmount");
 var calcTotalNetProfit = require("./calcTotalNetProfit");
 var calcNetProfitMargin = require("./calcNetProfitMargin");
-var calcQuantityPerItem = require("./calcQuantityPerItem");
+var calcQuantityPerSKU = require("./calcQuantityPerSKU");
 var calcTotalStorageCost = require("./calcTotalStorageCost");
 var calcNetProfitPerItem = require("./calcNetProfitPerItem");
 var calcTotalFinesPerItem = require("./calcTotalFinesPerItem");
@@ -55,7 +55,7 @@ var calc = {
 
   taxPerSKU: (retailAmount) => calcTaxPerSKU(retailAmount),
 
-  quantityPerItem: (data, itemName) => calcQuantityPerItem(data, itemName),
+  quantityPerSKU: (report) => calcQuantityPerSKU(report),
 
   totalRevenue: (data) => calcTotalRevenue(data),
 
