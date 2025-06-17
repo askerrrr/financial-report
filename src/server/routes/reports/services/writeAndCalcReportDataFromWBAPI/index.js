@@ -21,6 +21,8 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
   var items = [];
 
   for (var itemName of itemsName) {
+    var skuFilteredReport = report.filter((sku) => sku.sa_name === itemName);
+
     var qty = await calc.quantityPerItem(report, itemName);
     var finesPerItem = await calc.totalFinesPerItem(report, itemName);
     var revenuePerItem = await calc.totalRevenuePerItem(report, itemName);
