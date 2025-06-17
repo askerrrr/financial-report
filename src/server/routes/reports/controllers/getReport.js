@@ -7,7 +7,7 @@ var getReport = async (req, res, next) => {
 
   var report = await getReportById(userId, id);
 
-  var imageCollection = await collectImagesAsBase64(userId, report.items);
+  var imageCollection = await collectImagesAsBase64(userId, report.skus);
 
   res.json({ report, imageCollection });
 };

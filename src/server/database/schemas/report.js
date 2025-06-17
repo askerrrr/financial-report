@@ -3,26 +3,26 @@ var { Schema } = require("mongoose");
 var numOptions = { type: Number, default: 0 };
 var strOptions = { type: String, required: true };
 
-var itemsSchema = new Schema(
+var SKUSchema = new Schema(
   {
-    itemName: strOptions,
+    skuName: strOptions,
     qty: numOptions,
     costPrice: numOptions,
     returnAmount: numOptions,
-    revenuePerItem: numOptions,
+    revenuePerSKU: numOptions,
     averageRetailPrice: numOptions,
     averageStorageCost: numOptions,
-    finesPerItem: numOptions,
-    netProfitPerItem: numOptions,
+    finesPerSKU: numOptions,
+    netProfitPerSKU: numOptions,
     netProfitMargin: numOptions,
-    deliveryCostPerItem: numOptions,
-    storageCostPerItem: numOptions,
-    acceptancePerItem: numOptions,
+    deliveryCostPerSKU: numOptions,
+    storageCostPerSKU: numOptions,
+    acceptancePerSKU: numOptions,
     taxPerSKU: numOptions,
-    finalNetProfitPerItem: numOptions,
-    averageFinalNetProfitPerItem: numOptions,
-    retailAmountPerItem: numOptions,
-    averageNetProfitPerItem: numOptions,
+    finalNetProfitPerSKU: numOptions,
+    averageFinalNetProfitPerSKU: numOptions,
+    retailAmountPerSKU: numOptions,
+    averageNetProfitPerSKU: numOptions,
   },
   { _id: false }
 );
@@ -44,7 +44,7 @@ var reportSchema = new Schema(
     totalTaxAmount: numOptions,
     totalPaidAcceptance: numOptions,
     taxRate: { type: Number, default: 6 },
-    items: [{ type: itemsSchema, required: true }],
+    skus: [{ type: SKUSchema, required: true }],
   },
   { _id: false }
 );

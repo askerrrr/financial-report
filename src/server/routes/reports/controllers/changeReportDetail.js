@@ -7,36 +7,30 @@ var changeReportDetail = async (req, res, next) => {
 
   var { userId, reportId } = req.body;
 
-  var { items, ...rest } = await getReportById(userId, reportId);
+  var { skus, ...rest } = await getReportById(userId, reportId);
 
-  var changedItems = await changeElementInArray(items, req.body);
+  var changedSKUs = await changeElementInArray(skus, req.body);
 
-  var item = changedItems[req.body.index];
+  var sku = changedSKUs[req.body.index];
 
-  var itemWithCalculatedParams = await calcRemainingParams(
-    item,
-    +req.body.value
-  );
+  var skuWithCalculatedParams = await calcRemainingParams(sku, +req.body.value);
 
-  changedItems[req.body.index] = itemWithCalculatedParams;
+  changedSKUs[req.body.index] = skuWithCalculatedParams;
 
   var updatedReport = await calcRestTotalParams(rest, changedItems);
 
   var successUpdate = await updateReport(userId, reportId, updatedReport);
 
   if (successUpdate) {
-    var {
-      netProfitMargin,
-      finalNetProfitPerItem,
-      averageFinalNetProfitPerItem,
-    } = itemWithCalculatedParams;
+    var { netProfitMargin, finalNetProfitPerSKU, averageFinalNetProfitPerSKU } =
+      skuWithCalculatedParams;
 
     var { totalFinalNetProfit, totalNetProfitMargin } = updatedReport;
 
     return res.status(200).json({
       netProfitMargin,
-      finalNetProfitPerItem,
-      averageFinalNetProfitPerItem,
+      finalNetProfitPerSKU,
+      averageFinalNetProfitPerSKU,
       total: { totalFinalNetProfit, totalNetProfitMargin },
       index: req.body.index,
     });
