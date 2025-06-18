@@ -1,13 +1,17 @@
 import createThElement from "./createThElement.js";
 
 var createTotalTableHead = async () => {
-  var totalSoldTh = await createThElement("Всего продано шт.");
+  var totalRevenueTh = await createThElement("WB реализовал");
+
+  var totalSoldTh = await createThElement("Продано шт.");
 
   var totalDeliveryCostTh = await createThElement("Доставка");
 
   var totalFinesTh = await createThElement("Удержания");
 
   var totalStorageCostTh = await createThElement("Хранение");
+
+  var totalNetProfitTh = await createThElement("К перечислению");
 
   var totalTaxAmount = await createThElement("Налоги");
 
@@ -18,10 +22,12 @@ var createTotalTableHead = async () => {
   var tr = document.createElement("tr");
 
   tr.append(
+    totalRevenueTh,
     totalSoldTh,
     totalDeliveryCostTh,
     totalFinesTh,
     totalStorageCostTh,
+    totalNetProfitTh,
     totalTaxAmount,
     totalNetProfitMarginTh,
     totalFinalNetProfitTh

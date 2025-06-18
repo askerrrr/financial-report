@@ -11,6 +11,8 @@ var tbody = document.createElement("tbody");
 var tr = document.createElement("tr");
 
 var createTotalsTable = async (report) => {
+  var totalRevenueTd = await createTdElement(report.totalRevenue);
+
   var totalStorageCostTd = await createTdElement(report.totalStorageCost);
   var totalDeliveryCostTd = await createTdElement(report.totalDeliveryCost);
 
@@ -25,7 +27,10 @@ var createTotalsTable = async (report) => {
   );
 
   var totalSoldTd = await createTdElement(report.totalSold);
+
   var totalFinesTd = await createTdElement(report.totalFines);
+
+  var totalNetProfitTd = await createTdElement(report.totalNetProfit);
 
   var totalTaxAmountTd = await createTdElement(report.totalTaxAmount);
 
@@ -41,10 +46,12 @@ var createTotalsTable = async (report) => {
   }
 
   tr.append(
+    totalRevenueTd,
     totalSoldTd,
     totalDeliveryCostTd,
     totalFinesTd,
     totalStorageCostTd,
+    totalNetProfitTd,
     totalTaxAmountTd,
     totalNetProfitMarginTd,
     totalFinalNetProfitTd
