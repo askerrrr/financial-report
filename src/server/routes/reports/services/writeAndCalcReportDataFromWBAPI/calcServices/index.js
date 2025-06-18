@@ -59,7 +59,18 @@ var calc = {
 
   totalRevenue: (data) => calcTotalRevenue(data),
 
-  totalNetProfit: (data) => calcTotalNetProfit(data),
+  totalNetProfit: (
+    totalRevenue,
+    totalStorageCost,
+    totalDeliveryCost,
+    totalPaidAcceptance
+  ) =>
+    calcTotalNetProfit(
+      totalRevenue,
+      totalStorageCost,
+      totalDeliveryCost,
+      totalPaidAcceptance
+    ),
 
   totalDeliveryCost: (data) => calcTotalDeliveryCost(data),
 
