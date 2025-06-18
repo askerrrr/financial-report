@@ -11,7 +11,7 @@ var createTotalTableHead = async () => {
 
   var totalTaxAmount = await createThElement("Налоги");
 
-  var totalNetProfitMarginTh = await createThElement("Общая выручка %");
+  var totalNetProfitMarginTh = await createThElement("Маржинальность %");
 
   var totalFinalNetProfitTh = await createThElement("Всего");
 
