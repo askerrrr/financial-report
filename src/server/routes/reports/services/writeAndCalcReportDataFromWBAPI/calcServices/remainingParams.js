@@ -4,11 +4,7 @@ var calcFinalNetProfitPerSKU = require("./finalNetProfitPerSKU");
 var calcAverageFinalNetProfitPerSKU = require("./averageFinalNetProfitPerSKU");
 
 var calcRemainingParams = async (sku, costPrice) => {
-  var finalNetProfitPerSKU = await calcFinalNetProfitPerSKU(
-    sku.netProfitPerSKU,
-    sku.qty,
-    costPrice
-  );
+  var finalNetProfitPerSKU = await calcFinalNetProfitPerSKU(sku, costPrice);
 
   var netProfitMargin = await calcNetProfitMargin(
     sku.revenuePerSKU,

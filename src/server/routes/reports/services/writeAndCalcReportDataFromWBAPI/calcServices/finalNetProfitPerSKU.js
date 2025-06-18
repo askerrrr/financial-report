@@ -1,9 +1,12 @@
-var calcFinalNetProfitPerSKU = async (netProfitPerSKU, costPrice, qty) => {
+var calcFinalNetProfitPerSKU = async (
+  { qty, taxPerSKU, netProfitPerSKU },
+  costPrice
+) => {
   if (netProfitPerSKU === 0 || qty === 0) {
     return 0;
   }
 
-  var finalNetProfitPerSKU = netProfitPerSKU - qty * costPrice;
+  var finalNetProfitPerSKU = netProfitPerSKU - taxPerSKU - qty * costPrice;
 
   return finalNetProfitPerSKU;
 };
