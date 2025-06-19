@@ -37,6 +37,7 @@ var reportSchema = new Schema(
     totalRevenue: numOptions,
     totalSold: numOptions,
     totalFines: numOptions,
+    productCosts: numOptions,
     totalNetProfit: numOptions,
     totalFinalNetProfit: numOptions,
     totalNetProfitMargin: numOptions,
