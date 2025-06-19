@@ -7,7 +7,7 @@ var createTotalTableHead = async () => {
 
   var totalDeliveryCostTh = await createThElement("Доставка");
 
-  var totalFinesTh = await createThElement("Удержания");
+  var totalFinesTh = await createThElement("Штрафы");
 
   var totalStorageCostTh = await createThElement("Хранение");
 
