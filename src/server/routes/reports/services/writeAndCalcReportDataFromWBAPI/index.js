@@ -13,6 +13,7 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
   var totalRetailAmount = await calc.totalRetailAmount(report);
   var totalTaxAmount = await calc.totalTaxAmount(totalRetailAmount);
   var totalPaidAcceptance = await calc.totalPaidAcceptance(report);
+  var totalDeductionOrPayment = await calc.totalDeductionOrPayment(report);
 
   var totalNetProfit = await calc.totalNetProfit(
     totalRevenue,
@@ -105,6 +106,7 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
     totalDeliveryCost,
     totalRetailAmount,
     totalPaidAcceptance,
+    totalDeductionOrPayment,
   };
 };
 

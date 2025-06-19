@@ -1,6 +1,7 @@
 var calcTotalSold = require("./totalSold");
 var calcTaxPerSKU = require("./taxPerSKU");
 var calcTotalFines = require("./totalFines");
+var calcFinesPerSKU = require("./finesPerSKU");
 var calcTotalRevenue = require("./totalRevenue");
 var calcTotalTaxAmount = require("./totalTaxAmount");
 var calcTotalNetProfit = require("./totalNetProfit");
@@ -8,7 +9,6 @@ var calcNetProfitMargin = require("./netProfitMargin");
 var calcQuantityPerSKU = require("./quantityPerSKU");
 var calcTotalStorageCost = require("./totalStorageCost");
 var calcNetProfitPerSKU = require("./netProfitPerSKU");
-var calcFinesPerSKU = require("./finesPerSKU");
 var calcTotalDeliveryCost = require("./totalDeliveryCost");
 var calcTotalRetailAmount = require("./totalRetailAmount");
 var calcStorageCostPerSKU = require("./storageCostPerSKU");
@@ -21,6 +21,7 @@ var calcTotalNetProfitMargin = require("./totalNetProfitMargin");
 var calcPaidAcceptancePerSKU = require("./paidAcceptancePerSKU");
 var calcFinalNetProfitPerSKU = require("./finalNetProfitPerSKU");
 var calcAverageNetProfitPerSKU = require("./averageNetProfitPerSKU");
+var calcTotalDeductionOrPayment = require("./totalDeductionOrPayment");
 var calcAverageRetailPricePerSKU = require("./averageRetailPricePerSKU");
 var calcAverageStorageCostPerSKU = require("./averageStorageCostPerSKU");
 var calcAverageFinalNetProfitPerSKU = require("./averageFinalNetProfitPerSKU");
@@ -89,6 +90,8 @@ var calc = {
 
   totalNetProfitMargin: (totalRevenue, totalNetProfit) =>
     calcTotalNetProfitMargin(totalRevenue, totalNetProfit),
+
+  totalDeductionOrPayment: (report) => calcTotalDeductionOrPayment(report),
 
   totalRevenuePerSKU: (data, skusName) =>
     calcTotalRevenuePerSKU(data, skusName),

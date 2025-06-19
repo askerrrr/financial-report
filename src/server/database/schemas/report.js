@@ -44,6 +44,7 @@ var reportSchema = new Schema(
     totalRetailAmount: numOptions,
     totalTaxAmount: numOptions,
     totalPaidAcceptance: numOptions,
+    totalDeductionOrPayment: numOptions,
     taxRate: { type: Number, default: 6 },
     skus: [{ type: SKUSchema, required: true }],
   },
