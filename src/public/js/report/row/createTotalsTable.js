@@ -13,6 +13,10 @@ var tr = document.createElement("tr");
 var createTotalsTable = async (report) => {
   var totalRevenueTd = await createTdElement(report.totalRevenue);
 
+  var totalDeductionOrPaymentTd = await createTdElement(
+    report.deductionOrPayment
+  );
+
   var totalStorageCostTd = await createTdElement(report.totalStorageCost);
   var totalDeliveryCostTd = await createTdElement(report.totalDeliveryCost);
 
@@ -50,6 +54,7 @@ var createTotalsTable = async (report) => {
     totalSoldTd,
     totalDeliveryCostTd,
     totalFinesTd,
+    totalDeductionOrPaymentTd,
     totalStorageCostTd,
     totalNetProfitTd,
     totalTaxAmountTd,
