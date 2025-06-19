@@ -1,6 +1,8 @@
 import createThElement from "./createThElement.js";
 
 var createTotalTableHead = async () => {
+  var totalRetailAmountTh = await createThElement("Товаров продано на");
+
   var totalRevenueTh = await createThElement("WB реализовал");
 
   var totalSoldTh = await createThElement("Продано шт.");
@@ -26,6 +28,7 @@ var createTotalTableHead = async () => {
   var tr = document.createElement("tr");
 
   tr.append(
+    totalRetailAmountTh,
     totalRevenueTh,
     totalSoldTh,
     totalDeliveryCostTh,
