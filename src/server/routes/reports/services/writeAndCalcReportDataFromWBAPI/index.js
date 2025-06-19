@@ -25,7 +25,8 @@ var parseReport = async (
     totalRevenue,
     totalStorageCost,
     totalDeliveryCost,
-    totalPaidAcceptance
+    totalPaidAcceptance,
+    totalAdCampaignCosts
   );
 
   var storageDataFromPaidStorageReport = await parsePaidStorageReport(

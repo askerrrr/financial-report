@@ -70,13 +70,15 @@ var calc = {
     totalRevenue,
     totalStorageCost,
     totalDeliveryCost,
-    totalPaidAcceptance
+    totalPaidAcceptance,
+    totalAdCampaignCosts
   ) =>
     calcTotalNetProfit(
       totalRevenue,
       totalStorageCost,
       totalDeliveryCost,
-      totalPaidAcceptance
+      totalPaidAcceptance,
+      totalAdCampaignCosts
     ),
 
   totalDeliveryCost: (data) => calcTotalDeliveryCost(data),

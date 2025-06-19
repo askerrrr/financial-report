@@ -4,10 +4,15 @@ var calcTotalNetProfit = async (
   totalRevenue,
   totalStorageCost,
   totalDeliveryCost,
-  totalPaidAcceptance
+  totalPaidAcceptance,
+  totalAdCampaignCosts
 ) => {
   var totalNetProfit =
-    totalRevenue - totalStorageCost - totalDeliveryCost - totalPaidAcceptance;
+    totalRevenue -
+    totalStorageCost -
+    totalDeliveryCost -
+    totalPaidAcceptance -
+    totalAdCampaignCosts;
 
   return await shortNum(totalNetProfit);
 };
