@@ -3,15 +3,17 @@ var parseReport = require("../services/writeAndCalcReportDataFromWBAPI/index");
 var writeReportFromWBAPI = async (req, res, next) => {
   var { createReport } = req.app.locals.reportCollectionServices;
 
-  var { report, paidStorageReport, dateFrom, dateTo } = req.reportData;
+  var { dateTo, dateFrom, report, paidStorageReport, totalAdCampaignCosts } =
+    req.reportData;
 
   var userId = req.app.locals.userId;
 
   var parsedReport = await parseReport(
+    dateTo,
+    dateFrom,
     report,
     paidStorageReport,
-    dateFrom,
-    dateTo
+    totalAdCampaignCosts
   );
 
   var reportId = report[0].realizationreport_id;

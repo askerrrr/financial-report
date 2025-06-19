@@ -1,5 +1,6 @@
 var getReportByPeriodFromWBAPI = require("../services/differentServices/getReportByPeriodFromWBAPI");
 var createPaidStorageReportTask = require("../services/differentServices/createPaidStorageReportTask");
+var getAdvertisingCostsForPeriod = require("../services/differentServices/getAdvertisingCostsForPeriod");
 var getPaidStorageReportByTaskIdFromWBAPI = require("../services/differentServices/getPaidStorageReportByTaskIdFromWBAPI");
 var checkPaidStorageReportCreationStatus = require("../services/differentServices/checkPaidStorageReportCreationStatus");
 
@@ -29,6 +30,12 @@ var getReportFromWBAPI = async (req, res, next) => {
     userId
   );
 
+  var totalAdCampaignCosts = await getAdvertisingCostsForPeriod(
+    dateFrom,
+    dateTo,
+    token
+  );
+
   var report = await getReportByPeriodFromWBAPI(
     dateFrom,
     dateTo,
@@ -36,7 +43,13 @@ var getReportFromWBAPI = async (req, res, next) => {
     userId
   );
 
-  req.reportData = { report, paidStorageReport, dateFrom, dateTo };
+  req.reportData = {
+    report,
+    paidStorageReport,
+    dateFrom,
+    dateTo,
+    totalAdCampaignCosts,
+  };
 
   next();
 };
