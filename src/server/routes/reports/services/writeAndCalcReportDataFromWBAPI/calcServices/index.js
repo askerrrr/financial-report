@@ -16,6 +16,7 @@ var calcTotalPaidAcceptance = require("./totalPaidAcceptance");
 var calcTotalRevenuePerSKU = require("./totalRevenuePerSKU");
 var calcDeliveryCostPerSKU = require("./deliveryCostPerSKU");
 var calcRetailAmountPerSKU = require("./retailAmountPerSKU");
+var calcDeductionsOrPayments = require("./deductionsOrPayments");
 var calcTotalNetProfitMargin = require("./totalNetProfitMargin");
 var calcPaidAcceptancePerSKU = require("./paidAcceptancePerSKU");
 var calcFinalNetProfitPerSKU = require("./finalNetProfitPerSKU");
@@ -31,10 +32,13 @@ var calc = {
   storageCostPerSKU: (skusName, storageData) =>
     calcStorageCostPerSKU(skusName, storageData),
 
-  acceptancePerSKU: (skusName, report) => calcPaidAcceptancePerSKU(skusName, report),
+  acceptancePerSKU: (skusName, report) =>
+    calcPaidAcceptancePerSKU(skusName, report),
 
   retailAmountPerSKU: (skusName, report) =>
     calcRetailAmountPerSKU(skusName, report),
+
+  deductionsOrPayments: (report) => calcDeductionsOrPayments(report),
 
   netProfitPerSKU: (
     totalRevenuePerSKU,

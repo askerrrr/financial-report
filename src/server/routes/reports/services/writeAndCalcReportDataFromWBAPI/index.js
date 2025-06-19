@@ -45,6 +45,8 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
       qty
     );
 
+    var deductionOrPayment = await calc.deductionsOrPayments(skuFilteredReport);
+
     var retailAmountPerSKU = await calc.retailAmountPerSKU(skuFilteredReport);
 
     var taxPerSKU = await calc.taxPerSKU(retailAmountPerSKU);
@@ -83,6 +85,7 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
       storageCostPerSKU,
       deliveryCostPerSKU,
       retailAmountPerSKU,
+      deductionOrPayment,
       averageNetProfitPerSKU,
     });
   }
