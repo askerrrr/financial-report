@@ -31,7 +31,7 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
     var skuFilteredReport = report.filter((sku) => sku.sa_name === skuName);
 
     var qty = await calc.quantityPerSKU(skuFilteredReport);
-    var finesPerSKU = await calc.totalFinesPerSKU(skuFilteredReport);
+    var finesPerSKU = await calc.finesPerSKU(skuFilteredReport);
     var revenuePerSKU = await calc.totalRevenuePerSKU(skuFilteredReport);
 
     var averageRetailPrice = await calc.averageRetailPricePerSKU(
@@ -51,7 +51,7 @@ var parseReport = async (report, paidStorageReport, dateFrom, dateTo) => {
 
     var deliveryCostPerSKU = await calc.deliveryCostPerSKU(skuFilteredReport);
 
-    var acceptancePerSKU = await calc.acceptance(skuFilteredReport);
+    var acceptancePerSKU = await calc.acceptancePerSKU(skuFilteredReport);
 
     var netProfitPerSKU = await calc.netProfitPerSKU(
       revenuePerSKU,
