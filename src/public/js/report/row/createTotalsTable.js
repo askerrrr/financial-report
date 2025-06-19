@@ -14,7 +14,7 @@ var createTotalsTable = async (report) => {
   var totalRevenueTd = await createTdElement(report.totalRevenue);
 
   var totalDeductionOrPaymentTd = await createTdElement(
-    report.deductionOrPayment
+    report.totalDeductionOrPayment
   );
 
   var totalStorageCostTd = await createTdElement(report.totalStorageCost);
