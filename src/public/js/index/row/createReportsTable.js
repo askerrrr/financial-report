@@ -9,9 +9,20 @@ var createReportsTable = async (reports) => {
   for (var report of reports) {
     var tr = document.createElement("tr");
 
-    var { id, dateFrom, dateTo, totalFinalNetProfit } = report;
+    var {
+      id,
+      dateFrom,
+      dateTo,
+      totalTaxAmount,
+      totalProductCosts,
+      totalFinalNetProfit,
+    } = report;
 
     var period = await getReportPeriod(dateFrom, dateTo);
+
+    var totalProductCostsTd = await createTdElement(totalProductCosts);
+
+    var totalTaxAmountTd = await createTdElement(totalTaxAmount);
 
     var totalFinalNetProfitTd = await createTdElement(
       totalFinalNetProfit,
@@ -26,7 +37,13 @@ var createReportsTable = async (reports) => {
 
     var reportLink = await getReportLink(id);
 
-    tr.append(period, totalFinalNetProfitTd, reportLink);
+    tr.append(
+      period,
+      totalFinalNetProfitTd,
+      totalProductCostsTd,
+      totalTaxAmountTd,
+      reportLink
+    );
 
     tbody.append(tr);
   }
