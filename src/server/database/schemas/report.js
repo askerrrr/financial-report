@@ -24,6 +24,7 @@ var SKUSchema = new Schema(
     retailAmountPerSKU: numOptions,
     deductionOrPayment: numOptions,
     averageNetProfitPerSKU: numOptions,
+    averageAdvertisingCostPerSKU: numOptions,
   },
   { _id: false }
 );

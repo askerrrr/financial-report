@@ -63,11 +63,17 @@ var parseReport = async (
 
     var acceptancePerSKU = await calc.acceptancePerSKU(skuFilteredReport);
 
+    var averageAdvertisingCostPerSKU = await calc.averageAdvertisingCostPerSKU(
+      skuNames.length,
+      totalAdCampaignCosts
+    );
+
     var netProfitPerSKU = await calc.netProfitPerSKU(
       revenuePerSKU,
       deliveryCostPerSKU,
       averageStorageCost,
-      finesPerSKU
+      finesPerSKU,
+      averageAdvertisingCostPerSKU
     );
 
     var storageCostPerSKU = await calc.storageCostPerSKU(
@@ -95,6 +101,7 @@ var parseReport = async (
       retailAmountPerSKU,
       deductionOrPayment,
       averageNetProfitPerSKU,
+      averageAdvertisingCostPerSKU,
     });
   }
 

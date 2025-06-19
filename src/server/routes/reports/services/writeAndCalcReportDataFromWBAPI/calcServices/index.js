@@ -25,7 +25,7 @@ var calcTotalDeductionOrPayment = require("./totalDeductionOrPayment");
 var calcAverageRetailPricePerSKU = require("./averageRetailPricePerSKU");
 var calcAverageStorageCostPerSKU = require("./averageStorageCostPerSKU");
 var calcAverageFinalNetProfitPerSKU = require("./averageFinalNetProfitPerSKU");
-var caclAverageAdvertisingCostPerSKU = require("./caclAverageAdvertisingCostPerSKU");
+var caclAverageAdvertisingCostPerSKU = require("./averageAdvertisingCostPerSKU");
 
 var calc = {
   netProfitMargin: (revenuePerSKU, finalNetProfitPerSKU) =>
@@ -46,13 +46,15 @@ var calc = {
     totalRevenuePerSKU,
     deliveryCostPerSKU,
     averageStorageCost,
-    totalFinesPerSKU
+    totalFinesPerSKU,
+    averageAdvertisingCostPerSKU
   ) =>
     calcNetProfitPerSKU(
       totalRevenuePerSKU,
       deliveryCostPerSKU,
       averageStorageCost,
-      totalFinesPerSKU
+      totalFinesPerSKU,
+      averageAdvertisingCostPerSKU
     ),
 
   averageAdvertisingCostPerSKU: (totalSKUs, totalAdCampaignCosts) =>
