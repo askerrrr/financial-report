@@ -29,7 +29,7 @@ var openModal = async (index, fieldName, valueDisplay, url, id) => {
 
     document.body.removeChild(modal);
 
-    var data = await sendChangedData(input.value, index, fieldName, url, id);
+    var data = await sendChangedData(+input.value, index, fieldName, url, id);
 
     var { total, ...rest } = data;
 

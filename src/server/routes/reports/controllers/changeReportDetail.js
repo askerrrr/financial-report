@@ -13,7 +13,7 @@ var changeReportDetail = async (req, res, next) => {
 
   var sku = changedSKUs[req.body.index];
 
-  var skuWithCalculatedParams = await calcRemainingParams(sku, +req.body.value);
+  var skuWithCalculatedParams = await calcRemainingParams(sku, req.body.value);
 
   changedSKUs[req.body.index] = skuWithCalculatedParams;
 
