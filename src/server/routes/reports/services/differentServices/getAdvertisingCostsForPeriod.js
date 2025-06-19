@@ -1,7 +1,7 @@
 var { WBAPIError } = require("../../../../customError/customError");
 
 var calculateTotalAdCampaignCosts = async (data) =>
-  date.reduce((acc, i) => acc + i.updSum, 0);
+  data.reduce((acc, i) => acc + i.updSum, 0);
 
 var getAdvertisingCostsForPeriod = async (dateFrom, dateTo, token) => {
   var url = `https://advert-api.wildberries.ru/adv/v1/upd?from=${dateFrom}&to=${dateTo}`;
