@@ -9,7 +9,7 @@ var shortNum = async (num) => {
 
   var [start, end] = str.split(".");
 
-  var shortenedNum = +[start, end.slice(0, 3)].join(".");
+  var shortenedNum = +[start, end.slice(0, 2)].join(".");
 
   return shortenedNum;
 };
