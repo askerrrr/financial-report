@@ -1,7 +1,7 @@
 import createThElement from "./createThElement.js";
 
 var createTotalTableHead = async () => {
-  var totalRetailAmountTh = await createThElement("Товаров продано на");
+  var totalRetailAmountTh = await createThElement("Сумма продаж до комиссий");
 
   var totalRevenueTh = await createThElement("WB реализовал");
 
@@ -20,8 +20,10 @@ var createTotalTableHead = async () => {
   var totalNetProfitTh = await createThElement("К перечислению");
 
   var totalTaxAmount = await createThElement("Налоги");
+  totalTaxAmount.title = `Вычисляется по формуле: Сумма продаж  *  6  /  100\nСистема налогообложения по умолчанию: УСН 6%`;
 
   var totalNetProfitMarginTh = await createThElement("Маржинальность %");
+  totalNetProfitMarginTh.title = `Вычисляется по формуле: Итоговая сумма  *  100  /  Сумма продаж`;
 
   var totalFinalNetProfitTh = await createThElement("Итого");
 
