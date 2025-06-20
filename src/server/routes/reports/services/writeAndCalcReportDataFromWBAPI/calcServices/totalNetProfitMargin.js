@@ -1,11 +1,14 @@
 var shortNum = require("../shortNum");
 
-var calcTotalNetProfitMargin = async (totalRetailAmount, totalNetProfit) => {
-  if (totalNetProfit === 0 || totalNetProfit === 0) {
+var calcTotalNetProfitMargin = async (
+  totalRetailAmount,
+  totalFinalNetProfit
+) => {
+  if (totalFinalNetProfit === 0 || totalNetProfit === 0) {
     return 0;
   }
 
-  var totalNetProfitMargin = (totalNetProfit * 100) / totalRetailAmount;
+  var totalNetProfitMargin = (totalFinalNetProfit * 100) / totalRetailAmount;
 
   return await shortNum(totalNetProfitMargin);
 };

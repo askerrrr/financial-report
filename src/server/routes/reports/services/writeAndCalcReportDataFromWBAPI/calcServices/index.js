@@ -96,8 +96,8 @@ var calc = {
   totalTaxAmount: (totalRetailAmount, taxRate) =>
     calcTotalTaxAmount(totalRetailAmount, taxRate),
 
-  totalNetProfitMargin: (totalRevenue, totalNetProfit) =>
-    calcTotalNetProfitMargin(totalRevenue, totalNetProfit),
+  totalNetProfitMargin: (totalRevenue, totalFinalNetProfit) =>
+    calcTotalNetProfitMargin(totalRevenue, totalFinalNetProfit),
 
   totalDeductionOrPayment: (report) => calcTotalDeductionOrPayment(report),
 
