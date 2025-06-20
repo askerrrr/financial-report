@@ -4,7 +4,7 @@ var calcTotalNetProfitMargin = async (
   totalRetailAmount,
   totalFinalNetProfit
 ) => {
-  if (totalFinalNetProfit === 0 || totalNetProfit === 0) {
+  if (totalFinalNetProfit === 0 || totalRetailAmount === 0) {
     return 0;
   }
 
