@@ -12,7 +12,9 @@ var showReportsTable = async () => {
 
   var { reports } = data;
 
-  return await createReportsTable(reports);
+  var table = await createReportsTable(reports);
+
+  document.body.append(table);
 };
 
 showReportsTable();

@@ -1,8 +1,11 @@
 import createTdElement from "../../report/row/services/createTdElement.js";
 import getReportPeriod from "./services/getReportPeriod.js";
 import getReportLink from "./services/getReportLink.js";
+import createReportsTableHead from "./services/createReportsTableHead.js";
 
-var table = document.getElementById("reports");
+var table = document.createElement("table");
+table.id = "reports";
+
 var tbody = document.createElement("tbody");
 
 var createReportsTable = async (reports) => {
@@ -50,7 +53,9 @@ var createReportsTable = async (reports) => {
 
   tbody.id = "tbody";
 
-  table.append(tbody);
+  var thead = await createReportsTableHead();
+
+  table.append(thead, tbody);
 
   return table;
 };
