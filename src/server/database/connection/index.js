@@ -11,11 +11,14 @@ var reportCollection = reportDB.model("Report", reportSchema);
 
 var tokenCollection = reportDB.model("Token", tokenSchema);
 
-var reportingPeriod = reportDB.model("ReportingPeriod", reportingPeriodsSchema);
+var reportingPeriodsCollection = reportDB.model(
+  "ReportingPeriod",
+  reportingPeriodsSchema
+);
 
 module.exports = {
   userCollection,
   reportCollection,
   tokenCollection,
-  reportingPeriod,
+  reportingPeriodsCollection,
 };
