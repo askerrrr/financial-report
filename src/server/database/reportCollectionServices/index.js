@@ -36,6 +36,6 @@ var reportCollectionServices = {
     deleteReportFromDb(reportCollection, userId, reportId),
 
   deleteAllReportsByUserId: (userId) =>
-    deleteAllReportsByUserId(collection, userId),
+    deleteAllReportsByUserId(reportCollection, userId),
 };
 module.exports = reportCollectionServices;
