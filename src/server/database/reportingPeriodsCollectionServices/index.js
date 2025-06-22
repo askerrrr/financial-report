@@ -1,11 +1,11 @@
 var { reportingPeriodsCollection } = require("../connection");
 var {
-  createReportingPeriodsCollectionEntity,
+  createReportingPeriodsEntity,
 } = require("./services/createReportingPeriodsCollectionEntity");
 
 var reportingPeriodsCollectionServices = {
-  createReportingPeriodsCollectionEntity: (userId) =>
-    createReportingPeriodsCollectionEntity(reportingPeriodsCollection, userId),
+  createReportingPeriodsEntity: (userId) =>
+    createReportingPeriodsEntity(reportingPeriodsCollection, userId),
 };
 
 module.exports = reportingPeriodsCollectionServices;

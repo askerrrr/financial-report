@@ -5,7 +5,7 @@ var cookieParser = require("cookie-parser");
 var userCollectionServices = require("./database/userCollectionServices/");
 var tokenCollectionServices = require("./database/tokenCollectionServices/");
 var reportCollectionServices = require("./database/reportCollectionServices/");
-var reportingPeriodsCollectionServices = require("./database/reportingPeriodsCollectionServices");
+var reportingPeriodsCollectionServices = require("./database/reportingPeriodsCollectionServices/");
 
 var app = express();
 
