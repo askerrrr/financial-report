@@ -9,6 +9,7 @@ var deleteReportFromDb = require("./services/deleteReportFromDb");
 var createReportsEntity = require("./services/createReportsEntity");
 var getReportsByUserId = require("./services/getReportsByUserId");
 var updateReportPeriod = require("./services/updateReportPeriod");
+var deleteAllReportsByUserId = require("./services/deleteAllReportsByUserId");
 
 var reportCollectionServices = {
   createReport: (userId, report) =>
@@ -33,5 +34,8 @@ var reportCollectionServices = {
 
   deleteReportFromDb: (userId, reportId) =>
     deleteReportFromDb(reportCollection, userId, reportId),
+
+  deleteAllReportsByUserId: (userId) =>
+    deleteAllReportsByUserId(collection, userId),
 };
 module.exports = reportCollectionServices;
