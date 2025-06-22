@@ -59,4 +59,6 @@ router.delete(
   require("./controllers/deleteReport")
 );
 
+router.delete("/delete_all/:userId", require("./controllers/deleteAllReports"));
+
 module.exports = router;
