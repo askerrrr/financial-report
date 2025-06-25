@@ -15,7 +15,7 @@ class WBAPIError extends Error {
     this.userId = userId;
     this.status = status;
     this.message = message;
-    this.location = location;``
+    this.location = location;
   }
 }
 
