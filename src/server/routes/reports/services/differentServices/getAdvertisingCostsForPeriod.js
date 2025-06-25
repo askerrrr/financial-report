@@ -12,7 +12,7 @@ var getAdvertisingCostsForPeriod = async (dateFrom, dateTo, token) => {
   });
 
   if (!res.ok) {
-    throw new WBAPIError(userId, res.status, res.statusText);
+    throw new WBAPIError(userId, res.status, res.statusText, "advertising");
   }
 
   var data = await res.json();
