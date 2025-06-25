@@ -13,7 +13,7 @@ var getReportByPeriodFromWBAPI = async (dateFrom, dateTo, token, userId) => {
   });
 
   if (!res.ok) {
-    throw new WBAPIError(userId, res.status, res.statusText);
+    throw new WBAPIError(userId, res.status, res.statusText, "main_report");
   }
 
   var report = await res.json();
