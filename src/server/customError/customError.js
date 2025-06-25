@@ -10,11 +10,12 @@ class DatabaseError extends Error {
 }
 
 class WBAPIError extends Error {
-  constructor(userId, status, message) {
+  constructor(userId, status, message, location) {
     super(message);
     this.userId = userId;
     this.status = status;
     this.message = message;
+    this.location = location;``
   }
 }
 
