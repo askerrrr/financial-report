@@ -1,3 +1,5 @@
+var { getMondayIndex } = require("./monday");
+
 var monthsList = [
   "январь",
   "февраль",
