@@ -4,7 +4,9 @@ var deleteAllReportingPeriods = async (req, res, next) => {
 
   var { userId } = req.params;
 
-  await deleteAllReportingPeriodsByUserId(userId);
+  var successDelete = await deleteAllReportingPeriodsByUserId(userId);
+
+  return successDelete ? res.sendStatus(200) : res.sendStatus(304);
 };
 
 module.exports = deleteAllReportingPeriods;
