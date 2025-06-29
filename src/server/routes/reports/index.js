@@ -62,7 +62,7 @@ router.delete(
 router.delete("/delete_all/:userId", require("./controllers/deleteAllReports"));
 
 router.delete(
-  "/delete_all_reporting_periods/",
+  "/delete_all_reporting_periods/:userId",
   require("./controllers/deleteAllReportingPeriods")
 );
 
