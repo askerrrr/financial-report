@@ -59,7 +59,10 @@ router.delete(
   require("./controllers/deleteReport")
 );
 
-router.delete("/delete_all/:userId", require("./controllers/deleteAllReports"));
+router.delete(
+  "/delete_all_reports/:userId",
+  require("./controllers/deleteAllReports")
+);
 
 router.delete(
   "/delete_all_reporting_periods/:userId",
