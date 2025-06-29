@@ -1,5 +1,5 @@
 var deleteAllReportsByUserId = async (collection, userId) => {
-  var result = collection.updateOne(
+  var result = await collection.updateOne(
     { userId },
     {
       $set: { reports: [] },
