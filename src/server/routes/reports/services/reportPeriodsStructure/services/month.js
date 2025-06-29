@@ -1,21 +1,21 @@
 var { getMondayIndex } = require("./monday");
 
 var monthsList = [
-  "январь",
-  "февраль",
-  "март",
-  "апрель",
-  "май",
-  "июнь",
-  "июль",
-  "август",
-  "сентябрь",
-  "октябрь",
-  "ноябрь",
   "декабрь",
+  "ноябрь",
+  "октябрь",
+  "сентябрь",
+  "август",
+  "июль",
+  "июнь",
+  "май",
+  "апрель",
+  "март",
+  "февраль",
+  "январь",
 ];
 
-var getMonthName = (monthNum) => monthsList[+monthNum - 1];
+var getMonthName = (monthNum) => monthsList[monthsList.length - monthNum];
 
 var getMonthIndex = (month) => monthsList.indexOf(month);
 
