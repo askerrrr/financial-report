@@ -39,7 +39,7 @@ var getMonthsData = (reportId, date, carry = null) => {
 
   var { monthName, monthIndex } = getMonthNameAndIndex(monthNum);
 
-  var months = [];
+  var months = new Array(12).fill(null);
 
   months[monthIndex] = { month: monthName, reports };
 
