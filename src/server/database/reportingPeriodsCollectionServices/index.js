@@ -2,6 +2,7 @@ var { reportingPeriodsCollection } = require("../connection");
 var getReportingPeriods = require("./services/getReportingPeriods");
 var updateReportsPeriods = require("./services/updateReportinPeriods");
 var createReportingPeriodsEntity = require("./services/createReportingPeriodsCollectionEntity");
+var deleteAllReportingPeriodsByUserId = require("./services/deleteAllReportingPeriodsByUserId");
 
 var reportingPeriodsCollectionServices = {
   createReportingPeriodsEntity: (userId) =>
@@ -12,6 +13,9 @@ var reportingPeriodsCollectionServices = {
 
   getReportingPeriods: (userId) =>
     getReportingPeriods(reportingPeriodsCollection, userId),
+
+  deleteAllReportingPeriodsByUserId: (userId) =>
+    deleteAllReportingPeriodsByUserId(reportingPeriodsCollection, userId),
 };
 
 module.exports = reportingPeriodsCollectionServices;
