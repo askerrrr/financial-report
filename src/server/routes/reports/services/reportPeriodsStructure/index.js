@@ -14,7 +14,7 @@ var {
 } = require("./services/months");
 var { setReportIdInReports } = require("./services/reports");
 
-var main = (dateFrom, dateTo, reportId, years) => {
+var organizeReportsByPeriod = (dateFrom, dateTo, reportId, years) => {
   var [periodStartYear, periodStartMonth] = dateFrom.split("-");
 
   var [periodEndYear, periodEndMonth] = dateTo.split("-");
@@ -162,4 +162,4 @@ var main = (dateFrom, dateTo, reportId, years) => {
   return years;
 };
 
-module.exports = main;
+module.exports = organizeReportsByPeriod;
