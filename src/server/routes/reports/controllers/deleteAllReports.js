@@ -5,7 +5,7 @@ var deleteAllReports = async (req, res, next) => {
 
   var successDeleted = await deleteAllReportsByUserId(userId);
 
-  return res.status(200).json(successDeleted);
+  return successDeleted ? res.sendStatus(200) : res.sendStatus(304);
 };
 
 module.exports = deleteAllReports;
