@@ -1,4 +1,4 @@
-var changeElementInArray = require("../services/differentServices/changeElementInArray");
+var changeElementInArray = require("../services/different/changeElementInArray");
 var calcRestTotalParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/restTotalParams");
 var calcRemainingParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/remainingParams");
 

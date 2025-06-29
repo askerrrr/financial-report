@@ -1,4 +1,4 @@
-var collectImagesAsBase64 = require("../services/differentServices/collectImagesAsBase64");
+var collectImagesAsBase64 = require("../services/different/collectImagesAsBase64");
 
 var getReport = async (req, res, next) => {
   var { userId, id } = req.params;

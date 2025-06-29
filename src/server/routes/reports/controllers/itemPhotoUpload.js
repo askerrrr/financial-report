@@ -1,4 +1,4 @@
-var moveFileToUserFolder = require("../services/differentServices/moveFileToUserFolder");
+var moveFileToUserFolder = require("../services/different/moveFileToUserFolder");
 
 var itemPhotoUpload = async (req, res, next) => {
   var { itemname } = req.params;
