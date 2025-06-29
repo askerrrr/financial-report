@@ -15,13 +15,7 @@ var monthsList = [
   "декабрь",
 ];
 
-var getMonthName = (num) => {
-  if (typeof num == "string") {
-    return +num[0] ? monthsList[+num - 1] : monthsList[+num[1] - 1];
-  }
-
-  return monthsList[num - 1];
-};
+var getMonthName = (monthNum) => monthsList[+monthNum - 1];
 
 var getMonthIndex = (month) => monthsList.indexOf(month);
 
