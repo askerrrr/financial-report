@@ -1,39 +1,45 @@
+import getReportLink from "../row/services/getReportLink.js";
+import createTdElement from "../../report/row/services/createTdElement.js";
 import createReportsTableHead from "../row/services/createReportsTableHead.js";
 
-var createReportsTable = async (reports) => {
+var createReportsTable = async (month, reports) => {
   var table = document.createElement("table");
-  var tbody = document.createElement("tbody");
 
-  for (var reportId of reports) {
+  var tbody = document.createElement("tbody");
+  tbody.id = "tbody_month_" + month;
+
+  for (var { fullPeriod, reportId } of reports) {
     var tr = document.createElement("tr");
 
     if (reportId) {
-      tr.append(reportId);
+      var fullPeriodTd = await createTdElement(fullPeriod, "", null, null);
+      var totalFinalNetProfitTd = await createTdElement(
+        "totalFinalNetProfit",
+        null,
+        null,
+        "totalFinalNetProfit"
+      );
+
+      var totalProductCostsTd = await createTdElement("totalProductCosts");
+      var totalTaxAmountTd = await createTdElement("totalTaxAmount");
+      var reportLink = await getReportLink(reportId);
+
+      tr.append(
+        fullPeriodTd,
+        totalFinalNetProfitTd,
+        totalProductCostsTd,
+        totalTaxAmountTd,
+        reportLink
+      );
+
       tbody.append(tr);
     }
   }
 
   var tableHead = await createReportsTableHead();
-
   table.append(tbody, tableHead);
 
   return table;
-};
-
-var getReportsDetail = async (reports) => {
-  var div = document.createElement("div");
-
-  for (var reportId of reports) {
-    var details = document.createElement("details");
-    var summary = document.createElement("summary");
-
-    if (reportId) {
-      details.append(reportId);
-      div.append(details);
-    }
-  }
-
-  return div;
 };
 
 var getMonthsDetails = async (months, year) => {
@@ -50,9 +56,9 @@ var getMonthsDetails = async (months, year) => {
 
       details.id = `reports_container_${year}_${month}`;
 
-      var reportsTable = await createReportsTable(reports);
+      var reportsTable = await createReportsTable(month, reports);
 
-      details.append(summary, reportsTable  );
+      details.append(summary, reportsTable);
 
       div.append(details);
     }
