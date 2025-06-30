@@ -10,7 +10,7 @@ var showReportsTable = async () => {
 
   var data = await res.json();
 
-  var { reports } = data;
+  var { reports, years } = data;
 
   var table = await createReportsTable(reports);
 
