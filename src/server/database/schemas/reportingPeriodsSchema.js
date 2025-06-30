@@ -1,9 +1,17 @@
 var { Schema } = require("mongoose");
 
+var reportSchema = new Schema(
+  {
+    fullPeriod: { type: String, required: true },
+    reportId: { type: String, required: true },
+  },
+  { _id: false }
+);
+
 var monthPeriodSchema = new Schema(
   {
     month: { type: String, required: false },
-    reports: [{ type: String, required: false }],
+    reports: [{ type: reportSchema, required: false }],
   },
 
   { _id: false }

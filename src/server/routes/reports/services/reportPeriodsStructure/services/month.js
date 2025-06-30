@@ -26,18 +26,18 @@ var getMonthNameAndIndex = (monthNum) => {
   return { monthIndex, monthName };
 };
 
-var getMonthReports = (date, reportId, carry) => {
+var getMonthReports = (date, fullPeriod, reportId, carry) => {
   var mondayIndex = getMondayIndex(date);
 
   var reports = [];
 
   if (carry) {
     var mondaysQty = getMondaysQtyInMonth(date);
-    reports[mondaysQty] = reportId;
+    reports[mondaysQty] = { fullPeriod, reportId };
     return reports;
   }
 
-  reports[mondayIndex] = reportId;
+  reports[mondayIndex] = { fullPeriod, reportId };
 
   return reports;
 };

@@ -16,6 +16,7 @@ var { setReportIdInReports } = require("./services/reports");
 
 var organizeReportsByPeriod = (dateFrom, dateTo, reportId, years) => {
   var [periodStartYear, periodStartMonth] = dateFrom.split("-");
+  var fullPeriod = `${dateFrom} ${dateTo}`;
 
   var [periodEndYear, periodEndMonth] = dateTo.split("-");
 
@@ -40,7 +41,13 @@ var organizeReportsByPeriod = (dateFrom, dateTo, reportId, years) => {
 
           var { month, reports } = getNextYearFirstMonth(months);
 
-          reports = setReportIdInReports(dateTo, reports, reportId, "carry");
+          reports = setReportIdInReports(
+            dateTo,
+            reports,
+            reportId,
+            fullPeriod,
+            "carry"
+          );
 
           months[0] = { month, reports };
 
@@ -50,7 +57,11 @@ var organizeReportsByPeriod = (dateFrom, dateTo, reportId, years) => {
         } else {
           console.log("следующего года нет в списке");
 
-          var reports = getFirstMonthReporstForNewYear(dateTo, reportId);
+          var reports = getFirstMonthReporstForNewYear(
+            dateTo,
+            fullPeriod,
+            reportId
+          );
 
           var months = getMonthsForNewYear(reports);
 
@@ -68,14 +79,14 @@ var organizeReportsByPeriod = (dateFrom, dateTo, reportId, years) => {
     if (isNextMonthReportNeeded(dateFrom, dateTo)) {
       console.log("нужен переход на следующий месяц");
 
-      var months = getMonthsData(reportId, dateTo, "carry");
+      var months = getMonthsData(reportId, fullPeriod, dateTo, "carry");
 
       years.push({ year: periodStartYear, months });
 
       return years;
     }
 
-    var months = getMonthsData(reportId, dateFrom);
+    var months = getMonthsData(reportId, fullPeriod, dateFrom);
 
     years.push({ year: periodStartYear, months });
 
@@ -90,7 +101,12 @@ var organizeReportsByPeriod = (dateFrom, dateTo, reportId, years) => {
 
       if (!nextYearIsExist) {
         console.log("следующего года нет, создаем все с нуля и пушаем в years");
-        var reports = getFirstMonthReporstForNewYear(dateTo, reportId);
+        var reports = getFirstMonthReporstForNewYear(
+          dateTo,
+          fullPeriod,
+          reportId
+        );
+
         var months = getMonthsForNewYear(reports);
 
         years.push({ year: periodEndYear, months });
@@ -106,7 +122,8 @@ var organizeReportsByPeriod = (dateFrom, dateTo, reportId, years) => {
           periodEndYear,
           periodEndMonth,
           dateTo,
-          reportId
+          reportId,
+          fullPeriod
         );
         return years;
       }
@@ -123,7 +140,8 @@ var organizeReportsByPeriod = (dateFrom, dateTo, reportId, years) => {
       periodStartYear,
       periodStartMonth,
       dateFrom,
-      reportId
+      reportId,
+      fullPeriod
     );
     return years;
   }
@@ -140,7 +158,8 @@ var organizeReportsByPeriod = (dateFrom, dateTo, reportId, years) => {
       periodEndMonth,
       dateTo,
       reportId,
-      "monthCarry"
+      fullPeriod,
+      "carry"
     );
 
     return years;
@@ -156,7 +175,8 @@ var organizeReportsByPeriod = (dateFrom, dateTo, reportId, years) => {
     periodStartYear,
     periodStartMonth,
     dateFrom,
-    reportId
+    reportId,
+    fullPeriod
   );
 
   return years;

@@ -22,18 +22,18 @@ var getMonthsForNewYear = (reports) => {
   return months;
 };
 
-var getFirstMonthReporstForNewYear = (date, reportId) => {
+var getFirstMonthReporstForNewYear = (date, fullPeriod, reportId) => {
   var mondaysQty = getMondaysQtyInMonth(date);
 
-  reports = [];
+  var reports = [];
 
-  reports[mondaysQty] = reportId;
+  reports[mondaysQty] = { fullPeriod, reportId };
 
   return reports;
 };
 
-var getMonthsData = (reportId, date, carry = null) => {
-  var reports = getMonthReports(date, reportId, carry);
+var getMonthsData = (reportId, fullPeriod, date, carry = null) => {
+  var reports = getMonthReports(date, fullPeriod, reportId, carry);
 
   var monthNum = date.split("-")[1];
 
@@ -58,13 +58,20 @@ var updateYearStructure = (
   monthNum,
   reportDate,
   reportId,
+  fullPeriod,
   carry
 ) => {
   var { monthName, monthIndex } = getMonthNameAndIndex(monthNum);
 
   var reports = months[monthIndex]?.reports ?? [];
 
-  reports = setReportIdInReports(reportDate, reports, reportId, carry);
+  reports = setReportIdInReports(
+    reportDate,
+    reports,
+    reportId,
+    fullPeriod,
+    carry
+  );
 
   months[monthIndex] = { month: monthName, reports };
 
@@ -76,7 +83,7 @@ var isNextMonthReportNeeded = (dateFrom, dateTo) => {
   var [y, monthTo, dayTo] = dateTo.split("-");
 
   if (monthFrom === monthTo) {
-    return false;
+    return;
   }
 
   var daysInCurrentMonth = new Date(year, monthFrom, 0).getDate();
