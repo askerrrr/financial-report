@@ -1,6 +1,22 @@
 import getReportLink from "../row/services/getReportLink.js";
+import getCookieByName from "../services/getCookieByName.js";
+import getReportPeriod from "../row/services/getReportPeriod.js";
 import createTdElement from "../../report/row/services/createTdElement.js";
 import createReportsTableHead from "../row/services/createReportsTableHead.js";
+
+var userId = getCookieByName("userId");
+
+var getReportsData = async () => {
+  var res = await fetch("/api/" + userId);
+
+  if (!res.ok) {
+    return alert("Не удалось загрузить отчеты");
+  }
+
+  var { reports } = await res.json();
+
+  return reports;
+};
 
 var createReportsTable = async (month, reports) => {
   var table = document.createElement("table");
@@ -8,21 +24,27 @@ var createReportsTable = async (month, reports) => {
   var tbody = document.createElement("tbody");
   tbody.id = "tbody_month_" + month;
 
-  for (var { fullPeriod, reportId } of reports) {
+  var reportsData = await getReportsData();
+
+  for (var { reportId } of reports) {
     var tr = document.createElement("tr");
 
     if (reportId) {
-      var fullPeriodTd = await createTdElement(fullPeriod, "", null, null);
+      var report = reportsData.find((report) => report.id == reportId);
+      console.log("report: ", report);
+
+      var fullPeriodTd = await getReportPeriod(report.dateFrom, report.dateTo);
+
       var totalFinalNetProfitTd = await createTdElement(
-        "totalFinalNetProfit",
+        report.totalFinalNetProfit,
         null,
         null,
         "totalFinalNetProfit"
       );
 
-      var totalProductCostsTd = await createTdElement("totalProductCosts");
-      var totalTaxAmountTd = await createTdElement("totalTaxAmount");
-      var reportLink = await getReportLink(reportId);
+      var totalProductCostsTd = await createTdElement(report.totalProductCosts);
+      var totalTaxAmountTd = await createTdElement(report.totalTaxAmount);
+      var reportLink = await getReportLink(report.id);
 
       tr.append(
         fullPeriodTd,
@@ -37,7 +59,7 @@ var createReportsTable = async (month, reports) => {
   }
 
   var tableHead = await createReportsTableHead();
-  table.append(tbody, tableHead);
+  table.append(tableHead, tbody);
 
   return table;
 };
