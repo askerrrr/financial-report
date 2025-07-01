@@ -81,12 +81,12 @@ var getMonthsDetails = async (months, year) => {
     var summary = document.createElement("summary");
 
     if (monthData) {
-      var { month, reports } = monthData;
+      var { month, reportIds } = monthData;
       summary.append(month);
 
       details.id = `reports_container_${year}_${month}`;
 
-      var reportsTable = await createReportsTable(month, reports);
+      var reportsTable = await createReportsTable(month, reportIds);
 
       details.append(summary, reportsTable);
 
