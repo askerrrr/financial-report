@@ -18,11 +18,11 @@ var getReportsData = async () => {
   return reports;
 };
 
-var createReportsTable = async (month, reportIds) => {
+var createReportsTable = async (year, month, reportIds) => {
   var table = document.createElement("table");
 
   var tbody = document.createElement("tbody");
-  tbody.id = "tbody_month_" + month;
+  tbody.id = `tbody_year_${year}_month_${month}`;
 
   var reports = await getReportsData();
 
@@ -86,7 +86,7 @@ var getMonthsDetails = async (months, year) => {
 
       details.id = `reports_container_${year}_${month}`;
 
-      var reportsTable = await createReportsTable(month, reportIds);
+      var reportsTable = await createReportsTable(year, month, reportIds);
 
       details.append(summary, reportsTable);
 
@@ -99,9 +99,6 @@ var getMonthsDetails = async (months, year) => {
 
 var createPeriodDetails = async (years) => {
   for (var { year, months } of years) {
-    console.log("year: ", year);
-    console.log(months);
-
     var details = document.createElement("details");
     details.id = year;
 

@@ -15,9 +15,9 @@ var showReportsTable = async () => {
 
   await createPeriodDetails(years);
 
-  var table = await createReportsTable(reports);
+  //var table = await createReportsTable(reports);
 
-  document.body.append(table);
+  //document.body.append(table);
 };
 
 showReportsTable();
