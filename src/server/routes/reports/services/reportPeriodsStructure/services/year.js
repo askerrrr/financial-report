@@ -1,7 +1,7 @@
 var compareYears = async (periodStartYear, periodEndYear) =>
   periodStartYear === periodEndYear;
 
-var checkYearIsExists = async (years, year) =>
+var checkYearExists = async (years, year) =>
   years?.find((date) => date.year === year);
 
 var getYearIndex = async (years, year) =>
@@ -17,6 +17,6 @@ var isNextYearReportRequired = async (dateFrom, dateTo) => {
 module.exports = {
   getYearIndex,
   compareYears,
-  checkYearIsExists,
+  checkYearExists,
   isNextYearReportRequired,
 };

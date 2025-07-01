@@ -1,7 +1,7 @@
 var {
   getYearIndex,
   compareYears,
-  checkYearIsExists,
+  checkYearExists,
 } = require("./services/year");
 var {
   getMonthsData,
@@ -20,17 +20,14 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
 
   var [periodEndYear, periodEndMonth] = dateTo.split("-");
 
-  var yearIsExist = await checkYearIsExists(years, periodStartYear);
+  var yearIsExist = await checkYearExists(years, periodStartYear);
 
   if (!yearIsExist) {
     var isSingleYearReport = await compareYears(periodStartYear, periodEndYear);
 
     if (!isSingleYearReport) {
       if (await isNextMonthReportNeeded(dateFrom, dateTo)) {
-        var periodEndYearIsExist = await checkYearIsExists(
-          years,
-          periodEndYear
-        );
+        var periodEndYearIsExist = await checkYearExists(years, periodEndYear);
 
         if (periodEndYearIsExist) {
           var periodEndYearIndex = await getYearIndex(years, periodEndYear);
@@ -92,7 +89,7 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
 
   if (!isSingleYearReport) {
     if (await isNextMonthReportNeeded(dateFrom, dateTo)) {
-      var nextYearIsExist = await checkYearIsExists(years, periodEndYear);
+      var nextYearIsExist = await checkYearExists(years, periodEndYear);
 
       if (!nextYearIsExist) {
         var reportIds = await getFirstMonthReporstForNewYear(
