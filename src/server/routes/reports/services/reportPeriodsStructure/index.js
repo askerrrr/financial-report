@@ -27,11 +27,11 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
 
     if (!isSingleYearReport) {
       if (await isNextMonthReportNeeded(dateFrom, dateTo)) {
-        var periodEndYearIsExist = await checkYearExists(years, endYear);
+        var endYearIsExist = await checkYearExists(years, endYear);
 
-        if (periodEndYearIsExist) {
-          var periodEndYearIndex = await getYearIndex(years, endYear);
-          var { months } = years[periodEndYearIndex];
+        if (endYearIsExist) {
+          var endYearIndex = await getYearIndex(years, endYear);
+          var { months } = years[endYearIndex];
 
           var { month, reportIds } = await getNextYearFirstMonth(months);
 
@@ -45,7 +45,7 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
 
           months[0] = { month, reportIds };
 
-          years[periodEndYearIndex] = { year: endYear, months };
+          years[endYearIndex] = { year: endYear, months };
 
           return { years, year: endYear };
         } else {
