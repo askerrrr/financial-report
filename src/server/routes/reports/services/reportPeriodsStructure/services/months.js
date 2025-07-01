@@ -63,7 +63,7 @@ var updateYearStructure = async (
 ) => {
   var { monthName, monthIndex } = await getMonthNameAndIndex(monthNum);
 
-  var reportIds = months[monthIndex]?.reports ?? [];
+  var reportIds = months[monthIndex]?.reportIds ?? [];
 
   reportIds = await setReportIdInReports(
     reportDate,
