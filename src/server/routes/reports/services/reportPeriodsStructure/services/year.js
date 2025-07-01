@@ -1,13 +1,13 @@
-var compareYears = (periodStartYear, periodEndYear) =>
+var compareYears = async (periodStartYear, periodEndYear) =>
   periodStartYear === periodEndYear;
 
-var checkYearIsExists = (years, year) =>
+var checkYearIsExists = async (years, year) =>
   years?.find((date) => date.year === year);
 
-var getYearIndex = (years, year) =>
+var getYearIndex = async (years, year) =>
   years.findIndex((date) => date.year === year);
 
-var isNextYearReportRequired = (dateFrom, dateTo) => {
+var isNextYearReportRequired = async (dateFrom, dateTo) => {
   var yearFrom = dateFrom.split("-")[0];
   var yearTo = dateTo.split("-")[0];
 

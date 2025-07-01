@@ -2,17 +2,17 @@ var { getYearIndex } = require("./year");
 var { getMonthNameAndIndex } = require("./month");
 var { getMondayIndex, getMondaysQtyInMonth } = require("./monday");
 
-var setReportIdInReports = (
+var setReportIdInReports = async (
   date,
   reportIds,
   reportId,
   fullPeriod,
   monthCarry = null
 ) => {
-  var mondayIndex = getMondayIndex(date);
+  var mondayIndex = await getMondayIndex(date);
 
   if (monthCarry) {
-    var mondaysQty = getMondaysQtyInMonth(date);
+    var mondaysQty = await getMondaysQtyInMonth(date);
     reportIds[mondaysQty] = { fullPeriod, reportId };
 
     return reportIds;
@@ -23,8 +23,8 @@ var setReportIdInReports = (
   return reportIds;
 };
 
-var getReportsFromMonth = (months, monthNum) => {
-  var { monthIndex } = getMonthNameAndIndex(monthNum);
+var getReportsFromMonth = async (months, monthNum) => {
+  var { monthIndex } = await getMonthNameAndIndex(monthNum);
 
   var { reportIds } = months[monthIndex];
 

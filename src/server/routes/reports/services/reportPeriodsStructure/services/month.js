@@ -15,24 +15,24 @@ var monthsList = [
   "январь",
 ];
 
-var getMonthName = (monthNum) => monthsList[monthsList.length - monthNum];
+var getMonthName = async (monthNum) => monthsList[monthsList.length - monthNum];
 
-var getMonthIndex = (month) => monthsList.indexOf(month);
+var getMonthIndex = async (month) => monthsList.indexOf(month);
 
-var getMonthNameAndIndex = (monthNum) => {
-  var monthName = getMonthName(monthNum);
-  var monthIndex = getMonthIndex(monthName);
+var getMonthNameAndIndex = async (monthNum) => {
+  var monthName = await getMonthName(monthNum);
+  var monthIndex = await getMonthIndex(monthName);
 
   return { monthIndex, monthName };
 };
 
-var getMonthReportIds = (date, fullPeriod, reportId, carry) => {
-  var mondayIndex = getMondayIndex(date);
+var getMonthReportIds = async (date, fullPeriod, reportId, carry) => {
+  var mondayIndex = await getMondayIndex(date);
 
   var reportIds = [];
 
   if (carry) {
-    var mondaysQty = getMondaysQtyInMonth(date);
+    var mondaysQty = await getMondaysQtyInMonth(date);
     reportIds[mondaysQty] = { fullPeriod, reportId };
     return v;
   }

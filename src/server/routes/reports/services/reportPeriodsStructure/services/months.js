@@ -2,8 +2,8 @@ var { getMonthReportIds, getMonthNameAndIndex } = require("./month");
 var { getMondaysQtyInMonth } = require("./monday");
 var { setReportIdInReports } = require("./reports");
 
-var getMonthsForCurrentYear = (monthNum, reports) => {
-  var { monthName, monthIndex } = getMonthNameAndIndex(monthNum);
+var getMonthsForCurrentYear = async (monthNum, reports) => {
+  var { monthName, monthIndex } = await getMonthNameAndIndex(monthNum);
 
   var months = [];
   months[monthIndex] = { month: monthName, reports };
@@ -11,7 +11,7 @@ var getMonthsForCurrentYear = (monthNum, reports) => {
   return months;
 };
 
-var getMonthsForNewYear = (reports) => {
+var getMonthsForNewYear = async (reports) => {
   var firstMonthIndex = 0,
     firstMonthName = "январь";
 
@@ -22,8 +22,8 @@ var getMonthsForNewYear = (reports) => {
   return months;
 };
 
-var getFirstMonthReporstForNewYear = (date, fullPeriod, reportId) => {
-  var mondaysQty = getMondaysQtyInMonth(date);
+var getFirstMonthReporstForNewYear = async (date, fullPeriod, reportId) => {
+  var mondaysQty = await getMondaysQtyInMonth(date);
 
   var reportIds = [];
 
@@ -32,12 +32,12 @@ var getFirstMonthReporstForNewYear = (date, fullPeriod, reportId) => {
   return reportIds;
 };
 
-var getMonthsData = (reportId, fullPeriod, date, carry = null) => {
-  var reportIds = getMonthReportIds(date, fullPeriod, reportId, carry);
+var getMonthsData = async (reportId, fullPeriod, date, carry = null) => {
+  var reportIds = await getMonthReportIds(date, fullPeriod, reportId, carry);
 
   var monthNum = date.split("-")[1];
 
-  var { monthName, monthIndex } = getMonthNameAndIndex(monthNum);
+  var { monthName, monthIndex } = await getMonthNameAndIndex(monthNum);
 
   var months = new Array(12).fill(null);
 
@@ -46,13 +46,13 @@ var getMonthsData = (reportId, fullPeriod, date, carry = null) => {
   return months;
 };
 
-var getMonthsFromYear = (years, yearIndex) => {
+var getMonthsFromYear = async (years, yearIndex) => {
   var { months } = years[yearIndex];
 
   return months;
 };
 
-var updateYearStructure = (
+var updateYearStructure = async (
   months,
   year,
   monthNum,
@@ -61,11 +61,11 @@ var updateYearStructure = (
   fullPeriod,
   carry
 ) => {
-  var { monthName, monthIndex } = getMonthNameAndIndex(monthNum);
+  var { monthName, monthIndex } = await getMonthNameAndIndex(monthNum);
 
   var reportIds = months[monthIndex]?.reports ?? [];
 
-  reportIds = setReportIdInReports(
+  reportIds = await setReportIdInReports(
     reportDate,
     reportIds,
     reportId,
@@ -78,7 +78,7 @@ var updateYearStructure = (
   return { year, months };
 };
 
-var isNextMonthReportNeeded = (dateFrom, dateTo) => {
+var isNextMonthReportNeeded = async (dateFrom, dateTo) => {
   var [year, monthFrom, dayFrom] = dateFrom.split("-");
   var [y, monthTo, dayTo] = dateTo.split("-");
 
@@ -91,7 +91,7 @@ var isNextMonthReportNeeded = (dateFrom, dateTo) => {
   return daysInCurrentMonth - dayFrom + 1 < +dayTo;
 };
 
-var getNextYearFirstMonth = (months) =>
+var getNextYearFirstMonth = async (months) =>
   months[0] ?? { month: "январь", reports: [] };
 
 module.exports = {

@@ -1,4 +1,4 @@
-var getMonthMondays = (reportsDate) => {
+var getMonthMondays = async (reportsDate) => {
   var d = new Date(reportsDate),
     month = d.getMonth(),
     weekDays = [];
@@ -18,8 +18,8 @@ var getMonthMondays = (reportsDate) => {
   return weekDays.reverse();
 };
 
-var getMondayIndex = (date) => {
-  var mondays = getMonthMondays(date);
+var getMondayIndex = async (date) => {
+  var mondays = await getMonthMondays(date);
 
   var mondayIndex = mondays.findIndex(
     (monday) => monday === new Date(date).toISOString()
@@ -28,8 +28,8 @@ var getMondayIndex = (date) => {
   return mondayIndex === -1 ? 0 : mondayIndex;
 };
 
-var getMondaysQtyInMonth = (date) => {
-  var mondays = getMonthMondays(date);
+var getMondaysQtyInMonth = async (date) => {
+  var mondays = await getMonthMondays(date);
   return mondays.length;
 };
 
