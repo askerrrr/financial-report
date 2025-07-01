@@ -4,7 +4,7 @@ var { getMondayIndex, getMondaysQtyInMonth } = require("./monday");
 
 var setReportIdInReports = (
   date,
-  reports,
+  reportIds,
   reportId,
   fullPeriod,
   monthCarry = null
@@ -13,22 +13,22 @@ var setReportIdInReports = (
 
   if (monthCarry) {
     var mondaysQty = getMondaysQtyInMonth(date);
-    reports[mondaysQty] = { fullPeriod, reportId };
+    reportIds[mondaysQty] = { fullPeriod, reportId };
 
-    return reports;
+    return reportIds;
   }
 
-  reports[mondayIndex] = { fullPeriod, reportId };
+  reportIds[mondayIndex] = { fullPeriod, reportId };
 
-  return reports;
+  return reportIds;
 };
 
 var getReportsFromMonth = (months, monthNum) => {
   var { monthIndex } = getMonthNameAndIndex(monthNum);
 
-  var { reports } = months[monthIndex];
+  var { reportIds } = months[monthIndex];
 
-  return reports;
+  return reportIds;
 };
 
 module.exports = {

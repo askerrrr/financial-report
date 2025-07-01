@@ -26,20 +26,20 @@ var getMonthNameAndIndex = (monthNum) => {
   return { monthIndex, monthName };
 };
 
-var getMonthReports = (date, fullPeriod, reportId, carry) => {
+var getMonthReportIds = (date, fullPeriod, reportId, carry) => {
   var mondayIndex = getMondayIndex(date);
 
-  var reports = [];
+  var reportIds = [];
 
   if (carry) {
     var mondaysQty = getMondaysQtyInMonth(date);
-    reports[mondaysQty] = { fullPeriod, reportId };
-    return reports;
+    reportIds[mondaysQty] = { fullPeriod, reportId };
+    return v;
   }
 
-  reports[mondayIndex] = { fullPeriod, reportId };
+  reportIds[mondayIndex] = { fullPeriod, reportId };
 
-  return reports;
+  return reportIds;
 };
 
-module.exports = { getMonthReports, getMonthNameAndIndex };
+module.exports = { getMonthReportIds, getMonthNameAndIndex };

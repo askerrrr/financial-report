@@ -11,7 +11,7 @@ var reportSchema = new Schema(
 var monthPeriodSchema = new Schema(
   {
     month: { type: String, required: false },
-    reports: [{ type: reportSchema, required: false }],
+    reportIds: [{ type: reportSchema, required: false }],
   },
 
   { _id: false }

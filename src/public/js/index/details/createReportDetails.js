@@ -18,33 +18,41 @@ var getReportsData = async () => {
   return reports;
 };
 
-var createReportsTable = async (month, reports) => {
+var createReportsTable = async (month, reportIds) => {
   var table = document.createElement("table");
 
   var tbody = document.createElement("tbody");
   tbody.id = "tbody_month_" + month;
 
-  var reportsData = await getReportsData();
+  var reports = await getReportsData();
 
-  for (var { reportId } of reports) {
+  for (var { reportId } of reportIds) {
     var tr = document.createElement("tr");
 
     if (reportId) {
-      var report = reportsData.find((report) => report.id == reportId);
-      console.log("report: ", report);
+      var report = reports.find((report) => report.id == reportId);
 
-      var fullPeriodTd = await getReportPeriod(report.dateFrom, report.dateTo);
+      var {
+        id,
+        dateFrom,
+        dateTo,
+        totalFinalNetProfit,
+        totalProductCosts,
+        totalTaxAmount,
+      } = report;
+
+      var fullPeriodTd = await getReportPeriod(dateFrom, dateTo);
 
       var totalFinalNetProfitTd = await createTdElement(
-        report.totalFinalNetProfit,
+        totalFinalNetProfit,
         null,
         null,
         "totalFinalNetProfit"
       );
 
-      var totalProductCostsTd = await createTdElement(report.totalProductCosts);
-      var totalTaxAmountTd = await createTdElement(report.totalTaxAmount);
-      var reportLink = await getReportLink(report.id);
+      var totalProductCostsTd = await createTdElement(totalProductCosts);
+      var totalTaxAmountTd = await createTdElement(totalTaxAmount);
+      var reportLink = await getReportLink(id);
 
       tr.append(
         fullPeriodTd,

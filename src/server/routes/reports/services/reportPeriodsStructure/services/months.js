@@ -1,4 +1,4 @@
-var { getMonthReports, getMonthNameAndIndex } = require("./month");
+var { getMonthReportIds, getMonthNameAndIndex } = require("./month");
 var { getMondaysQtyInMonth } = require("./monday");
 var { setReportIdInReports } = require("./reports");
 
@@ -25,15 +25,15 @@ var getMonthsForNewYear = (reports) => {
 var getFirstMonthReporstForNewYear = (date, fullPeriod, reportId) => {
   var mondaysQty = getMondaysQtyInMonth(date);
 
-  var reports = [];
+  var reportIds = [];
 
-  reports[mondaysQty] = { fullPeriod, reportId };
+  reportIds[mondaysQty] = { fullPeriod, reportId };
 
-  return reports;
+  return reportIds;
 };
 
 var getMonthsData = (reportId, fullPeriod, date, carry = null) => {
-  var reports = getMonthReports(date, fullPeriod, reportId, carry);
+  var reportIds = getMonthReportIds(date, fullPeriod, reportId, carry);
 
   var monthNum = date.split("-")[1];
 
@@ -41,7 +41,7 @@ var getMonthsData = (reportId, fullPeriod, date, carry = null) => {
 
   var months = new Array(12).fill(null);
 
-  months[monthIndex] = { month: monthName, reports };
+  months[monthIndex] = { month: monthName, reportIds };
 
   return months;
 };
@@ -63,17 +63,17 @@ var updateYearStructure = (
 ) => {
   var { monthName, monthIndex } = getMonthNameAndIndex(monthNum);
 
-  var reports = months[monthIndex]?.reports ?? [];
+  var reportIds = months[monthIndex]?.reports ?? [];
 
-  reports = setReportIdInReports(
+  reportIds = setReportIdInReports(
     reportDate,
-    reports,
+    reportIds,
     reportId,
     fullPeriod,
     carry
   );
 
-  months[monthIndex] = { month: monthName, reports };
+  months[monthIndex] = { month: monthName, reportIds };
 
   return { year, months };
 };
