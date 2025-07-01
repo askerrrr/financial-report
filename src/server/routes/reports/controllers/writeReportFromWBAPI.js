@@ -25,7 +25,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   var { years } = await getReportingPeriods(userId);
 
-  var { years, year } = await organizeReportsByPeriod(
+  var { years, year, month } = await organizeReportsByPeriod(
     dateFrom,
     dateTo,
     reportId,
@@ -41,7 +41,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
     return res
       .status(200)
-      .json({ reportId, year, dateFrom, dateTo, totalTaxAmount });
+      .json({ reportId, year, month, dateFrom, dateTo, totalTaxAmount });
   }
 
   return res.sendStatus(500);
