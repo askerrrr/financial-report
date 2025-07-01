@@ -47,10 +47,8 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
 
           years[periodEndYearIndex] = { year: periodEndYear, months };
 
-          return years;
+          return { years, year: periodEndYear };
         } else {
-          console.log("следующего года нет в списке");
-
           var reportIds = await getFirstMonthReporstForNewYear(
             dateTo,
             fullPeriod,
@@ -61,13 +59,14 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
 
           years.push({ year: periodEndYear, months });
 
-          return years;
+          return { years, year: periodEndYear };
         }
       }
 
       var months = await getMonthsData(reportId, dateFrom);
       years.push({ year: periodStartYear, months });
-      return years;
+
+      return { years, year: periodStartYear };
     }
 
     if (await isNextMonthReportNeeded(dateFrom, dateTo)) {
@@ -75,14 +74,14 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
 
       years.push({ year: periodStartYear, months });
 
-      return years;
+      return { years, year: periodStartYear };
     }
 
     var months = await getMonthsData(reportId, fullPeriod, dateFrom);
 
     years.push({ year: periodStartYear, months });
 
-    return years;
+    return { years, year: periodStartYear };
   }
 
   var isSingleYearReport = await compareYears(periodStartYear, periodEndYear);
@@ -101,7 +100,8 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
         var months = await getMonthsForNewYear(reportIds);
 
         years.push({ year: periodEndYear, months });
-        return years;
+
+        return { years, year: periodEndYear };
       } else {
         var yearIndex = await getYearIndex(years, periodEndYear);
         var months = await getMonthsFromYear(years, yearIndex);
@@ -114,7 +114,8 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
           reportId,
           fullPeriod
         );
-        return years;
+
+        return { years, year: periodEndYear };
       }
     }
 
@@ -129,7 +130,8 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
       reportId,
       fullPeriod
     );
-    return years;
+
+    return { years, year: periodStartYear };
   }
 
   if (await isNextMonthReportNeeded(dateFrom, dateTo)) {
@@ -146,7 +148,7 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
       "carry"
     );
 
-    return years;
+    return { years, year: periodStartYear };
   }
 
   var yearIndex = await getYearIndex(years, periodStartYear);
@@ -161,7 +163,7 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
     fullPeriod
   );
 
-  return years;
+  return { years, year: periodStartYear };
 };
 
 module.exports = organizeReportsByPeriod;

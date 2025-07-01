@@ -25,21 +25,23 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   var { years } = await getReportingPeriods(userId);
 
-  var updatedReportPeriods = await organizeReportsByPeriod(
+  var { years, year } = await organizeReportsByPeriod(
     dateFrom,
     dateTo,
     reportId,
     years
   );
 
-  await updateReportsPeriods(userId, updatedReportPeriods);
+  await updateReportsPeriods(userId, years);
 
   var successfullWrite = await createReport(userId, parsedReport);
 
   if (successfullWrite) {
     var { totalTaxAmount } = parsedReport;
 
-    return res.status(200).json({ reportId, dateFrom, dateTo, totalTaxAmount });
+    return res
+      .status(200)
+      .json({ reportId, year, dateFrom, dateTo, totalTaxAmount });
   }
 
   return res.sendStatus(500);
