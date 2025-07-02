@@ -85,7 +85,7 @@ var createReportRow = async (reportData, reportTbody = null) => {
 };
 
 var createMonthDetails = async (reportData) => {
-  var { month } = reportData;
+  var { year, month } = reportData;
 
   var monthName = await getMonthNameByNum(month);
 
@@ -95,6 +95,11 @@ var createMonthDetails = async (reportData) => {
   var reportRow = await createReportRow(reportData);
 
   var details = document.createElement("details");
+
+  var monthName = await getMonthNameByNum(month);
+
+  details.id = `reports_container_${year}_${monthName}`;
+
   details.append(summary, reportRow);
 
   var div = document.createElement("div");
@@ -151,7 +156,9 @@ var insertReportDataToTop = async (reportData) => {
 
       console.log("reportTbody is null: ", reportTbody);
 
-      var reportsContainerId = `reports_container_${year}_${month}`;
+      var monthName = await getMonthNameByNum(month);
+
+      var reportsContainerId = `reports_container_${year}_${monthName}`;
 
       var reportsContainer = document.getElementById(reportsContainerId);
 
