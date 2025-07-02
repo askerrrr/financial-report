@@ -1,6 +1,6 @@
 import sendPeriodDate from "./sendPeriodDate.js";
 import validateReportPeriod from "./validateReportPeriod.js";
-import insertReportDataToTop from "./insertReportDataToTop.js";
+import insertReportDataToTop from "./insertReportDataToTop2.js";
 
 var createModal = async (className) => {
   var modal = document.createElement("div");

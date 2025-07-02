@@ -11,7 +11,9 @@ var createYearsDetails = async (years) => {
 
     details.append(summary, await createMonthsDetails(months, year));
 
-    document.body.append(details);
+    var yearsContainer = document.getElementById("years_container");
+
+    yearsContainer.append(details);
   }
 };
 
