@@ -1,7 +1,7 @@
-import getReportLink from "../row/services/getReportLink.js";
-import getReportPeriod from "../row/services/getReportPeriod.js";
-import createTdElement from "../../report/row/services/createTdElement.js";
-import createReportsTableHead from "../row/services/createReportsTableHead.js";
+import getReportLink from "../../row/services/getReportLink.js";
+import getReportPeriod from "../../row/services/getReportPeriod.js";
+import createTdElement from "../../../report/row/services/createTdElement.js";
+import createReportsTableHead from "../../row/services/createReportsTableHead.js";
 
 var monthsList = [
   "декабрь",

@@ -1,6 +1,6 @@
 import sendPeriodDate from "./sendPeriodDate.js";
 import validateReportPeriod from "./validateReportPeriod.js";
-import insertReportToYearMonthTree from "./insertReportToYearMonthTree.js";
+import insertReportToYearMonthTree from "./reportTreeBuilder/index.js";
 
 var createModal = async (className) => {
   var modal = document.createElement("div");
