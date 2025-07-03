@@ -96,8 +96,6 @@ var createMonthDetails = async (reportData) => {
 
   var details = document.createElement("details");
 
-  var monthName = await getMonthNameByNum(month);
-
   details.id = `reports_container_${year}_${monthName}`;
 
   details.append(summary, reportRow);
