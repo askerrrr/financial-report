@@ -19,4 +19,13 @@ class WBAPIError extends Error {
   }
 }
 
-module.exports = { DatabaseError, WBAPIError };
+class ReportNotFoundError extends Error {
+  constructor(reportId, message) {
+    super(message);
+
+    this.status = 404;
+    this.message = `the report with id ${reportId} the was not found`;
+  }
+}
+
+module.exports = { DatabaseError, WBAPIError, ReportNotFoundError };

@@ -1,5 +1,9 @@
 var multer = require("multer");
-var { DatabaseError, WBAPIError } = require("../../customError/customError");
+var {
+  DatabaseError,
+  WBAPIError,
+  ReportNotFoundError,
+} = require("../../customError/customError");
 
 var errorHandler = async (e, req, res, next) => {
   console.log("e: ", e);
@@ -17,7 +21,9 @@ var errorHandler = async (e, req, res, next) => {
     res.status(e.status).json({ msg: e.message });
   }
 
-  console.log("AppError: ", e);
+  if (e instanceof ReportNotFoundError) {
+    return res.status(404).json({ msg: e.message });
+  }
 };
 
 module.exports = errorHandler;
