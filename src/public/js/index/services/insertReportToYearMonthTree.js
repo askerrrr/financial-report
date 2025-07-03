@@ -97,6 +97,7 @@ var createMonthDetails = async (reportData) => {
   details.append(summary, reportRow);
 
   var div = document.createElement("div");
+  div.class = "details";
   div.append(details);
 
   return div;
@@ -152,6 +153,7 @@ var insertReportToYearMonthTree = async (reportData) => {
       details.append(summary, reportTable);
 
       var div = document.createElement("div");
+      div.class = "details";
       div.append(details);
 
       var year = document.getElementById(year);

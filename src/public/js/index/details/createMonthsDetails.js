@@ -2,6 +2,7 @@ import createReportsTable from "./createReportsTable.js";
 
 var createMonthsDetails = async (months, year) => {
   var div = document.createElement("div");
+  div.class = "details";
   div.id = `months_container_${year}`;
 
   for (var monthData of months) {
