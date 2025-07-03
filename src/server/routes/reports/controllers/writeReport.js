@@ -21,7 +21,7 @@ var writeReport = async (req, res, next) => {
       return res.sendStatus(500);
     }
 
-    res.status(200).json({ msg: "success upload", userId, data });
+    return res.status(200).json({ msg: "success upload", userId, data });
   }
 };
 

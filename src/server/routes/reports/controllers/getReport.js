@@ -9,7 +9,7 @@ var getReport = async (req, res, next) => {
 
   var imageCollection = await collectImagesAsBase64(userId, report.skus);
 
-  res.json({ report, imageCollection });
+  return res.json({ report, imageCollection });
 };
 
 module.exports = getReport;

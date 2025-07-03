@@ -24,7 +24,7 @@ var writeReports = async (req, res, next) => {
   }
 
   if (count == req.files.length) {
-    res.status(200).json({ msg: "success upload", userId, reports });
+    return res.status(200).json({ msg: "success upload", userId, reports });
   }
 };
 

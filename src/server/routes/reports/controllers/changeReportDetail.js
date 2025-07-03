@@ -36,7 +36,7 @@ var changeReportDetail = async (req, res, next) => {
     });
   }
 
-  res.sendStatus(304);
+  return res.sendStatus(304);
 };
 
 module.exports = changeReportDetail;
