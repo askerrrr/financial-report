@@ -67,13 +67,11 @@ var createReportRow = async (reportData, reportTbody = null) => {
     var monthName = await getMonthNameByNum(month);
 
     reportTbody.id = `tbody_year_${year}_month_${monthName}`;
-
     reportTbody.append(tr);
 
     var tableHead = await createReportsTableHead();
 
     var table = document.createElement("table");
-
     table.append(tableHead, reportTbody);
 
     return table;
@@ -95,13 +93,10 @@ var createMonthDetails = async (reportData) => {
   var reportRow = await createReportRow(reportData);
 
   var details = document.createElement("details");
-
   details.id = `reports_container_${year}_${monthName}`;
-
   details.append(summary, reportRow);
 
   var div = document.createElement("div");
-
   div.append(details);
 
   return div;
@@ -117,7 +112,6 @@ var createYearDetails = async (reportData) => {
 
   var details = document.createElement("details");
   details.id = year;
-
   details.append(summary, monthDetails);
 
   return details;
@@ -155,15 +149,12 @@ var insertReportToYearMonthTree = async (reportData) => {
 
       var details = document.createElement("details");
       details.id = `reports_container_${year}_${monthName}`;
-
       details.append(summary, reportTable);
 
       var div = document.createElement("div");
-
       div.append(details);
 
       var year = document.getElementById(year);
-
       year.append(div);
 
       return;
