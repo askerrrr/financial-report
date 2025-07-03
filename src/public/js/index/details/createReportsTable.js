@@ -1,8 +1,8 @@
-import getReportLink from "../row/services/getReportLink.js";
 import getReportsData from "../services/getReportsData.js";
-import getReportPeriod from "../row/services/getReportPeriod.js";
 import createTdElement from "../../report/row/services/createTdElement.js";
-import createReportsTableHead from "../row/services/createReportsTableHead.js";
+import getReportLink from "../services/reportTreeBuilder/table/getReportLink.js";
+import getReportPeriod from "../services/reportTreeBuilder/table/getReportPeriod.js";
+import createReportsTableHead from "../services/reportTreeBuilder/table/createReportsTableHead.js";
 
 var createReportsTable = async (year, month, reportIds) => {
   var table = document.createElement("table");
