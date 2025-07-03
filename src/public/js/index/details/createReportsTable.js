@@ -1,22 +1,8 @@
 import getReportLink from "../row/services/getReportLink.js";
-import getCookieByName from "../services/getCookieByName.js";
+import getReportsData from "../services/getReportsData.js";
 import getReportPeriod from "../row/services/getReportPeriod.js";
 import createTdElement from "../../report/row/services/createTdElement.js";
 import createReportsTableHead from "../row/services/createReportsTableHead.js";
-
-var userId = getCookieByName("userId");
-
-var getReportsData = async () => {
-  var res = await fetch("/api/" + userId);
-
-  if (!res.ok) {
-    return alert("Не удалось загрузить отчеты");
-  }
-
-  var { reports } = await res.json();
-
-  return reports;
-};
 
 var createReportsTable = async (year, month, reportIds) => {
   var table = document.createElement("table");
@@ -24,7 +10,7 @@ var createReportsTable = async (year, month, reportIds) => {
   var tbody = document.createElement("tbody");
   tbody.id = `tbody_year_${year}_month_${month}`;
 
-  var reports = await getReportsData();
+  var { reports } = await getReportsData();
 
   for (var { reportId } of reportIds) {
     var tr = document.createElement("tr");
