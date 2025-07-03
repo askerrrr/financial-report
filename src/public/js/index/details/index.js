@@ -2,18 +2,19 @@ import createMonthsDetails from "./createMonthsDetails.js";
 
 var createYearsDetails = async (years) => {
   for (var { year, months } of years) {
-    var details = document.createElement("details");
-    details.id = year;
-
     var summary = document.createElement("summary");
-
     summary.append(year);
 
-    details.append(summary, await createMonthsDetails(months, year));
+    var monthsDetails = await createMonthsDetails(months, year);
+
+    var yearDetails = document.createElement("details");
+    yearDetails.id = year;
+
+    yearDetails.append(summary, monthsDetails);
 
     var yearsContainer = document.getElementById("years_container");
 
-    yearsContainer.append(details);
+    yearsContainer.append(yearDetails);
   }
 };
 

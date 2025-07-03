@@ -125,7 +125,7 @@ var createYearDetails = async (reportData) => {
   return details;
 };
 
-var insertReportDataToTop = async (reportData) => {
+var insertReportToYearMonthTree = async (reportData) => {
   try {
     var { year } = reportData;
 
@@ -133,11 +133,7 @@ var insertReportDataToTop = async (reportData) => {
 
     var yearDetails = document.getElementById(yearDetailsId);
 
-    console.log("yearDetails: ", yearDetails);
-
     if (!yearDetails) {
-      console.log("yearDetails is null: ", yearDetails);
-
       var yearDetails = await createYearDetails(reportData);
 
       document.getElementById("years_container").prepend(yearDetails);
@@ -145,26 +141,32 @@ var insertReportDataToTop = async (reportData) => {
       return;
     }
 
-    var reportTbodyId = `tbody_year_${year}_month_${month}`;
+    var { month } = reportData;
+
+    var monthName = await getMonthNameByNum(month);
+
+    var reportTbodyId = `tbody_year_${year}_month_${monthName}`;
 
     var reportTbody = document.getElementById(reportTbodyId);
 
-    console.log("reportTbody: ", reportTbody);
-
     if (!reportTbody) {
-      var { month } = reportData;
+      var summary = document.createElement("summary");
+      summary.append(monthName);
 
-      console.log("reportTbody is null: ", reportTbody);
+      var reportTable = await createReportRow(reportData);
 
-      var monthName = await getMonthNameByNum(month);
+      var details = document.createElement("details");
+      details.id = `reports_container_${year}_${monthName}`;
 
-      var reportsContainerId = `reports_container_${year}_${monthName}`;
+      details.append(summary, reportTable);
 
-      var reportsContainer = document.getElementById(reportsContainerId);
+      var div = document.createElement("div");
 
-      var reportRow = await createReportRow(reportData);
+      div.append(details);
 
-      reportsContainer.append(reportRow);
+      var year = document.getElementById(year);
+
+      year.append(div);
 
       return;
     }
@@ -175,4 +177,4 @@ var insertReportDataToTop = async (reportData) => {
   }
 };
 
-export default insertReportDataToTop;
+export default insertReportToYearMonthTree;

@@ -1,6 +1,6 @@
 import sendPeriodDate from "./sendPeriodDate.js";
 import validateReportPeriod from "./validateReportPeriod.js";
-import insertReportDataToTop from "./insertReportDataToTop2.js";
+import insertReportToYearMonthTree from "./insertReportToYearMonthTree.js";
 
 var createModal = async (className) => {
   var modal = document.createElement("div");
@@ -89,13 +89,13 @@ var openReportPeriodModal = async () => {
       return alert("Конец периода введен некорректно");
     }
 
-    var successSaveReport = await sendPeriodDate(validDateFrom, validDateTo);
+    var reportData = await sendPeriodDate(validDateFrom, validDateTo);
 
-    if (!successSaveReport) {
-      return;
+    if (!reportData) {
+      return alert("Не удалось сохранить отчет");
     }
 
-    await insertReportDataToTop(successSaveReport);
+    await insertReportToYearMonthTree(reportData);
 
     return alert("Отчет успешно сохранен");
   });
