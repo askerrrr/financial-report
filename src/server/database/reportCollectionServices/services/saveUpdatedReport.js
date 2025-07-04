@@ -1,4 +1,4 @@
-var updateReport = async (collection, userId, reportId, report) => {
+var saveUpdatedReport = async (collection, userId, reportId, report) => {
   var result = await collection.updateOne(
     { userId, "reports.reportId": reportId },
     {
@@ -9,4 +9,4 @@ var updateReport = async (collection, userId, reportId, report) => {
   return result.acknowledged;
 };
 
-module.exports = updateReport;
+module.exports = saveUpdatedReport;

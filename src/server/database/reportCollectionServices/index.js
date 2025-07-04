@@ -2,7 +2,7 @@ var { reportCollection } = require("../connection/index");
 
 var updateItems = require("./services/updateItems");
 
-var updateReport = require("./services/updateReport");
+var saveUpdatedReport = require("./services/saveUpdatedReport");
 var saveReportToDb = require("./services/saveReportToDb");
 var getReportById = require("./services/getReportById");
 var deleteReportFromDb = require("./services/deleteReportFromDb");
@@ -23,8 +23,8 @@ var reportCollectionServices = {
 
   getReportsByUserId: (userId) => getReportsByUserId(reportCollection, userId),
 
-  updateReport: (userId, reportId, report) =>
-    updateReport(reportCollection, userId, reportId, report),
+  saveUpdatedReport: (userId, reportId, report) =>
+    saveUpdatedReport(reportCollection, userId, reportId, report),
 
   updateItems: (userId, reportId, items) =>
     updateItems(reportCollection, userId, reportId, items),

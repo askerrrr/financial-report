@@ -3,7 +3,8 @@ var calcRestTotalParams = require("../services/writeAndCalcReportDataFromWBAPI/c
 var calcRemainingParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/remainingParams");
 
 var changeReportDetail = async (req, res, next) => {
-  var { updateReport, getReportById } = req.app.locals.reportCollectionServices;
+  var { saveUpdatedReport, getReportById } =
+    req.app.locals.reportCollectionServices;
 
   var { userId, reportId, index, value } = req.body;
 
@@ -19,7 +20,7 @@ var changeReportDetail = async (req, res, next) => {
 
   var updatedReport = await calcRestTotalParams(rest, changedSKUs);
 
-  var successUpdate = await updateReport(userId, reportId, updatedReport);
+  var successUpdate = await saveUpdatedReport(userId, reportId, updatedReport);
 
   if (successUpdate) {
     var { netProfitMargin, finalNetProfitPerSKU, averageFinalNetProfitPerSKU } =
