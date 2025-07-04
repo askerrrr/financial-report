@@ -2,7 +2,7 @@ var parseReport = require("../services/writeAndCalcReportDataFromWBAPI/index");
 var organizeReportsByPeriod = require("../services/reportTreeBuilder");
 
 var writeReportFromWBAPI = async (req, res, next) => {
-  var { createReport } = req.app.locals.reportCollectionServices;
+  var { saveReportToDb } = req.app.locals.reportCollectionServices;
   var { getReportingPeriods, updateReportsPeriods } =
     req.app.locals.reportingPeriodsCollectionServices;
 
@@ -34,7 +34,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   await updateReportsPeriods(userId, years);
 
-  var successfullWrite = await createReport(userId, parsedReport);
+  var successfullWrite = await saveReportToDb(userId, parsedReport);
 
   if (successfullWrite) {
     var { totalTaxAmount } = parsedReport;

@@ -3,7 +3,7 @@ var { reportCollection } = require("../connection/index");
 var updateItems = require("./services/updateItems");
 
 var updateReport = require("./services/updateReport");
-var createReport = require("./services/createReport");
+var saveReportToDb = require("./services/saveReportToDb");
 var getReportById = require("./services/getReportById");
 var deleteReportFromDb = require("./services/deleteReportFromDb");
 var createReportsEntity = require("./services/createReportsEntity");
@@ -12,8 +12,8 @@ var updateReportPeriod = require("./services/updateReportPeriod");
 var deleteAllReportsByUserId = require("./services/deleteAllReportsByUserId");
 
 var reportCollectionServices = {
-  createReport: (userId, report) =>
-    createReport(reportCollection, userId, report),
+  saveReportToDb: (userId, report) =>
+    saveReportToDb(reportCollection, userId, report),
 
   getReportById: (userId, reportId) =>
     getReportById(reportCollection, userId, reportId),
