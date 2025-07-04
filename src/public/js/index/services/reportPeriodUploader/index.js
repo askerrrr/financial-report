@@ -1,55 +1,13 @@
-import sendPeriodDate from "./sendPeriodDate.js";
-import validateReportPeriod from "./validateReportPeriod.js";
-import insertReportToYearMonthTree from "./reportTreeBuilder/index.js";
-import { showLoader, deleteLoader } from "./loader.js";
-
-var createModal = async (className) => {
-  var modal = document.createElement("div");
-  modal.className = className;
-
-  return modal;
-};
-
-var createTitle = async () => {
-  var title = document.createElement("h3");
-  title.append("Введите период отчета");
-  title.className = "modal-title";
-
-  return title;
-};
-
-var createInputField = async (id, placeholder) => {
-  var input = document.createElement("input");
-  input.id = id;
-  input.type = "text";
-  input.placeholder = placeholder;
-  input.className = "modal-input";
-
-  return input;
-};
-
-var createButtonsContainer = async () => {
-  var div = document.createElement("div");
-  div.className = "modal-buttons";
-
-  return div;
-};
-
-var createSaveButton = async () => {
-  var button = document.createElement("button");
-  button.className = "modal-button modal-button-save";
-  button.textContent = "Сохранить";
-
-  return button;
-};
-
-var createCancelButton = async () => {
-  var button = document.createElement("button");
-  button.className = "modal-button modal-button-cancel";
-  button.textContent = "Отмена";
-
-  return button;
-};
+import createModal from "./services/createModal.js";
+import createTitle from "./services/createTitle.js";
+import sendPeriodDate from "./services/sendPeriodDate.js";
+import createInputField from "./services/createInputField.js";
+import createSaveButton from "./services/createSaveButton.js";
+import { showLoader, deleteLoader } from "./services/loader.js";
+import createCancelButton from "./services/createCancelButton.js";
+import validateReportPeriod from "./services/validateReportPeriod.js";
+import insertReportToYearMonthTree from "../reportTreeBuilder/index.js";
+import createButtonsContainer from "./services/createButtonsContainer.js";
 
 var openReportPeriodModal = async () => {
   var modal = await createModal("modal-overlay");

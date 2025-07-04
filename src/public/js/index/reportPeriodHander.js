@@ -1,5 +1,5 @@
 import checkWBTokenExists from "./services/checkWBTokenExists.js";
-import openReportPeriodModal from "./services/openReportPeriodModal.js";
+import openReportPeriodModal from "./services/reportPeriodUploader/index.js";
 
 var reportPeriodHander = async () => {
   var button = document.getElementById("period-button");
