@@ -1,6 +1,7 @@
 import sendPeriodDate from "./sendPeriodDate.js";
 import validateReportPeriod from "./validateReportPeriod.js";
 import insertReportToYearMonthTree from "./reportTreeBuilder/index.js";
+import { showLoader, deleteLoader } from "./loader.js";
 
 var createModal = async (className) => {
   var modal = document.createElement("div");
@@ -89,11 +90,17 @@ var openReportPeriodModal = async () => {
       return alert("Конец периода введен некорректно");
     }
 
+    await showLoader();
+
     var reportData = await sendPeriodDate(validDateFrom, validDateTo);
 
     if (!reportData) {
+      await deleteLoader();
+
       return alert("Не удалось сохранить отчет");
     }
+
+    await deleteLoader();
 
     await insertReportToYearMonthTree(reportData);
 
