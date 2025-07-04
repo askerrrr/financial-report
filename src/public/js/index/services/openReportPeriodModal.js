@@ -58,16 +58,15 @@ var openReportPeriodModal = async () => {
 
   var title = await createTitle();
 
-  var dateFromPlacaholder = "начало в формате гг.мм.дд - 2025.04.20";
-
   var dateFromInput = await createInputField(
     "dateFromInput",
-    dateFromPlacaholder
+    "начало в формате гг.мм.дд - 2025.04.21"
   );
 
-  var dateToPlaceholder = "конец в формате гг.мм.дд - 2025.04.27";
-
-  var dateToInput = await createInputField("dateToInput", dateToPlaceholder);
+  var dateToInput = await createInputField(
+    "dateToInput",
+    "конец в формате гг.мм.дд - 2025.04.27"
+  );
 
   var buttonsContainer = await createButtonsContainer();
 
