@@ -1,5 +1,5 @@
 var parseReport = require("../services/writeAndCalcReportDataFromWBAPI/index");
-var organizeReportsByPeriod = require("../services/reportPeriodsStructure");
+var organizeReportsByPeriod = require("../services/reportTreeBuilder");
 
 var writeReportFromWBAPI = async (req, res, next) => {
   var { createReport } = req.app.locals.reportCollectionServices;
