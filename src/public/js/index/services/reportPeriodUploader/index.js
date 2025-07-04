@@ -7,7 +7,7 @@ import { showLoader, deleteLoader } from "./services/loader.js";
 import createCancelButton from "./services/createCancelButton.js";
 import validateReportPeriod from "./services/validateReportPeriod.js";
 import createButtonsContainer from "./services/createButtonsContainer.js";
-import insertNewReportToTree from "../reportTreeBuilder/insertReportToTree/index.js";
+import insertNewReportToTree from "../reportTreeBuilder/insertNewReportToTree/index.js";
 
 var openReportPeriodModal = async () => {
   var modal = await createModal("modal-overlay");

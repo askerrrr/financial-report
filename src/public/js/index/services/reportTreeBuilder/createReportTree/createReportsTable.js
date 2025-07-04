@@ -1,8 +1,8 @@
 import getReportsData from "../../getReportsData.js";
-import getReportLink from "../insertReportToTree/table/getReportLink.js";
-import getReportPeriod from "../insertReportToTree/table/getReportPeriod.js";
+import getReportLink from "../insertNewReportToTree/table/getReportLink.js";
+import getReportPeriod from "../insertNewReportToTree/table/getReportPeriod.js";
 import createTdElement from "../../../../report/row/services/createTdElement.js";
-import createReportsTableHead from "../insertReportToTree/table/createReportsTableHead.js";
+import createReportsTableHead from "../insertNewReportToTree/table/createReportsTableHead.js";
 
 var createReportsTable = async (year, month, reportIds) => {
   var table = document.createElement("table");
