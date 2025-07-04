@@ -1,5 +1,6 @@
 var parseReport = require("../services/writeAndCalcReportDataFromWBAPI/index");
 var organizeReportsByPeriod = require("../services/reportTreeBuilder");
+var sortYearsTree = require("../services/different/sortYearTree");
 
 var writeReportFromWBAPI = async (req, res, next) => {
   var { saveReportToDb } = req.app.locals.reportCollectionServices;
@@ -32,7 +33,9 @@ var writeReportFromWBAPI = async (req, res, next) => {
     years
   );
 
-  await updateReportsPeriods(userId, years);
+  var sortedYears = await sortYearsTree(years);
+
+  await updateReportsPeriods(userId, sortedYears);
 
   var successfullWrite = await saveReportToDb(userId, parsedReport);
 
