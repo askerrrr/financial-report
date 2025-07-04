@@ -3,7 +3,7 @@ import createYearDetails from "./createYearDetails.js";
 import getMonthNameByNum from "./getMonthNameByNum.js";
 import removeNoReportsMessage from "./removeNoReportsMessage.js";
 
-var insertReportToYearMonthTree = async (reportData) => {
+var insertNewReportToTree = async (reportData) => {
   removeNoReportsMessage();
 
   var { year, month } = reportData;
@@ -50,4 +50,4 @@ var insertReportToYearMonthTree = async (reportData) => {
   return await createReportRow(reportData, monthName, reportTbody);
 };
 
-export default insertReportToYearMonthTree;
+export default insertNewReportToTree;
