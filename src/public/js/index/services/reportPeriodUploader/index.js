@@ -12,10 +12,6 @@ import createButtonsContainer from "./services/createButtonsContainer.js";
 var openReportPeriodModal = async () => {
   var modal = await createModal("modal-overlay");
 
-  var modalContent = await createModal("modal-content");
-
-  var title = await createTitle();
-
   var dateFromInput = await createInputField(
     "dateFromInput",
     "начало в формате гг.мм.дд - 2025.04.21"
@@ -25,8 +21,6 @@ var openReportPeriodModal = async () => {
     "dateToInput",
     "конец в формате гг.мм.дд - 2025.04.27"
   );
-
-  var buttonsContainer = await createButtonsContainer();
 
   var saveButton = await createSaveButton();
 
@@ -70,8 +64,12 @@ var openReportPeriodModal = async () => {
     document.body.removeChild(modal);
   });
 
+  var buttonsContainer = await createButtonsContainer();
   buttonsContainer.append(cancelButton, saveButton);
 
+  var title = await createTitle();
+
+  var modalContent = await createModal("modal-content");
   modalContent.append(title, dateFromInput, dateToInput, buttonsContainer);
 
   modal.append(modalContent);
