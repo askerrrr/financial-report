@@ -5,17 +5,17 @@ var calcRemainingParams = require("../services/writeAndCalcReportDataFromWBAPI/c
 var changeReportDetail = async (req, res, next) => {
   var { updateReport, getReportById } = req.app.locals.reportCollectionServices;
 
-  var { userId, reportId } = req.body;
+  var { userId, reportId, index, value } = req.body;
 
   var { skus, ...rest } = await getReportById(userId, reportId);
 
   var changedSKUs = await changeElementInArray(skus, req.body);
 
-  var sku = changedSKUs[req.body.index];
+  var sku = changedSKUs[index];
 
-  var skuWithCalculatedParams = await calcRemainingParams(sku, req.body.value);
+  var skuWithCalculatedParams = await calcRemainingParams(sku, value);
 
-  changedSKUs[req.body.index] = skuWithCalculatedParams;
+  changedSKUs[index] = skuWithCalculatedParams;
 
   var updatedReport = await calcRestTotalParams(rest, changedSKUs);
 
