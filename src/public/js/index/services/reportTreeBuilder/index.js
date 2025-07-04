@@ -1,8 +1,11 @@
 import createReportRow from "./createReportRow.js";
 import createYearDetails from "./createYearDetails.js";
 import getMonthNameByNum from "./getMonthNameByNum.js";
+import removeNoReportsMessage from "./removeNoReportsMessage.js";
 
 var insertReportToYearMonthTree = async (reportData) => {
+  removeNoReportsMessage();
+
   var { year, month } = reportData;
 
   var yearDetailsId = year;
