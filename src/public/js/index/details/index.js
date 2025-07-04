@@ -1,6 +1,8 @@
 import createMonthsDetails from "./createMonthsDetails.js";
 
 var createYearsDetails = async (years) => {
+  var yearsContainer = document.getElementById("years_container");
+
   for (var { year, months } of years) {
     var summary = document.createElement("summary");
     summary.append(year);
@@ -11,8 +13,6 @@ var createYearsDetails = async (years) => {
     yearDetails.id = year;
 
     yearDetails.append(summary, monthsDetails);
-
-    var yearsContainer = document.getElementById("years_container");
 
     yearsContainer.append(yearDetails);
   }
