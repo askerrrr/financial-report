@@ -1,6 +1,6 @@
 import createMonthsDetails from "./createMonthsDetails.js";
 
-var createYearsDetails = async (years) => {
+var createReportsTree = async (years) => {
   var yearsContainer = document.getElementById("years_container");
 
   for (var { year, months } of years) {
@@ -18,4 +18,4 @@ var createYearsDetails = async (years) => {
   }
 };
 
-export default createYearsDetails;
+export default createReportsTree;
