@@ -6,10 +6,43 @@ body {
   padding: 100px;
 }
 
-table {
+.details {
+  max-width: 1000px;
+  width: fit-content;
+  margin: 0 0 20px 0;
+}
+
+details {
+  min-width: 300px;
   max-width: 900px;
-  width: 45%;
-  margin: 100px auto 100px 0;
+  font-size: x-large;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #343a40;
+  border: 1px solid #495057;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0 0 10px 0;
+}
+
+summary {
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  outline: none;
+  display: block;
+}
+
+details[open] summary {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #495057;
+}
+
+table {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 10px 0;
   border-collapse: collapse;
   font-size: 16px;
   background-color: #343a40;
@@ -55,6 +88,38 @@ button {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+button:hover {
+  background-color: #495057;
+}
+
 .totalFinalNetProfit {
   color: #04ff00;
+}
+
+.input-file {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.input-file input[type="file"] {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  display: block;
+  width: 0;
+  height: 0;
+}
+
+.input-file span {
+  display: inline-block;
+  padding: 8px 15px;
+  background-color: #495057;
+  color: #f8f9fa;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.input-file:hover span {
+  background-color: #5a6268;
 }
