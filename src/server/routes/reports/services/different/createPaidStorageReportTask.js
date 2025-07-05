@@ -1,12 +1,9 @@
 var { WBAPIError } = require("../../../../customError/");
 
-var url = "https://seller-analytics-api.wildberries.ru/api/v1/paid_storage?";
-
 var createPaidStorageReportTask = async (dateFrom, dateTo, token, userId) => {
-  var dateFromParam = "dateFrom=" + dateFrom + "&";
-  var dateToParam = "dateTo=" + dateTo;
+  var url = `https://seller-analytics-api.wildberries.ru/api/v1/paid_storage?dateFrom=${dateFrom}&dateTo=${dateTo}`;
 
-  var res = await fetch(url + dateFromParam + dateToParam, {
+  var res = await fetch(url, {
     method: "GET",
     headers: { Authorization: "Bearer " + token },
   });
