@@ -3,7 +3,7 @@ var {
   DatabaseError,
   WBAPIError,
   ReportNotFoundError,
-} = require("../../customError/customError");
+} = require("../../customError/");
 
 var errorHandler = async (e, req, res, next) => {
   console.log("e: ", e);

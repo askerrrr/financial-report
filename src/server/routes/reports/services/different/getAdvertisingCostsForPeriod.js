@@ -1,4 +1,4 @@
-var { WBAPIError } = require("../../../../customError/customError");
+var { WBAPIError } = require("../../../../customError");
 
 var calculateTotalAdCampaignCosts = async (data) =>
   data.reduce((acc, i) => acc + i.updSum, 0);

@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../customError/customError");
+var { DatabaseError } = require("../../../customError/");
 
 var createTokenCollectionEntity = async (collection, userId) => {
   try {

@@ -1,4 +1,4 @@
-var { WBAPIError } = require("../../../../customError/customError");
+var { WBAPIError } = require("../../../../customError/");
 
 var url = "https://seller-analytics-api.wildberries.ru/api/v1/paid_storage?";
 

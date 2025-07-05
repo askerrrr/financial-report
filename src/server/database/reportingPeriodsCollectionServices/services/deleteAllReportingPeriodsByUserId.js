@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../customError/customError");
+var { DatabaseError } = require("../../../customError/");
 
 var deleteAllReportingPeriodsByUserId = async (collection, userId) => {
   try {
