@@ -1,14 +1,5 @@
-import checkFormData from "./services/checkFormData.js";
-
-var sendRegistationData = async (data) => {
-  var res = await fetch("/reg/new", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" },
-  });
-
-  return res;
-};
+import checkFormData from "./checkFormData.js";
+import sendRegistationData from "./sendRegistationData.js";
 
 var registrationFormHandler = async () => {
   try {
