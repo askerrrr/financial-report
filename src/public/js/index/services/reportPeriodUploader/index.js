@@ -1,3 +1,4 @@
+import getDateTo from "../periodUtils/getDateTo.js";
 import createModal from "./services/createModal.js";
 import createTitle from "./services/createTitle.js";
 import sendPeriodDate from "./services/sendPeriodDate.js";
@@ -34,7 +35,16 @@ var openReportPeriodModal = async () => {
       return alert("Начало периода введено некорректно");
     }
 
-    var dateTo = dateToInput.value;
+    var dateTo = dateToInput?.value;
+
+    console.log("dateFrom: ", dateFrom);
+
+    if (!dateTo) {
+      dateTo = await getDateTo(dateFrom);
+    }
+
+    console.log("dateTo: ", dateTo);
+
     var validDateTo = await validateReportPeriod(dateTo);
 
     if (!validDateTo) {
