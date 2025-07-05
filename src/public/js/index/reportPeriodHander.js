@@ -19,4 +19,4 @@ var reportPeriodHander = async () => {
   });
 };
 
-reportPeriodHander();
+export default reportPeriodHander;

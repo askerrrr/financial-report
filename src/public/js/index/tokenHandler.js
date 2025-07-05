@@ -10,4 +10,4 @@ var tokenHandler = async () => {
   });
 };
 
-tokenHandler();
+export default tokenHandler;
