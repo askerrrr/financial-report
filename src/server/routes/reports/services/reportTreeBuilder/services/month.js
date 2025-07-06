@@ -34,7 +34,8 @@ var getMonthReportIds = async (date, fullPeriod, reportId, carry) => {
   if (carry) {
     var mondaysQty = await getMondaysQtyInMonth(date);
     reportIds[mondaysQty] = { fullPeriod, reportId };
-    return v;
+
+    return reportIds;
   }
 
   reportIds[mondayIndex] = { fullPeriod, reportId };
