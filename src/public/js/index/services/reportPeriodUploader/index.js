@@ -37,13 +37,9 @@ var openReportPeriodModal = async () => {
 
     var dateTo = dateToInput?.value;
 
-    console.log("dateFrom: ", dateFrom);
-
     if (!dateTo) {
       dateTo = await getDateTo(dateFrom);
     }
-
-    console.log("dateTo: ", dateTo);
 
     var validDateTo = await validateReportPeriod(dateTo);
 
