@@ -11,13 +11,13 @@ var getMonthsForCurrentYear = async (monthNum, reports) => {
   return months;
 };
 
-var getMonthsForNewYear = async (reports) => {
+var getMonthsForNewYear = async (reportIds) => {
   var firstMonthIndex = 0,
     firstMonthName = "январь";
 
   var months = [];
 
-  months[firstMonthIndex] = { month: firstMonthName, reports };
+  months[firstMonthIndex] = { month: firstMonthName, reportIds };
 
   return months;
 };
