@@ -43,7 +43,7 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
             "carry"
           );
 
-          months[0] = { month, reportIds };
+          months[11] = { month, reportIds };
 
           years[endYearIndex] = { year: endYear, months };
 

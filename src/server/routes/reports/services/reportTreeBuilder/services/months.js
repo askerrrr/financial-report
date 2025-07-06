@@ -12,10 +12,10 @@ var getMonthsForCurrentYear = async (monthNum, reports) => {
 };
 
 var getMonthsForNewYear = async (reportIds) => {
-  var firstMonthIndex = 0,
+  var firstMonthIndex = 11,
     firstMonthName = "январь";
 
-  var months = [];
+  var months = new Array(12).fill(null);
 
   months[firstMonthIndex] = { month: firstMonthName, reportIds };
 
@@ -92,7 +92,7 @@ var isNextMonthReportNeeded = async (dateFrom, dateTo) => {
 };
 
 var getNextYearFirstMonth = async (months) =>
-  months[0] ?? { month: "январь", reports: [] };
+  months[11] ?? { month: "январь", reports: [] };
 
 module.exports = {
   getMonthsData,
