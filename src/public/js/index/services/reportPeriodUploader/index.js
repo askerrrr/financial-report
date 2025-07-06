@@ -1,6 +1,6 @@
-import getDateTo from "../periodUtils/getDateTo.js";
 import createModal from "./services/createModal.js";
 import createTitle from "./services/createTitle.js";
+import getDateToByDateFrom from "../periodUtils/index.js";
 import sendPeriodDate from "./services/sendPeriodDate.js";
 import createInputField from "./services/createInputField.js";
 import createSaveButton from "./services/createSaveButton.js";
@@ -38,7 +38,7 @@ var openReportPeriodModal = async () => {
     var dateTo = dateToInput?.value;
 
     if (!dateTo) {
-      dateTo = await getDateTo(validDateFrom);
+      dateTo = await getDateToByDateFrom(validDateFrom);
     }
 
     var validDateTo = await validateReportPeriod(dateTo);

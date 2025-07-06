@@ -5,7 +5,7 @@ import replaceDashToDot from "./services/replaceDashToDot.js";
 import hasPeriodOverlap from "./services/hasPeriodOverlap.js";
 import getWeekDaysFromMonth from "./services/getWeekDaysFromMonth.js";
 
-var getDateTo = async (dateFrom) => {
+var getDateToByDateFrom = async (dateFrom) => {
   var mondays = getWeekDaysFromMonth(dateFrom, "monday");
 
   if (!isMonday(dateFrom, mondays)) {
@@ -51,4 +51,4 @@ var getDateTo = async (dateFrom) => {
   return dateToWithDots;
 };
 
-export default getDateTo;
+export default getDateToByDateFrom;
