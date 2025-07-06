@@ -5,8 +5,6 @@ import createTdElement from "../../../../report/row/services/createTdElement.js"
 import createReportsTableHead from "../insertNewReportToTree/table/createReportsTableHead.js";
 
 var createReportsTable = async (year, month, reportIds) => {
-  var table = document.createElement("table");
-
   var tbody = document.createElement("tbody");
   tbody.id = `tbody_year_${year}_month_${month}`;
 
@@ -53,6 +51,9 @@ var createReportsTable = async (year, month, reportIds) => {
   }
 
   var tableHead = await createReportsTableHead();
+
+  var table = document.createElement("table");
+
   table.append(tableHead, tbody);
 
   return table;
