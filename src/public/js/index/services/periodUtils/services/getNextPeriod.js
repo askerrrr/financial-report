@@ -12,7 +12,7 @@ var getNextPeriod = (currentYear, currentMonth, currentDay) => {
     return nextYearDate;
   }
 
-  var currentYearDate = [currentYear, nextMonth, currentDay].join(".");
+  var currentYearDate = [currentYear, nextMonth, currentDay].join("-");
 
   return currentYearDate;
 };
