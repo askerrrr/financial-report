@@ -1,3 +1,4 @@
+var env = require("./env");
 var express = require("express");
 var { join } = require("node:path");
 var { mkdir } = require("node:fs/promises");
@@ -22,7 +23,7 @@ var app = express();
   app.locals.reportingPeriodsCollectionServices =
     reportingPeriodsCollectionServices;
 
-  app.listen(5000, "127.0.0.1", () => console.log("server running"));
+  app.listen(env.PORT, env.HOST, () => console.log("server running"));
 })();
 
 app.use(express.urlencoded());
