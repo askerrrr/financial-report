@@ -30,21 +30,21 @@ app.use(express.urlencoded());
 app.use(express.json());
 app.use(express.static(join(__dirname, "../public")));
 
-app.use(require("./middleware/mongoose/index"));
+app.use(require("./middleware/mongoose/"));
 
-app.use("/auth", require("./routes/auth/index"));
-app.use("/reg", require("./routes/registration/index"));
+app.use("/auth", require("./routes/auth/"));
+app.use("/reg", require("./routes/registration/"));
 
 app.use(cookieParser());
 
 app.use(require("./middleware/verifyJWTToken"));
 
-app.use("/", require("./routes/root/index"));
+app.use("/", require("./routes/root/"));
 
-app.use("/token", require("./routes/WBToken/index"));
+app.use("/token", require("./routes/WBToken/"));
 
-app.use("/reports", require("./routes/reports/index"));
+app.use("/reports", require("./routes/reports/"));
 
-app.all(/.*/, require("./middleware/notFoundHandler/notFoundHandler"));
+app.all(/.*/, require("./middleware/notFoundHandler/"));
 
-app.use(require("./middleware/errHandler/errorHandler"));
+app.use(require("./middleware/errHandler/"));
