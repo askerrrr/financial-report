@@ -12,7 +12,7 @@ var getDateToByDateFrom = async (dateFrom) => {
     return "Начало отчетного периода не является понедельником";
   }
 
-  var [year, month, day] = dateFrom.split(".");
+  var [year, month, day] = dateFrom.split("-");
 
   var sandays, dateTo;
 
@@ -43,7 +43,7 @@ var getDateToByDateFrom = async (dateFrom) => {
   var sandayIndex = ++mondayIndex;
 
   dateTo = sandays[sandayIndex];
-
+  console.log("dateTo: ", dateTo);
   var trancatedDate = truncateDate(dateTo);
 
   var dateToWithDots = replaceDashToDot(trancatedDate);

@@ -92,7 +92,7 @@ var isNextMonthReportNeeded = async (dateFrom, dateTo) => {
 };
 
 var getNextYearFirstMonth = async (months) =>
-  months[11] ?? { month: "январь", reports: [] };
+  months[11] ?? { month: "январь", reportIds: [] };
 
 module.exports = {
   getMonthsData,
