@@ -43,7 +43,7 @@ var getDateToByDateFrom = async (dateFrom) => {
   var sandayIndex = ++mondayIndex;
 
   dateTo = sandays[sandayIndex];
-  console.log("dateTo: ", dateTo);
+
   var trancatedDate = truncateDate(dateTo);
 
   var dateToWithDots = replaceDashToDot(trancatedDate);
