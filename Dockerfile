@@ -1,6 +1,6 @@
 FROM node:20.19.3-alpine3.20
 WORKDIR /report_app
-COPY package*.json  /app/
+COPY package*.json  /report_app/
 RUN npm i \
     && apk update \
     && apk add vim
