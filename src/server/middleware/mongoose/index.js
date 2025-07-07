@@ -1,7 +1,9 @@
+var env = require("../../env");
+
 var mongoose = require("mongoose");
 
 var mongooseConnection = async () => {
-  var userDB = mongoose.connect("mongodb://127.0.0.1:27017");
+  var userDB = mongoose.connect(env.mongo_uri);
 
   userDB.then(() => console.info("mongoose is connected"));
 };
