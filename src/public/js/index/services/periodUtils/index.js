@@ -9,7 +9,7 @@ var getDateToByDateFrom = async (dateFrom) => {
   var mondays = getWeekDaysFromMonth(dateFrom, "monday");
 
   if (!isMonday(dateFrom, mondays)) {
-    return "Начало отчетного периода не является понедельником";
+    return alert("Начало отчетного периода не является понедельником");
   }
 
   var [year, month, day] = dateFrom.split("-");
