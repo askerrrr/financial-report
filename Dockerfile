@@ -1,5 +1,5 @@
 FROM node:20.19.3-alpine3.20
-WORKDIR /app
+WORKDIR /report_app
 COPY package*.json  /app/
 RUN npm i \
     && apk update \
