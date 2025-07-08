@@ -3,6 +3,7 @@ var express = require("express");
 var { join } = require("node:path");
 var { mkdir } = require("node:fs/promises");
 var cookieParser = require("cookie-parser");
+var checkDBState = require("./middleware/mongoose");
 var userCollectionServices = require("./database/userCollectionServices/");
 var tokenCollectionServices = require("./database/tokenCollectionServices/");
 var reportCollectionServices = require("./database/reportCollectionServices/");
@@ -31,7 +32,7 @@ app.use(express.urlencoded());
 app.use(express.json());
 app.use(express.static(join(__dirname, "../public")));
 
-app.use(require("./middleware/mongoose/"));
+app.use(checkDBState);
 
 app.use("/auth", require("./routes/auth/"));
 app.use("/reg", require("./routes/registration/"));

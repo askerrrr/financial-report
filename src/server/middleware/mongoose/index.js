@@ -19,7 +19,7 @@ mongoose.connection.on("disconnected", () =>
 
 mongooseConnection();
 
-var checkState = (req, res, next) => {
+var checkDBState = (req, res, next) => {
   try {
     if (mongoose.connection.readyState !== 1) {
       next(new DatabaseConnectionError());
@@ -35,4 +35,4 @@ var checkState = (req, res, next) => {
   }
 };
 
-module.exports = checkState;
+module.exports = checkDBState;
