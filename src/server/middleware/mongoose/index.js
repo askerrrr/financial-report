@@ -1,4 +1,5 @@
 var env = require("../../env");
+var { DatabaseConnectionError } = require("../../customError");
 
 var mongoose = require("mongoose");
 

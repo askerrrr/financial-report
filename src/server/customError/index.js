@@ -9,6 +9,14 @@ class DatabaseError extends Error {
   }
 }
 
+class DatabaseConnectionError extends Error {
+  constructor(message) {
+    super(message);
+
+    this.message = "Database connection is not established";
+  }
+}
+
 class WBAPIError extends Error {
   constructor(userId, status, message, location) {
     super(message);
@@ -28,4 +36,9 @@ class ReportNotFoundError extends Error {
   }
 }
 
-module.exports = { DatabaseError, WBAPIError, ReportNotFoundError };
+module.exports = {
+  DatabaseError,
+  WBAPIError,
+  ReportNotFoundError,
+  DatabaseConnectionError,
+};
