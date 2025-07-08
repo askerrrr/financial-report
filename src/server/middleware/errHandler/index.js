@@ -3,6 +3,7 @@ var {
   DatabaseError,
   WBAPIError,
   ReportNotFoundError,
+  DatabaseConnectionError,
 } = require("../../customError");
 
 var errorHandler = async (e, req, res, next) => {
@@ -13,7 +14,7 @@ var errorHandler = async (e, req, res, next) => {
     return res.sendStatus(500);
   }
 
-  if (e instanceof DatabaseError) {
+  if (e instanceof DatabaseError && DatabaseConnectionError) {
     return res.sendStatus(500);
   }
 
