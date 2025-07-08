@@ -5,10 +5,11 @@ var env = Object.create(
 
     HOST: { value: "127.0.0.1" || process.env.HOST },
 
-    mongo_uri: {
-      value:
-        "mongodb://127.0.0.1:27017/reports" ||
-        `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/reports`,
+    getMongoURI: {
+      value: () =>
+        process.env.MONGO_HOST
+          ? `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/reports`
+          : "mongodb://127.0.0.1:27017/reports",
     },
 
     mongoose_options: {

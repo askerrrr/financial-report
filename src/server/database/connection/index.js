@@ -4,7 +4,10 @@ var tokenSchema = require("../schemas/token");
 var { userSchema, reportSchema } = require("../schemas/index");
 var reportingPeriodsSchema = require("../schemas/reportingPeriodsSchema");
 
-var reportDB = mongoose.createConnection(env.mongo_uri, env.mongoose_options);
+var reportDB = mongoose.createConnection(
+  env.getMongoURI(),
+  env.mongoose_options
+);
 
 var userCollection = reportDB.model("User", userSchema);
 
