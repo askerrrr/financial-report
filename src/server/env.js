@@ -3,7 +3,7 @@ var env = Object.create(
   {
     PORT: { value: 5000 || process.env.PORT },
 
-    HOST: { value: "127.0.0.1" || process.env.HOST },
+    HOST: { value: process.env.HOST || "127.0.0.1" },
 
     getMongoURI: {
       value: () =>
