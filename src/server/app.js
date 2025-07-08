@@ -34,6 +34,7 @@ app.use(express.static(join(__dirname, "../public")));
 
 app.use(checkDBState);
 
+app.use("/no-auth-decode/", require("./routes/noAuthDecode"));
 app.use("/auth", require("./routes/auth/"));
 app.use("/reg", require("./routes/registration/"));
 
