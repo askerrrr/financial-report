@@ -1,7 +1,7 @@
 var env = Object.create(
   {},
   {
-    PORT: { value: 5000 || process.env.PORT },
+    PORT: { value: process.env.PORT || 5000 },
 
     HOST: { value: process.env.HOST || "127.0.0.1" },
 
