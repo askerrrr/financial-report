@@ -1,5 +1,6 @@
 import createModal from "./services/createModal.js";
 import createTitle from "./services/createTitle.js";
+import isFutureDate from "./services/isFutureDate.js";
 import getDateToByDateFrom from "../periodUtils/index.js";
 import sendPeriodDate from "./services/sendPeriodDate.js";
 import createInputField from "./services/createInputField.js";
@@ -33,6 +34,10 @@ var openReportPeriodModal = async () => {
 
     if (!validDateFrom) {
       return alert("Начало периода введено некорректно");
+    }
+
+    if (await isFutureDate(validDateFrom)) {
+      return alert("Период введен некорректно");
     }
 
     var dateTo = dateToInput?.value;
