@@ -7,7 +7,7 @@ var verifyJWTToken = async (req, res, next) => {
 
     if (!token) {
       return res.sendFile(
-        join(__dirname, "../../public/html/auth/authForm.html")
+        join(__dirname, "../../public/html/noAuthDecode/index.html")
       );
     }
 
