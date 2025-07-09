@@ -20,4 +20,10 @@ var getWeekDaysFromMonth = (dateFrom, weekDay) => {
   return weekDays;
 };
 
+var isMonday = (dateFrom) => {
+  var mondays = getWeekDaysFromMonth(dateFrom, "monday");
+
+  return mondays.includes(new Date(dateFrom).toISOString());
+};
+
 export default getWeekDaysFromMonth;

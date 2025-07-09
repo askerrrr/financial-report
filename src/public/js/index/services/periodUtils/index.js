@@ -1,17 +1,10 @@
-import isMonday from "./services/isMonday.js";
 import truncateDate from "./services/truncateDate.js";
 import getNextPeriod from "./services/getNextPeriod.js";
 import replaceDashToDot from "./services/replaceDashToDot.js";
 import hasPeriodOverlap from "./services/hasPeriodOverlap.js";
-import getWeekDaysFromMonth from "./services/getWeekDaysFromMonth.js";
+import { getWeekDaysFromMonth } from "./services/getWeekDaysFromMonth.js";
 
 var getDateToByDateFrom = async (dateFrom) => {
-  var mondays = getWeekDaysFromMonth(dateFrom, "monday");
-
-  if (!isMonday(dateFrom, mondays)) {
-    return alert("Начало отчетного периода не является понедельником");
-  }
-
   var [year, month, day] = dateFrom.split("-");
 
   var sandays, dateTo;
@@ -37,6 +30,8 @@ var getDateToByDateFrom = async (dateFrom) => {
   sandays = getWeekDaysFromMonth(dateFrom, "sanday");
 
   var dateFromISO = new Date(dateFrom).toISOString();
+
+  var mondays = getWeekDaysFromMonth(dateFrom, "monday");
 
   var mondayIndex = mondays.indexOf(dateFromISO);
 
