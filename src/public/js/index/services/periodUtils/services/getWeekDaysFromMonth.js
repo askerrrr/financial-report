@@ -26,4 +26,4 @@ var isMonday = (dateFrom) => {
   return mondays.includes(new Date(dateFrom).toISOString());
 };
 
-export default getWeekDaysFromMonth;
+export { isMonday, getWeekDaysFromMonth };
