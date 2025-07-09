@@ -7,6 +7,8 @@ var createTotalTableHead = async () => {
 
   var totalSoldTh = await createThElement("Продано шт.");
 
+  var totalReturnAmountTh = await createThElement("Возвратов");
+
   var totalDeliveryCostTh = await createThElement("Доставка");
 
   var totalFinesTh = await createThElement("Штрафы");
@@ -33,6 +35,7 @@ var createTotalTableHead = async () => {
     totalRetailAmountTh,
     totalRevenueTh,
     totalSoldTh,
+    totalReturnAmountTh,
     totalDeliveryCostTh,
     totalFinesTh,
     deductionOrPaymentTh,

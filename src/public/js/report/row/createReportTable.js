@@ -32,6 +32,8 @@ var createReportTable = async (report) => {
 
     var qty = await createTdElement(sku.qty);
 
+    var returnAmount = await createTdElement(sku.returnAmountPerSKU);
+
     var costPriceInputField = await createInputField(
       sku.costPrice,
       index,
@@ -80,6 +82,7 @@ var createReportTable = async (report) => {
       SKUPhotoUploaderTd,
       skuName,
       qty,
+      returnAmount,
       costPrice,
       retailPrice,
       deliveryCost,
