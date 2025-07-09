@@ -1,4 +1,5 @@
 var { getMondayIndex } = require("./monday");
+var { getMondaysQtyInMonth } = require("./monday");
 
 var monthsList = [
   "декабрь",
