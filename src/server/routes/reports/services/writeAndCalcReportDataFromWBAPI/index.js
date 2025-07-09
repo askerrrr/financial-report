@@ -53,6 +53,8 @@ var parseReport = async (
       qty
     );
 
+    var returnAmountPerSKU = await calc.returnAmountPerSKU(skuFilteredReport);
+
     var deductionOrPayment = await calc.deductionsOrPayments(skuFilteredReport);
 
     var retailAmountPerSKU = await calc.retailAmountPerSKU(skuFilteredReport);
@@ -100,6 +102,7 @@ var parseReport = async (
       deliveryCostPerSKU,
       retailAmountPerSKU,
       deductionOrPayment,
+      returnAmountPerSKU,
       averageNetProfitPerSKU,
       averageAdvertisingCostPerSKU,
     });
