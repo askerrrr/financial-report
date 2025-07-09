@@ -14,6 +14,7 @@ var parseReport = async (
   var totalFines = await calc.totalFines(report);
   var totalRevenue = await calc.totalRevenue(report);
   var totalSold = await calc.totalSold(report, skuNames);
+  var totalReturnAmount = await calc.totalReturnAmount(report);
   var totalStorageCost = await calc.totalStorageCost(report);
   var totalDeliveryCost = await calc.totalDeliveryCost(report);
   var totalRetailAmount = await calc.totalRetailAmount(report);
@@ -121,6 +122,7 @@ var parseReport = async (
     totalNetProfit,
     totalStorageCost,
     totalDeliveryCost,
+    totalReturnAmount,
     totalRetailAmount,
     totalPaidAcceptance,
     totalAdCampaignCosts,

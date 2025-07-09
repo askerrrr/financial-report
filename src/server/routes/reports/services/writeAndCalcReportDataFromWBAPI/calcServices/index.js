@@ -13,6 +13,7 @@ var caclReturnAmountPerSKU = require("./returnAmountPerSKU");
 var calcTotalDeliveryCost = require("./totalDeliveryCost");
 var calcTotalRetailAmount = require("./totalRetailAmount");
 var calcStorageCostPerSKU = require("./storageCostPerSKU");
+var calcTotalReturnAmount = require("./totalReturnAmount");
 var calcTotalPaidAcceptance = require("./totalPaidAcceptance");
 var calcTotalRevenuePerSKU = require("./totalRevenuePerSKU");
 var calcDeliveryCostPerSKU = require("./deliveryCostPerSKU");
@@ -74,6 +75,8 @@ var calc = {
   totalFines: (data) => calcTotalFines(data),
 
   totalRevenue: (data) => calcTotalRevenue(data),
+
+  totalReturnAmount: (data) => calcTotalReturnAmount(data),
 
   totalNetProfit: (
     totalRevenue,
