@@ -1,19 +1,12 @@
 var isFutureDate = async (reportDate) => {
-  var today = new Date().toLocaleDateString();
+  var fullToday = new Date().toISOString();
+  var shortToday = fullToday.split("T")[0];
 
-  var [year, month, day] = reportDate.split("-");
+  var shortTodayMilliseconds = new Date(shortToday).getTime();
 
-  var validDate = [day, month, year].join(".");
+  var reportDateMilliseconds = new Date(reportDate).getTime();
 
-  var validDateMilliseconds = new Date(validDate).getTime();
-
-  if (isNaN(validDateMilliseconds)) {
-    return true;
-  }
-
-  var todayMilliseconds = new Date(today).getTime();
-
-  return validDateMilliseconds > todayMilliseconds;
+  return reportDateMilliseconds > shortTodayMilliseconds;
 };
 
 export default isFutureDate;

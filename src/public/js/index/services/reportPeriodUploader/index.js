@@ -9,6 +9,7 @@ import { showLoader, deleteLoader } from "./services/loader.js";
 import createCancelButton from "./services/createCancelButton.js";
 import validateReportPeriod from "./services/validateReportPeriod.js";
 import createButtonsContainer from "./services/createButtonsContainer.js";
+import { isMonday } from "../periodUtils/services/getWeekDaysFromMonth.js";
 import insertNewReportToTree from "../reportTreeBuilder/insertNewReportToTree/index.js";
 
 var openReportPeriodModal = async () => {
@@ -40,6 +41,10 @@ var openReportPeriodModal = async () => {
       return alert("Период введен некорректно");
     }
 
+    if (!(await isMonday(validDateFrom))) {
+      return alert("Начало периода не является понедельником");
+    }
+
     var dateTo = dateToInput?.value;
 
     if (!dateTo) {
@@ -47,6 +52,10 @@ var openReportPeriodModal = async () => {
     }
 
     var validDateTo = await validateReportPeriod(dateTo);
+
+    if (isFutureDate(validDateTo)) {
+      return alert("Отчет еще не готов...");
+    }
 
     if (!validDateTo) {
       return alert("Конец периода введен некорректно");

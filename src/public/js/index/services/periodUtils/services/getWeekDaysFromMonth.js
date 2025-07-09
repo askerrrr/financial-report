@@ -20,7 +20,7 @@ var getWeekDaysFromMonth = (dateFrom, weekDay) => {
   return weekDays;
 };
 
-var isMonday = (dateFrom) => {
+var isMonday = async (dateFrom) => {
   var mondays = getWeekDaysFromMonth(dateFrom, "monday");
 
   return mondays.includes(new Date(dateFrom).toISOString());
