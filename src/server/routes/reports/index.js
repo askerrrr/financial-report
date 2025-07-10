@@ -2,7 +2,7 @@ var multer = require("multer");
 var { Router } = require("express");
 var writeReport = require("./controllers/writeReport");
 var writeReports = require("./controllers/writeReports");
-var fileFilter = require("./services/downloadFile/fileFilter");
+var fileFilter = require("./services/fileFilter");
 
 var reportStorage = multer.diskStorage({
   destination: (req, file, cb) => {
