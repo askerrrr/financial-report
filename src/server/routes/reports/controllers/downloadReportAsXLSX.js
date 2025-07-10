@@ -1,3 +1,5 @@
+var getReportAsXLSXBuffer = require("../services/getReportAsXLSXBuffer");
+
 var downloadReportAsXLSX = async (req, res, next) => {
   var { reportId } = req.params;
   var { getReportById } = req.app.locals.reportCollectionServices;
@@ -6,7 +8,7 @@ var downloadReportAsXLSX = async (req, res, next) => {
 
   var report = await getReportById(userId, id);
 
-  var buffer;
+  var buffer = await getReportAsXLSXBuffer(report);
 
   return res
     .setHeader(
