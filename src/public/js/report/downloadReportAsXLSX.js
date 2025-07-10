@@ -6,7 +6,20 @@ var downloadReportAsXLSX = async (reportId) =>
 
     var url = "/reports/download-report-as-xlsx/" + "userId" + "/" + reportId;
 
-    //window.location.href = url;
+    var res = await fetch(url);
+
+    var blob = await res.blob();
+
+    var downloadUrl = window.URL.createObjectURL(blob);
+
+    var a = document.createElement("a");
+    a.href = downloadUrl;
+    a.download = "file.xlsx";
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(downloadUrl);
+
+    a.remove();
   });
 
 export default downloadReportAsXLSX;
