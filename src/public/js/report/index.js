@@ -1,7 +1,8 @@
-import getCookieByName from "../index/services/getCookieByName.js";
 import createReportTable from "./row/createReportTable.js";
 import createTotalsTable from "./row/createTotalsTable.js";
 import getReportInfo from "./row/services/getReportInfo.js";
+import downloadReportAsXLSX from "./downloadReportAsXLSX.js";
+import getCookieByName from "../index/services/getCookieByName.js";
 import injectBase64IntoImgTags from "./row/services/injectBase64IntoImgTags.js";
 
 var userId = await getCookieByName("userId");
@@ -31,6 +32,9 @@ var showReport = async () => {
   await createReportTable(report);
   await injectBase64IntoImgTags(imageCollection);
   await createTotalsTable(report);
+
+  var { reportId } = report;
+  await downloadReportAsXLSX(reportId);
 };
 
 showReport();
