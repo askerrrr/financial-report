@@ -1,4 +1,4 @@
-var getReportAsXLSXBuffer = require("../services/getReportAsXLSXBuffer");
+var getReportAsXLSXBuffer = require("../services/reportAsXLSXBuffer");
 
 var downloadReportAsXLSX = async (req, res, next) => {
   var { reportId } = req.params;
