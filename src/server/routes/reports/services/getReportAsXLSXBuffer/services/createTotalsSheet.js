@@ -14,7 +14,7 @@ var createTotalsSheet = async (report, workbook) => {
   sheet = await writeTotalsTitleToSheet(sheet, indent);
   sheet = await writeTotalValuesToSheet(sheet, indent, requiredTotals);
 
-  return sheet;
+  return workbook;
 };
 
 module.exports = createTotalsSheet;
