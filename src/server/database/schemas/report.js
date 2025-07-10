@@ -32,6 +32,7 @@ var SKUSchema = new Schema(
 
 var reportSchema = new Schema(
   {
+    userId: strOptions,
     reportId: numOptions,
     dateFrom: strOptions,
     dateTo: strOptions,
