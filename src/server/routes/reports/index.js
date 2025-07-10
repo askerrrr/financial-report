@@ -35,7 +35,7 @@ router.get("/:id", require("./controllers/getReportHTML"));
 router.get("/:userId/:id", require("./controllers/getReport"));
 
 router.get(
-  "/download-report-as-xlsx",
+  "/download-report-as-xlsx/:userId/:reportId",
   require("./controllers/downloadReportAsXLSX")
 );
 
