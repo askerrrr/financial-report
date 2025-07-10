@@ -34,6 +34,11 @@ router.get("/:id", require("./controllers/getReportHTML"));
 
 router.get("/:userId/:id", require("./controllers/getReport"));
 
+router.get(
+  "/download-report-as-xlsx",
+  require("./controllers/downloadReportAsXLSX")
+);
+
 router.post("/period", require("./controllers/changeReportPeriod"));
 
 router.post("/upload/file", updoadReports.single("file"), writeReport);
