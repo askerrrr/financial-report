@@ -53,7 +53,7 @@ var openReportPeriodModal = async () => {
 
     var validDateTo = await validateReportPeriod(dateTo);
 
-    if (isFutureDate(validDateTo)) {
+    if (await isFutureDate(validDateTo)) {
       return alert("Отчет еще не готов...");
     }
 
