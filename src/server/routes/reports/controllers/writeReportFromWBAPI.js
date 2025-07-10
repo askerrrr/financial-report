@@ -22,6 +22,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   var reportId = report[0].realizationreport_id;
 
+  parsedReport.userId = userId;
   parsedReport.reportId = reportId;
 
   var { years } = await getReportingPeriods(userId);
