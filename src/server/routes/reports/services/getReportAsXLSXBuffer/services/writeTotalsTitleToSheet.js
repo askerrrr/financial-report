@@ -17,7 +17,7 @@ var totalTitles = [
 
 var titleStyles = { vertical: "middle", horizontal: "left" };
 
-var writeTitleToTotalsSheet = async (sheet, cellNum) => {
+var writeTotalsTitleToSheet = async (sheet, cellNum) => {
   var cellName = "A";
 
   for (var title of totalTitles) {
@@ -32,4 +32,4 @@ var writeTitleToTotalsSheet = async (sheet, cellNum) => {
   return sheet;
 };
 
-module.exports = writeTitleToTotalsSheet;
+module.exports = writeTotalsTitleToSheet;
