@@ -4,13 +4,13 @@ var requiredSKUsFieldsName = [
   "costPrice",
   "returnAmount",
   "averageRetailPrice",
-  "deliveryCost",
+  "deliveryCostPerSKU",
   "deductionOrPayment",
-  "storageCost",
-  "acceptance",
-  "netProfit",
+  "storageCostPerSKU",
+  "acceptancePerSKU",
+  "netProfitPerSKU",
   "netProfitMargin",
-  "finalNetProfit",
+  "finalNetProfitPerSKU",
 ];
 
 var getRequiredSKUFieldsName = async (skus) =>
