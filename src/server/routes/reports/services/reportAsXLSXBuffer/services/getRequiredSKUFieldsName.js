@@ -21,13 +21,13 @@ var getRequiredSKUFieldsName = async (skus) =>
       costPrice: sku.costPrice,
       returnAmount: sku.returnAmount,
       averageRetailPrice: sku.averageRetailPrice,
-      deliveryCost: sku.deliveryCostPerSKU,
+      deliveryCostPerSKU: sku.deliveryCostPerSKU,
       deductionOrPayment: sku.deductionOrPayment,
-      storageCost: sku.storageCostPerSKU,
-      acceptance: sku.acceptancePerSKU,
-      netProfit: sku.netProfitPerSKU,
+      storageCostPerSKU: sku.storageCostPerSKU,
+      acceptancePerSKU: sku.acceptancePerSKU,
+      netProfitPerSKU: sku.netProfitPerSKU,
       netProfitMargin: sku.netProfitMargin,
-      finalNetProfit: sku.finalNetProfitPerSKU,
+      finalNetProfitPerSKU: sku.finalNetProfitPerSKU,
     };
   });
 
