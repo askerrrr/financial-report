@@ -1,4 +1,4 @@
-var getRequiredTotals = async (totalValues) => {
+var getRequiredTotalsField = async (totalValues) => {
   return {
     reportId: totalValues.reportId,
     dateFrom: totalValues.dateFrom,
@@ -17,4 +17,4 @@ var getRequiredTotals = async (totalValues) => {
   };
 };
 
-module.exports = getRequiredTotals;
+module.exports = getRequiredTotalsField;

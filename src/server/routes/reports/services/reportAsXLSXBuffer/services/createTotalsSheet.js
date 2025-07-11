@@ -1,4 +1,4 @@
-var getRequiredTotals = require("./getRequiredTotals");
+var getRequiredTotalsField = require("./getRequiredTotalsField");
 var writeTotalsTitleToSheet = require("./writeTotalsTitleToSheet");
 var writeTotalValuesToSheet = require("./writeTotalValuesToSheet");
 
@@ -9,7 +9,7 @@ var createTotalsSheet = async (report, workbook) => {
 
   var { skus, ...totalValues } = report;
 
-  var requiredTotals = await getRequiredTotals(totalValues);
+  var requiredTotals = await getRequiredTotalsField(totalValues);
 
   sheet = await writeTotalsTitleToSheet(sheet, indent);
   sheet = await writeTotalValuesToSheet(sheet, indent, requiredTotals);
