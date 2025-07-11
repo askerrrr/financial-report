@@ -13,7 +13,7 @@ var requiredSKUsFieldsName = [
   "finalNetProfit",
 ];
 
-var getRequiredSKUFieldsName = async () =>
+var getRequiredSKUFieldsName = async (skus) =>
   skus.map((sku) => {
     return {
       skuName: sku.skuName,
