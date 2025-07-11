@@ -1,10 +1,8 @@
 var getReportAsXLSXBuffer = require("../services/reportAsXLSXBuffer");
 
 var downloadReportAsXLSX = async (req, res, next) => {
-  var { reportId } = req.params;
+  var { userId, reportId } = req.params;
   var { getReportById } = req.app.locals.reportCollectionServices;
-
-  var userId = req.app.locals.userId;
 
   var report = await getReportById(userId, reportId);
 
@@ -15,7 +13,7 @@ var downloadReportAsXLSX = async (req, res, next) => {
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
-    .setHeader("Content-Disposition", 'attachment; filename="download.txt"')
+    .setHeader("Content-Disposition", 'attachment; filename="download.xlsx"')
     .send(buffer);
 };
 

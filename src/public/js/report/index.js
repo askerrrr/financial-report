@@ -33,8 +33,9 @@ var showReport = async () => {
   await injectBase64IntoImgTags(imageCollection);
   await createTotalsTable(report);
 
-  var { reportId } = report;
-  await downloadReportAsXLSX(reportId);
+  var { userId, reportId } = report;
+
+  await downloadReportAsXLSX(userId, reportId);
 };
 
 showReport();

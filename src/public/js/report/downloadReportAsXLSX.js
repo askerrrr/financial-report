@@ -1,10 +1,10 @@
 var button = document.getElementById("download-report-as-xlsx-button");
 
-var downloadReportAsXLSX = async (reportId) =>
+var downloadReportAsXLSX = async (userId, reportId) =>
   button.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    var url = "/reports/download-report-as-xlsx/" + "userId" + "/" + reportId;
+    var url = "/reports/download-report-as-xlsx/" + userId + "/" + reportId;
 
     var res = await fetch(url);
 
@@ -14,7 +14,7 @@ var downloadReportAsXLSX = async (reportId) =>
 
     var a = document.createElement("a");
     a.href = downloadUrl;
-    a.download = "file.xlsx";
+    a.download = "download.xlsx";
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(downloadUrl);
