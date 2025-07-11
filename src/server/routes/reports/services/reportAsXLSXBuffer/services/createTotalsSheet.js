@@ -12,7 +12,7 @@ var createTotalsSheet = async (report, sheet) => {
   sheet = await writeTotalsTitleToSheet(sheet, indent);
   sheet = await writeTotalValuesToSheet(sheet, indent, requiredTotals);
 
-  return workbook;
+  return sheet;
 };
 
 module.exports = createTotalsSheet;
