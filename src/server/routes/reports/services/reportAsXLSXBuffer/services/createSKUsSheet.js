@@ -1,6 +1,4 @@
-var createSKUsSheet = async (report, workbook) => {
-  var sheet = workbook.addWorksheet("Лист 1");
-
+var createSKUsSheet = async (report, sheet) => {
   return workbook;
 };
 
