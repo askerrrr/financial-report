@@ -1,16 +1,15 @@
-var { requiredSKUsField } = require("./getRequiredSKUFieldsName");
+var { requiredSKUsFieldsName } = require("./getRequiredSKUFieldsName");
 
 var columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
 
-var writeSKUsToSheet = async (workbook, skus) => {
-  var sheet = workbook.addWorksheet("Лист 1");
+var writeSKUsToSheet = async (sheet, skus) => {
   var cellNum = 2;
 
   for (var i = 0; i < skus.length; i++) {
     for (var j = 0; j < columns.length; j++) {
       var cellName = columns[j] + cellNum;
 
-      var skuFieldValue = skus[i][requiredSKUsField[j]];
+      var skuFieldValue = skus[i][requiredSKUsFieldsName[j]];
 
       sheet.getCell(cellName).value = skuFieldValue;
     }
@@ -18,7 +17,7 @@ var writeSKUsToSheet = async (workbook, skus) => {
     ++cellNum;
   }
 
-  return workbook;
+  return sheet;
 };
 
-module.exports = writeSKUsToSheet;
+module.exports = { writeSKUsToSheet, columns };
