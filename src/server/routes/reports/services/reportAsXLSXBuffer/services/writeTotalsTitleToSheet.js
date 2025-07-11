@@ -15,16 +15,21 @@ var totalTitles = [
   "Итого",
 ];
 
-var titleStyles = { vertical: "middle", horizontal: "left" };
+var fontStyles = { bold: true, font: 10 };
+
+var alignmentStyles = { vertical: "middle", horizontal: "left" };
 
 var writeTotalsTitleToSheet = async (sheet, cellNum) => {
   var cellName = "A";
+
+  sheet.getColumn(1).width = 27;
+  sheet.getColumn(1).font = fontStyles;
+  sheet.getColumn(1).alignment = alignmentStyles;
 
   for (var title of totalTitles) {
     var currentCell = cellName + cellNum;
 
     sheet.getCell(currentCell).value = title;
-    sheet.getCell(currentCell).alignment = titleStyles;
 
     cellNum++;
   }
