@@ -1,5 +1,3 @@
-var totalValuesStyles = { vertical: "middle", horizontal: "right" };
-
 var fontStyles = { font: 10 };
 
 var alignmentStyles = { vertical: "middle", horizontal: "right" };
