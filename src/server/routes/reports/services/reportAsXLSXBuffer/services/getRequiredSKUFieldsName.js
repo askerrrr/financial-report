@@ -1,8 +1,8 @@
 var requiredSKUsFieldsName = [
   "skuName",
   "qty",
-  "costPrice",
   "returnAmount",
+  "costPrice",
   "averageRetailPrice",
   "deliveryCostPerSKU",
   "deductionOrPayment",
