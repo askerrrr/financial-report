@@ -39,6 +39,11 @@ router.get(
   require("./controllers/downloadReportAsXLSX")
 );
 
+router.post(
+  "/download-reports-as-xlsx/",
+  require("./controllers/downloadReportsAsXLSX")
+);
+
 router.post("/period", require("./controllers/changeReportPeriod"));
 
 router.post("/upload/file", updoadReports.single("file"), writeReport);
