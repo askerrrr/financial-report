@@ -5,3 +5,44 @@ body {
   margin: 0;
   padding: 100px;
 }
+
+.auth-buttons {
+  position: fixed;
+  top: 40px;
+  right: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#auth,
+#registration {
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+}
+
+#auth {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #495057;
+  padding: 16px 32px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#registration {
+  background-color: #495057;
+  color: #ffffff;
+  border: 2px solid #495057;
+  padding: 16px 32px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#auth:hover,
+#registration:hover {
+  background-color: #6c757d;
+}
