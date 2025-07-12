@@ -1,4 +1,5 @@
 import createReportsTable from "./createReportsTable.js";
+import createMonthlyReportDownloadButton from "./createMonthlyReportDownloadButton.js";
 
 var createMonthsDetails = async (months, year) => {
   var div = document.createElement("div");
@@ -17,7 +18,9 @@ var createMonthsDetails = async (months, year) => {
 
       var reportsTable = await createReportsTable(year, month, reportIds);
 
-      details.append(summary, reportsTable);
+      var downloadBtn = await createMonthlyReportDownloadButton(reportIds);
+
+      details.append(summary, reportsTable, downloadBtn);
 
       div.append(details);
     }
