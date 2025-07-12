@@ -7,7 +7,7 @@ var createInputField = async (data, index, fieldName, url, id) => {
   var valueDisplay = document.createElement("span");
   valueDisplay.className = "editable-field-value";
   valueDisplay.textContent = data;
-  valueDisplay.id = `value-${data}`;
+  valueDisplay.id = `value-${index}`;
 
   var button = document.createElement("button");
   button.className = "editable-field-button";
