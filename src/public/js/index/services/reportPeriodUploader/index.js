@@ -17,12 +17,12 @@ var openReportPeriodModal = async () => {
 
   var dateFromInput = await createInputField(
     "dateFromInput",
-    "начало в формате гг.мм.дд - 2025.04.21"
+    "начало в формате гггг.мм.дд - 2025.04.21"
   );
 
   var dateToInput = await createInputField(
     "dateToInput",
-    "конец в формате гг.мм.дд - 2025.04.27"
+    "конец в формате гггг.мм.дд - 2025.04.27"
   );
 
   var saveButton = await createSaveButton();
