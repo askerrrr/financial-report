@@ -18,7 +18,11 @@ var createMonthsDetails = async (months, year) => {
 
       var reportsTable = await createReportsTable(year, month, reportIds);
 
-      var downloadBtn = await createMonthlyReportDownloadButton(reportIds);
+      var downloadBtn = await createMonthlyReportDownloadButton(
+        reportIds,
+        year,
+        month
+      );
 
       details.append(summary, reportsTable, downloadBtn);
 

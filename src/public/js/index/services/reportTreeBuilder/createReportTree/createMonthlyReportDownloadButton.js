@@ -1,6 +1,6 @@
 import getCookieByName from "../../getCookieByName.js";
 
-var createMonthlyReportDownloadButton = async (reportIds) => {
+var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
   var button = document.createElement("button");
 
   var reportIds = reportIds.map((e) => e.reportId);
@@ -22,12 +22,12 @@ var createMonthlyReportDownloadButton = async (reportIds) => {
 
     var blob = await res.blob();
 
-    var downloadUrl = window.URL.createObjectURL(blob); 
+    var downloadUrl = window.URL.createObjectURL(blob);
 
     var a = document.createElement("a");
     a.href = downloadUrl;
 
-    var fileName = `Отчеты`;
+    var fileName = `Отчеты за ${month} ${year}г`;
 
     a.download = fileName;
     document.body.appendChild(a);
