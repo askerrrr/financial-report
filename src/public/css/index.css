@@ -123,3 +123,45 @@ button:hover {
 .input-file:hover span {
   background-color: #5a6268;
 }
+
+.download-monthly-reports-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 0 15px 0;
+  background-color: #495057;
+  color: #f8f9fa;
+  border: 2px solid #343a40;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: calc(100% - 20px);
+  box-sizing: border-box;
+}
+
+.download-monthly-reports-button:hover {
+  background-color: #5a6268;
+  border-color: #495057;
+}
+
+.download-monthly-reports-button::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23f8f9fa"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>');
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+@media (max-width: 768px) {
+  .download-monthly-reports-button {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+}
