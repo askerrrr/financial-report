@@ -19,15 +19,18 @@ var downloadReportsAsXLSX = async (req, res, next) => {
     folder.file(fileName, buffer);
   }
 
-  var zipBuffer = zip.generateNodeStream({
+  var zipBuffer = await zip.generateAsync({
     type: "nodebuffer",
-    streamFiles: true,
+    compression: "DEFLATE",
   });
 
-  return res
-    .setHeader("Content-Type", "application/zip")
-    .setHeader("Content-Disposition", 'attachment; filename="download.zip"')
-    .send(zipBuffer);
+  res.set({
+    "Content-Type": "application/zip",
+    "Content-Disposition": 'attachment; filename="reports.zip"',
+    "Content-Length": zipBuffer.length,
+  });
+
+  return res.send(zipBuffer);
 };
 
 module.exports = downloadReportsAsXLSX;
