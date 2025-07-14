@@ -5,6 +5,7 @@ import createReportsTableHead from "../insertNewReportToTree/table/createReports
 
 var createReportsTable = async (year, month, reportIds, reports) => {
   var tbody = document.createElement("tbody");
+
   tbody.id = `tbody_year_${year}_month_${month}`;
 
   for (var { reportId } of reportIds) {

@@ -14,17 +14,19 @@ var createMonthsDetails = async (months, year, reports) => {
       var { month, reportIds } = monthData;
       summary.append(month);
 
+      var validReportIds = reportIds.filter((reportId) => reportId);
+
       details.id = `reports_container_${year}_${month}`;
 
       var reportsTable = await createReportsTable(
         year,
         month,
-        reportIds,
+        validReportIds,
         reports
       );
 
       var downloadBtn = await createMonthlyReportDownloadButton(
-        reportIds,
+        validReportIds,
         year,
         month
       );
