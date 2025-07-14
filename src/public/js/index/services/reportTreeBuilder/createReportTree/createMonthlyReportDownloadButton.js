@@ -18,9 +18,15 @@ var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
 
     var res = await fetch(url, {
       method: "POST",
-      body: JSON.stringify({ userId, reportIds, year, month }),
+      body: JSON.stringify({ userId, reportIds }),
       headers: { "Content-Type": "application/json" },
     });
+
+    if (!res.ok) {
+      return alert(
+        "Для скачивания отчетов нужно установить себестоимость для товаров"
+      );
+    }
 
     var blob = await res.blob();
 

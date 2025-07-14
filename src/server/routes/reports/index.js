@@ -41,6 +41,7 @@ router.get(
 
 router.post(
   "/download-reports-as-zip/",
+  require("./controllers/checkAllCostPricesNonZero"),
   require("./controllers/downloadReportsAsZip")
 );
 
