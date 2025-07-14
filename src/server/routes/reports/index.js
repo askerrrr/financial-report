@@ -40,8 +40,8 @@ router.get(
 );
 
 router.post(
-  "/download-reports-as-xlsx/",
-  require("./controllers/downloadReportsAsXLSX")
+  "/download-reports-as-zip/",
+  require("./controllers/downloadReportsAsZip")
 );
 
 router.post("/period", require("./controllers/changeReportPeriod"));

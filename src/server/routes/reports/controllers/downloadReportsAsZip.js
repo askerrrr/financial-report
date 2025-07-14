@@ -1,7 +1,7 @@
 var JSZip = require("jszip");
 var getReportAsXLSXBuffer = require("../services/reportAsXLSXBuffer");
 
-var downloadReportsAsXLSX = async (req, res, next) => {
+var downloadReportsAsZip = async (req, res, next) => {
   var { userId, reportIds } = req.body;
   var { getReportById } = req.app.locals.reportCollectionServices;
 
@@ -33,4 +33,4 @@ var downloadReportsAsXLSX = async (req, res, next) => {
   return res.send(zipBuffer);
 };
 
-module.exports = downloadReportsAsXLSX;
+module.exports = downloadReportsAsZip;

@@ -14,7 +14,7 @@ var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
 
     var userId = await getCookieByName("userId");
 
-    var url = "/reports/download-reports-as-xlsx/";
+    var url = "/reports/download-reports-as-zip/";
 
     var res = await fetch(url, {
       method: "POST",
