@@ -18,7 +18,7 @@ var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
 
     var res = await fetch(url, {
       method: "POST",
-      body: JSON.stringify({ userId, reportIds }),
+      body: JSON.stringify({ userId, reportIds, year, month }),
       headers: { "Content-Type": "application/json" },
     });
 

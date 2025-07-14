@@ -2,9 +2,10 @@ var JSZip = require("jszip");
 var getReportAsXLSXBuffer = require("../services/reportAsXLSXBuffer");
 
 var downloadReportsAsZip = async (req, res, next) => {
-  var { userId, reportIds } = req.body;
+  var { userId, reportIds, year, month } = req.body;
   var { getReportById } = req.app.locals.reportCollectionServices;
-
+  console.log({ year });
+  console.log({ month });
   var zip = new JSZip();
 
   var folder = zip.folder("Отчеты");
