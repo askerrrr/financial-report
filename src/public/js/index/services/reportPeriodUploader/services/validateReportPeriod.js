@@ -14,7 +14,6 @@ var validateReportPeriod = async (date) => {
   }
 
   if (day < 1 || day > 31) {
-    console.log("day error", day);
     return;
   }
 

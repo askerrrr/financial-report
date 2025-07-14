@@ -14,7 +14,6 @@ var sendChangedData = async (value, index, fieldName, url, reportId) => {
   }
 
   var data = await res.json();
-  console.log(data);
   return data;
 };
 
