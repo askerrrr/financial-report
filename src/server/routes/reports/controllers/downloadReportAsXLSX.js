@@ -8,13 +8,13 @@ var downloadReportAsXLSX = async (req, res, next) => {
 
   var buffer = await getReportAsXLSXBuffer(report);
 
-  return res
-    .setHeader(
-      "Content-Type",
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-    .setHeader("Content-Disposition", 'attachment; filename="download.xlsx"')
-    .send(buffer);
+  res.set({
+    "Content-Type":
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "Content-Disposition": 'attachment; filename="download.xlsx"',
+  });
+
+  return res.send(buffer);
 };
 
 module.exports = downloadReportAsXLSX;
