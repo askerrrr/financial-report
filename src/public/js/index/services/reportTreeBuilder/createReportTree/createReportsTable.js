@@ -1,14 +1,11 @@
-import getReportsData from "../../getReportsData.js";
 import getReportLink from "../insertNewReportToTree/table/getReportLink.js";
 import getReportPeriod from "../insertNewReportToTree/table/getReportPeriod.js";
 import createTdElement from "../../../../report/row/services/createTdElement.js";
 import createReportsTableHead from "../insertNewReportToTree/table/createReportsTableHead.js";
 
-var createReportsTable = async (year, month, reportIds) => {
+var createReportsTable = async (year, month, reportIds, reports) => {
   var tbody = document.createElement("tbody");
   tbody.id = `tbody_year_${year}_month_${month}`;
-
-  var { reports } = await getReportsData();
 
   for (var { reportId } of reportIds) {
     var tr = document.createElement("tr");

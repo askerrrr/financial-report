@@ -4,13 +4,13 @@ import showNoReportsMessage from "./services/showNoReportsMessage.js";
 import createReportsTree from "./services/reportTreeBuilder/createReportTree/index.js";
 
 var showReportsTree = async () => {
-  var { years } = await getReportsData();
+  var { reports, years } = await getReportsData();
 
   if (!years.length) {
     return showNoReportsMessage();
   }
 
-  await createReportsTree(years);
+  await createReportsTree(years, reports);
 
   await openLastDetails(years);
 };
