@@ -11,7 +11,7 @@ var sendItemPhoto = async (itemName, imgData) => {
   alert("Изображение сохранено");
 };
 
-var insertImageInImgTag = async (event, itemName) => {
+var insertImageInImgTag = async (event, input, itemName) => {
   var file = event.target.files[0];
 
   var reader = new FileReader();
@@ -24,12 +24,18 @@ var insertImageInImgTag = async (event, itemName) => {
     var img = document.getElementById("img-" + itemName);
     img.style.display = "block";
     img.src = e.target.result;
+    input.disabled = true;
+
+    var deleteImgButton = document.getElementById(
+      "delete-img-button-" + itemName
+    );
+    deleteImgButton.style.display = "block";
   });
 };
 
-var createInputElement = async (id, itemName) => {
+var createInputElement = async (itemName) => {
   var input = document.createElement("input");
-  input.id = "input-" + id + "-" + itemName;
+  input.id = "input-" + itemName;
   input.name = "item-photo";
   input.type = "file";
   input.multiple = false;
@@ -43,7 +49,7 @@ var createInputElement = async (id, itemName) => {
 
     uploadFormData.append("item-photo", input.files[0]);
 
-    await insertImageInImgTag(e, itemName);
+    await insertImageInImgTag(e, input, itemName);
 
     await sendItemPhoto(itemName, uploadFormData);
   });
@@ -53,7 +59,7 @@ var createInputElement = async (id, itemName) => {
 
 var createLabelElement = async (id, name) => {
   var label = document.createElement("label");
-  label.htmlFor = "input-" + id + "-" + name;
+  label.htmlFor = "input-" + name;
   label.className = "item-photo-uploader";
 
   return label;
@@ -83,32 +89,25 @@ var createPhotoElement = async (base64, itemName) => {
   img.src = `data:image/png=;base64,${base64}`;
   img.alt = "Фото";
   img.className = "cell-photo";
-  img.style.maxWidth = "100%";
-  img.style.maxHeight = "80px";
-  img.style.borderRadius = "4px";
 
   return img;
 };
 
-var createMenuButton = async () => {
+var createDeleteImgButton = async (name) => {
   var button = document.createElement("button");
-  button.className = "cell-menu-btn";
-  button.innerHTML = "&hellip;";
-  button.style.position = "absolute";
-  button.style.top = "5px";
-  button.style.right = "5px";
-  button.style.background = "none";
-  button.style.border = "none";
-  button.style.cursor = "pointer";
+
+  button.id = "delete-img-button-" + name;
+  button.className = "delete-img-button";
+  button.style.display = "none";
 
   return button;
 };
 
 var createItemPhotoUploader = async (id, name, index, imgData) => {
-  var input = await createInputElement(id, name);
+  var input = await createInputElement(name);
   var span = await createSpanElement(name);
   var img = await createPhotoElement(imgData, name);
-  var menuBtn = await createMenuButton();
+  var deleteImgButton = await createDeleteImgButton(name);
 
   if (imgData) {
     img.style.display = "block";
@@ -122,9 +121,14 @@ var createItemPhotoUploader = async (id, name, index, imgData) => {
   label.append(input, img, span);
 
   var form = await createFormElement(id, name);
-  form.append(label, menuBtn);
+  form.append(label);
 
-  return form;
+  var container = document.createElement("div");
+  container.className = "photo-cell-container";
+
+  container.append(form, deleteImgButton);
+
+  return container;
 };
 
 export default createItemPhotoUploader;

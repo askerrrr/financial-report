@@ -157,20 +157,50 @@ button:hover {
   display: block;
 }
 
-.cell-menu-btn {
+.photo-cell-container {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 80px;
+}
+
+.delete-img-button {
   position: absolute;
   top: 5px;
   right: 5px;
-  background: rgba(255, 255, 255, 0.2);
+  width: 20px;
+  height: 20px;
+  background: none;
   border: none;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
   color: #fff;
   cursor: pointer;
+  padding: 0;
+  margin: 0;
   z-index: 10;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.cell-menu-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+.delete-img-button::before {
+  content: "";
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M19 7h-3V6a4 4 0 0 0-4-4h-4a4 4 0 0 0-4 4v1H5a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V9h1a1 1 0 0 0 0-2zM9 6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1H9V6zm9 14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h12v11z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.delete-img-button:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  color: #ff6b6b;
+}
+
+.delete-img-button:active {
+  transform: scale(0.95);
 }
