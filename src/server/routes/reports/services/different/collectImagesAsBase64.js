@@ -11,7 +11,7 @@ var collectImagesAsBase64 = async (userId, skus) => {
 
     var userDir = "userId_" + userId;
 
-    var filePath = join("/var", "report_items_photos", userDir, fileName);
+    var filePath = join("/var", "report_skus_photo", userDir, fileName);
 
     var base64 = await getImageToBase64(filePath);
 

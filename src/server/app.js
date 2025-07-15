@@ -13,7 +13,7 @@ var app = express();
 
 (async () => {
   await mkdir("/var/report_uploads/", { recursive: true });
-  await mkdir("/var/report_items_photos/", { recursive: true });
+  await mkdir("/var/report_skus_photo/", { recursive: true });
   await mkdir("/var/temporary-photo-storage/", { recursive: true });
 
   app.locals.userCollectionServices = userCollectionServices;

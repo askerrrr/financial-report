@@ -3,7 +3,7 @@ var { rm } = require("node:fs/promises");
 var deleteImage = async (req, res, next) => {
   var { userId, skuName } = req.body;
 
-  var filePath = `/var/report_items_photos/userId_${userId}/${skuName}.png`;
+  var filePath = `/var/report_skus_photo/userId_${userId}/${skuName}.png`;
 
   var successDeleteImg;
 
