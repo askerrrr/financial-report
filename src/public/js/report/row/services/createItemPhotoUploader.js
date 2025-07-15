@@ -57,7 +57,7 @@ var createInputElement = async (itemName) => {
   return input;
 };
 
-var createLabelElement = async (id, name) => {
+var createLabelElement = async (name) => {
   var label = document.createElement("label");
   label.htmlFor = "input-" + name;
   label.className = "item-photo-uploader";
