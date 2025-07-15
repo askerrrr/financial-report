@@ -117,7 +117,7 @@ var createItemPhotoUploader = async (id, name, index, imgData) => {
     span.style.display = "block";
   }
 
-  var label = await createLabelElement(id, name);
+  var label = await createLabelElement(name);
   label.append(input, img, span);
 
   var form = await createFormElement(id, name);
