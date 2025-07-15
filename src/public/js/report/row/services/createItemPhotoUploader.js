@@ -1,3 +1,5 @@
+import getCookieByName from "../../../index/services/getCookieByName.js";
+
 var sendItemPhoto = async (itemName, imgData) => {
   var res = await fetch(`/reports/item-photo-upload/${itemName}`, {
     method: "POST",
@@ -99,6 +101,30 @@ var createDeleteImgButton = async (name) => {
   button.id = "delete-img-button-" + name;
   button.className = "delete-img-button";
   button.style.display = "none";
+
+  button.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    var userId = await getCookieByName("userId");
+
+    var res = await fetch("/reports/delete-image/", {
+      method: "DELETE",
+      body: JSON.stringify({ userId, name }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      return alert("Не удалось удалить фото");
+    }
+
+    var imgTadId = "img-" + name;
+    var img = document.getElementById(imgTadId);
+    img.src = null;
+
+    button.style.display = "none";
+
+    return alert("Фото успешно удалено");
+  });
 
   return button;
 };

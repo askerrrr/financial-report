@@ -80,4 +80,6 @@ router.delete(
   require("./controllers/deleteAllReportingPeriods")
 );
 
+router.delete("/delete-image/", require("./controllers/deleteImage"));
+
 module.exports = router;
