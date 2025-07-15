@@ -1,6 +1,6 @@
 import createTdElement from "./services/createTdElement.js";
 import createInputField from "./services/createInputField.js";
-import createItemPhotoUploader from "./services/createItemPhotoUploader.js";
+import createItemPhotoUploader from "./services/skuPhotoUploader/index.js";
 
 var url = "/reports/change";
 

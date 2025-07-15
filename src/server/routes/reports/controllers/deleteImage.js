@@ -1,9 +1,9 @@
 var { rm } = require("node:fs/promises");
 
 var deleteImage = async (req, res, next) => {
-  var { userId, name } = req.body;
+  var { userId, skuName } = req.body;
 
-  var filePath = `/var/report_items_photos/userId_${userId}/${name}.png`;
+  var filePath = `/var/report_items_photos/userId_${userId}/${skuName}.png`;
 
   var successDeleteImg;
 
