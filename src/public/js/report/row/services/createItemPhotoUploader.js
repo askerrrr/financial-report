@@ -89,7 +89,7 @@ var createPhotoElement = async (base64, itemName) => {
   var img = document.createElement("img");
   img.id = "img-" + itemName;
   img.src = `data:image/png=;base64,${base64}`;
-  img.alt = itemName;
+  img.alt = "Добавить";
   img.className = "cell-photo";
 
   return img;
