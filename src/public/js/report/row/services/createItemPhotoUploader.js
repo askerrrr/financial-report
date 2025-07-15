@@ -11,7 +11,7 @@ var sendItemPhoto = async (itemName, imgData) => {
   alert("Изображение сохранено");
 };
 
-var insertImageInImgTag = async (event, input, itemName) => {
+var insertImageInImgTag = async (event, itemName) => {
   var file = event.target.files[0];
 
   var reader = new FileReader();
@@ -24,11 +24,11 @@ var insertImageInImgTag = async (event, input, itemName) => {
     var img = document.getElementById("img-" + itemName);
     img.style.display = "block";
     img.src = e.target.result;
-    input.disabled = true;
 
     var deleteImgButton = document.getElementById(
       "delete-img-button-" + itemName
     );
+
     deleteImgButton.style.display = "block";
   });
 };
@@ -49,7 +49,7 @@ var createInputElement = async (itemName) => {
 
     uploadFormData.append("item-photo", input.files[0]);
 
-    await insertImageInImgTag(e, input, itemName);
+    await insertImageInImgTag(e, itemName);
 
     await sendItemPhoto(itemName, uploadFormData);
   });
