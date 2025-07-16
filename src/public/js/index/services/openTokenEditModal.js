@@ -27,11 +27,11 @@ var openTokenEditModal = async () => {
       return alert("Нельзя отправить пустое поле");
     }
 
+    document.body.removeChild(modal);
+
     var token = input.value;
 
     var successSaveToken = await sendWBAuthToken(token);
-
-    document.body.removeChild(modal);
 
     if (successSaveToken) {
       return alert("Токен успешно сохранен");
