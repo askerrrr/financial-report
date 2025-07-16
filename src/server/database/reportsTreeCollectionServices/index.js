@@ -1,6 +1,6 @@
 var { reportsTreeCollection } = require("../connection");
 var getReportsTree = require("./services/getReportsTree");
-var updateReportsPeriods = require("./services/updateReportinPeriods");
+var updateReportsPeriods = require("./services/updateReportsTree");
 var deleteReportsTreeByUserId = require("./services/deleteReportsTreeByUserId");
 var deleteReportFromReportTree = require("./services/deleteReportFromReportTree");
 var createReportsTreeEntity = require("./services/createReportsTreeEntity");

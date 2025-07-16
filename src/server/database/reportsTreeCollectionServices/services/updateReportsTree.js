@@ -1,6 +1,6 @@
 var { DatabaseError } = require("../../../customError");
 
-var updateReportingPeriods = async (collection, userId, years) => {
+var updateReportsTree = async (collection, userId, years) => {
   try {
     var result = await collection.updateOne(
       { userId },
@@ -15,4 +15,4 @@ var updateReportingPeriods = async (collection, userId, years) => {
   }
 };
 
-module.exports = updateReportingPeriods;
+module.exports = updateReportsTree;
