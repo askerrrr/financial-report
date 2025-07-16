@@ -22,9 +22,6 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   var reportId = report[0].realizationreport_id;
 
-  parsedReport.userId = userId;
-  parsedReport.reportId = reportId;
-
   var { years } = await getReportingPeriods(userId);
 
   var { years, year, month } = await organizeReportsByPeriod(
@@ -37,6 +34,10 @@ var writeReportFromWBAPI = async (req, res, next) => {
   var sortedYears = await sortYearsTree(years);
 
   await updateReportsPeriods(userId, sortedYears);
+
+  parsedReport.userId = userId;
+  parsedReport.reportId = reportId;
+  parsedReport.recordTo = { year, month };
 
   var successfullWrite = await saveReportToDb(userId, parsedReport);
 

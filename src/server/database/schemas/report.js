@@ -57,8 +57,8 @@ var reportSchema = new Schema(
     totalDeductionOrPayment: numOptions,
     taxRate: { type: Number, default: 6 },
     totalAdCampaignCosts: numOptions,
+    recordTo: { type: recordSchema, requred: true },
     skus: [{ type: SKUSchema, required: true }],
-    record: { type: recordSchema, requred: true },
   },
   { _id: false }
 );
