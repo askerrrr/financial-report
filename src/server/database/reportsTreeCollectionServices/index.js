@@ -2,7 +2,7 @@ var { reportsTreeCollection } = require("../connection");
 var getReportingPeriods = require("./services/getReportingPeriods");
 var updateReportsPeriods = require("./services/updateReportinPeriods");
 var createReportingPeriodsEntity = require("./services/createReportingPeriodsCollectionEntity");
-var deleteAllReportingPeriodsByUserId = require("./services/deleteAllReportingPeriodsByUserId");
+var deleteReportsTreeByUserId = require("./services/deleteReportsTreeByUserId");
 var deleteReportFromReportTree = require("./services/deleteReportFromReportTree");
 
 var reportsTreeCollectionServices = {
@@ -24,8 +24,8 @@ var reportsTreeCollectionServices = {
       reportId
     ),
 
-  deleteAllReportingPeriodsByUserId: (userId) =>
-    deleteAllReportingPeriodsByUserId(reportsTreeCollection, userId),
+  deleteReportsTreeByUserId: (userId) =>
+    deleteReportsTreeByUserId(reportsTreeCollection, userId),
 };
 
 module.exports = reportsTreeCollectionServices;

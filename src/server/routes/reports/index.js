@@ -77,7 +77,7 @@ router.delete(
 
 router.delete(
   "/delete_all_reporting_periods/:userId",
-  require("./controllers/deleteAllReportingPeriods")
+  require("./controllers/deleteReportsTree")
 );
 
 router.delete("/delete-image/", require("./controllers/deleteImage"));
