@@ -1,6 +1,6 @@
 var { DatabaseError } = require("../../../customError");
 
-var createReportingPeriodsEntity = async (collection, userId) => {
+var createReportsTreeEntity = async (collection, userId) => {
   try {
     var reportingPeriodsEntity = await collection.insertOne({
       userId,
@@ -15,4 +15,4 @@ var createReportingPeriodsEntity = async (collection, userId) => {
   }
 };
 
-module.exports = createReportingPeriodsEntity;
+module.exports = createReportsTreeEntity;

@@ -6,7 +6,7 @@ var createUser = async (req, res, next) => {
   var { createUser, getUserByLogin } = req.app.locals.userCollectionServices;
   var { createReportsEntity } = req.app.locals.reportCollectionServices;
   var { createTokenCollectionEntity } = req.app.locals.tokenCollectionServices;
-  var { createReportingPeriodsEntity } =
+  var { createReportsTreeEntity } =
     req.app.locals.reportsTreeCollectionServices;
 
   var userData = req.body;
@@ -25,7 +25,7 @@ var createUser = async (req, res, next) => {
 
   await createTokenCollectionEntity(userId);
   await createUserReportPhotosFolder(userId);
-  await createReportingPeriodsEntity(userId);
+  await createReportsTreeEntity(userId);
 
   var successCreate = await createUser(userData, reportsEntityObjectId);
 
