@@ -15,10 +15,7 @@ var reportCollection = reportDB.model("Report", reportSchema);
 
 var tokenCollection = reportDB.model("Token", tokenSchema);
 
-var reportsTreeCollection = reportDB.model(
-  "ReportingPeriod",
-  reportsTreeSchema
-);
+var reportsTreeCollection = reportDB.model("Reports_Tree", reportsTreeSchema);
 
 module.exports = {
   userCollection,
