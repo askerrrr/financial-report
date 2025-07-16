@@ -1,6 +1,6 @@
-import getCookieByName from "../../getCookieByName.js";
+import getCookieValueByName from "../../getCookieValueByName.js";
 
-var userId = await getCookieByName("userId");
+var userId = await getCookieValueByName("userId");
 
 var sendPeriodDate = async (dateFrom, dateTo) => {
   var res = await fetch("/reports/wbapi", {

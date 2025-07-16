@@ -1,7 +1,7 @@
-import getCookieByName from "./getCookieByName.js";
+import getCookieValueByName from "./getCookieValueByName.js";
 
 var getReportsData = async () => {
-  var userId = await getCookieByName("userId");
+  var userId = await getCookieValueByName("userId");
 
   var res = await fetch("/api/" + userId);
 

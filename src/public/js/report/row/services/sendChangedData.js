@@ -1,6 +1,6 @@
-import getCookieByName from "../../../index/services/getCookieByName.js";
+import getCookieValueByName from "../../../index/services/getCookieValueByName.js";
 
-var userId = await getCookieByName("userId");
+var userId = await getCookieValueByName("userId");
 
 var sendChangedData = async (value, index, fieldName, url, reportId) => {
   var res = await fetch(url, {

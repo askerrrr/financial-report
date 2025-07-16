@@ -1,4 +1,4 @@
-var getCookieByName = async (name) => {
+var getCookieValueByName = async (name) => {
   var cookies = document.cookie.split(";").map((e) => e.trim());
 
   var cookie = cookies.find((e) => e.startsWith(name));
@@ -8,4 +8,4 @@ var getCookieByName = async (name) => {
   return cookieValue;
 };
 
-export default getCookieByName;
+export default getCookieValueByName;

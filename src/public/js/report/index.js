@@ -2,10 +2,10 @@ import createReportTable from "./row/createReportTable.js";
 import createTotalsTable from "./row/createTotalsTable.js";
 import getReportInfo from "./row/services/getReportInfo.js";
 import downloadReportAsXLSX from "./downloadReportAsXLSX.js";
-import getCookieByName from "../index/services/getCookieByName.js";
+import getCookieValueByName from "../index/services/getCookieValueByName.js";
 import injectBase64IntoImgTags from "./row/services/injectBase64IntoImgTags.js";
 
-var userId = await getCookieByName("userId");
+var userId = await getCookieValueByName("userId");
 
 var pathParts = window.location.pathname.split("/");
 

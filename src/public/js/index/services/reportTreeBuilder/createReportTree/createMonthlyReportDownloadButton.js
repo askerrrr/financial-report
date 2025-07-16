@@ -1,4 +1,4 @@
-import getCookieByName from "../../getCookieByName.js";
+import getCookieValueByName from "../../getCookieValueByName.js";
 
 var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
   var button = document.createElement("button");
@@ -12,7 +12,7 @@ var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
   button.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    var userId = await getCookieByName("userId");
+    var userId = await getCookieValueByName("userId");
 
     var url = "/reports/download-reports-as-zip/";
 

@@ -1,4 +1,4 @@
-import getCookieByName from "../../../../index/services/getCookieByName.js";
+import getCookieValueByName from "../../../../index/services/getCookieValueByName.js";
 
 var createDeleteImgButton = async (skuName) => {
   var button = document.createElement("button");
@@ -10,7 +10,7 @@ var createDeleteImgButton = async (skuName) => {
   button.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    var userId = await getCookieByName("userId");
+    var userId = await getCookieValueByName("userId");
 
     var res = await fetch("/reports/delete-image/", {
       method: "DELETE",
