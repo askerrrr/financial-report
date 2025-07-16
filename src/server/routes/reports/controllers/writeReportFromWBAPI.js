@@ -5,7 +5,7 @@ var sortYearsTree = require("../services/different/sortYearTree");
 var writeReportFromWBAPI = async (req, res, next) => {
   var { saveReportToDb } = req.app.locals.reportCollectionServices;
   var { getReportingPeriods, updateReportsPeriods } =
-    req.app.locals.reportingPeriodsCollectionServices;
+    req.app.locals.reportsTreeCollectionServices;
 
   var { dateTo, dateFrom, report, paidStorageReport, totalAdCampaignCosts } =
     req.reportData;
