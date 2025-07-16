@@ -30,7 +30,6 @@ var getMonthNameAndIndex = async (monthNum) => {
 var getMonthReportIds = async (date, fullPeriod, reportId, carry) => {
   var mondayIndex = await getMondayIndex(date);
 
-
   var reportIds = new Array(5).fill(null);
 
   if (carry) {
@@ -42,8 +41,7 @@ var getMonthReportIds = async (date, fullPeriod, reportId, carry) => {
 
   reportIds[mondayIndex] = { fullPeriod, reportId };
 
-
   return reportIds;
 };
 
-module.exports = { getMonthReportIds, getMonthNameAndIndex };
+module.exports = { getMonthName, getMonthReportIds, getMonthNameAndIndex };

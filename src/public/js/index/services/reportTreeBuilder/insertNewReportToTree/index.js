@@ -1,6 +1,5 @@
 import createReportRow from "./createReportRow.js";
 import createYearDetails from "./createYearDetails.js";
-import getMonthNameByNum from "./getMonthNameByNum.js";
 import removeNoReportsMessage from "./removeNoReportsMessage.js";
 
 var insertNewReportToTree = async (reportData) => {
@@ -12,10 +11,8 @@ var insertNewReportToTree = async (reportData) => {
 
   var yearDetails = document.getElementById(yearDetailsId);
 
-  var monthName = await getMonthNameByNum(month);
-
   if (!yearDetails) {
-    var yearDetails = await createYearDetails(reportData, monthName);
+    var yearDetails = await createYearDetails(reportData, month);
 
     var yearsContainer = document.getElementById("years_container");
     yearsContainer.prepend(yearDetails);
@@ -23,18 +20,18 @@ var insertNewReportToTree = async (reportData) => {
     return;
   }
 
-  var reportTbodyId = `tbody_year_${year}_month_${monthName}`;
+  var reportTbodyId = `tbody_year_${year}_month_${month}`;
 
   var reportTbody = document.getElementById(reportTbodyId);
 
   if (!reportTbody) {
     var summary = document.createElement("summary");
-    summary.append(monthName);
+    summary.append(month);
 
-    var reportTable = await createReportRow(reportData, monthName);
+    var reportTable = await createReportRow(reportData, month);
 
     var details = document.createElement("details");
-    details.id = `reports_container_${year}_${monthName}`;
+    details.id = `reports_container_${year}_${month}`;
     details.append(summary, reportTable);
 
     var div = document.createElement("div");
@@ -47,7 +44,7 @@ var insertNewReportToTree = async (reportData) => {
     return;
   }
 
-  return await createReportRow(reportData, monthName, reportTbody);
+  return await createReportRow(reportData, month, reportTbody);
 };
 
 export default insertNewReportToTree;
