@@ -1,4 +1,4 @@
-import openTokenEditModal from "./services/openTokenEditModal.js";
+import openTokenEditModal from "./services/tokenEditModal/index.js";
 
 var tokenHandler = async () => {
   var button = document.getElementById("token-button");

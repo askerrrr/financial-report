@@ -1,4 +1,4 @@
-import getCookieByName from "./getCookieByName.js";
+import getCookieByName from "../getCookieByName.js";
 
 var userId = await getCookieByName("userId");
 
