@@ -1,6 +1,6 @@
 var { DatabaseError } = require("../../../customError");
 
-var getReportingPeriods = async (collection, userId) => {
+var getReportsTree = async (collection, userId) => {
   try {
     var reportingPeriods = await collection.findOne({ userId }).exec();
 
@@ -10,4 +10,4 @@ var getReportingPeriods = async (collection, userId) => {
   }
 };
 
-module.exports = getReportingPeriods;
+module.exports = getReportsTree;

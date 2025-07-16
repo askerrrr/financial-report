@@ -1,5 +1,5 @@
 var { reportsTreeCollection } = require("../connection");
-var getReportingPeriods = require("./services/getReportingPeriods");
+var getReportsTree = require("./services/getReportsTree");
 var updateReportsPeriods = require("./services/updateReportinPeriods");
 var deleteReportsTreeByUserId = require("./services/deleteReportsTreeByUserId");
 var deleteReportFromReportTree = require("./services/deleteReportFromReportTree");
@@ -12,8 +12,7 @@ var reportsTreeCollectionServices = {
   updateReportsPeriods: (userId, years) =>
     updateReportsPeriods(reportsTreeCollection, userId, years),
 
-  getReportingPeriods: (userId) =>
-    getReportingPeriods(reportsTreeCollection, userId),
+  getReportsTree: (userId) => getReportsTree(reportsTreeCollection, userId),
 
   deleteReportFromReportTree: (userId, year, month, reportId) =>
     deleteReportFromReportTree(
