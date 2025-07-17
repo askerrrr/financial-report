@@ -14,9 +14,8 @@ var getReportByPeriodFromWBAPI = async (dateFrom, dateTo, token, userId) => {
     return report;
   }
 
-  var errMsg;
-
-  errMsg = "Возникла ошибка при получении финансового отчета, попробуйте позже";
+  var errMsg =
+    "Возникла ошибка при получении финансового отчета, попробуйте позже";
 
   if (res.status === 429) {
     errMsg = "Подождите минуту перед получением нового отчёта";

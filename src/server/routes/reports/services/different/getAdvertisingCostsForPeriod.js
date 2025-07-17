@@ -19,9 +19,7 @@ var getAdvertisingCostsForPeriod = async (dateFrom, dateTo, token) => {
     return totalAdCampaignCosts;
   }
 
-  var errMsg;
-
-  errMsg =
+  var errMsg =
     "Возникла ошибка при получении отчета о платном хранении, попробуйте позже";
 
   if (res.status === 429) {

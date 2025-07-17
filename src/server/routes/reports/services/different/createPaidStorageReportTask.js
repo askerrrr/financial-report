@@ -14,9 +14,7 @@ var createPaidStorageReportTask = async (dateFrom, dateTo, token, userId) => {
     return data.taskId;
   }
 
-  var errMsg;
-
-  errMsg =
+  var errMsg =
     "Возникла ошибка при получении отчета о платном хранении, попробуйте позже";
 
   if (res.status === 429) {
