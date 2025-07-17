@@ -8,15 +8,23 @@ var getReportByPeriodFromWBAPI = async (dateFrom, dateTo, token, userId) => {
     headers: { Authorization: "Bearer " + token },
   });
 
-  if (!res.ok) {
-    var errMsg = "Возникла ошибка при получении финансового отчета";
+  if (res.ok) {
+    var report = await res.json();
 
-    throw new WBAPIError(userId, res.status, res.statusText, errMsg);
+    return report;
   }
 
-  var report = await res.json();
+  var errMsg;
 
-  return report;
+  errMsg = "Возникла ошибка при получении финансового отчета, попробуйте позже";
+
+  if (res.status === 429) {
+    errMsg = "Подождите минуту перед получением нового отчёта";
+  } else if (res.status === 401) {
+    errMsg = "Не удалось авторизоваться с помощью сохраненного токена";
+  }
+
+  throw new WBAPIError(userId, res.status, errMsg);
 };
 
 module.exports = getReportByPeriodFromWBAPI;

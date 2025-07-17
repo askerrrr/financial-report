@@ -11,17 +11,28 @@ var getAdvertisingCostsForPeriod = async (dateFrom, dateTo, token) => {
     headers: { Authorization: "Bearer " + token },
   });
 
-  if (!res.ok) {
-    var errMsg = "Возникла ошибка при получении отчета о рекламе";
+  if (res.ok) {
+    var data = await res.json();
 
-    throw new WBAPIError(userId, res.status, res.statusText, errMsg);
+    var totalAdCampaignCosts = await calculateTotalAdCampaignCosts(data);
+
+    return totalAdCampaignCosts;
   }
 
-  var data = await res.json();
+  var errMsg;
 
-  var totalAdCampaignCosts = await calculateTotalAdCampaignCosts(data);
+  errMsg =
+    "Возникла ошибка при получении отчета о платном хранении, попробуйте позже";
 
-  return totalAdCampaignCosts;
+  if (res.status === 429) {
+    errMsg =
+      "Подождите минуту перед получением нового отчёта о затратах на рекламу";
+  } else if (res.status === 401) {
+    errMsg =
+      "Не удалось авторизоваться для получения отчета о затратах на рекламу с помощью сохраненного токена. Получить токен с нужными правами можно получить в личном кабинете продавца";
+  }
+
+  throw new WBAPIError(userId, res.status, errMsg);
 };
 
 module.exports = getAdvertisingCostsForPeriod;

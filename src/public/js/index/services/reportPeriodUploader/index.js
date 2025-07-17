@@ -68,7 +68,7 @@ var openReportPeriodModal = async () => {
     if (!reportData) {
       await deleteLoader();
 
-      return alert("Не удалось сохранить отчет");
+      return;
     }
 
     await deleteLoader();

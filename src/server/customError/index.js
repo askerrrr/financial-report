@@ -18,12 +18,11 @@ class DatabaseConnectionError extends Error {
 }
 
 class WBAPIError extends Error {
-  constructor(userId, status, message, location) {
+  constructor(userId, status, message) {
     super(message);
     this.userId = userId;
     this.status = status;
     this.message = message;
-    this.location = location;
   }
 }
 
