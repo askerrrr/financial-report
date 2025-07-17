@@ -1,11 +1,22 @@
 var deleteReport = async (req, res, next) => {
   var { deleteReportFromDb } = req.app.locals.reportCollectionServices;
+  var { deleteReportFromReportTree } =
+    req.app.locals.reportsTreeCollectionServices;
 
-  var { userId, reportId } = req.params;
+  var { userId, reportId, year, month } = req.body;
 
-  var successDeleteReport = await deleteReportFromDb(userId, reportId);
+  var deletedFromTree = await deleteReportFromReportTree(
+    userId,
+    year,
+    month,
+    reportId
+  );
 
-  return successDeleteReport ? res.sendStatus(200) : res.sendStatus(304);
+  var deleteFromReports = await deleteReportFromDb(userId, reportId);
+
+  return deleteFromReports && deletedFromTree
+    ? res.sendStatus(200)
+    : res.sendStatus(304);
 };
 
 module.exports = deleteReport;
