@@ -5,7 +5,8 @@ var { setReportIdInReports } = require("./reports");
 var getMonthsForCurrentYear = async (monthNum, reports) => {
   var { monthName, monthIndex } = await getMonthNameAndIndex(monthNum);
 
-  var months = [];
+  var months = new Array(12).fill(null);
+
   months[monthIndex] = { month: monthName, reports };
 
   return months;
@@ -25,7 +26,7 @@ var getMonthsForNewYear = async (reportIds) => {
 var getFirstMonthReporstForNewYear = async (date, fullPeriod, reportId) => {
   var mondaysQty = await getMondaysQtyInMonth(date);
 
-  var reportIds = [];
+  var reportIds = new Array(5).fill(null);
 
   reportIds[mondaysQty] = { fullPeriod, reportId };
 
@@ -63,7 +64,7 @@ var updateYearStructure = async (
 ) => {
   var { monthName, monthIndex } = await getMonthNameAndIndex(monthNum);
 
-  var reportIds = months[monthIndex]?.reportIds ?? [];
+  var reportIds = months[monthIndex]?.reportIds ?? new Array(5).fill(null);
 
   reportIds = await setReportIdInReports(
     reportDate,
@@ -92,7 +93,7 @@ var isNextMonthReportNeeded = async (dateFrom, dateTo) => {
 };
 
 var getNextYearFirstMonth = async (months) =>
-  months[11] ?? { month: "январь", reportIds: [] };
+  months[11] ?? { month: "январь", reportIds: new Array(5).fill(null) };
 
 module.exports = {
   getMonthsData,
