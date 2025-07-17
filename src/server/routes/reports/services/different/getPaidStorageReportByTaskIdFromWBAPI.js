@@ -11,12 +11,9 @@ var getPaidStorageReportByTaskIdFromWBAPI = async (taskId, token, userId) => {
   });
 
   if (!res.ok) {
-    throw new WBAPIError(
-      userId,
-      res.status,
-      res.statusText,
-      "paid_storage_report"
-    );
+    var errMsg = "Возникла ошибка при получении отчета о платном хранении";
+
+    throw new WBAPIError(userId, res.status, res.statusText, errMsg);
   }
 
   var paidStorageReport = await res.json();

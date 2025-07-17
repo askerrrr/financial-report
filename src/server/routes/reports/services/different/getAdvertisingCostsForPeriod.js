@@ -12,12 +12,9 @@ var getAdvertisingCostsForPeriod = async (dateFrom, dateTo, token) => {
   });
 
   if (!res.ok) {
-    throw new WBAPIError(
-      userId,
-      res.status,
-      res.statusText,
-      "advertising_report"
-    );
+    var errMsg = "Возникла ошибка при получении отчета о рекламе";
+
+    throw new WBAPIError(userId, res.status, res.statusText, errMsg);
   }
 
   var data = await res.json();

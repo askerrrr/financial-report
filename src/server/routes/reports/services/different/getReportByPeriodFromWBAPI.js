@@ -9,7 +9,9 @@ var getReportByPeriodFromWBAPI = async (dateFrom, dateTo, token, userId) => {
   });
 
   if (!res.ok) {
-    throw new WBAPIError(userId, res.status, res.statusText, "main_report");
+    var errMsg = "Возникла ошибка при получении финансового отчета";
+
+    throw new WBAPIError(userId, res.status, res.statusText, errMsg);
   }
 
   var report = await res.json();
