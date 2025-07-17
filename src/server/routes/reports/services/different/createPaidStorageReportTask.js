@@ -9,7 +9,12 @@ var createPaidStorageReportTask = async (dateFrom, dateTo, token, userId) => {
   });
 
   if (!res.ok) {
-    throw new WBAPIError(userId, res.status, res.statusText);
+    throw new WBAPIError(
+      userId,
+      res.status,
+      res.statusText,
+      "paid_storage_report"
+    );
   }
 
   var { data } = await res.json();
