@@ -1,3 +1,4 @@
+import deleteReport from "./row/deleteReport.js";
 import createReportTable from "./row/createReportTable.js";
 import createTotalsTable from "./row/createTotalsTable.js";
 import getReportInfo from "./row/services/getReportInfo.js";
@@ -34,6 +35,7 @@ var showReport = async () => {
   await createTotalsTable(report);
 
   await downloadReportAsXLSX(report);
+  await deleteReport(report);
 };
 
 showReport();
