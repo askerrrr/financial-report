@@ -45,6 +45,8 @@ app.use("/", require("./routes/root/"));
 
 app.use("/token", require("./routes/WBToken/"));
 
+app.use("/options", require("./routes/options/"));
+
 app.use("/reports", require("./routes/reports/"));
 
 app.all(/.*/, require("./middleware/notFoundHandler/"));

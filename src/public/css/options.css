@@ -1,0 +1,33 @@
+body {
+  background-color: #212529;
+  color: #f8f9fa;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 100px;
+}
+
+#main {
+  position: absolute;
+  top: 80px;
+  left: 100px;
+  padding: 15px;
+  background-color: #343a40;
+  border: 1px solid #495057;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+#main h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #f8f9fa;
+  border-bottom: 1px solid #495057;
+  padding-bottom: 5px;
+}
+
+#main {
+  margin: 5px 0;
+  color: #f8f9fa;
+}
