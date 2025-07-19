@@ -1,5 +1,8 @@
-var { optionsCollecton } = require("../connection/");
+var { optionsCollection } = require("../connection/");
 
-var optionsCollectonServices = {};
+var optionsCollectonServices = {
+  createOptionsEntity: (userId) =>
+    createOptionsEntity(optionsCollection, userId),
+};
 
 module.exports = optionsCollectonServices;
