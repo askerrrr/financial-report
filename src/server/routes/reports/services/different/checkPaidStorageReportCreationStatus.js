@@ -42,14 +42,14 @@ var checkPaidStorageReportCreationStatus = async (taskId, token) => {
 
         if (attempts > 1) {
           clearInterval(timerId);
-          reject(false);
+          resolve(false);
         }
 
         ++attempts;
       }, 5000);
     } catch {
       clearInterval(timerId);
-      reject(false);
+      resolve(false);
     }
   });
 };
