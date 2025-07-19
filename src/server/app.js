@@ -7,6 +7,7 @@ var checkDBState = require("./middleware/mongoose");
 var userCollectionServices = require("./database/userCollectionServices/");
 var tokenCollectionServices = require("./database/tokenCollectionServices/");
 var reportCollectionServices = require("./database/reportCollectionServices/");
+var optionsCollectonServices = require("./database/optionsCollectonServices");
 var reportsTreeCollectionServices = require("./database/reportsTreeCollectionServices/");
 
 var app = express();
@@ -21,6 +22,8 @@ var app = express();
   app.locals.reportCollectionServices = reportCollectionServices;
 
   app.locals.tokenCollectionServices = tokenCollectionServices;
+
+  app.locals.optionsCollectonServices = optionsCollectonServices;
 
   app.locals.reportsTreeCollectionServices = reportsTreeCollectionServices;
 
