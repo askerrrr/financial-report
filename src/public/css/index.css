@@ -166,8 +166,10 @@ button:hover {
   }
 }
 
-button {
+#options {
   position: absolute;
+  top: 80px;
+  right: 100px;
   padding: 15px;
   background-color: #343a40;
   border: 1px solid #495057;
@@ -176,7 +178,7 @@ button {
   font-size: 14px;
 }
 
-button h3 {
+#options h3 {
   margin-top: 0;
   margin-bottom: 10px;
   color: #f8f9fa;
@@ -184,22 +186,57 @@ button h3 {
   padding-bottom: 5px;
 }
 
-button {
+#options {
   margin: 5px 0;
   color: #f8f9fa;
 }
 
-#options {
+#token-button {
+  position: absolute;
   top: 80px;
-  right: 100px;
+  right: 1000px;
+  padding: 15px;
+  background-color: #343a40;
+  border: 1px solid #495057;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+}
+
+#token-button h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #f8f9fa;
+  border-bottom: 1px solid #495057;
+  padding-bottom: 5px;
 }
 
 #token-button {
-  top: 80px;
-  right: 900px;
+  margin: 5px 0;
+  color: #f8f9fa;
 }
 
 #period-button {
+  position: absolute;
   top: 80px;
   right: 500px;
+  padding: 15px;
+  background-color: #343a40;
+  border: 1px solid #495057;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+}
+
+#period-button h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #f8f9fa;
+  border-bottom: 1px solid #495057;
+  padding-bottom: 5px;
+}
+
+#period-button {
+  margin: 5px 0;
+  color: #f8f9fa;
 }
