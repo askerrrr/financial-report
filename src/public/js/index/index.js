@@ -5,5 +5,5 @@ import reportPeriodHander from "./reportPeriodHander.js";
 
 tokenHandler();
 showReportsTree();
-fileUploadHandler();
+//fileUploadHandler();
 reportPeriodHander();

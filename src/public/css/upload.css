@@ -50,16 +50,9 @@
   background-color: #eee;
 }
 
-.token-button {
-  position: fixed;
-  top: 40px;
-  right: 20px;
-  z-index: 1000;
-}
-
-.period-button {
+/* .period-button {
   position: fixed;
   top: 80px;
   right: 20px;
   z-index: 1000;
-}
+} */
