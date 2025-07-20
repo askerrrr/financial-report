@@ -9,8 +9,31 @@
   <body>
     <button id="main" onclick="window.location.href='/'">На главную</button>
     <form>
-      <label for="tax-rate">Установить процент налогообложения</label
-      ><input id="tax-rate" type="text" />
+      <label for="tax-rate">Установить процент налогообложения</label>
+      <input id="tax-rate" type="text" />
+      <div class="radio-group">
+        <div class="radio-item">
+          <input
+            type="radio"
+            id="recalculate-all-reports-tax-amount"
+            name="tax-rate"
+          />
+          <label for="recalculate-all-reports-tax-amount"
+            >Пересчитать сумму налога для имеющихся отчетов</label
+          >
+        </div>
+
+        <div class="radio-item">
+          <input
+            type="radio"
+            id="calculate-tax-amount-for-future-reports"
+            name="tax-rate"
+          />
+          <label for="calculate-tax-amount-for-future-reports"
+            >Применить новое значение к будущим отчетам</label
+          >
+        </div>
+      </div>
       <button id="tax-rate-button">Сохранить</button>
     </form>
     <form>
