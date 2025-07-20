@@ -17,7 +17,7 @@ var mandatoryInsurancePremiumsHandler = async (mandatoryInsurancePremiums) => {
   button.onclick = async (e) => {
     e.preventDefault();
 
-    mandatoryInsurancePremiums = input.value;
+    mandatoryInsurancePremiums = +input.value;
 
     if (mandatoryInsurancePremiums < 0 && mandatoryInsurancePremiums > 1e5) {
       return alert("Недопустимое значение");
