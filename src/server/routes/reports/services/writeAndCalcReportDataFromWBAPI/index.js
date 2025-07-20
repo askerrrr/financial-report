@@ -3,7 +3,16 @@ var getSkuNames = require("./getSkuNames");
 var truncateSKUNums = require("./truncateSKUNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 
-var parseReport = async (report, paidStorageReport, totalAdCampaignCosts) => {
+var parseReport = async (
+  options,
+  report,
+  paidStorageReport,
+  totalAdCampaignCosts
+) => {
+  var { taxRate } = options;
+
+  console.log({ taxRate });
+
   var skuNames = await getSkuNames(report);
   var totalFines = await calc.totalFines(report);
   var totalRevenue = await calc.totalRevenue(report);
@@ -12,7 +21,7 @@ var parseReport = async (report, paidStorageReport, totalAdCampaignCosts) => {
   var totalStorageCost = await calc.totalStorageCost(report);
   var totalDeliveryCost = await calc.totalDeliveryCost(report);
   var totalRetailAmount = await calc.totalRetailAmount(report);
-  var totalTaxAmount = await calc.totalTaxAmount(totalRetailAmount);
+  var totalTaxAmount = await calc.totalTaxAmount(totalRetailAmount, taxRate);
   var totalPaidAcceptance = await calc.totalPaidAcceptance(report);
   var totalDeductionOrPayment = await calc.totalDeductionOrPayment(report);
 
@@ -54,7 +63,7 @@ var parseReport = async (report, paidStorageReport, totalAdCampaignCosts) => {
 
     var retailAmountPerSKU = await calc.retailAmountPerSKU(skuFilteredReport);
 
-    var taxPerSKU = await calc.taxPerSKU(retailAmountPerSKU);
+    var taxPerSKU = await calc.taxPerSKU(retailAmountPerSKU, taxRate);
 
     var deliveryCostPerSKU = await calc.deliveryCostPerSKU(skuFilteredReport);
 

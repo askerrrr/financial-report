@@ -1,11 +1,7 @@
 var calcTaxPerSKU = async (retailAmount, taxRate) => {
-  if (taxRate) {
-    return (retailAmount * taxRate) / 100;
-  }
+  var taxPerSKU = (retailAmount * taxRate) / 100;
 
-  var defaultTaxRate = 6;
-
-  return (retailAmount * defaultTaxRate) / 100;
+  return taxPerSKU;
 };
 
 module.exports = calcTaxPerSKU;

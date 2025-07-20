@@ -64,7 +64,7 @@ var calc = {
   averageAdvertisingCostPerSKU: (totalSKUs, totalAdCampaignCosts) =>
     caclAverageAdvertisingCostPerSKU(totalSKUs, totalAdCampaignCosts),
 
-  taxPerSKU: (retailAmount) => calcTaxPerSKU(retailAmount),
+  taxPerSKU: (retailAmount, taxRate) => calcTaxPerSKU(retailAmount, taxRate),
 
   quantityPerSKU: (report) => calcQuantityPerSKU(report),
 
