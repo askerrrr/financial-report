@@ -17,7 +17,7 @@ var taxRateHandler = async (taxRate) => {
   button.onclick = async (e) => {
     e.preventDefault();
 
-    var taxRate = +input.value;
+    taxRate = +input.value;
 
     if (taxRate < 1 || taxRate > 15) {
       return alert("Недопустимое значение");
