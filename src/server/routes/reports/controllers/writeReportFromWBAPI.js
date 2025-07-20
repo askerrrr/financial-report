@@ -7,18 +7,18 @@ var writeReportFromWBAPI = async (req, res, next) => {
   var { getReportsTree, updateReportsPeriods } =
     req.app.locals.reportsTreeCollectionServices;
 
-  var { dateTo, dateFrom, report, paidStorageReport, totalAdCampaignCosts } =
+  var { dateTo, dateFrom, mainReport, storageReport, totalAdCampaignCosts } =
     req.reportData;
 
   var userId = req.app.locals.userId;
 
-  var parsedReport = await parseReport(
-    report,
-    paidStorageReport,
+  var report = await parseReport(
+    mainReport,
+    storageReport,
     totalAdCampaignCosts
   );
 
-  var reportId = report[0].realizationreport_id;
+  var reportId = mainReport[0].realizationreport_id;
 
   var { years } = await getReportsTree(userId);
 
@@ -33,16 +33,16 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   await updateReportsPeriods(userId, sortedYears);
 
-  parsedReport.dateTo = dateTo;
-  parsedReport.userId = userId;
-  parsedReport.dateFrom = dateFrom;
-  parsedReport.reportId = reportId;
-  parsedReport.recordTo = { year, month };
+  report.dateTo = dateTo;
+  report.userId = userId;
+  report.dateFrom = dateFrom;
+  report.reportId = reportId;
+  report.recordTo = { year, month };
 
-  var successfullWrite = await saveReportToDb(userId, parsedReport);
+  var successfullWrite = await saveReportToDb(userId, report);
 
   if (successfullWrite) {
-    var { totalTaxAmount } = parsedReport;
+    var { totalTaxAmount } = report;
 
     return res
       .status(200)
