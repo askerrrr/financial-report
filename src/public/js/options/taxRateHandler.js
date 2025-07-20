@@ -25,6 +25,10 @@ var taxRateHandler = async (currentTaxRate) => {
 
     var newTaxRate = +input.value;
 
+    if (typeof newTaxRate === "number" && isNaN(newTaxRate)) {
+      return alert("Введите числовое значение");
+    }
+
     if (newTaxRate === currentTaxRate) {
       return alert("Новое значение совпадает с предыдущим");
     }

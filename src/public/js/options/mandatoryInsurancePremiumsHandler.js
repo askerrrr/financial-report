@@ -8,23 +8,40 @@ var sendMandatoryInsurancePremiums = async (mandatoryInsurancePremiums) => {
   return res.ok;
 };
 
-var mandatoryInsurancePremiumsHandler = async (mandatoryInsurancePremiums) => {
+var mandatoryInsurancePremiumsHandler = async (
+  currentMandatoryInsurancePremiums
+) => {
   var input = document.getElementById("mandatory-insurance-premiums");
-  input.placeholder = "сейчас сумма равна " + mandatoryInsurancePremiums + "р.";
+  input.placeholder =
+    "сейчас сумма равна " + currentMandatoryInsurancePremiums + "р.";
 
   var button = document.getElementById("mandatory-insurance-premiums-button");
 
   button.onclick = async (e) => {
     e.preventDefault();
 
-    mandatoryInsurancePremiums = +input.value;
+    var newMandatoryInsurancePremiums = +input.value;
 
-    if (mandatoryInsurancePremiums < 0 && mandatoryInsurancePremiums > 1e5) {
+    if (
+      typeof newMandatoryInsurancePremiums === "number" &&
+      isNaN(newMandatoryInsurancePremiums)
+    ) {
+      return alert("Введите числовое значение");
+    }
+
+    if (newMandatoryInsurancePremiums === currentMandatoryInsurancePremiums) {
+      return alert("Новое значение совпадает с предыдущим");
+    }
+
+    if (
+      newMandatoryInsurancePremiums < 0 &&
+      newMandatoryInsurancePremiums > 1e5
+    ) {
       return alert("Недопустимое значение");
     }
 
     var successChange = await sendMandatoryInsurancePremiums(
-      mandatoryInsurancePremiums
+      newMandatoryInsurancePremiums
     );
 
     if (successChange) {
