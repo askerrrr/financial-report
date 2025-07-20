@@ -2,6 +2,7 @@ var { optionsCollection } = require("../connection");
 var getUserOptionsFromDb = require("./services/getUserOptionsFromDb");
 var changeTaxRateToDb = require("./services/changeTaxRateToDb");
 var createOptionsEntity = require("./services/createOptionsEntity");
+var changeMandatoryInsurancePremiumsToDb = require("./services/changeMandatoryInsurancePremiumsToDb");
 
 var optionsCollectionServices = {
   getUserOptionsFromDb: (userId) =>
@@ -12,6 +13,13 @@ var optionsCollectionServices = {
 
   createOptionsEntity: (userId) =>
     createOptionsEntity(optionsCollection, userId),
+
+  changeMandatoryInsurancePremiumsToDb: (userId, mandatoryInsurancePremiums) =>
+    changeMandatoryInsurancePremiumsToDb(
+      optionsCollection,
+      userId,
+      mandatoryInsurancePremiums
+    ),
 };
 
 module.exports = optionsCollectionServices;
