@@ -6,7 +6,7 @@ var createUser = async (req, res, next) => {
   var { createUser, getUserByLogin } = req.app.locals.userCollectionServices;
   var { createReportsEntity } = req.app.locals.reportCollectionServices;
   var { createTokenCollectionEntity } = req.app.locals.tokenCollectionServices;
-  var { createOptionsEntity } = req.app.locals.optionsCollectonServices;
+  var { createOptionsEntity } = req.app.locals.optionsCollectionServices;
   var { createReportsTreeEntity } =
     req.app.locals.reportsTreeCollectionServices;
 

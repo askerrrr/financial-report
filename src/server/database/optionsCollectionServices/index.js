@@ -1,9 +1,9 @@
-var { optionsCollection } = require("../connection/");
+var { optionsCollection } = require("../connection");
 var getUserOptionsFromDb = require("./services/getUserOptionsFromDb");
 var changeTaxRateToDb = require("./services/changeTaxRateToDb");
 var createOptionsEntity = require("./services/createOptionsEntity");
 
-var optionsCollectonServices = {
+var optionsCollectionServices = {
   getUserOptionsFromDb: (userId) =>
     getUserOptionsFromDb(optionsCollection, userId),
 
@@ -14,4 +14,4 @@ var optionsCollectonServices = {
     createOptionsEntity(optionsCollection, userId),
 };
 
-module.exports = optionsCollectonServices;
+module.exports = optionsCollectionServices;

@@ -1,5 +1,5 @@
 var changeTaxRate = async (req, res, next) => {
-  var { changeTaxRateToDb } = req.app.locals.optionsCollectonServices;
+  var { changeTaxRateToDb } = req.app.locals.optionsCollectionServices;
 
   var { taxRate } = req.body;
   var userId = req.app.locals.userId;
