@@ -13,8 +13,6 @@ var writeReportFromWBAPI = async (req, res, next) => {
   var userId = req.app.locals.userId;
 
   var parsedReport = await parseReport(
-    dateTo,
-    dateFrom,
     report,
     paidStorageReport,
     totalAdCampaignCosts
@@ -35,7 +33,9 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   await updateReportsPeriods(userId, sortedYears);
 
+  parsedReport.dateTo = dateTo;
   parsedReport.userId = userId;
+  parsedReport.dateFrom = dateFrom;
   parsedReport.reportId = reportId;
   parsedReport.recordTo = { year, month };
 

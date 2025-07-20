@@ -3,13 +3,7 @@ var getSkuNames = require("./getSkuNames");
 var truncateSKUNums = require("./truncateSKUNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 
-var parseReport = async (
-  dateTo,
-  dateFrom,
-  report,
-  paidStorageReport,
-  totalAdCampaignCosts
-) => {
+var parseReport = async (report, paidStorageReport, totalAdCampaignCosts) => {
   var skuNames = await getSkuNames(report);
   var totalFines = await calc.totalFines(report);
   var totalRevenue = await calc.totalRevenue(report);
@@ -113,9 +107,7 @@ var parseReport = async (
 
   return {
     skus,
-    dateTo,
     totalSold,
-    dateFrom,
     totalFines,
     totalRevenue,
     totalTaxAmount,
