@@ -7,6 +7,11 @@ var recalculateReportsTaxRate = async (req, res, next) => {
   var reports = await getReportsByUserId(userId);
 
   reports.map((report) => (report.taxRate = taxRate));
+  reports.map(
+    (report) =>
+      (report.totalTaxAmount = (report.totalRetailAmount * taxRate) / 100)
+  );
+
   reports.map((report) =>
     report.skus.map(
       (sku) => (sku.taxPerSKU = (sku.retailAmountPerSKU * taxRate) / 100)
