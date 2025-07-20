@@ -1,8 +1,7 @@
 var changeTaxRate = async (req, res, next) => {
-  var { changeTaxRateToDb } = req.app.locals.optionsCollectionServices;
-
-  var { taxRate } = req.body;
   var userId = req.app.locals.userId;
+  var { taxRate, recalculate } = req.body;
+  var { changeTaxRateToDb } = req.app.locals.optionsCollectionServices;
 
   var successChange = await changeTaxRateToDb(userId, taxRate);
 
@@ -10,7 +9,12 @@ var changeTaxRate = async (req, res, next) => {
     return res.sendStatus(304);
   }
 
-  return res.sendStatus(200);
+  if (!recalculate) {
+    return res.sendStatus(200);
+  }
+
+  req.taxRate = taxRate;
+  next();
 };
 
 module.exports = changeTaxRate;

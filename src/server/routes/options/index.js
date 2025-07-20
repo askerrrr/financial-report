@@ -6,7 +6,11 @@ router.get("/", require("./controllers/getOptionsPage"));
 
 router.get("/api", require("./controllers/getUserOptions"));
 
-router.post("/taxrate", require("./controllers/changeTaxRate"));
+router.post(
+  "/taxrate",
+  require("./controllers/changeTaxRate"),
+  require("./controllers/recalculateReportsTaxRate")
+);
 
 router.post(
   "/mandatory-insurance-premiums",
