@@ -4,7 +4,7 @@ var getUserOptionsFromDb = async (collection, userId) => {
   try {
     var options = await collection.findOne({ userId });
 
-    return options;
+    return options.toObject();
   } catch (e) {
     throw new DatabaseError();
   }

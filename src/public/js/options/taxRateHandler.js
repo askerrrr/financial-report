@@ -7,8 +7,10 @@ var sendTaxRate = async (taxRate) => {
 
   return res.ok;
 };
-var taxRateHandler = async () => {
+
+var taxRateHandler = async (taxRate) => {
   var input = document.getElementById("tax-rate");
+  input.placeholder = "сейчас процент равен " + taxRate;
 
   var button = document.getElementById("tax-rate-button");
 
