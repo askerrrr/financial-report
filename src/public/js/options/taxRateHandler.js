@@ -8,9 +8,9 @@ var sendTaxRate = async (taxRate, recalculate) => {
   return res.ok;
 };
 
-var taxRateHandler = async (taxRate) => {
+var taxRateHandler = async (currentTaxRate) => {
   var input = document.getElementById("tax-rate");
-  input.placeholder = "сейчас процент равен " + taxRate;
+  input.placeholder = "сейчас процент равен " + currentTaxRate;
 
   var radioButton = document.getElementById(
     "recalculate-all-reports-tax-amount"
@@ -23,13 +23,17 @@ var taxRateHandler = async (taxRate) => {
 
     var recalculate = radioButton.checked;
 
-    taxRate = +input.value;
+    var newTaxRate = +input.value;
 
-    if (taxRate < 1 || taxRate > 15) {
+    if (newTaxRate === currentTaxRate) {
+      return alert("Новое значение совпадает с предыдущим");
+    }
+
+    if (newTaxRate < 1 || newTaxRate > 15) {
       return alert("Недопустимое значение");
     }
 
-    var successChange = await sendTaxRate(taxRate, recalculate);
+    var successChange = await sendTaxRate(newTaxRate, recalculate);
 
     if (successChange) {
       return alert("Изменение успешно применено");
