@@ -6,10 +6,10 @@ import mandatoryInsurancePremiumsHandler from "./mandatoryInsurancePremiumsHandl
 var main = async () => {
   var options = await getOptions();
 
-  var { taxRate, mandatoryInsurancePremiums } = options;
+  var { taxRate, insuranceFeePercentage, mandatoryInsurancePremiums } = options;
 
   await taxRateHandler(taxRate);
-  insuranceFeePercentageHandler();
+  await insuranceFeePercentageHandler(insuranceFeePercentage);
   await mandatoryInsurancePremiumsHandler(mandatoryInsurancePremiums);
 };
 
