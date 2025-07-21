@@ -1,7 +1,7 @@
-var sendPercent = async (percent) => {
+var sendPercent = async (percent, recalculate) => {
   var res = await fetch("/options/insurance-fee-percentage", {
     method: "POST",
-    body: JSON.stringify({ percent }),
+    body: JSON.stringify({ percent, recalculate }),
     headers: { "Content-Type": "application/json" },
   });
 
@@ -12,10 +12,16 @@ var insuranceFeePercentageHandler = async (currentPercent) => {
   var input = document.getElementById("insurance-fee-percentage");
   input.placeholder = "сейчас процент равен " + currentPercent;
 
+  var radioButton = document.getElementById(
+    "recalculate-all-reports-insurance-fee-percentage"
+  );
+
   var button = document.getElementById("insurance-fee-percentage-button");
 
   button.onclick = async (e) => {
     e.preventDefault();
+
+    var recalculate = radioButton.checked;
 
     var newPercent = +input.value;
 
@@ -31,7 +37,7 @@ var insuranceFeePercentageHandler = async (currentPercent) => {
       return alert("Недопустимое значение");
     }
 
-    var successChange = await sendPercent(newPercent);
+    var successChange = await sendPercent(newPercent, recalculate);
 
     if (successChange) {
       return alert("Процент успешно установлен");
