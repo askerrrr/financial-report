@@ -49,6 +49,31 @@
         >Установить процент от чистой прибыли, который будет уходить на
         погашение обязательных страховых взносов</label
       ><input id="insurance-fee-percentage" type="text" />
+      <div class="radio-group">
+        <div class="radio-item">
+          <input
+            type="radio"
+            id="recalculate-all-reports-insurance-fee-percentage"
+            name="insurance-fee-percentage"
+            checked
+          />
+          <label for="recalculate-all-reports-insurance-fee-percentage"
+            >Пересчитать сумму погашения обязательных страховых взносов с новым
+            значением % в отчетах (если есть)</label
+          >
+        </div>
+
+        <div class="radio-item">
+          <input
+            type="radio"
+            id="calculate-insurance-fee-percentage-for-future-reports"
+            name="insurance-fee-percentage"
+          />
+          <label for="calculate-insurance-fee-percentage-for-future-reports"
+            >Применить новое значение к будущим отчетам</label
+          >
+        </div>
+      </div>
       <button id="insurance-fee-percentage-button">Сохранить</button>
     </form>
     <script src="/js/options/index.js" type="module"></script>
