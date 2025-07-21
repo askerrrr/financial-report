@@ -30,6 +30,7 @@ var app = express();
   app.listen(env.PORT, env.HOST, () => console.log("server running"));
 })();
 
+app.disable("x-powered-by");
 app.use(express.urlencoded());
 app.use(express.json());
 app.use(express.static(join(__dirname, "../public")));
