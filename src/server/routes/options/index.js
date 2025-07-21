@@ -13,6 +13,11 @@ router.post(
 );
 
 router.post(
+  "/insurance-fee-percentage",
+  require("./controllers/changeInsuranceFeePercentage")
+);
+
+router.post(
   "/mandatory-insurance-premiums",
   require("./controllers/changeMandatoryInsurancePremiums")
 );
