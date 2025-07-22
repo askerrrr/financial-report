@@ -8,7 +8,7 @@ var changeReportDetail = async (req, res, next) => {
 
   var { userId, reportId, index, value } = req.body;
 
-  var { skus, ...rest } = await getReportById(userId, reportId);
+  var { skus, ...totalParams } = await getReportById(userId, reportId);
 
   var changedSKUs = await changeElementInArray(skus, req.body);
 
@@ -18,7 +18,7 @@ var changeReportDetail = async (req, res, next) => {
 
   changedSKUs[index] = skuWithCalculatedParams;
 
-  var updatedReport = await calcRestTotalParams(rest, changedSKUs);
+  var updatedReport = await calcRestTotalParams(totalParams, changedSKUs);
 
   var successUpdate = await saveUpdatedReport(userId, reportId, updatedReport);
 
