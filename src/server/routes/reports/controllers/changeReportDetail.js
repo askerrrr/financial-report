@@ -29,11 +29,11 @@ var changeReportDetail = async (req, res, next) => {
     var { totalFinalNetProfit, totalNetProfitMargin } = updatedReport;
 
     return res.status(200).json({
+      index,
       netProfitMargin,
       finalNetProfitPerSKU,
       averageFinalNetProfitPerSKU,
       total: { totalFinalNetProfit, totalNetProfitMargin },
-      index: req.body.index,
     });
   }
 
