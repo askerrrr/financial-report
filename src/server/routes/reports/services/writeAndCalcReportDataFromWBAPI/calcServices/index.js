@@ -14,6 +14,7 @@ var calcTotalDeliveryCost = require("./totalDeliveryCost");
 var calcTotalRetailAmount = require("./totalRetailAmount");
 var calcStorageCostPerSKU = require("./storageCostPerSKU");
 var calcTotalReturnAmount = require("./totalReturnAmount");
+var calcInsuranceFeePerSKU = require("./insuranceFeePerSKU");
 var calcTotalPaidAcceptance = require("./totalPaidAcceptance");
 var calcTotalRevenuePerSKU = require("./totalRevenuePerSKU");
 var calcDeliveryCostPerSKU = require("./deliveryCostPerSKU");
@@ -60,6 +61,9 @@ var calc = {
       totalFinesPerSKU,
       averageAdvertisingCostPerSKU
     ),
+
+  insuranceFeePerSKU: (finalNetProfitPerSKU, insuranceFeePercentage) =>
+    calcInsuranceFeePerSKU(finalNetProfitPerSKU, insuranceFeePercentage),
 
   averageAdvertisingCostPerSKU: (totalSKUs, totalAdCampaignCosts) =>
     caclAverageAdvertisingCostPerSKU(totalSKUs, totalAdCampaignCosts),
