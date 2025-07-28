@@ -30,7 +30,7 @@ var SKUSchema = new Schema(
   { _id: false }
 );
 
-var recordSchema = new Schema(
+var recordToSchema = new Schema(
   { year: strOptions, month: strOptions },
   { _id: false }
 );
@@ -57,7 +57,7 @@ var reportSchema = new Schema(
     totalDeductionOrPayment: numOptions,
     taxRate: { type: Number, default: 6 },
     totalAdCampaignCosts: numOptions,
-    recordTo: { type: recordSchema, requred: true },
+    recordTo: { type: recordToSchema, requred: true },
     skus: [{ type: SKUSchema, required: true }],
   },
   { _id: false }
