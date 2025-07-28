@@ -19,6 +19,7 @@ var SKUSchema = new Schema(
     storageCostPerSKU: numOptions,
     acceptancePerSKU: numOptions,
     taxPerSKU: numOptions,
+    insuranceFee: numOptions,
     returnAmountPerSKU: numOptions,
     finalNetProfitPerSKU: numOptions,
     averageFinalNetProfitPerSKU: numOptions,
