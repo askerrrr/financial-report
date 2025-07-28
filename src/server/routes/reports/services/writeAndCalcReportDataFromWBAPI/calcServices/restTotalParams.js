@@ -1,18 +1,21 @@
 var calcProductCosts = require("./productCosts");
+var calcTotalInsuranceFee = require("./totalInsuranceFee");
 var calcTotalFinalNetProfit = require("./totalFinalNetProfit");
 var calcTotalNetProfitMargin = require("./totalNetProfitMargin");
 
-var calcRestTotalParams = async (rest, skus) => {
-  rest.totalFinalNetProfit = await calcTotalFinalNetProfit(skus);
+var calcRestTotalParams = async (totals, skus) => {
+  totals.totalFinalNetProfit = await calcTotalFinalNetProfit(skus);
 
-  rest.productCosts = await calcProductCosts(skus);
+  totals.productCosts = await calcProductCosts(skus);
 
-  rest.totalNetProfitMargin = await calcTotalNetProfitMargin(
-    rest.totalRetailAmount,
-    rest.totalFinalNetProfit
+  totals.totalInsuranceFee = await calcTotalInsuranceFee(skus);
+
+  totals.totalNetProfitMargin = await calcTotalNetProfitMargin(
+    totals.totalRetailAmount,
+    totals.totalFinalNetProfit
   );
 
-  return { ...rest, skus };
+  return { ...totals, skus };
 };
 
 module.exports = calcRestTotalParams;
