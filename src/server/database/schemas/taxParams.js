@@ -4,6 +4,7 @@ var taxParamsSchema = new Schema({
   userId: { type: String, required: true },
   taxRate: { type: Number, default: 6 },
   insuranceFeePercentage: { type: Number, default: 10 },
+  paidInsurancePremiums: { type: Number, default: 0 },
   mandatoryInsurancePremiums: { type: Number, default: 0 },
 });
 
