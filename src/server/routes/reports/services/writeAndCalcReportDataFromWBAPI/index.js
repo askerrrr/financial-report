@@ -3,25 +3,22 @@ var getSkuNames = require("./getSkuNames");
 var truncateSKUNums = require("./truncateSKUNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 
-var parseReport = async (
-  options,
-  report,
-  paidStorageReport,
-  totalAdCampaignCosts
-) => {
+var parseReports = async (options, reports) => {
   var { taxRate } = options;
 
-  var skuNames = await getSkuNames(report);
-  var totalFines = await calc.totalFines(report);
-  var totalRevenue = await calc.totalRevenue(report);
-  var totalSold = await calc.totalSold(report, skuNames);
-  var totalReturnAmount = await calc.totalReturnAmount(report);
-  var totalStorageCost = await calc.totalStorageCost(report);
-  var totalDeliveryCost = await calc.totalDeliveryCost(report);
-  var totalRetailAmount = await calc.totalRetailAmount(report);
+  var { mainReport, storageReport, totalAdCampaignCosts } = reports;
+
+  var skuNames = await getSkuNames(mainReport);
+  var totalFines = await calc.totalFines(mainReport);
+  var totalRevenue = await calc.totalRevenue(mainReport);
+  var totalSold = await calc.totalSold(mainReport, skuNames);
+  var totalReturnAmount = await calc.totalReturnAmount(mainReport);
+  var totalStorageCost = await calc.totalStorageCost(mainReport);
+  var totalDeliveryCost = await calc.totalDeliveryCost(mainReport);
+  var totalRetailAmount = await calc.totalRetailAmount(mainReport);
   var totalTaxAmount = await calc.totalTaxAmount(totalRetailAmount, taxRate);
-  var totalPaidAcceptance = await calc.totalPaidAcceptance(report);
-  var totalDeductionOrPayment = await calc.totalDeductionOrPayment(report);
+  var totalPaidAcceptance = await calc.totalPaidAcceptance(mainReport);
+  var totalDeductionOrPayment = await calc.totalDeductionOrPayment(mainReport);
 
   var totalNetProfit = await calc.totalNetProfit(
     totalRevenue,
@@ -32,13 +29,13 @@ var parseReport = async (
   );
 
   var storageDataFromPaidStorageReport = await parsePaidStorageReport(
-    paidStorageReport
+    storageReport
   );
 
   var skus = [];
 
   for (var skuName of skuNames) {
-    var skuFilteredReport = report.filter((sku) => sku.sa_name === skuName);
+    var skuFilteredReport = mainReport.filter((sku) => sku.sa_name === skuName);
 
     var qty = await calc.quantityPerSKU(skuFilteredReport);
     var finesPerSKU = await calc.finesPerSKU(skuFilteredReport);
@@ -129,4 +126,4 @@ var parseReport = async (
   };
 };
 
-module.exports = parseReport;
+module.exports = parseReports;

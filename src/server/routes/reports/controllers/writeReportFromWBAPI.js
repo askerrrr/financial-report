@@ -1,4 +1,4 @@
-var parseReport = require("../services/writeAndCalcReportDataFromWBAPI/index");
+var parseReports = require("../services/writeAndCalcReportDataFromWBAPI/index");
 var organizeReportsByPeriod = require("../services/reportTreeBuilder");
 var sortYearsTree = require("../services/different/sortYearTree");
 
@@ -15,12 +15,9 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   var options = await getUserOptionsFromDb(userId);
 
-  var report = await parseReport(
-    options,
-    mainReport,
-    storageReport,
-    totalAdCampaignCosts
-  );
+  var reports = { mainReport, storageReport, totalAdCampaignCosts };
+
+  var report = await parseReports(options, reports);
 
   var reportId = mainReport[0].realizationreport_id;
 
