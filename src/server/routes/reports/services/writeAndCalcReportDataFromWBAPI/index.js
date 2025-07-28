@@ -11,8 +11,6 @@ var parseReport = async (
 ) => {
   var { taxRate } = options;
 
-  console.log({ taxRate });
-
   var skuNames = await getSkuNames(report);
   var totalFines = await calc.totalFines(report);
   var totalRevenue = await calc.totalRevenue(report);
