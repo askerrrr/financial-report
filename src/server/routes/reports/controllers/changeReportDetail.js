@@ -6,6 +6,8 @@ var changeReportDetail = async (req, res, next) => {
   var { saveUpdatedReport, getReportById } =
     req.app.locals.reportCollectionServices;
 
+  var { getUserOptionsFromDb } = req.app.locals.optionsCollectionServices;
+
   var { userId, reportId, index, value } = req.body;
 
   var { skus, ...totalParams } = await getReportById(userId, reportId);
@@ -14,7 +16,9 @@ var changeReportDetail = async (req, res, next) => {
 
   var sku = changedSKUs[index];
 
-  var skuWithCalculatedParams = await calcRemainingParams(sku, value);
+  var options = await getUserOptionsFromDb(userId);
+
+  var skuWithCalculatedParams = await calcRemainingParams(sku, value, options);
 
   changedSKUs[index] = skuWithCalculatedParams;
 
