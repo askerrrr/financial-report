@@ -1,5 +1,5 @@
 var getOptions = async () => {
-  var res = await fetch("/options/api");
+  var res = await fetch("/tax_params/api");
 
   var { options } = await res.json();
 

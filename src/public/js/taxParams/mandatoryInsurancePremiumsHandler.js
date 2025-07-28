@@ -1,5 +1,5 @@
 var sendMandatoryInsurancePremiums = async (mandatoryInsurancePremiums) => {
-  var res = await fetch("/options/mandatory-insurance-premiums", {
+  var res = await fetch("/tax_params/mandatory-insurance-premiums", {
     method: "POST",
     body: JSON.stringify({ mandatoryInsurancePremiums }),
     headers: { "Content-Type": "application/json" },

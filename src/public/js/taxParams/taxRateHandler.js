@@ -1,5 +1,5 @@
 var sendTaxRate = async (taxRate, recalculate) => {
-  var res = await fetch("/options/taxrate", {
+  var res = await fetch("/tax_params/taxrate", {
     method: "POST",
     body: JSON.stringify({ taxRate, recalculate }),
     headers: { "Content-Type": "application/json" },

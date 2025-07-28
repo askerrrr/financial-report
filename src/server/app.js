@@ -49,7 +49,7 @@ app.use("/", require("./routes/root/"));
 
 app.use("/token", require("./routes/WBToken/"));
 
-app.use("/options", require("./routes/options/"));
+app.use("/tax_params", require("./routes/taxParams/"));
 
 app.use("/reports", require("./routes/reports/"));
 
