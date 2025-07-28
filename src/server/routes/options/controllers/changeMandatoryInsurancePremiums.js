@@ -1,7 +1,7 @@
 var changeMandatoryInsurancePremiums = async (req, res, next) => {
   var { mandatoryInsurancePremiums } = req.body;
   var { changeMandatoryInsurancePremiumsToDb } =
-    req.app.locals.optionsCollectionServices;
+    req.app.locals.taxParamsCollectionServices;
 
   var userId = req.app.locals.userId;
 

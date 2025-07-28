@@ -2,9 +2,9 @@ var { Router } = require("express");
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.get("/", require("./controllers/getOptionsPage"));
+router.get("/", require("./controllers/getTaxParamsPage"));
 
-router.get("/api", require("./controllers/getUserOptions"));
+router.get("/api", require("./controllers/getTaxParams"));
 
 router.post(
   "/taxrate",

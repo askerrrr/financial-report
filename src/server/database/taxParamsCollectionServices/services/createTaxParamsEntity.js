@@ -1,6 +1,6 @@
 var { DatabaseError } = require("../../../customError");
 
-var createOptionsEntity = async (collection, userId) => {
+var createTaxParamsEntity = async (collection, userId) => {
   try {
     var optionsEntity = await collection.insertOne({ userId });
 
@@ -10,4 +10,4 @@ var createOptionsEntity = async (collection, userId) => {
   }
 };
 
-module.exports = createOptionsEntity;
+module.exports = createTaxParamsEntity;

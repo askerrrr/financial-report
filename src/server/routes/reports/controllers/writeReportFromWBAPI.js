@@ -6,18 +6,18 @@ var writeReportFromWBAPI = async (req, res, next) => {
   var { saveReportToDb } = req.app.locals.reportCollectionServices;
   var { getReportsTree, updateReportsPeriods } =
     req.app.locals.reportsTreeCollectionServices;
-  var { getUserOptionsFromDb } = req.app.locals.optionsCollectionServices;
+  var { getTaxParamsFromDb } = req.app.locals.taxParamsCollectionServices;
 
   var { dateTo, dateFrom, mainReport, storageReport, totalAdCampaignCosts } =
     req.reportData;
 
   var userId = req.app.locals.userId;
 
-  var options = await getUserOptionsFromDb(userId);
+  var taxParams = await getTaxParamsFromDb(userId);
 
   var reports = { mainReport, storageReport, totalAdCampaignCosts };
 
-  var report = await parseReports(options, reports);
+  var report = await parseReports(taxParams, reports);
 
   var reportId = mainReport[0].realizationreport_id;
 

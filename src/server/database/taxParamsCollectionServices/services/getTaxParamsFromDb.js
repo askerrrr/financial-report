@@ -1,6 +1,6 @@
 var { DatabaseError } = require("../../../customError");
 
-var getUserOptionsFromDb = async (collection, userId) => {
+var getTaxParamsFromDb = async (collection, userId) => {
   try {
     var options = await collection.findOne({ userId });
 
@@ -10,4 +10,4 @@ var getUserOptionsFromDb = async (collection, userId) => {
   }
 };
 
-module.exports = getUserOptionsFromDb;
+module.exports = getTaxParamsFromDb;

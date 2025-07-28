@@ -2,7 +2,7 @@ var changeInsuranceFeePercentage = async (req, res, next) => {
   var userId = req.app.locals.userId;
   var { percent } = req.body;
   var { changeInsuranceFeePercentageToDb } =
-    req.app.locals.optionsCollectionServices;
+    req.app.locals.taxParamsCollectionServices;
 
   var successChange = await changeInsuranceFeePercentageToDb(userId, percent);
 
