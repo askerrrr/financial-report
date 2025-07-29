@@ -21,6 +21,7 @@ var SKUSchema = new Schema(
     taxPerSKU: numOptions,
     insuranceFee: numOptions,
     returnAmountPerSKU: numOptions,
+    preTaxProfitPerSKU: numOptions,
     finalProfitPerSKU: numOptions,
     averageFinalProfitPerSKU: numOptions,
     retailAmountPerSKU: numOptions,
@@ -31,7 +32,7 @@ var SKUSchema = new Schema(
   { _id: false }
 );
 
-var recordToSchema = new Schema(  
+var recordToSchema = new Schema(
   { year: strOptions, month: strOptions },
   { _id: false }
 );
@@ -56,6 +57,7 @@ var reportSchema = new Schema(
     totalRetailAmount: numOptions,
     totalTaxAmount: numOptions,
     totalPaidAcceptance: numOptions,
+    totalPreTaxProfit: numOptions,
     totalDeductionOrPayment: numOptions,
     taxRate: { type: Number, default: 6 },
     totalAdCampaignCosts: numOptions,
