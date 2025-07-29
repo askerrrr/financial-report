@@ -19,7 +19,7 @@ var errorHandler = async (e, req, res, next) => {
   }
 
   if (e instanceof WBAPIError) {
-    res.status(e.status).json({ msg: e.message });
+    return res.status(e.status).json({ msg: e.message });
   }
 
   if (e instanceof ReportNotFoundError) {
