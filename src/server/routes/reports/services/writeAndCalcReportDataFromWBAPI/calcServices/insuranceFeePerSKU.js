@@ -1,10 +1,10 @@
 var shortNum = require("../shortNum");
 
 var calcInsuranceFeePerSKU = async (
-  finalNetProfitPerSKU,
+  finalProfitPerSKU,
   insuranceFeePercentage
 ) => {
-  var insuranceFee = (finalNetProfitPerSKU * insuranceFeePercentage) / 100;
+  var insuranceFee = (finalProfitPerSKU * insuranceFeePercentage) / 100;
 
   return await shortNum(insuranceFee);
 };

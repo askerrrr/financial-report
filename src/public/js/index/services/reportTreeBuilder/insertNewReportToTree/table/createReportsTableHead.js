@@ -3,7 +3,7 @@ import createThElement from "../../../../../report/row/services/createThElement.
 var createReportsTableHead = async () => {
   var reportPeriod = await createThElement("Период отчета");
 
-  var totalFinalNetProfit = await createThElement("Чистая прибыль");
+  var totalFinalProfit = await createThElement("Чистая прибыль");
 
   var totalProductCosts = await createThElement("Затраты на товар");
 
@@ -15,7 +15,7 @@ var createReportsTableHead = async () => {
 
   tr.append(
     reportPeriod,
-    totalFinalNetProfit,
+    totalFinalProfit,
     totalProductCosts,
     totalTaxAmount,
     reportLink

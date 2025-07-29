@@ -1,3 +1,3 @@
-var calcTotalForTheProduct = async (netProfit, qty) => netProfit * qty;
+var calcTotalForTheProduct = async (profit, qty) => profit * qty;
 
 export default calcTotalForTheProduct;

@@ -1,18 +1,18 @@
-var calcNetProfitPerSKU = async (
+var calcProfitPerSKU = async (
   revenuePerSKU,
   deliveryCostPerSKU,
   averageStorageCost,
   finesPerSKU,
   averageAdvertisingCostPerSKU
 ) => {
-  var netProfitPerSKU =
+  var profitPerSKU =
     revenuePerSKU -
     deliveryCostPerSKU -
     averageStorageCost -
     finesPerSKU -
     averageAdvertisingCostPerSKU;
 
-  return netProfitPerSKU;
+  return profitPerSKU;
 };
 
-module.exports = calcNetProfitPerSKU;
+module.exports = calcProfitPerSKU;

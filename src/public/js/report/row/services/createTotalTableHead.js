@@ -19,15 +19,15 @@ var createTotalTableHead = async () => {
 
   var totalAdCampaignCostsTh = await createThElement("Реклама");
 
-  var totalNetProfitTh = await createThElement("К перечислению");
+  var totalProfitTh = await createThElement("К перечислению");
 
   var totalTaxAmount = await createThElement("Налоги");
   totalTaxAmount.title = `Вычисляется по формуле: Сумма продаж  *  6  /  100\nСистема налогообложения по умолчанию: УСН 6%`;
 
-  var totalNetProfitMarginTh = await createThElement("Маржинальность %");
-  totalNetProfitMarginTh.title = `Вычисляется по формуле: Итоговая сумма  *  100  /  Сумма продаж`;
+  var totalProfitMarginTh = await createThElement("Маржинальность %");
+  totalProfitMarginTh.title = `Вычисляется по формуле: Итоговая сумма  *  100  /  Сумма продаж`;
 
-  var totalFinalNetProfitTh = await createThElement("Итого");
+  var totalFinalProfitTh = await createThElement("Итого");
 
   var tr = document.createElement("tr");
 
@@ -41,10 +41,10 @@ var createTotalTableHead = async () => {
     deductionOrPaymentTh,
     totalStorageCostTh,
     totalAdCampaignCostsTh,
-    totalNetProfitTh,
+    totalProfitTh,
     totalTaxAmount,
-    totalNetProfitMarginTh,
-    totalFinalNetProfitTh
+    totalProfitMarginTh,
+    totalFinalProfitTh
   );
 
   var thead = document.createElement("thead");

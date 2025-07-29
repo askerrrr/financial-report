@@ -54,27 +54,25 @@ var createReportTable = async (report) => {
 
     var acceptancePerSKU = await createTdElement(sku.acceptancePerSKU);
 
-    var netProfitPerSKU = await createTdElement(sku.netProfitPerSKU);
+    var profitPerSKU = await createTdElement(sku.profitPerSKU);
 
-    var averageNetProfitPerSKU = await createTdElement(
-      sku.averageNetProfitPerSKU
-    );
+    var averageProfitPerSKU = await createTdElement(sku.averageProfitPerSKU);
 
-    var averageFinalNetProfitPerSKU = await createTdElement(
-      sku.averageFinalNetProfitPerSKU,
-      "averageFinalNetProfitPerSKU",
+    var averageFinalProfitPerSKU = await createTdElement(
+      sku.averageFinalProfitPerSKU,
+      "averageFinalProfitPerSKU",
       index
     );
 
-    var netProfitMargin = await createTdElement(
-      sku.netProfitMargin,
-      "netProfitMargin",
+    var profitMargin = await createTdElement(
+      sku.profitMargin,
+      "profitMargin",
       index
     );
 
-    var finalNetProfitPerSKU = await createTdElement(
-      sku.finalNetProfitPerSKU,
-      "finalNetProfitPerSKU",
+    var finalProfitPerSKU = await createTdElement(
+      sku.finalProfitPerSKU,
+      "finalProfitPerSKU",
       index
     );
 
@@ -89,11 +87,11 @@ var createReportTable = async (report) => {
       fines,
       storageCostPerSKU,
       acceptancePerSKU,
-      netProfitPerSKU,
-      averageNetProfitPerSKU,
-      averageFinalNetProfitPerSKU,
-      netProfitMargin,
-      finalNetProfitPerSKU
+      profitPerSKU,
+      averageProfitPerSKU,
+      averageFinalProfitPerSKU,
+      profitMargin,
+      finalProfitPerSKU
     );
 
     tbody.append(tr);

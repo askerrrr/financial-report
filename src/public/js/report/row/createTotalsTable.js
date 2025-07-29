@@ -1,7 +1,7 @@
 import createTdElement from "./services/createTdElement.js";
 import createTotalTableHead from "./services/createTotalTableHead.js";
-import calcTotalFinalNetProfit from "./services/calcTotalFinalNetProfit.js";
-import calcTotalNetProfitMargin from "./services/calcTotalNetProfitMargin.js";
+import calcTotalFinalProfit from "./services/calcTotalFinalProfit.js";
+import calcTotalProfitMargin from "./services/calcTotalProfitMargin.js";
 
 var table = document.createElement("table");
 table.id = "totals-table";
@@ -22,14 +22,14 @@ var createTotalsTable = async (report) => {
   var totalStorageCostTd = await createTdElement(report.totalStorageCost);
   var totalDeliveryCostTd = await createTdElement(report.totalDeliveryCost);
 
-  var totalNetProfitMargin = await calcTotalNetProfitMargin(
+  var totalProfitMargin = await calcTotalProfitMargin(
     report.totalRetailAmount,
-    report.totalFinalNetProfit
+    report.totalFinalProfit
   );
 
-  var totalNetProfitMarginTd = await createTdElement(
-    totalNetProfitMargin,
-    "totalNetProfitMargin"
+  var totalProfitMarginTd = await createTdElement(
+    totalProfitMargin,
+    "totalProfitMargin"
   );
 
   var totalSoldTd = await createTdElement(report.totalSold);
@@ -42,19 +42,19 @@ var createTotalsTable = async (report) => {
     report.totalAdCampaignCosts
   );
 
-  var totalNetProfitTd = await createTdElement(report.totalNetProfit);
+  var totalProfitTd = await createTdElement(report.totalProfit);
 
   var totalTaxAmountTd = await createTdElement(report.totalTaxAmount);
 
-  var totalFinalNetProfit = await calcTotalFinalNetProfit(report.skus);
+  var totalFinalProfit = await calcTotalFinalProfit(report.skus);
 
-  var totalFinalNetProfitTd = await createTdElement(
-    totalFinalNetProfit,
-    "totalFinalNetProfit"
+  var totalFinalProfitTd = await createTdElement(
+    totalFinalProfit,
+    "totalFinalProfit"
   );
 
-  if (+totalFinalNetProfit < 0) {
-    totalFinalNetProfitTd.style.color = "red";
+  if (+totalFinalProfit < 0) {
+    totalFinalProfitTd.style.color = "red";
   }
 
   tr.append(
@@ -67,10 +67,10 @@ var createTotalsTable = async (report) => {
     totalDeductionOrPaymentTd,
     totalStorageCostTd,
     totalAdCampaignCostsTd,
-    totalNetProfitTd,
+    totalProfitTd,
     totalTaxAmountTd,
-    totalNetProfitMarginTd,
-    totalFinalNetProfitTd
+    totalProfitMarginTd,
+    totalFinalProfitTd
   );
 
   tbody.append(tr);

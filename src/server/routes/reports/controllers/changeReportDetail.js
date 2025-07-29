@@ -31,17 +31,17 @@ var changeReportDetail = async (req, res, next) => {
   var successUpdate = await saveUpdatedReport(userId, reportId, updatedReport);
 
   if (successUpdate) {
-    var { netProfitMargin, finalNetProfitPerSKU, averageFinalNetProfitPerSKU } =
+    var { profitMargin, finalProfitPerSKU, averageFinalProfitPerSKU } =
       skuWithCalculatedParams;
 
-    var { totalFinalNetProfit, totalNetProfitMargin } = updatedReport;
+    var { totalFinalProfit, totalProfitMargin } = updatedReport;
 
     return res.status(200).json({
       index,
-      netProfitMargin,
-      finalNetProfitPerSKU,
-      averageFinalNetProfitPerSKU,
-      total: { totalFinalNetProfit, totalNetProfitMargin },
+      profitMargin,
+      finalProfitPerSKU,
+      averageFinalProfitPerSKU,
+      total: { totalFinalProfit, totalProfitMargin },
     });
   }
 

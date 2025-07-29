@@ -13,8 +13,8 @@ var getRequiredTotalsField = async (totalValues) => {
     totalAdCampaignCosts: totalValues.totalAdCampaignCosts,
     productCosts: totalValues.productCosts,
     totalTaxAmount: totalValues.totalTaxAmount,
-    totalNetProfitMargin: totalValues.totalNetProfitMargin,
-    totalFinalNetProfit: totalValues.totalFinalNetProfit,
+    totalProfitMargin: totalValues.totalProfitMargin,
+    totalFinalProfit: totalValues.totalFinalProfit,
   };
 };
 

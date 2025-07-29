@@ -1,20 +1,20 @@
 var shortNum = require("../shortNum");
 
-var calcTotalNetProfit = async (
+var calcTotalProfit = async (
   totalRevenue,
   totalStorageCost,
   totalDeliveryCost,
   totalPaidAcceptance,
   totalAdCampaignCosts
 ) => {
-  var totalNetProfit =
+  var totalProfit =
     totalRevenue -
     totalStorageCost -
     totalDeliveryCost -
     totalPaidAcceptance -
     totalAdCampaignCosts;
 
-  return await shortNum(totalNetProfit);
+  return await shortNum(totalProfit);
 };
 
-module.exports = calcTotalNetProfit;
+module.exports = calcTotalProfit;

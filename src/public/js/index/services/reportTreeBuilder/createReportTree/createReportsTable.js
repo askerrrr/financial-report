@@ -18,18 +18,18 @@ var createReportsTable = async (year, month, reportIds, reports) => {
         id,
         dateFrom,
         dateTo,
-        totalFinalNetProfit,
+        totalFinalProfit,
         totalProductCosts,
         totalTaxAmount,
       } = report;
 
       var fullPeriodTd = await getReportPeriod(dateFrom, dateTo);
 
-      var totalFinalNetProfitTd = await createTdElement(
-        totalFinalNetProfit,
+      var totalFinalProfitTd = await createTdElement(
+        totalFinalProfit,
         null,
         null,
-        "totalFinalNetProfit"
+        "totalFinalProfit"
       );
 
       var totalProductCostsTd = await createTdElement(totalProductCosts);
@@ -38,7 +38,7 @@ var createReportsTable = async (year, month, reportIds, reports) => {
 
       tr.append(
         fullPeriodTd,
-        totalFinalNetProfitTd,
+        totalFinalProfitTd,
         totalProductCostsTd,
         totalTaxAmountTd,
         reportLink

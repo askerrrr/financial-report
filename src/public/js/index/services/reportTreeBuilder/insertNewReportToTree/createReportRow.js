@@ -24,18 +24,18 @@ var createReportRow = async (reportData, monthName, reportTbody = null) => {
     "totalTaxAmount"
   );
 
-  var totalFinalNetProfitTd = await createTdElement(
+  var totalFinalProfitTd = await createTdElement(
     0,
     null,
     null,
-    "totalFinalNetProfit"
+    "totalFinalProfit"
   );
 
   var tr = document.createElement("tr");
 
   tr.append(
     reportPeriod,
-    totalFinalNetProfitTd,
+    totalFinalProfitTd,
     totalProductCostsTd,
     totalTaxAmountTd,
     reportLink

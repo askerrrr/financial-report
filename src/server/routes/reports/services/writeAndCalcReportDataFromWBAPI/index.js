@@ -20,7 +20,7 @@ var parseReports = async (options, reports) => {
   var totalPaidAcceptance = await calc.totalPaidAcceptance(mainReport);
   var totalDeductionOrPayment = await calc.totalDeductionOrPayment(mainReport);
 
-  var totalNetProfit = await calc.totalNetProfit(
+  var totalProfit = await calc.totalProfit(
     totalRevenue,
     totalStorageCost,
     totalDeliveryCost,
@@ -69,7 +69,7 @@ var parseReports = async (options, reports) => {
       totalAdCampaignCosts
     );
 
-    var netProfitPerSKU = await calc.netProfitPerSKU(
+    var profitPerSKU = await calc.profitPerSKU(
       revenuePerSKU,
       deliveryCostPerSKU,
       averageStorageCost,
@@ -82,8 +82,8 @@ var parseReports = async (options, reports) => {
       storageDataFromPaidStorageReport
     );
 
-    var averageNetProfitPerSKU = await calc.averageNetProfitPerSKU(
-      netProfitPerSKU,
+    var averageProfitPerSKU = await calc.averageProfitPerSKU(
+      profitPerSKU,
       qty
     );
 
@@ -93,7 +93,7 @@ var parseReports = async (options, reports) => {
       taxPerSKU,
       finesPerSKU,
       revenuePerSKU,
-      netProfitPerSKU,
+      profitPerSKU,
       acceptancePerSKU,
       averageRetailPrice,
       averageStorageCost,
@@ -102,7 +102,7 @@ var parseReports = async (options, reports) => {
       retailAmountPerSKU,
       deductionOrPayment,
       returnAmountPerSKU,
-      averageNetProfitPerSKU,
+      averageProfitPerSKU,
       averageAdvertisingCostPerSKU,
     });
   }
@@ -115,7 +115,7 @@ var parseReports = async (options, reports) => {
     totalFines,
     totalRevenue,
     totalTaxAmount,
-    totalNetProfit,
+    totalProfit,
     totalStorageCost,
     totalDeliveryCost,
     totalReturnAmount,

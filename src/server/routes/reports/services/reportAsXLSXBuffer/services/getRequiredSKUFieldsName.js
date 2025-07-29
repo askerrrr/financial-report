@@ -8,9 +8,9 @@ var requiredSKUsFieldsName = [
   "deductionOrPayment",
   "storageCostPerSKU",
   "acceptancePerSKU",
-  "netProfitPerSKU",
-  "netProfitMargin",
-  "finalNetProfitPerSKU",
+  "profitPerSKU",
+  "profitMargin",
+  "finalProfitPerSKU",
 ];
 
 var getRequiredSKUFieldsName = async (skus) =>
@@ -25,9 +25,9 @@ var getRequiredSKUFieldsName = async (skus) =>
       deductionOrPayment: sku.deductionOrPayment,
       storageCostPerSKU: sku.storageCostPerSKU,
       acceptancePerSKU: sku.acceptancePerSKU,
-      netProfitPerSKU: sku.netProfitPerSKU,
-      netProfitMargin: sku.netProfitMargin,
-      finalNetProfitPerSKU: sku.finalNetProfitPerSKU,
+      profitPerSKU: sku.profitPerSKU,
+      profitMargin: sku.profitMargin,
+      finalProfitPerSKU: sku.finalProfitPerSKU,
     };
   });
 

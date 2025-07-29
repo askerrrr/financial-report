@@ -13,25 +13,25 @@ var SKUSchema = new Schema(
     averageRetailPrice: numOptions,
     averageStorageCost: numOptions,
     finesPerSKU: numOptions,
-    netProfitPerSKU: numOptions,
-    netProfitMargin: numOptions,
+    profitPerSKU: numOptions,
+    profitMargin: numOptions,
     deliveryCostPerSKU: numOptions,
     storageCostPerSKU: numOptions,
     acceptancePerSKU: numOptions,
     taxPerSKU: numOptions,
     insuranceFee: numOptions,
     returnAmountPerSKU: numOptions,
-    finalNetProfitPerSKU: numOptions,
-    averageFinalNetProfitPerSKU: numOptions,
+    finalProfitPerSKU: numOptions,
+    averageFinalProfitPerSKU: numOptions,
     retailAmountPerSKU: numOptions,
     deductionOrPayment: numOptions,
-    averageNetProfitPerSKU: numOptions,
+    averageProfitPerSKU: numOptions,
     averageAdvertisingCostPerSKU: numOptions,
   },
   { _id: false }
 );
 
-var recordToSchema = new Schema(
+var recordToSchema = new Schema(  
   { year: strOptions, month: strOptions },
   { _id: false }
 );
@@ -46,10 +46,10 @@ var reportSchema = new Schema(
     totalSold: numOptions,
     totalFines: numOptions,
     productCosts: numOptions,
-    totalNetProfit: numOptions,
+    totalProfit: numOptions,
     totalInsuranceFee: numOptions,
-    totalFinalNetProfit: numOptions,
-    totalNetProfitMargin: numOptions,
+    totalFinalProfit: numOptions,
+    totalProfitMargin: numOptions,
     totalReturnAmount: numOptions,
     totalStorageCost: numOptions,
     totalDeliveryCost: numOptions,
