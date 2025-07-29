@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var tokenSchema = require("../schemas/token");
 var taxParamsSchema = require("../schemas/taxParams");
 var { userSchema, reportSchema } = require("../schemas/index");
-var reportsTreeSchema = require("../schemas/reportsTreeCollection");
+var reportsTreeSchema = require("../schemas/reportsTree");
 
 var reportDB = mongoose.createConnection(
   env.getMongoURI(),

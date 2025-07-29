@@ -25,9 +25,9 @@ var yearsPeriodSchema = new Schema(
   { _id: false }
 );
 
-var reportsTreeCollection = new Schema({
+var reportsTreeSchema = new Schema({
   userId: { type: String, required: true },
   years: [{ type: yearsPeriodSchema, required: false }],
 });
 
-module.exports = reportsTreeCollection;
+module.exports = reportsTreeSchema;
