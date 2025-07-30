@@ -1,17 +1,34 @@
 var shortNum = require("../shortNum");
 var calcProfitMargin = require("./profitMargin");
-var calcInsuranceFeePerSKU = require("./insuranceFeePerSKU");
 var calcFinalProfitPerSKU = require("./finalProfitPerSKU");
+var calcInsuranceFeePerSKU = require("./insuranceFeePerSKU");
+var calcPreTaxProfitPerSKU = require("./preTaxProfitPerSKU");
 var calcAverageFinalProfitPerSKU = require("./averageFinalProfitPerSKU");
 
 var calcRemainingParams = async (sku, costPrice, taxParams) => {
-  var finalProfitPerSKU = await calcFinalProfitPerSKU(sku, costPrice);
+  var preTaxProfitPerSKU = await calcPreTaxProfitPerSKU(sku, costPrice);
 
-  var { insuranceFeePercentage } = taxParams;
+  var { insuranceFeePercentage, paidTaxAmount, paidInsurancePremiums } =
+    taxParams;
 
   var insuranceFee = await calcInsuranceFeePerSKU(
-    finalProfitPerSKU,
+    preTaxProfitPerSKU,
     insuranceFeePercentage
+  );
+
+  var finalProfitPerSKU;
+
+  if (paidTaxAmount > paidInsurancePremiums) {
+    finalProfitPerSKU = await calcFinalProfitPerSKU(
+      preTaxProfitPerSKU,
+      insuranceFee,
+      sku.taxPerSKU
+    );
+  }
+
+  finalProfitPerSKU = await calcFinalProfitPerSKU(
+    preTaxProfitPerSKU,
+    insuranceFee
   );
 
   var profitMargin = await calcProfitMargin(
@@ -24,10 +41,10 @@ var calcRemainingParams = async (sku, costPrice, taxParams) => {
     finalProfitPerSKU
   );
 
-  sku.profitMargin = await shortNum(profitMargin);
-  sku.finalProfitPerSKU = await shortNum(finalProfitPerSKU - insuranceFee);
-
   sku.insuranceFee = insuranceFee;
+  sku.profitMargin = await shortNum(profitMargin);
+  sku.finalProfitPerSKU = await shortNum(finalProfitPerSKU);
+  sku.preTaxProfitPerSKU = await shortNum(preTaxProfitPerSKU);
   sku.averageFinalProfitPerSKU = await shortNum(averageFinalProfitPerSKU);
 
   return sku;
