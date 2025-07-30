@@ -2,8 +2,11 @@ var calcProductCosts = require("./productCosts");
 var calcTotalInsuranceFee = require("./totalInsuranceFee");
 var calcTotalFinalProfit = require("./totalFinalProfit");
 var calcTotalProfitMargin = require("./totalProfitMargin");
+var calcTotalPreTaxProfit = require("./totalPreTaxProfit");
 
 var calcRestTotalParams = async (totals, skus) => {
+  totals.totalPreTaxProfit = await calcTotalPreTaxProfit(skus);
+
   totals.totalFinalProfit = await calcTotalFinalProfit(skus);
 
   totals.productCosts = await calcProductCosts(skus);
