@@ -1,14 +1,14 @@
 var { DatabaseError } = require("../../../customError");
 
-var changeMandatoryInsurancePremiumsToDb = async (
+var changeMandatoryInsuranceFeeToDb = async (
   collection,
   userId,
-  mandatoryInsurancePremiums
+  mandatoryInsuranceFee
 ) => {
   try {
     var result = await collection.updateOne(
       { userId },
-      { $set: { mandatoryInsurancePremiums } }
+      { $set: { mandatoryInsuranceFee } }
     );
 
     return result.modifiedCount;
@@ -17,4 +17,4 @@ var changeMandatoryInsurancePremiumsToDb = async (
   }
 };
 
-module.exports = changeMandatoryInsurancePremiumsToDb;
+module.exports = changeMandatoryInsuranceFeeToDb;

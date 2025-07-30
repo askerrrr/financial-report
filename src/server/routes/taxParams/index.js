@@ -19,7 +19,7 @@ router.post(
 
 router.post(
   "/mandatory-insurance-premiums",
-  require("./controllers/changeMandatoryInsurancePremiums")
+  require("./controllers/changeMandatoryInsuranceFee")
 );
 
 module.exports = router;

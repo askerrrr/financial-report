@@ -1,16 +1,16 @@
 import getOptions from "./getOptions.js";
 import taxRateHandler from "./taxRateHandler.js";
 import insuranceFeePercentageHandler from "./insuranceFeePercentageHandler.js";
-import mandatoryInsurancePremiumsHandler from "./mandatoryInsurancePremiumsHandler.js";
+import mandatoryInsuranceFeeHandler from "./mandatoryInsuranceFeeHandler.js";
 
 var main = async () => {
   var options = await getOptions();
 
-  var { taxRate, insuranceFeePercentage, mandatoryInsurancePremiums } = options;
+  var { taxRate, insuranceFeePercentage, mandatoryInsuranceFee } = options;
 
   await taxRateHandler(taxRate);
   await insuranceFeePercentageHandler(insuranceFeePercentage);
-  await mandatoryInsurancePremiumsHandler(mandatoryInsurancePremiums);
+  await mandatoryInsuranceFeeHandler(mandatoryInsuranceFee);
 };
 
 main();

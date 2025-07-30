@@ -4,7 +4,7 @@ var changeTaxRateToDb = require("./services/changeTaxRateToDb");
 var createTaxParamsEntity = require("./services/createTaxParamsEntity");
 var changePaidTaxAmountToDb = require("./services/changePaidTaxAmountToDb");
 var changeInsuranceFeePercentageToDb = require("./services/changeInsuranceFeePercentageToDb");
-var changeMandatoryInsurancePremiumsToDb = require("./services/changeMandatoryInsurancePremiumsToDb");
+var changeMandatoryInsuranceFeeToDb = require("./services/changeMandatoryInsuranceFeeToDb");
 
 var taxParamsCollectionServices = {
   getTaxParamsFromDb: (userId) =>
@@ -26,11 +26,11 @@ var taxParamsCollectionServices = {
       insuranceFeePercentage
     ),
 
-  changeMandatoryInsurancePremiumsToDb: (userId, mandatoryInsurancePremiums) =>
-    changeMandatoryInsurancePremiumsToDb(
+  changeMandatoryInsuranceFeeToDb: (userId, mandatoryInsuranceFee) =>
+    changeMandatoryInsuranceFeeToDb(
       taxParamsCollection,
       userId,
-      mandatoryInsurancePremiums
+      mandatoryInsuranceFee
     ),
 };
 

@@ -5,8 +5,8 @@ var taxParamsSchema = new Schema({
   taxRate: { type: Number, default: 6 },
   paidTaxAmount: { type: Number, default: 0 },
   insuranceFeePercentage: { type: Number, default: 10 },
-  paidInsurancePremiums: { type: Number, default: 0 },
-  mandatoryInsurancePremiums: { type: Number, default: 0 },
+  paidInsuranceFee: { type: Number, default: 0 },
+  mandatoryInsuranceFee: { type: Number, default: 0 },
 });
 
 module.exports = taxParamsSchema;

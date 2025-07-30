@@ -1,47 +1,42 @@
-var sendMandatoryInsurancePremiums = async (mandatoryInsurancePremiums) => {
+var sendMandatoryInsuranceFee = async (mandatoryInsuranceFee) => {
   var res = await fetch("/tax_params/mandatory-insurance-premiums", {
     method: "POST",
-    body: JSON.stringify({ mandatoryInsurancePremiums }),
+    body: JSON.stringify({ mandatoryInsuranceFee }),
     headers: { "Content-Type": "application/json" },
   });
 
   return res.ok;
 };
 
-var mandatoryInsurancePremiumsHandler = async (
-  currentMandatoryInsurancePremiums
-) => {
+var mandatoryInsuranceFeeHandler = async (currentMandatoryInsuranceFee) => {
   var input = document.getElementById("mandatory-insurance-premiums");
   input.placeholder =
-    "сейчас сумма равна " + currentMandatoryInsurancePremiums + "р.";
+    "сейчас сумма равна " + currentMandatoryInsuranceFee + "р.";
 
   var button = document.getElementById("mandatory-insurance-premiums-button");
 
   button.onclick = async (e) => {
     e.preventDefault();
 
-    var newMandatoryInsurancePremiums = +input.value;
+    var newMandatoryInsuranceFee = +input.value;
 
     if (
-      typeof newMandatoryInsurancePremiums === "number" &&
-      isNaN(newMandatoryInsurancePremiums)
+      typeof newMandatoryInsuranceFee === "number" &&
+      isNaN(newMandatoryInsuranceFee)
     ) {
       return alert("Введите числовое значение");
     }
 
-    if (newMandatoryInsurancePremiums === currentMandatoryInsurancePremiums) {
+    if (newMandatoryInsuranceFee === currentMandatoryInsuranceFee) {
       return alert("Новое значение совпадает с предыдущим");
     }
 
-    if (
-      newMandatoryInsurancePremiums < 0 &&
-      newMandatoryInsurancePremiums > 1e5
-    ) {
+    if (newMandatoryInsuranceFee < 0 && newMandatoryInsuranceFee > 1e5) {
       return alert("Недопустимое значение");
     }
 
-    var successChange = await sendMandatoryInsurancePremiums(
-      newMandatoryInsurancePremiums
+    var successChange = await sendMandatoryInsuranceFee(
+      newMandatoryInsuranceFee
     );
 
     if (successChange) {
@@ -52,4 +47,4 @@ var mandatoryInsurancePremiumsHandler = async (
   };
 };
 
-export default mandatoryInsurancePremiumsHandler;
+export default mandatoryInsuranceFeeHandler;
