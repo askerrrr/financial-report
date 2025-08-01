@@ -17,17 +17,17 @@ var calcRemainingParams = async (sku, costPrice, taxParams) => {
 
   var finalProfitPerSKU;
 
-  if (paidTaxAmount > paidInsuranceFee) {
-    finalProfitPerSKU = await calcFinalProfitPerSKU(
-      preTaxProfitPerSKU,
-      insuranceFee,
-      sku.taxPerSKU
-    );
-  }
+  // if (paidTaxAmount > paidInsuranceFee) {
+  //   finalProfitPerSKU = await calcFinalProfitPerSKU(
+  //     preTaxProfitPerSKU,
+  //     insuranceFee,
+  //     sku.taxPerSKU
+  //   );
+  // }
 
   finalProfitPerSKU = await calcFinalProfitPerSKU(
     preTaxProfitPerSKU,
-    insuranceFee
+    sku.taxPerSKU
   );
 
   var profitMargin = await calcProfitMargin(
