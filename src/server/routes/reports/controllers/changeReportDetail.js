@@ -1,6 +1,6 @@
 var changeElementInArray = require("../services/different/changeElementInArray");
-var calcRestTotalParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/restTotalParams");
-var calcRemainingParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/remainingParams");
+var calcRestReportTotalParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/restReportTotalParams");
+var calcRestSKUParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/restSKUParams");
 
 var changeReportDetail = async (req, res, next) => {
   var { saveUpdatedReport, getReportById } =
@@ -18,15 +18,11 @@ var changeReportDetail = async (req, res, next) => {
 
   var taxParams = await getTaxParamsFromDb(userId);
 
-  var skuWithCalculatedParams = await calcRemainingParams(
-    sku,
-    value,
-    taxParams
-  );
+  var skuWithCalculatedParams = await calcRestSKUParams(sku, value, taxParams);
 
   changedSKUs[index] = skuWithCalculatedParams;
 
-  var updatedReport = await calcRestTotalParams(totalParams, changedSKUs);
+  var updatedReport = await calcRestReportTotalParams(totalParams, changedSKUs);
 
   var successUpdate = await saveUpdatedReport(userId, reportId, updatedReport);
 

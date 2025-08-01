@@ -4,7 +4,7 @@ var calcTotalFinalProfit = require("./totalFinalProfit");
 var calcTotalProfitMargin = require("./totalProfitMargin");
 var calcTotalPreTaxProfit = require("./totalPreTaxProfit");
 
-var calcRestTotalParams = async (totals, skus) => {
+var calcRestReportTotalParams = async (totals, skus) => {
   totals.totalPreTaxProfit = await calcTotalPreTaxProfit(skus);
 
   totals.totalFinalProfit = await calcTotalFinalProfit(skus);
@@ -21,4 +21,4 @@ var calcRestTotalParams = async (totals, skus) => {
   return { ...totals, skus };
 };
 
-module.exports = calcRestTotalParams;
+module.exports = calcRestReportTotalParams;

@@ -5,7 +5,7 @@ var calcInsuranceFeePerSKU = require("./insuranceFeePerSKU");
 var calcPreTaxProfitPerSKU = require("./preTaxProfitPerSKU");
 var calcAverageFinalProfitPerSKU = require("./averageFinalProfitPerSKU");
 
-var calcRemainingParams = async (sku, costPrice, taxParams) => {
+var calcRestSKUParams = async (sku, costPrice, taxParams) => {
   var preTaxProfitPerSKU = await calcPreTaxProfitPerSKU(sku, costPrice);
 
   var { insuranceFeePercentage, paidTaxAmount, paidInsuranceFee } = taxParams;
@@ -49,4 +49,4 @@ var calcRemainingParams = async (sku, costPrice, taxParams) => {
   return sku;
 };
 
-module.exports = calcRemainingParams;
+module.exports = calcRestSKUParams;
