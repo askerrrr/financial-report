@@ -6,6 +6,7 @@ var taxParamsSchema = new Schema({
   paidTaxAmount: { type: Number, default: 0 },
   insuranceFeePercentage: { type: Number, default: 10 },
   paidInsuranceFee: { type: Number, default: 0 },
+  isInsuranceFeePaid: { type: Boolean, default: false },
   mandatoryInsuranceFee: { type: Number, default: 0 },
 });
 
