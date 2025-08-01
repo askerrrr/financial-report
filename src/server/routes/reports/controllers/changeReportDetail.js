@@ -8,19 +8,23 @@ var changeReportDetail = async (req, res, next) => {
 
   var { getTaxParamsFromDb } = req.app.locals.taxParamsCollectionServices;
 
-  var { userId, reportId, index, value } = req.body;
+  var { userId, reportId, skuIndex, costPrice } = req.body;
 
   var { skus, ...totalParams } = await getReportById(userId, reportId);
 
   var changedSKUs = await changeElementInArray(skus, req.body);
 
-  var sku = changedSKUs[index];
+  var sku = changedSKUs[skuIndex];
 
   var taxParams = await getTaxParamsFromDb(userId);
 
-  var skuWithCalculatedParams = await calcRestSKUParams(sku, value, taxParams);
+  var skuWithCalculatedParams = await calcRestSKUParams(
+    sku,
+    costPrice,
+    taxParams
+  );
 
-  changedSKUs[index] = skuWithCalculatedParams;
+  changedSKUs[skuIndex] = skuWithCalculatedParams;
 
   var updatedReport = await calcRestReportTotalParams(totalParams, changedSKUs);
 
@@ -33,7 +37,7 @@ var changeReportDetail = async (req, res, next) => {
     var { totalFinalProfit, totalProfitMargin } = updatedReport;
 
     return res.status(200).json({
-      index,
+      skuIndex,
       profitMargin,
       finalProfitPerSKU,
       averageFinalProfitPerSKU,

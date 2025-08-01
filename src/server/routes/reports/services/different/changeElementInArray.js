@@ -1,9 +1,9 @@
-var changeElementInArray = async (skus, { index, value, fieldName }) => {
-  var sku = skus[index];
+var changeElementInArray = async (skus, { skuIndex, costPrice, fieldName }) => {
+  var sku = skus[skuIndex];
 
-  sku[fieldName] = value;
+  sku[fieldName] = costPrice;
 
-  skus[index] = sku;
+  skus[skuIndex] = sku;
 
   return skus;
 };

@@ -2,7 +2,7 @@ import sendChangedData from "./sendChangedData.js";
 import updateTotalTableField from "./updateTotalTableField.js";
 import updateCalculatedTableFields from "./updateCalculatedTableFields.js";
 
-var openModal = async (index, fieldName, valueDisplay, url, id) => {
+var openModal = async (skuIndex, fieldName, valueDisplay, url, id) => {
   var modal = document.createElement("div");
   modal.className = "modal-overlay";
 
@@ -26,10 +26,11 @@ var openModal = async (index, fieldName, valueDisplay, url, id) => {
   saveButton.textContent = "Сохранить";
   saveButton.addEventListener("click", async () => {
     valueDisplay.textContent = input.value;
+    var costPrice = +input.value;
 
     document.body.removeChild(modal);
 
-    var data = await sendChangedData(+input.value, index, fieldName, url, id);
+    var data = await sendChangedData(costPrice, skuIndex, fieldName, url, id);
 
     var { total, ...rest } = data;
 

@@ -2,10 +2,10 @@ import getCookieValueByName from "../../../index/services/getCookieValueByName.j
 
 var userId = await getCookieValueByName("userId");
 
-var sendChangedData = async (value, index, fieldName, url, reportId) => {
+var sendChangedData = async (costPrice, skuIndex, fieldName, url, reportId) => {
   var res = await fetch(url, {
     method: "POST",
-    body: JSON.stringify({ userId, value, index, fieldName, reportId }),
+    body: JSON.stringify({ userId, costPrice, skuIndex, fieldName, reportId }),
     headers: { "Content-Type": "application/json" },
   });
 
