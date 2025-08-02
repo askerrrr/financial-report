@@ -1,7 +1,7 @@
-var sendTaxRate = async (taxRate, recalculate) => {
+var sendTaxRate = async (taxRate, recalculate, year) => {
   var res = await fetch("/tax_params/taxrate", {
     method: "POST",
-    body: JSON.stringify({ taxRate, recalculate }),
+    body: JSON.stringify({ taxRate, recalculate, year }),
     headers: { "Content-Type": "application/json" },
   });
 
@@ -20,6 +20,15 @@ var taxRateHandler = async (currentTaxRate) => {
 
   button.onclick = async (e) => {
     e.preventDefault();
+    var selectElem = document.getElementById("tax-year-select-1");
+
+    var selectedYear = +selectElem.value;
+
+    if (typeof selectedYear === "number" && isNaN(selectedYear)) {
+      var currentYear = new Date().getFullYear();
+
+      selectedYear = currentYear;
+    }
 
     var recalculate = radioButton.checked;
 
@@ -37,7 +46,11 @@ var taxRateHandler = async (currentTaxRate) => {
       return alert("Недопустимое значение");
     }
 
-    var successChange = await sendTaxRate(newTaxRate, recalculate);
+    var successChange = await sendTaxRate(
+      newTaxRate,
+      recalculate,
+      selectedYear
+    );
 
     if (successChange) {
       return alert("Изменение успешно применено");
