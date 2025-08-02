@@ -1,6 +1,14 @@
-var years = [2025, 2024];
+var getYears = async () => {
+  var res = await fetch("/tax_params/years");
+
+  var { years } = await res.json();
+
+  return years;
+};
 
 var taxYearSelectHandler = async () => {
+  var years = await getYears();
+
   var selectsElem = document.getElementsByName("tax-year");
 
   selectsElem.forEach((select) => {

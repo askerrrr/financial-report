@@ -6,6 +6,8 @@ router.get("/", require("./controllers/getTaxParamsPage"));
 
 router.get("/api", require("./controllers/getTaxParams"));
 
+router.get("/years", require("./controllers/getReportYears"));
+
 router.post(
   "/taxrate",
   require("./controllers/changeTaxRate"),
