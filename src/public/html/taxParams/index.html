@@ -9,6 +9,10 @@
   <body>
     <button id="main" onclick="window.location.href='/'">На главную</button>
     <form>
+      <label for="tax-year-select-1">Отчетный год</label>
+      <select name="tax-year" id="tax-year-select-1">
+        <option value="">-- Выберите отчетный год --</option>
+      </select>
       <label for="tax-rate">Установить процент налогообложения</label>
       <input id="tax-rate" type="text" />
       <div class="radio-group">
@@ -23,7 +27,6 @@
             >Пересчитать сумму налога для имеющихся отчетов (если есть)</label
           >
         </div>
-
         <div class="radio-item">
           <input
             type="radio"
@@ -38,6 +41,10 @@
       <button id="tax-rate-button">Сохранить</button>
     </form>
     <form>
+      <label for="tax-year-select-2">Отчетный год</label>
+      <select name="tax-year" id="tax-year-select-2">
+        <option value="">-- Выберите отчетный год --</option>
+      </select>
       <label for="mandatory-insurance-premiums"
         >Установить сумму обязательных страховых взносов, уплачиваемых за
         год</label
@@ -45,6 +52,10 @@
       <button id="mandatory-insurance-premiums-button">Сохранить</button>
     </form>
     <form>
+      <label for="tax-year-select-3">Отчетный год</label>
+      <select name="tax-year" id="tax-year-select-3">
+        <option value="">-- Выберите отчетный год --</option>
+      </select>
       <label for="insurance-fee-percentage"
         >Установить процент от чистой прибыли, который будет уходить на
         погашение обязательных страховых взносов</label
@@ -62,7 +73,6 @@
             значением % в отчетах (если есть)</label
           >
         </div>
-
         <div class="radio-item">
           <input
             type="radio"
