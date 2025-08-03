@@ -5,7 +5,7 @@ var changePaidTaxAmountToDb = async (collection, userId, paidTaxAmount) => {
     var result = await collection.updateOne(
       { userId },
       {
-        $set: { paidTaxAmount },
+        $set: { "years.$.paidTaxAmount": paidTaxAmount },
       }
     );
 

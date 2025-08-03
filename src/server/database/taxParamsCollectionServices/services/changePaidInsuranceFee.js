@@ -8,7 +8,7 @@ var changePaidInsuranceFeeToDb = async (
   try {
     var result = await collection.updateOne(
       { userId },
-      { $set: { paidInsuranceFee } }
+      { $set: { "years.$.paidInsuranceFee": paidInsuranceFee } }
     );
 
     return result.modifiedCount;

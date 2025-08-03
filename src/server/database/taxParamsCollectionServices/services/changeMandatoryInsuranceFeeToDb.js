@@ -8,7 +8,7 @@ var changeMandatoryInsuranceFeeToDb = async (
   try {
     var result = await collection.updateOne(
       { userId },
-      { $set: { mandatoryInsuranceFee } }
+      { $set: { "years.$.mandatoryInsuranceFee": mandatoryInsuranceFee } }
     );
 
     return result.modifiedCount;

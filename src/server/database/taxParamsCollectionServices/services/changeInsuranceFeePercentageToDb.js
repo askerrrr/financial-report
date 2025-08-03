@@ -9,7 +9,7 @@ var changeInsuranceFeePercentageToDb = async (
     var result = await collection.updateOne(
       { userId },
       {
-        $set: { insuranceFeePercentage },
+        $set: { "years.$.insuranceFeePercentage": insuranceFeePercentage },
       }
     );
 
