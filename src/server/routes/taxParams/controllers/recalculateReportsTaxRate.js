@@ -6,6 +6,10 @@ var recalculateReportsTaxRate = async (req, res, next) => {
 
   var reports = await getReportsByUserId(userId);
 
+  if (reports.length == 0) {
+    return res.sendStatus(200);
+  }
+
   reports.map((report) => (report.taxRate = taxRate));
   reports.map(
     (report) =>
