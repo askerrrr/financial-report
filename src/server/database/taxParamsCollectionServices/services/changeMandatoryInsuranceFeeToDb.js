@@ -3,11 +3,12 @@ var { DatabaseError } = require("../../../customError");
 var changeMandatoryInsuranceFeeToDb = async (
   collection,
   userId,
+  year,
   mandatoryInsuranceFee
 ) => {
   try {
     var result = await collection.updateOne(
-      { userId },
+      { userId, "years.year": year },
       { $set: { "years.$.mandatoryInsuranceFee": mandatoryInsuranceFee } }
     );
 

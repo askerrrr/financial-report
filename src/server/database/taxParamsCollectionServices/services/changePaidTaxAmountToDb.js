@@ -1,9 +1,14 @@
 var { DatabaseError } = require("../../../customError");
 
-var changePaidTaxAmountToDb = async (collection, userId, paidTaxAmount) => {
+var changePaidTaxAmountToDb = async (
+  collection,
+  userId,
+  year,
+  paidTaxAmount
+) => {
   try {
     var result = await collection.updateOne(
-      { userId },
+      { userId, "years.year": year },
       {
         $set: { "years.$.paidTaxAmount": paidTaxAmount },
       }
