@@ -15,7 +15,7 @@ var {
 var { setReportIdInReports } = require("./services/reports");
 var { getMonthName } = require("./services/month");
 
-var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
+var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
   var [startYear, startMonth] = dateFrom.split("-");
   var [endYear, endMonth] = dateTo.split("-");
 
@@ -170,4 +170,4 @@ var organizeReportsByPeriod = async (dateFrom, dateTo, reportId, years) => {
   return { years, year: startYear, month: startMonthName };
 };
 
-module.exports = organizeReportsByPeriod;
+module.exports = insertReportToReportTree;
