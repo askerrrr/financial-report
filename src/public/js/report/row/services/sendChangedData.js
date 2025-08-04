@@ -1,11 +1,9 @@
-import getCookieValueByName from "../../../index/services/getCookieValueByName.js";
+var url = "/reports/change";
 
-var userId = await getCookieValueByName("userId");
-
-var sendChangedData = async (costPrice, skuIndex, fieldName, url, reportId) => {
+var sendChangedData = async (costPriceData) => {
   var res = await fetch(url, {
     method: "POST",
-    body: JSON.stringify({ userId, costPrice, skuIndex, fieldName, reportId }),
+    body: JSON.stringify({ ...costPriceData }),
     headers: { "Content-Type": "application/json" },
   });
 

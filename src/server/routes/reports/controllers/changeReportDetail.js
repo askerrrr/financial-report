@@ -5,10 +5,9 @@ var calcRestSKUParams = require("../services/writeAndCalcReportDataFromWBAPI/cal
 var changeReportDetail = async (req, res, next) => {
   var { saveUpdatedReport, getReportById } =
     req.app.locals.reportCollectionServices;
-
   var { getTaxParamsFromDb } = req.app.locals.taxParamsCollectionServices;
 
-  var { userId, reportId, skuIndex, costPrice } = req.body;
+  var { userId, reportId, skuIndex, costPrice, year } = req.body;
 
   var { skus, ...totalParams } = await getReportById(userId, reportId);
 
@@ -16,7 +15,7 @@ var changeReportDetail = async (req, res, next) => {
 
   var sku = changedSKUs[skuIndex];
 
-  var taxParams = await getTaxParamsFromDb(userId);
+  var taxParams = await getTaxParamsFromDb(userId, year);
 
   var skuWithCalculatedParams = await calcRestSKUParams(
     sku,

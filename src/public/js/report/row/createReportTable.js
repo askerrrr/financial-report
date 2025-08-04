@@ -1,30 +1,28 @@
 import createTdElement from "./services/createTdElement.js";
 import createInputField from "./services/createInputField.js";
-import createItemPhotoUploader from "./services/skuPhotoUploader/index.js";
-
-var url = "/reports/change";
+import createSKUPhotoUploader from "./services/skuPhotoUploader/index.js";
 
 var table = document.getElementById("report");
 
 var createReportTable = async (report) => {
   var tbody = document.createElement("tbody");
 
-  var { reportId, skus } = report;
+  var { reportId, recordTo, skus, userId } = report;
 
-  for (var [index, sku] of Object.entries(skus)) {
+  for (var [skuIndex, sku] of Object.entries(skus)) {
     var tr = document.createElement("tr");
 
-    var SKUPhotoUploader = await createItemPhotoUploader(
+    var SKUPhotoUploader = await createSKUPhotoUploader(
       reportId,
       sku.skuName,
-      index,
+      skuIndex,
       null
     );
 
     var SKUPhotoUploaderTd = await createTdElement(
       SKUPhotoUploader,
       "photo-cell",
-      index,
+      skuIndex,
       "photo-cell"
     );
 
@@ -34,13 +32,16 @@ var createReportTable = async (report) => {
 
     var returnAmount = await createTdElement(sku.returnAmountPerSKU);
 
-    var costPriceInputField = await createInputField(
-      sku.costPrice,
-      index,
-      "costPrice",
-      url,
-      reportId
-    );
+    var costPriceData = {
+      userId,
+      skuIndex,
+      reportId,
+      year: +recordTo.year,
+      fieldName: "costPrice",
+      costPrice: sku.costPrice,
+    };
+
+    var costPriceInputField = await createInputField(costPriceData);
 
     var costPrice = await createTdElement(costPriceInputField);
 
@@ -61,19 +62,19 @@ var createReportTable = async (report) => {
     var averageFinalProfitPerSKU = await createTdElement(
       sku.averageFinalProfitPerSKU,
       "averageFinalProfitPerSKU",
-      index
+      skuIndex
     );
 
     var profitMargin = await createTdElement(
       sku.profitMargin,
       "profitMargin",
-      index
+      skuIndex
     );
 
     var finalProfitPerSKU = await createTdElement(
       sku.finalProfitPerSKU,
       "finalProfitPerSKU",
-      index
+      skuIndex
     );
 
     tr.append(

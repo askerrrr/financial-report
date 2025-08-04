@@ -1,12 +1,12 @@
-var updateCalculatedTableFields = async (data) => {
-  var { index } = data;
+var updateCalculatedTableFields = async (sku) => {
+  var { skuIndex } = sku;
+  console.log({ sku });
+  delete sku.skuIndex;
 
-  delete data.index;
+  for (var fildName of Object.keys(sku)) {
+    var elemId = [fildName, skuIndex].join("-");
 
-  for (var elem of Object.keys(data)) {
-    var elemId = [elem, index].join("-");
-
-    document.getElementById(elemId).textContent = data[elem];
+    document.getElementById(elemId).textContent = sku[fildName];
   }
 };
 

@@ -12,32 +12,39 @@ var taxParamsCollectionServices = {
   addNewTaxYearToDb: (userId, year) =>
     addNewTaxYearToDb(taxParamsCollection, userId, year),
 
-  getTaxParamsFromDb: (userId) =>
-    getTaxParamsFromDb(taxParamsCollection, userId),
+  getTaxParamsFromDb: (userId, year) =>
+    getTaxParamsFromDb(taxParamsCollection, userId, year),
 
-  changeTaxRateToDb: (userId, taxRate) =>
-    changeTaxRateToDb(taxParamsCollection, userId, taxRate),
+  changeTaxRateToDb: (userId, year, taxRate) =>
+    changeTaxRateToDb(taxParamsCollection, userId, year, taxRate),
 
-  createTaxParamsEntity: (userId) =>
-    createTaxParamsEntity(taxParamsCollection, userId),
+  createTaxParamsEntity: (userId, year) =>
+    createTaxParamsEntity(taxParamsCollection, userId, year),
 
-  changePaidTaxAmountToDb: (userId, paidTaxAmount) =>
-    changePaidTaxAmountToDb(taxParamsCollection, userId, paidTaxAmount),
+  changePaidTaxAmountToDb: (userId, year, paidTaxAmount) =>
+    changePaidTaxAmountToDb(taxParamsCollection, userId, year, paidTaxAmount),
 
-  changeInsuranceFeePercentageToDb: (userId, insuranceFeePercentage) =>
+  changeInsuranceFeePercentageToDb: (userId, year, insuranceFeePercentage) =>
     changeInsuranceFeePercentageToDb(
       taxParamsCollection,
       userId,
+      year,
       insuranceFeePercentage
     ),
 
-  changePaidInsuranceFeeToDb: (userId, paidInsuranceFee) =>
-    changePaidInsuranceFeeToDb(taxParamsCollection, userId, paidInsuranceFee),
+  changePaidInsuranceFeeToDb: (userId, year, paidInsuranceFee) =>
+    changePaidInsuranceFeeToDb(
+      taxParamsCollection,
+      userId,
+      year,
+      paidInsuranceFee
+    ),
 
-  changeMandatoryInsuranceFeeToDb: (userId, mandatoryInsuranceFee) =>
+  changeMandatoryInsuranceFeeToDb: (userId, year, mandatoryInsuranceFee) =>
     changeMandatoryInsuranceFeeToDb(
       taxParamsCollection,
       userId,
+      year,
       mandatoryInsuranceFee
     ),
 };

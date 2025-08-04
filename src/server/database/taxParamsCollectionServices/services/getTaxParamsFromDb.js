@@ -2,9 +2,9 @@ var { DatabaseError } = require("../../../customError");
 
 var getTaxParamsFromDb = async (collection, userId, year) => {
   try {
-    var taxParams = await collection.findOne({ userId, "years.year": year });
+    var { years } = await collection.findOne({ userId, "years.year": year });
 
-    return taxParams.toObject();
+    return years.find((date) => date.year == year);
   } catch (e) {
     throw new DatabaseError();
   }
