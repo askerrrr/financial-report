@@ -4,7 +4,7 @@ var sortYearsTree = require("../services/different/sortYearTree");
 
 var writeReportFromWBAPI = async (req, res, next) => {
   var { saveReportToDb } = req.app.locals.reportCollectionServices;
-  var { getReportsTree, updateReportsPeriods } =
+  var { getReportsTree, updateReportTree } =
     req.app.locals.reportsTreeCollectionServices;
   var { getTaxParamsFromDb, changePaidTaxAmountToDb } =
     req.app.locals.taxParamsCollectionServices;
@@ -33,7 +33,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   var sortedYears = await sortYearsTree(years);
 
-  await updateReportsPeriods(userId, sortedYears);
+  await updateReportTree(userId, sortedYears);
 
   var { paidTaxAmount } = taxParams;
   paidTaxAmount += report.totalTaxAmount;
