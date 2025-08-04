@@ -1,3 +1,5 @@
+import getCurrentTaxYear from "./getCurrentTaxYear.js";
+
 var sendTaxRate = async (taxRate, recalculate, year) => {
   var res = await fetch("/tax_params/taxrate", {
     method: "POST",
@@ -20,15 +22,8 @@ var taxRateHandler = async (currentTaxRate) => {
 
   button.onclick = async (e) => {
     e.preventDefault();
-    var selectElem = document.getElementById("tax-year-select-1");
 
-    var selectedYear = +selectElem.value;
-
-    if (typeof selectedYear === "number" && isNaN(selectedYear)) {
-      var currentYear = new Date().getFullYear();
-
-      selectedYear = currentYear;
-    }
+    var selectedYear = await getCurrentTaxYear();
 
     var recalculate = radioButton.checked;
 

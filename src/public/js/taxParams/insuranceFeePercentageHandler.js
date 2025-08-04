@@ -1,3 +1,5 @@
+import getCurrentTaxYear from "./getCurrentTaxYear.js";
+
 var sendPercent = async (percent, recalculate, year) => {
   var res = await fetch("/tax_params/insurance-fee-percentage", {
     method: "POST",
@@ -21,15 +23,7 @@ var insuranceFeePercentageHandler = async (currentPercent) => {
   button.onclick = async (e) => {
     e.preventDefault();
 
-    var selectElem = document.getElementById("tax-year-select-3");
-
-    var selectedYear = +selectElem.value;
-
-    if (typeof selectedYear === "number" && isNaN(selectedYear)) {
-      var currentYear = new Date().getFullYear();
-
-      selectedYear = currentYear;
-    }
+    var selectedYear = await getCurrentTaxYear();
 
     var recalculate = radioButton.checked;
 

@@ -1,3 +1,5 @@
+import getCurrentTaxYear from "./getCurrentTaxYear.js";
+
 var sendMandatoryInsuranceFee = async (mandatoryInsuranceFee, year) => {
   var res = await fetch("/tax_params/mandatory-insurance-premiums", {
     method: "POST",
@@ -18,15 +20,7 @@ var mandatoryInsuranceFeeHandler = async (currentMandatoryInsuranceFee) => {
   button.onclick = async (e) => {
     e.preventDefault();
 
-    var selectElem = document.getElementById("tax-year-select-2");
-
-    var selectedYear = +selectElem.value;
-
-    if (typeof selectedYear === "number" && isNaN(selectedYear)) {
-      var currentYear = new Date().getFullYear();
-
-      selectedYear = currentYear;
-    }
+    var selectedYear = await getCurrentTaxYear();
 
     var newMandatoryInsuranceFee = +input.value;
 
