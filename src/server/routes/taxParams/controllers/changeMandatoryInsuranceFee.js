@@ -1,5 +1,5 @@
 var changeMandatoryInsuranceFee = async (req, res, next) => {
-  var { mandatoryInsuranceFee } = req.body;
+  var { year, mandatoryInsuranceFee } = req.body;
   var { changeMandatoryInsuranceFeeToDb } =
     req.app.locals.taxParamsCollectionServices;
 
@@ -7,6 +7,7 @@ var changeMandatoryInsuranceFee = async (req, res, next) => {
 
   var successChange = await changeMandatoryInsuranceFeeToDb(
     userId,
+    year,
     mandatoryInsuranceFee
   );
 

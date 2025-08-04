@@ -1,9 +1,9 @@
 var changeTaxRate = async (req, res, next) => {
   var userId = req.app.locals.userId;
-  var { taxRate, recalculate } = req.body;
+  var { taxRate, recalculate, year } = req.body;
   var { changeTaxRateToDb } = req.app.locals.taxParamsCollectionServices;
 
-  var successChange = await changeTaxRateToDb(userId, taxRate);
+  var successChange = await changeTaxRateToDb(userId, year, taxRate);
 
   if (!successChange) {
     return res.sendStatus(304);
