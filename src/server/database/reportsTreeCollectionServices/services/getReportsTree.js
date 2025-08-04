@@ -2,9 +2,9 @@ var { DatabaseError } = require("../../../customError");
 
 var getReportsTree = async (collection, userId) => {
   try {
-    var reportingPeriods = await collection.findOne({ userId }).exec();
+    var reportTree = await collection.findOne({ userId }).exec();
 
-    return reportingPeriods;
+    return reportTree;
   } catch (e) {
     throw new DatabaseError(userId, e);
   }
