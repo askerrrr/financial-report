@@ -1,17 +1,13 @@
-var insertTaxYearsToSelectElem = async () => {
-  var years = await getYears();
+var insertTaxYearsToSelectElem = async (years) => {
+  var selects = document.getElementById("tax-year");
 
-  var selectsElem = document.getElementById("tax-year");
+  for (var { year } of years) {
+    var option = document.createElement("option");
+    option.text = year;
+    option.value = year;
 
-  selectsElem.forEach((select) => {
-    years.forEach((year) => {
-      var optionElem = document.createElement("option");
-      optionElem.text = year;
-      optionElem.value = year;
-
-      select.append(optionElem);
-    });
-  });
+    selects.append(option);
+  }
 };
 
 export default insertTaxYearsToSelectElem;
