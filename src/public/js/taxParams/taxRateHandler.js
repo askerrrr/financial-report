@@ -1,4 +1,4 @@
-import getCurrentTaxYear from "./getCurrentTaxYear.js";
+import getSelectedTaxYear from "./getSelectedTaxYear.js";
 
 var sendTaxRate = async (taxRate, recalculate, year) => {
   var res = await fetch("/tax_params/taxrate", {
@@ -23,7 +23,7 @@ var taxRateHandler = async (currentTaxRate) => {
   button.onclick = async (e) => {
     e.preventDefault();
 
-    var selectedYear = await getCurrentTaxYear();
+    var selectedYear = await getSelectedTaxYear();
 
     var recalculate = radioButton.checked;
 

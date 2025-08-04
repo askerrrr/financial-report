@@ -1,4 +1,4 @@
-import getCurrentTaxYear from "./getCurrentTaxYear.js";
+import getSelectedTaxYear from "./getSelectedTaxYear.js";
 
 var sendPercent = async (percent, recalculate, year) => {
   var res = await fetch("/tax_params/insurance-fee-percentage", {
@@ -23,7 +23,7 @@ var insuranceFeePercentageHandler = async (currentPercent) => {
   button.onclick = async (e) => {
     e.preventDefault();
 
-    var selectedYear = await getCurrentTaxYear();
+    var selectedYear = await getSelectedTaxYear();
 
     var recalculate = radioButton.checked;
 

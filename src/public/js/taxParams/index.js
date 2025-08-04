@@ -1,6 +1,6 @@
 import getTaxParams from "./getTaxParams.js";
 import taxRateHandler from "./taxRateHandler.js";
-import getCurrentTaxYear from "./getCurrentTaxYear.js";
+import getSelectedTaxYear from "./getSelectedTaxYear.js";
 import insertTaxYearsToSelectElem from "./insertTaxYearsToSelectElem.js";
 import insuranceFeePercentageHandler from "./insuranceFeePercentageHandler.js";
 import mandatoryInsuranceFeeHandler from "./mandatoryInsuranceFeeHandler.js";
@@ -15,7 +15,7 @@ var main = async () => {
   await insuranceFeePercentageHandler(insuranceFeePercentage);
   await mandatoryInsuranceFeeHandler(mandatoryInsuranceFee);
 
-  await getCurrentTaxYear();
+  await getSelectedTaxYear();
 };
 
 main();

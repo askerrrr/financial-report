@@ -1,4 +1,4 @@
-var getCurrentTaxYear = async () => {
+var getSelectedTaxYear = async () => {
   var options = document.querySelectorAll("option");
 
   var selectedYear;
@@ -12,4 +12,4 @@ var getCurrentTaxYear = async () => {
   return selectedYear;
 };
 
-export default getCurrentTaxYear;
+export default getSelectedTaxYear;
