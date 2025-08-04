@@ -3,11 +3,9 @@ var getTaxParams = async (req, res, next) => {
 
   var userId = req.app.locals.userId;
 
-  var options = await getTaxParamsFromDb(userId);
+  var taxParams = await getTaxParamsFromDb(userId);
 
-  delete options._id;
-
-  return res.json({ options });
+  return res.json({ taxParams });
 };
 
 module.exports = getTaxParams;
