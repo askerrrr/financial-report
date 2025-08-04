@@ -6,21 +6,15 @@ var writeReportFromWBAPI = async (req, res, next) => {
   var { saveReportToDb } = req.app.locals.reportCollectionServices;
   var { getReportsTree, updateReportTree } =
     req.app.locals.reportsTreeCollectionServices;
-  var { getTaxParamsFromDb, changePaidTaxAmountToDb } =
+  var { addNewTaxYearToDb, changePaidTaxAmountToDb } =
     req.app.locals.taxParamsCollectionServices;
 
   var { dateTo, dateFrom, mainReport, storageReport, totalAdCampaignCosts } =
     req.reportData;
 
   var userId = req.app.locals.userId;
-
-  var taxParams = await getTaxParamsFromDb(userId);
-
-  var reports = { mainReport, storageReport, totalAdCampaignCosts };
-
-  var report = await parseReports(taxParams, reports);
-
   var reportId = mainReport[0].realizationreport_id;
+  var reports = { mainReport, storageReport, totalAdCampaignCosts };
 
   var { years } = await getReportsTree(userId);
 
@@ -34,6 +28,10 @@ var writeReportFromWBAPI = async (req, res, next) => {
   var sortedYears = await sortYearsTree(years);
 
   await updateReportTree(userId, sortedYears);
+
+  var taxParams = await addNewTaxYearToDb(userId, year);
+
+  var report = await parseReports(taxParams, reports);
 
   var { paidTaxAmount } = taxParams;
   paidTaxAmount += report.totalTaxAmount;

@@ -4,20 +4,30 @@ var addNewTaxYearToDb = async (collection, userId, year) => {
   try {
     var { years } = await collection.findOne({ userId });
 
-    var yearIsExists = years.find((date) => date.year === year);
+    var existYear = years.find((date) => date.year == year);
 
-    if (yearIsExists) {
-      return;
+    if (existYear) {
+      return existYear;
     }
 
-    var result = await collection.updateOne(
+    await collection.updateOne(
       { userId },
       {
         $push: { years: { year } },
       }
     );
 
-    return result.modifiedCount;
+    var defaultTaxOptions = {
+      year,
+      taxRate: 6,
+      paidTaxAmount: 0,
+      paidInsuranceFee: 0,
+      mandatoryInsuranceFee: 0,
+      isInsuranceFeePaid: false,
+      insuranceFeePercentage: 10,
+    };
+
+    return defaultTaxOptions;
   } catch (e) {
     throw new DatabaseError(userId, e);
   }
