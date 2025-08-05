@@ -1,4 +1,5 @@
 var recalculateReportsTaxRate = async (req, res, next) => {
+  var year = req.year;
   var taxRate = req.taxRate;
   var userId = req.app.locals.userId;
   var { getReportsByUserId, saveUpdatedReports } =
@@ -10,16 +11,23 @@ var recalculateReportsTaxRate = async (req, res, next) => {
     return res.sendStatus(200);
   }
 
-  reports.map((report) => (report.taxRate = taxRate));
+  reports.map((report) => {
+    if (report.recordTo.year == year) {
+      report.taxRate = taxRate;
+    }
+  });
+
   reports.map(
     (report) =>
       (report.totalTaxAmount = (report.totalRetailAmount * taxRate) / 100)
   );
 
   reports.map((report) =>
-    report.skus.map(
-      (sku) => (sku.taxPerSKU = (sku.retailAmountPerSKU * taxRate) / 100)
-    )
+    report.skus.map((sku) => {
+      if (report.recordTo.year == year) {
+        sku.taxPerSKU = (sku.retailAmountPerSKU * taxRate) / 100;
+      }
+    })
   );
 
   var successUpdate = await saveUpdatedReports(userId, reports);
