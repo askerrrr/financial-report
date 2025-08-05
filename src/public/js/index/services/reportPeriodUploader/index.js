@@ -27,7 +27,7 @@ var openReportPeriodModal = async () => {
 
   var saveButton = await createSaveButton();
 
-  saveButton.addEventListener("click", async () => {
+  saveButton.onclick = async () => {
     document.body.removeChild(modal);
 
     var dateFrom = dateFromInput.value;
@@ -75,14 +75,20 @@ var openReportPeriodModal = async () => {
 
     await insertNewReportToTree(reportData);
 
-    return alert("Отчет успешно сохранен");
-  });
+    var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
+
+    if (confirmed) {
+      window.location.href = "/reports/" + reportData.reportId;
+    }
+
+    return;
+  };
 
   var cancelButton = await createCancelButton();
 
-  cancelButton.addEventListener("click", () => {
+  cancelButton.onclick = () => {
     document.body.removeChild(modal);
-  });
+  };
 
   var buttonsContainer = await createButtonsContainer();
   buttonsContainer.append(cancelButton, saveButton);
@@ -98,11 +104,11 @@ var openReportPeriodModal = async () => {
 
   dateFromInput.focus();
 
-  modal.addEventListener("click", (e) => {
+  modal.onclick = (e) => {
     if (e.target === modal) {
       document.body.removeChild(modal);
     }
-  });
+  };
 };
 
 export default openReportPeriodModal;
