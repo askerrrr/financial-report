@@ -39,7 +39,7 @@ var insuranceFeePercentageHandler = async () => {
       return alert("Новое значение совпадает с предыдущим");
     }
 
-    if (newPercent < 0 && newPercent > 100) {
+    if (newPercent <= 0 && newPercent >= 100) {
       return alert("Недопустимое значение");
     }
 
