@@ -8,6 +8,10 @@ import insuranceFeePercentageHandler from "./insuranceFeePercentageHandler.js";
 var main = async () => {
   var taxParams = await getTaxParams();
 
+  if (taxParams.length == 0) {
+    return;
+  }
+
   var { taxRate, insuranceFeePercentage, mandatoryInsuranceFee } = taxParams[0];
 
   document.getElementById("tax-rate").placeholder =
