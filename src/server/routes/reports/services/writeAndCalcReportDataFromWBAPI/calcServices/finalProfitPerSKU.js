@@ -1,7 +1,13 @@
+var shortNum = require("../shortNum");
+
 var calcFinalProfitPerSKU = async (
   preTaxProfitPerSKU,
   insuranceFee,
   taxPerSKU = 0
-) => preTaxProfitPerSKU - insuranceFee - taxPerSKU;
+) => {
+  var finalProfitPerSKU = preTaxProfitPerSKU - insuranceFee - taxPerSKU;
+
+  return await shortNum(finalProfitPerSKU);
+};
 
 module.exports = calcFinalProfitPerSKU;
