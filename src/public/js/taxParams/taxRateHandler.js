@@ -1,3 +1,4 @@
+import getTaxParams from "./getTaxParams.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
 
 var sendTaxRate = async (taxRate, recalculate, year) => {
@@ -10,9 +11,8 @@ var sendTaxRate = async (taxRate, recalculate, year) => {
   return res.ok;
 };
 
-var taxRateHandler = async (currentTaxRate) => {
+var taxRateHandler = async () => {
   var input = document.getElementById("tax-rate");
-  input.placeholder = "сейчас процент равен " + currentTaxRate;
 
   var radioButton = document.getElementById(
     "recalculate-all-reports-tax-amount"
@@ -24,9 +24,11 @@ var taxRateHandler = async (currentTaxRate) => {
     e.preventDefault();
 
     var selectedYear = await getSelectedTaxYear();
+    var taxParams = await getTaxParams();
 
+    var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
+    var currentTaxRate = yearTaxParams.taxRate;
     var recalculate = radioButton.checked;
-
     var newTaxRate = +input.value;
 
     if (typeof newTaxRate === "number" && isNaN(newTaxRate)) {
@@ -47,7 +49,11 @@ var taxRateHandler = async (currentTaxRate) => {
       selectedYear
     );
 
+    input.value = "";
+
     if (successChange) {
+      input.placeholder = "сейчас процент равен " + newTaxRate;
+
       return alert("Изменение успешно применено");
     }
 

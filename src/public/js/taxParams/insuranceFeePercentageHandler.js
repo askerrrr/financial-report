@@ -1,3 +1,4 @@
+import getTaxParams from "./getTaxParams.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
 
 var sendPercent = async (percent, recalculate, year) => {
@@ -10,9 +11,8 @@ var sendPercent = async (percent, recalculate, year) => {
   return res.ok;
 };
 
-var insuranceFeePercentageHandler = async (currentPercent) => {
+var insuranceFeePercentageHandler = async () => {
   var input = document.getElementById("insurance-fee-percentage");
-  input.placeholder = "сейчас процент равен " + currentPercent;
 
   var radioButton = document.getElementById(
     "recalculate-all-reports-insurance-fee-percentage"
@@ -24,9 +24,11 @@ var insuranceFeePercentageHandler = async (currentPercent) => {
     e.preventDefault();
 
     var selectedYear = await getSelectedTaxYear();
+    var taxParams = await getTaxParams();
 
+    var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
+    var currentPercent = yearTaxParams.insuranceFeePercentage;
     var recalculate = radioButton.checked;
-
     var newPercent = +input.value;
 
     if (typeof newPercent === "number" && isNaN(newPercent)) {
@@ -47,7 +49,11 @@ var insuranceFeePercentageHandler = async (currentPercent) => {
       selectedYear
     );
 
+    input.value = "";
+
     if (successChange) {
+      input.placeholder = "сейчас процент равен " + newPercent;
+
       return alert("Процент успешно установлен");
     }
 

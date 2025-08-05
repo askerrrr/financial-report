@@ -1,3 +1,4 @@
+import getTaxParams from "./getTaxParams.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
 
 var sendMandatoryInsuranceFee = async (mandatoryInsuranceFee, year) => {
@@ -10,10 +11,8 @@ var sendMandatoryInsuranceFee = async (mandatoryInsuranceFee, year) => {
   return res.ok;
 };
 
-var mandatoryInsuranceFeeHandler = async (currentMandatoryInsuranceFee) => {
+var mandatoryInsuranceFeeHandler = async () => {
   var input = document.getElementById("mandatory-insurance-premiums");
-  input.placeholder =
-    "сейчас сумма равна " + currentMandatoryInsuranceFee + "р.";
 
   var button = document.getElementById("mandatory-insurance-premiums-button");
 
@@ -21,7 +20,10 @@ var mandatoryInsuranceFeeHandler = async (currentMandatoryInsuranceFee) => {
     e.preventDefault();
 
     var selectedYear = await getSelectedTaxYear();
+    var taxParams = await getTaxParams();
 
+    var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
+    var currentMandatoryInsuranceFee = yearTaxParams.mandatoryInsuranceFee;
     var newMandatoryInsuranceFee = +input.value;
 
     if (
@@ -44,7 +46,12 @@ var mandatoryInsuranceFeeHandler = async (currentMandatoryInsuranceFee) => {
       selectedYear
     );
 
+    input.value = "";
+
     if (successChange) {
+      input.placeholder =
+        "сейчас сумма равна " + newMandatoryInsuranceFee + "р.";
+
       return alert("Сумма обязательных страховых взносов установлена");
     }
 
