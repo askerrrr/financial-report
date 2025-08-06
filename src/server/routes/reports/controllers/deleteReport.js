@@ -2,8 +2,14 @@ var deleteReport = async (req, res, next) => {
   var { deleteReportFromDb } = req.app.locals.reportCollectionServices;
   var { deleteReportFromReportTree } =
     req.app.locals.reportsTreeCollectionServices;
+  var {
+    getTaxParamsFromDb,
+    changePaidTaxAmountToDb,
+    changePaidInsuranceFeeToDb,
+  } = req.app.locals.taxParamsCollectionServices;
 
-  var { userId, reportId, year, month } = req.body;
+  var { userId, reportId, year, month, totalTaxAmount, totalInsuranceFee } =
+    req.body;
 
   var deletedFromTree = await deleteReportFromReportTree(
     userId,
@@ -13,6 +19,14 @@ var deleteReport = async (req, res, next) => {
   );
 
   var deleteFromReports = await deleteReportFromDb(userId, reportId);
+
+  var taxParams = await getTaxParamsFromDb(userId, year);
+
+  taxParams.paidTaxAmount -= totalTaxAmount;
+  taxParams.paidInsuranceFee -= totalInsuranceFee;
+
+  await changePaidTaxAmountToDb(userId, year, taxParams.paidTaxAmount);
+  await changePaidInsuranceFeeToDb(userId, year, taxParams.paidInsuranceFee);
 
   return deleteFromReports && deletedFromTree
     ? res.sendStatus(200)
