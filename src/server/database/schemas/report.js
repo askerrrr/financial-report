@@ -1,8 +1,8 @@
 var { Schema } = require("mongoose");
 
+var booleanOptions = { type: Boolean };
 var numberOptions = { type: Number, default: 0 };
 var stringOptions = { type: String, required: true };
-var booleanOptions = { type: Boolean, default: true };
 
 var SKUSchema = new Schema(
   {
