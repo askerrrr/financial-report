@@ -1,3 +1,5 @@
+var recalculateReportsTaxRate = require("../services/recalculateReportsTaxRate");
+
 var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
   var year = req.year;
   var taxRate = req.taxRate;
@@ -11,24 +13,7 @@ var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
     return res.sendStatus(200);
   }
 
-  reports.map((report) => {
-    if (report.recordTo.year == year) {
-      report.taxRate = taxRate;
-    }
-  });
-
-  reports.map(
-    (report) =>
-      (report.totalTaxAmount = (report.totalRetailAmount * taxRate) / 100)
-  );
-
-  reports.map((report) =>
-    report.skus.map((sku) => {
-      if (report.recordTo.year == year) {
-        sku.taxPerSKU = (sku.retailAmountPerSKU * taxRate) / 100;
-      }
-    })
-  );
+  reports = await recalculateReportsTaxRate(taxRate, year, reports);
 
   var successUpdate = await saveUpdatedReports(userId, reports);
 
