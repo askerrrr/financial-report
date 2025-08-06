@@ -28,6 +28,7 @@ var SKUSchema = new Schema(
     retailAmountPerSKU: numberOptions,
     deductionOrPayment: numberOptions,
     averageProfitPerSKU: numberOptions,
+    isCostPriceSet: { type: Boolean, default: false },
     isInsuranceFeeIncluded: booleanOptions,
     averageAdvertisingCostPerSKU: numberOptions,
   },
