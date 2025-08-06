@@ -10,28 +10,26 @@ var calcRestSKUParams = async (sku, costPrice, taxParams) => {
 
   var { insuranceFeePercentage, paidTaxAmount, paidInsuranceFee } = taxParams;
 
-  var finalProfitPerSKU, newInsuranceFee;
+  var newInsuranceFee = await calcInsuranceFeePerSKU(
+    preTaxProfitPerSKU,
+    insuranceFeePercentage
+  );
+
+  var finalProfitPerSKU;
 
   if (paidTaxAmount >= paidInsuranceFee) {
-    newInsuranceFee = 0;
-
     finalProfitPerSKU = await calcFinalProfitPerSKU(
       preTaxProfitPerSKU,
-      newInsuranceFee,
-      sku.taxPerSKU
-    );
-  } else {
-    newInsuranceFee = await calcInsuranceFeePerSKU(
-      preTaxProfitPerSKU,
-      insuranceFeePercentage
-    );
-
-    finalProfitPerSKU = await calcFinalProfitPerSKU(
-      preTaxProfitPerSKU,
-      newInsuranceFee,
+      0,
       sku.taxPerSKU
     );
   }
+
+  finalProfitPerSKU = await calcFinalProfitPerSKU(
+    preTaxProfitPerSKU,
+    newInsuranceFee,
+    sku.taxPerSKU
+  );
 
   var profitMargin = await calcProfitMargin(
     sku.revenuePerSKU,
