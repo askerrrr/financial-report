@@ -44,6 +44,7 @@ var calcRestSKUParams = async (sku, costPrice, taxParams) => {
     finalProfitPerSKU
   );
 
+  sku.isCostPriceSet = true;
   sku.insuranceFee = newInsuranceFee;
   sku.profitMargin = await shortNum(profitMargin);
   sku.isInsuranceFeeIncluded = isInsuranceFeeIncluded;
