@@ -35,7 +35,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   taxParams.paidTaxAmount += report.totalTaxAmount;
 
-  await changePaidTaxAmountToDb(userId, taxParams.paidTaxAmount);
+  await changePaidTaxAmountToDb(userId, year, taxParams.paidTaxAmount);
 
   report.dateTo = dateTo;
   report.userId = userId;
