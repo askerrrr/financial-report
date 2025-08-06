@@ -1,4 +1,5 @@
 var { taxParamsCollection } = require("../connection");
+var deleteTaxYears = require("./services/deleteTaxYears");
 var addNewTaxYearToDb = require("./services/addNewTaxYear");
 var getTaxParamsFromDb = require("./services/getTaxParamsFromDb");
 var changeTaxRateToDb = require("./services/changeTaxRateToDb");
@@ -9,6 +10,8 @@ var changeInsuranceFeePercentageToDb = require("./services/changeInsuranceFeePer
 var changeMandatoryInsuranceFeeToDb = require("./services/changeMandatoryInsuranceFeeToDb");
 
 var taxParamsCollectionServices = {
+  deleteTaxYears: (userId) => deleteTaxYears(taxParamsCollection, userId),
+
   addNewTaxYearToDb: (userId, year) =>
     addNewTaxYearToDb(taxParamsCollection, userId, year),
 
