@@ -1,4 +1,4 @@
-var recalculateReportsTaxRate = async (req, res, next) => {
+var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
   var year = req.year;
   var taxRate = req.taxRate;
   var userId = req.app.locals.userId;
@@ -39,4 +39,4 @@ var recalculateReportsTaxRate = async (req, res, next) => {
   return res.sendStatus(304);
 };
 
-module.exports = recalculateReportsTaxRate;
+module.exports = recalculateReportsParamsAfterChangingTaxRate;

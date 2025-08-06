@@ -11,7 +11,7 @@ router.get("/years", require("./controllers/getReportYears"));
 router.post(
   "/taxrate",
   require("./controllers/changeTaxRate"),
-  require("./controllers/recalculateReportsTaxRate")
+  require("./controllers/recalculateReportsParamsAfterChangingTaxRate")
 );
 
 router.post(
