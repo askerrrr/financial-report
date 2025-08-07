@@ -1,22 +1,15 @@
 var recalculateReportsTaxRate = async (newTaxRate, year, reports) => {
-  reports.map((report) => {
+  for (var report of reports) {
     if (report.recordTo.year == year) {
       report.taxRate = newTaxRate;
-    }
-  });
 
-  reports.map(
-    (report) =>
-      (report.totalTaxAmount = (report.totalRetailAmount * newTaxRate) / 100)
-  );
+      report.totalTaxAmount = (report.totalRetailAmount * newTaxRate) / 100;
 
-  reports.map((report) =>
-    report.skus.map((sku) => {
-      if (report.recordTo.year == year) {
+      report.skus.map((sku) => {
         sku.taxPerSKU = (sku.retailAmountPerSKU * newTaxRate) / 100;
-      }
-    })
-  );
+      });
+    }
+  }
 
   return reports;
 };
