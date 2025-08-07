@@ -3,6 +3,7 @@ var deleteTaxYears = require("./services/deleteTaxYears");
 var addNewTaxYearToDb = require("./services/addNewTaxYear");
 var getTaxParamsFromDb = require("./services/getTaxParamsFromDb");
 var changeTaxRateToDb = require("./services/changeTaxRateToDb");
+var saveUpdatedTaxParams = require("./services/saveUpdatedTaxParams");
 var createTaxParamsEntity = require("./services/createTaxParamsEntity");
 var changePaidTaxAmountToDb = require("./services/changePaidTaxAmountToDb");
 var changePaidInsuranceFeeToDb = require("./services/changeMandatoryInsuranceFeeToDb");
@@ -50,6 +51,9 @@ var taxParamsCollectionServices = {
       year,
       mandatoryInsuranceFee
     ),
+
+  saveUpdatedTaxParams: (userId, year, taxParams) =>
+    saveUpdatedTaxParams(taxParamsCollection, userId, year, taxParams),
 };
 
 module.exports = taxParamsCollectionServices;
