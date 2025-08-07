@@ -54,6 +54,12 @@ var insuranceFeePercentageHandler = async () => {
     if (successChange) {
       input.placeholder = "сейчас процент равен " + newPercent;
 
+      var insuranceFeePercentageTdElement = document.getElementById(
+        "insuranceFeePercentage-" + selectedYear
+      );
+
+      insuranceFeePercentageTdElement.textContent = newPercent;
+
       return alert("Процент успешно установлен");
     }
 

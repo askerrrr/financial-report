@@ -54,6 +54,9 @@ var taxRateHandler = async () => {
     if (successChange) {
       input.placeholder = "сейчас процент равен " + newTaxRate;
 
+      var taxRateTdElement = document.getElementById("taxRate-" + selectedYear);
+      taxRateTdElement.textContent = newTaxRate;
+
       return alert("Изменение успешно применено");
     }
 

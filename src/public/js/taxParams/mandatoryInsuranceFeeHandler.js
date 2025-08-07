@@ -52,6 +52,12 @@ var mandatoryInsuranceFeeHandler = async () => {
       input.placeholder =
         "сейчас сумма равна " + newMandatoryInsuranceFee + "р.";
 
+      var mandatoryInsuranceFeeTdElement = document.getElementById(
+        "mandatoryInsuranceFee-" + selectedYear
+      );
+
+      mandatoryInsuranceFeeTdElement.textContent = newMandatoryInsuranceFee;
+
       return alert("Сумма обязательных страховых взносов установлена");
     }
 
