@@ -16,7 +16,8 @@ router.post(
 
 router.post(
   "/insurance-fee-percentage",
-  require("./controllers/changeInsuranceFeePercentage")
+  require("./controllers/changeInsuranceFeePercentage"),
+  require("./controllers/recalculateReportsParamsAfterChangingInsuranceFeePergentage")
 );
 
 router.post(
