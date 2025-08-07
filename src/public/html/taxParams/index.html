@@ -7,6 +7,18 @@
     <title>Настройки</title>
   </head>
   <body>
+    <table id="tax-table">
+      <thead>
+        <tr>
+          <th>Год</th>
+          <th>Процент налогообложения</th>
+          <th>Обязательные страховые взносы</th>
+          <th>Уплачено обязательных страховых взносов</th>
+          <th>Процент от обязательных страховых взносов</th>
+        </tr>
+      </thead>
+      <tbody id="tax-tbody"></tbody>
+    </table>
     <button id="main" onclick="window.location.href='/'">На главную</button>
     <form>
       <label for="tax-year-select-1">Отчетный год</label>
@@ -78,6 +90,7 @@
       </div>
       <button id="insurance-fee-percentage-button">Сохранить</button>
     </form>
+
     <script src="/js/taxParams/index.js" type="module"></script>
   </body>
 </html>

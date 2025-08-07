@@ -1,3 +1,4 @@
+import createTaxTable from "./taxTable.js";
 import getTaxParams from "./getTaxParams.js";
 import taxRateHandler from "./taxRateHandler.js";
 import handleTaxYearSelection from "./handleTaxYearSelection.js";
@@ -22,6 +23,8 @@ var main = async () => {
 
   document.getElementById("insurance-fee-percentage").placeholder =
     "сейчас процент равен " + insuranceFeePercentage;
+
+  await createTaxTable(taxParams);
 
   await taxRateHandler();
   await mandatoryInsuranceFeeHandler();
