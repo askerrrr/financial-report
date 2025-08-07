@@ -3,6 +3,11 @@ var recalculateReportsParamsAfterChangingInsuranceFeePergentage = async (
   res,
   next
 ) => {
+  var { year, userId, percent } = req.body;
+  var { getTaxParamsFromDb } = req.app.locals.taxParamsCollectionServices;
+
+  var taxParams = await getTaxParamsFromDb(userId, year);
+
   return res.sendStatus(200);
 };
 

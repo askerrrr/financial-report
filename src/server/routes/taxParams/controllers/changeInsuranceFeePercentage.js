@@ -3,7 +3,7 @@ var changeInsuranceFeePercentage = async (req, res, next) => {
   var { year, percent, recalculate } = req.body;
   var { changeInsuranceFeePercentageToDb } =
     req.app.locals.taxParamsCollectionServices;
-  console.log(req.body);
+
   var success = await changeInsuranceFeePercentageToDb(userId, year, percent);
 
   if (!success) {
@@ -14,9 +14,7 @@ var changeInsuranceFeePercentage = async (req, res, next) => {
     return res.sendStatus(200);
   }
 
-  req.year = year;
-  req.percent = percent;
-
+  req.body = { year, userId, percent };
   next();
 };
 
