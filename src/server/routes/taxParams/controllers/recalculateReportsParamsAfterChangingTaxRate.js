@@ -4,9 +4,7 @@ var calcFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDa
 var calcAverageFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/averageFinalProfitPerSKU");
 
 var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
-  var year = req.year;
-  var taxRate = req.taxRate;
-  var userId = req.app.locals.userId;
+  var { year, userId, taxRate } = req.body;
   var { getReportsByUserId, saveUpdatedReports } =
     req.app.locals.reportCollectionServices;
   var { getTaxParamsFromDb, changePaidTaxAmountToDb } =
