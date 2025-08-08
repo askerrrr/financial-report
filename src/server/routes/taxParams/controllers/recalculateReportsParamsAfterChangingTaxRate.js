@@ -5,13 +5,8 @@ var calcAverageFinalProfitPerSKU = require("../../reports/services/writeAndCalcR
 
 var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
   var { year, userId, taxRate } = req.body;
-  var { getReportsByUserId, saveUpdatedReports } =
-    req.app.locals.reportCollectionServices;
-  var {
-    getTaxParamsFromDb,
-    changePaidTaxAmountToDb,
-    changeInsuranceFeePercentageToDb,
-  } = req.app.locals.taxParamsCollectionServices;
+  var { getReportsByUserId, saveUpdatedReports } = req.app.locals.reportCollectionServices;
+  var { getTaxParamsFromDb, changePaidTaxAmountToDb, changeInsuranceFeePercentageToDb } = req.app.locals.taxParamsCollectionServices;
 
   var reports = await getReportsByUserId(userId);
 
@@ -21,8 +16,8 @@ var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
 
   reports = await recalculateReportsTaxRate(taxRate, year, reports);
 
-  var paidTaxAmount = 0;
-  var shouldResetInsuranceFeePercentage;
+  var paidTaxAmount = 0,
+    shouldResetInsuranceFeePercentage;
 
   var { mandatoryInsuranceFee } = await getTaxParamsFromDb(userId, year);
 
@@ -36,30 +31,16 @@ var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
             sku.isInsuranceFeeIncluded = false;
             shouldResetInsuranceFeePercentage = true;
 
-            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(
-              sku.preTaxProfitPerSKU,
-              0,
-              sku.taxPerSKUb
-            );
+            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, 0, sku.taxPerSKUb);
           } else {
             sku.isInsuranceFeeIncluded = true;
 
-            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(
-              sku.preTaxProfitPerSKU,
-              sku.insuranceFee,
-              sku.taxPerSKU
-            );
+            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, sku.insuranceFee, sku.taxPerSKU);
           }
 
-          sku.profitMargin = await calcProfitMargin(
-            sku.revenuePerSKU,
-            sku.finalProfitPerSKU
-          );
+          sku.profitMargin = await calcProfitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
 
-          sku.averageFinalProfitPerSKU = await calcAverageFinalProfitPerSKU(
-            sku.qty,
-            sku.finalProfitPerSKU
-          );
+          sku.averageFinalProfitPerSKU = await calcAverageFinalProfitPerSKU(sku.qty, sku.finalProfitPerSKU);
         }
       });
     }

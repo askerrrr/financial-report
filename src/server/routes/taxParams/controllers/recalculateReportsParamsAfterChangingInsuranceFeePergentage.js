@@ -1,8 +1,4 @@
-var recalculateReportsParamsAfterChangingInsuranceFeePergentage = async (
-  req,
-  res,
-  next
-) => {
+var recalculateReportsParamsAfterChangingInsuranceFeePergentage = async (req, res, next) => {
   var { year, userId, percent } = req.body;
   var { getTaxParamsFromDb } = req.app.locals.taxParamsCollectionServices;
 

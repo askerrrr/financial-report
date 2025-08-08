@@ -10,9 +10,7 @@ var checkAllCostPricesNonZero = async (req, res, next) => {
     reports.push(report);
   }
 
-  var allCostPricesNonZero = reports.every((report) =>
-    report.skus.every((sku) => sku.costPrice > 0)
-  );
+  var allCostPricesNonZero = reports.every((report) => report.skus.every((sku) => sku.costPrice > 0));
 
   if (!allCostPricesNonZero) {
     return res.sendStatus(400);

@@ -1,6 +1,5 @@
 var deleteAllReportingPeriods = async (req, res, next) => {
-  var { deleteReportsTreeByUserId } =
-    req.app.locals.reportsTreeCollectionServices;
+  var { deleteReportsTreeByUserId } = req.app.locals.reportsTreeCollectionServices;
 
   var { userId } = req.params;
 

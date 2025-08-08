@@ -4,13 +4,10 @@ var sortYearsTree = require("../services/different/sortYearTree");
 
 var writeReportFromWBAPI = async (req, res, next) => {
   var { saveReportToDb } = req.app.locals.reportCollectionServices;
-  var { getReportsTree, updateReportTree } =
-    req.app.locals.reportsTreeCollectionServices;
-  var { addNewTaxYearToDb, changePaidTaxAmountToDb } =
-    req.app.locals.taxParamsCollectionServices;
+  var { getReportsTree, updateReportTree } = req.app.locals.reportsTreeCollectionServices;
+  var { addNewTaxYearToDb, changePaidTaxAmountToDb } = req.app.locals.taxParamsCollectionServices;
 
-  var { dateTo, dateFrom, mainReport, storageReport, totalAdCampaignCosts } =
-    req.reportData;
+  var { dateTo, dateFrom, mainReport, storageReport, totalAdCampaignCosts } = req.reportData;
 
   var userId = req.app.locals.userId;
   var reportId = mainReport[0].realizationreport_id;
@@ -18,12 +15,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   var { years } = await getReportsTree(userId);
 
-  var { years, year, month } = await insertReportToReportTree(
-    dateFrom,
-    dateTo,
-    reportId,
-    years
-  );
+  var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, years);
 
   var sortedYears = await sortYearsTree(years);
 
@@ -48,9 +40,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
   if (successfullWrite) {
     var { totalTaxAmount } = report;
 
-    return res
-      .status(200)
-      .json({ reportId, year, month, dateFrom, dateTo, totalTaxAmount });
+    return res.status(200).json({ reportId, year, month, dateFrom, dateTo, totalTaxAmount });
   }
 
   return res.sendStatus(500);
