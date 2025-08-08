@@ -8,7 +8,8 @@ var calcAverageFinalProfitPerSKU = require("./averageFinalProfitPerSKU");
 var calcRestSKUParams = async (sku, costPrice, taxParams) => {
   var preTaxProfitPerSKU = await calcPreTaxProfitPerSKU(sku, costPrice);
 
-  var { insuranceFeePercentage, paidTaxAmount, paidInsuranceFee } = taxParams;
+  var { insuranceFeePercentage, paidTaxAmount, mandatoryInsuranceFee } =
+    taxParams;
 
   var newInsuranceFee = await calcInsuranceFeePerSKU(
     preTaxProfitPerSKU,
@@ -18,7 +19,7 @@ var calcRestSKUParams = async (sku, costPrice, taxParams) => {
   var finalProfitPerSKU;
   var isInsuranceFeeIncluded;
 
-  if (paidTaxAmount >= paidInsuranceFee) {
+  if (paidTaxAmount >= mandatoryInsuranceFee) {
     isInsuranceFeeIncluded = false;
 
     finalProfitPerSKU = await calcFinalProfitPerSKU(
@@ -55,7 +56,7 @@ var calcRestSKUParams = async (sku, costPrice, taxParams) => {
   sku.averageFinalProfitPerSKU = await shortNum(averageFinalProfitPerSKU);
 
   var recalculatedPaidInsuranceFee =
-    paidInsuranceFee - sku.insuranceFee + newInsuranceFee;
+    mandatoryInsuranceFee - sku.insuranceFee + newInsuranceFee;
 
   return { recalculatedPaidInsuranceFee, skuWithCalculatedParams: sku };
 };
