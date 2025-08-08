@@ -43,15 +43,11 @@ var insuranceFeePercentageHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var successChange = await sendPercent(
-      newPercent,
-      recalculate,
-      selectedYear
-    );
+    var success = await sendPercent(newPercent, recalculate, selectedYear);
 
     input.value = "";
 
-    if (successChange) {
+    if (success) {
       input.placeholder = "сейчас процент равен " + newPercent;
 
       var insuranceFeePercentageTdElement = document.getElementById(

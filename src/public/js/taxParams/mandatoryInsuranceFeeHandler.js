@@ -41,14 +41,14 @@ var mandatoryInsuranceFeeHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var successChange = await sendMandatoryInsuranceFee(
+    var success = await sendMandatoryInsuranceFee(
       newMandatoryInsuranceFee,
       selectedYear
     );
 
     input.value = "";
 
-    if (successChange) {
+    if (success) {
       input.placeholder =
         "сейчас сумма равна " + newMandatoryInsuranceFee + "р.";
 

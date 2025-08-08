@@ -43,15 +43,11 @@ var taxRateHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var successChange = await sendTaxRate(
-      newTaxRate,
-      recalculate,
-      selectedYear
-    );
+    var success = await sendTaxRate(newTaxRate, recalculate, selectedYear);
 
     input.value = "";
 
-    if (successChange) {
+    if (success) {
       input.placeholder = "сейчас процент равен " + newTaxRate;
 
       var taxRateTdElement = document.getElementById("taxRate-" + selectedYear);
