@@ -22,7 +22,8 @@ var reportCollectionServices = {
   createReportsEntity: (userId) =>
     createReportsEntity(reportCollection, userId),
 
-  getReportsByUserId: (userId) => getReportsByUserId(reportCollection, userId),
+  getReportsByUserId: (userId, year) =>
+    getReportsByUserId(reportCollection, userId, year),
 
   saveUpdatedReport: (userId, reportId, report) =>
     saveUpdatedReport(reportCollection, userId, reportId, report),
