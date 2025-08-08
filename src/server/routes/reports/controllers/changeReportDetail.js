@@ -1,14 +1,11 @@
 var changeElementInArray = require("../services/different/changeElementInArray");
-var calcRestReportTotalParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/restReportTotalParams");
 var calcRestSKUParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/restSKUParams");
+var calcRestReportTotalParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/restReportTotalParams");
 
 var changeReportDetail = async (req, res, next) => {
-  var { saveUpdatedReport, getReportById } =
-    req.app.locals.reportCollectionServices;
-  var { getTaxParamsFromDb, changePaidInsuranceFeeToDb } =
-    req.app.locals.taxParamsCollectionServices;
-
   var { userId, reportId, skuIndex, costPrice, year } = req.body;
+  var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
+  var { getTaxParamsFromDb, changePaidInsuranceFeeToDb, changeInsuranceFeePercentageToDb } = req.app.locals.taxParamsCollectionServices;
 
   var { skus, ...totalParams } = await getReportById(userId, reportId);
 
@@ -18,10 +15,10 @@ var changeReportDetail = async (req, res, next) => {
 
   var taxParams = await getTaxParamsFromDb(userId, year);
 
-  var { skuWithCalculatedParams, recalculatedPaidInsuranceFee } =
-    await calcRestSKUParams(sku, costPrice, taxParams);
+  var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = await calcRestSKUParams(sku, costPrice, taxParams);
 
   await changePaidInsuranceFeeToDb(userId, year, recalculatedPaidInsuranceFee);
+  await changeInsuranceFeePercentageToDb(userId, year, insuranceFeePercentage);
 
   changedSKUs[skuIndex] = skuWithCalculatedParams;
 
@@ -30,10 +27,8 @@ var changeReportDetail = async (req, res, next) => {
   var success = await saveUpdatedReport(userId, reportId, updatedReport);
 
   if (success) {
-    var { profitMargin, finalProfitPerSKU, averageFinalProfitPerSKU } =
-      skuWithCalculatedParams;
-
     var { totalFinalProfit, totalProfitMargin } = updatedReport;
+    var { profitMargin, finalProfitPerSKU, averageFinalProfitPerSKU } = skuWithCalculatedParams;
 
     return res.status(200).json({
       skuIndex,
