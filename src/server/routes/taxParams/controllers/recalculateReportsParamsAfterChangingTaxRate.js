@@ -7,8 +7,11 @@ var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
   var { year, userId, taxRate } = req.body;
   var { getReportsByUserId, saveUpdatedReports } =
     req.app.locals.reportCollectionServices;
-  var { getTaxParamsFromDb, changePaidTaxAmountToDb } =
-    req.app.locals.taxParamsCollectionServices;
+  var {
+    getTaxParamsFromDb,
+    changePaidTaxAmountToDb,
+    changeInsuranceFeePercentageToDb,
+  } = req.app.locals.taxParamsCollectionServices;
 
   var reports = await getReportsByUserId(userId);
 
@@ -19,8 +22,9 @@ var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
   reports = await recalculateReportsTaxRate(taxRate, year, reports);
 
   var paidTaxAmount = 0;
+  var shouldResetInsuranceFeePercentage;
 
-  var { paidInsuranceFee } = await getTaxParamsFromDb(userId, year);
+  var { mandatoryInsuranceFee } = await getTaxParamsFromDb(userId, year);
 
   for (var i = reports.length - 1; i >= 0; i--) {
     if (reports[i].recordTo.year == year) {
@@ -28,23 +32,24 @@ var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
         paidTaxAmount += sku.taxPerSKU;
 
         if (sku.isCostPriceSet) {
-          if (paidTaxAmount >= paidInsuranceFee) {
+          if (paidTaxAmount >= mandatoryInsuranceFee) {
             sku.isInsuranceFeeIncluded = false;
+            shouldResetInsuranceFeePercentage = true;
 
             sku.finalProfitPerSKU = await calcFinalProfitPerSKU(
               sku.preTaxProfitPerSKU,
               0,
               sku.taxPerSKUb
             );
+          } else {
+            sku.isInsuranceFeeIncluded = true;
+
+            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(
+              sku.preTaxProfitPerSKU,
+              sku.insuranceFee,
+              sku.taxPerSKU
+            );
           }
-
-          sku.isInsuranceFeeIncluded = true;
-
-          sku.finalProfitPerSKU = await calcFinalProfitPerSKU(
-            sku.preTaxProfitPerSKU,
-            sku.insuranceFee,
-            sku.taxPerSKU
-          );
 
           sku.profitMargin = await calcProfitMargin(
             sku.revenuePerSKU,
@@ -61,6 +66,10 @@ var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
   }
 
   await changePaidTaxAmountToDb(userId, year, paidTaxAmount);
+
+  if (shouldResetInsuranceFeePercentage) {
+    await changeInsuranceFeePercentageToDb(userId, 0, year);
+  }
 
   var successUpdate = await saveUpdatedReports(userId, reports);
 

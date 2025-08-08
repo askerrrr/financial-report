@@ -16,7 +16,7 @@ var calcRestSKUParams = async (sku, costPrice, taxParams) => {
   );
 
   var finalProfitPerSKU;
-  var isInsuranceFeeIncluded = true;
+  var isInsuranceFeeIncluded;
 
   if (paidTaxAmount >= paidInsuranceFee) {
     isInsuranceFeeIncluded = false;
@@ -26,13 +26,15 @@ var calcRestSKUParams = async (sku, costPrice, taxParams) => {
       0,
       sku.taxPerSKU
     );
-  }
+  } else {
+    isInsuranceFeeIncluded = true;
 
-  finalProfitPerSKU = await calcFinalProfitPerSKU(
-    preTaxProfitPerSKU,
-    newInsuranceFee,
-    sku.taxPerSKU
-  );
+    finalProfitPerSKU = await calcFinalProfitPerSKU(
+      preTaxProfitPerSKU,
+      newInsuranceFee,
+      sku.taxPerSKU
+    );
+  }
 
   var profitMargin = await calcProfitMargin(
     sku.revenuePerSKU,
