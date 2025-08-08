@@ -5,17 +5,19 @@ var changeMandatoryInsuranceFee = async (req, res, next) => {
 
   var userId = req.app.locals.userId;
 
-  var successChange = await changeMandatoryInsuranceFeeToDb(
+  var success = await changeMandatoryInsuranceFeeToDb(
     userId,
     year,
     mandatoryInsuranceFee
   );
 
-  if (!successChange) {
+  if (!success) {
     return res.sendStatus(304);
   }
 
-  return res.sendStatus(200);
+  req.body = { userId, year };
+
+  next();
 };
 
 module.exports = changeMandatoryInsuranceFee;

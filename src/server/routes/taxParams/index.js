@@ -22,7 +22,8 @@ router.post(
 
 router.post(
   "/mandatory-insurance-premiums",
-  require("./controllers/changeMandatoryInsuranceFee")
+  require("./controllers/changeMandatoryInsuranceFee"),
+  require("./controllers/recalculateReportsParamsAfterChangingMandatoryInsuranceFee")
 );
 
 module.exports = router;
