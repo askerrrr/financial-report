@@ -35,7 +35,7 @@ var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
           } else {
             sku.isInsuranceFeeIncluded = true;
 
-            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, sku.insuranceFee, sku.taxPerSKU);
+            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, sku.insuranceFee);
           }
 
           sku.profitMargin = await calcProfitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);

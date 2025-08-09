@@ -21,7 +21,7 @@ var calcRestSKUParams = async (sku, costPrice, taxParams) => {
 
     finalProfitPerSKU = await calcFinalProfitPerSKU(preTaxProfitPerSKU, 0, sku.taxPerSKU);
   } else {
-    finalProfitPerSKU = await calcFinalProfitPerSKU(preTaxProfitPerSKU, newInsuranceFee, sku.taxPerSKU);
+    finalProfitPerSKU = await calcFinalProfitPerSKU(preTaxProfitPerSKU, newInsuranceFee);
   }
 
   var profitMargin = await calcProfitMargin(sku.revenuePerSKU, finalProfitPerSKU);
