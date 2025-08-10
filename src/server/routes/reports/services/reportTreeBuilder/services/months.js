@@ -28,7 +28,7 @@ var getFirstMonthReporstForNewYear = async (date, fullPeriod, reportId) => {
 
   var reportIds = new Array(5).fill(null);
 
-  reportIds[mondaysQty] = { fullPeriod, reportId };
+  reportIds[mondaysQty] = { reportId, ...fullPeriod };
 
   return reportIds;
 };
@@ -53,26 +53,12 @@ var getMonthsFromYear = async (years, yearIndex) => {
   return months;
 };
 
-var updateYearStructure = async (
-  months,
-  year,
-  monthNum,
-  reportDate,
-  reportId,
-  fullPeriod,
-  carry
-) => {
+var updateYearStructure = async (months, year, monthNum, reportDate, reportId, fullPeriod, carry) => {
   var { monthName, monthIndex } = await getMonthNameAndIndex(monthNum);
 
   var reportIds = months[monthIndex]?.reportIds ?? new Array(5).fill(null);
 
-  reportIds = await setReportIdInReports(
-    reportDate,
-    reportIds,
-    reportId,
-    fullPeriod,
-    carry
-  );
+  reportIds = await setReportIdInReports(reportDate, reportIds, reportId, fullPeriod, carry);
 
   months[monthIndex] = { month: monthName, reportIds };
 
@@ -92,8 +78,7 @@ var isNextMonthReportNeeded = async (dateFrom, dateTo) => {
   return daysInCurrentMonth - dayFrom + 1 < +dayTo;
 };
 
-var getNextYearFirstMonth = async (months) =>
-  months[11] ?? { month: "январь", reportIds: new Array(5).fill(null) };
+var getNextYearFirstMonth = async (months) => months[11] ?? { month: "январь", reportIds: new Array(5).fill(null) };
 
 module.exports = {
   getMonthsData,

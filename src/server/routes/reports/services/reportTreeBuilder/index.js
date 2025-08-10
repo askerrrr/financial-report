@@ -1,8 +1,4 @@
-var {
-  getYearIndex,
-  compareYears,
-  checkYearExists,
-} = require("./services/year");
+var { getYearIndex, compareYears, checkYearExists } = require("./services/year");
 var {
   getMonthsData,
   getMonthsFromYear,
@@ -22,7 +18,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
   var startMonthName = await getMonthName(startMonth);
   var endMonthName = await getMonthName(endMonth);
 
-  var fullPeriod = `${dateFrom} ${dateTo}`;
+  var fullPeriod = { dateFrom, dateTo };
 
   var yearIsExist = await checkYearExists(years, startYear);
 
@@ -39,13 +35,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
 
           var { month, reportIds } = await getNextYearFirstMonth(months);
 
-          reportIds = await setReportIdInReports(
-            dateTo,
-            reportIds,
-            reportId,
-            fullPeriod,
-            "carry"
-          );
+          reportIds = await setReportIdInReports(dateTo, reportIds, reportId, fullPeriod, "carry");
 
           months[11] = { month, reportIds };
 
@@ -53,11 +43,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
 
           return { years, year: endYear, month: endMonthName };
         } else {
-          var reportIds = await getFirstMonthReporstForNewYear(
-            dateTo,
-            fullPeriod,
-            reportId
-          );
+          var reportIds = await getFirstMonthReporstForNewYear(dateTo, fullPeriod, reportId);
 
           var months = await getMonthsForNewYear(reportIds);
 
@@ -95,11 +81,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
       var nextYearIsExist = await checkYearExists(years, endYear);
 
       if (!nextYearIsExist) {
-        var reportIds = await getFirstMonthReporstForNewYear(
-          dateTo,
-          fullPeriod,
-          reportId
-        );
+        var reportIds = await getFirstMonthReporstForNewYear(dateTo, fullPeriod, reportId);
 
         var months = await getMonthsForNewYear(reportIds);
 
@@ -110,14 +92,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
         var yearIndex = await getYearIndex(years, endYear);
         var months = await getMonthsFromYear(years, yearIndex);
 
-        years[yearIndex] = await updateYearStructure(
-          months,
-          endYear,
-          endMonth,
-          dateTo,
-          reportId,
-          fullPeriod
-        );
+        years[yearIndex] = await updateYearStructure(months, endYear, endMonth, dateTo, reportId, fullPeriod);
 
         return { years, year: endYear, month: endMonthName };
       }
@@ -126,14 +101,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
     var yearIndex = await getYearIndex(years, startYear);
     var months = await getMonthsFromYear(years, yearIndex);
 
-    years[yearIndex] = await updateYearStructure(
-      months,
-      startYear,
-      startMonth,
-      dateFrom,
-      reportId,
-      fullPeriod
-    );
+    years[yearIndex] = await updateYearStructure(months, startYear, startMonth, dateFrom, reportId, fullPeriod);
 
     return { years, year: startYear, month: startMonthName };
   }
@@ -142,15 +110,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
     var yearIndex = await getYearIndex(years, startYear);
     var months = await getMonthsFromYear(years, yearIndex);
 
-    years[yearIndex] = await updateYearStructure(
-      months,
-      startYear,
-      endMonth,
-      dateTo,
-      reportId,
-      fullPeriod,
-      "carry"
-    );
+    years[yearIndex] = await updateYearStructure(months, startYear, endMonth, dateTo, reportId, fullPeriod, "carry");
 
     return { years, year: startYear, month: endMonthName };
   }
@@ -158,14 +118,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
   var yearIndex = await getYearIndex(years, startYear);
   var months = await getMonthsFromYear(years, yearIndex);
 
-  years[yearIndex] = await updateYearStructure(
-    months,
-    startYear,
-    startMonth,
-    dateFrom,
-    reportId,
-    fullPeriod
-  );
+  years[yearIndex] = await updateYearStructure(months, startYear, startMonth, dateFrom, reportId, fullPeriod);
 
   return { years, year: startYear, month: startMonthName };
 };
