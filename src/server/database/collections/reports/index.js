@@ -1,6 +1,5 @@
 var { reportCollection } = require("../../connections/");
 
-var updateItems = require("./services/updateItems");
 var getReportById = require("./services/getReportById");
 var saveReportToDb = require("./services/saveReportToDb");
 var saveUpdatedReport = require("./services/saveUpdatedReport");
@@ -23,8 +22,6 @@ var reportCollectionServices = {
   saveUpdatedReport: (userId, reportId, report) => saveUpdatedReport(reportCollection, userId, reportId, report),
 
   saveUpdatedReports: (userId, reports) => saveUpdatedReports(reportCollection, userId, reports),
-
-  updateItems: (userId, reportId, items) => updateItems(reportCollection, userId, reportId, items),
 
   updateReportPeriod: (userId, reportId, period) => updateReportPeriod(reportCollection, userId, reportId, period),
 
