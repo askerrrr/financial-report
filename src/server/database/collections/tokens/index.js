@@ -1,4 +1,4 @@
-var { tokenCollection } = require("../../connections/index");
+var { tokenCollection } = require("../../connections");
 var updateWBToken = require("./services/updateWBToken");
 var getWBTokenByUserId = require("./services/getWBTokenByUserId");
 var createTokenCollectionEntity = require("./services/createTokenCollectionEntity");

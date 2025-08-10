@@ -1,4 +1,4 @@
-const { DatabaseError } = require("../../../customError/");
+var { DatabaseError } = require("../../../../customError/");
 
 var getUserByUserId = async (collection, userId) => {
   try {

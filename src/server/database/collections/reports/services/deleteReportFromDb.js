@@ -1,12 +1,18 @@
-var deleteReportFromDb = async (collection, userId, reportId) => {
-  var result = await collection.updateOne(
-    { userId },
-    {
-      $pull: { reports: { reportId } },
-    }
-  );
+var { DatabaseError } = require("../../../../customError");
 
-  return result.modifiedCount;
+var deleteReportFromDb = async (collection, userId, reportId) => {
+  try {
+    var result = await collection.updateOne(
+      { userId },
+      {
+        $pull: { reports: { reportId } },
+      }
+    );
+
+    return result.modifiedCount;
+  } catch (e) {
+    throw new DatabaseError(userId, e);
+  }
 };
 
 module.exports = deleteReportFromDb;

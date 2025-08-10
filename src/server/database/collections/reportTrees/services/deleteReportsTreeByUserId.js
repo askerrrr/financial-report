@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../customError");
+var { DatabaseError } = require("../../../../customError");
 
 var deleteReportsTreeByUserId = async (collection, userId) => {
   try {

@@ -1,11 +1,10 @@
-var { reportCollection } = require("../../connections/index");
+var { reportCollection } = require("../../connections/");
 
 var updateItems = require("./services/updateItems");
-
+var getReportById = require("./services/getReportById");
+var saveReportToDb = require("./services/saveReportToDb");
 var saveUpdatedReport = require("./services/saveUpdatedReport");
 var saveUpdatedReports = require("./services/saveUpdatedReports");
-var saveReportToDb = require("./services/saveReportToDb");
-var getReportById = require("./services/getReportById");
 var deleteReportFromDb = require("./services/deleteReportFromDb");
 var createReportsEntity = require("./services/createReportsEntity");
 var getReportsByUserId = require("./services/getReportsByUserId");

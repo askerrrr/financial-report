@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../customError");
+var { DatabaseError } = require("../../../../customError");
 
 var createReportsTreeEntity = async (collection, userId) => {
   try {
