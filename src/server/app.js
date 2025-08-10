@@ -55,4 +55,4 @@ app.use("/reports", require("./routes/reports/"));
 
 app.all(/.*/, require("./middleware/notFoundHandler/"));
 
-app.use(require("./middleware/errHandler/"));
+app.use(require("./middleware/errorHandler/"));

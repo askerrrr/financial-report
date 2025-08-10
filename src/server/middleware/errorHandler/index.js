@@ -1,10 +1,5 @@
 var multer = require("multer");
-var {
-  DatabaseError,
-  WBAPIError,
-  ReportNotFoundError,
-  DatabaseConnectionError,
-} = require("../../customError");
+var { WBAPIError, DatabaseError, ReportNotFoundError, DatabaseConnectionError } = require("../../customError");
 
 var errorHandler = async (e, req, res, next) => {
   console.log("e: ", e);
