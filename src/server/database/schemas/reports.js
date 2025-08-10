@@ -34,10 +34,7 @@ var SKUSchema = new Schema(
   { _id: false }
 );
 
-var recordToSchema = new Schema(
-  { year: stringOptions, month: stringOptions },
-  { _id: false }
-);
+var recordToSchema = new Schema({ year: stringOptions, month: stringOptions }, { _id: false });
 
 var reportSchema = new Schema(
   {
@@ -69,4 +66,9 @@ var reportSchema = new Schema(
   { _id: false }
 );
 
-module.exports = reportSchema;
+var reportsSchema = new Schema({
+  userId: stringOptions,
+  reports: { type: [reportSchema], required: false },
+});
+
+module.exports = reportsSchema;

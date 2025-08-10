@@ -5,10 +5,10 @@ var taxYear = new Schema(
     year: { type: Number, required: true },
     taxRate: { type: Number, default: 6 },
     paidTaxAmount: { type: Number, default: 0 },
+    mandatoryInsuranceFee: { type: Number, default: 0 },
     insuranceFeePercentage: { type: Number, default: 10 },
     paidInsuranceFee: { type: Number, default: 0 },
     isInsuranceFeePaid: { type: Boolean, default: false },
-    mandatoryInsuranceFee: { type: Number, default: 0 },
   },
   { _id: false }
 );
