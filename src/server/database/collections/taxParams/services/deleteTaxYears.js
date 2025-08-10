@@ -1,11 +1,11 @@
-var { DatabaseError } = require("../../../customError");
+const { DatabaseError } = require("../../../../customError");
 
-var saveUpdatedReports = async (collection, userId, reports) => {
+var deleteTaxYears = async (collection, userId) => {
   try {
     var result = await collection.updateOne(
       { userId },
       {
-        $set: { reports },
+        $set: { years: [] },
       }
     );
 
@@ -15,4 +15,4 @@ var saveUpdatedReports = async (collection, userId, reports) => {
   }
 };
 
-module.exports = saveUpdatedReports;
+module.exports = deleteTaxYears;

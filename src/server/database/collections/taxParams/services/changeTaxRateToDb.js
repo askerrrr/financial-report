@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../customError");
+var { DatabaseError } = require("../../../../customError");
 
 var changeTaxRateToDb = async (collection, userId, year, taxRate) => {
   try {

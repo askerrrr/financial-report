@@ -1,11 +1,6 @@
-var { DatabaseError } = require("../../../customError");
+var { DatabaseError } = require("../../../../customError");
 
-var changeInsuranceFeePercentageToDb = async (
-  collection,
-  userId,
-  year,
-  insuranceFeePercentage
-) => {
+var changeInsuranceFeePercentageToDb = async (collection, userId, year, insuranceFeePercentage) => {
   try {
     var result = await collection.updateOne(
       { userId, "years.year": year },

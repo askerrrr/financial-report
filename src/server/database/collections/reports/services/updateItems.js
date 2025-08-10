@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../customError/");
+var { DatabaseError } = require("../../../../customError");
 
 var updateItems = async (collection, userId, reportId, items) => {
   try {

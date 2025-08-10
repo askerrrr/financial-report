@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../customError");
+var { DatabaseError } = require("../../../../customError");
 
 var saveUpdatedTaxParams = async (collection, userId, year, taxParams) => {
   try {

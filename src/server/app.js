@@ -4,11 +4,11 @@ var { join } = require("node:path");
 var { mkdir } = require("node:fs/promises");
 var cookieParser = require("cookie-parser");
 var checkDBState = require("./middleware/mongoose");
-var userCollectionServices = require("./database/userCollectionServices/");
-var tokenCollectionServices = require("./database/tokenCollectionServices/");
-var reportCollectionServices = require("./database/reportCollectionServices/");
-var taxParamsCollectionServices = require("./database/taxParamsCollectionServices");
-var reportsTreeCollectionServices = require("./database/reportsTreeCollectionServices/");
+var userCollectionServices = require("./database/collections/users");
+var tokenCollectionServices = require("./database/collections/tokens");
+var reportCollectionServices = require("./database/collections/reports");
+var taxParamsCollectionServices = require("./database/collections/taxParams");
+var reportsTreeCollectionServices = require("./database/collections/reportTrees");
 
 var app = express();
 

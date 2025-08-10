@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../customError/");
+var { DatabaseError } = require("../../../../customError");
 
 var saveReportToDb = async (collection, userId, report) => {
   try {
