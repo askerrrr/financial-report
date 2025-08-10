@@ -1,6 +1,6 @@
-var { getMonthReportIds, getMonthNameAndIndex } = require("./month");
 var { getMondaysQtyInMonth } = require("./monday");
 var { setReportIdInReports } = require("./reports");
+var { getMonthReportIds, getMonthNameAndIndex } = require("./month");
 
 var getMonthsForCurrentYear = async (monthNum, reports) => {
   var { monthName, monthIndex } = await getMonthNameAndIndex(monthNum);

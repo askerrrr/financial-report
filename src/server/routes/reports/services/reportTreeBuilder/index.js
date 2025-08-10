@@ -1,4 +1,3 @@
-var { getYearIndex, compareYears, checkYearExists } = require("./services/year");
 var {
   getMonthsData,
   getMonthsFromYear,
@@ -8,8 +7,9 @@ var {
   isNextMonthReportNeeded,
   getFirstMonthReporstForNewYear,
 } = require("./services/months");
-var { setReportIdInReports } = require("./services/reports");
 var { getMonthName } = require("./services/month");
+var { setReportIdInReports } = require("./services/reports");
+var { getYearIndex, compareYears, checkYearExists } = require("./services/year");
 
 var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
   var [startYear, startMonth] = dateFrom.split("-");

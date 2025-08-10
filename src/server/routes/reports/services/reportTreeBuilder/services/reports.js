@@ -1,4 +1,3 @@
-var { getYearIndex } = require("./year");
 var { getMonthNameAndIndex } = require("./month");
 var { getMondayIndex, getMondaysQtyInMonth } = require("./monday");
 
