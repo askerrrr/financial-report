@@ -8,10 +8,10 @@ var recalculateReportsParamsAfterChangingInsuranceFeePergentage = async (req, re
   var reports = await getReportsByUserId(userId);
   var taxParams = await getTaxParamsFromDb(userId, year);
 
-  var { reports, recalculatedPaidInsuranceFee } = await recalculateReportsInsuranceFee(year, reports, percent, taxParams);
+  var { reports, newPercent, recalculatedPaidInsuranceFee } = await recalculateReportsInsuranceFee(year, reports, percent, taxParams);
 
   await saveUpdatedReports(userId, reports);
-  await changeInsuranceFeePercentageToDb(userId, year, percent);
+  await changeInsuranceFeePercentageToDb(userId, year, newPercent);
   await changePaidInsuranceFeeToDb(userId, year, recalculatedPaidInsuranceFee);
 
   return res.sendStatus(200);

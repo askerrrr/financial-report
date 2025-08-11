@@ -16,7 +16,7 @@ var recalculateReportsInsuranceFee = async (year, reports, newPercent, taxParams
             recalculatedPaidInsuranceFee += sku.insuranceFee;
 
             if (paidTaxAmount >= mandatoryInsuranceFee) {
-              percent = 0;
+              newPercent = 0;
               sku.isInsuranceFeeIncluded = false;
               sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, 0, sku.taxPerSKU);
             } else {
@@ -31,7 +31,7 @@ var recalculateReportsInsuranceFee = async (year, reports, newPercent, taxParams
     }
   }
 
-  return { reports, recalculatedPaidInsuranceFee };
+  return { reports, newPercent, recalculatedPaidInsuranceFee };
 };
 
 module.exports = recalculateReportsInsuranceFee;
