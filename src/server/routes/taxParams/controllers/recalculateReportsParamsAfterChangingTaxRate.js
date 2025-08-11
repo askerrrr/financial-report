@@ -1,7 +1,6 @@
 var recalculateReportsTaxRate = require("../services/recalculateReportsTaxRate");
 var calcProfitMargin = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/profitMargin");
 var calcFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/finalProfitPerSKU");
-var calcAverageFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/averageFinalProfitPerSKU");
 
 var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
   var { year, userId, taxRate } = req.body;
@@ -39,8 +38,6 @@ var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
           }
 
           sku.profitMargin = await calcProfitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
-
-          sku.averageFinalProfitPerSKU = await calcAverageFinalProfitPerSKU(sku.qty, sku.finalProfitPerSKU);
         }
       });
     }

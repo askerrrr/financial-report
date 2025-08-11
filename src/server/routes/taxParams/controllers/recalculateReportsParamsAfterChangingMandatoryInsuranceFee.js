@@ -1,6 +1,5 @@
 var calcProfitMargin = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/profitMargin");
 var calcFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/finalProfitPerSKU");
-var calcAverageFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/averageFinalProfitPerSKU");
 
 var recalculateReportsParamsAfterChangingMandatoryInsuranceFee = async (req, res, next) => {
   var { userId, year } = req.body;
@@ -23,7 +22,6 @@ var recalculateReportsParamsAfterChangingMandatoryInsuranceFee = async (req, res
         }
 
         sku.profitMargin = await calcProfitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
-        sku.averageFinalProfitPerSKU = await calcAverageFinalProfitPerSKU(sku.qty, sku.finalProfitPerSKU);
       });
     }
   }

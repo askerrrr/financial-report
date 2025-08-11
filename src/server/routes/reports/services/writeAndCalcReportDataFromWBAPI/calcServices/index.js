@@ -27,46 +27,27 @@ var calcAverageProfitPerSKU = require("./averageProfitPerSKU");
 var calcTotalDeductionOrPayment = require("./totalDeductionOrPayment");
 var calcAverageRetailPricePerSKU = require("./averageRetailPricePerSKU");
 var calcAverageStorageCostPerSKU = require("./averageStorageCostPerSKU");
-var calcAverageFinalProfitPerSKU = require("./averageFinalProfitPerSKU");
 var caclAverageAdvertisingCostPerSKU = require("./averageAdvertisingCostPerSKU");
 
 var calc = {
-  profitMargin: (revenuePerSKU, finalProfitPerSKU) =>
-    calcProfitMargin(revenuePerSKU, finalProfitPerSKU),
+  profitMargin: (revenuePerSKU, finalProfitPerSKU) => calcProfitMargin(revenuePerSKU, finalProfitPerSKU),
 
-  storageCostPerSKU: (skusName, storageData) =>
-    calcStorageCostPerSKU(skusName, storageData),
+  storageCostPerSKU: (skusName, storageData) => calcStorageCostPerSKU(skusName, storageData),
 
-  acceptancePerSKU: (skusName, report) =>
-    calcPaidAcceptancePerSKU(skusName, report),
+  acceptancePerSKU: (skusName, report) => calcPaidAcceptancePerSKU(skusName, report),
 
-  retailAmountPerSKU: (skusName, report) =>
-    calcRetailAmountPerSKU(skusName, report),
+  retailAmountPerSKU: (skusName, report) => calcRetailAmountPerSKU(skusName, report),
 
   deductionsOrPayments: (report) => calcDeductionsOrPayments(report),
 
   returnAmountPerSKU: (sku) => caclReturnAmountPerSKU(sku),
 
-  profitPerSKU: (
-    totalRevenuePerSKU,
-    deliveryCostPerSKU,
-    averageStorageCost,
-    totalFinesPerSKU,
-    averageAdvertisingCostPerSKU
-  ) =>
-    calcProfitPerSKU(
-      totalRevenuePerSKU,
-      deliveryCostPerSKU,
-      averageStorageCost,
-      totalFinesPerSKU,
-      averageAdvertisingCostPerSKU
-    ),
+  profitPerSKU: (totalRevenuePerSKU, deliveryCostPerSKU, averageStorageCost, totalFinesPerSKU, averageAdvertisingCostPerSKU) =>
+    calcProfitPerSKU(totalRevenuePerSKU, deliveryCostPerSKU, averageStorageCost, totalFinesPerSKU, averageAdvertisingCostPerSKU),
 
-  insuranceFeePerSKU: (finalProfitPerSKU, insuranceFeePercentage) =>
-    calcInsuranceFeePerSKU(finalProfitPerSKU, insuranceFeePercentage),
+  insuranceFeePerSKU: (finalProfitPerSKU, insuranceFeePercentage) => calcInsuranceFeePerSKU(finalProfitPerSKU, insuranceFeePercentage),
 
-  averageAdvertisingCostPerSKU: (totalSKUs, totalAdCampaignCosts) =>
-    caclAverageAdvertisingCostPerSKU(totalSKUs, totalAdCampaignCosts),
+  averageAdvertisingCostPerSKU: (totalSKUs, totalAdCampaignCosts) => caclAverageAdvertisingCostPerSKU(totalSKUs, totalAdCampaignCosts),
 
   taxPerSKU: (retailAmount, taxRate) => calcTaxPerSKU(retailAmount, taxRate),
 
@@ -82,20 +63,8 @@ var calc = {
 
   totalReturnAmount: (data) => calcTotalReturnAmount(data),
 
-  totalProfit: (
-    totalRevenue,
-    totalStorageCost,
-    totalDeliveryCost,
-    totalPaidAcceptance,
-    totalAdCampaignCosts
-  ) =>
-    calcTotalProfit(
-      totalRevenue,
-      totalStorageCost,
-      totalDeliveryCost,
-      totalPaidAcceptance,
-      totalAdCampaignCosts
-    ),
+  totalProfit: (totalRevenue, totalStorageCost, totalDeliveryCost, totalPaidAcceptance, totalAdCampaignCosts) =>
+    calcTotalProfit(totalRevenue, totalStorageCost, totalDeliveryCost, totalPaidAcceptance, totalAdCampaignCosts),
 
   totalDeliveryCost: (data) => calcTotalDeliveryCost(data),
 
@@ -103,36 +72,25 @@ var calc = {
 
   totalRetailAmount: (data) => calcTotalRetailAmount(data),
 
-  totalTaxAmount: (totalRetailAmount, taxRate) =>
-    calcTotalTaxAmount(totalRetailAmount, taxRate),
+  totalTaxAmount: (totalRetailAmount, taxRate) => calcTotalTaxAmount(totalRetailAmount, taxRate),
 
-  totalProfitMargin: (totalRevenue, totalFinalProfit) =>
-    calcTotalProfitMargin(totalRevenue, totalFinalProfit),
+  totalProfitMargin: (totalRevenue, totalFinalProfit) => calcTotalProfitMargin(totalRevenue, totalFinalProfit),
 
   totalDeductionOrPayment: (report) => calcTotalDeductionOrPayment(report),
 
-  totalRevenuePerSKU: (data, skusName) =>
-    calcTotalRevenuePerSKU(data, skusName),
+  totalRevenuePerSKU: (data, skusName) => calcTotalRevenuePerSKU(data, skusName),
 
   totalPaidAcceptance: (report) => calcTotalPaidAcceptance(report),
 
-  deliveryCostPerSKU: (data, skusName) =>
-    calcDeliveryCostPerSKU(data, skusName),
+  deliveryCostPerSKU: (data, skusName) => calcDeliveryCostPerSKU(data, skusName),
 
-  averageFinalProfitPerSKU: (qty, finalProfitPerSKU) =>
-    calcAverageFinalProfitPerSKU(qty, finalProfitPerSKU),
+  averageProfitPerSKU: (profitPerSKU, qty) => calcAverageProfitPerSKU(profitPerSKU, qty),
 
-  averageProfitPerSKU: (profitPerSKU, qty) =>
-    calcAverageProfitPerSKU(profitPerSKU, qty),
+  finalProfitPerSKU: (profitPerSKU, costPrice, qty) => calcFinalProfitPerSKU(profitPerSKU, costPrice, qty),
 
-  finalProfitPerSKU: (profitPerSKU, costPrice, qty) =>
-    calcFinalProfitPerSKU(profitPerSKU, costPrice, qty),
+  averageStorageCostPerSKU: (totalStorageCost, totalSold, qty) => calcAverageStorageCostPerSKU(totalStorageCost, totalSold, qty),
 
-  averageStorageCostPerSKU: (totalStorageCost, totalSold, qty) =>
-    calcAverageStorageCostPerSKU(totalStorageCost, totalSold, qty),
-
-  averageRetailPricePerSKU: (data, quantity, skusName) =>
-    calcAverageRetailPricePerSKU(data, quantity, skusName),
+  averageRetailPricePerSKU: (data, quantity, skusName) => calcAverageRetailPricePerSKU(data, quantity, skusName),
 };
 
 module.exports = calc;
