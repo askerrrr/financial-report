@@ -9,7 +9,7 @@ var alignmentStyles = {
 
 var writeSKUsToSheet = async (sheet, skus) => {
   var cellNum = 2;
-
+  console.log({ skus });
   for (var i = 0; i < skus.length; i++) {
     for (var j = 0; j < columns.length; j++) {
       var cellName = columns[j] + cellNum;

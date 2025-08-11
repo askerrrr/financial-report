@@ -1,7 +1,7 @@
 var requiredSKUsFieldsName = [
   "skuName",
   "qty",
-  "returnAmount",
+  "returnAmountPerSKU",
   "costPrice",
   "averageRetailPrice",
   "deliveryCostPerSKU",
@@ -19,7 +19,7 @@ var getRequiredSKUFieldsName = async (skus) =>
       skuName: sku.skuName,
       qty: sku.qty,
       costPrice: sku.costPrice,
-      returnAmount: sku.returnAmount,
+      returnAmountPerSKU: sku.returnAmountPerSKU,
       averageRetailPrice: sku.averageRetailPrice,
       deliveryCostPerSKU: sku.deliveryCostPerSKU,
       deductionOrPayment: sku.deductionOrPayment,
