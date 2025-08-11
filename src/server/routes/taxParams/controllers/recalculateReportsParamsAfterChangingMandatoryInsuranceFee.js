@@ -11,18 +11,20 @@ var recalculateReportsParamsAfterChangingMandatoryInsuranceFee = async (req, res
 
   for (var i = reports.length - 1; i >= 0; i--) {
     if (reports[i].recordTo.year == year) {
-      reports[i].skus.map(async (sku) => {
-        if (paidTaxAmount >= mandatoryInsuranceFee) {
-          insuranceFeePercentage = 0;
-          sku.isInsuranceFeeIncluded = false;
-          sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, 0, sku.taxPerSKU);
-        } else {
-          sku.isInsuranceFeeIncluded = true;
-          sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, sku.insuranceFee);
-        }
+      await Promise.all(
+        reports[i].skus.map(async (sku) => {
+          if (paidTaxAmount >= mandatoryInsuranceFee) {
+            insuranceFeePercentage = 0;
+            sku.isInsuranceFeeIncluded = false;
+            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, 0, sku.taxPerSKU);
+          } else {
+            sku.isInsuranceFeeIncluded = true;
+            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, sku.insuranceFee);
+          }
 
-        sku.profitMargin = await calcProfitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
-      });
+          sku.profitMargin = await calcProfitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
+        })
+      );
     }
   }
 

@@ -22,24 +22,26 @@ var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
 
   for (var i = reports.length - 1; i >= 0; i--) {
     if (reports[i].recordTo.year == year) {
-      reports[i].skus.map(async (sku) => {
-        paidTaxAmount += sku.taxPerSKU;
+      await Promise.all(
+        reports[i].skus.map(async (sku) => {
+          paidTaxAmount += sku.taxPerSKU;
 
-        if (sku.isCostPriceSet) {
-          if (paidTaxAmount >= mandatoryInsuranceFee) {
-            sku.isInsuranceFeeIncluded = false;
-            shouldResetInsuranceFeePercentage = true;
+          if (sku.isCostPriceSet) {
+            if (paidTaxAmount >= mandatoryInsuranceFee) {
+              sku.isInsuranceFeeIncluded = false;
+              shouldResetInsuranceFeePercentage = true;
 
-            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, 0, sku.taxPerSKUb);
-          } else {
-            sku.isInsuranceFeeIncluded = true;
+              sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, 0, sku.taxPerSKUb);
+            } else {
+              sku.isInsuranceFeeIncluded = true;
 
-            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, sku.insuranceFee);
+              sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, sku.insuranceFee);
+            }
+
+            sku.profitMargin = await calcProfitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
           }
-
-          sku.profitMargin = await calcProfitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
-        }
-      });
+        })
+      );
     }
   }
 
