@@ -6,7 +6,7 @@ var changeTaxRateToDb = require("./services/changeTaxRateToDb");
 var saveUpdatedTaxParams = require("./services/saveUpdatedTaxParams");
 var createTaxParamsEntity = require("./services/createTaxParamsEntity");
 var changePaidTaxAmountToDb = require("./services/changePaidTaxAmountToDb");
-var changePaidInsuranceFeeToDb = require("./services/changeMandatoryInsuranceFeeToDb");
+var changePaidInsuranceFeeToDb = require("./services/changePaidInsuranceFee");
 var changeInsuranceFeePercentageToDb = require("./services/changeInsuranceFeePercentageToDb");
 var changeMandatoryInsuranceFeeToDb = require("./services/changeMandatoryInsuranceFeeToDb");
 
