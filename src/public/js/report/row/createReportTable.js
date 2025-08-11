@@ -12,19 +12,9 @@ var createReportTable = async (report) => {
   for (var [skuIndex, sku] of Object.entries(skus)) {
     var tr = document.createElement("tr");
 
-    var SKUPhotoUploader = await createSKUPhotoUploader(
-      reportId,
-      sku.skuName,
-      skuIndex,
-      null
-    );
+    var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, skuIndex, null);
 
-    var SKUPhotoUploaderTd = await createTdElement(
-      SKUPhotoUploader,
-      "photo-cell",
-      skuIndex,
-      "photo-cell"
-    );
+    var SKUPhotoUploaderTd = await createTdElement(SKUPhotoUploader, "photo-cell", skuIndex, "photo-cell");
 
     var skuName = await createTdElement(sku.skuName);
 
@@ -59,23 +49,9 @@ var createReportTable = async (report) => {
 
     var averageProfitPerSKU = await createTdElement(sku.averageProfitPerSKU);
 
-    var averageFinalProfitPerSKU = await createTdElement(
-      sku.averageFinalProfitPerSKU,
-      "averageFinalProfitPerSKU",
-      skuIndex
-    );
+    var profitMargin = await createTdElement(sku.profitMargin, "profitMargin", skuIndex);
 
-    var profitMargin = await createTdElement(
-      sku.profitMargin,
-      "profitMargin",
-      skuIndex
-    );
-
-    var finalProfitPerSKU = await createTdElement(
-      sku.finalProfitPerSKU,
-      "finalProfitPerSKU",
-      skuIndex
-    );
+    var finalProfitPerSKU = await createTdElement(sku.finalProfitPerSKU, "finalProfitPerSKU", skuIndex);
 
     tr.append(
       SKUPhotoUploaderTd,
@@ -90,7 +66,6 @@ var createReportTable = async (report) => {
       acceptancePerSKU,
       profitPerSKU,
       averageProfitPerSKU,
-      averageFinalProfitPerSKU,
       profitMargin,
       finalProfitPerSKU
     );

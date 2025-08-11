@@ -28,7 +28,7 @@ var getReportData = async () => {
 
 var showReport = async () => {
   var { report, imageCollection } = await getReportData();
-  console.log({ report });
+
   await getReportInfo(report);
   await createReportTable(report);
   await injectBase64IntoImgTags(imageCollection);

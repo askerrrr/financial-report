@@ -28,13 +28,12 @@ var changeReportDetail = async (req, res, next) => {
 
   if (success) {
     var { totalFinalProfit, totalProfitMargin } = updatedReport;
-    var { profitMargin, finalProfitPerSKU, averageFinalProfitPerSKU } = skuWithCalculatedParams;
+    var { profitMargin, finalProfitPerSKU } = skuWithCalculatedParams;
 
     return res.status(200).json({
       skuIndex,
       profitMargin,
       finalProfitPerSKU,
-      averageFinalProfitPerSKU,
       total: { totalFinalProfit, totalProfitMargin },
     });
   }
