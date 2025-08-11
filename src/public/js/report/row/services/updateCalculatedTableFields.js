@@ -1,6 +1,6 @@
 var updateCalculatedTableFields = async (sku) => {
   var { skuIndex } = sku;
-  console.log({ sku });
+
   delete sku.skuIndex;
 
   for (var fildName of Object.keys(sku)) {
