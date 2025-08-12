@@ -14,15 +14,16 @@ var calcRestSKUParams = async (sku, costPrice, taxParams) => {
   var finalProfitPerSKU,
     isInsuranceFeeIncluded = true;
 
-  if (paidTaxAmount >= mandatoryInsuranceFee) {
-    insuranceFeePercentage = 0;
-    isInsuranceFeeIncluded = false;
+  // if (paidTaxAmount >= mandatoryInsuranceFee) {
+  //   insuranceFeePercentage = 0;
+  //   isInsuranceFeeIncluded = false;
 
-    finalProfitPerSKU = await calcFinalProfitPerSKU(preTaxProfitPerSKU, 0, sku.taxPerSKU);
-  } else {
-    finalProfitPerSKU = await calcFinalProfitPerSKU(preTaxProfitPerSKU, newInsuranceFee);
-  }
+  //   finalProfitPerSKU = await calcFinalProfitPerSKU(preTaxProfitPerSKU, 0, sku.taxPerSKU);
+  // } else {
+  //   finalProfitPerSKU = await calcFinalProfitPerSKU(preTaxProfitPerSKU, newInsuranceFee);
+  // }
 
+  finalProfitPerSKU = await calcFinalProfitPerSKU(preTaxProfitPerSKU, 0, sku.taxPerSKU);
   var profitMargin = await calcProfitMargin(sku.revenuePerSKU, finalProfitPerSKU);
 
   sku.isCostPriceSet = true;

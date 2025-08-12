@@ -12,7 +12,7 @@ var changeInsuranceFeePercentage = async (req, res, next) => {
   if (!recalculate) {
     return res.sendStatus(200);
   }
-
+  return res.sendStatus(200);
   req.body = { year, userId, percent };
   next();
 };

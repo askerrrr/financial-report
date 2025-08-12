@@ -9,7 +9,7 @@ var changeMandatoryInsuranceFee = async (req, res, next) => {
   if (!success) {
     return res.sendStatus(304);
   }
-
+  return res.sendStatus(200);
   req.body = { userId, year };
 
   next();

@@ -13,6 +13,7 @@ var changeTaxRate = async (req, res, next) => {
     return res.sendStatus(200);
   }
 
+  return res.sendStatus(200);
   req.body = { year, userId, taxRate };
 
   next();
