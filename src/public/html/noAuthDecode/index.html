@@ -7,9 +7,24 @@
     <title>Расшифровка без регистрации</title>
   </head>
   <body>
+    <button id="no-auth-decode-button" type="button" onclick="window.dialog.show()">Расшифровка отчета без регистрации</button>
     <div class="auth-buttons">
       <a href="/auth" id="auth">Войти</a>
       <a href="/reg" id="registration">Регистрация</a>
     </div>
+    <dialog id="dialog">
+      <form>
+        <p>Для получения отчета необходим токен с тремя категориями: Аналитика, Продвижение, Статистика</p>
+        <label for="token">Введите токен</label>
+        <input type="text" id="token" />
+        <label for="dateFrom">Введите начало периода</label>
+        <input type="text" id="dateFrom" placeholder="в формате гггг.мм.дд   2025.04.14" />
+        <label for="dateTo">Введите конец периода</label>
+        <input type="text" id="dateTo" placeholder="в формате гггг.мм.дд   2025.04.21" />
+        <button type="button" onclick="window.dialog.close()">Закрыть</button>
+        <button type="button" id="get-report">Получить отчет</button>
+      </form>
+    </dialog>
+    <script src="/js/noAuthDecode/index.js" type="module"></script>
   </body>
 </html>
