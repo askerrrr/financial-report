@@ -1,6 +1,7 @@
 import getToken from "./getToken.js";
 import sendReportData from "./sendReportData.js";
 import getReportPeriod from "./getReportPeriod.js";
+import { showLoader, deleteLoader } from "../index/services/reportPeriodUploader/services/loader.js";
 
 var main = async () => {
   var getReportBtn = document.getElementById("get-report");
@@ -10,7 +11,15 @@ var main = async () => {
 
     var { dateFrom, dateTo } = await getReportPeriod();
 
-    var success = await sendReportData(token, dateFrom, dateTo);
+    document.getElementById("dialog").close();
+    await showLoader();
+
+    var redirectUrl = await sendReportData(dateFrom, dateTo, token);
+
+    if (redirectUrl) {
+      await deleteLoader();
+      window.location.href = redirectUrl;
+    }
   };
 };
 

@@ -1,5 +1,5 @@
 var sendReportData = async (dateFrom, dateTo, token) => {
-  var res = await fetch("url", {
+  var res = await fetch("/no-auth-decode/", {
     method: "POST",
     body: JSON.stringify({ dateFrom, dateTo, token }),
     headers: { "Content-Type": "application/json" },
@@ -8,10 +8,11 @@ var sendReportData = async (dateFrom, dateTo, token) => {
   var result = await res.json();
 
   if (!res.ok) {
-    return alert(result);
+    alert(result.msg);
+    return;
   }
 
-  return result;
+  return result.redirectUrl;
 };
 
 export default sendReportData;
