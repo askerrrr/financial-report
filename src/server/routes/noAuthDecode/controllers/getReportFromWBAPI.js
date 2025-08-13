@@ -26,6 +26,8 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   var id = randomBytes(15).toString("hex");
 
+  req.app.locals.reports = [{ id, report }];
+
   var redirectUrl = "/no-auth-decode/report/" + id;
 
   return res.json({ redirectUrl });
