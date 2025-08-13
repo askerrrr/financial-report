@@ -27,14 +27,14 @@ var getReportData = async () => {
 };
 
 var showReport = async () => {
-  var { report, imageCollection } = await getReportData();
+  var { report, imageCollection, downloadReportLink } = await getReportData();
 
   await getReportInfo(report);
   await createReportTable(report);
   await injectBase64IntoImgTags(imageCollection);
   await createTotalsTable(report);
 
-  await downloadReportAsXLSX(report);
+  await downloadReportAsXLSX(report, downloadReportLink);
   await deleteReport(report);
 };
 

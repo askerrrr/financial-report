@@ -12,23 +12,19 @@ var getCostPricesValueFromTable = async (skusQty) => {
   return costPrices;
 };
 
-var downloadReportAsXLSX = async (report) =>
+var downloadReportAsXLSX = async (report, url) =>
   button.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    var { userId, reportId, dateFrom, dateTo } = report;
+    var { dateFrom, dateTo } = report;
 
     var costPrices = await getCostPricesValueFromTable(report.skus.length);
 
     var allCostPricesNonZero = costPrices.every((costPrice) => costPrice > 0);
 
     if (!allCostPricesNonZero) {
-      return alert(
-        "Для скачивания файла нужно установить себестоимости для товаров"
-      );
+      return alert("Для скачивания файла нужно установить себестоимости для товаров");
     }
-
-    var url = "/reports/download-report-as-xlsx/" + userId + "/" + reportId;
 
     var res = await fetch(url);
 
