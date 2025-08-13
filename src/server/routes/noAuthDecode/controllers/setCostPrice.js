@@ -24,6 +24,10 @@ var setCostPrice = async (req, res, next) => {
   var { totalFinalProfit, totalProfitMargin } = updatedReport;
   var { profitMargin, finalProfitPerSKU } = skuWithCalculatedParams;
 
+  var reportIndex = req.app.locals?.reports.findIndex((item) => item.id === id && item.report.reportId === reportId);
+
+  req.app.locals.reports[reportIndex] = { id, report: updatedReport };
+
   return res.status(200).json({
     skuIndex,
     profitMargin,
