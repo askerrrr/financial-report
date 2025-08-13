@@ -4,7 +4,7 @@ var getReport = async (req, res, next) => {
   var { report } = req.app.locals?.reports.find((report) => report.id === id);
 
   if (!report) {
-    return res.status(500).json("Произошла ошибка, попробуйте позже");
+    return res.status(500).json({ msg: "Произошла ошибка, попробуйте позже" });
   }
 
   return res.json({ report });

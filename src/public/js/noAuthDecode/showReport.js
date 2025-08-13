@@ -5,9 +5,14 @@ var getReport = async (id) => {
 
   var res = await fetch(url);
 
-  var { report } = await res.json();
+  var data = await res.json();
 
-  return report;
+  if (!res.ok) {
+    alert(data.msg);
+    return;
+  }
+
+  return data.report;
 };
 
 var showReport = async () => {
