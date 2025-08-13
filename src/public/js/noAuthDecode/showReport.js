@@ -1,7 +1,7 @@
 import createReportTable from "./createReportTable.js";
 
 var getReport = async (id) => {
-  var url = "/no-auth-decode/report/" + id;
+  var url = "/no-auth-decode/api/report/" + id;
 
   var res = await fetch(url);
 
