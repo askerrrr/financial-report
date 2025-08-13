@@ -8,6 +8,8 @@ router.get("/report/:id", require("./controllers/getReportPage"));
 
 router.get("/api/report/:id", require("./controllers/getReport"));
 
+router.get("/xlsx/:id/:reportId", require("./controllers/downloadReportAsXLSX"));
+
 router.post("/", require("./controllers/getReportFromWBAPI"));
 
 router.post("/report/set-cost-price", require("./controllers/setCostPrice"));
