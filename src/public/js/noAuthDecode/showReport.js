@@ -20,7 +20,7 @@ var showReport = async () => {
 
   var report = await getReport(id);
 
-  await createReportTable(report);
+  await createReportTable(id, report);
 };
 
 showReport();

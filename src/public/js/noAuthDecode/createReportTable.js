@@ -3,10 +3,10 @@ import createInputField from "../report/row/services/createInputField.js";
 
 var table = document.getElementById("report");
 
-var createReportTable = async (report) => {
+var createReportTable = async (id, report) => {
   var tbody = document.createElement("tbody");
 
-  var { reportId, skus, userId } = report;
+  var { reportId, skus } = report;
 
   for (var [skuIndex, sku] of Object.entries(skus)) {
     var tr = document.createElement("tr");
@@ -15,7 +15,7 @@ var createReportTable = async (report) => {
     var qty = await createTdElement(sku.qty);
     var returnAmount = await createTdElement(sku.returnAmountPerSKU);
 
-    var costPriceData = { userId, skuIndex, reportId, fieldName: "costPrice", costPrice: sku.costPrice };
+    var costPriceData = { id, skuIndex, reportId, fieldName: "costPrice", costPrice: sku.costPrice, url: "/no-auth-decode/report/set-cost-price" };
 
     var costPriceInputField = await createInputField(costPriceData);
     var costPrice = await createTdElement(costPriceInputField);
