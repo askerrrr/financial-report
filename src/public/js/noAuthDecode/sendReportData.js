@@ -1,7 +1,7 @@
-var sendReportData = async (dateFrom, dateTo, token) => {
+var sendReportData = async (dateFrom, dateTo, token, taxRate = 6) => {
   var res = await fetch("/no-auth-decode/", {
     method: "POST",
-    body: JSON.stringify({ dateFrom, dateTo, token }),
+    body: JSON.stringify({ dateFrom, dateTo, token, taxRate }),
     headers: { "Content-Type": "application/json" },
   });
 

@@ -7,7 +7,7 @@ var checkPaidStorageReportCreationStatus = require("../../reports/services/diffe
 var getPaidStorageReportByTaskIdFromWBAPI = require("../../reports/services/different/getPaidStorageReportByTaskIdFromWBAPI");
 
 var getReportFromWBAPI = async (req, res, next) => {
-  var { dateFrom, dateTo, token } = req.body;
+  var { dateFrom, dateTo, token, taxRate } = req.body;
 
   var taskId = await createPaidStorageReportTask(dateFrom, dateTo, token, "");
   var statusIsDone = await checkPaidStorageReportCreationStatus(taskId, token);
@@ -22,12 +22,12 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   var reports = { mainReport, storageReport, totalAdCampaignCosts };
 
-  var report = await parseReports({ taxRate: 0 }, reports);
+  var report = await parseReports({ taxRate }, reports);
   report.reportId = mainReport[0].realizationreport_id;
 
   var id = randomBytes(15).toString("hex");
 
-  req.app.locals.reports = [{ id, report }];
+  req.app.locals.reports = [{ id, taxRate, report }];
 
   var redirectUrl = "/no-auth-decode/report/" + id;
 
