@@ -1,3 +1,5 @@
+import createReportTable from "./createReportTable.js";
+
 var getReport = async (id) => {
   var url = "/no-auth-decode/report/" + id;
 
@@ -12,6 +14,8 @@ var showReport = async () => {
   var id = window.location.pathname.split("/")[3];
 
   var report = await getReport(id);
+
+  await createReportTable(report);
 };
 
 showReport();
