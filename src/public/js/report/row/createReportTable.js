@@ -13,44 +13,23 @@ var createReportTable = async (report) => {
     var tr = document.createElement("tr");
 
     var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, skuIndex, null);
-
     var SKUPhotoUploaderTd = await createTdElement(SKUPhotoUploader, "photo-cell", skuIndex, "photo-cell");
-
     var skuName = await createTdElement(sku.skuName);
-
     var qty = await createTdElement(sku.qty);
-
     var returnAmount = await createTdElement(sku.returnAmountPerSKU);
 
-    var costPriceData = {
-      userId,
-      skuIndex,
-      reportId,
-      year: +recordTo.year,
-      fieldName: "costPrice",
-      costPrice: sku.costPrice,
-    };
+    var dataToChange = { userId, skuIndex, reportId, year: +recordTo.year, fieldName: "costPrice", costPrice: sku.costPrice, url: "/reports/change" };
 
-    var costPriceInputField = await createInputField(costPriceData);
-
+    var costPriceInputField = await createInputField(dataToChange);
     var costPrice = await createTdElement(costPriceInputField);
-
     var retailPrice = await createTdElement(sku.averageRetailPrice);
-
     var deliveryCost = await createTdElement(sku.deliveryCostPerSKU);
-
     var fines = await createTdElement(sku.finesPerSKU);
-
     var storageCostPerSKU = await createTdElement(sku.storageCostPerSKU);
-
     var acceptancePerSKU = await createTdElement(sku.acceptancePerSKU);
-
     var profitPerSKU = await createTdElement(sku.profitPerSKU);
-
     var averageProfitPerSKU = await createTdElement(sku.averageProfitPerSKU);
-
     var profitMargin = await createTdElement(sku.profitMargin, "profitMargin", skuIndex);
-
     var finalProfitPerSKU = await createTdElement(sku.finalProfitPerSKU, "finalProfitPerSKU", skuIndex);
 
     tr.append(

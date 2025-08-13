@@ -1,9 +1,7 @@
-var url = "/reports/change";
-
-var sendChangedData = async (costPriceData) => {
-  var res = await fetch(url, {
+var sendChangedData = async (data) => {
+  var res = await fetch(data.url, {
     method: "POST",
-    body: JSON.stringify({ ...costPriceData }),
+    body: JSON.stringify({ ...data }),
     headers: { "Content-Type": "application/json" },
   });
 
