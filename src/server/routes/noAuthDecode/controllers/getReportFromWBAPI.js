@@ -18,7 +18,7 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   var mainReport = await getReportByPeriodFromWBAPI(dateFrom, dateTo, token, "");
   var storageReport = await getPaidStorageReportByTaskIdFromWBAPI(taskId, token, "");
-  var totalAdCampaignCosts = await getAdvertisingCostsForPeriod(dateFrom, dateTo, token);
+  var totalAdCampaignCosts = await getAdvertisingCostsForPeriod(dateFrom, dateTo, token, "");
 
   var reports = { mainReport, storageReport, totalAdCampaignCosts };
 
