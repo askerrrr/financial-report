@@ -1,5 +1,8 @@
 var sendChangedData = async (data) => {
-  var res = await fetch(data.url, {
+  var { url } = data;
+  delete data.url;
+
+  var res = await fetch(url, {
     method: "POST",
     body: JSON.stringify({ ...data }),
     headers: { "Content-Type": "application/json" },
