@@ -23,6 +23,7 @@ var getReportFromWBAPI = async (req, res, next) => {
   var reports = { mainReport, storageReport, totalAdCampaignCosts };
 
   var report = await parseReports({ taxRate: 0 }, reports);
+  report.reportId = mainReport[0].realizationreport_id;
 
   var id = randomBytes(15).toString("hex");
 
