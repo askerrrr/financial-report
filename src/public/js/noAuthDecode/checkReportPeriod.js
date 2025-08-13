@@ -3,14 +3,8 @@ import { isMonday } from "../index/services/periodUtils/services/getWeekDaysFrom
 import isFutureDate from "../index/services/reportPeriodUploader/services/isFutureDate.js";
 import validateReportPeriod from "../index/services/reportPeriodUploader/services/validateReportPeriod.js";
 
-var getDateFrom = async () => {
-  var dateFrom = document.getElementById("dateFrom").value;
+var checkDateFrom = async (dateFrom) => {
   var validDateFrom = await validateReportPeriod(dateFrom);
-
-  if (!dateFrom) {
-    alert("Начало периода введено некорректно");
-    throw new Error("dateFrom is not valid");
-  }
 
   if (await isFutureDate(validDateFrom)) {
     alert("Период введен некорректно");
@@ -22,10 +16,10 @@ var getDateFrom = async () => {
     throw new Error("dateFrom is not monday");
   }
 
-  return validDateFrom;
+  return { validDateFrom };
 };
 
-var getDateTo = async (dateFrom) => {
+var checkDateTo = async (dateFrom) => {
   var dateTo = document.getElementById("dateTo").value;
 
   if (!dateTo) {
@@ -44,15 +38,7 @@ var getDateTo = async (dateFrom) => {
     throw new Error("the report is not ready");
   }
 
-  return validDateTo;
+  return { validDateTo };
 };
 
-var getReportPeriod = async () => {
-  var dateFrom = await getDateFrom();
-
-  var dateTo = await getDateTo(dateFrom);
-
-  return { dateFrom, dateTo };
-};
-
-export default getReportPeriod;
+export { checkDateFrom, checkDateTo };

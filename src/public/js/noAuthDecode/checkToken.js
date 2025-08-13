@@ -15,9 +15,8 @@ var getStatus = async (url, token) => {
   return { Status };
 };
 
-var getToken = async () =>
+var checkToken = async (token) =>
   new Promise(async (resolve, reject) => {
-    var token = document.getElementById("token").value;
     var failedStatuses = [];
 
     await Promise.all(
@@ -33,11 +32,11 @@ var getToken = async () =>
     );
 
     if (failedStatuses.length === 0) {
-      resolve({ token });
+      resolve({ validToken: token });
     } else {
       alert("В токене отсутствует категория:" + "\n- " + failedStatuses.join("\n- "));
       reject(new Error("Invalid token categories"));
     }
   });
 
-export default getToken;
+export default checkToken;
