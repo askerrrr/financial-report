@@ -24,6 +24,8 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   var report = await parseReports({ taxRate }, reports);
 
+  report.dateTo = dateTo;
+  report.dateFrom = dateFrom;
   report.totalProfitMargin = 0;
   report.totalFinalProfit = 0;
 
