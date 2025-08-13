@@ -15,9 +15,9 @@ var createReportTable = async (id, report) => {
     var qty = await createTdElement(sku.qty);
     var returnAmount = await createTdElement(sku.returnAmountPerSKU);
 
-    var costPriceData = { id, skuIndex, reportId, fieldName: "costPrice", costPrice: sku.costPrice, url: "/no-auth-decode/report/set-cost-price" };
+    var dataToChange = { id, skuIndex, reportId, fieldName: "costPrice", costPrice: sku.costPrice, url: "/no-auth-decode/report/set-cost-price" };
 
-    var costPriceInputField = await createInputField(costPriceData);
+    var costPriceInputField = await createInputField(dataToChange);
     var costPrice = await createTdElement(costPriceInputField);
     var retailPrice = await createTdElement(sku.averageRetailPrice);
     var deliveryCost = await createTdElement(sku.deliveryCostPerSKU);
