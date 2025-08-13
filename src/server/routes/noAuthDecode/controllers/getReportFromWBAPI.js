@@ -23,6 +23,14 @@ var getReportFromWBAPI = async (req, res, next) => {
   var reports = { mainReport, storageReport, totalAdCampaignCosts };
 
   var report = await parseReports({ taxRate }, reports);
+
+  report.totalProfitMargin = 0;
+  report.totalFinalProfit = 0;
+
+  report.skus.map((sku) => {
+    (sku.costPrice = 0), (sku.finalProfitPerSKU = 0), (sku.profitMargin = 0);
+  });
+
   report.reportId = mainReport[0].realizationreport_id;
 
   var id = randomBytes(15).toString("hex");

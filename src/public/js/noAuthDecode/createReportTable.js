@@ -26,8 +26,8 @@ var createReportTable = async (id, report, url) => {
     var acceptancePerSKU = await createTdElement(sku.acceptancePerSKU);
     var profitPerSKU = await createTdElement(sku.profitPerSKU);
     var averageProfitPerSKU = await createTdElement(sku.averageProfitPerSKU);
-    var profitMargin = await createTdElement(0, "profitMargin", skuIndex);
-    var finalProfitPerSKU = await createTdElement(0, "finalProfitPerSKU", skuIndex);
+    var profitMargin = await createTdElement(sku.profitMargin, "profitMargin", skuIndex);
+    var finalProfitPerSKU = await createTdElement(sku.finalProfitPerSKU, "finalProfitPerSKU", skuIndex);
 
     tr.append(
       skuName,
