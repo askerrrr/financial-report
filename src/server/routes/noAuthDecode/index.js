@@ -10,4 +10,6 @@ router.get("/api/report/:id", require("./controllers/getReport"));
 
 router.post("/", require("./controllers/getReportFromWBAPI"));
 
+router.post("/report/set-cost-price", require("./controllers/setCostPrice"));
+
 module.exports = router;
