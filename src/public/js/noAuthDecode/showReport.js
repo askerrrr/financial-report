@@ -12,15 +12,15 @@ var getReport = async (id) => {
     return;
   }
 
-  return data.report;
+  return data;
 };
 
 var showReport = async () => {
   var id = window.location.pathname.split("/")[3];
 
-  var report = await getReport(id);
+  var { report, setCostPriceUrl } = await getReport(id);
 
-  await createReportTable(id, report);
+  await createReportTable(id, report, setCostPriceUrl);
 };
 
 showReport();

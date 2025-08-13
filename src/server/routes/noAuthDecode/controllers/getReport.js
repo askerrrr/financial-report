@@ -8,7 +8,9 @@ var getReport = async (req, res, next) => {
     return res.status(500).json({ msg: "Произошла ошибка, попробуйте позже" });
   }
 
-  return res.json({ report });
+  var setCostPriceUrl = "/no-auth-decode/report/set-cost-price";
+
+  return res.json({ report, setCostPriceUrl });
 };
 
 module.exports = getReport;
