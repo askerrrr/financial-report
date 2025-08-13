@@ -1,4 +1,5 @@
 import createReportTable from "./createReportTable.js";
+import createTotalsTable from "./createTotalsTable.js";
 
 var getReport = async (id) => {
   var url = "/no-auth-decode/api/report/" + id;
@@ -21,6 +22,7 @@ var showReport = async () => {
   var { report, setCostPriceUrl } = await getReport(id);
 
   await createReportTable(id, report, setCostPriceUrl);
+  await createTotalsTable(report);
 };
 
 showReport();
