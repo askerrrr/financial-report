@@ -1,5 +1,6 @@
 import createReportTable from "./createReportTable.js";
 import createTotalsTable from "./createTotalsTable.js";
+import downloadReportAsXLSX from "../report/downloadReportAsXLSX.js";
 
 var getReport = async (id) => {
   var url = "/no-auth-decode/api/report/" + id;
@@ -19,10 +20,11 @@ var getReport = async (id) => {
 var showReport = async () => {
   var id = window.location.pathname.split("/")[3];
 
-  var { report, setCostPriceUrl } = await getReport(id);
+  var { report, setCostPriceLink, downloadReportLink } = await getReport(id);
 
-  await createReportTable(id, report, setCostPriceUrl);
+  await createReportTable(id, report, setCostPriceLink);
   await createTotalsTable(report);
+  await downloadReportAsXLSX(report, downloadReportLink);
 };
 
 showReport();

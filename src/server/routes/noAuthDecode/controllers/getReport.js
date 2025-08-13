@@ -7,9 +7,10 @@ var getReport = async (req, res, next) => {
     return res.status(500).json({ msg: "Произошла ошибка, попробуйте позже" });
   }
 
-  var setCostPriceUrl = "/no-auth-decode/report/set-cost-price";
+  var setCostPriceLink = "/no-auth-decode/report/set-cost-price";
+  var downloadReportLink = "/no-auth-decode/xlsx/" + id + "/" + report.reportId;
 
-  return res.json({ report, setCostPriceUrl });
+  return res.json({ report, setCostPriceLink, downloadReportLink });
 };
 
 module.exports = getReport;
