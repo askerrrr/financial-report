@@ -2,10 +2,10 @@ import createTdElement from "./services/createTdElement.js";
 import createInputField from "./services/createInputField.js";
 import createSKUPhotoUploader from "./services/skuPhotoUploader/index.js";
 
-var table = document.getElementById("report");
+var table = document.getElementById("skus-table");
 
-var createReportTable = async (report) => {
-  var tbody = document.createElement("tbody");
+var createSKUsTable = async (report) => {
+  var tbody = document.getElementById("skus-tbody");
 
   var { reportId, recordTo, skus, userId } = report;
 
@@ -57,4 +57,4 @@ var createReportTable = async (report) => {
   return table;
 };
 
-export default createReportTable;
+export default createSKUsTable;

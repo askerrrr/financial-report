@@ -3,7 +3,7 @@ import createInputField from "../report/row/services/createInputField.js";
 
 var table = document.getElementById("report");
 
-var createReportTable = async (id, report, url) => {
+var createSKUsTable = async (id, report, url) => {
   var tbody = document.createElement("tbody");
 
   var { reportId, skus } = report;
@@ -53,4 +53,4 @@ var createReportTable = async (id, report, url) => {
   return table;
 };
 
-export default createReportTable;
+export default createSKUsTable;

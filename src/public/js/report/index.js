@@ -1,5 +1,5 @@
 import deleteReport from "./row/deleteReport.js";
-import createReportTable from "./row/createReportTable.js";
+import createSKUsTable from "./row/createSKUsTable.js";
 import createTotalsTable from "./row/createTotalsTable.js";
 import getReportInfo from "./row/services/getReportInfo.js";
 import downloadReportAsXLSX from "./downloadReportAsXLSX.js";
@@ -30,7 +30,7 @@ var showReport = async () => {
   var { report, imageCollection, downloadReportLink } = await getReportData();
 
   await getReportInfo(report);
-  await createReportTable(report);
+  await createSKUsTable(report);
   await injectBase64IntoImgTags(imageCollection);
   await createTotalsTable(report);
 

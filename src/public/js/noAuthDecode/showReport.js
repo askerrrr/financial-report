@@ -1,4 +1,4 @@
-import createReportTable from "./createReportTable.js";
+import createSKUsTable from "./createSKUsTable.js";
 import createTotalsTable from "./createTotalsTable.js";
 import downloadReportAsXLSX from "../report/downloadReportAsXLSX.js";
 
@@ -22,7 +22,7 @@ var showReport = async () => {
 
   var { report, setCostPriceLink, downloadReportLink } = await getReport(id);
 
-  await createReportTable(id, report, setCostPriceLink);
+  await createSKUsTable(id, report, setCostPriceLink);
   await createTotalsTable(report);
   await downloadReportAsXLSX(report, downloadReportLink);
 };
