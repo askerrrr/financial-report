@@ -5,11 +5,11 @@ var createTotalsSheet = require("./services/createTotalsSheet");
 var getReportAsXLSXBuffer = async (report) => {
   var workbook = new ExcelJS.Workbook();
 
-  var skusSheet = workbook.addWorksheet("Лист 1");
+  var skusSheet = workbook.addWorksheet("Товары");
 
   skusSheet = await createSKUsSheet(report, skusSheet);
 
-  var totalsSheet = workbook.addWorksheet("Лист 2");
+  var totalsSheet = workbook.addWorksheet("Сводка");
 
   totalsSheet = await createTotalsSheet(report, totalsSheet);
 
