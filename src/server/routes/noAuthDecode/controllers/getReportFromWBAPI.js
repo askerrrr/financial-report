@@ -26,22 +26,22 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   report.dateTo = dateTo;
   report.dateFrom = dateFrom;
-  report.totalProfitMargin = 0;
   report.totalFinalProfit = 0;
+  report.totalProfitMargin = 0;
+  report.reportId = mainReport[0].realizationreport_id;
 
   report.skus.map((sku) => {
     (sku.costPrice = 0), (sku.finalProfitPerSKU = 0), (sku.profitMargin = 0);
   });
 
-  report.reportId = mainReport[0].realizationreport_id;
-
   var id = randomBytes(15).toString("hex");
 
   req.app.locals.reports = [{ id, taxRate, report }];
 
-  var redirectUrl = "/no-auth-decode/report/" + id;
+  var setCostPriceLink = "/no-auth-decode/report/set-cost-price";
+  var downloadReportLink = "/no-auth-decode/xlsx/" + id + "/" + report.reportId;
 
-  return res.json({ redirectUrl });
+  return res.json({ id, report, setCostPriceLink, downloadReportLink });
 };
 
 module.exports = getReportFromWBAPI;

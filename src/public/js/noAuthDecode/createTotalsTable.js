@@ -1,43 +1,26 @@
 import createTdElement from "../report/row/services/createTdElement.js";
-import createTotalTableHead from "../report/row/services/createTotalTableHead.js";
 import calcTotalFinalProfit from "../report/row/services/calcTotalFinalProfit.js";
 import calcTotalProfitMargin from "../report/row/services/calcTotalProfitMargin.js";
 
-var table = document.createElement("table");
-table.id = "totals-table";
-
-var tbody = document.createElement("tbody");
-
+var table = document.getElementById("totals-table");
+var tbody = document.getElementById("totals-tbody");
 var tr = document.createElement("tr");
 
 var createTotalsTable = async (report) => {
   var totalRetailAmountTd = await createTdElement(report.totalRetailAmount);
-
   var totalRevenueTd = await createTdElement(report.totalRevenue);
-
   var totalDeductionOrPaymentTd = await createTdElement(report.totalDeductionOrPayment);
-
   var totalStorageCostTd = await createTdElement(report.totalStorageCost);
   var totalDeliveryCostTd = await createTdElement(report.totalDeliveryCost);
-
   var totalProfitMargin = await calcTotalProfitMargin(report.totalRetailAmount, report.totalFinalProfit);
-
   var totalProfitMarginTd = await createTdElement(totalProfitMargin, "totalProfitMargin");
-
   var totalSoldTd = await createTdElement(report.totalSold);
-
   var totalReturnAmountTd = await createTdElement(report.totalReturnAmount);
-
   var totalFinesTd = await createTdElement(report.totalFines);
-
   var totalAdCampaignCostsTd = await createTdElement(report.totalAdCampaignCosts);
-
   var totalProfitTd = await createTdElement(report.totalProfit);
-
   var totalTaxAmountTd = await createTdElement(report.totalTaxAmount);
-
   var totalFinalProfit = await calcTotalFinalProfit(report.skus);
-
   var totalFinalProfitTd = await createTdElement(totalFinalProfit, "totalFinalProfit");
 
   if (+totalFinalProfit < 0) {
@@ -62,14 +45,7 @@ var createTotalsTable = async (report) => {
 
   tbody.append(tr);
 
-  var thead = await createTotalTableHead();
-
-  table.append(thead, tbody);
-
-  var body = document.getElementById("report-body");
-  body.append(table);
-
-  return body;
+  table.append(tbody);
 };
 
 export default createTotalsTable;

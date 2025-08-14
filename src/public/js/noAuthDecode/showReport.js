@@ -2,29 +2,18 @@ import createSKUsTable from "./createSKUsTable.js";
 import createTotalsTable from "./createTotalsTable.js";
 import downloadReportAsXLSX from "../report/downloadReportAsXLSX.js";
 
-var getReport = async (id) => {
-  var url = "/no-auth-decode/api/report/" + id;
-
-  var res = await fetch(url);
-
-  var data = await res.json();
-
-  if (!res.ok) {
-    alert(data.msg);
-    return;
-  }
-
-  return data;
-};
-
-var showReport = async () => {
-  var id = window.location.pathname.split("/")[3];
-
-  var { report, setCostPriceLink, downloadReportLink } = await getReport(id);
+var showReport = async (data) => {
+  var { id, report, setCostPriceLink, downloadReportLink } = data;
 
   await createSKUsTable(id, report, setCostPriceLink);
   await createTotalsTable(report);
   await downloadReportAsXLSX(report, downloadReportLink);
+
+  document.getElementById("skus-table").style.display = "block";
+  document.getElementById("totals-table").style.display = "block";
+  document.getElementById("download-report-as-xlsx-button").style.display = "block";
+
+  window.scrollTo({ top: 900, behavior: "smooth" });
 };
 
-showReport();
+export default showReport;

@@ -5,14 +5,13 @@ var sendReportData = async (dateFrom, dateTo, token, taxRate = 6) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  var result = await res.json();
+  var data = await res.json();
 
   if (!res.ok) {
-    alert(result.msg);
-    return;
+    throw new Error(res.text);
   }
 
-  return result.redirectUrl;
+  return data;
 };
 
 export default sendReportData;

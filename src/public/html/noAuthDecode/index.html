@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="/css/loader.css" type="text/css" />
+    <link rel="stylesheet" href="/css/modalWindow.css" type="text/css" />
     <link rel="stylesheet" href="/css/noAuthDecode.css" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Расшифровка без регистрации</title>
@@ -29,7 +30,6 @@
     <table id="skus-table">
       <thead>
         <tr>
-          <th>Фото</th>
           <th>Артикул</th>
           <th>Кол-во</th>
           <th>Возвраты</th>
@@ -46,24 +46,26 @@
         </tr>
       </thead>
       <tbody id="skus-tbody"></tbody>
-      <table id="totals-table">
-        <thead>
-          <th>Сумма продаж до комиссий</th>
-          <th>WB реализовал</th>
-          <th>Продано шт.</th>
-          <th>Возвратов</th>
-          <th>Доставка в р.</th>
-          <th>Штрафы</th>
-          <th>Удержания/Выплаты</th>
-          <th>Хранение</th>
-          <th>Реклама</th>
-          <th>К перечислению</th>
-          <th>Налоги</th>
-          <th>Маржинальность %</th>
-          <th>Итого в р.</th>
-        </thead>
-      </table>
     </table>
+    <table id="totals-table">
+      <thead>
+        <th>Сумма продаж до комиссий</th>
+        <th>WB реализовал</th>
+        <th>Продано шт.</th>
+        <th>Возвратов</th>
+        <th>Доставка в р.</th>
+        <th>Штрафы</th>
+        <th>Удержания/Выплаты</th>
+        <th>Хранение</th>
+        <th>Реклама</th>
+        <th>К перечислению</th>
+        <th>Налоги</th>
+        <th>Маржинальность %</th>
+        <th>Итого в р.</th>
+      </thead>
+      <tbody id="totals-tbody"></tbody>
+    </table>
+    <button id="download-report-as-xlsx-button">Скачать отчет как эксель</button>
     <script src="/js/noAuthDecode/index.js" type="module"></script>
   </body>
 </html>

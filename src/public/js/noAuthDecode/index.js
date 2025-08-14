@@ -1,4 +1,5 @@
 import checkToken from "./checkToken.js";
+import showReport from "./showReport.js";
 import sendReportData from "./sendReportData.js";
 import { checkDateFrom, checkDateTo } from "./checkReportPeriod.js";
 import { showLoader, deleteLoader } from "../index/services/reportPeriodUploader/services/loader.js";
@@ -29,15 +30,18 @@ var main = async () => {
       document.getElementById("dialog").close();
       await showLoader();
 
-      var redirectUrl = await sendReportData(validDateFrom, validDateTo, validToken);
+      var report = await sendReportData(validDateFrom, validDateTo, validToken);
 
-      if (redirectUrl) {
+      if (!report) {
         await deleteLoader();
-        window.location.href = redirectUrl;
+        throw new Error("Возникла ошибка при получении отчета...\nПопробуйте еще раз");
       }
+
+      await deleteLoader();
+      await showReport(report);
     };
   } catch (e) {
-    alert("Произошла непредвиденная ошибка...\nПопробуйте еще раз");
+    alert(e.message);
 
     await deleteLoader();
   }

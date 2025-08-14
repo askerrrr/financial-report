@@ -3,8 +3,8 @@ body {
   color: #f8f9fa;
   font-family: Arial, sans-serif;
   margin: 0;
-  height: 2000px;
   padding: 100px;
+  min-height: 100vh;
 }
 
 .auth-buttons {
@@ -143,8 +143,7 @@ body {
 
 table {
   width: 80%;
-  position: absolute;
-  margin: 110px auto;
+  margin: 40px auto;
   border-collapse: collapse;
   font-size: 14px;
   background-color: #343a40;
@@ -153,11 +152,25 @@ table {
 }
 
 #skus-table {
-  top: 800px;
+  margin-top: 500px;
 }
 
 #totals-table {
-  top: 1000px;
+  margin-top: 60px;
+}
+
+#download-report-as-xlsx-button {
+  display: block;
+  margin: 60px auto;
+  width: fit-content;
+  padding: 16px 32px;
+  background-color: #495057;
+  color: #f8f9fa;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: none;
+  font-size: 16px;
 }
 
 th,

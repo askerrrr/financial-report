@@ -1,10 +1,10 @@
 import createTdElement from "../report/row/services/createTdElement.js";
 import createInputField from "../report/row/services/createInputField.js";
 
-var table = document.getElementById("report");
+var table = document.getElementById("skus-table");
 
 var createSKUsTable = async (id, report, url) => {
-  var tbody = document.createElement("tbody");
+  var tbody = document.getElementById("skus-tbody");
 
   var { reportId, skus } = report;
 
