@@ -37,7 +37,6 @@ var main = async () => {
       var report = await sendReportData(validDateFrom, validDateTo, validToken, taxRate);
 
       if (!report) {
-        await deleteLoader();
         throw new Error("Возникла ошибка при получении отчета...\nПопробуйте еще раз");
       }
 
