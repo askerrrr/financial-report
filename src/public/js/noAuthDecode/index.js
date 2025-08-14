@@ -5,6 +5,8 @@ import sendReportData from "./sendReportData.js";
 import { checkDateFrom, checkDateTo } from "./checkReportPeriod.js";
 import { showLoader, deleteLoader } from "../index/services/reportPeriodUploader/services/loader.js";
 
+console.log(document.getElementById("skus-table"));
+
 var main = async () => {
   try {
     var getReportBtn = document.getElementById("get-report");
