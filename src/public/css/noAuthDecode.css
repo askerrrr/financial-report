@@ -140,3 +140,49 @@ body {
   border-radius: 6px;
   border-left: 4px solid #6c757d;
 }
+
+table {
+  width: 80%;
+  position: absolute;
+  margin: 110px auto;
+  border-collapse: collapse;
+  font-size: 14px;
+  background-color: #343a40;
+  color: #f8f9fa;
+  display: none;
+}
+
+#skus-table {
+  top: 800px;
+}
+
+#totals-table {
+  top: 1000px;
+}
+
+th,
+td {
+  padding: 20px;
+  text-align: left;
+  border: 1px solid #495057;
+  text-align: center;
+  vertical-align: middle;
+}
+
+th {
+  background-color: #495057;
+  font-weight: bold;
+}
+
+th:first-child,
+td:first-child {
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #3e444a;
+}
+
+tbody tr:hover {
+  background-color: #4a4f55;
+}
