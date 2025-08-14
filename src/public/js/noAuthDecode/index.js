@@ -1,5 +1,6 @@
 import checkToken from "./checkToken.js";
 import showReport from "./showReport.js";
+import checkTaxRate from "./checkTaxRate.js";
 import sendReportData from "./sendReportData.js";
 import { checkDateFrom, checkDateTo } from "./checkReportPeriod.js";
 import { showLoader, deleteLoader } from "../index/services/reportPeriodUploader/services/loader.js";
@@ -23,14 +24,17 @@ var main = async () => {
         return;
       }
 
+      var taxRate = +document.getElementById("tax-rate").value || 0;
+
       var { validToken } = await checkToken(token);
       var { validDateFrom } = await checkDateFrom(dateFrom);
       var { validDateTo } = await checkDateTo(validDateFrom);
+      var { taxRate } = await checkTaxRate(taxRate);
 
       document.getElementById("dialog").close();
       await showLoader();
 
-      var report = await sendReportData(validDateFrom, validDateTo, validToken);
+      var report = await sendReportData(validDateFrom, validDateTo, validToken, taxRate);
 
       if (!report) {
         await deleteLoader();
