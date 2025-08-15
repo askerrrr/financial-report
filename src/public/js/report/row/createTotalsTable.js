@@ -1,6 +1,4 @@
 import createTdElement from "./services/createTdElement.js";
-import calcTotalFinalProfit from "./services/calcTotalFinalProfit.js";
-import calcTotalProfitMargin from "./services/calcTotalProfitMargin.js";
 
 var table = document.getElementById("totals-table");
 
@@ -18,9 +16,7 @@ var createTotalsTable = async (report) => {
   var totalStorageCostTd = await createTdElement(report.totalStorageCost);
   var totalDeliveryCostTd = await createTdElement(report.totalDeliveryCost);
 
-  var totalProfitMargin = await calcTotalProfitMargin(report.totalRetailAmount, report.totalFinalProfit);
-
-  var totalProfitMarginTd = await createTdElement(totalProfitMargin, "totalProfitMargin");
+  var totalProfitMarginTd = await createTdElement(report.totalProfitMargin, "totalProfitMargin");
 
   var totalSoldTd = await createTdElement(report.totalSold);
 
@@ -34,11 +30,9 @@ var createTotalsTable = async (report) => {
 
   var totalTaxAmountTd = await createTdElement(report.totalTaxAmount);
 
-  var totalFinalProfit = await calcTotalFinalProfit(report.skus);
+  var totalFinalProfitTd = await createTdElement(report.totalFinalProfit, "totalFinalProfit");
 
-  var totalFinalProfitTd = await createTdElement(totalFinalProfit, "totalFinalProfit");
-
-  if (+totalFinalProfit < 0) {
+  if (report.totalFinalProfit < 0) {
     totalFinalProfitTd.style.color = "red";
   }
 
