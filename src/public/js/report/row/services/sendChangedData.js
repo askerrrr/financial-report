@@ -1,6 +1,5 @@
 var sendChangedData = async (data) => {
   var { url } = data;
-  delete data.url;
 
   var res = await fetch(url, {
     method: "POST",

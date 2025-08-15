@@ -25,7 +25,7 @@ var changeReportDetail = async (req, res, next) => {
   var updatedReport = await calcRestReportTotalParams(totalParams, changedSKUs);
 
   var success = await saveUpdatedReport(userId, reportId, updatedReport);
-
+  console.log({ success });
   if (success) {
     var { totalFinalProfit, totalProfitMargin } = updatedReport;
     var { profitMargin, finalProfitPerSKU } = skuWithCalculatedParams;
