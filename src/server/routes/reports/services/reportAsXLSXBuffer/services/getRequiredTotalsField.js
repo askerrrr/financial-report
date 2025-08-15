@@ -5,6 +5,7 @@ var getRequiredTotalsField = async (totalValues) => {
     dateTo: totalValues.dateTo,
     totalRetailAmount: totalValues.totalRetailAmount,
     totalRevenue: totalValues.totalRevenue,
+    totalSold: totalValues.totalSold,
     totalDeliveryCost: totalValues.totalDeliveryCost,
     totalStorageCost: totalValues.totalStorageCost,
     totalPaidAcceptance: totalValues.totalPaidAcceptance,
