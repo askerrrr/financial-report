@@ -1,5 +1,5 @@
 var JSZip = require("jszip");
-var { getReportAsXLSXBuffer, getMonthlySummaryBuffer } = require("../services/reportAsXLSXBuffer");
+var { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer } = require("../services/reportAsXLSXBuffer");
 
 var downloadReportsAsZip = async (req, res, next) => {
   var reports = req.reports;
@@ -16,19 +16,16 @@ var downloadReportsAsZip = async (req, res, next) => {
     folder.file(fileName, buffer);
   }
 
-  var monthlySummaryBuffer = await getMonthlySummaryBuffer(reports);
+  var monthlySummaryBuffer = await getMonthlySummaryAsXLSXBuffer(reports);
 
   folder.file("Сводка.xlsx", monthlySummaryBuffer);
 
-  var zipBuffer = await zip.generateAsync({
-    type: "nodebuffer",
-    compression: "DEFLATE",
-  });
+  var zipBuffer = await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" });
 
   res.set({
     "Content-Type": "application/zip",
-    "Content-Disposition": 'attachment; filename="reports.zip"',
     "Content-Length": zipBuffer.length,
+    "Content-Disposition": 'attachment; filename="reports.zip"',
   });
 
   return res.send(zipBuffer);

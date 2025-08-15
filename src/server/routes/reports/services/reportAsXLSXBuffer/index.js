@@ -21,7 +21,7 @@ var getReportAsXLSXBuffer = async (report) => {
   return buffer;
 };
 
-var getMonthlySummaryBuffer = async (reports) => {
+var getMonthlySummaryAsXLSXBuffer = async (reports) => {
   var workbook = new ExcelJS.Workbook();
 
   var sheet = workbook.addWorksheet("Лист 1");
@@ -39,4 +39,4 @@ var getMonthlySummaryBuffer = async (reports) => {
   return buffer;
 };
 
-module.exports = { getReportAsXLSXBuffer, getMonthlySummaryBuffer };
+module.exports = { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer };
