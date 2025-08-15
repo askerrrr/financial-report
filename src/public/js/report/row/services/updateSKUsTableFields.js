@@ -1,4 +1,4 @@
-var updateCalculatedTableFields = async (sku) => {
+var updateSKUsTableFields = async (sku) => {
   var { skuIndex } = sku;
 
   delete sku.skuIndex;
@@ -10,4 +10,4 @@ var updateCalculatedTableFields = async (sku) => {
   }
 };
 
-export default updateCalculatedTableFields;
+export default updateSKUsTableFields;

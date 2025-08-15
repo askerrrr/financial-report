@@ -1,6 +1,6 @@
 import sendChangedData from "./sendChangedData.js";
-import updateTotalTableField from "./updateTotalTableField.js";
-import updateCalculatedTableFields from "./updateCalculatedTableFields.js";
+import updateTotalsTableFields from "./updateTotalsTableFields.js";
+import updateSKUsTableFields from "./updateSKUsTableFields.js";
 
 var openModal = async (costPriceData, valueDisplay) => {
   var modal = document.createElement("div");
@@ -34,9 +34,9 @@ var openModal = async (costPriceData, valueDisplay) => {
 
     var { total, ...sku } = data;
 
-    await updateCalculatedTableFields(sku);
+    await updateSKUsTableFields(sku);
 
-    await updateTotalTableField(total);
+    await updateTotalsTableFields(total);
   });
 
   var cancelButton = document.createElement("button");
