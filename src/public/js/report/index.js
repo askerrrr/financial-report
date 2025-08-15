@@ -1,8 +1,8 @@
-import deleteReport from "./row/deleteReport.js";
 import createSKUsTable from "./row/createSKUsTable.js";
 import createTotalsTable from "./row/createTotalsTable.js";
 import getReportInfo from "./row/services/getReportInfo.js";
 import downloadReportAsXLSX from "./downloadReportAsXLSX.js";
+import deleteReportHandler from "./row/deleteReportHandler.js";
 import getCookieValueByName from "../index/services/getCookieValueByName.js";
 import injectBase64IntoImgTags from "./row/services/injectBase64IntoImgTags.js";
 
@@ -35,7 +35,7 @@ var showReport = async () => {
   await createTotalsTable(report);
 
   await downloadReportAsXLSX(report, downloadReportLink);
-  await deleteReport(report);
+  await deleteReportHandler(report);
 };
 
 showReport();

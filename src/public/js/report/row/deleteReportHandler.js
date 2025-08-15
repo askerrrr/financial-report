@@ -10,7 +10,7 @@ var sendDeletionRequest = async (reportData) => {
   return res.ok;
 };
 
-var deleteReport = async (report) =>
+var deleteReportHandler = async (report) =>
   button.addEventListener("click", async (e) => {
     e.preventDefault();
 
@@ -44,4 +44,4 @@ var deleteReport = async (report) =>
     return;
   });
 
-export default deleteReport;
+export default deleteReportHandler;
