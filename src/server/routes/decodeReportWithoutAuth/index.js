@@ -2,7 +2,7 @@ var { Router } = require("express");
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.get("/", require("./controllers/getNoAuthDecodePage"));
+router.get("/", require("./controllers/getDecodeReportWithoutAuthPage"));
 
 router.get("/report/:id", require("./controllers/getReportPage"));
 

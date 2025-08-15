@@ -6,9 +6,7 @@ var verifyJWTToken = async (req, res, next) => {
     var token = req.cookies?.token;
 
     if (!token) {
-      return res.sendFile(
-        join(__dirname, "../../public/html/noAuthDecode/index.html")
-      );
+      return res.sendFile(join(__dirname, "../../public/html/decodeReportWithoutAuth/index.html"));
     }
 
     var user = JWT.verify(token, "secretkey");

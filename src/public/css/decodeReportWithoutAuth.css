@@ -48,7 +48,7 @@ body {
   background-color: #6c757d;
 }
 
-#no-auth-decode-button {
+#decode-report-without-auth-button {
   background-color: #343a40;
   color: #ffffff;
   border: 2px solid #495057;

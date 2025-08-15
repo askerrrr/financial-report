@@ -4,16 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="/css/loader.css" type="text/css" />
     <link rel="stylesheet" href="/css/modalWindow.css" type="text/css" />
-    <link rel="stylesheet" href="/css/noAuthDecode.css" type="text/css" />
+    <link rel="stylesheet" href="/css/decodeReportWithoutAuth.css" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Расшифровка без регистрации</title>
   </head>
   <body>
-    <button id="no-auth-decode-button" type="button">Расшифровка отчета без регистрации</button>
+    <button id="decode-report-without-auth-button" type="button">Расшифровка отчета без регистрации</button>
     <div class="auth-buttons">
       <a href="/auth" id="auth">Войти</a>
       <a href="/reg" id="registration">Регистрация</a>
-    </div>
+    </div>  
     <dialog id="dialog">
       <form>
         <p>Для получения отчета необходим токен с тремя категориями: Аналитика, Продвижение, Статистика</p>
@@ -68,6 +68,6 @@
       <tbody id="totals-tbody"></tbody>
     </table>
     <button id="download-report-as-xlsx-button">Скачать отчет как эксель</button>
-    <script src="/js/noAuthDecode/index.js" type="module"></script>
+    <script src="/js/decodeReportWithoutAuth/index.js" type="module"></script>
   </body>
 </html>

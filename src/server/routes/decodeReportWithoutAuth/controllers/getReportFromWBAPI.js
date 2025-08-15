@@ -1,5 +1,5 @@
 var { randomBytes } = require("node:crypto");
-var parseReports = require("../../reports/services/writeAndCalcReportDataFromWBAPI/");
+var parseReports = require("../../reports/services/writeAndCalcReportDataFromWBAPI");
 var getReportByPeriodFromWBAPI = require("../../reports/services/different/getReportByPeriodFromWBAPI");
 var createPaidStorageReportTask = require("../../reports/services/different/createPaidStorageReportTask");
 var getAdvertisingCostsForPeriod = require("../../reports/services/different/getAdvertisingCostsForPeriod");
@@ -38,8 +38,8 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   req.app.locals.reports = [{ id, taxRate, report }];
 
-  var setCostPriceLink = "/no-auth-decode/report/set-cost-price";
-  var downloadReportLink = "/no-auth-decode/xlsx/" + id + "/" + report.reportId;
+  var setCostPriceLink = "/decode-report-without-auth/report/set-cost-price";
+  var downloadReportLink = "/decode-report-without-auth/xlsx/" + id + "/" + report.reportId;
 
   return res.json({ id, report, setCostPriceLink, downloadReportLink });
 };
