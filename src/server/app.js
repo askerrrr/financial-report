@@ -39,6 +39,7 @@ app.use(checkDBState);
 
 app.use("/decode-report-without-auth/", require("./routes/decodeReportWithoutAuth"));
 app.use("/auth", require("./routes/auth/"));
+app.use("/admin", require("./routes/admin/"));
 app.use("/reg", require("./routes/registration/"));
 
 app.use(cookieParser());
