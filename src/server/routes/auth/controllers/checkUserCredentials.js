@@ -6,25 +6,23 @@ var checkCredentials = require("../services/checkCredentials");
 var checkUserCredentials = async (req, res, next) => {
   var { getUserByLogin } = req.app.locals.userCollectionServices;
 
-  var userData = req.body;
+  var existUser = await getUserByLogin(req.body.login);
 
-  var userDataFromDB = await getUserByLogin(userData.login);
-
-  if (!userDataFromDB) {
+  if (!existUser) {
     return res.sendStatus(404);
   }
 
-  var successAuth = await checkCredentials(userData, userDataFromDB);
+  var success = await checkCredentials(req.body, existUser);
 
-  if (!successAuth) {
+  if (!success) {
     return res.sendStatus(403);
   }
 
-  var payload = { role: "user", userId: userDataFromDB.userId };
+  var payload = { role: "user", userId: existUser.userId };
 
   var token = JWT.sign(payload, env.secretKey, { expiresIn: "2h" });
 
-  var userId = userDataFromDB.userId;
+  var userId = existUser.userId;
 
   return res
     .cookie("token", token, { httpOnly: true, maxAge: 2000 * 60 * 60 })
