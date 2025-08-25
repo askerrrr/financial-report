@@ -1,11 +1,7 @@
-import getCookieValueByName from "../getCookieValueByName.js";
-
-var userId = await getCookieValueByName("userId");
-
 var sendWBAuthToken = async (token) => {
   var res = await fetch("/token", {
     method: "POST",
-    body: JSON.stringify({ userId, token }),
+    body: JSON.stringify({ token }),
     headers: { "Content-Type": "application/json" },
   });
 
