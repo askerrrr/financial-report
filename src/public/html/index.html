@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/index.css" type="text/css" />
+    <link rel="stylesheet" href="/css/upload.css" type="text/css" />
+    <link rel="stylesheet" href="/css/modalWindow.css" type="text/css" />
+    <link rel="stylesheet" href="/css/loader.css" type="text/css" />
+    <link rel="icon" href="../image/favicon.ico" type="image/x-icon" />
+    <title>Отчёты</title>
+  </head>
+  <body id="main">
+    <button
+      class="options"
+      id="options"
+      onclick="window.location.href='/tax_params'"
+    >
+      Настройки
+    </button>
+    <button class="token-button" id="token-button">Загрузить токен</button>
+    <button class="period-button" id="period-button">
+      Получить отчет за период
+    </button>
+    <!-- <form enctype="multipart/form-data" id="upload-form">
+      <label for="fileinput" class="input-file">
+        <input
+          type="file"
+          name="file"
+          id="fileinput"
+          multiple
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        />
+        <span>Загрузить файл отчёта</span>
+      </label>
+    </form> -->
+    <div id="years_container" class="details"></div>
+    <script src="/js/index/index.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,231 @@
+body {
+  background-color: #212529;
+  color: #f8f9fa;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 200px;
+}
+
+table {
+  width: 100%;
+  margin: 110px auto;
+  border-collapse: collapse;
+  font-size: 14px;
+  background-color: #343a40;
+  color: #f8f9fa;
+}
+
+th,
+td {
+  padding: 20px;
+  text-align: left;
+  border: 1px solid #495057;
+  text-align: center;
+  vertical-align: middle;
+}
+
+th {
+  background-color: #495057;
+  font-weight: bold;
+}
+
+th:first-child,
+td:first-child {
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #3e444a;
+}
+
+tbody tr:hover {
+  background-color: #4a4f55;
+}
+
+button {
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #212529;
+  padding: 5px 10px;
+  font-family: Arial, sans-serif;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  background-color: #212529;
+  color: white;
+}
+
+#url-to-main {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  padding: 15px;
+  background-color: #343a40;
+  border: 1px solid #495057;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  font-size: 14px;
+}
+
+#report-info {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #343a40;
+  border: 1px solid #495057;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  font-size: 14px;
+  text-align: center;
+}
+
+#report-info h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #f8f9fa;
+  border-bottom: 1px solid #495057;
+  padding-bottom: 5px;
+}
+
+#report-info p {
+  margin: 5px 0;
+  color: #f8f9fa;
+}
+
+#download-report-as-xlsx-button {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  padding: 15px;
+  background-color: #343a40;
+  border: 1px solid #495057;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+}
+
+#download-report-as-xlsx-button h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #f8f9fa;
+  border-bottom: 1px solid #495057;
+  padding-bottom: 5px;
+}
+
+#download-report-as-xlsx-button {
+  margin: 5px 0;
+  color: #f8f9fa;
+}
+
+.item-photo-uploader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 80px;
+  background-color: #343a40;
+  border: 1px dashed #495057;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.item-photo-uploader:hover {
+  border-color: #6c757d;
+}
+
+.cell-photo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.item-photo-uploader span {
+  color: #adb5bd;
+  font-size: 12px;
+  display: block;
+}
+
+.photo-cell-container {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 80px;
+}
+
+.delete-img-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-img-button::before {
+  content: "";
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M19 7h-3V6a4 4 0 0 0-4-4h-4a4 4 0 0 0-4 4v1H5a1 1 0 0 0 0 2h1v11a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V9h1a1 1 0 0 0 0-2zM9 6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1H9V6zm9 14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h12v11z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.delete-img-button:hover {
+  opacity: 1;
+  transform: scale(1.1);
+  color: #ff6b6b;
+}
+
+.delete-img-button:active {
+  transform: scale(0.95);
+}
+
+#delete-report-button {
+  position: absolute;
+  top: 160px;
+  right: 20px;
+  padding: 15px;
+  background-color: #343a40;
+  border: 1px solid #495057;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+}
+
+#delete-report-button h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #f8f9fa;
+  border-bottom: 1px solid #495057;
+  padding-bottom: 5px;
+}
+
+#delete-report-button {
+  margin: 5px 0;
+  color: #f8f9fa;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/report.css" type="text/css" />
+    <link rel="icon" href="../../image/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/modalWindow.css" type="text/css" />
+    <title>Report</title>
+  </head>
+  <body id="report-body">
+    <button id="download-report-as-xlsx-button">Скачать отчет как эксель</button>
+    <button id="delete-report-button">Удалить отчет</button>
+    <form action="/"><button id="url-to-main">На главную</button></form>
+    <table id="totals-table">
+      <thead>
+        <th>WB реализовал</th>
+        <th>Продано шт.</th>
+        <th>Возвратов</th>
+        <th>К перечислению продавцу</th>
+        <th>Себестоимость проданного товара</th>
+        <th>Доставка</th>
+        <th>Приёмка</th>
+        <th>Штрафы</th>
+        <th>Удержания/Выплаты</th>
+        <th>Хранение</th>
+        <th>Реклама</th>
+        <th>Налоги</th>
+        <th>Маржинальность %</th>
+        <th>Итого</th>
+      </thead>
+      <tbody id="totals-tbody"></tbody>
+    </table>
+    <details
+      id="details"
+      onclick="window['details'].open ? window['summary-skus'].textContent = 'Открыть таблицу с товарами' : window['summary-skus'].textContent = 'Закрыть таблицу с товарами'"
+    >
+      <summary id="summary-skus">Открыть таблицу с товарами</summary>
+      <table id="skus-table">
+        <thead>
+          <tr>
+            <th>Фото</th>
+            <th>Артикул</th>
+            <th>Количество</th>
+            <th>Возвраты</th>
+            <th>Доставка</th>
+            <th>Удержания/Выплаты</th>
+            <th>Штрафы</th>
+            <th>Хранение</th>
+            <th>Приёмка</th>
+            <th>Выплата с вычетом всех услуг WB</th>
+            <th>Себестоимость</th>
+            <th>Маржинальность %</th>
+            <th>Итого</th>
+          </tr>
+        </thead>
+        <tbody id="skus-tbody"></tbody>
+      </table>
+    </details>
+    <script src="/js/report/index.js" type="module"></script>
+  </body>
+</html>
