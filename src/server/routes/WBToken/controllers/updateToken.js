@@ -1,11 +1,7 @@
 var updateToken = async (req, res, next) => {
-  console.log('req.body: ', req.body)
   var { token } = req.body;
-  
-  var userId = req.app.locals.userId
+    var userId = req.app.locals.userId
   var { updateWBToken, getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
-
-
 
   var currentToken = await getWBTokenByUserId(userId);
 
