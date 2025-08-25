@@ -2,7 +2,7 @@ import createModal from "./services/createModal.js";
 import createTitle from "./services/createTitle.js";
 import isFutureDate from "./services/isFutureDate.js";
 import getDateToByDateFrom from "../periodUtils/index.js";
-import sendPeriodDate from "./services/sendPeriodDate.js";
+import sendReportPeriod from "./services/sendReportPeriod.js";
 import createInputField from "./services/createInputField.js";
 import createSaveButton from "./services/createSaveButton.js";
 import { showLoader, deleteLoader } from "./services/loader.js";
@@ -15,15 +15,9 @@ import insertNewReportToTree from "../reportTreeBuilder/insertNewReportToTree/in
 var openReportPeriodModal = async () => {
   var modal = await createModal("modal-overlay");
 
-  var dateFromInput = await createInputField(
-    "dateFromInput",
-    "начало в формате гггг.мм.дд - 2025.04.21"
-  );
+  var dateFromInput = await createInputField("dateFromInput", "начало в формате гггг.мм.дд - 2025.04.21");
 
-  var dateToInput = await createInputField(
-    "dateToInput",
-    "конец в формате гггг.мм.дд - 2025.04.27"
-  );
+  var dateToInput = await createInputField("dateToInput", "конец в формате гггг.мм.дд - 2025.04.27");
 
   var saveButton = await createSaveButton();
 
@@ -63,7 +57,7 @@ var openReportPeriodModal = async () => {
 
     await showLoader();
 
-    var reportData = await sendPeriodDate(validDateFrom, validDateTo);
+    var reportData = await sendReportPeriod(validDateFrom, validDateTo);
 
     if (!reportData) {
       await deleteLoader();
