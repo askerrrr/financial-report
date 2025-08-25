@@ -1,7 +1,11 @@
-var createCancelButton = async () => {
+var createCancelButton = async (modal) => {
   var button = document.createElement("button");
   button.className = "modal-button modal-button-cancel";
-  button.textContent = "Отмена";
+  button.textContent = "Закрыть";
+
+  button.onclick = () => {
+    document.body.removeChild(modal);
+  };
 
   return button;
 };

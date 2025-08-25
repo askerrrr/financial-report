@@ -14,11 +14,7 @@ var openReportPeriodModal = async () => {
 
   var saveButton = await createSaveButton(modal, dateFromInput, dateToInput);
 
-  var cancelButton = await createCancelButton();
-
-  cancelButton.onclick = () => {
-    document.body.removeChild(modal);
-  };
+  var cancelButton = await createCancelButton(modal);
 
   var buttonsContainer = await createButtonsContainer();
   buttonsContainer.append(cancelButton, saveButton);
