@@ -12,8 +12,8 @@ var env = Object.create(
 
     mongoose_options: {
       value: {
-        user: "admin",
-        pass: "passwd",
+        user: process.env.MONGO_INITDB_ROOT_USERNAME || "admin",
+        pass: process.env.MONGO_INITDB_ROOT_PASSWORD || "passwd",
         authSource: "admin",
         authMechanism: "SCRAM-SHA-1",
       },
