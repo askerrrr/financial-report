@@ -35,9 +35,18 @@ class ReportNotFoundError extends Error {
   }
 }
 
+class FormDataError extends Error {
+  constructor(message){
+    super(message)
+    this.status = 400
+    this.message = message
+  }
+}
+
 module.exports = {
-  DatabaseError,
   WBAPIError,
+  FormDataError,
+  DatabaseError,
   ReportNotFoundError,
   DatabaseConnectionError,
 };

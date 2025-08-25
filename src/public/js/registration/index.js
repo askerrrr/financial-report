@@ -1,4 +1,3 @@
-import checkFormData from "./checkFormData.js";
 import sendRegistationData from "./sendRegistationData.js";
 
 var registrationFormHandler = async () =>
@@ -6,12 +5,17 @@ var registrationFormHandler = async () =>
     e.preventDefault();
 
     var login = document.getElementById("login").value;
+
+    if(!login) {
+      alert('Придумайте логин')
+      return 
+    }
+
     var passwd = document.getElementById("passwd").value;
 
-    var validData = await checkFormData(login, passwd);
-
-    if (!validData) {
-      return;
+    if(!passwd){
+      alert('Придумайте пароль')
+      return 
     }
 
     var redirectUrl = await sendRegistationData(login, passwd);

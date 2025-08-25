@@ -1,6 +1,8 @@
 var env = require("../../../env");
 var JWT = require("jsonwebtoken");
 var { randomBytes } = require("node:crypto");
+var checkLogin = require('../services/checkLogin')
+var checkPasswd= require('../services/checkPasswd')
 var createUserReportPhotosFolder = require("../services/createUserReportPhotosFolder");
 
 var createUser = async (req, res, next) => {
@@ -10,7 +12,10 @@ var createUser = async (req, res, next) => {
   var { createTokenCollectionEntity } = req.app.locals.tokenCollectionServices;
   var { createReportsTreeEntity } = req.app.locals.reportsTreeCollectionServices;
 
-  var user = req.body;
+  var user = req.body
+
+  await checkLogin(user.login)
+  await checkPasswd(user.passwd)
 
   var userIsExist = await getUserByLogin(user.login);
 
