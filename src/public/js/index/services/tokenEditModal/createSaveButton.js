@@ -1,5 +1,5 @@
 import sendWBAuthToken from "./sendToken.js";
-import checkToken from "../../../decodeReportWithoutAuth/checkToken.js";
+import checkToken from "../../../decodeReportWithoutRegistration/checkToken.js";
 
 var createSaveButton = async (input, modal) => {
   var saveButton = document.createElement("button");

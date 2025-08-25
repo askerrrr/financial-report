@@ -5,7 +5,7 @@ var { mkdir } = require("node:fs/promises");
 var cookieParser = require("cookie-parser");
 var checkDBState = require("./middleware/mongoose");
 var userCollectionServices = require("./database/collections/users");
-var adminCollectionServices = require('./database/collections/admins')
+var adminCollectionServices = require("./database/collections/admins");
 var tokenCollectionServices = require("./database/collections/tokens");
 var reportCollectionServices = require("./database/collections/reports");
 var taxParamsCollectionServices = require("./database/collections/taxParams");
@@ -19,7 +19,7 @@ var app = express();
   await mkdir("/var/temporary-photo-storage/", { recursive: true });
 
   app.locals.userCollectionServices = userCollectionServices;
-  app.locals.adminCollectionServices = adminCollectionServices
+  app.locals.adminCollectionServices = adminCollectionServices;
   app.locals.reportCollectionServices = reportCollectionServices;
   app.locals.tokenCollectionServices = tokenCollectionServices;
   app.locals.taxParamsCollectionServices = taxParamsCollectionServices;
