@@ -44,9 +44,9 @@ router.post("/upload/file", updoadReports.single("file"), writeReport);
 
 router.post("/upload/files", updoadReports.array("file", 10), writeReports);
 
-router.put("/wbapi", require("./controllers/getReportFromWBAPI"), require("./controllers/writeReportFromWBAPI"));
+router.post("/wbapi", require("./controllers/getReportFromWBAPI"), require("./controllers/writeReportFromWBAPI"));
 
-router.post("/change", require("./controllers/changeReportDetail"));
+router.put("/change", require("./controllers/changeReportDetail"));
 
 router.post("/item-photo-upload/:itemname", uploadItemPhotos.single("item-photo"), require("./controllers/itemPhotoUpload"));
 
