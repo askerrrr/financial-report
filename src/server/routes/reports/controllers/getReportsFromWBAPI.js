@@ -4,7 +4,7 @@ var getAdvertisingCostsForPeriod = require("../services/different/getAdvertising
 var getPaidStorageReportByTaskIdFromWBAPI = require("../services/different/getPaidStorageReportByTaskIdFromWBAPI");
 var checkPaidStorageReportCreationStatus = require("../services/different/checkPaidStorageReportCreationStatus");
 
-var getReportFromWBAPI = async (req, res, next) => {
+var getReportsFromWBAPI = async (req, res, next) => {
   var userId = req.app.locals.userId
   var { dateFrom, dateTo } = req.body;
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
@@ -36,4 +36,4 @@ var getReportFromWBAPI = async (req, res, next) => {
   next();
 };
 
-module.exports = getReportFromWBAPI;
+module.exports = getReportsFromWBAPI;
