@@ -29,12 +29,6 @@ var openReportPeriodModal = async () => {
   document.body.append(modal);
 
   dateFromInput.focus();
-
-  modal.onclick = (e) => {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  };
 };
 
 export default openReportPeriodModal;
