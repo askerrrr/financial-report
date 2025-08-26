@@ -24,6 +24,8 @@ var errorHandler = async (e, req, res, next) => {
   if(e instanceof FormDataError) {
     return res.status(e.status).json({msg: e.message})
   }
+
+   res.status(e.status).json({msg: e.message, status: e.status})
 };
 
 module.exports = errorHandler;
