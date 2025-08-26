@@ -5,17 +5,13 @@ var sendReportPeriod = async (dateFrom, dateTo) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  console.log({ status: res.status });
-
   if (!res.ok) {
     var { msg } = await res.json();
-
     alert(msg);
     return;
   }
 
   var reportData = await res.json();
-
   return reportData;
 };
 
