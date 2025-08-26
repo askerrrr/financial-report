@@ -6,21 +6,18 @@ var checkDateFrom = async (dateFrom) => {
   var standardizedDateFrom = await standardizeDate(dateFrom);
 
   if (!standardizedDateFrom) {
-    alert("Начало периода введено некорректно");
-    return;
+    throw new Error("Начало периода введено некорректно");
   }
 
   if (await isFutureDate(standardizedDateFrom)) {
-    alert("Период введен некорректно");
-    return;
+    throw new Error("Период введен некорректно");
   }
 
   if (!(await isMonday(standardizedDateFrom))) {
-    alert("Начало периода не является понедельником");
-    return;
+    throw new Error("Начало периода не является понедельником");
   }
 
-  return standardizedDateFrom;
+  return { validDateFrom: standardizedDateFrom };
 };
 
 export default checkDateFrom;

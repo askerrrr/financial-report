@@ -10,33 +10,38 @@ var createSaveButton = async (modal, dateFromInput, dateToInput) => {
   button.textContent = "Сохранить";
 
   button.onclick = async () => {
-    document.body.removeChild(modal);
+    try {
+      document.body.removeChild(modal);
 
-    var dateFrom = dateFromInput.value;
-    var validDateFrom = await checkDateFrom(dateFrom);
+      var dateFrom = dateFromInput.value;
+      var { validDateFrom } = await checkDateFrom(dateFrom);
 
-    var dateTo = dateToInput?.value;
-    var validDateTo = await checkDateTo(dateTo, validDateFrom);
+      var dateTo = dateToInput?.value;
+      var { validDateTo } = await checkDateTo(dateTo, validDateFrom);
 
-    await showLoader();
+      await showLoader();
 
-    var reportData = await sendReportPeriod(validDateFrom, validDateTo);
+      var reportData = await sendReportPeriod(validDateFrom, validDateTo);
 
-    if (!reportData) {
+      if (!reportData) {
+        await deleteLoader();
+        return;
+      }
+
       await deleteLoader();
+      await insertNewReportToTree(reportData);
+
+      var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
+
+      if (confirmed) {
+        window.location.href = "/reports/" + reportData.reportId;
+      }
+
       return;
+    } catch (e) {
+      alert(e.message);
+      await deleteLoader();
     }
-
-    await deleteLoader();
-    await insertNewReportToTree(reportData);
-
-    var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
-
-    if (confirmed) {
-      window.location.href = "/reports/" + reportData.reportId;
-    }
-
-    return;
   };
 
   return button;

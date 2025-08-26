@@ -10,16 +10,14 @@ var checkDateTo = async (dateTo, validDateFrom) => {
   var standardizedDateTo = await standardizeDate(dateTo);
 
   if (await isFutureDate(standardizedDateTo)) {
-    alert("Отчет еще не готов...");
-    return;
+    throw new Error("Отчет еще не готов...");
   }
 
   if (!standardizedDateTo) {
-    alert("Конец периода введен некорректно");
-    return;
+    throw new Error("Конец периода введен некорректно");
   }
 
-  return standardizedDateTo;
+  return { validDateTo: standardizedDateTo };
 };
 
 export default checkDateTo;

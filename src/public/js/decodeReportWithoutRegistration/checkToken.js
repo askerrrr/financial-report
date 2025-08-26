@@ -15,8 +15,12 @@ var getStatus = async (url, token) => {
   return { Status };
 };
 
-var checkToken = async (token) =>
-  new Promise(async (resolve, reject) => {
+var checkToken = async (token) => {
+  if (!token) {
+    throw new Error("Введите токен");
+  }
+
+  return new Promise(async (resolve, reject) => {
     var failedStatuses = [];
 
     await Promise.all(
@@ -39,5 +43,6 @@ var checkToken = async (token) =>
       reject(new Error("Invalid token categories"));
     }
   });
+};
 
 export default checkToken;
