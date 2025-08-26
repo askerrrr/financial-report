@@ -21,7 +21,6 @@ var checkLogin = async (login) => {
 
   var result = login.match(regExp)
 
-
   if (result.length !== login.length) {
     throw new FormDataError("Логин должен содержать только латинские буквы или цифры");
   }
