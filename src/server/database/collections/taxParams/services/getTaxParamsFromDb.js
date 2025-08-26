@@ -10,7 +10,7 @@ var getTaxParamsFromDb = async (collection, userId, year) => {
 
     return years;
   } catch (e) {
-    throw new DatabaseError();
+    throw new DatabaseError(userId, e);
   }
 };
 
