@@ -1,7 +1,8 @@
-var createButtonsContainer = async () => {
+var createButtonsContainer = async (cancelButton, saveButton) => {
   var div = document.createElement("div");
   div.className = "modal-buttons";
 
+  div.append(cancelButton, saveButton);
   return div;
 };
 
