@@ -30,7 +30,7 @@ var uploadItemPhotos = multer({
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.get("/:id", require("./controllers/getReportHTML"));
+router.get("/:id", require("./controllers/getReportPage"));
 
 router.get("/:userId/:id", require("./controllers/getReport"));
 
