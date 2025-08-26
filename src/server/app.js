@@ -18,6 +18,8 @@ var app = express();
   await mkdir("/var/report_skus_photo/", { recursive: true });
   await mkdir("/var/temporary-photo-storage/", { recursive: true });
 
+  process.env.NODE_ENV='production'
+  
   app.locals.userCollectionServices = userCollectionServices;
   app.locals.adminCollectionServices = adminCollectionServices;
   app.locals.reportCollectionServices = reportCollectionServices;
