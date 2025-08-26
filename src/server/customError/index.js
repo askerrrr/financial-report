@@ -40,11 +40,11 @@ class ReportNotFoundError extends Error {
 }
 
 class FormDataError extends Error {
-  constructor(message, invalidLogin){
+  constructor(message, invalidField){
     super(message)
     this.status = 400
     this.message = message
-    this.invalidLogin = invalidLogin
+    this.invalidField = invalidField
     this.name = this.constructor.name
   }
 }

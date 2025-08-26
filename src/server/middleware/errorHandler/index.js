@@ -21,7 +21,7 @@ var errorHandler = async (e, req, res, next) => {
   }
 
   if(e instanceof FormDataError) {
-    return res.status(e.status).json({msg: e.message, invalidLogin: e.invalidLogin})
+    return res.status(e.status).json({msg: e.message, invalidField: e.invalidField})
   }
 
   res.status(e.status).json({msg: e.message, status: e.status})
