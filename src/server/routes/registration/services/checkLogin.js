@@ -17,11 +17,12 @@ var checkLogin = async (login) => {
     throw new FormDataError("Максимальная длина логина равна 20");
   }
 
-  var loginWithoutNums = login.split("").filter((i) => !+i);
+  var regExp = /[a-zA-Z0-9]/gi
 
-  var loginContainsValidChar = loginWithoutNums.every((i) => i.charCodeAt() > 96 && i.charCodeAt() < 123);
+  var result = login.match(regExp)
 
-  if (!loginContainsValidChar) {
+
+  if (result.length !== login.length) {
     throw new FormDataError("Логин должен содержать только латинские буквы или цифры");
   }
 
