@@ -1,22 +1,22 @@
 import getDateToByDateFrom from "../index/services/periodUtils/index.js";
 import { isMonday } from "../index/services/periodUtils/services/getWeekDaysFromMonth.js";
 import isFutureDate from "../index/services/reportPeriodUploader/services/isFutureDate.js";
-import validateReportPeriod from "../index/services/reportPeriodUploader/services/validateReportPeriod.js";
+import standardizeDate from "../index/services/reportPeriodUploader/services/standardizeDate.js";
 
 var checkDateFrom = async (dateFrom) => {
-  var validDateFrom = await validateReportPeriod(dateFrom);
+  var standardizedDateFrom = await standardizeDate(dateFrom);
 
-  if (await isFutureDate(validDateFrom)) {
+  if (await isFutureDate(standardizedDateFrom)) {
     alert("Период введен некорректно");
     throw new Error("dateFrom is not valid");
   }
 
-  if (!(await isMonday(validDateFrom))) {
+  if (!(await isMonday(standardizedDateFrom))) {
     alert("Начало периода не является понедельником");
     throw new Error("dateFrom is not monday");
   }
 
-  return { validDateFrom };
+  return { dateFrom: standardizedDateFrom };
 };
 
 var checkDateTo = async (dateFrom) => {
@@ -26,19 +26,19 @@ var checkDateTo = async (dateFrom) => {
     dateTo = await getDateToByDateFrom(dateFrom);
   }
 
-  var validDateTo = await validateReportPeriod(dateTo);
+  var standardizedDateTo = await standardizeDate(dateTo);
 
-  if (await isFutureDate(validDateTo)) {
+  if (await isFutureDate(standardizedDateTo)) {
     alert("Отчет еще не готов...");
     throw new Error("the report is not ready");
   }
 
-  if (!validDateTo) {
+  if (!standardizedDateTo) {
     alert("Конец периода введен некорректно");
     throw new Error("the report is not ready");
   }
 
-  return { validDateTo };
+  return { dateTo: standardizedDateTo };
 };
 
 export { checkDateFrom, checkDateTo };

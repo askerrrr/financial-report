@@ -1,4 +1,4 @@
-var validateReportPeriod = async (date) => {
+var standardizeDate = async (date) => {
   var [year, mounth, day] = date.split(".").map(Number);
 
   if (year < 2024 || year > new Date().getFullYear()) {
@@ -24,4 +24,4 @@ var validateReportPeriod = async (date) => {
   return [year, mounth, day].join("-");
 };
 
-export default validateReportPeriod;
+export default standardizeDate;

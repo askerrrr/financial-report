@@ -32,7 +32,7 @@ var checkToken = async (token) =>
     );
 
     if (failedStatuses.length === 0) {
-      resolve({ validToken: token });
+      resolve({ token });
     } else {
       alert("В токене отсутствует категория:" + "\n- " + failedStatuses.join("\n- "));
       document.getElementById("token").value = "";

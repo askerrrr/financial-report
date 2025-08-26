@@ -26,15 +26,15 @@ var main = async () => {
 
       var taxRate = +document.getElementById("tax-rate").value || 0;
 
-      var { validToken } = await checkToken(token);
-      var { validDateFrom } = await checkDateFrom(dateFrom);
-      var { validDateTo } = await checkDateTo(validDateFrom);
+      var { token } = await checkToken(token);
+      var { dateFrom } = await checkDateFrom(dateFrom);
+      var { dateTo } = await checkDateTo(dateFrom);
       var { taxRate } = await checkTaxRate(taxRate);
 
       document.getElementById("dialog").close();
       await showLoader();
 
-      var report = await sendReportData(validDateFrom, validDateTo, validToken, taxRate);
+      var report = await sendReportData(dateFrom, dateTo, token, taxRate);
 
       if (!report) {
         throw new Error("Возникла ошибка при получении отчета...\nПопробуйте еще раз");
