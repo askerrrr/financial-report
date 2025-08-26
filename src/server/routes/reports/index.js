@@ -36,8 +36,6 @@ router.get("/:userId/:id", require("./controllers/getReport"));
 
 router.get("/download-report-as-xlsx/:userId/:reportId", require("./controllers/downloadReportAsXLSX"));
 
-router.get("/check-report-exists/:dateFrom/:dateTo", require("./controllers/checkReportExists"));
-
 router.post("/download-reports-as-zip/", require("./controllers/checkAllCostPricesNonZero"), require("./controllers/downloadReportsAsZip"));
 
 router.post("/period", require("./controllers/changeReportPeriod"));
@@ -46,7 +44,12 @@ router.post("/upload/file", updoadReports.single("file"), writeReport);
 
 router.post("/upload/files", updoadReports.array("file", 10), writeReports);
 
-router.post("/save-new-report", require("./controllers/getReportsFromWBAPI"), require("./controllers/writeReportFromWBAPI"));
+router.post(
+  "/save-new-report",
+  require("./controllers/checkReportExists"),
+  require("./controllers/getReportsFromWBAPI"),
+  require("./controllers/writeReportFromWBAPI")
+);
 
 router.put("/change", require("./controllers/changeReportDetail"));
 

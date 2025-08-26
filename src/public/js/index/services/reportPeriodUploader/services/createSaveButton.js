@@ -1,9 +1,8 @@
 import isFutureDate from "./isFutureDate.js";
+import standardizeDate from "./standardizeDate.js";
 import sendReportPeriod from "./sendReportPeriod.js";
 import { showLoader, deleteLoader } from "./loader.js";
-import checkReportExists from "./checkReportExists.js";
 import getDateToByDateFrom from "../../periodUtils/index.js";
-import standardizeDate from "./standardizeDate.js";
 import { isMonday } from "../../periodUtils/services/getWeekDaysFromMonth.js";
 import insertNewReportToTree from "../../reportTreeBuilder/insertNewReportToTree/index.js";
 
@@ -44,12 +43,6 @@ var createSaveButton = async (modal, dateFromInput, dateToInput) => {
 
     if (!standardizedDateTo) {
       return alert("Конец периода введен некорректно");
-    }
-
-    var reportIsExist = await checkReportExists(standardizedDateFrom, standardizedDateTo);
-
-    if (reportIsExist) {
-      return;
     }
 
     await showLoader();

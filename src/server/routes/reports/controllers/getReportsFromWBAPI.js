@@ -5,33 +5,22 @@ var getPaidStorageReportByTaskIdFromWBAPI = require("../services/different/getPa
 var checkPaidStorageReportCreationStatus = require("../services/different/checkPaidStorageReportCreationStatus");
 
 var getReportsFromWBAPI = async (req, res, next) => {
-  var userId = req.app.locals.userId
-  var { dateFrom, dateTo } = req.body;
+  var { userId, dateFrom, dateTo } = req.body;
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
 
   var token = await getWBTokenByUserId(userId);
-
   var taskId = await createPaidStorageReportTask(dateFrom, dateTo, token, userId);
-
   var statusIsDone = await checkPaidStorageReportCreationStatus(taskId, token);
 
   if (!statusIsDone) {
     return res.sendStatus(304);
   }
 
+  var mainReport = await getReportByPeriodFromWBAPI(dateFrom, dateTo, token, userId);
   var storageReport = await getPaidStorageReportByTaskIdFromWBAPI(taskId, token, userId);
-
   var totalAdvertisingCosts = await getAdvertisingCostsForPeriod(dateFrom, dateTo, token, userId);
 
-  var mainReport = await getReportByPeriodFromWBAPI(dateFrom, dateTo, token, userId);
-
-  req.reportData = {
-    dateTo,
-    dateFrom,
-    mainReport,
-    storageReport,
-    totalAdvertisingCosts,
-  };
+  req.reportData = { dateTo, dateFrom, mainReport, storageReport, totalAdvertisingCosts };
 
   next();
 };
