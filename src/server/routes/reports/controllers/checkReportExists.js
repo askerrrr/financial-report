@@ -4,7 +4,7 @@ var checkReportExists = async (req, res, next) => {
   var { checkReportExistsToDb } = req.app.locals.reportCollectionServices;
 
   var isReportExists = await checkReportExistsToDb(userId, dateFrom, dateTo);
-  console.log({ dateFrom, dateTo, isReportExists });
+
   if (isReportExists) {
     return res.json({ msg: "Отчет за данный период уже существует.\nЧтобы загрузить отчет еще раз, необходимо его удалить." });
   }
