@@ -2,15 +2,14 @@ var multer = require("multer");
 var { WBAPIError, FormDataError, DatabaseError, ReportNotFoundError, DatabaseConnectionError } = require("../../customError");
 
 var errorHandler = async (e, req, res, next) => {
-  console.log("e: ", e);
+  console.log({ msg: e.message, errName: e.name, status: e.status, stack: e.stack, cause: e.cause });
 
   if (e instanceof multer.MulterError) {
-    console.log("MulterError ", e);
     return res.sendStatus(500);
   }
 
   if (e instanceof DatabaseError && DatabaseConnectionError) {
-    return res.sendStatus(500);
+    return res.sendStatus(e.status);
   }
 
   if (e instanceof WBAPIError) {
@@ -18,11 +17,11 @@ var errorHandler = async (e, req, res, next) => {
   }
 
   if (e instanceof ReportNotFoundError) {
-    return res.status(404).json({ msg: e.message });
+    return res.status(e.status).json({ msg: e.message });
   }
 
   if(e instanceof FormDataError) {
-    return res.status(e.status).json({msg: e.message})
+    return res.status(e.status).json({msg: e.message, invalidLogin: e.invalidLogin})
   }
 
   res.status(e.status).json({msg: e.message, status: e.status})

@@ -1,6 +1,7 @@
 class DatabaseError extends Error {
   constructor(userId, e, message) {
     super(message);
+    this.status = 500
     this.userId = userId;
     this.cause = e?.cause ?? "";
     this.stack = e?.stack ?? "";
@@ -12,8 +13,9 @@ class DatabaseError extends Error {
 class DatabaseConnectionError extends Error {
   constructor(message) {
     super(message);
-
+    this.status = 500
     this.message = "Database connection is not established";
+    this.name = this.constructor.name
   }
 }
 
@@ -23,23 +25,27 @@ class WBAPIError extends Error {
     this.userId = userId;
     this.status = status;
     this.message = message;
+    this.name = this.constructor.name
   }
 }
 
 class ReportNotFoundError extends Error {
-  constructor(reportId, message) {
+  constructor(userId, reportId, message) {
     super(message);
-
     this.status = 404;
+    this.userId = userId
     this.message = `the report with id ${reportId} the was not found`;
+    this.name = this.constructor.name
   }
 }
 
 class FormDataError extends Error {
-  constructor(message){
+  constructor(message, invalidLogin){
     super(message)
     this.status = 400
     this.message = message
+    this.invalidLogin = invalidLogin
+    this.name = this.constructor.name
   }
 }
 
