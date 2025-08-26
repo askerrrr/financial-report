@@ -1,6 +1,7 @@
 import isFutureDate from "./isFutureDate.js";
 import sendReportPeriod from "./sendReportPeriod.js";
 import { showLoader, deleteLoader } from "./loader.js";
+import checkReportExists from "./checkReportExists.js";
 import getDateToByDateFrom from "../../periodUtils/index.js";
 import validateReportPeriod from "./validateReportPeriod.js";
 import { isMonday } from "../../periodUtils/services/getWeekDaysFromMonth.js";
@@ -43,6 +44,12 @@ var createSaveButton = async (modal, dateFromInput, dateToInput) => {
 
     if (!validDateTo) {
       return alert("Конец периода введен некорректно");
+    }
+
+    var reportIsExist = await checkReportExists(validDateFrom, validDateTo);
+
+    if (reportIsExist) {
+      return;
     }
 
     await showLoader();

@@ -36,6 +36,8 @@ router.get("/:userId/:id", require("./controllers/getReport"));
 
 router.get("/download-report-as-xlsx/:userId/:reportId", require("./controllers/downloadReportAsXLSX"));
 
+router.get("/check-report-exists/:dateFrom/:dateTo", require("./controllers/checkReportExists"));
+
 router.post("/download-reports-as-zip/", require("./controllers/checkAllCostPricesNonZero"), require("./controllers/downloadReportsAsZip"));
 
 router.post("/period", require("./controllers/changeReportPeriod"));
