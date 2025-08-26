@@ -1,8 +1,6 @@
 var { FormDataError } = require("../../../customError");
 
 var checkLogin = async (login) => {
-  console.log({login})
-
   if(!login){
     throw new FormDataError('Логин не может быть пустым')
   }
