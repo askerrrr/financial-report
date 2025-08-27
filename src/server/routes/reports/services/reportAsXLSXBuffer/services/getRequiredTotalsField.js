@@ -6,6 +6,7 @@ var getRequiredTotalsField = async (totalValues) => {
     totalRetailAmount: totalValues.totalRetailAmount,
     totalSellerPayoutAmount: totalValues.totalSellerPayoutAmount,
     totalSold: totalValues.totalSold,
+    totalReturnAmount: totalValues.totalReturnAmount,
     totalDeliveryCost: totalValues.totalDeliveryCost,
     totalStorageCost: totalValues.totalStorageCost,
     totalPaidAcceptance: totalValues.totalPaidAcceptance,

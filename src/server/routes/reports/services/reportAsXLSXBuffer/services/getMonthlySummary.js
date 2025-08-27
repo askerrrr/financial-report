@@ -10,13 +10,15 @@ var totalRetailAmount = 0,
   totalProductsCosts = 0,
   totalTaxAmount = 0,
   totalProfitMargin = 0,
-  totalFinalProfit = 0;
+  totalFinalProfit = 0,
+  totalReturnAmount = 0;
 
 var getMonthlySummary = async (reports) => {
   for (var report of reports) {
     totalRetailAmount += report.totalRetailAmount;
     totalSellerPayoutAmount += report.totalSellerPayoutAmount;
     totalSold += report.totalSold;
+    totalReturnAmount += report.totalReturnAmount;
     totalDeliveryCost += report.totalDeliveryCost;
     totalStorageCost += report.totalStorageCost;
     totalPaidAcceptance += report.totalPaidAcceptance;
@@ -36,6 +38,7 @@ var getMonthlySummary = async (reports) => {
     totalRetailAmount,
     totalSellerPayoutAmount,
     totalSold,
+    totalReturnAmount,
     totalDeliveryCost,
     totalStorageCost,
     totalPaidAcceptance,
