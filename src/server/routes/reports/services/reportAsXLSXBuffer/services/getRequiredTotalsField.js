@@ -11,7 +11,7 @@ var getRequiredTotalsField = async (totalValues) => {
     totalPaidAcceptance: totalValues.totalPaidAcceptance,
     totalFines: totalValues.totalFines,
     totalDeductionOrPayment: totalValues.totalDeductionOrPayment,
-    totalAdCampaignCosts: totalValues.totalAdCampaignCosts,
+    totalAdvertisingCosts: totalValues.totalAdvertisingCosts,
     totalProductCosts: totalValues.totalProductCosts,
     totalTaxAmount: totalValues.totalTaxAmount,
     totalProfitMargin: totalValues.totalProfitMargin,
