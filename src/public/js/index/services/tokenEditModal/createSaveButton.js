@@ -12,10 +12,8 @@ var createSaveButton = async (input, modal) => {
     }
 
     var token = input.value;
-
-    var { validToken } = await checkToken(token);
-
-    var success = await sendWBAuthToken(validToken);
+    var { token } = await checkToken(token);
+    var success = await sendWBAuthToken(token);
 
     if (!success) {
       input.value = "";
@@ -23,7 +21,6 @@ var createSaveButton = async (input, modal) => {
     }
 
     modal.remove();
-
     setTimeout(() => alert("Токен успешно сохранен"));
   };
 
