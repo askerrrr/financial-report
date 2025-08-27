@@ -7,7 +7,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
   var { getReportsTree, updateReportTree } = req.app.locals.reportsTreeCollectionServices;
   var { addNewTaxYearToDb, changePaidTaxAmountToDb } = req.app.locals.taxParamsCollectionServices;
 
-  var { dateTo, dateFrom, mainReport, storageReport, totalAdvertisingCosts } = req.reportData;
+  var { dateTo, dateFrom, mainReport, storageReport, totalAdvertisingCosts } = req.body;
 
   var userId = req.app.locals.userId;
   var reportId = mainReport[0].realizationreport_id;
