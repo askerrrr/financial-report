@@ -1,9 +1,9 @@
-import createSKUsTable from "./row/createSKUsTable.js";
-import createTotalsTable from "./row/createTotalsTable.js";
-import getReportInfo from "./row/services/getReportInfo.js";
-import deleteReportHandler from "./row/deleteReportHandler.js";
+import createSKUsTable from "./table/createSKUsTable.js";
+import createTotalsTable from "./table/createTotalsTable.js";
+import getReportInfo from "./table/services/getReportInfo.js";
+import deleteReportHandler from "./table/deleteReportHandler.js";
 import getCookieValueByName from "../index/services/getCookieValueByName.js";
-import injectBase64IntoImgTags from "./row/services/injectBase64IntoImgTags.js";
+import injectBase64IntoImgTags from "./table/services/injectBase64IntoImgTags.js";
 import downloadReportAsXLSXButtonHandler from "./downloadReportAsXLSXButtonHandler.js";
 
 var userId = await getCookieValueByName("userId");

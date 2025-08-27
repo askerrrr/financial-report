@@ -1,7 +1,7 @@
 import getReportLink from "./table/getReportLink.js";
 import getReportPeriod from "./table/getReportPeriod.js";
 import createReportsTableHead from "./table/createReportsTableHead.js";
-import createTdElement from "../../../../report/row/services/createTdElement.js";
+import createTdElement from "../../../../report/table/services/createTdElement.js";
 
 var createReportRow = async (reportData, monthName, reportTbody = null) => {
   var { dateFrom, dateTo, reportId, totalTaxAmount } = reportData;

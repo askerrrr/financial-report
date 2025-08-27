@@ -1,4 +1,4 @@
-import createTdElement from "../report/row/services/createTdElement.js";
+import createTdElement from "../report/table/services/createTdElement.js";
 
 var table = document.getElementById("totals-table");
 var tbody = document.getElementById("totals-tbody");

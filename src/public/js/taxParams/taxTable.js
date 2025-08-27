@@ -1,4 +1,4 @@
-import createTdElement from "../report/row/services/createTdElement.js";
+import createTdElement from "../report/table/services/createTdElement.js";
 
 var createTaxTable = async (taxParams) => {
   var tbody = document.getElementById("tax-tbody");
@@ -6,38 +6,17 @@ var createTaxTable = async (taxParams) => {
   for (var taxYear of taxParams) {
     var tr = document.createElement("tr");
 
-    var {
-      year,
-      taxRate,
-      paidInsuranceFee,
-      mandatoryInsuranceFee,
-      insuranceFeePercentage,
-    } = taxYear;
+    var { year, taxRate, paidInsuranceFee, mandatoryInsuranceFee, insuranceFeePercentage } = taxYear;
 
     var yearTd = await createTdElement(year, "year-" + year);
     var taxRateTd = await createTdElement(taxRate, "taxRate-" + year);
-    var mandatoryInsuranceFeeTd = await createTdElement(
-      mandatoryInsuranceFee,
-      "mandatoryInsuranceFee-" + year
-    );
+    var mandatoryInsuranceFeeTd = await createTdElement(mandatoryInsuranceFee, "mandatoryInsuranceFee-" + year);
 
-    var insuranceFeePercentageTd = await createTdElement(
-      insuranceFeePercentage,
-      "insuranceFeePercentage-" + year
-    );
+    var insuranceFeePercentageTd = await createTdElement(insuranceFeePercentage, "insuranceFeePercentage-" + year);
 
-    var paidInsuranceFeeTd = await createTdElement(
-      paidInsuranceFee,
-      "paidInsuranceFee-" + year
-    );
+    var paidInsuranceFeeTd = await createTdElement(paidInsuranceFee, "paidInsuranceFee-" + year);
 
-    tr.append(
-      yearTd,
-      taxRateTd,
-      mandatoryInsuranceFeeTd,
-      paidInsuranceFeeTd,
-      insuranceFeePercentageTd
-    );
+    tr.append(yearTd, taxRateTd, mandatoryInsuranceFeeTd, paidInsuranceFeeTd, insuranceFeePercentageTd);
     tbody.append(tr);
   }
 

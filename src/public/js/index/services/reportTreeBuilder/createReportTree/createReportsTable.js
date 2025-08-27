@@ -1,6 +1,6 @@
 import getReportLink from "../insertNewReportToTree/table/getReportLink.js";
 import getReportPeriod from "../insertNewReportToTree/table/getReportPeriod.js";
-import createTdElement from "../../../../report/row/services/createTdElement.js";
+import createTdElement from "../../../../report/table/services/createTdElement.js";
 import createReportsTableHead from "../insertNewReportToTree/table/createReportsTableHead.js";
 
 var createReportsTable = async (year, month, reportIds, reports) => {
@@ -14,35 +14,17 @@ var createReportsTable = async (year, month, reportIds, reports) => {
     if (reportId) {
       var report = reports.find((report) => report.id == reportId);
 
-      var {
-        id,
-        dateFrom,
-        dateTo,
-        totalFinalProfit,
-        totalProductCosts,
-        totalTaxAmount,
-      } = report;
+      var { id, dateFrom, dateTo, totalFinalProfit, totalProductCosts, totalTaxAmount } = report;
 
       var fullPeriodTd = await getReportPeriod(dateFrom, dateTo);
 
-      var totalFinalProfitTd = await createTdElement(
-        totalFinalProfit,
-        null,
-        null,
-        "totalFinalProfit"
-      );
+      var totalFinalProfitTd = await createTdElement(totalFinalProfit, null, null, "totalFinalProfit");
 
       var totalProductCostsTd = await createTdElement(totalProductCosts);
       var totalTaxAmountTd = await createTdElement(totalTaxAmount);
       var reportLink = await getReportLink(id);
 
-      tr.append(
-        fullPeriodTd,
-        totalFinalProfitTd,
-        totalProductCostsTd,
-        totalTaxAmountTd,
-        reportLink
-      );
+      tr.append(fullPeriodTd, totalFinalProfitTd, totalProductCostsTd, totalTaxAmountTd, reportLink);
 
       tbody.append(tr);
     }

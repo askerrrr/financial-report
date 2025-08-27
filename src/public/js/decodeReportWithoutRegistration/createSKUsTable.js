@@ -1,5 +1,5 @@
-import createTdElement from "../report/row/services/createTdElement.js";
-import createInputField from "../report/row/services/createInputField.js";
+import createTdElement from "../report/table/services/createTdElement.js";
+import createInputField from "../report/table/services/createInputField.js";
 
 var table = document.getElementById("skus-table");
 

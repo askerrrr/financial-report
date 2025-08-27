@@ -1,4 +1,4 @@
-import createThElement from "../../../../../report/row/services/createThElement.js";
+import createThElement from "../../../../../report/table/services/createThElement.js";
 
 var createReportsTableHead = async () => {
   var reportPeriod = await createThElement("Период отчета");
