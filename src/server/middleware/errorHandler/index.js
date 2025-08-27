@@ -2,7 +2,7 @@ var multer = require("multer");
 var { WBAPIError, FormDataError, DatabaseError, ReportNotFoundError, DatabaseConnectionError } = require("../../customError");
 
 var errorHandler = async (e, req, res, next) => {
-  console.log({ msg: e.message, errName: e.name, status: e?.status, stack: e.stack, cause: e.cause });
+  console.log({ msg: e.message, errName: e.name, status: e?.status || 500, stack: e.stack, cause: e?.cause || null });
 
   if (e instanceof multer.MulterError) {
     return res.sendStatus(500);
