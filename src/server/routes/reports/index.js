@@ -24,7 +24,7 @@ router.post(
 
 router.put("/change", require("./controllers/changeReportDetail"));
 
-router.post("/item-photo-upload/:itemname", upload.single("item-photo"), require("./controllers/itemPhotoUpload"));
+router.post("/sku-photo-upload/:skuName", upload.single("sku-photo"), require("./controllers/skuPhotoUpload"));
 
 router.delete("/delete/", require("./controllers/deleteReport"));
 

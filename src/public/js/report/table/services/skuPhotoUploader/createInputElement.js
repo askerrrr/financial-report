@@ -1,10 +1,10 @@
-import sendItemPhoto from "./sendItemPhoto.js";
+import sendSkuPhoto from "./sendSkuPhoto.js";
 import insertImageToImgTag from "./insertImageToImgTag.js";
 
 var createInputElement = async (skuName) => {
   var input = document.createElement("input");
   input.id = "input-" + skuName;
-  input.name = "item-photo";
+  input.name = "sku-photo";
   input.type = "file";
   input.multiple = false;
   input.accept = "image/jpg, image/jpeg, image/png";
@@ -15,9 +15,9 @@ var createInputElement = async (skuName) => {
 
     var uploadFormData = new FormData();
 
-    uploadFormData.append("item-photo", input.files[0]);
+    uploadFormData.append("sku-photo", input.files[0]);
 
-    var success = await sendItemPhoto(skuName, uploadFormData);
+    var success = await sendSkuPhoto(skuName, uploadFormData);
 
     if (!success) {
       alert("Не удалось загрузить изображение");

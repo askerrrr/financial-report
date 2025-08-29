@@ -126,7 +126,7 @@ button:hover {
   color: #f8f9fa;
 }
 
-.item-photo-uploader {
+.sku-photo-uploader {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,7 +140,7 @@ button:hover {
   overflow: hidden;
 }
 
-.item-photo-uploader:hover {
+.sku-photo-uploader:hover {
   border-color: #6c757d;
 }
 
@@ -151,7 +151,7 @@ button:hover {
   display: block;
 }
 
-.item-photo-uploader span {
+.sku-photo-uploader span {
   color: #adb5bd;
   font-size: 12px;
   display: block;

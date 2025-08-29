@@ -10,7 +10,7 @@ module.exports = (req, file, cb) => {
       : cb(null, (req.fileMimeTypeIsValid = false));
   }
 
-  if (req.path.startsWith("/item-photo-upload/")) {
+  if (req.path.startsWith("/sku-photo-upload/")) {
     validMimeType = ["image/jpg", "image/jpeg", "image/png"];
 
     return validMimeType.includes(file.mimetype)
