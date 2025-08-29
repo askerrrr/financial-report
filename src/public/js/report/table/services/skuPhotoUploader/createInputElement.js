@@ -17,9 +17,15 @@ var createInputElement = async (skuName) => {
 
     uploadFormData.append("item-photo", input.files[0]);
 
-    await insertImageToImgTag(e, skuName);
+    var success = await sendItemPhoto(skuName, uploadFormData);
 
-    await sendItemPhoto(skuName, uploadFormData);
+    if (!success) {
+      alert("Не удалось загрузить изображение");
+      return;
+    }
+
+    alert("Изображение сохранено");
+    await insertImageToImgTag(e, skuName);
   });
 
   return input;

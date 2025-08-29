@@ -4,11 +4,7 @@ var sendItemPhoto = async (itemName, imgData) => {
     body: imgData,
   });
 
-  if (!res.ok) {
-    return alert("Не удалось загрузить изображение");
-  }
-
-  alert("Изображение сохранено");
+  return res.ok;
 };
 
 export default sendItemPhoto;
