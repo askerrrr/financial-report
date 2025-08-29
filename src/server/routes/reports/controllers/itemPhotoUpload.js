@@ -7,7 +7,7 @@ var itemPhotoUpload = async (req, res, next) => {
   var buffer = req.file.buffer
   
   var objectKey= itemname + "_" + userId;
-  await s3.upload(objectKey, buffer);
+  await s3.uploadFile(objectKey, buffer);
   return res.sendStatus(200);
 };
 
