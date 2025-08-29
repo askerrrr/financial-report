@@ -28,6 +28,8 @@ var env = Object.create(
         credentials: { accessKeyId: process.env.accessKeyIds, secretAccessKey: process.env.secretAccessKey },
       },
     },
+
+    bucketName: { value: process.env.bucketName },
   }
 );
 
