@@ -2,29 +2,8 @@ var multer = require("multer");
 var { Router } = require("express");
 var fileFilter = require("./services/fileFilter");
 
-var reportStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "/var/report_uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-
-var temporaryItemsPhotoStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "/var/temporary-photo-storage/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-
-var updoadReports = multer({ storage: reportStorage, fileFilter });
-var uploadItemPhotos = multer({
-  storage: temporaryItemsPhotoStorage,
-  fileFilter,
-});
+var storage = multer.memoryStorage()
+var upload = multer({ storage, fileFilter });
 
 var router = Router({ caseSensitive: true, strict: true });
 
@@ -45,7 +24,7 @@ router.post(
 
 router.put("/change", require("./controllers/changeReportDetail"));
 
-router.post("/item-photo-upload/:itemname", uploadItemPhotos.single("item-photo"), require("./controllers/itemPhotoUpload"));
+router.post("/item-photo-upload/:itemname", upload.single("item-photo"), require("./controllers/itemPhotoUpload"));
 
 router.delete("/delete/", require("./controllers/deleteReport"));
 
