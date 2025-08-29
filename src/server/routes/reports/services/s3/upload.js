@@ -1,15 +1,9 @@
+var { readFile } = require("node:fs/promises");
 var { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
-var uploadFile = async (userId, itemname, filePath) => {
-  var fileName = itemname + "_" + userId;
-
-  var client = new S3Client({
-    region,
-    endpoint,
-    credentials: { accessKeyId: process.env.accessKeyIds, secretAccessKey: process.env.secretAccessKey },
-  });
-
-  var command = new PutObjectCommand({ Bucket: bucketName, Key: fileName, Body: await readFile(req.file.path) });
+var uploadFile = async (objectName, filePath) => {
+  var client = new S3Client(S3Client_OPTIONS);
+  var command = new PutObjectCommand({ Bucket: process.env.bucketName, Key: objectName, Body: await readFile(filePath) });
 
   var res = await client.send(command);
 

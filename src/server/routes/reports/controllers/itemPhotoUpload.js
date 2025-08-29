@@ -8,7 +8,8 @@ var itemPhotoUpload = async (req, res, next) => {
 
   var filePath = req.file.path;
 
-  await s3.upload(userId, itemname, filePath);
+  var objectName = itemname + "_" + userId;
+  await s3.upload(objectName, filePath);
 
   await moveFileToUserFolder(userId, itemname, filePath);
 

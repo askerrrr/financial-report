@@ -20,6 +20,14 @@ var env = Object.create(
     },
 
     secretKey: { value: "youSecretKey" },
+
+    S3Client_OPTIONS: {
+      value: {
+        region: process.env.s3_region,
+        endpoint: process.env.s3_endpoint,
+        credentials: { accessKeyId: process.env.accessKeyIds, secretAccessKey: process.env.secretAccessKey },
+      },
+    },
   }
 );
 
