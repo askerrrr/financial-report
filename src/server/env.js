@@ -25,7 +25,7 @@ var env = Object.create(
       value: {
         region: process.env.s3_region,
         endpoint: process.env.s3_endpoint,
-        credentials: { accessKeyId: process.env.accessKeyIds, secretAccessKey: process.env.secretAccessKey },
+        credentials: { accessKeyId: process.env.AWS_ACCESS_KEY, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY },
       },
     },
 
