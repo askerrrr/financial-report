@@ -5,15 +5,12 @@ var itemPhotoUpload = async (req, res, next) => {
   var { itemname } = req.params;
 
   var userId = req.app.locals.userId;
-
   var buffer = req.file.buffer
   
-  return
-	//
-  var objectName = itemname + "_" + userId;
-  //await s3.upload(objectName, filePath);
+  var objectKey= itemname + "_" + userId;
+  await s3.upload(objectKey, buffer);
 
-  await moveFileToUserFolder(userId, itemname, filePath);
+ // await moveFileToUserFolder(userId, itemname, filePath);
 
   return res.sendStatus(200);
 };

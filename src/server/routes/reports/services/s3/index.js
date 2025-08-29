@@ -1,5 +1,5 @@
 var s3 = {
-  get: require("./get"),
+  getFile: require("./get"),
   upload: require("./upload"),
   delete: require("./delete"),
 };

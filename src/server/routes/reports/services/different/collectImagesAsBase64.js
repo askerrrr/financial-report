@@ -1,19 +1,11 @@
-var { join } = require("node:path");
-var getImageToBase64 = require("./getImageToBase64");
+var s3 = require('../s3')
 
 var collectImagesAsBase64 = async (userId, skus) => {
   var array = [];
 
-  for (var sku of skus) {
-    var { skuName } = sku;
-
-    var fileName = skuName + ".png";
-
-    var userDir = "userId_" + userId;
-
-    var filePath = join("/var", "report_skus_photo", userDir, fileName);
-
-    var base64 = await getImageToBase64(filePath);
+  for (var { skuName } of skus) {
+    var objectKey = skuName + '_' + userId	
+    var base64 = await s3.getFile(objectKey);
 
     array.push({ skuName, base64 });
   }
