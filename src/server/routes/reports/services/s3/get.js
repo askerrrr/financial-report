@@ -5,15 +5,13 @@ var getFile = async (Key) => {
 try{
   var client = new S3Client(env.S3Client_OPTIONS);
   var command = new GetObjectCommand({ Bucket: env.bucketName, Key });
-
   var { Body } = await client.send(command);
-  var base64 = Body.transformToString('base64') || null
+  var base64 = Body.transformToString('base64')
   return base64
-	
   }catch(e){
-  if(e.message == 'NuSuchKey'){
-  return null
-             }
+    if(e.message == 'NuSuchKey'){
+      return null
+     }
   }
 };
 
