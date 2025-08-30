@@ -5,8 +5,8 @@ import createImageElement from "./createImageElement.js";
 import createLabelElement from "./createLabelElement.js";
 import createDeleteImgButton from "./createDeleteImgButton.js";
 
-var createSKUPhotoUploader = async (id, skuName, index, imgData) => {
-  var input = await createInputElement(skuName);
+var createSKUPhotoUploader = async (id, skuName, objectKey, index, imgData) => {
+  var input = await createInputElement(skuName, objectKey);
   var span = await createSpanElement(skuName);
   var img = await createImageElement(imgData, skuName);
   var deleteImgButton = await createDeleteImgButton(skuName);

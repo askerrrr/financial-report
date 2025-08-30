@@ -1,5 +1,5 @@
-var sendSkuPhoto = async (skuName, imgData) => {
-  var res = await fetch(`/reports/sku-photo-upload/${skuName}`, {
+var sendSkuPhoto = async (objectKey, imgData) => {
+  var res = await fetch(`/reports/sku-photo-upload/${objectKey}`, {
     method: "PUT",
     body: imgData,
   });

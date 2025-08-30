@@ -3,7 +3,7 @@ var getSkuNames = require("./getSkuNames");
 var truncateSKUNums = require("./truncateSKUNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 
-var parseReports = async (options, reports) => {
+var parseReports = async (userId, options, reports) => {
   var { taxRate } = options;
 
   var { mainReport, storageReport, totalAdvertisingCosts } = reports;
@@ -23,6 +23,7 @@ var parseReports = async (options, reports) => {
     var sku = {};
 
     sku.skuName = skuName;
+    sku.objectKey =  'skuname=' + skuName + ';' + 'userId=' + userId
     sku.qty = await calc.quantityPerSKU(skuFilteredReport);
     sku.finesPerSKU = await calc.finesPerSKU(skuFilteredReport);
     sku.acceptancePerSKU = await calc.acceptancePerSKU(skuFilteredReport);

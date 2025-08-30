@@ -12,7 +12,7 @@ var createSKUsTable = async (report) => {
   for (var [skuIndex, sku] of Object.entries(skus)) {
     var tr = document.createElement("tr");
 
-    var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, skuIndex, null);
+    var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, sku.objectKey, skuIndex, null);
     var SKUPhotoUploaderTd = await createTdElement(SKUPhotoUploader, "photo-cell", skuIndex, "photo-cell");
     var skuName = await createTdElement(sku.skuName);
     var qty = await createTdElement(sku.qty);
