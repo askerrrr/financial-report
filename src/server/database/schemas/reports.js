@@ -31,7 +31,6 @@ var SKUSchema = new Schema(
     averageRetailPrice: numberOptions,
     averageStorageCost: numberOptions,
     averageAdvertisingCostPerSKU: numberOptions,
-    objectKey: stringOptions,
   },
   { _id: false }
 );

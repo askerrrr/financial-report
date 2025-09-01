@@ -2,7 +2,7 @@ var multer = require("multer");
 var { Router } = require("express");
 var fileFilter = require("./services/fileFilter");
 
-var storage = multer.memoryStorage()
+var storage = multer.memoryStorage();
 var upload = multer({ storage, fileFilter });
 
 var router = Router({ caseSensitive: true, strict: true });
@@ -24,7 +24,7 @@ router.post(
 
 router.put("/change", require("./controllers/changeReportDetail"));
 
-router.put("/sku-photo-upload/:objectKey", upload.single("sku-photo"), require("./controllers/skuPhotoUpload"));
+router.put("/sku-photo-upload/:skuName", upload.single("sku-photo"), require("./controllers/skuPhotoUpload"));
 
 router.delete("/delete/", require("./controllers/deleteReport"));
 
