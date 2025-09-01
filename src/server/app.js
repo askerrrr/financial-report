@@ -23,7 +23,11 @@ var app = express();
   app.locals.taxParamsCollectionServices = taxParamsCollectionServices;
   app.locals.reportsTreeCollectionServices = reportsTreeCollectionServices;
 
-  app.listen(env.PORT, env.HOST, () => console.log("server running"));
+  app.listen(env.PORT, env.HOST, async () => {
+    console.log("server running");
+
+    await upgradeReportsSchema(reportCollectionServices);
+  });
 })();
 
 app.disable("x-powered-by");
@@ -32,7 +36,6 @@ app.use(express.json());
 app.use(express.static(join(__dirname, "../public")));
 
 app.use(checkDBState);
-app.use(upgradeReportsSchema());
 
 app.use("/decode-report-without-registration/", require("./routes/decodeReportWithoutRegistration"));
 app.use("/auth", require("./routes/auth/"));

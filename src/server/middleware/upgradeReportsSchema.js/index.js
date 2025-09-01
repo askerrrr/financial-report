@@ -1,5 +1,5 @@
 var { SKUSchema } = require("../../database/schemas/reports");
 
-var upgradeReportsSchema = (req, res, next) => () => {};
+var upgradeReportsSchema = async (reportCollectionServices) => {};
 
 module.exports = upgradeReportsSchema;
