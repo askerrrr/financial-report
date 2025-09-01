@@ -2,7 +2,7 @@ var env = require("../../env");
 var mongoose = require("mongoose");
 var usersSchema = require("../schemas/users");
 var tokenSchema = require("../schemas/token");
-var reportsSchema = require("../schemas/reports");
+var { reportsSchema } = require("../schemas/reports");
 var taxParamsSchema = require("../schemas/taxParams");
 var reportsTreeSchema = require("../schemas/reportsTree");
 

@@ -1,9 +1,9 @@
 var env = require("./env");
 var express = require("express");
 var { join } = require("node:path");
-var { mkdir } = require("node:fs/promises");
 var cookieParser = require("cookie-parser");
 var checkDBState = require("./middleware/mongoose");
+var upgradeReportsSchema = require("./middleware/upgradeReportsSchema.js");
 var userCollectionServices = require("./database/collections/users");
 var adminCollectionServices = require("./database/collections/admins");
 var tokenCollectionServices = require("./database/collections/tokens");
@@ -14,8 +14,8 @@ var reportsTreeCollectionServices = require("./database/collections/reportTrees"
 var app = express();
 
 (async () => {
-  process.env.NODE_ENV='production'
-  
+  process.env.NODE_ENV = "production";
+
   app.locals.userCollectionServices = userCollectionServices;
   app.locals.adminCollectionServices = adminCollectionServices;
   app.locals.reportCollectionServices = reportCollectionServices;
@@ -32,6 +32,7 @@ app.use(express.json());
 app.use(express.static(join(__dirname, "../public")));
 
 app.use(checkDBState);
+app.use(upgradeReportsSchema());
 
 app.use("/decode-report-without-registration/", require("./routes/decodeReportWithoutRegistration"));
 app.use("/auth", require("./routes/auth/"));
