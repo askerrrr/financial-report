@@ -23,11 +23,9 @@ var app = express();
   app.locals.taxParamsCollectionServices = taxParamsCollectionServices;
   app.locals.reportsTreeCollectionServices = reportsTreeCollectionServices;
 
-  app.listen(env.PORT, env.HOST, async () => {
-    console.log("server running");
+  await upgradeReportsSchema(reportCollectionServices)
 
-    await upgradeReportsSchema(reportCollectionServices);
-  });
+  app.listen(env.PORT, env.HOST, async () => console.log("server running"));
 })();
 
 app.disable("x-powered-by");
