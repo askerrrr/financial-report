@@ -1,5 +1,6 @@
 var { reportCollection } = require("../../connections/");
 
+var getAllReports = require("./services/getAllReports");
 var getReportById = require("./services/getReportById");
 var saveReportToDb = require("./services/saveReportToDb");
 var saveUpdatedReport = require("./services/saveUpdatedReport");
@@ -12,15 +13,14 @@ var createReportsEntity = require("./services/createReportsEntity");
 var deleteAllReportsByUserId = require("./services/deleteAllReportsByUserId");
 
 var reportCollectionServices = {
+  getAllReports: () => getAllReports(reportCollection),
   getReportById: (userId, reportId) => getReportById(reportCollection, userId, reportId),
   getReportsByUserId: (userId, year) => getReportsByUserId(reportCollection, userId, year),
 
   createReportsEntity: (userId) => createReportsEntity(reportCollection, userId),
 
   saveReportToDb: (userId, report) => saveReportToDb(reportCollection, userId, report),
-
   saveUpdatedReports: (userId, reports) => saveUpdatedReports(reportCollection, userId, reports),
-
   saveUpdatedReport: (userId, reportId, report) => saveUpdatedReport(reportCollection, userId, reportId, report),
 
   updateReportPeriod: (userId, reportId, period) => updateReportPeriod(reportCollection, userId, reportId, period),
@@ -28,7 +28,6 @@ var reportCollectionServices = {
   checkReportExistsToDb: (userId, dateFrom, dateTo) => checkReportExistsToDb(reportCollection, userId, dateFrom, dateTo),
 
   deleteReportFromDb: (userId, reportId) => deleteReportFromDb(reportCollection, userId, reportId),
-
   deleteAllReportsByUserId: (userId) => deleteAllReportsByUserId(reportCollection, userId),
 };
 
