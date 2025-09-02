@@ -1,7 +1,13 @@
 var { getMonthNameAndIndex } = require("./month");
 var { getMondayIndex, getMondaysQtyInMonth } = require("./monday");
 
-var setReportIdInReports = async (date, reportIds, reportId, fullPeriod, monthCarry = null) => {
+var setReportIdInReports = async (
+  date,
+  reportIds,
+  reportId,
+  fullPeriod,
+  monthCarry = null
+) => {
   var mondayIndex = await getMondayIndex(date);
 
   if (monthCarry) {

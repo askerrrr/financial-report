@@ -1,7 +1,20 @@
 var { getMondayIndex } = require("./monday");
 var { getMondaysQtyInMonth } = require("./monday");
 
-var monthsList = ["декабрь", "ноябрь", "октябрь", "сентябрь", "август", "июль", "июнь", "май", "апрель", "март", "февраль", "январь"];
+var monthsList = [
+  "декабрь",
+  "ноябрь",
+  "октябрь",
+  "сентябрь",
+  "август",
+  "июль",
+  "июнь",
+  "май",
+  "апрель",
+  "март",
+  "февраль",
+  "январь",
+];
 
 var getMonthName = async (monthNum) => monthsList[monthsList.length - monthNum];
 
@@ -22,11 +35,11 @@ var getMonthReportIds = async (date, fullPeriod, reportId, carry) => {
   if (carry) {
     var mondaysQty = await getMondaysQtyInMonth(date);
     reportIds[mondaysQty] = { reportId, ...fullPeriod };
-
+    console.log({ reportIds });
     return reportIds;
   }
-
-  reportIds[mondayIndex] = { fullPeriod, reportId };
+  console.log({ reportIds });
+  reportIds[mondayIndex] = { reportId, ...fullPeriod };
 
   return reportIds;
 };
