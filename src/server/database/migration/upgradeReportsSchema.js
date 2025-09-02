@@ -1,12 +1,11 @@
-var { reportSchema } = require("../../database/schemas/reports");
+var { reportSchema } = require("../schemas/reports");
+var { getAllDataFromReportCollection } = require("../collections/reports");
 
-var upgradeReportsSchema = async (reportCollectionServices) => {
+var upgradeReportsSchema = async () => {
   var reportSchemaKeys = Object.keys(reportSchema.obj);
 
-  var { getAllDataFromReportCollection } = reportCollectionServices;
-
   var data = await getAllDataFromReportCollection();
-
+  console.log({ reportSchemaKeys });
   if (data.length === 0) {
     return;
   }
