@@ -1,6 +1,7 @@
 var parseReports = require("../services/writeAndCalcReportDataFromWBAPI/index");
 var insertReportToReportTree = require("../services/reportTreeBuilder");
 var sortYearsTree = require("../services/different/sortYearTree");
+var { reportSchemaVersion, recordToSchemaVersion } = require("../../../database/migration/schemaVersioning/reportsCollection");
 
 var writeReportFromWBAPI = async (req, res, next) => {
   var { saveReportToDb } = req.app.locals.reportCollectionServices;
@@ -33,7 +34,8 @@ var writeReportFromWBAPI = async (req, res, next) => {
   report.userId = userId;
   report.dateFrom = dateFrom;
   report.reportId = reportId;
-  report.recordTo = { year, month };
+  report.schemaVersion = reportSchemaVersion;
+  report.recordTo = { year, month, schemaVersion: recordToSchemaVersion };
 
   var success = await saveReportToDb(userId, report);
 

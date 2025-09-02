@@ -1,8 +1,9 @@
 var { DatabaseError } = require("../../../../customError");
+var { reportsSchemaVersion } = require("../../../migration/schemaVersioning/reportsCollection");
 
 var createReportsEntity = async (collection, userId) => {
   try {
-    var reportsEntity = await collection.insertOne({ userId });
+    var reportsEntity = await collection.insertOne({ userId, schemaVersion: reportsSchemaVersion });
 
     var result = await reportsEntity.save();
 
