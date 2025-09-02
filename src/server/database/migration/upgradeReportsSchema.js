@@ -5,7 +5,7 @@ var upgradeReportsSchema = async () => {
   var reportSchemaKeys = Object.keys(reportSchema.obj);
 
   var data = await getAllDataFromReportCollection();
-  console.log({ reportSchemaKeys });
+
   if (data.length === 0) {
     return;
   }
