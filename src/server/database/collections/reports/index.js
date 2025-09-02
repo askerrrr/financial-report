@@ -1,6 +1,5 @@
 var { reportCollection } = require("../../connections/");
 
-var getAllReports = require("./services/getAllReports");
 var getReportById = require("./services/getReportById");
 var saveReportToDb = require("./services/saveReportToDb");
 var saveUpdatedReport = require("./services/saveUpdatedReport");
@@ -11,9 +10,10 @@ var getReportsByUserId = require("./services/getReportsByUserId");
 var updateReportPeriod = require("./services/updateReportPeriod");
 var createReportsEntity = require("./services/createReportsEntity");
 var deleteAllReportsByUserId = require("./services/deleteAllReportsByUserId");
+var getAllDataFromReportCollection = require("./services/getAllDataFromReportCollection");
 
 var reportCollectionServices = {
-  getAllReports: () => getAllReports(reportCollection),
+  getAllDataFromReportCollection: () => getAllDataFromReportCollection(reportCollection),
   getReportById: (userId, reportId) => getReportById(reportCollection, userId, reportId),
   getReportsByUserId: (userId, year) => getReportsByUserId(reportCollection, userId, year),
 

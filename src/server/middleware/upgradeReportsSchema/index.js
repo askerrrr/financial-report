@@ -6,9 +6,9 @@ var upgradeReportsSchema = async (reportCollectionServices) => {
     { key: "newKey2", value: "value2" },
   ];
 
-  var { getAllReports } = reportCollectionServices;
+  var { getAllDataFromReportCollection } = reportCollectionServices;
 
-  var data = await getAllReports();
+  var data = await getAllDataFromReportCollection();
 
   for (var { reports } of data) {
     reports.map((item) => {
