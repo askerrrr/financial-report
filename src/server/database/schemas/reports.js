@@ -73,4 +73,4 @@ var reportsSchema = new Schema({
   reports: { type: [reportSchema], required: false },
 });
 
-module.exports = { reportsSchema, SKUSchema };
+module.exports = { SKUSchema, reportSchema, reportsSchema };
