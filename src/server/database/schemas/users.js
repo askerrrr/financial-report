@@ -5,7 +5,7 @@ var usersSchema = new Schema({
   login: { type: String, required: true },
   passwd: { type: String, required: true },
   role: { type: String, required: true, default: "user" },
-  schemaVersion: { type: Number, default: 1 },
+  schemaVersion: { type: Number },
 });
 
 module.exports = usersSchema;

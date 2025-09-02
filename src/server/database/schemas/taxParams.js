@@ -9,7 +9,7 @@ var taxYear = new Schema(
     insuranceFeePercentage: { type: Number, default: 10 },
     paidInsuranceFee: { type: Number, default: 0 },
     isInsuranceFeePaid: { type: Boolean, default: false },
-    schemaVersion: { type: Number, default: 1 },
+    schemaVersion: { type: Number },
   },
   { _id: false }
 );
@@ -17,7 +17,7 @@ var taxYear = new Schema(
 var taxParamsSchema = new Schema({
   userId: { type: String, required: true },
   years: [{ type: taxYear, required: false }],
-  schemaVersion: { type: Number, default: 1 },
+  schemaVersion: { type: Number },
 });
 
 module.exports = taxParamsSchema;
