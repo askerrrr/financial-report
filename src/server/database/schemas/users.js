@@ -1,13 +1,11 @@
 var { Schema } = require("mongoose");
 
-var usersSchema = new Schema(
-  {
-    userId: { type: String, required: true },
-    login: { type: String, required: true },
-    passwd: { type: String, required: true },
-    role: { type: String, required: true, default: "user" },
-  },
-  { version: 1 }
-);
+var usersSchema = new Schema({
+  userId: { type: String, required: true },
+  login: { type: String, required: true },
+  passwd: { type: String, required: true },
+  role: { type: String, required: true, default: "user" },
+  schemaVersion: { type: Number, default: 1 },
+});
 
 module.exports = usersSchema;

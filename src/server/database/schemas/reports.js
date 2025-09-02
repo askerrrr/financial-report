@@ -31,11 +31,12 @@ var SKUSchema = new Schema(
     averageRetailPrice: numberOptions,
     averageStorageCost: numberOptions,
     averageAdvertisingCostPerSKU: numberOptions,
+    schemaVersion: { type: Number, default: 1 },
   },
-  { _id: false, version: 1 }
+  { _id: false }
 );
 
-var recordToSchema = new Schema({ year: stringOptions, month: stringOptions }, { _id: false, version: 1 });
+var recordToSchema = new Schema({ year: stringOptions, month: stringOptions, schemaVersion: { type: Number, default: 1 } }, { _id: false });
 
 var reportSchema = new Schema(
   {
@@ -64,16 +65,15 @@ var reportSchema = new Schema(
     taxRate: { type: Number, default: 6 },
     recordTo: { type: recordToSchema, requred: true },
     skus: [{ type: SKUSchema, required: true }],
+    schemaVersion: { type: Number, default: 1 },
   },
-  { _id: false, version: 1 }
+  { _id: false }
 );
 
-var reportsSchema = new Schema(
-  {
-    userId: stringOptions,
-    reports: { type: [reportSchema], required: false },
-  },
-  { version: 1 }
-);
+var reportsSchema = new Schema({
+  userId: stringOptions,
+  reports: { type: [reportSchema], required: false },
+  schemaVersion: { type: Number, default: 1 },
+});
 
 module.exports = { SKUSchema, reportSchema, reportsSchema };
