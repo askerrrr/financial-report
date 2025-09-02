@@ -2,9 +2,7 @@ var { DatabaseError } = require("../../../../customError");
 
 var getReportsByUserId = async (collection, userId, year) => {
   try {
-    var user = await collection.findOne({ userId });
-
-    var reports = user?.reports || [];
+    var { reports } = await collection.findOne({ userId });
 
     if (year) {
       return reports.filter((reports) => reports.recordTo.year == year);
