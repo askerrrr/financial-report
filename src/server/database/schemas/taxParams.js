@@ -10,12 +10,15 @@ var taxYear = new Schema(
     paidInsuranceFee: { type: Number, default: 0 },
     isInsuranceFeePaid: { type: Boolean, default: false },
   },
-  { _id: false }
+  { _id: false, version: 1 }
 );
 
-var taxParamsSchema = new Schema({
-  userId: { type: String, required: true },
-  years: [{ type: taxYear, required: false }],
-});
+var taxParamsSchema = new Schema(
+  {
+    userId: { type: String, required: true },
+    years: [{ type: taxYear, required: false }],
+  },
+  { version: 1 }
+);
 
 module.exports = taxParamsSchema;
