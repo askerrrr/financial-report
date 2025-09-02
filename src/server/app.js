@@ -3,7 +3,6 @@ var express = require("express");
 var { join } = require("node:path");
 var cookieParser = require("cookie-parser");
 var checkDBState = require("./middleware/mongoose");
-var upgradeReportsSchema = require("./middleware/upgradeReportsSchema");
 var userCollectionServices = require("./database/collections/users");
 var adminCollectionServices = require("./database/collections/admins");
 var tokenCollectionServices = require("./database/collections/tokens");
@@ -22,8 +21,6 @@ var app = express();
   app.locals.tokenCollectionServices = tokenCollectionServices;
   app.locals.taxParamsCollectionServices = taxParamsCollectionServices;
   app.locals.reportsTreeCollectionServices = reportsTreeCollectionServices;
-
-  await upgradeReportsSchema(reportCollectionServices)
 
   app.listen(env.PORT, env.HOST, async () => console.log("server running"));
 })();
