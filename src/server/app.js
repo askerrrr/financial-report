@@ -4,24 +4,18 @@ var { join } = require("node:path");
 var cookieParser = require("cookie-parser");
 var checkDBState = require("./middleware/mongoose");
 var runDBMigration = require("./database/migration");
-var userCollectionServices = require("./database/collections/users");
-var adminCollectionServices = require("./database/collections/admins");
-var tokenCollectionServices = require("./database/collections/tokens");
-var reportCollectionServices = require("./database/collections/reports");
-var taxParamsCollectionServices = require("./database/collections/taxParams");
-var reportsTreeCollectionServices = require("./database/collections/reportTrees");
 
 var app = express();
 
 (async () => {
   process.env.NODE_ENV = "production";
 
-  app.locals.userCollectionServices = userCollectionServices;
-  app.locals.adminCollectionServices = adminCollectionServices;
-  app.locals.reportCollectionServices = reportCollectionServices;
-  app.locals.tokenCollectionServices = tokenCollectionServices;
-  app.locals.taxParamsCollectionServices = taxParamsCollectionServices;
-  app.locals.reportsTreeCollectionServices = reportsTreeCollectionServices;
+  app.locals.userCollectionServices = require("./database/collections/users");
+  app.locals.tokenCollectionServices = require("./database/collections/tokens");
+  app.locals.adminCollectionServices = require("./database/collections/admins");
+  app.locals.reportCollectionServices = require("./database/collections/reports");
+  app.locals.taxParamsCollectionServices = require("./database/collections/taxParams");
+  app.locals.reportsTreeCollectionServices = require("./database/collections/reportTrees");
 
   await runDBMigration();
 
