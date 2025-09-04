@@ -15,16 +15,16 @@ var addNewTaxYearToDb = async (collection, userId, year) => {
     var existTaxYear = years.find((date) => date.year === year);
 
     if (existTaxYear) {
-      var nextTaxYear = year + 1;
-      var nextTaxYearIsExist = years.find((date) => date.year == nextTaxYear);
-      mandatoryInsuranceFee = mandatoryInsuranceFees.find((item) => item.year === nextTaxYear).value;
+      var nextYear = year + 1;
+      var nextYearIsExist = years.find((date) => date.year === nextYear);
+      mandatoryInsuranceFee = mandatoryInsuranceFees.find((item) => item.year === nextYear).value;
       var nextYearPaidTaxAmount = -mandatoryInsuranceFee;
 
-      if (!nextTaxYearIsExist) {
+      if (!nextYearIsExist) {
         await collection.updateOne(
           { userId },
           {
-            $push: { years: { year: nextTaxYear, mandatoryInsuranceFee, paidTaxAmount: nextYearPaidTaxAmount } },
+            $push: { years: { year: nextYear, mandatoryInsuranceFee, paidTaxAmount: nextYearPaidTaxAmount } },
           }
         );
       }
