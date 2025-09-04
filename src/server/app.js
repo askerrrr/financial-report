@@ -6,6 +6,7 @@ var checkDBState = require("./middleware/mongoose");
 var runDBMigration = require("./database/migration");
 
 var app = express();
+var errorApp = express();
 
 (async () => {
   process.env.NODE_ENV = "production";
@@ -17,7 +18,13 @@ var app = express();
   app.locals.taxParamsCollectionServices = require("./database/collections/taxParams");
   app.locals.reportsTreeCollectionServices = require("./database/collections/reportTrees");
 
-  await runDBMigration();
+  var success = await runDBMigration();
+
+  if (!success) {
+    errorApp.get("/", (_, res) => res.set({ "Content-Type": "text/html" }).send("<p>Сервер временно недоступен</p>"));
+
+    return errorApp.listen(env.PORT, env.HOST, () => console.log("Сервер временно недоступен."));
+  }
 
   app.listen(env.PORT, env.HOST, async () => console.log("server running"));
 })();

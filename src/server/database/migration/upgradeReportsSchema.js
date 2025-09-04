@@ -10,26 +10,49 @@ var upgradeReportsSchema = async () => {
   }
 
   var reportSchemaKeys = Object.keys(reportSchema.obj);
+  var updatedReportsCount = 0,
+    updateFailedReportsCount = 0,
+    pendingReportUpdatesCount = 0;
 
-  for (var { reports } of data) {
-    reports.map(async (report) => {
-      if (report.schemaVersion !== reportSchemaVersion || !report.schemaVersion) {
-        report.schemaVersion = reportSchemaVersion;
+  try {
+    for (var { reports } of data) {
+      for (var report of reports) {
+        if (report.schemaVersion !== reportSchemaVersion || !report.schemaVersion) {
+          pendingReportUpdatesCount++;
 
-        reportSchemaKeys.map((key) => {
-          if (!report.hasOwnProperty(key)) {
-            report[key] = reportSchema[key]?.default ?? 0;
+          var updatedReport = { ...report };
 
-            console.log({ key: reportSchema[key]?.default });
-            console.log("newKey: ", report[key]);
+          updatedReport.schemaVersion = reportSchemaVersion;
+
+          reportSchemaKeys.map((key) => {
+            if (!updatedReport.hasOwnProperty(key)) {
+              updatedReport[key] = reportSchema[key]?.default ?? 0;
+            }
+          });
+
+          try {
+            var success = await saveUpdatedReport(report.userId, report.reportId, updatedReport);
+
+            if (!success) {
+              updateFailedReportsCount++;
+            } else {
+              updatedReportsCount++;
+            }
+          } catch (e) {
+            console.log({ errMsg: e.message, errName: "DBMigrationError", stack: e.stack });
+            updateFailedReportsCount++;
           }
-        });
-
-        console.log(`the report ${report.reportId} needs to be updated`);
-
-        await saveUpdatedReport(report.userId, report.reportId, report);
+        }
       }
-    });
+    }
+  } catch (e) {
+    console.log({ errMsg: e.message, errName: "DBMigrationError", stack: e.stack });
+  }
+
+  if (pendingReportUpdatesCount) {
+    return {
+      msg: `result of migration of the "reports" collection\npendingReportUpdatesCount: ${pendingReportUpdatesCount}\nupdatedReportsCount: ${updatedReportsCount}\nupdateFailedReportsCount: ${updateFailedReportsCount}`,
+    };
   }
 };
 
