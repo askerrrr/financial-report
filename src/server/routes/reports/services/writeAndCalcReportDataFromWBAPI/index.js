@@ -4,8 +4,8 @@ var truncateSKUNums = require("./truncateSKUNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 var { skuSchemaVersion } = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
-var parseReports = async (options, reports) => {
-  var { taxRate } = options;
+var parseReports = async (taxParams, reports) => {
+  var { taxRate } = taxParams;
 
   var { mainReport, storageReport, totalAdvertisingCosts } = reports;
 
