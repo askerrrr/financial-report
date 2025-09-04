@@ -15,6 +15,10 @@ var upgradeReportsSchema = async () => {
     reports.map((report) => {
       console.log("schemaVersion in different", report.schemaVersion !== reportSchemaVersion);
 
+      if (!report?.schemaVersion) {
+        report.schemaVersion = reportSchemaVersion;
+      }
+
       if (report.schemaVersion !== reportSchemaVersion) {
         reportSchemaKeys.map((key) => {
           if (!report.hasOwnProperty(key)) {
