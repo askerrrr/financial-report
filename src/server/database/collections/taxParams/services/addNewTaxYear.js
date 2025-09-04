@@ -3,11 +3,22 @@ var { DatabaseError } = require("../../../../customError");
 var addNewTaxYearToDb = async (collection, userId, year) => {
   try {
     var { years } = await collection.findOne({ userId });
+    var existTaxYear = years.find((date) => date.year == year);
 
-    var existYear = years.find((date) => date.year == year);
+    if (existTaxYear) {
+      var nextTaxYear = ++year;
+      var nextTaxYearIsExist = years.find((date) => date.year == nextTaxYear);
 
-    if (existYear) {
-      return existYear;
+      if (!nextTaxYearIsExist) {
+        await collection.updateOne(
+          { userId },
+          {
+            $push: { years: { year: nextTaxYear } },
+          }
+        );
+      }
+
+      return existTaxYear;
     }
 
     await collection.updateOne(
