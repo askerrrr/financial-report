@@ -1,6 +1,6 @@
 var { reportSchema } = require("../schemas/reports");
-var { getAllDataFromReportCollection } = require("../collections/reports");
 var { reportSchemaVersion } = require("./schemaVersioning/reportsCollection");
+var { getAllDataFromReportCollection, saveUpdatedReport } = require("../collections/reports");
 
 var upgradeReportsSchema = async () => {
   var data = await getAllDataFromReportCollection();
@@ -12,14 +12,10 @@ var upgradeReportsSchema = async () => {
   var reportSchemaKeys = Object.keys(reportSchema.obj);
 
   for (var { reports } of data) {
-    reports.map((report) => {
-      console.log("schemaVersion in different", report.schemaVersion !== reportSchemaVersion);
-
-      if (!report?.schemaVersion) {
+    reports.map(async (report) => {
+      if (report.schemaVersion !== reportSchemaVersion || !report.schemaVersion) {
         report.schemaVersion = reportSchemaVersion;
-      }
 
-      if (report.schemaVersion !== reportSchemaVersion) {
         reportSchemaKeys.map((key) => {
           if (!report.hasOwnProperty(key)) {
             report[key] = reportSchema[key]?.default ?? 0;
@@ -28,6 +24,10 @@ var upgradeReportsSchema = async () => {
             console.log("newKey: ", report[key]);
           }
         });
+
+        console.log(`the report ${report.reportId} needs to be updated`);
+
+        await saveUpdatedReport(report.userId, report.reportId, report);
       }
     });
   }

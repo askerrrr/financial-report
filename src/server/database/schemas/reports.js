@@ -65,7 +65,6 @@ var reportSchema = new Schema(
     taxRate: { type: Number, default: 6 },
     recordTo: { type: recordToSchema, requred: true },
     skus: [{ type: SKUSchema, required: true }],
-    _______newKey: { type: String },
     schemaVersion: { type: Number },
   },
   { _id: false }
