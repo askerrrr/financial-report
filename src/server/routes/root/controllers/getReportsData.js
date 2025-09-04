@@ -5,9 +5,7 @@ var getReportsData = async (req, res, next) => {
 
   var { getReportsByUserId } = req.app.locals.reportCollectionServices;
   var { getReportsTree } = req.app.locals.reportsTreeCollectionServices;
-  var { addNewTaxYearToDb, changePaidTaxAmountToDb } = req.app.locals.taxParamsCollectionServices;
 
-  await addNewTaxYearToDb(userId, 2025);
   var { years } = await getReportsTree(userId);
 
   var reports = await getReportsByUserId(userId);
