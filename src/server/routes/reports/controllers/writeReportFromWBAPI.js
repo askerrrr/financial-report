@@ -11,7 +11,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
   var { dateTo, dateFrom } = req.body;
 
   var userId = req.app.locals.userId;
-  var reportId = mainReport[0].realizationreport_id;
+  var reportId = req.body.mainReport[0].realizationreport_id;
 
   var { years } = await getReportsTree(userId);
 
