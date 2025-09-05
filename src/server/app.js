@@ -17,13 +17,6 @@ mongoose.connection.on("disconnected", () => setTimeout(mongooseConnection, 5000
   await mongooseConnection();
   process.env.NODE_ENV = "production";
 
-  app.locals.userCollectionServices = require("./database/collections/users");
-  app.locals.tokenCollectionServices = require("./database/collections/tokens");
-  app.locals.adminCollectionServices = require("./database/collections/admins");
-  app.locals.reportCollectionServices = require("./database/collections/reports");
-  app.locals.taxParamsCollectionServices = require("./database/collections/taxParams");
-  app.locals.reportsTreeCollectionServices = require("./database/collections/reportTrees");
-
   var success = await runDBMigration();
 
   if (!success) {
@@ -31,6 +24,7 @@ mongoose.connection.on("disconnected", () => setTimeout(mongooseConnection, 5000
     return errorApp.listen(env.PORT, env.HOST, () => console.log("Сервер временно недоступен."));
   }
 
+  app.locals = { ...require("./database/collections/") };
   app.listen(env.PORT, env.HOST, async () => console.log("server running"));
 })();
 
