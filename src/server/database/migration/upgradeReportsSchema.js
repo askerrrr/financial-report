@@ -1,4 +1,5 @@
 var { reportSchema } = require("../schemas/reports");
+var { DBMigrationError } = require("../../customError");
 var { reportSchemaVersion } = require("./schemaVersioning/reportsCollection");
 var { getAllDataFromReportCollection, saveUpdatedReport } = require("../collections/reports");
 
@@ -9,10 +10,11 @@ var upgradeReportsSchema = async () => {
     return;
   }
 
-  var reportSchemaKeys = Object.keys(reportSchema.obj);
+  var userId;
+  var failedUpdates = [];
   var updatedReportsCount = 0,
-    updateFailedReportsCount = 0,
     pendingReportUpdatesCount = 0;
+  var reportSchemaKeys = Object.keys(reportSchema.obj);
 
   try {
     for (var { reports } of data) {
@@ -24,7 +26,7 @@ var upgradeReportsSchema = async () => {
 
           updatedReport.schemaVersion = reportSchemaVersion;
 
-          reportSchemaKeys.map((key) => {
+          reportSchemaKeys.forEach((key) => {
             if (!updatedReport.hasOwnProperty(key)) {
               updatedReport[key] = reportSchema[key]?.default ?? 0;
             }
@@ -34,25 +36,28 @@ var upgradeReportsSchema = async () => {
             var success = await saveUpdatedReport(report.userId, report.reportId, updatedReport);
 
             if (!success) {
-              updateFailedReportsCount++;
-            } else {
-              updatedReportsCount++;
+              userId = report.userId;
+              failedUpdates.push(report.reportId);
             }
+
+            updatedReportsCount++;
           } catch (e) {
-            console.log({ errMsg: e.message, errName: "DBMigrationError", stack: e.stack });
-            updateFailedReportsCount++;
+            userId = report.userId;
+            failedUpdates.push(report.reportId);
+            throw new DBMigrationError(userId, failedUpdates);
           }
         }
       }
     }
-  } catch (e) {
-    console.log({ errMsg: e.message, errName: "DBMigrationError", stack: e.stack });
-  }
 
-  if (pendingReportUpdatesCount) {
-    return {
-      msg: `result of migration of the "reports" collection\npendingReportUpdatesCount: ${pendingReportUpdatesCount}\nupdatedReportsCount: ${updatedReportsCount}\nupdateFailedReportsCount: ${updateFailedReportsCount}`,
-    };
+    if (pendingReportUpdatesCount) {
+      console.log("reports --- success");
+      return;
+    }
+
+    console.log("reports --- does not need");
+  } catch (e) {
+    throw new DBMigrationError(userId, failedUpdates);
   }
 };
 
