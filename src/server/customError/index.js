@@ -49,10 +49,21 @@ class FormDataError extends Error {
   }
 }
 
+class DBMigrationError extends Error {
+  constructor(message) {
+    super(message);
+
+    this.message = message;
+    this.status = 500;
+    this.name = this.constructor.name;
+  }
+}
+
 module.exports = {
   WBAPIError,
   FormDataError,
   DatabaseError,
+  DBMigrationError,
   ReportNotFoundError,
   DatabaseConnectionError,
 };
