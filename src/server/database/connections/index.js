@@ -1,22 +1,13 @@
 var env = require("../../env");
 var mongoose = require("mongoose");
-var usersSchema = require("../schemas/users");
-var tokenSchema = require("../schemas/token");
-var { reportsSchema } = require("../schemas/reports");
-var taxParamsSchema = require("../schemas/taxParams");
-var reportsTreeSchema = require("../schemas/reportsTree");
 
-var reportsDB = mongoose.createConnection(env.getMongoURI(), env.mongoose_options);
+var connection = mongoose.createConnection(env.getMongoURI(), env.mongoose_options);
 
-var userCollection = reportsDB.model("User", usersSchema);
-
-var reportCollection = reportsDB.model("Report", reportsSchema);
-
-var tokenCollection = reportsDB.model("Token", tokenSchema);
-
-var taxParamsCollection = reportsDB.model("Tax_Param", taxParamsSchema);
-
-var reportsTreeCollection = reportsDB.model("Reports_Tree", reportsTreeSchema);
+var userCollection = connection.model("User", require("../schemas/users"));
+var tokenCollection = connection.model("Token", require("../schemas/token"));
+var taxParamsCollection = connection.model("Tax_Param", require("../schemas/taxParams"));
+var reportCollection = connection.model("Report", require("../schemas/reports").reportsSchema);
+var reportsTreeCollection = connection.model("Reports_Tree", require("../schemas/reportsTree"));
 
 module.exports = {
   userCollection,
