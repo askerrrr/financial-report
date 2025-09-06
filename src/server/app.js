@@ -9,17 +9,22 @@ var app = express();
 var errorApp = express();
 
 (async () => {
-  process.env.NODE_ENV = "production";
+  try {
+    process.env.NODE_ENV = "production";
 
-  var success = await runDBMigration();
+    var success = await runDBMigration();
 
-  if (!success) {
+    if (!success) {
+      errorApp.get("/", (_, res) => res.set({ "Content-Type": "text/html" }).send("<p>Сервер временно недоступен</p>"));
+      return errorApp.listen(env.PORT, env.HOST, () => console.log("Сервер временно недоступен."));
+    }
+
+    app.locals = { ...require("./database/collections/") };
+    app.listen(env.PORT, env.HOST, async () => console.log("server running"));
+  } catch (e) {
     errorApp.get("/", (_, res) => res.set({ "Content-Type": "text/html" }).send("<p>Сервер временно недоступен</p>"));
-    return errorApp.listen(env.PORT, env.HOST, () => console.log("Сервер временно недоступен."));
+    errorApp.listen(env.PORT, env.HOST, () => console.log("Сервер временно недоступен."));
   }
-
-  app.locals = { ...require("./database/collections/") };
-  app.listen(env.PORT, env.HOST, async () => console.log("server running"));
 })();
 
 app.disable("x-powered-by");
