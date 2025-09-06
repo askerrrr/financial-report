@@ -1,6 +1,5 @@
 var env = require("./env");
 var express = require("express");
-var mongoose = require("mongoose");
 var { join } = require("node:path");
 var cookieParser = require("cookie-parser");
 var checkDBState = require("./middleware/mongoose");
@@ -8,13 +7,8 @@ var runDBMigration = require("./database/migration");
 
 var app = express();
 var errorApp = express();
-var mongooseConnection = async () => await mongoose.connect(env.getMongoURI(), env.mongoose_options).then(() => console.log("mongoose conected"));
-mongoose.Promise = Promise;
-mongoose.connection.on("error", () => mongoose.disconnect());
-mongoose.connection.on("disconnected", () => setTimeout(mongooseConnection, 5000));
 
 (async () => {
-  await mongooseConnection();
   process.env.NODE_ENV = "production";
 
   var success = await runDBMigration();
