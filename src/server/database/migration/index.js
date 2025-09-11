@@ -2,16 +2,9 @@ var upgradeSKUsShema = require("./upgradeSKUsShema");
 var upgradeReportsSchema = require("./upgradeReportsSchema");
 
 var runDBMigration = async () => {
-  console.log("Database migration\nCollections:");
-  try {
-    //await upgradeSKUsShema();
-    await upgradeReportsSchema();
-
-    return true;
-  } catch (e) {
-    console.log(e.message);
-    return;
-  }
+  console.log("-------------------------\n     Database migration\nSchema list:");
+  await upgradeSKUsShema();
+  await upgradeReportsSchema();
 };
 
 module.exports = runDBMigration;

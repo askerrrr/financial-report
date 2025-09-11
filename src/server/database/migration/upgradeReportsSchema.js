@@ -51,11 +51,11 @@ var upgradeReportsSchema = async () => {
     }
 
     if (pendingReportUpdatesCount) {
-      console.log("reports --- success");
+      console.log("reports --- success migration");
       return;
     }
 
-    console.log("reports --- does not need");
+    console.log("reports --- does not need migration");
   } catch (e) {
     throw new DBMigrationError(userId, failedUpdates);
   }

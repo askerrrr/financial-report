@@ -2,55 +2,133 @@ var env = require("./env");
 var express = require("express");
 var { join } = require("node:path");
 var cookieParser = require("cookie-parser");
-var checkDBState = require("./middleware/mongoose");
 var runDBMigration = require("./database/migration");
+var { setupMongooseEvents, mongooseConnection } = require("./middleware/mongoose");
+var serverEmitter = require("./customEvent");
+var mainServerIsListen = false;
+var errorServerIsListen = false;
 
-var app = express();
-var errorApp = express();
+var mainServerInstance = null;
+var errorServerInstance = null;
 
-(async () => {
-  try {
-    process.env.NODE_ENV = "production";
+var createServer = () => {
+  var app = express();
+  return app;
+};
 
-    var success = await runDBMigration();
-
-    if (!success) {
-      errorApp.get("/", (_, res) => res.set({ "Content-Type": "text/html" }).send("<p>Сервер временно недоступен</p>"));
-      return errorApp.listen(env.PORT, env.HOST, () => console.log("Сервер временно недоступен."));
-    }
-
-    app.locals = { ...require("./database/collections/") };
-    app.listen(env.PORT, env.HOST, async () => console.log("server running"));
-  } catch (e) {
-    errorApp.get("/", (_, res) => res.set({ "Content-Type": "text/html" }).send("<p>Сервер временно недоступен</p>"));
-    errorApp.listen(env.PORT, env.HOST, () => console.log("Сервер временно недоступен."));
+var runErrorServer = async () => {
+  if (errorServerInstance) {
+    await new Promise((resolve) => {
+      if (errorServerInstance && errorServerInstance.close) {
+        errorServerInstance.close(() => {
+          errorServerInstance.removeAllListeners();
+          errorServerInstance = null;
+          errorServerIsListen = false;
+          resolve();
+        });
+      }
+    });
   }
-})();
 
-app.disable("x-powered-by");
-app.use(express.urlencoded());
-app.use(express.json());
-app.use(express.static(join(__dirname, "../public")));
+  var errorApp = createServer();
+  errorApp.get("/", (_, res) => res.set({ "Content-Type": "text/html" }).send("<p>Сервер временно недоступен</p>"));
+  errorServerIsListen = true;
+  errorServerInstance = errorApp.listen(env.PORT, env.HOST, () => console.log("Сервер временно недоступен."));
+};
 
-app.use(checkDBState);
+var runDB = async () => {
+  setupMongooseEvents();
 
-app.use("/decode-report-without-registration/", require("./routes/decodeReportWithoutRegistration"));
-app.use("/auth", require("./routes/auth/"));
-app.use("/admin", require("./routes/admin/"));
-app.use("/reg", require("./routes/registration/"));
+  await mongooseConnection();
+  await runDBMigration().then(() => console.log("\n     migration completed\n-------------------------\n"));
+};
 
-app.use(cookieParser());
+var runServer = async () => {
+  if (mainServerInstance) {
+    await new Promise((resolve) => {
+      if (mainServerInstance && mainServerInstance.close) {
+        mainServerInstance.close(() => {
+          mainServerInstance.removeAllListeners();
+          mainServerInstance = null;
+          mainServerIsListen = false;
+          resolve();
+        });
+      }
+    });
+  }
 
-app.use(require("./middleware/verifyJWTToken"));
+  process.env.NODE_ENV = "production";
+  var app = createServer();
 
-app.use("/", require("./routes/root/"));
+  app.locals = { ...require("./database/collections/") };
+  app.disable("x-powered-by");
+  app.use(express.urlencoded());
+  app.use(express.json());
+  app.use(express.static(join(__dirname, "../public")));
 
-app.use("/token", require("./routes/WBToken/"));
+  //app.use(checkDBState);
 
-app.use("/tax_params", require("./routes/taxParams/"));
+  app.use("/decode-report-without-registration/", require("./routes/decodeReportWithoutRegistration"));
+  app.use("/auth", require("./routes/auth/"));
+  app.use("/admin", require("./routes/admin/"));
+  app.use("/reg", require("./routes/registration/"));
 
-app.use("/reports", require("./routes/reports/"));
+  app.use(cookieParser());
+  app.use(require("./middleware/verifyJWTToken"));
+  app.use("/", require("./routes/root/"));
+  app.use("/token", require("./routes/WBToken/"));
+  app.use("/tax_params", require("./routes/taxParams/"));
+  app.use("/reports", require("./routes/reports/"));
 
-app.all(/.*/, require("./middleware/notFoundHandler/"));
+  app.all(/.*/, require("./middleware/notFoundHandler/"));
 
-app.use(require("./middleware/errorHandler/"));
+  app.use(require("./middleware/errorHandler/"));
+
+  mainServerIsListen = true;
+  mainServerInstance = app.listen(env.PORT, env.HOST, async () => console.log("server running"));
+};
+
+var main = async () => {
+  try {
+    await runDB();
+    await runServer();
+  } catch (e) {
+    if (e.name !== "MongooseServerSelectionError") {
+      await runErrorServer();
+    }
+  }
+};
+
+main();
+
+serverEmitter.on("start", async () => {
+  if (errorServerIsListen) {
+    await new Promise((resolve) => {
+      errorServerInstance.close(() => {
+        errorServerInstance.removeAllListeners();
+        errorServerInstance = null;
+        errorServerIsListen = false;
+        resolve();
+      });
+    });
+  }
+  return await runServer();
+});
+
+serverEmitter.on("close", async () => {
+  if (mainServerIsListen) {
+    await new Promise((resolve) => {
+      mainServerInstance.close(() => {
+        mainServerInstance.removeAllListeners();
+        mainServerInstance = null;
+        mainServerIsListen = false;
+        resolve();
+      });
+    });
+  }
+  return await runErrorServer();
+});
+
+process.on("unhandledRejection", async (reason, promise) => {
+  //console.log("reason name: ", reason.name);
+});
