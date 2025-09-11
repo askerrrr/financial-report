@@ -1,7 +1,4 @@
-var env = require("../../env");
-var mongoose = require("mongoose");
-
-var connection = mongoose.createConnection(env.getMongoURI(), env.mongoose_options);
+var { connection } = require("../../middleware/mongoose");
 
 var userCollection = connection.model("User", require("../schemas/users"));
 var tokenCollection = connection.model("Token", require("../schemas/token"));

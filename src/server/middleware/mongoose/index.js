@@ -9,6 +9,8 @@ var eventsConfigured = false;
 var mongooseIsReconnected = false;
 const MAX_CONNECTION_ATTEMPTS = 30;
 
+var connection = mongoose.connection;
+
 var setupMongooseEvents = () => {
   if (eventsConfigured) {
     return;
@@ -17,12 +19,12 @@ var setupMongooseEvents = () => {
   eventsConfigured = true;
   console.log("connection to mongoose...\n");
 
-  mongoose.connection.on("error", (e) => {
+  connection.on("error", (e) => {
     console.log("mongoose connection error: ", { name: e.name, msg: e.message });
     mongoose.disconnect();
   });
 
-  mongoose.connection.on("disconnected", async () => {
+  connection.on("disconnected", async () => {
     console.log("mongoose disconnected\n");
 
     if (timerId) {
@@ -36,7 +38,7 @@ var setupMongooseEvents = () => {
     if (connectionAttempts === MAX_CONNECTION_ATTEMPTS) {
       clearTimeout(timerId);
       timerId = null;
-      mongoose.connection.removeAllListeners();
+      connection.removeAllListeners();
       console.log("mongoose connection was been destroed");
 
       return;
@@ -45,9 +47,9 @@ var setupMongooseEvents = () => {
     connectionAttempts++;
   });
 
-  mongoose.connection.on("reconnected", () => {});
+  connection.on("reconnected", () => {});
 
-  mongoose.connection.on("connected", async () => {
+  connection.on("connected", async () => {
     if (timerId) {
       console.clear();
       console.log("mongoose reconnected\n");
@@ -86,4 +88,4 @@ var checkDBState = (req, res, next) => {
   }
 };
 
-module.exports = { setupMongooseEvents, mongooseConnection };
+module.exports = { setupMongooseEvents, mongooseConnection, connection };
