@@ -2,9 +2,7 @@ var env = require("./env");
 var express = require("express");
 var { join } = require("node:path");
 var cookieParser = require("cookie-parser");
-var runDBMigration = require("./database/migration");
-var { setupMongooseEvents, mongooseConnection } = require("./middleware/mongoose");
-var serverEmitter = require("./customEvent");
+
 var mainServerIsListen = false;
 var errorServerIsListen = false;
 
@@ -36,13 +34,6 @@ var runErrorServer = async () => {
   errorServerInstance = errorApp.listen(env.PORT, env.HOST, () => console.log("Сервер временно недоступен."));
 };
 
-var runDB = async () => {
-  setupMongooseEvents();
-
-  await mongooseConnection();
-  await runDBMigration().then(() => console.log("\n     migration completed\n-------------------------\n"));
-};
-
 var runServer = async () => {
   if (mainServerInstance) {
     await new Promise((resolve) => {
@@ -66,8 +57,6 @@ var runServer = async () => {
   app.use(express.json());
   app.use(express.static(join(__dirname, "../public")));
 
-  //app.use(checkDBState);
-
   app.use("/decode-report-without-registration/", require("./routes/decodeReportWithoutRegistration"));
   app.use("/auth", require("./routes/auth/"));
   app.use("/admin", require("./routes/admin/"));
@@ -88,18 +77,22 @@ var runServer = async () => {
   mainServerInstance = app.listen(env.PORT, env.HOST, async () => console.log("server running"));
 };
 
-var main = async () => {
+var { runDB } = require("./database");
+var serverEmitter = require("./customEvent");
+
+var startApp = async () => {
   try {
     await runDB();
     await runServer();
   } catch (e) {
+    console.log(e);
     if (e.name !== "MongooseServerSelectionError") {
       await runErrorServer();
     }
   }
 };
 
-main();
+startApp();
 
 serverEmitter.on("start", async () => {
   if (errorServerIsListen) {

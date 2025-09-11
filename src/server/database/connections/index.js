@@ -1,4 +1,4 @@
-var { connection } = require("../../middleware/mongoose");
+var { connection } = require("../index");
 
 var userCollection = connection.model("User", require("../schemas/users"));
 var tokenCollection = connection.model("Token", require("../schemas/token"));
