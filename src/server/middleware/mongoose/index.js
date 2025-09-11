@@ -59,6 +59,7 @@ var setupMongooseEvents = () => {
     }
 
     if (!mongooseIsReconnected) {
+      console.clear();
       console.log("mongoose connected\n");
     }
 
