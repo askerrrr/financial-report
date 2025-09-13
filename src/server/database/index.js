@@ -68,8 +68,8 @@ var setupMongooseEvents = () => {
 var mongooseConnection = async () => await mongoose.connect(env.getMongoURI(), env.mongoose_options);
 
 var runDB = async () => {
-  setupMongooseEvents(mongoose);
-  await mongooseConnection(mongoose);
+  setupMongooseEvents();
+  await mongooseConnection();
 
   var runDBMigration = require("./migration/");
 
