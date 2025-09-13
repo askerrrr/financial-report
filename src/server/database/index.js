@@ -2,10 +2,8 @@ var mongoose = require("mongoose");
 var mongooseConnection = require("./mongooseConnection");
 var setupMongooseEvents = require("./setupMongooseEvents");
 
-var connection = mongoose.connection;
-
 var runDB = async () => {
-  setupMongooseEvents(connection);
+  setupMongooseEvents(mongoose);
   await mongooseConnection(mongoose);
 
   var runDBMigration = require("./migration/");
@@ -13,4 +11,4 @@ var runDB = async () => {
   await runDBMigration().then(() => console.log("\n     migration completed\n-------------------------\n"));
 };
 
-module.exports = { runDB, connection };
+module.exports = { runDB, connection: mongoose.connection };
