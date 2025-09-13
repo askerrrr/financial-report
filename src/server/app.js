@@ -85,8 +85,7 @@ var startApp = async () => {
     await runDB();
     await runServer();
   } catch (e) {
-    console.log(e);
-    if (e.name !== "MongooseServerSelectionError") {
+    if (e.name !== "MongooseServerSelectionError" || e.name !== "MongoServerSelectionError") {
       await runErrorServer();
     }
   }
