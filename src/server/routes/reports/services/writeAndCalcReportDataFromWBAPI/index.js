@@ -16,11 +16,12 @@ var parseReports = async (taxRate, reports) => {
 
   var skus = [];
 
-  for (var { skuName } of skuNamesAndIds) {
+  for (var { skuId, skuName } of skuNamesAndIds) {
     var skuFilteredReport = mainReport.filter((sku) => sku.sa_name === skuName);
 
     var sku = {};
 
+    sku.Id = skuId;
     sku.skuName = skuName;
     sku.schemaVersion = skuSchemaVersion;
     sku.qty = await calc.quantityPerSKU(skuFilteredReport);

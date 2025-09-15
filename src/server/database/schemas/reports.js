@@ -32,6 +32,7 @@ var SKUSchema = new Schema(
     averageStorageCost: numberOptions,
     averageAdvertisingCostPerSKU: numberOptions,
     schemaVersion: { type: Number },
+    id: { type: Number, required: true },
   },
   { _id: false }
 );
