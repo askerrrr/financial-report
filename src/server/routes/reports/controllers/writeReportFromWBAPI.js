@@ -19,7 +19,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
   await updateReportTree(userId, sortedYears);
 
   var { taxRate, paidTaxAmount } = await addNewTaxYearToDb(userId, +year);
-  var report = await parseReports(taxRate, req.body);
+  var { report, skuNamesAndIds } = await parseReports(taxRate, req.body);
   paidTaxAmount += report.totalTaxAmount;
   await changePaidTaxAmountToDb(userId, year, paidTaxAmount);
 

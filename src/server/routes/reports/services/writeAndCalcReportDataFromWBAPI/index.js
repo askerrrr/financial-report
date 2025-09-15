@@ -21,7 +21,7 @@ var parseReports = async (taxRate, reports) => {
 
     var sku = {};
 
-    sku.Id = skuId;
+    sku.id = skuId;
     sku.skuName = skuName;
     sku.schemaVersion = skuSchemaVersion;
     sku.qty = await calc.quantityPerSKU(skuFilteredReport);
@@ -57,7 +57,7 @@ var parseReports = async (taxRate, reports) => {
   var totalDeductionOrPayment = await calc.totalDeductionOrPayment(skus);
   var totalSellerPayoutAmount = await calc.totalSellerPayoutAmount(skus);
 
-  return {
+  var report = {
     skus,
     totalSold,
     totalFines,
@@ -73,6 +73,8 @@ var parseReports = async (taxRate, reports) => {
     totalAdditionalPayment,
     totalDeductionOrPayment,
   };
+
+  return { report, skuNamesAndIds };
 };
 
 module.exports = parseReports;
