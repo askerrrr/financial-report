@@ -2,7 +2,7 @@ var { Schema } = require("mongoose");
 
 var SKUSchema = new Schema({
   name: { type: String, required: true },
-  skuId: { type: Number, required: true },
+  id: { type: Number, required: true },
   price: { type: Number, required: true },
   discont: { type: Number, required: true },
   discountedPrice: { type: Number, required: true },

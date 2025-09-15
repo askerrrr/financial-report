@@ -16,13 +16,13 @@ var parseReports = async (taxRate, reports) => {
 
   var skus = [];
 
-  for (var { skuId, skuName } of skuNamesAndIds) {
-    var skuFilteredReport = mainReport.filter((sku) => sku.sa_name === skuName);
+  for (var { id, name } of skuNamesAndIds) {
+    var skuFilteredReport = mainReport.filter((sku) => sku.sa_name === name);
 
     var sku = {};
 
-    sku.id = skuId;
-    sku.skuName = skuName;
+    sku.id = id;
+    sku.skuName = name;
     sku.schemaVersion = skuSchemaVersion;
     sku.qty = await calc.quantityPerSKU(skuFilteredReport);
     sku.finesPerSKU = await calc.finesPerSKU(skuFilteredReport);
@@ -35,7 +35,7 @@ var parseReports = async (taxRate, reports) => {
     sku.additionalPaymentPerSKU = await calc.additionalPaymentPerSKU(skuFilteredReport);
     sku.sellerPayoutAmountPerSKU = await calc.sellerPayoutAmountPerSKU(skuFilteredReport);
     sku.averageRetailPrice = await calc.averageRetailPricePerSKU(sku.qty, skuFilteredReport);
-    sku.storageCostPerSKU = await calc.storageCostPerSKU(skuName, storageDataFromPaidStorageReport);
+    sku.storageCostPerSKU = await calc.storageCostPerSKU(name, storageDataFromPaidStorageReport);
     sku.averageStorageCost = await calc.averageStorageCostPerSKU(totalStorageCost, totalSold, sku.qty);
     sku.averageAdvertisingCostPerSKU = await calc.averageAdvertisingCostPerSKU(skuNamesAndIds.length, totalAdvertisingCosts);
     sku.profitPerSKU = await calc.profitPerSKU(sku);
