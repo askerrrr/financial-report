@@ -9,7 +9,7 @@ var getSkuNamesAndIds = async (report) => {
     }
   }
 
-  return uniqueMap;
+  return [...uniqueMap.values()];
 };
 
 module.exports = getSkuNamesAndIds;
