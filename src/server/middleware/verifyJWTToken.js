@@ -18,7 +18,7 @@ var verifyJWTToken = async (req, res, next) => {
       return next();
     }
 
-    return next();
+    return next({ status: 403 });
   } catch (e) {
     res.clearCookie("token");
     next(e);
