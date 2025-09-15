@@ -1,5 +1,5 @@
 var calc = require("./calcServices/index");
-var getSkuNames = require("./getSkuNames");
+var getSkuNamesAndIds = require("./getSkuNamesAndIds");
 var truncateSKUNums = require("./truncateSKUNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 var { skuSchemaVersion } = require("../../../../database/migration/schemaVersioning/reportsCollection");
@@ -10,13 +10,13 @@ var parseReports = async (taxRate, reports) => {
   var totalSold = await calc.totalSold(mainReport);
   var totalStorageCost = await calc.totalStorageCost(mainReport);
 
-  var skuNames = await getSkuNames(mainReport);
+  var skuNamesAndIds = await getSkuNamesAndIds(mainReport);
 
   var storageDataFromPaidStorageReport = await parsePaidStorageReport(storageReport);
 
   var skus = [];
 
-  for (var skuName of skuNames) {
+  for (var { skuName } of skuNamesAndIds) {
     var skuFilteredReport = mainReport.filter((sku) => sku.sa_name === skuName);
 
     var sku = {};
@@ -36,7 +36,7 @@ var parseReports = async (taxRate, reports) => {
     sku.averageRetailPrice = await calc.averageRetailPricePerSKU(sku.qty, skuFilteredReport);
     sku.storageCostPerSKU = await calc.storageCostPerSKU(skuName, storageDataFromPaidStorageReport);
     sku.averageStorageCost = await calc.averageStorageCostPerSKU(totalStorageCost, totalSold, sku.qty);
-    sku.averageAdvertisingCostPerSKU = await calc.averageAdvertisingCostPerSKU(skuNames.length, totalAdvertisingCosts);
+    sku.averageAdvertisingCostPerSKU = await calc.averageAdvertisingCostPerSKU(skuNamesAndIds.length, totalAdvertisingCosts);
     sku.profitPerSKU = await calc.profitPerSKU(sku);
     sku.averageProfitPerSKU = await calc.averageProfitPerSKU(sku);
 
