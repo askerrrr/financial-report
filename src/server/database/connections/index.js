@@ -1,5 +1,6 @@
 var { connection } = require("../index");
 
+var skuCollection = connection.model("Sku", require("../schemas/skus"));
 var userCollection = connection.model("User", require("../schemas/users"));
 var tokenCollection = connection.model("Token", require("../schemas/token"));
 var taxParamsCollection = connection.model("Tax_Param", require("../schemas/taxParams"));
@@ -7,6 +8,7 @@ var reportCollection = connection.model("Report", require("../schemas/reports").
 var reportsTreeCollection = connection.model("Reports_Tree", require("../schemas/reportsTree"));
 
 module.exports = {
+  skuCollection,
   userCollection,
   reportCollection,
   tokenCollection,
