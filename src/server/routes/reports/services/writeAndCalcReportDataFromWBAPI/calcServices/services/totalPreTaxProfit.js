@@ -1,4 +1,4 @@
-var shortNum = require("../shortNum");
+var shortNum = require("../../shortNum");
 
 var calcTotalPreTaxProfit = async (skus) => {
   var totalPreTaxProfit = skus.reduce(

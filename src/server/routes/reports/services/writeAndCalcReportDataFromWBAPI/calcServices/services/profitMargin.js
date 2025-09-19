@@ -1,4 +1,4 @@
-var shortNum = require("../shortNum");
+var shortNum = require("../../shortNum");
 
 var calcProfitMargin = async ({ finalProfitPerSKU, retailAmountPerSKU }) => {
   if (finalProfitPerSKU === 0) {

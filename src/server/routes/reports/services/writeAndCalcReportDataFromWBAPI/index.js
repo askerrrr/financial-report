@@ -1,4 +1,4 @@
-var calc = require("./calcServices/index");
+var calc = require("./calcServices");
 var getSkuNamesAndIds = require("./getSkuNamesAndIds");
 var truncateSKUNums = require("./truncateSKUNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
@@ -14,12 +14,11 @@ var parseReports = async (taxRate, reports) => {
 
   var storageDataFromPaidStorageReport = await parsePaidStorageReport(storageReport);
 
+  var sku = {};
   var skus = [];
 
   for (var { id, name } of skuNamesAndIds) {
     var skuFilteredReport = mainReport.filter((sku) => sku.sa_name === name);
-
-    var sku = {};
 
     sku.id = id;
     sku.skuName = name;

@@ -1,4 +1,4 @@
-var shortNum = require("../shortNum");
+var shortNum = require("../../shortNum");
 
 var calcInsuranceFeePerSKU = async (preTaxProfitPerSKU, insuranceFeePercentage) => {
   if (insuranceFeePercentage == 0) {

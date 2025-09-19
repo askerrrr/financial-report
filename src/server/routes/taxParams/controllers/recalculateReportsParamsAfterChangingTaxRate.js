@@ -1,6 +1,6 @@
 var recalculateReportsTaxRate = require("../services/recalculateReportsTaxRate");
-var calcProfitMargin = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/profitMargin");
-var calcFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/finalProfitPerSKU");
+var calcProfitMargin = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/profitMargin");
+var calcFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/finalProfitPerSKU");
 
 var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
   var { year, userId, taxRate } = req.body;

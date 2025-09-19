@@ -1,6 +1,6 @@
-var calcProfitMargin = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/profitMargin");
-var calcFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/finalProfitPerSKU");
-var calcInsuranceFeePerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/insuranceFeePerSKU");
+var calcProfitMargin = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/profitMargin");
+var calcFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/finalProfitPerSKU");
+var calcInsuranceFeePerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/insuranceFeePerSKU");
 
 var recalculateReportsInsuranceFee = async (year, reports, newPercent, taxParams) => {
   var { paidTaxAmount, mandatoryInsuranceFee } = taxParams;

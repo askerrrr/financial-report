@@ -1,4 +1,4 @@
-var shortNum = require("../shortNum");
+var shortNum = require("../../shortNum");
 
 var calcTotalTaxAmount = async (skus) => {
   var totalTaxAmount = skus.reduce((acc, sku) => acc + sku.taxPerSKU, 0);

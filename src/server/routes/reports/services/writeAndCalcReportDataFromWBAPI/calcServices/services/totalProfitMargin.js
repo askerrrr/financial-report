@@ -1,4 +1,4 @@
-var shortNum = require("../shortNum");
+var shortNum = require("../../shortNum");
 
 var calcTotalProfitMargin = async (totalRetailAmount, totalFinalProfit) => {
   if (totalFinalProfit === 0 || totalRetailAmount === 0) {
