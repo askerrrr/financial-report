@@ -10,7 +10,7 @@ var parseReports = async (taxRate, reports) => {
   var totalSold = await calc.totalSold(mainReport);
   var totalStorageCost = await calc.totalStorageCost(mainReport);
 
-  var skuNamesAndIds = await getSkuNamesAndIds(mainReport);
+  var skuNamesAndIds = getSkuNamesAndIds(mainReport);
 
   var storageDataFromPaidStorageReport = await parsePaidStorageReport(storageReport);
 

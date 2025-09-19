@@ -1,4 +1,4 @@
-var getSkuNamesAndIds = async (report) => {
+var getSkuNamesAndIds = (report) => {
   var uniqueMap = new Map();
 
   for (var sku of report) {
