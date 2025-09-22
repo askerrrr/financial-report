@@ -10,7 +10,7 @@ var getReportById = async (collection, userId, reportId) => {
       throw new ReportNotFoundError(userId, reportId);
     }
 
-    return report;
+    return report.toObject();
   } catch (e) {
     if (e instanceof ReportNotFoundError) {
       throw e;
