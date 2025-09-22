@@ -7,18 +7,17 @@ import { getWeekDaysFromMonth } from "./services/getWeekDaysFromMonth.js";
 var getDateToByDateFrom = async (dateFrom) => {
   var [year, month, day] = dateFrom.split("-");
 
-  var sandays, dateTo;
+  var sundays, dateTo;
 
   var overlap = hasPeriodOverlap(year, month, day);
 
   if (overlap) {
     var nextPeriod = getNextPeriod(year, month, day);
-
-    sandays = getWeekDaysFromMonth(nextPeriod, "sanday");
+    sundays = getWeekDaysFromMonth(nextPeriod, "sunday");
 
     var firstSandayIndex = 0;
 
-    dateTo = sandays[firstSandayIndex];
+    dateTo = sundays[firstSandayIndex];
 
     var trancatedDate = truncateDate(dateTo);
 
@@ -27,17 +26,16 @@ var getDateToByDateFrom = async (dateFrom) => {
     return dateToWithDots;
   }
 
-  sandays = getWeekDaysFromMonth(dateFrom, "sanday");
-
-  var dateFromISO = new Date(dateFrom).toISOString();
-
   var mondays = getWeekDaysFromMonth(dateFrom, "monday");
-
+  var dateFromISO = new Date(dateFrom).toISOString();
   var mondayIndex = mondays.indexOf(dateFromISO);
+
+  sundays = getWeekDaysFromMonth(dateFrom, "sunday");
+  var dateFromISO = new Date(dateFrom).toISOString();
 
   var sandayIndex = ++mondayIndex;
 
-  dateTo = sandays[sandayIndex];
+  dateTo = sundays[sandayIndex];
 
   var trancatedDate = truncateDate(dateTo);
 
