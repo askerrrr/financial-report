@@ -1,29 +1,28 @@
 var getMonthMondays = async (reportsDate) => {
-  var d = new Date(reportsDate),
-    month = d.getMonth(),
-    weekDays = [];
+  var date = new Date(reportsDate);
+  var month = date.getMonth();
+  var mondays = [];
 
-  d.setDate(1);
+  date.setDate(1);
 
-  while (d.getDay() !== 1) {
-    d.setDate(d.getDate() + 1);
+  while (date.getDay() !== 1) {
+    date.setDate(date.getDate() + 1);
   }
 
-  while (d.getMonth() === month) {
-    weekDays.push(new Date(d.getTime()).toISOString());
+  while (date.getMonth() === month) {
+    var monday = new Date(date.getTime()).toISOString();
+    mondays.push(monday);
 
-    d.setDate(d.getDate() + 7);
+    date.setDate(date.getDate() + 7);
   }
 
-  return weekDays.reverse();
+  return mondays.reverse();
 };
 
 var getMondayIndex = async (date) => {
   var mondays = await getMonthMondays(date);
 
-  var mondayIndex = mondays.findIndex(
-    (monday) => monday === new Date(date).toISOString()
-  );
+  var mondayIndex = mondays.findIndex((monday) => monday === new Date(date).toISOString());
 
   return mondayIndex === -1 ? 0 : mondayIndex;
 };
