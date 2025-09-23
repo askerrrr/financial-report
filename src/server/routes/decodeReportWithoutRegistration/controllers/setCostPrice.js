@@ -1,4 +1,4 @@
-var changeElementInArray = require("../../reports/services/different/changeElementInArray");
+var updateSkuInArray = require("../../reports/services/different/updateSkuInArray");
 var calcRestSKUParams = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/restSKUParams");
 var calcRestReportTotalParams = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/restReportTotalParams");
 
@@ -9,7 +9,7 @@ var setCostPrice = async (req, res, next) => {
 
   var { skus, ...totalParams } = report;
 
-  var changedSKUs = await changeElementInArray(skus, req.body);
+  var changedSKUs = await updateSkuInArray(skus, req.body);
 
   var sku = changedSKUs[skuIndex];
 
