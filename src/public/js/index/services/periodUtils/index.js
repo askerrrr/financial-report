@@ -8,9 +8,7 @@ var getDateToByDateFrom = async (dateFrom) => {
 
   var sundays, dateTo;
 
-  var overlap = hasPeriodOverlap(year, month, day);
-
-  if (overlap) {
+  if (hasPeriodOverlap(year, month, day)) {
     var nextPeriod = getNextPeriod(year, month);
     sundays = getWeekDaysFromMonth(nextPeriod, "sunday");
 
@@ -19,7 +17,6 @@ var getDateToByDateFrom = async (dateFrom) => {
     dateTo = sundays[firstSandayIndex];
 
     var trancatedDate = truncateDate(dateTo);
-
     return trancatedDate;
   }
 
@@ -28,14 +25,11 @@ var getDateToByDateFrom = async (dateFrom) => {
   var mondayIndex = mondays.indexOf(dateFromISO);
 
   sundays = getWeekDaysFromMonth(dateFrom, "sunday");
-  var dateFromISO = new Date(dateFrom).toISOString();
-
   var sandayIndex = ++mondayIndex;
 
   dateTo = sundays[sandayIndex];
 
   var trancatedDate = truncateDate(dateTo);
-
   return trancatedDate;
 };
 
