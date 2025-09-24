@@ -1,10 +1,10 @@
 import getNextMonth from "./getNextMonth.js";
 import getNextYearDate from "./getNextYearDate.js";
 
-var getNextPeriod = (currentYear, currentMonth, currentDay) => {
-  var { nextMonth } = getNextMonth(+currentMonth);
+var getNextPeriod = (currentYear, currentMonth) => {
+  var { nextMonth } = getNextMonth(currentMonth);
 
-  if (+nextMonth > 12) {
+  if (nextMonth > 12) {
     var nextYear = ++currentYear;
 
     var nextYearDate = getNextYearDate(nextYear);
@@ -12,7 +12,7 @@ var getNextPeriod = (currentYear, currentMonth, currentDay) => {
     return nextYearDate;
   }
 
-  var currentYearDate = [currentYear, nextMonth, currentDay].join("-");
+  var currentYearDate = [currentYear, nextMonth, "15"].join("-");
 
   return currentYearDate;
 };

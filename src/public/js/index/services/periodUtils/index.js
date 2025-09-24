@@ -5,14 +5,14 @@ import hasPeriodOverlap from "./services/hasPeriodOverlap.js";
 import { getWeekDaysFromMonth } from "./services/getWeekDaysFromMonth.js";
 
 var getDateToByDateFrom = async (dateFrom) => {
-  var [year, month, day] = dateFrom.split("-");
+  var [year, month, day] = dateFrom.split("-").map(Number);
 
   var sundays, dateTo;
 
   var overlap = hasPeriodOverlap(year, month, day);
 
   if (overlap) {
-    var nextPeriod = getNextPeriod(year, month, day);
+    var nextPeriod = getNextPeriod(year, month);
     sundays = getWeekDaysFromMonth(nextPeriod, "sunday");
 
     var firstSandayIndex = 0;
