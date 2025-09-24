@@ -10,7 +10,7 @@ const config = {
 
   // Stop running tests after `n` failures
   // bail: 0,
-
+  verbose: false,
   // The directory where Jest should store its cached dependency information
   // cacheDirectory: "C:\\Users\\Adm\\AppData\\Local\\Temp\\jest",
 
