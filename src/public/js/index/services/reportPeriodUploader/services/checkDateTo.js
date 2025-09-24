@@ -3,11 +3,13 @@ import standardizeDate from "./standardizeDate.js";
 import getDateToByDateFrom from "../../periodUtils/index.js";
 
 var checkDateTo = async (dateTo, validDateFrom) => {
-  if (!dateTo) {
-    dateTo = await getDateToByDateFrom(validDateFrom);
+  var standardizedDateTo;
+
+  if (dateTo) {
+    standardizedDateTo = await standardizeDate(dateTo);
   }
 
-  var standardizedDateTo = await standardizeDate(dateTo);
+  standardizedDateTo = await getDateToByDateFrom(validDateFrom);
 
   if (await isFutureDate(standardizedDateTo)) {
     throw new Error("Отчет еще не готов...");

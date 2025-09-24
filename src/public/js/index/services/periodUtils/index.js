@@ -1,6 +1,5 @@
 import truncateDate from "./services/truncateDate.js";
 import getNextPeriod from "./services/getNextPeriod.js";
-import replaceDashToDot from "./services/replaceDashToDot.js";
 import hasPeriodOverlap from "./services/hasPeriodOverlap.js";
 import { getWeekDaysFromMonth } from "./services/getWeekDaysFromMonth.js";
 
@@ -21,9 +20,7 @@ var getDateToByDateFrom = async (dateFrom) => {
 
     var trancatedDate = truncateDate(dateTo);
 
-    var dateToWithDots = replaceDashToDot(trancatedDate);
-
-    return dateToWithDots;
+    return trancatedDate;
   }
 
   var mondays = getWeekDaysFromMonth(dateFrom, "monday");
@@ -39,9 +36,7 @@ var getDateToByDateFrom = async (dateFrom) => {
 
   var trancatedDate = truncateDate(dateTo);
 
-  var dateToWithDots = replaceDashToDot(trancatedDate);
-
-  return dateToWithDots;
+  return trancatedDate;
 };
 
 export default getDateToByDateFrom;
