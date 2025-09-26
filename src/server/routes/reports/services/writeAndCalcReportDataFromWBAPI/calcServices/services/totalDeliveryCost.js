@@ -1,7 +1,8 @@
-var shortNum  =require('../../shortNum')
+var shortNum = require("../../shortNum");
 
-var calcTotalDeliveryCost = async (skus) =>{
-    var totalDeliveryCost =  skus.reduce((acc, sku) => acc + sku.deliveryCostPerSKU, 0)
-return await shortNum(totalDeliveryCost)}
+var calcTotalDeliveryCost = (skus) => {
+  var totalDeliveryCost = skus.reduce((acc, sku) => acc + sku.deliveryCostPerSKU, 0);
+  return shortNum(totalDeliveryCost);
+};
 
 module.exports = calcTotalDeliveryCost;

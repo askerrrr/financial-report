@@ -1,4 +1,4 @@
-var calcRetailAmountPerSKU = async (sku) => {
+var calcRetailAmountPerSKU = (sku) => {
   var retailAmountPerSKU = sku.reduce((acc, i) => acc + i.retail_amount, 0);
 
   return retailAmountPerSKU;

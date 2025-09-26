@@ -1,9 +1,9 @@
 var shortNum = require("../../shortNum");
 
-var calcTotalSellerPayoutAmount = async (skus) => {
+var calcTotalSellerPayoutAmount = (skus) => {
   var totalSellerPayoutAmount = skus.reduce((acc, sku) => acc + sku.sellerPayoutAmountPerSKU, 0);
 
-  return await shortNum(totalSellerPayoutAmount);
+  return shortNum(totalSellerPayoutAmount);
 };
 
 module.exports = calcTotalSellerPayoutAmount;

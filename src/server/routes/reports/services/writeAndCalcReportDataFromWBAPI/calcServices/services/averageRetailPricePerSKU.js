@@ -1,4 +1,4 @@
-var calcAverageRetailPricePerItem = async (quantity, sku) => {
+var calcAverageRetailPricePerItem = (quantity, sku) => {
   var allRetailPricesZero = sku.every((e) => e.retail_price === 0);
 
   if (allRetailPricesZero) {

@@ -24,37 +24,37 @@ var parseReports = async (taxRate, reports) => {
     sku.skuName = name;
     sku.schemaVersion = skuSchemaVersion;
     sku.qty = await calc.quantityPerSKU(skuFilteredReport);
-    sku.finesPerSKU = await calc.finesPerSKU(skuFilteredReport);
-    sku.acceptancePerSKU = await calc.acceptancePerSKU(skuFilteredReport);
-    sku.retailAmountPerSKU = await calc.retailAmountPerSKU(skuFilteredReport);
-    sku.taxPerSKU = await calc.taxPerSKU(sku.retailAmountPerSKU, taxRate);
-    sku.returnAmountPerSKU = await calc.returnAmountPerSKU(skuFilteredReport);
-    sku.deliveryCostPerSKU = await calc.deliveryCostPerSKU(skuFilteredReport);
-    sku.deductionOrPayment = await calc.deductionsOrPayments(skuFilteredReport);
-    sku.additionalPaymentPerSKU = await calc.additionalPaymentPerSKU(skuFilteredReport);
-    sku.sellerPayoutAmountPerSKU = await calc.sellerPayoutAmountPerSKU(skuFilteredReport);
-    sku.averageRetailPrice = await calc.averageRetailPricePerSKU(sku.qty, skuFilteredReport);
-    sku.storageCostPerSKU = await calc.storageCostPerSKU(name, storageDataFromPaidStorageReport);
-    sku.averageStorageCost = await calc.averageStorageCostPerSKU(totalStorageCost, totalSold, sku.qty);
-    sku.averageAdvertisingCostPerSKU = await calc.averageAdvertisingCostPerSKU(skuNamesAndIds.length, totalAdvertisingCosts);
-    sku.profitPerSKU = await calc.profitPerSKU(sku);
-    sku.averageProfitPerSKU = await calc.averageProfitPerSKU(sku);
+    sku.finesPerSKU = calc.finesPerSKU(skuFilteredReport);
+    sku.acceptancePerSKU = calc.acceptancePerSKU(skuFilteredReport);
+    sku.retailAmountPerSKU = calc.retailAmountPerSKU(skuFilteredReport);
+    sku.taxPerSKU = calc.taxPerSKU(sku.retailAmountPerSKU, taxRate);
+    sku.returnAmountPerSKU = calc.returnAmountPerSKU(skuFilteredReport);
+    sku.deliveryCostPerSKU = calc.deliveryCostPerSKU(skuFilteredReport);
+    sku.deductionOrPayment = calc.deductionsOrPayments(skuFilteredReport);
+    sku.additionalPaymentPerSKU = calc.additionalPaymentPerSKU(skuFilteredReport);
+    sku.sellerPayoutAmountPerSKU = calc.sellerPayoutAmountPerSKU(skuFilteredReport);
+    sku.averageRetailPrice = calc.averageRetailPricePerSKU(sku.qty, skuFilteredReport);
+    sku.storageCostPerSKU = calc.storageCostPerSKU(name, storageDataFromPaidStorageReport);
+    sku.averageStorageCost = calc.averageStorageCostPerSKU(totalStorageCost, totalSold, sku.qty);
+    sku.averageAdvertisingCostPerSKU = calc.averageAdvertisingCostPerSKU(skuNamesAndIds.length, totalAdvertisingCosts);
+    sku.profitPerSKU = calc.profitPerSKU(sku);
+    sku.averageProfitPerSKU = calc.averageProfitPerSKU(sku);
 
     skus.push({ ...sku });
   }
 
   skus = await truncateSKUNums(skus);
 
-  var totalFines = await calc.totalFines(skus);
-  var totalProfit = await calc.totalProfit(skus);
-  var totalTaxAmount = await calc.totalTaxAmount(skus);
-  var totalReturnAmount = await calc.totalReturnAmount(skus);
-  var totalDeliveryCost = await calc.totalDeliveryCost(skus);
-  var totalRetailAmount = await calc.totalRetailAmount(skus);
-  var totalPaidAcceptance = await calc.totalPaidAcceptance(skus);
-  var totalAdditionalPayment = await calc.totalAdditionalPayment(skus);
-  var totalDeductionOrPayment = await calc.totalDeductionOrPayment(skus);
-  var totalSellerPayoutAmount = await calc.totalSellerPayoutAmount(skus);
+  var totalFines = calc.totalFines(skus);
+  var totalProfit = calc.totalProfit(skus);
+  var totalTaxAmount = calc.totalTaxAmount(skus);
+  var totalReturnAmount = calc.totalReturnAmount(skus);
+  var totalDeliveryCost = calc.totalDeliveryCost(skus);
+  var totalRetailAmount = calc.totalRetailAmount(skus);
+  var totalPaidAcceptance = calc.totalPaidAcceptance(skus);
+  var totalAdditionalPayment = calc.totalAdditionalPayment(skus);
+  var totalDeductionOrPayment = calc.totalDeductionOrPayment(skus);
+  var totalSellerPayoutAmount = calc.totalSellerPayoutAmount(skus);
 
   var report = {
     skus,

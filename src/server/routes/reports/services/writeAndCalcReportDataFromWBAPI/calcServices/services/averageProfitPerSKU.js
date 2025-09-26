@@ -1,4 +1,4 @@
-var calcAverageProfitPerSKU = async (sku) => {
+var calcAverageProfitPerSKU = (sku) => {
   if (sku.profitPerSKU == 0 || sku.qty == 0) {
     return 0;
   }

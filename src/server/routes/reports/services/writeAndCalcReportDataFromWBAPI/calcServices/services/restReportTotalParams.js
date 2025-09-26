@@ -4,16 +4,16 @@ var calcTotalFinalProfit = require("./totalFinalProfit");
 var calcTotalProfitMargin = require("./totalProfitMargin");
 var calcTotalPreTaxProfit = require("./totalPreTaxProfit");
 
-var calcRestReportTotalParams = async (totals, skus) => {
-  totals.totalPreTaxProfit = await calcTotalPreTaxProfit(skus);
+var calcRestReportTotalParams = (totals, skus) => {
+  totals.totalPreTaxProfit = calcTotalPreTaxProfit(skus);
 
-  totals.totalFinalProfit = await calcTotalFinalProfit(skus);
+  totals.totalFinalProfit = calcTotalFinalProfit(skus);
 
-  totals.totalProductCosts = await calcProductCosts(skus);
+  totals.totalProductCosts = calcProductCosts(skus);
 
-  totals.totalInsuranceFee = await calcTotalInsuranceFee(skus);
+  totals.totalInsuranceFee = calcTotalInsuranceFee(skus);
 
-  totals.totalProfitMargin = await calcTotalProfitMargin(totals.totalRetailAmount, totals.totalFinalProfit);
+  totals.totalProfitMargin = calcTotalProfitMargin(totals.totalRetailAmount, totals.totalFinalProfit);
 
   return { ...totals, skus };
 };

@@ -1,4 +1,4 @@
-var calcProfitPerSKU = async (sku) =>
+var calcProfitPerSKU = (sku) =>
   sku.sellerPayoutAmountPerSKU -
   sku.finesPerSKU -
   sku.acceptancePerSKU -

@@ -1,12 +1,9 @@
 var shortNum = require("../../shortNum");
 
-var caclAverageAdvertisingCostPerSKU = async (
-  totalSKUs,
-  totalAdCampaignCosts
-) => {
+var caclAverageAdvertisingCostPerSKU = (totalSKUs, totalAdCampaignCosts) => {
   var averageAdvertisingCostPerSKU = totalAdCampaignCosts / totalSKUs;
 
-  return await shortNum(averageAdvertisingCostPerSKU);
+  return shortNum(averageAdvertisingCostPerSKU);
 };
 
 module.exports = caclAverageAdvertisingCostPerSKU;
