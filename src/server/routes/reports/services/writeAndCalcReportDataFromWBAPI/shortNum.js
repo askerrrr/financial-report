@@ -1,4 +1,4 @@
-var shortNum = async (num) => {
+var shortNum = (num) => {
   var str = num + "";
 
   var strIncludesDot = str.split("").includes(".");

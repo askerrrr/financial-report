@@ -1,19 +1,16 @@
 var shortNum = require("./shortNum");
 
-var truncateSKUNums = async (skus) => {
-  var result = await Promise.all(
-    skus.map(async (sku) => {
-      for (var value of Object.keys(sku)) {
-        if (typeof sku[value] == "number") {
-          sku[value] = await shortNum(sku[value]);
+var truncateSKUNums = (skus) =>
+  Promise.all(
+    skus.map((sku) => {
+      for (var key of Object.keys(sku)) {
+        if (typeof sku[key] == "number") {
+          sku[key] = shortNum(sku[key]);
         }
       }
 
       return sku;
     })
   );
-
-  return result;
-};
 
 module.exports = truncateSKUNums;
