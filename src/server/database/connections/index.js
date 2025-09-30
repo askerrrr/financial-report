@@ -6,6 +6,7 @@ var tokenCollection = connection.model("Token", require("../schemas/token"));
 var taxParamsCollection = connection.model("Tax_Param", require("../schemas/taxParams"));
 var reportCollection = connection.model("Report", require("../schemas/reports").reportsSchema);
 var reportsTreeCollection = connection.model("Reports_Tree", require("../schemas/reportsTree"));
+var pendingReportsCollection = connection.model("Pending_Report", require("../schemas/pendingReportsSchema"));
 
 module.exports = {
   skuCollection,
@@ -14,4 +15,5 @@ module.exports = {
   tokenCollection,
   taxParamsCollection,
   reportsTreeCollection,
+  pendingReportsCollection,
 };
