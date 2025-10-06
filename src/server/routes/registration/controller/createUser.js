@@ -1,22 +1,23 @@
 var env = require("../../../env");
 var JWT = require("jsonwebtoken");
 var { randomBytes } = require("node:crypto");
-var checkLogin = require('../services/checkLogin')
-var checkPasswd= require('../services/checkPasswd')
+var checkLogin = require("../services/checkLogin");
+var checkPasswd = require("../services/checkPasswd");
 var createUserReportPhotosFolder = require("../services/createUserReportPhotosFolder");
 
 var createUser = async (req, res, next) => {
-  var { createSKUsEntity } = req.app.locals.skusCollectionServices
+  var { createSKUsEntity } = req.app.locals.skusCollectionServices;
   var { createReportsEntity } = req.app.locals.reportCollectionServices;
   var { createTaxParamsEntity } = req.app.locals.taxParamsCollectionServices;
   var { createUserToDb, getUserByLogin } = req.app.locals.userCollectionServices;
   var { createTokenCollectionEntity } = req.app.locals.tokenCollectionServices;
   var { createReportsTreeEntity } = req.app.locals.reportsTreeCollectionServices;
+  var { createReportsLoadingStatesCollectionEntity } = req.app.locals.reportLoadingStatesCollectionServices;
 
-  var user = req.body
+  var user = req.body;
 
-  await checkLogin(user.login)
-  await checkPasswd(user.passwd)
+  await checkLogin(user.login);
+  await checkPasswd(user.passwd);
 
   var userIsExist = await getUserByLogin(user.login);
 
@@ -25,12 +26,13 @@ var createUser = async (req, res, next) => {
   }
 
   var userId = randomBytes(10).toString("hex");
-  await createSKUsEntity(userId)
+  await createSKUsEntity(userId);
   await createReportsEntity(userId);
   await createTaxParamsEntity(userId);
   await createReportsTreeEntity(userId);
   await createTokenCollectionEntity(userId);
   await createUserReportPhotosFolder(userId);
+  await createReportsLoadingStatesCollectionEntity(userId);
 
   user.userId = userId;
 
