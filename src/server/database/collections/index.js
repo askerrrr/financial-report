@@ -6,4 +6,5 @@ module.exports = {
   reportCollectionServices: require("./reports"),
   taxParamsCollectionServices: require("./taxParams"),
   reportsTreeCollectionServices: require("./reportTrees"),
+  reportLoadingStatesCollectionServices: require("./reportLoadingStates"),
 };
