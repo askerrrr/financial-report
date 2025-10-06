@@ -15,5 +15,5 @@ module.exports = {
   tokenCollection,
   taxParamsCollection,
   reportsTreeCollection,
-  pendingReportsCollection,
+  reportLoadingStatesCollection
 };
