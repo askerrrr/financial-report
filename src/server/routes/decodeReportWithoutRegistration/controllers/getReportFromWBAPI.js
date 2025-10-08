@@ -22,7 +22,7 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   var reports = { mainReport, storageReport, totalAdvertisingCosts };
 
-  var report = await parseReports({ taxRate }, reports);
+  var { report } = await parseReports({ taxRate }, reports);
 
   report.dateTo = dateTo;
   report.dateFrom = dateFrom;
