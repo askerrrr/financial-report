@@ -15,7 +15,7 @@ var changeReportDetail = async (req, res, next) => {
 
   var taxParams = await getTaxParamsFromDb(userId, year);
 
-  var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = await calcRestSKUParams(sku, costPrice, taxParams);
+  var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = calcRestSKUParams(sku, costPrice, taxParams);
 
   await changePaidInsuranceFeeToDb(userId, year, recalculatedPaidInsuranceFee);
   await changeInsuranceFeePercentageToDb(userId, year, insuranceFeePercentage);
@@ -30,9 +30,13 @@ var changeReportDetail = async (req, res, next) => {
     var { profitMargin, finalProfitPerSKU } = skuWithCalculatedParams;
 
     return res.status(200).json({
-      skuIndex,
-      profitMargin,
-      finalProfitPerSKU,
+      sku: {
+        skuIndex,
+        data: {
+          profitMargin,
+          finalProfitPerSKU,
+        },
+      },
       total: { totalFinalProfit, totalProfitMargin },
     });
   }

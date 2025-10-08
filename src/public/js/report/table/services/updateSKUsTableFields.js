@@ -1,15 +1,12 @@
 var updateSKUsTableFields = async (sku) => {
-  var { skuIndex } = sku;
+  var { skuIndex, data } = sku;
 
-  delete sku.skuIndex;
-
-  for (var fieldName of Object.keys(sku)) {
+  for (var fieldName of Object.keys(data)) {
     var elemId = [fieldName, skuIndex].join("-");
-
     var skuField = document.getElementById(elemId);
-    skuField.textContent = sku[fieldName];
+    skuField.textContent = data[fieldName];
 
-    if (sku[fieldName] < 0) {
+    if (data[fieldName] < 0) {
       skuField.style.color = "red";
     } else {
       skuField.style.color = "#04ff00";

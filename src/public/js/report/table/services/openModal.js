@@ -30,9 +30,7 @@ var openModal = async (costPriceData, valueDisplay) => {
 
     document.body.removeChild(modal);
 
-    var data = await sendChangedData(costPriceData);
-
-    var { total, ...sku } = data;
+    var { total, sku } = await sendChangedData(costPriceData);
 
     await updateSKUsTableFields(sku);
 

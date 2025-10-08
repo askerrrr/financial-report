@@ -14,8 +14,7 @@ var setCostPrice = async (req, res, next) => {
   var sku = changedSKUs[skuIndex];
 
   var taxParams = { paidTaxAmount: 0, insuranceFeePercentage: 0, mandatoryInsuranceFee: 0 };
-
-  var { skuWithCalculatedParams } = await calcRestSKUParams(sku, costPrice, taxParams);
+  var { skuWithCalculatedParams } = calcRestSKUParams(sku, costPrice, taxParams);
 
   changedSKUs[skuIndex] = skuWithCalculatedParams;
 
@@ -29,9 +28,13 @@ var setCostPrice = async (req, res, next) => {
   req.app.locals.reports[reportIndex] = { id, report: updatedReport };
 
   return res.status(200).json({
-    skuIndex,
-    profitMargin,
-    finalProfitPerSKU,
+    sku: {
+      skuIndex,
+      data: {
+        profitMargin,
+        finalProfitPerSKU,
+      },
+    },
     total: { totalFinalProfit, totalProfitMargin },
   });
 };

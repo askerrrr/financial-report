@@ -5,14 +5,14 @@ var parsePaidStorageReport = require("./parsePaidStorageReport");
 var { skuSchemaVersion } = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
 var parseReports = async (taxRate, reports) => {
-  var { mainReport, storageReport, totalAdvertisingCosts } = reports;
+  var { mainReport, paidStorageReport, totalAdvertisingCosts } = reports;
 
   var totalSold = await calc.totalSold(mainReport);
   var totalStorageCost = await calc.totalStorageCost(mainReport);
 
   var skuNamesAndIds = getSkuNamesAndIds(mainReport);
 
-  var storageDataFromPaidStorageReport = await parsePaidStorageReport(storageReport);
+  var storageDataFromPaidStorageReport = await parsePaidStorageReport(paidStorageReport);
 
   var sku = {};
   var skus = [];

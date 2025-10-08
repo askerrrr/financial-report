@@ -4,10 +4,10 @@ var parseReports = require("../../reports/services/writeAndCalcReportDataFromWBA
 
 var getReportFromWBAPI = async (req, res, next) => {
   var { dateFrom, dateTo, token, taxRate } = req.body;
-  var reports = { mainReport, storageReport, totalAdvertisingCosts };
 
   var reports = await getReports("decode-without-auth", dateFrom, dateTo, token);
-  var { report } = await parseReports({ taxRate }, reports);
+
+  var { report } = await parseReports(taxRate, reports);
 
   report.dateTo = dateTo;
   report.dateFrom = dateFrom;
