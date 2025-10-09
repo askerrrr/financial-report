@@ -64,7 +64,7 @@ var runServer = async () => {
 
   app.use(cookieParser());
   app.use(require("./middleware/verifyJWTToken"));
-  app.use("/", require("./routes/root/"));
+  app.use("/", require("./routes/index/"));
   app.use("/token", require("./routes/WBToken/"));
   app.use("/tax_params", require("./routes/taxParams/"));
   app.use("/reports", require("./routes/reports/"));
