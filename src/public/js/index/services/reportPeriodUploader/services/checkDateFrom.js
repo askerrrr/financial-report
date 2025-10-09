@@ -3,6 +3,21 @@ import standardizeDate from "./standardizeDate.js";
 import { isMonday } from "../../periodUtils/services/getWeekDaysFromMonth.js";
 
 var checkDateFrom = async (dateFrom) => {
+  var dateIncludesDot = dateFrom.split("").includes(".");
+
+  if (!dateIncludesDot) {
+    throw new Error("Неккоректный период");
+  }
+
+  var everyIsNum = dateFrom
+    .split(".")
+    .map(Number)
+    .every((num) => typeof num === "number" && !isNaN(num));
+
+  if (!everyIsNum) {
+    throw new Error("Неккоректный период");
+  }
+
   var standardizedDateFrom = await standardizeDate(dateFrom);
 
   if (!standardizedDateFrom) {
