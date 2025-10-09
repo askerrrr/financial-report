@@ -2,9 +2,9 @@ import checkToken from "./checkToken.js";
 import showReport from "./showReport.js";
 import checkTaxRate from "./checkTaxRate.js";
 import sendReportData from "./sendReportData.js";
-import checkDateTo from "../index/services/reportPeriodUploader/services/checkDateTo.js";
-import checkDateFrom from "../index/services/reportPeriodUploader/services/checkDateFrom.js";
-import { showLoader, deleteLoader } from "../index/services/reportPeriodUploader/services/loader.js";
+import checkDateTo from "../index/services/reportLoader/services/checkDateTo.js";
+import checkDateFrom from "../index/services/reportLoader/services/checkDateFrom.js";
+import { showLoader, deleteLoader } from "../index/services/reportLoader/services/loader.js";
 
 var main = async () => {
   try {
