@@ -6,6 +6,21 @@ var checkDateTo = async (dateTo, dateFrom) => {
   var standardizedDateTo;
 
   if (dateTo) {
+    var dateIncludesDot = dateTo.split("").includes(".");
+
+    if (!dateIncludesDot) {
+      throw new Error("Неккоректный период");
+    }
+
+    var everyIsNum = dateTo
+      .split(".")
+      .map(Number)
+      .every((num) => typeof num === "number" && !isNaN(num));
+
+    if (!everyIsNum) {
+      throw new Error("Неккоректный период");
+    }
+
     standardizedDateTo = await standardizeDate(dateTo);
   }
 
