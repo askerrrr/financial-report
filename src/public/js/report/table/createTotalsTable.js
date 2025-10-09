@@ -4,20 +4,20 @@ var tbody = document.getElementById("totals-tbody");
 var tr = document.createElement("tr");
 
 var createTotalsTable = async (report) => {
-  var totalRetailAmountTd = await createTdElement(report.totalRetailAmount);
-  var totalSellerPayoutAmountTd = await createTdElement(report.totalSellerPayoutAmount);
-  var totalProductCostsTd = await createTdElement(report.totalProductCosts);
-  var totalDeductionOrPaymentTd = await createTdElement(report.totalDeductionOrPayment);
-  var totalStorageCostTd = await createTdElement(report.totalStorageCost);
-  var totalDeliveryCostTd = await createTdElement(report.totalDeliveryCost);
-  var totalPaidAcceptanceTd = await createTdElement(report.totalPaidAcceptance);
-  var totalProfitMarginTd = await createTdElement(report.totalProfitMargin, "totalProfitMargin");
-  var totalSoldTd = await createTdElement(report.totalSold);
-  var totalReturnAmountTd = await createTdElement(report.totalReturnAmount);
-  var totalFinesTd = await createTdElement(report.totalFines);
-  var totalAdvertisingCostsTd = await createTdElement(report.totalAdvertisingCosts);
-  var totalTaxAmountTd = await createTdElement(report.totalTaxAmount);
-  var totalFinalProfitTd = await createTdElement(report.totalFinalProfit, "totalFinalProfit");
+  var totalRetailAmountTd = createTdElement(report.totalRetailAmount);
+  var totalSellerPayoutAmountTd = createTdElement(report.totalSellerPayoutAmount);
+  var totalProductCostsTd = createTdElement(report.totalProductCosts);
+  var totalDeductionOrPaymentTd = createTdElement(report.totalDeductionOrPayment);
+  var totalStorageCostTd = createTdElement(report.totalStorageCost);
+  var totalDeliveryCostTd = createTdElement(report.totalDeliveryCost);
+  var totalPaidAcceptanceTd = createTdElement(report.totalPaidAcceptance);
+  var totalProfitMarginTd = createTdElement(report.totalProfitMargin, "totalProfitMargin");
+  var totalSoldTd = createTdElement(report.totalSold);
+  var totalReturnAmountTd = createTdElement(report.totalReturnAmount);
+  var totalFinesTd = createTdElement(report.totalFines);
+  var totalAdvertisingCostsTd = createTdElement(report.totalAdvertisingCosts);
+  var totalTaxAmountTd = createTdElement(report.totalTaxAmount);
+  var totalFinalProfitTd = createTdElement(report.totalFinalProfit, "totalFinalProfit");
 
   if (report.totalFinalProfit < 0) {
     totalFinalProfitTd.style.color = "red";

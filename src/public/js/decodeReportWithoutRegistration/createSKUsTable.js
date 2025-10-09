@@ -11,23 +11,23 @@ var createSKUsTable = async (id, report, url) => {
   for (var [skuIndex, sku] of Object.entries(skus)) {
     var tr = document.createElement("tr");
 
-    var skuName = await createTdElement(sku.skuName);
-    var qty = await createTdElement(sku.qty);
-    var returnAmount = await createTdElement(sku.returnAmountPerSKU);
+    var skuName = createTdElement(sku.skuName);
+    var qty = createTdElement(sku.qty);
+    var returnAmount = createTdElement(sku.returnAmountPerSKU);
 
     var dataToChange = { id, skuIndex, reportId, fieldName: "costPrice", costPrice: sku.costPrice, url };
 
     var costPriceInputField = await createInputField(dataToChange);
-    var costPrice = await createTdElement(costPriceInputField);
-    var retailPrice = await createTdElement(sku.averageRetailPrice);
-    var deliveryCost = await createTdElement(sku.deliveryCostPerSKU);
-    var fines = await createTdElement(sku.finesPerSKU);
-    var storageCostPerSKU = await createTdElement(sku.storageCostPerSKU);
-    var acceptancePerSKU = await createTdElement(sku.acceptancePerSKU);
-    var profitPerSKU = await createTdElement(sku.profitPerSKU);
-    var averageProfitPerSKU = await createTdElement(sku.averageProfitPerSKU);
-    var profitMargin = await createTdElement(sku.profitMargin, "profitMargin", skuIndex);
-    var finalProfitPerSKU = await createTdElement(sku.finalProfitPerSKU, "finalProfitPerSKU", skuIndex);
+    var costPrice = createTdElement(costPriceInputField);
+    var retailPrice = createTdElement(sku.averageRetailPrice);
+    var deliveryCost = createTdElement(sku.deliveryCostPerSKU);
+    var fines = createTdElement(sku.finesPerSKU);
+    var storageCostPerSKU = createTdElement(sku.storageCostPerSKU);
+    var acceptancePerSKU = createTdElement(sku.acceptancePerSKU);
+    var profitPerSKU = createTdElement(sku.profitPerSKU);
+    var averageProfitPerSKU = createTdElement(sku.averageProfitPerSKU);
+    var profitMargin = createTdElement(sku.profitMargin, "profitMargin", skuIndex);
+    var finalProfitPerSKU = createTdElement(sku.finalProfitPerSKU, "finalProfitPerSKU", skuIndex);
 
     tr.append(
       skuName,

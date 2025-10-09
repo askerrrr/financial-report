@@ -1,4 +1,4 @@
-var createTdElement = async (data, fieldName, index, className = "") => {
+var createTdElement = (data, fieldName, index, className = "") => {
   var td = document.createElement("td");
   td.className = className;
 

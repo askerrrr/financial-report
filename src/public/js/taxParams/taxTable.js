@@ -8,13 +8,13 @@ var createTaxTable = async (taxParams) => {
 
     var { year, taxRate, paidInsuranceFee, mandatoryInsuranceFee, insuranceFeePercentage } = taxYear;
 
-    var yearTd = await createTdElement(year, "year-" + year);
-    var taxRateTd = await createTdElement(taxRate, "taxRate-" + year);
-    var mandatoryInsuranceFeeTd = await createTdElement(mandatoryInsuranceFee, "mandatoryInsuranceFee-" + year);
+    var yearTd = createTdElement(year, "year-" + year);
+    var taxRateTd = createTdElement(taxRate, "taxRate-" + year);
+    var mandatoryInsuranceFeeTd = createTdElement(mandatoryInsuranceFee, "mandatoryInsuranceFee-" + year);
 
-    var insuranceFeePercentageTd = await createTdElement(insuranceFeePercentage, "insuranceFeePercentage-" + year);
+    var insuranceFeePercentageTd = createTdElement(insuranceFeePercentage, "insuranceFeePercentage-" + year);
 
-    var paidInsuranceFeeTd = await createTdElement(paidInsuranceFee, "paidInsuranceFee-" + year);
+    var paidInsuranceFeeTd = createTdElement(paidInsuranceFee, "paidInsuranceFee-" + year);
 
     tr.append(yearTd, taxRateTd, mandatoryInsuranceFeeTd, paidInsuranceFeeTd, insuranceFeePercentageTd);
     tbody.append(tr);

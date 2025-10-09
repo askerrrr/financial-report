@@ -10,36 +10,15 @@ var createReportRow = async (reportData, monthName, reportTbody = null) => {
 
   var reportLink = await getReportLink(reportId);
 
-  var totalProductCostsTd = await createTdElement(
-    0,
-    null,
-    null,
-    "totalProductCosts"
-  );
+  var totalProductCostsTd = createTdElement(0, null, null, "totalProductCosts");
 
-  var totalTaxAmountTd = await createTdElement(
-    totalTaxAmount,
-    null,
-    null,
-    "totalTaxAmount"
-  );
+  var totalTaxAmountTd = createTdElement(totalTaxAmount, null, null, "totalTaxAmount");
 
-  var totalFinalProfitTd = await createTdElement(
-    0,
-    null,
-    null,
-    "totalFinalProfit"
-  );
+  var totalFinalProfitTd = createTdElement(0, null, null, "totalFinalProfit");
 
   var tr = document.createElement("tr");
 
-  tr.append(
-    reportPeriod,
-    totalFinalProfitTd,
-    totalProductCostsTd,
-    totalTaxAmountTd,
-    reportLink
-  );
+  tr.append(reportPeriod, totalFinalProfitTd, totalProductCostsTd, totalTaxAmountTd, reportLink);
 
   if (!reportTbody) {
     reportTbody = document.createElement("tbody");

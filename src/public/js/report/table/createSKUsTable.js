@@ -12,24 +12,24 @@ var createSKUsTable = async (report) => {
   for (var [skuIndex, sku] of Object.entries(skus)) {
     var tr = document.createElement("tr");
 
-    var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, null);
-    var SKUPhotoUploaderTd = await createTdElement(SKUPhotoUploader, "photo-cell", skuIndex, "photo-cell");
-    var skuName = await createTdElement(sku.skuName);
-    var qty = await createTdElement(sku.qty);
-    var returnAmount = await createTdElement(sku.returnAmountPerSKU);
-
     var dataToChange = { userId, skuIndex, reportId, year: +recordTo.year, fieldName: "costPrice", costPrice: sku.costPrice, url: "/reports/change" };
 
+    var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, null);
     var costPriceInputField = await createInputField(dataToChange);
-    var costPrice = await createTdElement(costPriceInputField);
-    var deliveryCost = await createTdElement(sku.deliveryCostPerSKU);
-    var deductionOrPayment = await createTdElement(sku.deductionOrPayment);
-    var fines = await createTdElement(sku.finesPerSKU);
-    var storageCostPerSKU = await createTdElement(sku.storageCostPerSKU);
-    var acceptancePerSKU = await createTdElement(sku.acceptancePerSKU);
-    var profitPerSKU = await createTdElement(sku.profitPerSKU);
-    var profitMargin = await createTdElement(sku.profitMargin, "profitMargin", skuIndex);
-    var finalProfitPerSKU = await createTdElement(sku.finalProfitPerSKU, "finalProfitPerSKU", skuIndex);
+
+    var SKUPhotoUploaderTd = createTdElement(SKUPhotoUploader, "photo-cell", skuIndex, "photo-cell");
+    var skuName = createTdElement(sku.skuName);
+    var qty = createTdElement(sku.qty);
+    var returnAmount = createTdElement(sku.returnAmountPerSKU);
+    var costPrice = createTdElement(costPriceInputField);
+    var deliveryCost = createTdElement(sku.deliveryCostPerSKU);
+    var deductionOrPayment = createTdElement(sku.deductionOrPayment);
+    var fines = createTdElement(sku.finesPerSKU);
+    var storageCostPerSKU = createTdElement(sku.storageCostPerSKU);
+    var acceptancePerSKU = createTdElement(sku.acceptancePerSKU);
+    var profitPerSKU = createTdElement(sku.profitPerSKU);
+    var profitMargin = createTdElement(sku.profitMargin, "profitMargin", skuIndex);
+    var finalProfitPerSKU = createTdElement(sku.finalProfitPerSKU, "finalProfitPerSKU", skuIndex);
 
     if (sku.profitMargin < 0) {
       profitMargin.style.color = "red";
