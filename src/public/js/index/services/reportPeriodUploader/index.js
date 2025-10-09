@@ -1,26 +1,26 @@
-import createModal from "./services/createModal.js";
-import createTitle from "./services/createTitle.js";
-import createInputField from "./services/createInputField.js";
+import createModal from "../utils/createModal.js";
+import createTitle from "../utils/createTitle.js";
+import createInputField from "../utils/createInputField.js";
 import createSaveButton from "./services/createSaveButton.js";
-import createCancelButton from "./services/createCancelButton.js";
-import createButtonsContainer from "./services/createButtonsContainer.js";
+import createCancelButton from "../utils/createCancelButton.js";
+import createButtonsContainer from "../utils/createButtonsContainer.js";
 
 var openReportPeriodModal = async () => {
-  var modal = await createModal("modal-overlay");
+  var modal = createModal("modal-overlay");
 
-  var dateFromInput = await createInputField("dateFromInput", "начало в формате гггг.мм.дд - 2025.04.21");
+  var dateFromInput = createInputField("dateFromInput", "начало в формате гггг.мм.дд - 2025.04.21");
 
-  var dateToInput = await createInputField("dateToInput", "конец в формате гггг.мм.дд - 2025.04.27");
+  var dateToInput = createInputField("dateToInput", "конец в формате гггг.мм.дд - 2025.04.27");
 
   var saveButton = await createSaveButton(modal, dateFromInput, dateToInput);
 
-  var cancelButton = await createCancelButton(modal);
+  var cancelButton = createCancelButton(modal);
 
-  var buttonsContainer = await createButtonsContainer(cancelButton, saveButton);
+  var buttonsContainer = createButtonsContainer(cancelButton, saveButton);
 
-  var title = await createTitle();
+  var title = createTitle("Введите период отчета");
 
-  var modalContent = await createModal("modal-content");
+  var modalContent = createModal("modal-content");
   modalContent.append(title, dateFromInput, dateToInput, buttonsContainer);
 
   modal.append(modalContent);

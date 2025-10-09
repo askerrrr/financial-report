@@ -1,6 +1,6 @@
-var createTitle = async () => {
+var createTitle = (content) => {
   var title = document.createElement("h3");
-  title.append("Введите период отчета");
+  title.append(content);
   title.className = "modal-title";
 
   return title;

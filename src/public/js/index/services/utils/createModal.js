@@ -1,6 +1,9 @@
-var createModal = async (className) => {
+var createModal = (className) => {
   var modal = document.createElement("div");
-  modal.className = className;
+
+  if (className) {
+    modal.className = className;
+  }
 
   modal.onclick = (e) => {
     if (e.target === modal) {

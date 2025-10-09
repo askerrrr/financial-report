@@ -1,27 +1,26 @@
-import createInput from "./createInput.js";
-import createTitle from "./createTitle.js";
-import createModal from "./createModal.js";
+import createTitle from "../utils/createTitle.js";
+import createModal from "../utils/createModal.js";
 import createSaveButton from "./createSaveButton.js";
-import createModaContent from "./createModaContent.js";
-import createCancelButton from "./createCancelButton.js";
-import createButtonsContainer from "./createButtonsContainer.js";
+import createInputField from "../utils/createInputField.js";
+import createCancelButton from "../utils/createCancelButton.js";
+import createButtonsContainer from "../utils/createButtonsContainer.js";
 
 var openTokenEditModal = async () => {
-  var input = await createInput();
+  var input = createInputField("token");
 
-  var modal = await createModal();
+  var modal = createModal("modal-overlay");
 
   var saveButton = await createSaveButton(input, modal);
 
-  var cancelButton = await createCancelButton(modal);
+  var cancelButton = createCancelButton(modal);
 
-  var buttonsContainer = await createButtonsContainer();
+  var buttonsContainer = createButtonsContainer(cancelButton, saveButton);
 
   buttonsContainer.append(cancelButton, saveButton);
 
-  var modalContent = await createModaContent();
+  var modalContent = createModal("modal-content");
 
-  var title = await createTitle();
+  var title = createTitle("Введите токен");
 
   modalContent.append(title, input, buttonsContainer);
   modal.append(modalContent);
