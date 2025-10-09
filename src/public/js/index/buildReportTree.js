@@ -36,7 +36,7 @@ var deleteEmptyMonth = async (userId) => {
   await sendMonthForDeletion(userId, monthsForDeletion);
 };
 
-var showReportsTree = async () => {
+var buildReportTree = async () => {
   var { reports, years } = await getReportsData();
 
   if (!years.length) {
@@ -52,4 +52,4 @@ var showReportsTree = async () => {
   await deleteEmptyMonth(userId);
 };
 
-export default showReportsTree;
+export default buildReportTree;

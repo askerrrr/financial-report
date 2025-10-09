@@ -1,10 +1,17 @@
-import checkWBTokenExists from "./services/checkWBTokenExists.js";
 import openReportPeriodModal from "./services/reportLoader/index.js";
 
-var reportPeriodHander = async () => {
-  var button = document.getElementById("period-button");
+var checkWBTokenExists = async () => {
+  var res = await fetch("/token/exist");
 
-  button.addEventListener("click", async (e) => {
+  if (res.status === 404) {
+    return;
+  }
+
+  return true;
+};
+
+var reportLoaderHandler = async () =>
+  (document.getElementById("period-button").onclick = async (e) => {
     e.preventDefault();
 
     var tokenIsExists = await checkWBTokenExists();
@@ -15,6 +22,5 @@ var reportPeriodHander = async () => {
 
     await openReportPeriodModal();
   });
-};
 
-export default reportPeriodHander;
+export default reportLoaderHandler;

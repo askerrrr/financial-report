@@ -1,9 +1,9 @@
-import tokenHandler from "./tokenHandler.js";
-import showReportsTree from "./showReportsTree.js";
+import buildReportTree from "./buildReportTree.js";
 import fileUploadHandler from "./fileUploadHandler.js";
-import reportPeriodHander from "./reportPeriodHander.js";
+import WBTokenLoaderHandler from "./WBTokenLoaderHandler.js";
+import reportLoaderHandler from "./reportLoaderHandler.js";
 
-tokenHandler();
-showReportsTree();
+WBTokenLoaderHandler();
+buildReportTree();
 //fileUploadHandler();
-reportPeriodHander();
+reportLoaderHandler();
