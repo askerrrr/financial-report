@@ -5,7 +5,7 @@ import createInputField from "../utils/createInputField.js";
 import createCancelButton from "../utils/createCancelButton.js";
 import createButtonsContainer from "../utils/createButtonsContainer.js";
 
-var openTokenEditModal = async () => {
+var openWBTokenLoader = async () => {
   var input = createInputField("token");
 
   var modal = createModal("modal-overlay");
@@ -30,4 +30,4 @@ var openTokenEditModal = async () => {
   input.focus();
 };
 
-export default openTokenEditModal;
+export default openWBTokenLoader;
