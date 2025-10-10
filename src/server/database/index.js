@@ -8,6 +8,8 @@ var eventsConfigured = false;
 var mongooseReconnected = false;
 const MAX_CONNECTION_ATTEMPTS = 5;
 
+var mongooseConnection = async () => await mongoose.connect(env.getMongoURI());
+
 var setupMongooseEvents = () => {
   if (eventsConfigured) {
     return;
@@ -64,8 +66,6 @@ var setupMongooseEvents = () => {
     connectionAttempts = 0;
   });
 };
-
-var mongooseConnection = async () => await mongoose.connect(env.getMongoURI(), env.mongoose_options);
 
 var runDB = async () => {
   setupMongooseEvents();
