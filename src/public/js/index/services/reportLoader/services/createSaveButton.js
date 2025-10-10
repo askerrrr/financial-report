@@ -3,6 +3,7 @@ import checkDateFrom from "./checkDateFrom.js";
 import sendReportPeriod from "./sendReportPeriod.js";
 import { showLoader, deleteLoader } from "./loader.js";
 import insertNewReportToTree from "../../reportTreeBuilder/insertNewReportToTree/index.js";
+import getDateToByDateFrom from "../../periodUtils/index.js";
 
 var createSaveButton = async (modal, dateFromInput, dateToInput) => {
   var button = document.createElement("button");
@@ -17,7 +18,8 @@ var createSaveButton = async (modal, dateFromInput, dateToInput) => {
       var { validDateFrom } = await checkDateFrom(dateFrom);
 
       var dateTo = dateToInput?.value;
-      var { validDateTo } = await checkDateTo(dateTo, validDateFrom);
+
+      var { validDateTo, isPeriodWithinSameWeek } = await checkDateTo(dateTo, validDateFrom);
 
       await showLoader();
 

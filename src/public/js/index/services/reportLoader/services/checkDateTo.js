@@ -3,38 +3,46 @@ import standardizeDate from "./standardizeDate.js";
 import getDateToByDateFrom from "../../periodUtils/index.js";
 
 var checkDateTo = async (dateTo, dateFrom) => {
-  var standardizedDateTo;
+  var expectedDateTo = await getDateToByDateFrom(dateFrom);
 
-  if (dateTo) {
-    var dateIncludesDot = dateTo.split("").includes(".");
-
-    if (!dateIncludesDot) {
-      throw new Error("Неккоректный период");
+  if (!dateTo) {
+    if (await isFutureDate(expectedDateTo)) {
+      throw new Error("Отчет еще не готов...");
     }
 
-    var everyIsNum = dateTo
-      .split(".")
-      .map(Number)
-      .every((num) => typeof num === "number" && !isNaN(num));
-
-    if (!everyIsNum) {
-      throw new Error("Неккоректный период");
-    }
-
-    standardizedDateTo = await standardizeDate(dateTo);
+    return { validDateTo: expectedDateTo, isPeriodWithinSameWeek: true };
   }
 
-  standardizedDateTo = await getDateToByDateFrom(dateFrom);
+  var dateIncludesDot = dateTo.split("").includes(".");
 
-  if (await isFutureDate(standardizedDateTo)) {
+  if (!dateIncludesDot) {
+    throw new Error("Неккоректный период");
+  }
+
+  var everyIsNum = dateTo
+    .split(".")
+    .map(Number)
+    .every((num) => typeof num === "number" && !isNaN(num));
+
+  if (!everyIsNum) {
+    throw new Error("Неккоректный период");
+  }
+
+  dateTo = await standardizeDate(dateTo);
+
+  if (await isFutureDate(dateTo)) {
     throw new Error("Отчет еще не готов...");
   }
 
-  if (!standardizedDateTo) {
+  if (!dateTo) {
     throw new Error("Конец периода введен некорректно");
   }
 
-  return { validDateTo: standardizedDateTo };
+  if (dateTo === expectedDateTo) {
+    return { validDateTo: expectedDateTo, isPeriodWithinSameWeek: true };
+  }
+
+  return { validDateTo: dateTo, isPeriodWithinSameWeek: false };
 };
 
 export default checkDateTo;
