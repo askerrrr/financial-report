@@ -8,7 +8,7 @@ var sendReportPeriod = async (dateFrom, dateTo, isPeriodWithinSameWeek) => {
   });
 
   if (res.status === 202) {
-    return;
+    return true;
   }
 
   if (!res.ok) {
