@@ -1,17 +1,12 @@
-var env = require("../../../env");
+var sendReportPeriodsToReportLoader = require("../services/different/sendReportPeriodsToReportLoader");
 
 var reportLoadDelegate = async (req, res, next) => {
-  var { userId, dateFrom, dateTo, isPeriodWithinSameWeek } = req.body;
+  var { isPeriodWithinSameWeek } = req.body;
 
   if (!isPeriodWithinSameWeek) {
     try {
-      await fetch(env.report_loader_url, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ userId, dateFrom, dateTo }),
-      });
-
-      return res.sendStatus(202);
+      var { status } = await sendReportPeriodsToReportLoader(req.body);
+      return res.sendStatus(status);
     } catch {
       return res.status(503).json({ msg: "Не удалось загрузить отчёты за выбранный период.\nВременно доступна загрузка отчётов по одному" });
     }
