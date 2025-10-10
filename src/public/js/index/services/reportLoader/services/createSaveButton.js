@@ -3,7 +3,6 @@ import checkDateFrom from "./checkDateFrom.js";
 import sendReportPeriod from "./sendReportPeriod.js";
 import { showLoader, deleteLoader } from "./loader.js";
 import insertNewReportToTree from "../../reportTreeBuilder/insertNewReportToTree/index.js";
-import getDateToByDateFrom from "../../periodUtils/index.js";
 
 var createSaveButton = async (modal, dateFromInput, dateToInput) => {
   var button = document.createElement("button");
@@ -21,9 +20,15 @@ var createSaveButton = async (modal, dateFromInput, dateToInput) => {
 
       var { validDateTo, isPeriodWithinSameWeek } = await checkDateTo(dateTo, validDateFrom);
 
+      if (!isPeriodWithinSameWeek) {
+        await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
+        alert("Началась загрузка отчетов...");
+        return;
+      }
+
       await showLoader();
 
-      var reportData = await sendReportPeriod(validDateFrom, validDateTo);
+      var reportData = await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
 
       if (!reportData) {
         await deleteLoader();
@@ -41,6 +46,7 @@ var createSaveButton = async (modal, dateFromInput, dateToInput) => {
 
       return;
     } catch (e) {
+      console.log(e);
       alert(e.message);
       await deleteLoader();
     }

@@ -11,19 +11,13 @@ router.get("/:id", require("./controllers/getReportPage"));
 
 router.get("/:userId/:id", require("./controllers/getReport"));
 
-router.get(
-  "/download-report-as-xlsx/:userId/:reportId",
-  require("./controllers/downloadReportAsXLSX")
-);
+router.get("/download-report-as-xlsx/:userId/:reportId", require("./controllers/downloadReportAsXLSX"));
 
-router.post(
-  "/download-reports-as-zip/",
-  require("./controllers/checkAllCostPricesNonZero"),
-  require("./controllers/downloadReportsAsZip")
-);
+router.post("/download-reports-as-zip/", require("./controllers/checkAllCostPricesNonZero"), require("./controllers/downloadReportsAsZip"));
 
 router.post(
   "/save-new-report",
+  require("./controllers/reportLoadDelegate"),
   require("./controllers/checkReportExists"),
   require("./controllers/getReportsFromWBAPI"),
   require("./controllers/writeReportFromWBAPI")
@@ -31,23 +25,13 @@ router.post(
 
 router.put("/change", require("./controllers/changeReportDetail"));
 
-router.put(
-  "/sku-photo-upload/:skuName",
-  upload.single("sku-photo"),
-  require("./controllers/skuPhotoUpload")
-);
+router.put("/sku-photo-upload/:skuName", upload.single("sku-photo"), require("./controllers/skuPhotoUpload"));
 
 router.delete("/delete/", require("./controllers/deleteReport"));
 
-router.delete(
-  "/delete_all_reports/:userId",
-  require("./controllers/deleteAllReports")
-);
+router.delete("/delete_all_reports/:userId", require("./controllers/deleteAllReports"));
 
-router.delete(
-  "/delete_all_reporting_periods/:userId",
-  require("./controllers/deleteReportsTree")
-);
+router.delete("/delete_all_reporting_periods/:userId", require("./controllers/deleteReportsTree"));
 
 router.delete("/delete-image/", require("./controllers/deleteImage"));
 

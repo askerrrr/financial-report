@@ -1,9 +1,15 @@
 var sendReportPeriod = async (dateFrom, dateTo, isPeriodWithinSameWeek) => {
+  var userId = document.cookie.split("=")[1];
+
   var res = await fetch("/reports/save-new-report", {
     method: "POST",
-    body: JSON.stringify({ dateFrom, dateTo, isPeriodWithinSameWeek }),
+    body: JSON.stringify({ userId, dateFrom, dateTo, isPeriodWithinSameWeek }),
     headers: { "Content-Type": "application/json" },
   });
+
+  if (res.status === 202) {
+    return;
+  }
 
   if (!res.ok) {
     var { msg } = await res.json();
