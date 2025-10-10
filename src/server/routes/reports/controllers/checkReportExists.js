@@ -8,7 +8,6 @@ var checkReportExists = async (req, res, next) => {
     return res.status(409).json({ msg: "Отчет за данный период уже существует.\nЧтобы загрузить отчет еще раз, необходимо его удалить." });
   }
 
-  req.body.userId = userId;
   next();
 };
 
