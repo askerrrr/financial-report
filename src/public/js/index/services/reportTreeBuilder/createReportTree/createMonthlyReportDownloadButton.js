@@ -1,5 +1,3 @@
-import getCookieValueByName from "../../getCookieValueByName.js";
-
 var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
   var button = document.createElement("button");
 
@@ -12,7 +10,7 @@ var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
   button.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    var userId = await getCookieValueByName("userId");
+    var userId = document.cookie.split("=")[1];
 
     var url = "/reports/download-reports-as-zip/";
 
@@ -23,9 +21,7 @@ var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
     });
 
     if (!res.ok) {
-      return alert(
-        "Для скачивания отчетов нужно установить себестоимость для товаров"
-      );
+      return alert("Для скачивания отчетов нужно установить себестоимость для товаров");
     }
 
     var blob = await res.blob();

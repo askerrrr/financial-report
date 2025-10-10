@@ -1,6 +1,5 @@
 import getReportsData from "./services/getReportsData.js";
 import openLastDetails from "./services/openLastDetails.js";
-import getCookieValueByName from "./services/getCookieValueByName.js";
 import showNoReportsMessage from "./services/showNoReportsMessage.js";
 import createReportsTree from "./services/reportTreeBuilder/createReportTree/index.js";
 
@@ -43,7 +42,7 @@ var buildReportTree = async () => {
     return showNoReportsMessage();
   }
 
-  var userId = await getCookieValueByName("userId");
+  var userId = document.cookie.split("=")[1];
 
   await createReportsTree(years, reports);
 

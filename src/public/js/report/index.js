@@ -2,11 +2,10 @@ import createSKUsTable from "./table/createSKUsTable.js";
 import createTotalsTable from "./table/createTotalsTable.js";
 import getReportInfo from "./table/services/getReportInfo.js";
 import deleteReportHandler from "./table/deleteReportHandler.js";
-import getCookieValueByName from "../index/services/getCookieValueByName.js";
 import injectBase64IntoImgTags from "./table/services/injectBase64IntoImgTags.js";
 import downloadReportAsXLSXButtonHandler from "./downloadReportAsXLSXButtonHandler.js";
 
-var userId = await getCookieValueByName("userId");
+var userId = document.cookie.split("=")[1];
 
 var pathParts = window.location.pathname.split("/");
 
