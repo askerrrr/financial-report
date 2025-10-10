@@ -1,6 +1,6 @@
 var checkReportExists = async (req, res, next) => {
   var userId = req.app.locals.userId;
-  var { dateFrom, dateTo } = req.body;
+  var { dateFrom, dateTo, isPeriodWithinSameWeek } = req.body;
   var { checkReportExistsToDb } = req.app.locals.reportCollectionServices;
 
   var isReportExists = await checkReportExistsToDb(userId, dateFrom, dateTo);

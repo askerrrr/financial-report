@@ -1,7 +1,7 @@
-var sendReportPeriod = async (dateFrom, dateTo) => {
+var sendReportPeriod = async (dateFrom, dateTo, isPeriodWithinSameWeek) => {
   var res = await fetch("/reports/save-new-report", {
     method: "POST",
-    body: JSON.stringify({ dateFrom, dateTo }),
+    body: JSON.stringify({ dateFrom, dateTo, isPeriodWithinSameWeek }),
     headers: { "Content-Type": "application/json" },
   });
 
