@@ -13,7 +13,7 @@ var getReportsData = async (req, res, next) => {
 
   var [yearsDto, reportsDto] = await Promise.all([getYearsDto(years), getReportsDto(reports)]);
 
-  return res.json({ reports: reportsDto, years, yearsDto });
+  return res.json({ reports: reportsDto, years: yearsDto });
 };
 
 module.exports = getReportsData;
