@@ -4,8 +4,8 @@ var checkAllCostPricesNonZero = async (req, res, next) => {
 
   var reports = [];
 
-  for (var id of reportIds) {
-    var report = await getReportById(userId, id);
+  for (var { reportId } of reportIds) {
+    var report = await getReportById(userId, reportId);
 
     reports.push(report);
   }

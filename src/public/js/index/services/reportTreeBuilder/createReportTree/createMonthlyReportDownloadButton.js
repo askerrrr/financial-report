@@ -1,8 +1,6 @@
 var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
   var button = document.createElement("button");
 
-  var reportIds = reportIds.map((e) => e.reportId);
-
   button.id = reportIds;
   button.textContent = "Отчеты за месяц";
   button.className = "download-monthly-reports-button";
