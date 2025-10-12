@@ -1,3 +1,4 @@
+var getYearsDto = require("../services/getYearsDto");
 var getReportsDto = require("../services/getReportsDto");
 
 var getReportsData = async (req, res, next) => {
@@ -10,9 +11,9 @@ var getReportsData = async (req, res, next) => {
 
   var reports = await getReportsByUserId(userId);
 
-  var reportsDto = await getReportsDto(reports);
+  var [yearsDto, reportsDto] = await Promise.all([getYearsDto(years), getReportsDto(reports)]);
 
-  return res.json({ reports: reportsDto, years });
+  return res.json({ reports: reportsDto, years, yearsDto });
 };
 
 module.exports = getReportsData;
