@@ -1,6 +1,6 @@
 var { DatabaseError } = require("../../../../customError");
 
-var deleteReportsTreeByUserId = async (collection, userId) => {
+var deleteReportTreeByUserId = async (collection, userId) => {
   try {
     var result = await collection.updateOne(
       { userId },
@@ -15,4 +15,4 @@ var deleteReportsTreeByUserId = async (collection, userId) => {
   }
 };
 
-module.exports = deleteReportsTreeByUserId;
+module.exports = deleteReportTreeByUserId;
