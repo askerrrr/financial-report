@@ -36,17 +36,17 @@ var deleteEmptyMonth = async (userId) => {
 };
 
 var buildReportTree = async () => {
-  var { reports, years } = await getReportsData();
+  var { reports, reportTree } = await getReportsData();
 
-  if (!years.length) {
+  if (!reportTree.length) {
     return showNoReportsMessage();
   }
 
   var userId = document.cookie.split("=")[1];
 
-  await createReportsTree(years, reports);
+  await createReportsTree(reportTree, reports);
 
-  await openLastDetails(years);
+  await openLastDetails(reportTree);
 
   await deleteEmptyMonth(userId);
 };

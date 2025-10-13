@@ -1,4 +1,4 @@
-var getYearsDto = async (years) =>
+var getReportTreeDto = async (years) =>
   years.map(({ year, months }) => {
     return {
       year,
@@ -10,4 +10,4 @@ var getYearsDto = async (years) =>
     };
   });
 
-module.exports = getYearsDto;
+module.exports = getReportTreeDto;

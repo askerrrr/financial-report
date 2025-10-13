@@ -1,4 +1,4 @@
-var getYearsDto = require("../services/getYearsDto");
+var getReportTreeDto = require("../services/getReportTreeDto");
 var getReportsDto = require("../services/getReportsDto");
 
 var getReportsData = async (req, res, next) => {
@@ -7,11 +7,11 @@ var getReportsData = async (req, res, next) => {
   var { getReportsByUserId } = req.app.locals.reportCollectionServices;
   var { getReportsTree } = req.app.locals.reportsTreeCollectionServices;
 
-  var [{ years }, reports] = await Promise.all([getReportsTree(userId), getReportsByUserId(userId)]);
+  var [{ reportTree }, reports] = await Promise.all([getReportsTree(userId), getReportsByUserId(userId)]);
 
-  var [yearsDto, reportsDto] = await Promise.all([getYearsDto(years), getReportsDto(reports)]);
+  var [reportTreeDto, reportsDto] = await Promise.all([getReportTreeDto(reportTree), getReportsDto(reports)]);
 
-  return res.json({ reports: reportsDto, years: yearsDto });
+  return res.json({ reports: reportsDto, reportTree: reportTreeDto });
 };
 
 module.exports = getReportsData;
