@@ -11,7 +11,7 @@ var createUser = async (req, res, next) => {
   var { createTaxParamsEntity } = req.app.locals.taxParamsCollectionServices;
   var { createUserToDb, getUserByLogin } = req.app.locals.userCollectionServices;
   var { createTokenCollectionEntity } = req.app.locals.tokenCollectionServices;
-  var { createReportsTreeEntity } = req.app.locals.reportsTreeCollectionServices;
+  var { createReportTreeEntity } = req.app.locals.reportsTreeCollectionServices;
   var { createReportsLoadingStatesCollectionEntity } = req.app.locals.reportLoadingStatesCollectionServices;
 
   var user = req.body;
@@ -29,7 +29,7 @@ var createUser = async (req, res, next) => {
   await createSKUsEntity(userId);
   await createReportsEntity(userId);
   await createTaxParamsEntity(userId);
-  await createReportsTreeEntity(userId);
+  await createReportTreeEntity(userId);
   await createTokenCollectionEntity(userId);
   await createUserReportPhotosFolder(userId);
   await createReportsLoadingStatesCollectionEntity(userId);

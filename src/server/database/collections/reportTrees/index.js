@@ -2,12 +2,12 @@ var { reportsTreeCollection } = require("../../connections");
 
 var getReportTree = require("./services/getReportTree");
 var updateReportTree = require("./services/updateReportTree");
-var createReportsTreeEntity = require("./services/createReportsTreeEntity");
+var createReportTreeEntity = require("./services/createReportTreeEntity");
 var deleteReportsTreeByUserId = require("./services/deleteReportsTreeByUserId");
 var deleteReportFromReportTree = require("./services/deleteReportFromReportTree");
 
 var reportsTreeCollectionServices = {
-  createReportsTreeEntity: (userId) => createReportsTreeEntity(reportsTreeCollection, userId),
+  createReportTreeEntity: (userId) => createReportTreeEntity(reportsTreeCollection, userId),
 
   updateReportTree: (userId, years) => updateReportTree(reportsTreeCollection, userId, years),
 
