@@ -1,11 +1,10 @@
-var getLastMonthName = (year) => year.find((month) => month !== null).month; //[0];
-
 var openLastDetails = async (years) => {
   var lastYearData = years[0];
 
   var { year, months } = lastYearData;
+  console.log({ months });
 
-  var lastMonthName = getLastMonthName(months);
+  var lastMonthName = months[0].month;
 
   var lastMonthDetailsId = `reports_container_${year}_${lastMonthName}`;
   var lastMonthDetails = document.getElementById(lastMonthDetailsId);
