@@ -12,8 +12,8 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   var reportId = reports.mainReport[0].realizationreport_id;
 
-  var { years } = await getReportTree(userId);
-  var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, years);
+  var { reportTree } = await getReportTree(userId);
+  var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
   var sortedYears = await sortYearsTree(years);
   await updateReportTree(userId, sortedYears);
 
