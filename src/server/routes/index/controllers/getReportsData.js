@@ -1,6 +1,5 @@
 var getReportsDto = require("../services/getReportsDto");
 var getReportTreeDto = require("../services/getReportTreeDto");
-var getLastMonthReports = require("../services/getLastMonthReports");
 
 var getReportsData = async (req, res, next) => {
   var userId = req.app.locals.userId;
@@ -16,10 +15,7 @@ var getReportsData = async (req, res, next) => {
 
   var [reportTreeDto, reportsDto] = await Promise.all([getReportTreeDto(reportTree), getReportsDto(reports)]);
 
-  var lastMonthReportIds = reportTreeDto[0].months[0].reportIds;
-  var { lastMonthReports } = getLastMonthReports(reportsDto, lastMonthReportIds);
-
-  return res.json({ reports: reportsDto, reportTree: reportTreeDto, lastMonthReports });
+  return res.json({ reports: reportsDto, reportTree: reportTreeDto });
 };
 
 module.exports = getReportsData;

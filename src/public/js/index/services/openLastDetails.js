@@ -2,7 +2,6 @@ var openLastDetails = async (years) => {
   var lastYearData = years[0];
 
   var { year, months } = lastYearData;
-  console.log({ months });
 
   var lastMonthName = months[0].month;
 
