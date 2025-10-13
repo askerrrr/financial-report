@@ -5,14 +5,14 @@ var { reportSchemaVersion, recordToSchemaVersion } = require("../../../database/
 
 var writeReportFromWBAPI = async (req, res, next) => {
   var { saveReportToDb } = req.app.locals.reportCollectionServices;
-  var { getReportsTree, updateReportTree } = req.app.locals.reportsTreeCollectionServices;
+  var { getReportTree, updateReportTree } = req.app.locals.reportsTreeCollectionServices;
   var { addNewTaxYearToDb, changePaidTaxAmountToDb } = req.app.locals.taxParamsCollectionServices;
 
   var { dateTo, dateFrom, reports, userId } = req.body;
 
   var reportId = reports.mainReport[0].realizationreport_id;
 
-  var { years } = await getReportsTree(userId);
+  var { years } = await getReportTree(userId);
   var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, years);
   var sortedYears = await sortYearsTree(years);
   await updateReportTree(userId, sortedYears);

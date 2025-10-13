@@ -1,6 +1,6 @@
 var { DatabaseError } = require("../../../../customError");
 
-var getReportsTree = async (collection, userId) => {
+var getReportTree = async (collection, userId) => {
   try {
     var { years } = await collection.findOne({ userId }).exec();
 
@@ -10,4 +10,4 @@ var getReportsTree = async (collection, userId) => {
   }
 };
 
-module.exports = getReportsTree;
+module.exports = getReportTree;

@@ -1,9 +1,9 @@
 var getReportYears = async (req, res, next) => {
-  var { getReportsTree } = req.app.locals.reportsTreeCollectionServices;
+  var { getReportTree } = req.app.locals.reportsTreeCollectionServices;
 
   var userId = req.app.locals.userId;
 
-  var reportsTree = await getReportsTree(userId);
+  var reportsTree = await getReportTree(userId);
 
   var years = reportsTree.years.map((date) => date.year);
 
