@@ -1,4 +1,3 @@
-var env = require("../../../env");
 var JWT = require("jsonwebtoken");
 var { randomBytes } = require("node:crypto");
 var checkLogin = require("../services/checkLogin");
@@ -44,7 +43,7 @@ var createUser = async (req, res, next) => {
 
   var payload = { userId, role: "user" };
 
-  var token = JWT.sign(payload, env.secretKey, { expiresIn: "2h" });
+  var token = JWT.sign(payload, process.env.SECRET_KEY, { expiresIn: "2h" });
 
   return res
     .cookie("token", token, { httpOnly: true, maxAge: 2000 * 60 * 60 })

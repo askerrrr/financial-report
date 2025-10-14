@@ -1,10 +1,8 @@
-var env = require("../../../../env");
-
 var sendReportPeriodsToReportLoader = async ({ userId, dateFrom, dateTo }) => {
-  var res = await fetch(env.report_loader_url, {
+  var res = await fetch(process.env.REPORT_LOADER_URL, {
     method: "POST",
     body: JSON.stringify({ userId, dateFrom, dateTo }),
-    headers: { "content-type": "application/json", Authorization: "Bearer " + env.secretKey },
+    headers: { "content-type": "application/json", Authorization: "Bearer " + process.envsecretKey },
   });
 
   return { status: res.status };

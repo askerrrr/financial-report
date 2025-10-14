@@ -1,4 +1,3 @@
-var env = require("../../../env");
 var JWT = require("jsonwebtoken");
 
 var checkCredentials = require("../services/checkCredentials");
@@ -20,7 +19,7 @@ var checkUserCredentials = async (req, res, next) => {
 
   var payload = { role: "user", userId: existUser.userId };
 
-  var token = JWT.sign(payload, env.secretKey, { expiresIn: "2h" });
+  var token = JWT.sign(payload, process.env.SECRET_KEY, { expiresIn: "2h" });
 
   var userId = existUser.userId;
 

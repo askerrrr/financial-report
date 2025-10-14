@@ -1,4 +1,3 @@
-var env = require("../env");
 var JWT = require("jsonwebtoken");
 var { join } = require("node:path");
 
@@ -10,7 +9,7 @@ var verifyJWTToken = async (req, res, next) => {
       return res.sendFile(join(__dirname, "../../public/html/decodeReportWithoutRegistration/index.html"));
     }
 
-    var user = JWT.verify(token, env.secretKey);
+    var user = JWT.verify(token, process.env.SECRET_KEY);
 
     if (user.role == "user") {
       req.app.locals.userId = user.userId;

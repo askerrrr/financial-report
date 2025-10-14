@@ -1,9 +1,8 @@
-var env = require("../../../../env");
 var { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
 var uploadFile = async (Key, Body) => {
-  var client = new S3Client(env.S3Client_OPTIONS);
-  var command = new PutObjectCommand({ Bucket: env.bucketName, Key, Body, ContentType: "image/png" });
+  var client = new S3Client(process.env.S3_CLIENT_OPTIONS);
+  var command = new PutObjectCommand({ Bucket: process.env.BUCKET_NAME, Key, Body, ContentType: "image/png" });
   var res = await client.send(command);
   console.log("httpStatusCode: ", res["$metadata"].httpStatusCode);
   return { httpStatusCode: res["$metadata"].httpStatusCode };

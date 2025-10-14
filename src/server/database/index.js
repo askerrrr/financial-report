@@ -1,4 +1,3 @@
-var env = require("../env");
 var mongoose = require("mongoose");
 var serverEmitter = require("../customEvent");
 
@@ -8,7 +7,7 @@ var eventsConfigured = false;
 var mongooseReconnected = false;
 const MAX_CONNECTION_ATTEMPTS = 5;
 
-var mongooseConnection = async () => await mongoose.connect(env.getMongoURI());
+var mongooseConnection = async () => await mongoose.connect(process.env.MONGO_URI);
 
 var setupMongooseEvents = () => {
   if (eventsConfigured) {

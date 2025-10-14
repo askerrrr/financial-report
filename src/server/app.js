@@ -1,4 +1,3 @@
-var env = require("./env");
 var express = require("express");
 var { join } = require("node:path");
 var cookieParser = require("cookie-parser");
@@ -31,7 +30,7 @@ var runErrorServer = async () => {
   var errorApp = createServer();
   errorApp.get("/", (_, res) => res.set({ "Content-Type": "text/html" }).send("<p>Сервер временно недоступен</p>"));
   errorServerIsListen = true;
-  errorServerInstance = errorApp.listen(env.PORT, env.HOST, () => console.log("Сервер временно недоступен."));
+  errorServerInstance = errorApp.listen(process.env.PORT, process.env.HOST, () => console.log("Сервер временно недоступен."));
 };
 
 var runServer = async () => {
@@ -74,7 +73,7 @@ var runServer = async () => {
   app.use(require("./middleware/errorHandler/"));
 
   mainServerIsListen = true;
-  mainServerInstance = app.listen(env.PORT, env.HOST, async () => console.log("server running"));
+  mainServerInstance = app.listen(process.env.PORT, process.env.HOST, async () => console.log("server running"));
 };
 
 var { runDB } = require("./database");
