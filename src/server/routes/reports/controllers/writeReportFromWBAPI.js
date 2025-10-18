@@ -1,6 +1,6 @@
-var parseReports = require("../services/writeAndCalcReportDataFromWBAPI/index");
-var insertReportToReportTree = require("../services/reportTreeBuilder");
 var sortYearsTree = require("../services/different/sortYearTree");
+var insertReportToReportTree = require("../services/reportTreeBuilder");
+var parseReports = require("../services/writeAndCalcReportDataFromWBAPI/index");
 var { reportSchemaVersion, recordToSchemaVersion } = require("../../../database/migration/schemaVersioning/reportsCollection");
 
 var writeReportFromWBAPI = async (req, res, next) => {
@@ -14,7 +14,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
   var { reportTree } = await getReportTree(userId);
   var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
-  var sortedYears = await sortYearsTree(years);
+  var sortedYears = sortYearsTree(years);
   await updateReportTree(userId, sortedYears);
 
   var { taxRate, paidTaxAmount } = await addNewTaxYearToDb(userId, +year);
