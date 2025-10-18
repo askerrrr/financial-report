@@ -1,5 +1,5 @@
 var { WBAPIError } = require("../../../../customError");
-var getReportByPeriodFromWBAPI = require("./getReportByPeriodFromWBAPI");
+var getWeeklyFinancialReportFromWBAPI = require("./getWeeklyFinancialReportFromWBAPI");
 var createPaidStorageReportTask = require("./createPaidStorageReportTask");
 var getAdvertisingCostsForPeriod = require("./getAdvertisingCostsForPeriod");
 var checkPaidStorageReportCreationStatus = require("./checkPaidStorageReportCreationStatus");
@@ -15,7 +15,7 @@ var getReports = async (userId, dateFrom, dateTo, token) => {
   }
 
   var [mainReport, paidStorageReport, totalAdvertisingCosts] = await Promise.all([
-    getReportByPeriodFromWBAPI(dateFrom, dateTo, token, userId),
+    getWeeklyFinancialReportFromWBAPI(dateFrom, dateTo, token, userId),
     getPaidStorageReportByTaskIdFromWBAPI(taskId, token, userId),
     getAdvertisingCostsForPeriod(dateFrom, dateTo, token, userId),
   ]);
