@@ -1,5 +1,5 @@
 var { randomBytes } = require("node:crypto");
-var getReports = require("../../reports//services/different/getReports");
+var getReports = require("../../reports/services/WBAPI");
 var parseReports = require("../../reports/services/writeAndCalcReportDataFromWBAPI");
 
 var getReportFromWBAPI = async (req, res, next) => {

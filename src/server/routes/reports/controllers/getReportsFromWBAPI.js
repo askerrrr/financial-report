@@ -1,4 +1,4 @@
-var getReports = require("../services/different/getReports");
+var getReports = require("../services/WBAPI");
 
 var getReportsFromWBAPI = async (req, res, next) => {
   var { userId, dateFrom, dateTo } = req.body;
