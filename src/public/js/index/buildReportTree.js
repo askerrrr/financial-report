@@ -32,7 +32,7 @@ var deleteEmptyMonth = async (userId) => {
     }
   }
 
-  await sendMonthForDeletion(userId, monthsForDeletion);
+  //await sendMonthForDeletion(userId, monthsForDeletion);
 };
 
 var buildReportTree = async () => {
