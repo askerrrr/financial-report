@@ -1,35 +1,34 @@
-import truncateDate from "./services/truncateDate.js";
 import getNextPeriod from "./services/getNextPeriod.js";
 import hasPeriodOverlap from "./services/hasPeriodOverlap.js";
-import { getWeekDaysFromMonth } from "./services/getWeekDaysFromMonth.js";
+import { getMondaysOrSundaysOfMonth } from "./services/getMondaysOrSundaysOfMonth.js";
 
 var getDateToByDateFrom = async (dateFrom) => {
   var [year, month, day] = dateFrom.split("-").map(Number);
 
-  var sundays, dateTo;
+  var dateTo;
 
   if (hasPeriodOverlap(year, month, day)) {
     var nextPeriod = getNextPeriod(year, month);
-    sundays = getWeekDaysFromMonth(nextPeriod, "sunday");
+    var { sundays } = getMondaysOrSundaysOfMonth(nextPeriod, "sunday");
 
     var firstSandayIndex = 0;
 
     dateTo = sundays[firstSandayIndex];
 
-    var trancatedDate = truncateDate(dateTo);
+    var trancatedDate = dateTo.split("T")[0];
     return trancatedDate;
   }
 
-  var mondays = getWeekDaysFromMonth(dateFrom, "monday");
+  var { mondays } = getMondaysOrSundaysOfMonth(dateFrom, "monday");
   var dateFromISO = new Date(dateFrom).toISOString();
   var mondayIndex = mondays.indexOf(dateFromISO);
 
-  sundays = getWeekDaysFromMonth(dateFrom, "sunday");
+  var { sundays } = getMondaysOrSundaysOfMonth(dateFrom, "sunday");
   var sandayIndex = ++mondayIndex;
 
   dateTo = sundays[sandayIndex];
 
-  var trancatedDate = truncateDate(dateTo);
+  var trancatedDate = dateTo.split("T")[0];
   return trancatedDate;
 };
 

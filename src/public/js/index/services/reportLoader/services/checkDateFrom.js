@@ -1,6 +1,6 @@
 import isFutureDate from "./isFutureDate.js";
 import standardizeDate from "./standardizeDate.js";
-import { isMonday } from "../../periodUtils/services/getWeekDaysFromMonth.js";
+import { isMonday } from "../../periodUtils/services/getMondaysOrSundaysOfMonth.js";
 
 var checkDateFrom = async (dateFrom) => {
   var dateIncludesDot = dateFrom.split("").includes(".");
