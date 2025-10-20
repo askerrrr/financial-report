@@ -7,7 +7,15 @@ var eventsConfigured = false;
 var mongooseReconnected = false;
 const MAX_CONNECTION_ATTEMPTS = 5;
 
-var mongooseConnection = async () => await mongoose.connect(process.env.MONGO_URI);
+var mongooseConnection = async () => {
+  if (process.env.MONGO_HOST) {
+    var mongoUri = `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.DB_NAME}`;
+
+    await mongoose.connect(mongoUri, JSON.parse(process.env.MONGO_OPTIONS));
+  } else {
+    await mongoose.connect(process.env.MONGO_URI);
+  }
+};
 
 var setupMongooseEvents = () => {
   if (eventsConfigured) {
