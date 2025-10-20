@@ -1,6 +1,6 @@
 import isFutureDate from "./isFutureDate.js";
 import standardizeDate from "./standardizeDate.js";
-import getDateToByDateFrom from "../../periodUtils/index.js";
+import getDateToByDateFrom from "../../dateUtils/index.js";
 
 var checkDateTo = async (dateTo, dateFrom) => {
   var expectedDateTo = await getDateToByDateFrom(dateFrom);
