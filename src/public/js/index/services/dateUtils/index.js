@@ -8,7 +8,7 @@ var getDateToByDateFrom = async (dateFrom) => {
   var dateTo;
 
   if (hasPeriodOverlap(year, month, day)) {
-    var nextPeriod = getNextPeriod(year, month);
+    var { nextPeriod } = getNextPeriod(year, month);
     var { sundays } = getMondaysOrSundaysOfMonth(nextPeriod, "sunday");
 
     var firstSandayIndex = 0;

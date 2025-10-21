@@ -7,6 +7,12 @@ var sendReportPeriod = async (dateFrom, dateTo, isPeriodWithinSameWeek) => {
     headers: { "Content-Type": "application/json" },
   });
 
+  if (res.status === 409) {
+    var { msg } = await res.json();
+    alert(msg);
+    return;
+  }
+
   if (res.status === 202) {
     return true;
   }
