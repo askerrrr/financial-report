@@ -1,10 +1,13 @@
+var checkReportExistsInTree = require("../services/different/checkReportExistsInTree");
+
 var checkReportExists = async (req, res, next) => {
-  var { dateFrom, dateTo, userId } = req.body;
-  var { checkReportExistsToDb } = req.app.locals.reportCollectionServices;
+  var { dateFrom, userId } = req.body;
+  var { getReportTree } = req.app.locals.reportsTreeCollectionServices;
 
-  var isReportExists = await checkReportExistsToDb(userId, dateFrom, dateTo);
+  var { reportTree } = await getReportTree(userId);
+  var { reportIsExist } = checkReportExistsInTree(dateFrom, reportTree);
 
-  if (isReportExists) {
+  if (reportIsExist) {
     return res.status(409).json({ msg: "Отчет за данный период уже существует.\nЧтобы загрузить отчет еще раз, необходимо его удалить." });
   }
 
