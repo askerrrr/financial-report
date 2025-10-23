@@ -24,7 +24,7 @@ var errorHandler = async (e, req, res, next) => {
     return res.status(e.status).json({ msg: e.message, invalidField: e.invalidField });
   }
 
-  res.status(e?.status || 500).json({ msg: e.message, status: e?.status || 500 });
+  res.status(e?.status || 500).json({ msg: "Произошла ошибка..." });
 };
 
 module.exports = errorHandler;

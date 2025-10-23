@@ -37,7 +37,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
     return res.status(200).json({ reportId, year, month, dateFrom, dateTo, totalTaxAmount });
   }
 
-  return res.sendStatus(500);
+  return res.status(400).json({ msg: "Произошла ошибка, попробуйте повторить еще раз через 1 минуту" });
 };
 
 module.exports = writeReportFromWBAPI;

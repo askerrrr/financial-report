@@ -21,18 +21,13 @@ var createSaveButton = async (modal, dateFromInput, dateToInput) => {
       var { validDateTo, isPeriodWithinSameWeek } = await checkDateTo(dateTo, validDateFrom);
 
       if (!isPeriodWithinSameWeek) {
-        var success = await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
-        if (!success) {
-          return;
-        }
-
-        alert("Началась загрузка отчетов...");
+        await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
         return;
       }
 
-      await showLoader();
-
       var reportData = await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
+
+      await showLoader();
 
       if (!reportData) {
         await deleteLoader();

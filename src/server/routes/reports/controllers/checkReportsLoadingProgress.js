@@ -6,7 +6,7 @@ var checkReportsLoadingProgress = async (req, res, next) => {
 
   if (loadingInProgress) {
     await prependToReportsQueue(userId, dateFrom, dateTo);
-    return res.status(200).json({ msg: "Отчет скоро будет добавлен." });
+    return res.status(202).json({ msg: "Отчет скоро будет добавлен." });
   }
 
   next();

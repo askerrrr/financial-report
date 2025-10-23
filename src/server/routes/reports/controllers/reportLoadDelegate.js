@@ -6,7 +6,7 @@ var reportLoadDelegate = async (req, res, next) => {
   if (!isPeriodWithinSameWeek) {
     try {
       var { status } = await sendReportPeriodsToReportLoader(req.body);
-      return res.sendStatus(status);
+      return res.status(status).json({ msg: "Загрузка отчётов началась. Они будут отображаться по мере их добавления" });
     } catch {
       return res.status(503).json({ msg: "Не удалось загрузить отчёты за выбранный период.\nВременно доступна загрузка отчётов по одному" });
     }
