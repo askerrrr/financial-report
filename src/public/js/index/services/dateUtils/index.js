@@ -11,9 +11,9 @@ var getDateToByDateFrom = async (dateFrom) => {
     var { nextPeriod } = getNextPeriod(year, month);
     var { sundays } = getMondaysOrSundaysOfMonth(nextPeriod, "sunday");
 
-    var firstSandayIndex = 0;
+    var firstSundayIndex = 0;
 
-    dateTo = sundays[firstSandayIndex];
+    dateTo = sundays[firstSundayIndex];
 
     var trancatedDate = dateTo.split("T")[0];
     return trancatedDate;
@@ -24,9 +24,13 @@ var getDateToByDateFrom = async (dateFrom) => {
   var mondayIndex = mondays.indexOf(dateFromISO);
 
   var { sundays } = getMondaysOrSundaysOfMonth(dateFrom, "sunday");
-  var sandayIndex = ++mondayIndex;
+  var sundayIndex = ++mondayIndex;
 
-  dateTo = sundays[sandayIndex];
+  if (sundayIndex === sundays.length) {
+    sundayIndex -= 1;
+  }
+
+  dateTo = sundays[sundayIndex];
 
   var trancatedDate = dateTo.split("T")[0];
   return trancatedDate;
