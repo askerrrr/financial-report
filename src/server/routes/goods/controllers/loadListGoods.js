@@ -13,7 +13,7 @@ var loadListGoods = async (req, res, next) => {
   var listGoogs = await extractRequiredListGoodsData(rawListGoogs);
   var success = await saveListGoodsToDb(userId, listGoogs);
   if (success) {
-    return res.sendStatus("success message");
+    return res.sendStatus(200);
   }
 };
 
