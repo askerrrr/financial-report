@@ -1,5 +1,5 @@
 var extractRequiredListGoodsData = async (rawListGoods) => {
-  var listGoods = rawListGoods.map(({ item }) => {
+  var listGoods = rawListGoods.map((item) => {
     return {
       id: item.nmID,
       skuName: item.vendorCode,
