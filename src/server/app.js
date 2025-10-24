@@ -60,6 +60,7 @@ var runServer = async () => {
   app.use("/auth", require("./routes/auth/"));
   app.use("/admin", require("./routes/admin/"));
   app.use("/reg", require("./routes/registration/"));
+  app.use("/goods", require("./routes/goods"));
 
   app.use(cookieParser());
   app.use(require("./middleware/verifyJWTToken"));
