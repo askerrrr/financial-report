@@ -4,6 +4,6 @@ var router = Router();
 
 router.get("/", require("./controllers/getListGoodsPage"));
 router.get("/api", require("./controllers/getListGoods"));
-router.post("/", require('./controllers/loadListGoodss'))
+router.post("/", require("./controllers/loadListGoods"));
 
 module.exports = router;
