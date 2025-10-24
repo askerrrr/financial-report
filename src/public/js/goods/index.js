@@ -1,0 +1,3 @@
+var showListGoodsTable = async () => {};
+
+showListGoodsTable();
