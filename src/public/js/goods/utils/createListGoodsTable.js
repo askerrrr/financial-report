@@ -1,5 +1,5 @@
+import createInputField from "./createInputField.js";
 import createTdElement from "../../report/table/services/createTdElement.js";
-import createInputField from "../../report/table/services/createInputField.js";
 
 var createListGoodsTable = async (listGoods) => {
   var tbody = document.getElementById("list-goods-tbody");
@@ -9,8 +9,13 @@ var createListGoodsTable = async (listGoods) => {
 
     var tr = document.createElement("tr");
     var skuNameTd = createTdElement(skuName, "skuName");
-    var priceTd = createTdElement(price, "price");
-    var discountTd = createTdElement(discount, "discount");
+
+    var priceInputField = await createInputField(price, "price");
+    var priceTd = createTdElement(priceInputField, "price");
+
+    var discountInputField = await createInputField(discount, "discount");
+    var discountTd = createTdElement(discountInputField, "discount");
+
     var discountedPriceTd = createTdElement(discountedPrice, "discountedPrice");
     var clubDiscountedPriceTd = createTdElement(clubDiscountedPrice, "clubDiscountedPrice");
 
