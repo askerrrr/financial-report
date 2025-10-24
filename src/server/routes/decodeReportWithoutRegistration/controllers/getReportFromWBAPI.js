@@ -1,11 +1,11 @@
 var { randomBytes } = require("node:crypto");
-var getReports = require("../../reports/services/WBAPI");
+var wbapi = require("../../reports/services/WBAPI");
 var parseReports = require("../../reports/services/writeAndCalcReportDataFromWBAPI");
 
 var getReportFromWBAPI = async (req, res, next) => {
   var { dateFrom, dateTo, token, taxRate } = req.body;
 
-  var reports = await getReports("decode-without-auth", dateFrom, dateTo, token);
+  var reports = await wbapi.getReports("decode-without-auth", dateFrom, dateTo, token);
 
   var { report } = await parseReports(taxRate, reports);
 
