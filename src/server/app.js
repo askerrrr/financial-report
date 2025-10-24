@@ -60,7 +60,6 @@ var runServer = async () => {
   app.use("/auth", require("./routes/auth/"));
   app.use("/admin", require("./routes/admin/"));
   app.use("/reg", require("./routes/registration/"));
-  app.use("/goods", require("./routes/goods"));
 
   app.use(cookieParser());
   app.use(require("./middleware/verifyJWTToken"));
@@ -68,6 +67,7 @@ var runServer = async () => {
   app.use("/token", require("./routes/WBToken/"));
   app.use("/tax_params", require("./routes/taxParams/"));
   app.use("/reports", require("./routes/reports/"));
+  app.use("/goods", require("./routes/goods"));
 
   app.all(/.*/, require("./middleware/notFoundHandler/"));
 
