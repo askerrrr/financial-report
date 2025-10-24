@@ -2,7 +2,7 @@ import createListGoodsTable from "./utils/createListGoodsTable.js";
 
 var getListGoods = async () => {
   var userId = document.cookie.split("=")[1];
-  var url = "/goods/" + userId;
+  var url = "/goods/api/" + userId;
 
   var res = await fetch(url);
 
@@ -18,7 +18,7 @@ var getListGoods = async () => {
 
 var showListGoodsTable = async () => {
   var { listGoods } = await getListGoods();
-  createListGoodsTable(listGoods);
+  await createListGoodsTable(listGoods);
 };
 
 showListGoodsTable();
