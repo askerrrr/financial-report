@@ -14,7 +14,7 @@ var getGoodsListFromWBAPI = async (userId, token) => {
 
     var { listGoods } = data.data;
 
-    return { listGoods };
+    return { rawListGoogs: listGoods };
   } catch (e) {
     throw new WBAPIError(userId, 400, e);
   }
