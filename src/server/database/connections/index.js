@@ -2,6 +2,7 @@ var { connection } = require("../index");
 
 var skuCollection = connection.model("Sku", require("../schemas/skus"));
 var userCollection = connection.model("User", require("../schemas/users"));
+var goodsCollection = connection.model("Googs", require("../schemas/goods"));
 var tokenCollection = connection.model("Token", require("../schemas/token"));
 var taxParamsCollection = connection.model("Tax_Param", require("../schemas/taxParams"));
 var reportCollection = connection.model("Report", require("../schemas/reports").reportsSchema);
@@ -11,9 +12,10 @@ var reportLoadingStatesCollection = connection.model("Report_Loading_States", re
 module.exports = {
   skuCollection,
   userCollection,
+  goodsCollection,
   reportCollection,
   tokenCollection,
   taxParamsCollection,
   reportsTreeCollection,
-  reportLoadingStatesCollection
+  reportLoadingStatesCollection,
 };
