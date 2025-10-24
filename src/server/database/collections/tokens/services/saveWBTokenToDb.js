@@ -1,6 +1,6 @@
 var { DatabaseError } = require("../../../../customError");
 
-var updateWBToken = async (collection, userId, token) => {
+var saveWBTokenToDb = async (collection, userId, token) => {
   try {
     var result = await collection.updateOne(
       { userId },
@@ -15,4 +15,4 @@ var updateWBToken = async (collection, userId, token) => {
   }
 };
 
-module.exports = updateWBToken;
+module.exports = saveWBTokenToDb;
