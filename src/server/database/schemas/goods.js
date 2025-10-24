@@ -12,6 +12,6 @@ var skuSchema = new Schema(
   { _id: false }
 );
 
-var goodsSchema = new Schema({});
+var goodsSchema = new Schema({ userId: { type: String, required: true }, listGoods: [{ type: skuSchema, required: true }] });
 
 module.exports = goodsSchema;
