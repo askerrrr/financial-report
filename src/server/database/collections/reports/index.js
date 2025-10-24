@@ -1,4 +1,4 @@
-var { reportCollection } = require("../../connections/");
+var { reportCollection } = require("../../connections");
 
 var getReportById = require("./services/getReportById");
 var saveReportToDb = require("./services/saveReportToDb");
