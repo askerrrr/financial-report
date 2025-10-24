@@ -3,10 +3,10 @@ var extractRequiredListGoodsData = async (rawListGoods) => {
     return {
       id: item.nmID,
       skuName: item.vendorCode,
-      price: item.sizes.price,
+      price: item.sizes[0].price,
       discount: item.discount,
-      clubDiscount: item.sizes.clubDiscount,
-      discountedPrice: item.sizes.discountedPrice,
+      discountedPrice: item.sizes[0].discountedPrice,
+      clubDiscountedPrice: item.sizes[0].clubDiscountedPrice,
     };
   });
 

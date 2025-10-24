@@ -6,8 +6,8 @@ var skuSchema = new Schema(
     skuName: { type: String, required: true },
     price: { type: Number, required: false },
     discount: { type: Number, required: false },
-    clubDiscount: { type: Number, required: false },
     discountedPrice: { type: Number, required: false },
+    clubDiscountedPrice: { type: Number, required: false },
   },
   { _id: false }
 );

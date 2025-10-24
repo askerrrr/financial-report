@@ -10,8 +10,11 @@ var loadListGoods = async (req, res, next) => {
   var token = await getWBTokenByUserId(userId);
 
   var { rawListGoogs } = await wbapi.getListGoods(userId, token);
-  var listGoogs = await extractRequiredListGoodsData(rawListGoogs);
-  var success = await saveListGoodsToDb(userId, listGoogs);
+
+  var { listGoods } = await extractRequiredListGoodsData(rawListGoogs);
+
+  var success = await saveListGoodsToDb(userId, listGoods);
+
   if (success) {
     return res.sendStatus(200);
   }
