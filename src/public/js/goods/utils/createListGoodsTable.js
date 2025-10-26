@@ -10,16 +10,24 @@ var createListGoodsTable = async (listGoods) => {
     var tr = document.createElement("tr");
     var skuNameTd = createTdElement(skuName, "skuName");
 
-    var priceInputField = await createInputField(price, "price");
-    var priceTd = createTdElement(priceInputField, "price");
+    var priceTd = createTdElement(price, "price");
 
-    var discountInputField = await createInputField(discount, "discount");
-    var discountTd = createTdElement(discountInputField, "discount");
+    var discountTd = createTdElement(discount, "discount");
 
     var discountedPriceTd = createTdElement(discountedPrice, "discountedPrice");
     var clubDiscountedPriceTd = createTdElement(clubDiscountedPrice, "clubDiscountedPrice");
 
-    tr.append(skuNameTd, priceTd, discountTd, discountedPriceTd, clubDiscountedPriceTd);
+    var inputField = await createInputField(item, skuName);
+    var inputFieldTd = createTdElement(inputField);
+
+    tr.append(
+      skuNameTd,
+      priceTd,
+      discountTd,
+      discountedPriceTd,
+      clubDiscountedPriceTd,
+      inputFieldTd
+    );
 
     tbody.append(tr);
   }
