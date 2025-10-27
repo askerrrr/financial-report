@@ -6,7 +6,7 @@ var saveWBToken = async (req, res, next) => {
   var currentToken = await getWBTokenByUserId(userId);
 
   if (currentToken === token) {
-    return res.sendStatus(304);
+    return res.sendStatus(409);
   }
 
   var success = await saveWBTokenToDb(userId, token);
