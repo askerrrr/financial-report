@@ -15,17 +15,21 @@ var getAllDataFromReportCollection = require("./services/getAllDataFromReportCol
 var reportCollectionServices = {
   getAllDataFromReportCollection: () => getAllDataFromReportCollection(reportCollection),
   getReportById: (userId, reportId) => getReportById(reportCollection, userId, reportId),
-  getReportsByUserId: (userId, year) => getReportsByUserId(reportCollection, userId, year),
+  getReportsByUserId: (userId, projectQuery) =>
+    getReportsByUserId(reportCollection, userId, projectQuery),
 
   createReportsEntity: (userId) => createReportsEntity(reportCollection, userId),
 
   saveReportToDb: (userId, report) => saveReportToDb(reportCollection, userId, report),
   saveUpdatedReports: (userId, reports) => saveUpdatedReports(reportCollection, userId, reports),
-  saveUpdatedReport: (userId, reportId, report) => saveUpdatedReport(reportCollection, userId, reportId, report),
+  saveUpdatedReport: (userId, reportId, report) =>
+    saveUpdatedReport(reportCollection, userId, reportId, report),
 
-  updateReportPeriod: (userId, reportId, period) => updateReportPeriod(reportCollection, userId, reportId, period),
+  updateReportPeriod: (userId, reportId, period) =>
+    updateReportPeriod(reportCollection, userId, reportId, period),
 
-  checkReportExistsToDb: (userId, dateFrom, dateTo) => checkReportExistsToDb(reportCollection, userId, dateFrom, dateTo),
+  checkReportExistsToDb: (userId, dateFrom, dateTo) =>
+    checkReportExistsToDb(reportCollection, userId, dateFrom, dateTo),
 
   deleteReportFromDb: (userId, reportId) => deleteReportFromDb(reportCollection, userId, reportId),
   deleteAllReportsByUserId: (userId) => deleteAllReportsByUserId(reportCollection, userId),

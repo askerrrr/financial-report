@@ -8,12 +8,12 @@ var createReportsTable = async (year, month, reportIds, reports) => {
 
   tbody.id = `tbody_year_${year}_month_${month}`;
 
-  for (var { reportId } of reportIds) {
+  for (var { reportId, dateFrom, dateTo } of reportIds) {
     var tr = document.createElement("tr");
 
-    var report = reports.find((report) => report.id == reportId);
+    var report = reports.find((report) => report.reportId == reportId);
 
-    var { id, dateFrom, dateTo, totalFinalProfit, totalProductCosts, totalTaxAmount } = report;
+    var { totalFinalProfit, totalProductCosts, totalTaxAmount } = report;
 
     var fullPeriodTd = await getReportPeriod(dateFrom, dateTo);
 
@@ -21,7 +21,7 @@ var createReportsTable = async (year, month, reportIds, reports) => {
 
     var totalProductCostsTd = createTdElement(totalProductCosts);
     var totalTaxAmountTd = createTdElement(totalTaxAmount);
-    var reportLink = await getReportLink(id);
+    var reportLink = await getReportLink(reportId);
 
     tr.append(fullPeriodTd, totalFinalProfitTd, totalProductCostsTd, totalTaxAmountTd, reportLink);
 

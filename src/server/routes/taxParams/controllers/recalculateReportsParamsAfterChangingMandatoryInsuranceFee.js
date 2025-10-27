@@ -4,9 +4,10 @@ var calcFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDa
 var recalculateReportsParamsAfterChangingMandatoryInsuranceFee = async (req, res, next) => {
   var { userId, year } = req.body;
   var { getReportsByUserId, saveUpdatedReports } = req.app.locals.reportCollectionServices;
-  var { getTaxParamsFromDb, changeInsuranceFeePercentageToDb } = req.app.locals.taxParamsCollectionServices;
+  var { getTaxParamsFromDb, changeInsuranceFeePercentageToDb } =
+    req.app.locals.taxParamsCollectionServices;
 
-  var reports = await getReportsByUserId(userId);
+  var { reports } = await getReportsByUserId(userId);
   var { insuranceFeePercentage, mandatoryInsuranceFee } = await getTaxParamsFromDb(userId, year);
 
   var paidTaxAmount = 0;
@@ -20,10 +21,17 @@ var recalculateReportsParamsAfterChangingMandatoryInsuranceFee = async (req, res
           if (paidTaxAmount >= mandatoryInsuranceFee) {
             insuranceFeePercentage = 0;
             sku.isInsuranceFeeIncluded = false;
-            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, 0, sku.taxPerSKU);
+            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(
+              sku.preTaxProfitPerSKU,
+              0,
+              sku.taxPerSKU
+            );
           } else {
             sku.isInsuranceFeeIncluded = true;
-            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, sku.insuranceFee);
+            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(
+              sku.preTaxProfitPerSKU,
+              sku.insuranceFee
+            );
           }
 
           sku.profitMargin = await calcProfitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
