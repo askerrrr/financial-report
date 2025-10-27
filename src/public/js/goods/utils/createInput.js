@@ -8,7 +8,7 @@ var createInput = (id, className, type = "text", event, cb) => {
     input.addEventListener(event, cb);
   }
 
-  return { input };
+  return input;
 };
 
 export default createInput;

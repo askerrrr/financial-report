@@ -9,7 +9,7 @@ var createButton = (buttonText, className, id, event, cb) => {
     button.addEventListener(event, cb);
   }
 
-  return { button };
+  return button;
 };
 
 export default createButton;
