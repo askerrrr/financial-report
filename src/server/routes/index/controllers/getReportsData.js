@@ -5,7 +5,7 @@ var projectonFields = [
   "reports.totalTaxAmount",
   "reports.totalFinalProfit",
   "reports.totalProductCosts",
-].join(" ");
+];
 
 var getReportsData = async (req, res, next) => {
   var userId = req.app.locals.userId;
