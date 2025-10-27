@@ -67,6 +67,7 @@ var runServer = async () => {
   app.use("/token", require("./routes/WBToken/"));
   app.use("/tax_params", require("./routes/taxParams/"));
   app.use("/reports", require("./routes/reports/"));
+  app.use("/goods", require("./routes/goods"));
 
   app.all(/.*/, require("./middleware/notFoundHandler/"));
 

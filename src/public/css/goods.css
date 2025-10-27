@@ -1,0 +1,54 @@
+#list-goods-table {
+  width: auto;
+  max-width: 95%;
+  margin: 20px auto;
+  border: 5px solid #fff;
+  border-top: 5px solid #fff;
+  border-bottom: 3px solid #fff;
+  border-collapse: separate;
+  border-spacing: 15px 10px;
+  outline: 3px solid #ffd300;
+  font-size: 15px;
+  background: #fff !important;
+  table-layout: fixed;
+}
+#list-goods-table th {
+  font-weight: bold;
+  padding: 10px;
+  background: #ffd300;
+  border: none;
+  text-align: center;
+  font-size: 15px;
+  border-top: 3px solid #fff;
+  border-bottom: 3px solid #ffd300;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+#list-goods-table td {
+  padding: 10px;
+  border: none;
+  border-top: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  font-size: 15px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: center;
+}
+#list-goods-table tbody tr:nth-child(even) {
+  background: #f8f8f8 !important;
+}
+
+#list-goods-table th,
+#list-goods-table td {
+  white-space: normal;
+  line-height: 1.4;
+}
+
+#list-goods-table th:last-child,
+#list-goods-table td:last-child {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  min-width: 150px;
+  max-width: 250px;
+}
