@@ -4,7 +4,7 @@ var downloadReportAsXLSX = async (req, res, next) => {
   var { userId, reportId } = req.params;
   var { getReportById } = req.app.locals.reportCollectionServices;
 
-  var report = await getReportById(userId, reportId);
+  var { report } = await getReportById(userId, reportId);
 
   var buffer = await getReportAsXLSXBuffer(report);
 

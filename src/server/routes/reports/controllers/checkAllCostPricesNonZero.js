@@ -5,12 +5,14 @@ var checkAllCostPricesNonZero = async (req, res, next) => {
   var reports = [];
 
   for (var { reportId } of reportIds) {
-    var report = await getReportById(userId, reportId);
+    var { report } = await getReportById(userId, reportId);
 
     reports.push(report);
   }
 
-  var allCostPricesNonZero = reports.every((report) => report.skus.every((sku) => sku.costPrice > 0));
+  var allCostPricesNonZero = reports.every((report) =>
+    report.skus.every((sku) => sku.costPrice > 0)
+  );
 
   if (!allCostPricesNonZero) {
     return res.sendStatus(400);

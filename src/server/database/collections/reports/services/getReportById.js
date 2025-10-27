@@ -2,15 +2,16 @@ var { DatabaseError, ReportNotFoundError } = require("../../../../customError");
 
 var getReportById = async (collection, userId, reportId) => {
   try {
-    var { reports } = await collection.findOne({ userId });
+    var { reports } = await collection.findOne(
+      { userId, "reports.reportId": reportId },
+      { "reports.$": 1 }
+    );
 
-    var report = reports.find((report) => report.reportId == reportId);
-
-    if (!report) {
+    if (!reports.length) {
       throw new ReportNotFoundError(userId, reportId);
     }
 
-    return report.toObject();
+    return { report: reports[0] };
   } catch (e) {
     if (e instanceof ReportNotFoundError) {
       throw e;

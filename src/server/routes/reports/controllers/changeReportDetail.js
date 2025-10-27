@@ -7,7 +7,8 @@ var changeReportDetail = async (req, res, next) => {
   var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
   var { getTaxParamsFromDb, changePaidInsuranceFeeToDb, changeInsuranceFeePercentageToDb } = req.app.locals.taxParamsCollectionServices;
 
-  var { skus, ...totalParams } = await getReportById(userId, reportId);
+  var { report } = await getReportById(userId, reportId);
+    var { skus, ...totalParams } = report
 
   var updatedSKUS = await updateSkuInArray(skus, req.body);
 
