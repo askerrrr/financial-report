@@ -1,4 +1,4 @@
-var saveWBToken = async (req, res, next) => {
+var saveToken = async (req, res, next) => {
   var { token } = req.body;
   var userId = req.app.locals.userId;
   var { saveWBTokenToDb, getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
@@ -14,4 +14,4 @@ var saveWBToken = async (req, res, next) => {
   return success ? res.sendStatus(200) : res.sendStatus(500);
 };
 
-module.exports = saveWBToken;
+module.exports = saveToken;
