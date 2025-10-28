@@ -1,22 +1,11 @@
 import getTaxParams from "./getTaxParams.js";
+import sendNewTaxParam from "./sendNewTaxParam.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
-
-var sendTaxRate = async (taxRate, recalculate, year) => {
-  var res = await fetch("/tax_params/taxrate", {
-    method: "POST",
-    body: JSON.stringify({ taxRate, recalculate, year }),
-    headers: { "Content-Type": "application/json" },
-  });
-
-  return res.ok;
-};
 
 var taxRateHandler = async () => {
   var input = document.getElementById("tax-rate");
 
-  var radioButton = document.getElementById(
-    "recalculate-all-reports-tax-amount"
-  );
+  var radioButton = document.getElementById("recalculate-all-reports-tax-amount");
 
   var button = document.getElementById("tax-rate-button");
 
@@ -43,7 +32,7 @@ var taxRateHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var success = await sendTaxRate(newTaxRate, recalculate, selectedYear);
+    var success = await sendNewTaxParam(selectedYear, recalculate, { taxRate: newTaxRate });
 
     input.value = "";
 

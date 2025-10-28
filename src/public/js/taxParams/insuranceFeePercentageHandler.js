@@ -1,22 +1,11 @@
 import getTaxParams from "./getTaxParams.js";
+import sendNewTaxParam from "./sendNewTaxParam.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
-
-var sendPercent = async (percent, recalculate, year) => {
-  var res = await fetch("/tax_params/insurance-fee-percentage", {
-    method: "POST",
-    body: JSON.stringify({ percent, recalculate, year }),
-    headers: { "Content-Type": "application/json" },
-  });
-
-  return res.ok;
-};
 
 var insuranceFeePercentageHandler = async () => {
   var input = document.getElementById("insurance-fee-percentage");
 
-  var radioButton = document.getElementById(
-    "recalculate-all-reports-insurance-fee-percentage"
-  );
+  var radioButton = document.getElementById("recalculate-all-reports-insurance-fee-percentage");
 
   var button = document.getElementById("insurance-fee-percentage-button");
 
@@ -42,8 +31,9 @@ var insuranceFeePercentageHandler = async () => {
     if (newPercent <= 0 && newPercent >= 100) {
       return alert("Недопустимое значение");
     }
-
-    var success = await sendPercent(newPercent, recalculate, selectedYear);
+    var success = await sendNewTaxParam(selectedYear, recalculate, {
+      insuranceFeePercentage: newPercent,
+    });
 
     input.value = "";
 

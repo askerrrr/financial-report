@@ -1,15 +1,6 @@
 import getTaxParams from "./getTaxParams.js";
+import sendNewTaxParam from "./sendNewTaxParam.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
-
-var sendMandatoryInsuranceFee = async (mandatoryInsuranceFee, year) => {
-  var res = await fetch("/tax_params/mandatory-insurance-premiums", {
-    method: "POST",
-    body: JSON.stringify({ mandatoryInsuranceFee, year }),
-    headers: { "Content-Type": "application/json" },
-  });
-
-  return res.ok;
-};
 
 var mandatoryInsuranceFeeHandler = async () => {
   var input = document.getElementById("mandatory-insurance-premiums");
@@ -26,10 +17,7 @@ var mandatoryInsuranceFeeHandler = async () => {
     var currentMandatoryInsuranceFee = yearTaxParams.mandatoryInsuranceFee;
     var newMandatoryInsuranceFee = +input.value;
 
-    if (
-      typeof newMandatoryInsuranceFee === "number" &&
-      isNaN(newMandatoryInsuranceFee)
-    ) {
+    if (typeof newMandatoryInsuranceFee === "number" && isNaN(newMandatoryInsuranceFee)) {
       return alert("Введите числовое значение");
     }
 
@@ -41,16 +29,14 @@ var mandatoryInsuranceFeeHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var success = await sendMandatoryInsuranceFee(
-      newMandatoryInsuranceFee,
-      selectedYear
-    );
+    var success = await sendNewTaxParam(selectedYear, null, {
+      mandatoryInsuranceFee: newMandatoryInsuranceFee,
+    });
 
     input.value = "";
 
     if (success) {
-      input.placeholder =
-        "сейчас сумма равна " + newMandatoryInsuranceFee + "р.";
+      input.placeholder = "сейчас сумма равна " + newMandatoryInsuranceFee + "р.";
 
       var mandatoryInsuranceFeeTdElement = document.getElementById(
         "mandatoryInsuranceFee-" + selectedYear
