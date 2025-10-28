@@ -1,5 +1,4 @@
 import getReportsData from "./services/getReportsData.js";
-import openLastDetails from "./services/openLastDetails.js";
 import showNoReportsMessage from "./services/showNoReportsMessage.js";
 import createReportsTree from "./services/reportTreeBuilder/createReportTree/index.js";
 import createReportsTable from "./services/reportTreeBuilder/createReportTree/createReportsTable.js";
@@ -32,6 +31,10 @@ var insertLastReportsToTree = async (tree, lastReports, lastMonthData) => {
   var monthsContainerId = `months_container_${year}`;
   var monthsContainer = document.getElementById(monthsContainerId);
   monthsContainer.prepend(reportsContainer);
+
+  var lastYearDetailsId = year;
+  var lastYearDetails = document.getElementById(lastYearDetailsId);
+  lastYearDetails.open = true;
 };
 
 var deleteEmptyMonth = async (userId) => {
@@ -68,8 +71,6 @@ var buildReportTree = async () => {
   await createReportsTree(reportTree).then(() =>
     insertLastReportsToTree(reportTree, lastReports, lastMonthData)
   );
-
-  await openLastDetails(reportTree);
 
   await deleteEmptyMonth(userId);
 };

@@ -8,8 +8,8 @@ var getRequiredReports = async (reportIds) => {
 
   var res = await fetch(url, {
     method: "POST",
-    body: JSON.stringify({ userId, reportIds: reportIds.map((item) => item.reportId) }),
     headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userId, reportIds: reportIds.map((item) => item.reportId) }),
   });
 
   var { reports } = await res.json();
@@ -17,39 +17,44 @@ var getRequiredReports = async (reportIds) => {
   return { reports };
 };
 
-var createMonthsDetails = async (months, year) => {
-  try {
-    var div = document.createElement("div");
-    div.class = "details";
-    div.id = `months_container_${year}`;
+var createDetailsToReportsContainer = (year, month, reportIds) => {
+  var summary = document.createElement("summary");
+  summary.append(month);
 
-    for (var { month, reportIds } of months) {
-      var details = document.createElement("details");
-      var summary = document.createElement("summary");
+  var details = document.createElement("details");
+  details.id = `reports_container_${year}_${month}`;
+  details.append(summary);
 
-      summary.append(month);
-      details.append(summary);
-      details.id = `reports_container_${year}_${month}`;
+  details.addEventListener("click", async () => {
+    if (!details.open) {
+      if (!document.getElementById(`tbody_year_${year}_month_${month}`)) {
+        var { reports } = await getRequiredReports(reportIds);
 
-      details.addEventListener("click", async () => {
-        if (details.open) {
+        var [reportsTable, downloadBtn] = await Promise.all([
+          createReportsTable(year, month, reportIds, reports),
+          createMonthlyReportDownloadButton(reportIds, year, month),
+        ]);
 
-          var { reports } = await getRequiredReports(reportIds);
-          var reportsTable = await createReportsTable(year, month, reportIds, reports);
-
-          var downloadBtn = await createMonthlyReportDownloadButton(reportIds, year, month);
-
-          details.append(reportsTable, downloadBtn);
-        }
-      });
-
-      div.append(details);
+        details.append(reportsTable, downloadBtn);
+        details.open = true;
+      }
     }
+  });
 
-    return div;
-  } catch (e) {
-    console.log({ e });
+  return details;
+};
+
+var createMonthsDetails = async (months, year) => {
+  var monthsContainer = document.createElement("div");
+  monthsContainer.class = "details";
+  monthsContainer.id = `months_container_${year}`;
+
+  for (var { month, reportIds } of months) {
+    var reportsContainer = createDetailsToReportsContainer(year, month, reportIds);
+    monthsContainer.append(reportsContainer);
   }
+
+  return monthsContainer;
 };
 
 export default createMonthsDetails;
