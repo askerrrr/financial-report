@@ -1,29 +1,32 @@
 import createReportsTable from "./createReportsTable.js";
 import createMonthlyReportDownloadButton from "./createMonthlyReportDownloadButton.js";
 
-var createMonthsDetails = async (months, year, reports) => {
+var createMonthsDetails = async (months, year) => {
   var div = document.createElement("div");
   div.class = "details";
   div.id = `months_container_${year}`;
 
-  for (var monthData of months) {
+  for (var { month, reportIds } of months) {
     var details = document.createElement("details");
     var summary = document.createElement("summary");
 
-    if (monthData) {
-      var { month, reportIds } = monthData;
-      summary.append(month);
+    summary.append(month);
+    details.append(summary);
+    details.id = `reports_container_${year}_${month}`;
 
-      details.id = `reports_container_${year}_${month}`;
+    details.addEventListener("click", async () => {
+      if (details.open) {
+        console.log("details open");
+        //var {reports} = await getReports(userId, reportIds)
+        // var reportsTable = await createReportsTable(year, month, reportIds, reports);
 
-      var reportsTable = await createReportsTable(year, month, reportIds, reports);
+        // var downloadBtn = await createMonthlyReportDownloadButton(reportIds, year, month);
 
-      var downloadBtn = await createMonthlyReportDownloadButton(reportIds, year, month);
+        // details.append(reportsTable, downloadBtn);
+      }
+    });
 
-      details.append(summary, reportsTable, downloadBtn);
-
-      div.append(details);
-    }
+    div.append(details);
   }
 
   return div;

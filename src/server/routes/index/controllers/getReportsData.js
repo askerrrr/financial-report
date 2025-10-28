@@ -20,7 +20,7 @@ var getReportsData = async (req, res, next) => {
 
   var { reports } = await getReportsByUserId(userId, projectonFields, lastReportIds);
 
-  return res.json({ reports, reportTree: reportTreeDto });
+  return res.json({ lastReports: reports, reportTree: reportTreeDto });
 };
 
 module.exports = getReportsData;
