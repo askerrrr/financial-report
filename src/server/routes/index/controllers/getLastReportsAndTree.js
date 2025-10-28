@@ -2,7 +2,7 @@ var getReportTreeDto = require("../services/getReportTreeDto");
 
 var projectonFields = ["reports.reportId", "reports.totalTaxAmount", "reports.totalFinalProfit", "reports.totalProductCosts"];
 
-var getReportsData = async (req, res, next) => {
+var getLastReportsAndTree = async (req, res, next) => {
   var userId = req.app.locals.userId;
 
   var { getReportsByUserId } = req.app.locals.reportCollectionServices;
@@ -23,4 +23,4 @@ var getReportsData = async (req, res, next) => {
   return res.json({ lastReports: reports, reportTree: reportTreeDto });
 };
 
-module.exports = getReportsData;
+module.exports = getLastReportsAndTree;
