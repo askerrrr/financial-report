@@ -4,6 +4,6 @@ var router = Router();
 
 router.get("/", require("./controllers/getMainPage"));
 router.get("/api/:userId", require("./controllers/getLastReportsAndTree"));
-router.get("/api/required-reports/", require("./controllers/getReports"));
+router.post("/api/required-reports/", require("./controllers/getReports"));
 
 module.exports = router;
