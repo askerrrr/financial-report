@@ -15,9 +15,7 @@ var sendMonthForDeletion = async (userId, monthsForDeletion) => {
   }
 };
 
-var insertLastReportsToTree = async (tree, lastReports) => {
-  var lastMonthData = tree[0].months.shift();
-
+var insertLastReportsToTree = async (tree, lastReports, lastMonthData) => {
   var { year } = tree[0];
   var { month, reportIds } = lastMonthData;
 
@@ -65,8 +63,11 @@ var buildReportTree = async () => {
   }
 
   var userId = document.cookie.split("=")[1];
+  var lastMonthData = reportTree[0].months.shift();
 
-  await createReportsTree(reportTree).then(() => insertLastReportsToTree(reportTree, lastReports));
+  await createReportsTree(reportTree).then(() =>
+    insertLastReportsToTree(reportTree, lastReports, lastMonthData)
+  );
 
   await openLastDetails(reportTree);
 
