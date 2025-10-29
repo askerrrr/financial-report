@@ -16,7 +16,7 @@ var getLastReportsAndTree = async (req, res, next) => {
 
   var reportTreeDto = await getReportTreeDto(reportTree);
 
-  var lastReportIds = reportTreeDto[0].months[0].reportIds.map((item) => +item.reportId);
+  var lastReportIds = reportTreeDto[0].months[0].reportIds.map((item) => item.reportId);
 
   var { reports } = await getReportsByUserId(userId, projectonFields, lastReportIds);
 

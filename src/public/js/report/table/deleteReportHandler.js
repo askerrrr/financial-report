@@ -17,8 +17,7 @@ var deleteReportHandler = async (report) =>
     var confirmed = confirm("Удалить отчет?");
 
     if (confirmed) {
-      var { userId, reportId, recordTo, totalInsuranceFee, totalTaxAmount } =
-        report;
+      var { userId, reportId, recordTo, totalInsuranceFee, totalTaxAmount } = report;
       var { year, month } = recordTo;
 
       var reportData = {
@@ -34,11 +33,12 @@ var deleteReportHandler = async (report) =>
 
       if (success) {
         alert("Отчет успешно удален");
-
         window.location.href = "/";
+        return;
+      } else {
+        alert("Не удалось удалить отчет...");
+        return;
       }
-
-      return alert("Не удалось удалить отчет...");
     }
 
     return;
