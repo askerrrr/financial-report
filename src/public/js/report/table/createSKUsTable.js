@@ -12,7 +12,7 @@ var createSKUsTable = async (report) => {
   for (var [skuIndex, sku] of Object.entries(skus)) {
     var tr = document.createElement("tr");
 
-    var dataToChange = { userId, skuIndex, reportId, year: +recordTo.year, fieldName: "costPrice", costPrice: sku.costPrice, url: "/reports/change" };
+    var dataToChange = { userId, skuIndex, reportId, year: +recordTo.year, costPrice: sku.costPrice, url: "/reports/change" };
 
     var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, null);
     var costPriceInputField = await createInputField(dataToChange);
