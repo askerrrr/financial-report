@@ -9,7 +9,7 @@ var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/:id", require("./controllers/getReportPage"));
 
-router.get("/:userId/:id", require("./controllers/getReport"));
+router.get("/:userId/:reportId", require("./controllers/getReport"));
 
 router.get("/download-report-as-xlsx/:userId/:reportId", require("./controllers/downloadReportAsXLSX"));
 
