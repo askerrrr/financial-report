@@ -17,14 +17,16 @@ var deleteReport = async (req, res, next) => {
     taxParams.paidInsuranceFee -= totalInsuranceFee;
     var { paidTaxAmount, paidInsuranceFee } = taxParams;
 
-    var deleteFromReports = await deleteReportFromDb(userId, reportId, session);
-    var deletedFromTree = await deleteReportFromReportTree(userId, year, month, reportId, session);
-    var taxParamsUpdated = await changeTaxParamsToDb(userId, year, session, {
-      paidTaxAmount,
-      paidInsuranceFee,
-    });
+    var results = await Promise.all([
+      deleteReportFromDb(userId, reportId, session),
+      deleteReportFromReportTree(userId, year, month, reportId, session),
+      changeTaxParamsToDb(userId, year, session, {
+        paidTaxAmount,
+        paidInsuranceFee,
+      }),
+    ]);
 
-    if (!deleteFromReports || !deletedFromTree || !taxParamsUpdated) {
+    if (!results.every((i) => Boolean(i) === true)) {
       throw new Error("");
     }
 

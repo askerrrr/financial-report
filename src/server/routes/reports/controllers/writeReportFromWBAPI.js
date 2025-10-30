@@ -1,53 +1,47 @@
 var sortYearsTree = require("../services/different/sortYearTree");
 var insertReportToReportTree = require("../services/reportTreeBuilder");
 var parseReports = require("../services/writeAndCalcReportDataFromWBAPI/index");
-var {
-  reportSchemaVersion,
-  recordToSchemaVersion,
-} = require("../../../database/migration/schemaVersioning/reportsCollection");
+var { reportSchemaVersion, recordToSchemaVersion } = require("../../../database/migration/schemaVersioning/reportsCollection");
 
 var writeReportFromWBAPI = async (req, res, next) => {
-  var { saveReportToDb } = req.app.locals.reportCollectionServices;
-  var { getReportTree, updateReportTree } = req.app.locals.reportsTreeCollectionServices;
-  var { addNewTaxYearToDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
+  try {
+    var { saveReportToDb } = req.app.locals.reportCollectionServices;
+    var { getReportTree, updateReportTree } = req.app.locals.reportsTreeCollectionServices;
+    var { addNewTaxYearToDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
-  var { dateTo, dateFrom, reports, userId } = req.body;
+    var { dateTo, dateFrom, reports, userId } = req.body;
 
-  var reportId = reports.mainReport[0].realizationreport_id;
+    var reportId = reports.mainReport[0].realizationreport_id;
 
-  var { reportTree } = await getReportTree(userId);
-  var { years, year, month } = await insertReportToReportTree(
-    dateFrom,
-    dateTo,
-    reportId,
-    reportTree
-  );
-  var sortedYears = sortYearsTree(years);
-  await updateReportTree(userId, sortedYears);
+    var { reportTree } = await getReportTree(userId);
+    var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
+    var sortedYears = sortYearsTree(years);
+    await updateReportTree(userId, sortedYears);
 
-  var { taxRate, paidTaxAmount } = await addNewTaxYearToDb(userId, +year);
-  var { report, skuNamesAndIds } = await parseReports(taxRate, reports);
-  paidTaxAmount += report.totalTaxAmount;
-  await changeTaxParamsToDb(userId, year, { paidTaxAmount });
+    var { taxRate, paidTaxAmount } = await addNewTaxYearToDb(userId, year);
+    var { report, skuNamesAndIds } = await parseReports(taxRate, reports);
+    paidTaxAmount += report.totalTaxAmount;
+    await changeTaxParamsToDb(userId, year, (session = null), { paidTaxAmount });
 
-  report.dateTo = dateTo;
-  report.userId = userId;
-  report.dateFrom = dateFrom;
-  report.reportId = reportId;
-  report.schemaVersion = reportSchemaVersion;
-  report.recordTo = { year, month, schemaVersion: recordToSchemaVersion };
+    report.dateTo = dateTo;
+    report.userId = userId;
+    report.dateFrom = dateFrom;
+    report.reportId = reportId;
+    report.schemaVersion = reportSchemaVersion;
+    report.recordTo = { year, month, schemaVersion: recordToSchemaVersion };
 
-  var success = await saveReportToDb(userId, report);
+    var success = await saveReportToDb(userId, report);
 
-  if (success) {
-    var { totalTaxAmount } = report;
+    if (success) {
+      var { totalTaxAmount } = report;
 
-    return res.status(200).json({ reportId, year, month, dateFrom, dateTo, totalTaxAmount });
+      return res.status(200).json({ reportId, year, month, dateFrom, dateTo, totalTaxAmount });
+    }
+
+    return res.status(400).json({ msg: "Произошла ошибка, попробуйте повторить еще раз через 1 минуту" });
+  } catch (e) {
+    console.log({ e });
   }
-
-  return res
-    .status(400)
-    .json({ msg: "Произошла ошибка, попробуйте повторить еще раз через 1 минуту" });
 };
 
 module.exports = writeReportFromWBAPI;

@@ -3,8 +3,7 @@ var changeTaxParams = async (req, res, next) => {
   var { year, recalculate, data } = req.body;
   var { changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
-  var success = await changeTaxParamsToDb(userId, year, data);
-
+  var success = await changeTaxParamsToDb(userId, year, (session = null), data);
 
   if (success) {
     return res.sendStatus(200);
