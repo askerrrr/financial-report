@@ -1,5 +1,5 @@
-var updateSkuInArray = require("../services/different/updateSkuInArray");
 var calc = require("../services/calcServices");
+var updateSkuInArray = require("../services/different/updateSkuInArray");
 
 var changeReportDetail = async (req, res, next) => {
   var { userId, reportId, skuIndex, costPrice, year } = req.body;
@@ -9,7 +9,7 @@ var changeReportDetail = async (req, res, next) => {
   var { report } = await getReportById(userId, reportId);
   var { skus, ...totalParams } = report;
 
-  var updatedSKUS = await updateSkuInArray(skus, req.body);
+  var updatedSKUS = updateSkuInArray(skus, req.body);
 
   var sku = updatedSKUS[skuIndex];
 
