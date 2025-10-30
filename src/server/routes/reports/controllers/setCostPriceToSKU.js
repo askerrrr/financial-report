@@ -1,7 +1,7 @@
 var calc = require("../services/calcServices");
 var updateSkuInArray = require("../services/different/updateSkuInArray");
 
-var changeReportDetail = async (req, res, next) => {
+var setCostPriceToSKU = async (req, res, next) => {
   var { userId, reportId, skuIndex, costPrice, year } = req.body;
   var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
@@ -43,4 +43,4 @@ var changeReportDetail = async (req, res, next) => {
   return res.sendStatus(304);
 };
 
-module.exports = changeReportDetail;
+module.exports = setCostPriceToSKU;

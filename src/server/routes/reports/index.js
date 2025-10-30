@@ -24,7 +24,7 @@ router.post(
   require("./controllers/writeReportFromWBAPI")
 );
 
-router.put("/change", require("./controllers/changeReportDetail"));
+router.put("/change", require("./controllers/setCostPriceToSKU"));
 
 router.put("/sku-photo-upload/:skuName", upload.single("sku-photo"), require("./controllers/skuPhotoUpload"));
 
