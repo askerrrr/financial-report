@@ -9,13 +9,11 @@ var changeReportDetail = async (req, res, next) => {
   var { report } = await getReportById(userId, reportId);
   var { skus, ...totalParams } = report;
 
-  var updatedSKUS = updateSkuInArray(skus, req.body);
-
-  var sku = updatedSKUS[skuIndex];
+  var { updatedSKUS, updatedSKU } = updateSkuInArray(skus, req.body);
 
   var taxParams = await getTaxParamsFromDb(userId, year);
 
-  var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = calc.sku.restParams(sku, costPrice, taxParams);
+  var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = calc.sku.restParams(updatedSKU, costPrice, taxParams);
 
   var updatedTaxParams = { insuranceFeePercentage, paidInsuranceFee: recalculatedPaidInsuranceFee };
 

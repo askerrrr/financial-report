@@ -5,7 +5,7 @@ var updateSkuInArray = (skus, { skuIndex, costPrice, fieldName }) => {
 
   skus[skuIndex] = sku;
 
-  return skus;
+  return { updatedSKUS: skus, updatedSKU: sku };
 };
 
 module.exports = updateSkuInArray;
