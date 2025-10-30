@@ -20,14 +20,14 @@ var createSKUsTable = async (report) => {
     var SKUPhotoUploaderTd = createTdElement(SKUPhotoUploader, "photo-cell", skuIndex, "photo-cell");
     var skuName = createTdElement(sku.skuName);
     var qty = createTdElement(sku.qty);
-    var returnAmount = createTdElement(sku.returnAmountPerSKU);
+    var returnAmount = createTdElement(sku.returnAmount);
     var costPrice = createTdElement(costPriceInputField);
-    var deliveryCost = createTdElement(sku.deliveryCostPerSKU);
+    var deliveryCost = createTdElement(sku.deliveryCost);
     var deductionOrPayment = createTdElement(sku.deductionOrPayment);
-    var fines = createTdElement(sku.finesPerSKU);
-    var storageCostPerSKU = createTdElement(sku.storageCostPerSKU);
-    var acceptancePerSKU = createTdElement(sku.acceptancePerSKU);
-    var profitPerSKU = createTdElement(sku.profitPerSKU);
+    var fines = createTdElement(sku.fines);
+    var storageCost = createTdElement(sku.storageCost);
+    var acceptance = createTdElement(sku.acceptance);
+    var profit = createTdElement(sku.profit);
     var profitMargin = createTdElement(sku.profitMargin, "profitMargin", skuIndex);
     var finalProfitPerSKU = createTdElement(sku.finalProfitPerSKU, "finalProfitPerSKU", skuIndex);
 
@@ -47,9 +47,9 @@ var createSKUsTable = async (report) => {
       deliveryCost,
       deductionOrPayment,
       fines,
-      storageCostPerSKU,
-      acceptancePerSKU,
-      profitPerSKU,
+      storageCost,
+      acceptance,
+      profit,
       costPrice,
       profitMargin,
       finalProfitPerSKU

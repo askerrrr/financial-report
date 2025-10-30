@@ -6,10 +6,10 @@ var recalculateReportsTaxRate = async (newTaxRate, year, reports) => {
       report.taxRate = newTaxRate;
 
       report.skus.map(async (sku) => {
-        sku.taxPerSKU = calc.sku.tax(sku.retailAmountPerSKU, newTaxRate);
+        sku.tax = calc.sku.tax(sku.retailAmount, newTaxRate);
       });
 
-      report.totalTaxAmount = report.skus.reduce((acc, sku) => acc + sku.taxPerSKU, 0);
+      report.totalTaxAmount = report.skus.reduce((acc, sku) => acc + sku.tax, 0);
     }
   }
 

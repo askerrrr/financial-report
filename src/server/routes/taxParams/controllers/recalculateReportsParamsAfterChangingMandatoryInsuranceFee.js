@@ -14,12 +14,12 @@ var recalculateReportsParamsAfterChangingMandatoryInsuranceFee = async (req, res
     if (reports[i].recordTo.year == year) {
       await Promise.all(
         reports[i].skus.map(async (sku) => {
-          paidTaxAmount += sku.taxPerSKU;
+          paidTaxAmount += sku.tax;
 
           if (paidTaxAmount >= mandatoryInsuranceFee) {
             insuranceFeePercentage = 0;
             sku.isInsuranceFeeIncluded = false;
-            sku.finalProfitPerSKU = calc.sku.finalProfit(sku.preTaxProfitPerSKU, 0, sku.taxPerSKU);
+            sku.finalProfitPerSKU = calc.sku.finalProfit(sku.preTaxProfitPerSKU, 0, sku.tax);
           } else {
             sku.isInsuranceFeeIncluded = true;
             sku.finalProfitPerSKU = calc.sku.finalProfit(sku.preTaxProfitPerSKU, sku.insuranceFee);

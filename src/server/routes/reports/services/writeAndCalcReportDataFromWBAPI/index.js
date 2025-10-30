@@ -24,21 +24,21 @@ var parseReports = async (taxRate, reports) => {
     sku.skuName = name;
     sku.schemaVersion = skuSchemaVersion;
     sku.qty = await calc.sku.quantity(skuFilteredReport);
-    sku.finesPerSKU = calc.sku.fines(skuFilteredReport);
-    sku.acceptancePerSKU = calc.sku.paidAcceptance(skuFilteredReport);
-    sku.retailAmountPerSKU = calc.sku.retailAmount(skuFilteredReport);
-    sku.taxPerSKU = calc.sku.tax(sku.retailAmountPerSKU, taxRate);
-    sku.returnAmountPerSKU = calc.sku.returnAmount(skuFilteredReport);
-    sku.deliveryCostPerSKU = calc.sku.deliveryCost(skuFilteredReport);
+    sku.fines = calc.sku.fines(skuFilteredReport);
+    sku.acceptance = calc.sku.paidAcceptance(skuFilteredReport);
+    sku.retailAmount = calc.sku.retailAmount(skuFilteredReport);
+    sku.tax = calc.sku.tax(sku.retailAmount, taxRate);
+    sku.returnAmount = calc.sku.returnAmount(skuFilteredReport);
+    sku.deliveryCost = calc.sku.deliveryCost(skuFilteredReport);
     sku.deductionOrPayment = calc.sku.deductionsOrPayments(skuFilteredReport);
-    sku.additionalPaymentPerSKU = calc.sku.additionalPayment(skuFilteredReport);
-    sku.sellerPayoutAmountPerSKU = calc.sku.sellerPayoutAmount(skuFilteredReport);
+    sku.additionalPayment = calc.sku.additionalPayment(skuFilteredReport);
+    sku.sellerPayoutAmount = calc.sku.sellerPayoutAmount(skuFilteredReport);
     sku.averageRetailPrice = calc.sku.averageRetailPrice(sku.qty, skuFilteredReport);
-    sku.storageCostPerSKU = calc.sku.storageCost(name, storageDataFromPaidStorageReport);
+    sku.storageCost = calc.sku.storageCost(name, storageDataFromPaidStorageReport);
     sku.averageStorageCost = calc.sku.averageStorageCost(totalStorageCost, totalSold, sku.qty);
-    sku.averageAdvertisingCostPerSKU = calc.sku.averageAdvertisingCost(skuNamesAndIds.length, totalAdvertisingCosts);
-    sku.profitPerSKU = calc.sku.profit(sku);
-    sku.averageProfitPerSKU = calc.sku.averageProfit(sku);
+    sku.averageAdvertisingCost = calc.sku.averageAdvertisingCost(skuNamesAndIds.length, totalAdvertisingCosts);
+    sku.profit = calc.sku.profit(sku);
+    sku.averageProfitPerSKU = calc.sku.averageProfitPerSKU(sku);
 
     skus.push({ ...sku });
   }

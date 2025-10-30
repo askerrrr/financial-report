@@ -1,11 +1,11 @@
 var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
 
-var calcPreTaxProfitPerSKU = ({ qty, profitPerSKU }, costPrice) => {
-  if (profitPerSKU === 0 || qty === 0) {
+var calcPreTaxProfitPerSKU = ({ qty, profit }, costPrice) => {
+  if (profit === 0 || qty === 0) {
     return 0;
   }
 
-  var preTaxProfitPerSKU = profitPerSKU - qty * costPrice;
+  var preTaxProfitPerSKU = profit - qty * costPrice;
 
   return shortNum(preTaxProfitPerSKU);
 };

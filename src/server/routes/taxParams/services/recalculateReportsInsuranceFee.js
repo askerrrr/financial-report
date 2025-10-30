@@ -16,7 +16,7 @@ var recalculateReportsInsuranceFee = async (year, reports, newPercent, taxParams
             if (paidTaxAmount >= mandatoryInsuranceFee) {
               newPercent = 0;
               sku.isInsuranceFeeIncluded = false;
-              sku.finalProfitPerSKU = calc.sku.finalProfit(sku.preTaxProfitPerSKU, 0, sku.taxPerSKU);
+              sku.finalProfitPerSKU = calc.sku.finalProfit(sku.preTaxProfitPerSKU, 0, sku.tax);
             } else {
               sku.isInsuranceFeeIncluded = true;
               sku.finalProfitPerSKU = calc.sku.finalProfit(sku.preTaxProfitPerSKU, sku.insuranceFee);

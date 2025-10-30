@@ -1,7 +1,7 @@
 var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
 
-var calcFinalProfitPerSKU = (preTaxProfitPerSKU, insuranceFee, taxPerSKU = 0) => {
-  var finalProfitPerSKU = preTaxProfitPerSKU - insuranceFee - taxPerSKU;
+var calcFinalProfitPerSKU = (preTaxProfitPerSKU, insuranceFee, tax = 0) => {
+  var finalProfitPerSKU = preTaxProfitPerSKU - insuranceFee - tax;
 
   return shortNum(finalProfitPerSKU);
 };
