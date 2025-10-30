@@ -4,7 +4,7 @@ var calc = require("../services/calcServices");
 var changeReportDetail = async (req, res, next) => {
   var { userId, reportId, skuIndex, costPrice, year } = req.body;
   var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
-  var { getTaxParamsFromDb, changePaidInsuranceFeeToDb, changeInsuranceFeePercentageToDb } = req.app.locals.taxParamsCollectionServices;
+  var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
   var { report } = await getReportById(userId, reportId);
   var { skus, ...totalParams } = report;
@@ -17,8 +17,9 @@ var changeReportDetail = async (req, res, next) => {
 
   var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = calc.sku.restParams(sku, costPrice, taxParams);
 
-  await changePaidInsuranceFeeToDb(userId, year, recalculatedPaidInsuranceFee);
-  await changeInsuranceFeePercentageToDb(userId, year, insuranceFeePercentage);
+  var updatedTaxParams = { insuranceFeePercentage, paidInsuranceFee: recalculatedPaidInsuranceFee };
+
+  await changeTaxParamsToDb(userId, year, (session = null), updatedTaxParams);
 
   updatedSKUS[skuIndex] = skuWithCalculatedParams;
 
