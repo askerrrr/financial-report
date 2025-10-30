@@ -1,4 +1,4 @@
-var calc = require("./calcServices");
+var calc = require("../calcServices");
 var getSkuNamesAndIds = require("./getSkuNamesAndIds");
 var truncateSKUNums = require("./truncateSKUNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
@@ -7,8 +7,8 @@ var { skuSchemaVersion } = require("../../../../database/migration/schemaVersion
 var parseReports = async (taxRate, reports) => {
   var { mainReport, paidStorageReport, totalAdvertisingCosts } = reports;
 
-  var totalSold = await calc.totalSold(mainReport);
-  var totalStorageCost = await calc.totalStorageCost(mainReport);
+  var totalSold = await calc.total.sold(mainReport);
+  var totalStorageCost = await calc.total.storageCost(mainReport);
 
   var skuNamesAndIds = getSkuNamesAndIds(mainReport);
 
@@ -23,38 +23,38 @@ var parseReports = async (taxRate, reports) => {
     sku.id = id;
     sku.skuName = name;
     sku.schemaVersion = skuSchemaVersion;
-    sku.qty = await calc.quantityPerSKU(skuFilteredReport);
-    sku.finesPerSKU = calc.finesPerSKU(skuFilteredReport);
-    sku.acceptancePerSKU = calc.acceptancePerSKU(skuFilteredReport);
-    sku.retailAmountPerSKU = calc.retailAmountPerSKU(skuFilteredReport);
-    sku.taxPerSKU = calc.taxPerSKU(sku.retailAmountPerSKU, taxRate);
-    sku.returnAmountPerSKU = calc.returnAmountPerSKU(skuFilteredReport);
-    sku.deliveryCostPerSKU = calc.deliveryCostPerSKU(skuFilteredReport);
-    sku.deductionOrPayment = calc.deductionsOrPayments(skuFilteredReport);
-    sku.additionalPaymentPerSKU = calc.additionalPaymentPerSKU(skuFilteredReport);
-    sku.sellerPayoutAmountPerSKU = calc.sellerPayoutAmountPerSKU(skuFilteredReport);
-    sku.averageRetailPrice = calc.averageRetailPricePerSKU(sku.qty, skuFilteredReport);
-    sku.storageCostPerSKU = calc.storageCostPerSKU(name, storageDataFromPaidStorageReport);
-    sku.averageStorageCost = calc.averageStorageCostPerSKU(totalStorageCost, totalSold, sku.qty);
-    sku.averageAdvertisingCostPerSKU = calc.averageAdvertisingCostPerSKU(skuNamesAndIds.length, totalAdvertisingCosts);
-    sku.profitPerSKU = calc.profitPerSKU(sku);
-    sku.averageProfitPerSKU = calc.averageProfitPerSKU(sku);
+    sku.qty = await calc.sku.quantity(skuFilteredReport);
+    sku.finesPerSKU = calc.sku.fines(skuFilteredReport);
+    sku.acceptancePerSKU = calc.sku.paidAcceptance(skuFilteredReport);
+    sku.retailAmountPerSKU = calc.sku.retailAmount(skuFilteredReport);
+    sku.taxPerSKU = calc.sku.tax(sku.retailAmountPerSKU, taxRate);
+    sku.returnAmountPerSKU = calc.sku.returnAmount(skuFilteredReport);
+    sku.deliveryCostPerSKU = calc.sku.deliveryCost(skuFilteredReport);
+    sku.deductionOrPayment = calc.sku.deductionsOrPayments(skuFilteredReport);
+    sku.additionalPaymentPerSKU = calc.sku.additionalPayment(skuFilteredReport);
+    sku.sellerPayoutAmountPerSKU = calc.sku.sellerPayoutAmount(skuFilteredReport);
+    sku.averageRetailPrice = calc.sku.averageRetailPrice(sku.qty, skuFilteredReport);
+    sku.storageCostPerSKU = calc.sku.storageCost(name, storageDataFromPaidStorageReport);
+    sku.averageStorageCost = calc.sku.averageStorageCost(totalStorageCost, totalSold, sku.qty);
+    sku.averageAdvertisingCostPerSKU = calc.sku.averageAdvertisingCost(skuNamesAndIds.length, totalAdvertisingCosts);
+    sku.profitPerSKU = calc.sku.profit(sku);
+    sku.averageProfitPerSKU = calc.sku.averageProfit(sku);
 
     skus.push({ ...sku });
   }
 
   skus = await truncateSKUNums(skus);
 
-  var totalFines = calc.totalFines(skus);
-  var totalProfit = calc.totalProfit(skus);
-  var totalTaxAmount = calc.totalTaxAmount(skus);
-  var totalReturnAmount = calc.totalReturnAmount(skus);
-  var totalDeliveryCost = calc.totalDeliveryCost(skus);
-  var totalRetailAmount = calc.totalRetailAmount(skus);
-  var totalPaidAcceptance = calc.totalPaidAcceptance(skus);
-  var totalAdditionalPayment = calc.totalAdditionalPayment(skus);
-  var totalDeductionOrPayment = calc.totalDeductionOrPayment(skus);
-  var totalSellerPayoutAmount = calc.totalSellerPayoutAmount(skus);
+  var totalFines = calc.total.fines(skus);
+  var totalProfit = calc.total.profit(skus);
+  var totalTaxAmount = calc.total.taxAmount(skus);
+  var totalReturnAmount = calc.total.returnAmount(skus);
+  var totalDeliveryCost = calc.total.deliveryCost(skus);
+  var totalRetailAmount = calc.total.retailAmount(skus);
+  var totalPaidAcceptance = calc.total.paidAcceptance(skus);
+  var totalAdditionalPayment = calc.total.additionalPayment(skus);
+  var totalDeductionOrPayment = calc.total.deductionOrPayment(skus);
+  var totalSellerPayoutAmount = calc.total.sellerPayoutAmount(skus);
 
   var report = {
     skus,

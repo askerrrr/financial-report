@@ -1,4 +1,4 @@
-var shortNum = require("../../shortNum");
+var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
 
 var caclAverageAdvertisingCostPerSKU = (totalSKUs, totalAdCampaignCosts) => {
   var averageAdvertisingCostPerSKU = totalAdCampaignCosts / totalSKUs;

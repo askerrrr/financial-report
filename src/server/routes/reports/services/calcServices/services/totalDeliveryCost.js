@@ -1,4 +1,4 @@
-var shortNum = require("../../shortNum");
+var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
 
 var calcTotalDeliveryCost = (skus) => {
   var totalDeliveryCost = skus.reduce((acc, sku) => acc + sku.deliveryCostPerSKU, 0);

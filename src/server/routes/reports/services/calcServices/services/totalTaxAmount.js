@@ -1,4 +1,4 @@
-var shortNum = require("../../shortNum");
+var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
 
 var calcTotalTaxAmount = (skus) => {
   var totalTaxAmount = skus.reduce((acc, sku) => acc + sku.taxPerSKU, 0);

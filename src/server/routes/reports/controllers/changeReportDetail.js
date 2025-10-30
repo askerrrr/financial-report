@@ -1,6 +1,5 @@
 var updateSkuInArray = require("../services/different/updateSkuInArray");
-var calcRestSKUParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/services/restSKUParams");
-var calcRestReportTotalParams = require("../services/writeAndCalcReportDataFromWBAPI/calcServices/services/restReportTotalParams");
+var calc = require("../services/calcServices");
 
 var changeReportDetail = async (req, res, next) => {
   var { userId, reportId, skuIndex, costPrice, year } = req.body;
@@ -8,7 +7,7 @@ var changeReportDetail = async (req, res, next) => {
   var { getTaxParamsFromDb, changePaidInsuranceFeeToDb, changeInsuranceFeePercentageToDb } = req.app.locals.taxParamsCollectionServices;
 
   var { report } = await getReportById(userId, reportId);
-    var { skus, ...totalParams } = report
+  var { skus, ...totalParams } = report;
 
   var updatedSKUS = await updateSkuInArray(skus, req.body);
 
@@ -16,14 +15,14 @@ var changeReportDetail = async (req, res, next) => {
 
   var taxParams = await getTaxParamsFromDb(userId, year);
 
-  var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = calcRestSKUParams(sku, costPrice, taxParams);
+  var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = calc.sku.restParams(sku, costPrice, taxParams);
 
   await changePaidInsuranceFeeToDb(userId, year, recalculatedPaidInsuranceFee);
   await changeInsuranceFeePercentageToDb(userId, year, insuranceFeePercentage);
 
   updatedSKUS[skuIndex] = skuWithCalculatedParams;
 
-  var updatedReport = await calcRestReportTotalParams(totalParams, updatedSKUS);
+  var updatedReport = await calc.total.restParams(totalParams, updatedSKUS);
   var success = await saveUpdatedReport(userId, reportId, updatedReport);
 
   if (success) {
