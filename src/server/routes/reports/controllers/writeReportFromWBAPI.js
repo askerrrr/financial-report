@@ -24,7 +24,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
       var sortedYears = sortYearsTree(years);
 
       var { taxRate, paidTaxAmount } = await addNewTaxYearToDb(userId, year, session);
-      var { report, skuNamesAndIds } = await parseReports(taxRate, reports);
+      var { report } = await parseReports(taxRate, reports);
       paidTaxAmount += report.totalTaxAmount;
 
       report.dateTo = dateTo;
