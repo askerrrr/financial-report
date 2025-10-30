@@ -1,3 +1,4 @@
+var { connection } = require("../../../database/");
 var sortYearsTree = require("../services/different/sortYearTree");
 var insertReportToReportTree = require("../services/reportTreeBuilder");
 var parseReports = require("../services/writeAndCalcReportDataFromWBAPI/index");
@@ -14,31 +15,38 @@ var writeReportFromWBAPI = async (req, res, next) => {
     var reportId = reports.mainReport[0].realizationreport_id;
 
     var { reportTree } = await getReportTree(userId);
-    var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
-    var sortedYears = sortYearsTree(years);
-    await updateReportTree(userId, sortedYears);
+    var session = await connection.startSession();
 
-    var { taxRate, paidTaxAmount } = await addNewTaxYearToDb(userId, year);
-    var { report, skuNamesAndIds } = await parseReports(taxRate, reports);
-    paidTaxAmount += report.totalTaxAmount;
-    await changeTaxParamsToDb(userId, year, (session = null), { paidTaxAmount });
+    try {
+      session.startTransaction();
 
-    report.dateTo = dateTo;
-    report.userId = userId;
-    report.dateFrom = dateFrom;
-    report.reportId = reportId;
-    report.schemaVersion = reportSchemaVersion;
-    report.recordTo = { year, month, schemaVersion: recordToSchemaVersion };
+      var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
+      var sortedYears = sortYearsTree(years);
 
-    var success = await saveReportToDb(userId, report);
+      var { taxRate, paidTaxAmount } = await addNewTaxYearToDb(userId, year, session);
+      var { report, skuNamesAndIds } = await parseReports(taxRate, reports);
+      paidTaxAmount += report.totalTaxAmount;
 
-    if (success) {
-      var { totalTaxAmount } = report;
+      report.dateTo = dateTo;
+      report.userId = userId;
+      report.dateFrom = dateFrom;
+      report.reportId = reportId;
+      report.schemaVersion = reportSchemaVersion;
+      report.recordTo = { year, month, schemaVersion: recordToSchemaVersion };
 
-      return res.status(200).json({ reportId, year, month, dateFrom, dateTo, totalTaxAmount });
+      await saveReportToDb(userId, report, session);
+      await updateReportTree(userId, sortedYears, session);
+      await changeTaxParamsToDb(userId, year, session, { paidTaxAmount });
+
+      session.commitTransaction();
+
+      res.status(200).json({ reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount });
+    } catch (e) {
+      await session.abortTransaction();
+      return res.status(400).json({ msg: "Произошла ошибка, попробуйте повторить еще раз через 1 минуту" });
+    } finally {
+      await session.endSession();
     }
-
-    return res.status(400).json({ msg: "Произошла ошибка, попробуйте повторить еще раз через 1 минуту" });
   } catch (e) {
     console.log({ e });
   }
