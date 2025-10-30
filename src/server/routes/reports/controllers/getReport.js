@@ -6,11 +6,11 @@ var getReport = async (req, res, next) => {
   var { getReportById } = req.app.locals.reportCollectionServices;
 
   var { report } = await getReportById(userId, id);
-  var imageCollection = await collectImagesAsBase64(userId, report.skus);
+  var { skuImages } = await collectImagesAsBase64(userId, report.skus);
 
   var downloadReportLink = "/reports/download-report-as-xlsx/" + userId + "/" + id;
 
-  return res.json({ report, imageCollection, downloadReportLink });
+  return res.json({ report, skuImages, downloadReportLink });
 };
 
 module.exports = getReport;
