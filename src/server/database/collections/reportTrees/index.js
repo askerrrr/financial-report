@@ -13,7 +13,8 @@ var reportsTreeCollectionServices = {
 
   getReportTree: (userId) => getReportTree(reportsTreeCollection, userId),
 
-  deleteReportFromReportTree: (userId, year, month, reportId) => deleteReportFromReportTree(reportsTreeCollection, userId, year, month, reportId),
+  deleteReportFromReportTree: (userId, year, month, reportId, session) =>
+    deleteReportFromReportTree(reportsTreeCollection, userId, year, month, reportId, session),
 
   deleteReportTreeByUserId: (userId) => deleteReportTreeByUserId(reportsTreeCollection, userId),
 };
