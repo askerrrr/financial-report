@@ -11,15 +11,18 @@ var getLastReportsAndTree = async (req, res, next) => {
   var { reportTree } = await getReportTree(userId);
 
   if (!reportTree.length) {
-    return res.json({ reports: [], reportTree: [] });
+    return res.json({ lastReports: [], reportTree: [] });
   }
 
   var reportTreeDto = await getReportTreeDto(reportTree);
 
   var lastReportIds = reportTreeDto[0].months[0].reportIds.map((item) => item.reportId);
 
-  var { reports } = await getReportsByUserId(userId, projectonFields, lastReportIds);
+  if (!lastReportIds.length) {
+    return res.json({ lastReports: [], reportTree: [] });
+  }
 
+  var { reports } = await getReportsByUserId(userId, projectonFields, lastReportIds);
   return res.json({ lastReports: reports, reportTree: reportTreeDto });
 };
 
