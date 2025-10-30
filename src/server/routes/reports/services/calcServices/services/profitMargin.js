@@ -1,11 +1,11 @@
 var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
 
-var calcProfitMargin = ({ finalProfitPerSKU, retailAmount }) => {
-  if (finalProfitPerSKU === 0) {
+var calcProfitMargin = ({ finalProfit, retailAmount }) => {
+  if (finalProfit === 0) {
     return 0;
   }
 
-  var profitMargin = (finalProfitPerSKU * 100) / retailAmount;
+  var profitMargin = (finalProfit * 100) / retailAmount;
 
   return shortNum(profitMargin);
 };

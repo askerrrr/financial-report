@@ -10,19 +10,19 @@ var recalculateReportsInsuranceFee = async (year, reports, newPercent, taxParams
       await Promise.all(
         reports[i].skus.map(async (sku) => {
           if (sku.isCostPriceSet) {
-            sku.insuranceFee = (sku.preTaxProfitPerSKU, newPercent);
+            sku.insuranceFee = (sku.preTaxProfit, newPercent);
             recalculatedPaidInsuranceFee += sku.insuranceFee;
 
             if (paidTaxAmount >= mandatoryInsuranceFee) {
               newPercent = 0;
               sku.isInsuranceFeeIncluded = false;
-              sku.finalProfitPerSKU = calc.sku.finalProfit(sku.preTaxProfitPerSKU, 0, sku.tax);
+              sku.finalProfit = calc.sku.finalProfit(sku.preTaxProfit, 0, sku.tax);
             } else {
               sku.isInsuranceFeeIncluded = true;
-              sku.finalProfitPerSKU = calc.sku.finalProfit(sku.preTaxProfitPerSKU, sku.insuranceFee);
+              sku.finalProfit = calc.sku.finalProfit(sku.preTaxProfit, sku.insuranceFee);
             }
 
-            sku.profitMargin = calc.sku.profitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
+            sku.profitMargin = calc.sku.profitMargin(sku.revenue, sku.finalProfit);
           }
         })
       );

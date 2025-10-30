@@ -9,7 +9,7 @@ var SKUSchema = new Schema(
     skuName: stringOptions,
     qty: numberOptions,
     costPrice: numberOptions,
-    revenuePerSKU: numberOptions,
+    revenue: numberOptions,
     sellerPayoutAmount: numberOptions,
     fines: numberOptions,
     returnAmount: numberOptions,
@@ -22,12 +22,12 @@ var SKUSchema = new Schema(
     tax: numberOptions,
     insuranceFee: numberOptions,
     profit: numberOptions,
-    preTaxProfitPerSKU: numberOptions,
-    finalProfitPerSKU: numberOptions,
+    preTaxProfit: numberOptions,
+    finalProfit: numberOptions,
     profitMargin: numberOptions,
     isCostPriceSet: { type: Boolean, default: false },
     isInsuranceFeeIncluded: booleanOptions,
-    averageProfitPerSKU: numberOptions,
+    averageProfit: numberOptions,
     averageRetailPrice: numberOptions,
     averageStorageCost: numberOptions,
     averageAdvertisingCost: numberOptions,
@@ -37,7 +37,10 @@ var SKUSchema = new Schema(
   { _id: false }
 );
 
-var recordToSchema = new Schema({ year: stringOptions, month: stringOptions, schemaVersion: { type: Number } }, { _id: false });
+var recordToSchema = new Schema(
+  { year: stringOptions, month: stringOptions, schemaVersion: { type: Number } },
+  { _id: false }
+);
 
 var reportSchema = new Schema(
   {

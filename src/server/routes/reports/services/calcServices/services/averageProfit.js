@@ -3,9 +3,9 @@ var calcAverageProfitPerSKU = (sku) => {
     return 0;
   }
 
-  var averageProfitPerSKU = sku.profit / sku.qty;
+  var averageProfit = sku.profit / sku.qty;
 
-  return averageProfitPerSKU;
+  return averageProfit;
 };
 
 module.exports = calcAverageProfitPerSKU;

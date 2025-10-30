@@ -5,9 +5,9 @@ var calcPreTaxProfitPerSKU = ({ qty, profit }, costPrice) => {
     return 0;
   }
 
-  var preTaxProfitPerSKU = profit - qty * costPrice;
+  var preTaxProfit = profit - qty * costPrice;
 
-  return shortNum(preTaxProfitPerSKU);
+  return shortNum(preTaxProfit);
 };
 
 module.exports = calcPreTaxProfitPerSKU;

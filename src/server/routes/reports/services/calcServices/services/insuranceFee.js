@@ -1,11 +1,11 @@
 var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
 
-var calcInsuranceFeePerSKU = (preTaxProfitPerSKU, insuranceFeePercentage) => {
+var calcInsuranceFeePerSKU = (preTaxProfit, insuranceFeePercentage) => {
   if (insuranceFeePercentage == 0) {
     return 0;
   }
 
-  var insuranceFee = (preTaxProfitPerSKU * insuranceFeePercentage) / 100;
+  var insuranceFee = (preTaxProfit * insuranceFeePercentage) / 100;
 
   return shortNum(insuranceFee);
 };

@@ -2,7 +2,9 @@ var calc = require("../calcServices");
 var getSkuNamesAndIds = require("./getSkuNamesAndIds");
 var truncateSKUNums = require("./truncateSKUNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
-var { skuSchemaVersion } = require("../../../../database/migration/schemaVersioning/reportsCollection");
+var {
+  skuSchemaVersion,
+} = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
 var parseReports = async (taxRate, reports) => {
   var { mainReport, paidStorageReport, totalAdvertisingCosts } = reports;
@@ -36,9 +38,12 @@ var parseReports = async (taxRate, reports) => {
     sku.averageRetailPrice = calc.sku.averageRetailPrice(sku.qty, skuFilteredReport);
     sku.storageCost = calc.sku.storageCost(name, storageDataFromPaidStorageReport);
     sku.averageStorageCost = calc.sku.averageStorageCost(totalStorageCost, totalSold, sku.qty);
-    sku.averageAdvertisingCost = calc.sku.averageAdvertisingCost(skuNamesAndIds.length, totalAdvertisingCosts);
+    sku.averageAdvertisingCost = calc.sku.averageAdvertisingCost(
+      skuNamesAndIds.length,
+      totalAdvertisingCosts
+    );
     sku.profit = calc.sku.profit(sku);
-    sku.averageProfitPerSKU = calc.sku.averageProfitPerSKU(sku);
+    sku.averageProfit = calc.sku.averageProfit(sku);
 
     skus.push({ ...sku });
   }

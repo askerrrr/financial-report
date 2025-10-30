@@ -4,11 +4,13 @@ var updateSkuInArray = require("../../reports/services/different/updateSkuInArra
 var setCostPrice = async (req, res, next) => {
   var { id, reportId, skuIndex, costPrice } = req.body;
 
-  var { report } = req.app.locals.reports.find((item) => item.id == id && item.report.reportId === reportId);
+  var { report } = req.app.locals.reports.find(
+    (item) => item.id == id && item.report.reportId === reportId
+  );
 
   var { skus, ...totalParams } = report;
 
-  var changedSKUs = await updateSkuInArray(skus, req.body);
+  var changedSKUs = updateSkuInArray(skus, req.body);
 
   var sku = changedSKUs[skuIndex];
 
@@ -17,12 +19,14 @@ var setCostPrice = async (req, res, next) => {
 
   changedSKUs[skuIndex] = skuWithCalculatedParams;
 
-  var updatedReport = await calc.total.restParams(totalParams, changedSKUs);
+  var updatedReport = calc.total.restParams(totalParams, changedSKUs);
 
   var { totalFinalProfit, totalProfitMargin } = updatedReport;
-  var { profitMargin, finalProfitPerSKU } = skuWithCalculatedParams;
+  var { profitMargin, finalProfit } = skuWithCalculatedParams;
 
-  var reportIndex = req.app.locals?.reports.findIndex((item) => item.id === id && item.report.reportId === reportId);
+  var reportIndex = req.app.locals?.reports.findIndex(
+    (item) => item.id === id && item.report.reportId === reportId
+  );
 
   req.app.locals.reports[reportIndex] = { id, report: updatedReport };
 
@@ -31,7 +35,7 @@ var setCostPrice = async (req, res, next) => {
       skuIndex,
       data: {
         profitMargin,
-        finalProfitPerSKU,
+        finalProfit,
       },
     },
     total: { totalFinalProfit, totalProfitMargin },

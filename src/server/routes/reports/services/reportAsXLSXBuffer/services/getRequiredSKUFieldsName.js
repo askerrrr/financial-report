@@ -10,7 +10,7 @@ var requiredSKUsFieldsName = [
   "acceptance",
   "profit",
   "profitMargin",
-  "finalProfitPerSKU",
+  "finalProfit",
 ];
 
 var getRequiredSKUFieldsName = async (skus) =>
@@ -27,7 +27,7 @@ var getRequiredSKUFieldsName = async (skus) =>
       acceptance: sku.acceptance,
       profit: sku.profit,
       profitMargin: sku.profitMargin,
-      finalProfitPerSKU: sku.finalProfitPerSKU,
+      finalProfit: sku.finalProfit,
     };
   });
 

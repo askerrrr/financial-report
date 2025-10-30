@@ -15,7 +15,14 @@ var createSKUsTable = async (id, report, url) => {
     var qty = createTdElement(sku.qty);
     var returnAmount = createTdElement(sku.returnAmount);
 
-    var dataToChange = { id, skuIndex, reportId, fieldName: "costPrice", costPrice: sku.costPrice, url };
+    var dataToChange = {
+      id,
+      skuIndex,
+      reportId,
+      fieldName: "costPrice",
+      costPrice: sku.costPrice,
+      url,
+    };
 
     var costPriceInputField = await createInputField(dataToChange);
     var costPrice = createTdElement(costPriceInputField);
@@ -25,9 +32,9 @@ var createSKUsTable = async (id, report, url) => {
     var storageCost = createTdElement(sku.storageCost);
     var acceptance = createTdElement(sku.acceptance);
     var profit = createTdElement(sku.profit);
-    var averageProfitPerSKU = createTdElement(sku.averageProfitPerSKU);
+    var averageProfit = createTdElement(sku.averageProfit);
     var profitMargin = createTdElement(sku.profitMargin, "profitMargin", skuIndex);
-    var finalProfitPerSKU = createTdElement(sku.finalProfitPerSKU, "finalProfitPerSKU", skuIndex);
+    var finalProfit = createTdElement(sku.finalProfit, "finalProfit", skuIndex);
 
     tr.append(
       skuName,
@@ -40,9 +47,9 @@ var createSKUsTable = async (id, report, url) => {
       storageCost,
       acceptance,
       profit,
-      averageProfitPerSKU,
+      averageProfit,
       profitMargin,
-      finalProfitPerSKU
+      finalProfit
     );
 
     tbody.append(tr);

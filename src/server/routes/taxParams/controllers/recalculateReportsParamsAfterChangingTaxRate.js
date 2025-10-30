@@ -4,7 +4,8 @@ var recalculateReportsTaxRate = require("../services/recalculateReportsTaxRate")
 var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
   var { year, userId, taxRate } = req.body;
   var { getReportsByUserId, saveUpdatedReports } = req.app.locals.reportCollectionServices;
-  var { getTaxParamsFromDb, changePaidTaxAmountToDb, changeInsuranceFeePercentageToDb } = req.app.locals.taxParamsCollectionServices;
+  var { getTaxParamsFromDb, changePaidTaxAmountToDb, changeInsuranceFeePercentageToDb } =
+    req.app.locals.taxParamsCollectionServices;
 
   var { reports } = await getReportsByUserId(userId);
 
@@ -30,14 +31,14 @@ var recalculateReportsParamsAfterChangingTaxRate = async (req, res, next) => {
               sku.isInsuranceFeeIncluded = false;
               shouldResetInsuranceFeePercentage = true;
 
-              sku.finalProfitPerSKU = calc.sku.finalProfit(sku.preTaxProfitPerSKU, 0, sku.taxb);
+              sku.finalProfit = calc.sku.finalProfit(sku.preTaxProfit, 0, sku.taxb);
             } else {
               sku.isInsuranceFeeIncluded = true;
 
-              sku.finalProfitPerSKU = calc.sku.finalProfit(sku.preTaxProfitPerSKU, sku.insuranceFee);
+              sku.finalProfit = calc.sku.finalProfit(sku.preTaxProfit, sku.insuranceFee);
             }
 
-            sku.profitMargin = calc.sku.profitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
+            sku.profitMargin = calc.sku.profitMargin(sku.revenue, sku.finalProfit);
           }
         })
       );
