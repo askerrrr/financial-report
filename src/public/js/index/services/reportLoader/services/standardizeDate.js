@@ -1,27 +1,19 @@
+var startDayFromMS = new Date("2024-01-29").getTime();
+
 var standardizeDate = async (date) => {
-  var [year, mounth, day] = date.split(".").map(Number);
+  var [year, month, day] = date.split(".");
 
-  if (year < 2024 || year > new Date().getFullYear()) {
+  var validDay = day.padStart(2, 0);
+  var validMonth = month.padStart(2, 0);
+
+  var validDateFormat = [year, validMonth, validDay].join("-");
+  var validDateMS = new Date(validDateFormat).getTime();
+
+  if (validDateMS < startDayFromMS) {
     return;
   }
 
-  if (mounth < 1 || mounth > 12) {
-    return;
-  }
-
-  if (mounth > 0 && mounth < 10) {
-    mounth = "0" + mounth;
-  }
-
-  if (day < 1 || day > 31) {
-    return;
-  }
-
-  if (day > 0 && day < 10) {
-    day = "0" + day;
-  }
-
-  return [year, mounth, day].join("-");
+  return validDateFormat;
 };
 
 export default standardizeDate;
