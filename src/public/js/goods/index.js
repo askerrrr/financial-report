@@ -1,3 +1,4 @@
+import fileUploadHandler from "./fileUploadHandler.js";
 import createListGoodsTable from "./utils/createListGoodsTable.js";
 
 var getListGoods = async () => {
@@ -22,3 +23,4 @@ var showListGoodsTable = async () => {
 };
 
 showListGoodsTable();
+fileUploadHandler();
