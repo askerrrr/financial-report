@@ -11,7 +11,7 @@ router.get("/api/:userId", require("./controllers/getListGoods"));
 router.post("/", require("./controllers/loadListGoods"));
 router.post("/change-prices-discounts/:userId", require("./controllers/changePricesAndDiscounts"));
 router.post(
-  "/upload-prices-discount-file",
+  "/upload-prices-discount-file/:userId",
   upload.single("file"),
   require("./controllers/uploadPricesAndDiscountsFile")
 );
