@@ -2,17 +2,15 @@ var calc = require("../calcServices");
 var getSkuNamesAndIds = require("./getSkuNamesAndIds");
 var truncateSKUNums = require("./truncateSKUNums");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
-var {
-  skuSchemaVersion,
-} = require("../../../../database/migration/schemaVersioning/reportsCollection");
+var { skuSchemaVersion } = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
 var parseReports = async (taxRate, reports) => {
-  var { mainReport, paidStorageReport, totalAdvertisingCosts } = reports;
+  var { weeklyFinancialReport, paidStorageReport, totalAdvertisingCosts } = reports;
 
-  var totalSold = await calc.total.sold(mainReport);
-  var totalStorageCost = await calc.total.storageCost(mainReport);
+  var totalSold = await calc.total.sold(weeklyFinancialReport);
+  var totalStorageCost = await calc.total.storageCost(weeklyFinancialReport);
 
-  var skuNamesAndIds = getSkuNamesAndIds(mainReport);
+  var skuNamesAndIds = getSkuNamesAndIds(weeklyFinancialReport);
 
   var storageDataFromPaidStorageReport = await parsePaidStorageReport(paidStorageReport);
 
@@ -20,7 +18,7 @@ var parseReports = async (taxRate, reports) => {
   var skus = [];
 
   for (var { id, name } of skuNamesAndIds) {
-    var skuFilteredReport = mainReport.filter((sku) => sku.sa_name === name);
+    var skuFilteredReport = weeklyFinancialReport.filter((sku) => sku.sa_name === name);
 
     sku.id = id;
     sku.skuName = name;
@@ -38,10 +36,7 @@ var parseReports = async (taxRate, reports) => {
     sku.averageRetailPrice = calc.sku.averageRetailPrice(sku.qty, skuFilteredReport);
     sku.storageCost = calc.sku.storageCost(name, storageDataFromPaidStorageReport);
     sku.averageStorageCost = calc.sku.averageStorageCost(totalStorageCost, totalSold, sku.qty);
-    sku.averageAdvertisingCost = calc.sku.averageAdvertisingCost(
-      skuNamesAndIds.length,
-      totalAdvertisingCosts
-    );
+    sku.averageAdvertisingCost = calc.sku.averageAdvertisingCost(skuNamesAndIds.length, totalAdvertisingCosts);
     sku.profit = calc.sku.profit(sku);
     sku.averageProfit = calc.sku.averageProfit(sku);
 

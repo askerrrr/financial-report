@@ -14,7 +14,7 @@ var getReportFromWBAPI = async (req, res, next) => {
   report.totalFinalProfit = 0;
   report.totalProductCosts = 0;
   report.totalProfitMargin = 0;
-  report.reportId = reports.mainReport[0].realizationreport_id;
+  report.reportId = reports.weeklyFinancialReport[0].realizationreport_id;
 
   report.skus.map((sku) => {
     (sku.costPrice = 0), (sku.finalProfit = 0), (sku.profitMargin = 0);

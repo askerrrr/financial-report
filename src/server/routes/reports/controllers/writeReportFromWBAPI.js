@@ -12,7 +12,7 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
     var { dateTo, dateFrom, reports, userId } = req.body;
 
-    var reportId = reports.mainReport[0].realizationreport_id;
+    var reportId = reports.weeklyFinancialReport[0].realizationreport_id;
 
     var { reportTree } = await getReportTree(userId);
     var session = await connection.startSession();
