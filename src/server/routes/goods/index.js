@@ -1,8 +1,9 @@
 var multer = require("multer");
 var { Router } = require("express");
+var fileFilter = require("./services/fileFilter");
 
 var storage = multer.memoryStorage();
-var upload = multer({ storage });
+var upload = multer({ storage, fileFilter });
 
 var router = Router({ caseSensitive: true, strict: true });
 
