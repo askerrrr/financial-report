@@ -8,7 +8,7 @@ var createPaidStorageReportTask = async (dateFrom, dateTo, token, userId) => {
     headers: { Authorization: "Bearer " + token },
   });
 
-  if (res.ok) { 
+  if (res.ok) {
     var { data } = await res.json();
 
     return { taskId: data.taskId };
