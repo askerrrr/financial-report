@@ -1,4 +1,4 @@
-import createListGoodsTable from "./utils/createListGoodsTable";
+import createListGoodsTable from "./utils/createListGoodsTable.js";
 import enableListGoodsTable from "./utils/enableListGoodsTable.js";
 import enableFlleUploadButton from "./utils/enableFlleUploadButton.js";
 import disableLoadListGoodsButton from "./utils/disableLoadListGoodsButton.js";
