@@ -21,16 +21,18 @@ var fileParser = async (buffer, listGoods) => {
         var prices = [];
         var discounts = [];
 
-        var { id, skuName } = listGoods.find((sku) => sku.skuName === cell.value);
+        var { id, skuName, hidden } = listGoods.find((sku) => sku.skuName === cell.value);
 
-        ws.getRow(indent + 1).eachCell((cell) => prices.push(+cell.text));
-        ws.getRow(indent + 2).eachCell((cell) => discounts.push(+cell.text));
+        if (!hidden) {
+          ws.getRow(indent + 1).eachCell((cell) => prices.push(+cell.text));
+          ws.getRow(indent + 2).eachCell((cell) => discounts.push(+cell.text));
 
-        prices.shift();
-        discounts.shift();
+          prices.shift();
+          discounts.shift();
 
-        var mergedArrays = mergeArrays(prices, discounts, id);
-        pricesAndDiscounts.push({ skuName, data: mergedArrays });
+          var mergedArrays = mergeArrays(prices, discounts, id);
+          pricesAndDiscounts.push({ skuName, data: mergedArrays });
+        }
       }
 
       if (!cell.value) break;
