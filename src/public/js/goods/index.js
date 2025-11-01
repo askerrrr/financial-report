@@ -17,8 +17,16 @@ var getListGoods = async () => {
   return { listGoods };
 };
 
+var enableListGoodsTable = () => (document.getElementById("list-goods-table").hidden = false);
+
 var showListGoodsTable = async () => {
   var { listGoods } = await getListGoods();
+
+  if (!listGoods.length) {
+    //show list goods load button
+  }
+
+  enableListGoodsTable();
   await createListGoodsTable(listGoods);
 };
 
