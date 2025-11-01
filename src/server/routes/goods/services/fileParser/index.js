@@ -1,32 +1,44 @@
 var Exceljs = require("exceljs");
+var mergeArrays = require("./utils/mergeArrays");
 
-var fileParser = async (buffer) => {
-  var wb = new Exceljs.Workbook();
-  await wb.xlsx.load(buffer);
-  var ws = wb.getWorksheet("Лист1");
+var fileParser = async (buffer, listGoods) => {
+  try {
+    var wb = new Exceljs.Workbook();
+    await wb.xlsx.load(buffer);
+    var ws = wb.getWorksheet("Лист1");
 
-  columnNum = 2;
-  var pricesAndDiscounts = [];
+    var indent = 4;
+    var ignition = 1;
+    var pricesAndDiscounts = [];
 
-  while (columnNum) {
-    var row = [];
+    var firstColumn;
 
-    ws.getRow(columnNum).eachCell((cell) => {
-      var cellData = cell?.text;
+    while (ignition) {
+      firstColumn = "A" + indent;
+      var cell = ws.getCell(firstColumn);
 
-      if (typeof +cellData === "number" && !isNaN(+cellData)) {
-        row.push(+cellData);
-      } else {
-        row.push(cellData);
+      if (cell.name === "skuName") {
+        var prices = [];
+        var discounts = [];
+
+        var { id, skuName } = listGoods.find((sku) => sku.skuName === cell.value);
+
+        ws.getRow(indent + 1).eachCell((cell) => prices.push(+cell.text));
+        ws.getRow(indent + 2).eachCell((cell) => discounts.push(+cell.text));
+
+        prices.shift();
+        discounts.shift();
+
+        var mergedArrays = mergeArrays(prices, discounts, id);
+        pricesAndDiscounts.push({ skuName, data: mergedArrays });
       }
-    });
 
-    if (!row.length) {
-      break;
+      if (!cell.value) break;
+
+      indent += 5;
     }
-
-    pricesAndDiscounts.push({ skuName: row[0], price: row[1], discount: row[2] });
-    columnNum++;
+  } catch (e) {
+    throw new Error("File read error");
   }
 
   return { pricesAndDiscounts };
