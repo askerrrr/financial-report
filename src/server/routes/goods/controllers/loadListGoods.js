@@ -15,8 +15,10 @@ var loadListGoods = async (req, res, next) => {
   var success = await saveListGoodsToDb(userId, listGoods);
 
   if (success) {
-    return res.sendStatus(200);
+    return res.json({ listGoods });
   }
+
+  return res.sendStatus(304);
 };
 
 module.exports = loadListGoods;
