@@ -1,5 +1,8 @@
 import fileUploadHandler from "./fileUploadHandler.js";
 import createListGoodsTable from "./utils/createListGoodsTable.js";
+import enableListGoodsTable from "./utils/enableListGoodsTable.js";
+import enableFlleUploadButton from "./utils/enableFlleUploadButton.js";
+import disableLoadListGoodsButton from "./utils/disableLoadListGoodsButton.js";
 
 var getListGoods = async () => {
   var userId = document.cookie.split("=")[1];
@@ -16,10 +19,6 @@ var getListGoods = async () => {
 
   return { listGoods };
 };
-
-var enableFlleUploadButton = () => (document.getElementById("upload-form").hidden = false);
-var enableListGoodsTable = () => (document.getElementById("list-goods-table").hidden = false);
-var disableLoadListGoodsButton = () => (document.getElementById("load-list-goods").hidden = true);
 
 var showListGoodsTable = async () => {
   var { listGoods } = await getListGoods();
