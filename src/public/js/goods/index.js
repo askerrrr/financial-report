@@ -2,7 +2,7 @@ import fileUploadHandler from "./fileUploadHandler.js";
 import createListGoodsTable from "./utils/createListGoodsTable.js";
 import enableListGoodsTable from "./utils/enableListGoodsTable.js";
 import enableFlleUploadButton from "./utils/enableFlleUploadButton.js";
-import disableLoadListGoodsButton from "./utils/disableLoadListGoodsButton.js";
+import loadListGoodsButtonHandler from "./loadListGoodsButtonHandler.js";
 
 var getListGoods = async () => {
   var userId = document.cookie.split("=")[1];
@@ -24,7 +24,7 @@ var showListGoodsTable = async () => {
   var { listGoods } = await getListGoods();
 
   if (!listGoods.length) {
-    //show list goods load button
+    await loadListGoodsButtonHandler();
     return;
   }
 
