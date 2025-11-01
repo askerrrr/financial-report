@@ -18,6 +18,7 @@ var getListGoods = async () => {
 };
 
 var enableListGoodsTable = () => (document.getElementById("list-goods-table").hidden = false);
+var enableFlleUploadButton = () => (document.getElementById("upload-form").hidden = false);
 
 var showListGoodsTable = async () => {
   var { listGoods } = await getListGoods();
@@ -28,6 +29,7 @@ var showListGoodsTable = async () => {
   }
 
   enableListGoodsTable();
+  enableFlleUploadButton();
   await createListGoodsTable(listGoods);
 };
 
