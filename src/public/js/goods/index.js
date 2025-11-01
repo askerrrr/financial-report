@@ -24,6 +24,7 @@ var showListGoodsTable = async () => {
 
   if (!listGoods.length) {
     //show list goods load button
+    return;
   }
 
   enableListGoodsTable();
