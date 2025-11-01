@@ -3,7 +3,7 @@ import createListGoodsTable from "./utils/createListGoodsTable.js";
 import enableListGoodsTable from "./utils/enableListGoodsTable.js";
 import enableFlleUploadButton from "./utils/enableFlleUploadButton.js";
 import loadListGoodsButtonHandler from "./loadListGoodsButtonHandler.js";
-import disableLoadListGoodsButton from "./utils/disableLoadListGoodsButton.js";
+import enableLoadListGoodsButton from "./utils/enableLoadListGoodsButton.js";
 
 var getListGoods = async () => {
   var userId = document.cookie.split("=")[1];
@@ -25,13 +25,13 @@ var showListGoodsTable = async () => {
   var { listGoods } = await getListGoods();
 
   if (!listGoods.length) {
+    enableLoadListGoodsButton();
     await loadListGoodsButtonHandler();
     return;
   }
 
   enableListGoodsTable();
   enableFlleUploadButton();
-  disableLoadListGoodsButton();
   await createListGoodsTable(listGoods);
 };
 
