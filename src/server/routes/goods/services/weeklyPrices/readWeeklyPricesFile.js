@@ -1,5 +1,4 @@
 var Exceljs = require("exceljs");
-var mergeArrays = require("./utils/mergeArrays");
 
 var readWeeklyPricesFile = async (buffer, listGoods) => {
   var wb = new Exceljs.Workbook();
