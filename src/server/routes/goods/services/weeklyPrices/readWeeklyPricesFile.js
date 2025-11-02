@@ -1,7 +1,7 @@
 var Exceljs = require("exceljs");
 var mergeArrays = require("./utils/mergeArrays");
 
-var fileParser = async (buffer, listGoods) => {
+var readWeeklyPricesFile = async (buffer, listGoods) => {
   try {
     var wb = new Exceljs.Workbook();
     await wb.xlsx.load(buffer);
@@ -46,4 +46,4 @@ var fileParser = async (buffer, listGoods) => {
   return { pricesAndDiscounts };
 };
 
-module.exports = fileParser;
+module.exports = readWeeklyPricesFile;

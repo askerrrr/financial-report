@@ -1,4 +1,4 @@
-var fileParser = require("../services/fileParser");
+var { readWeeklyPricesFile } = require("../services/weeklyPrices/");
 
 var uploadPricesAndDiscountsFile = async (req, res, next) => {
   var { userId } = req.params;
@@ -7,7 +7,7 @@ var uploadPricesAndDiscountsFile = async (req, res, next) => {
 
   var fileBuffer = req.file.buffer;
 
-  var { pricesAndDiscounts } = await fileParser(fileBuffer, listGoods);
+  var { pricesAndDiscounts } = await readWeeklyPricesFile(fileBuffer, listGoods);
   return res.json({ pricesAndDiscounts });
 };
 
