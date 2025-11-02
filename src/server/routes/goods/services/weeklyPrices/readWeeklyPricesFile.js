@@ -2,45 +2,71 @@ var Exceljs = require("exceljs");
 var mergeArrays = require("./utils/mergeArrays");
 
 var readWeeklyPricesFile = async (buffer, listGoods) => {
-  try {
-    var wb = new Exceljs.Workbook();
-    await wb.xlsx.load(buffer);
-    var ws = wb.getWorksheet("Лист1");
+  var wb = new Exceljs.Workbook();
+  await wb.xlsx.load(buffer);
 
-    var indent = 4;
-    var ignition = 1;
-    var pricesAndDiscounts = [];
+  var ws = wb.getWorksheet("Лист1");
 
-    var firstColumn;
+  var skuNamesAndIds = [];
+  var skuNameIndent = 4;
+  var firstColumnName = "A";
+  var skuNameCellAddress = firstColumnName + skuNameIndent;
 
-    while (ignition) {
-      firstColumn = "A" + indent;
-      var cell = ws.getCell(firstColumn);
+  while (true) {
+    var cell = ws.getCell(skuNameCellAddress);
 
-      if (cell.name === "skuName") {
-        var prices = [];
-        var discounts = [];
+    if (cell?.value) {
+      var { id } = listGoods.find((sku) => sku.skuName === cell.value);
 
-        var { id, skuName, hidden } = listGoods.find((sku) => sku.skuName === cell.value);
-
-        if (!hidden) {
-          ws.getRow(indent + 1).eachCell((cell) => prices.push(+cell.text));
-          ws.getRow(indent + 2).eachCell((cell) => discounts.push(+cell.text));
-
-          prices.shift();
-          discounts.shift();
-
-          var mergedArrays = mergeArrays(prices, discounts, id);
-          pricesAndDiscounts.push({ skuName, data: mergedArrays });
-        }
-      }
-
-      if (!cell.value) break;
-
-      indent += 5;
+      skuNamesAndIds.push({ skuName: cell.value, nmID: id });
+      skuNameIndent += 5;
+      skuNameCellAddress = firstColumnName + skuNameIndent;
+      continue;
     }
-  } catch (e) {
-    throw new Error("File read error");
+
+    break;
+  }
+
+  var k = 0;
+  var columnNum = 2;
+  var priceIndent = 5;
+  var priceCellAddress;
+  var discountIndent = 6;
+  var discountCellAddress;
+  var pricesAndDiscounts = [];
+  var columns = ["B", "C", "D", "E", "F", "G", "H"];
+
+  while (columnNum < 9) {
+    var data = [];
+
+    for (var i = 0; i < skuNamesAndIds.length; i++) {
+      priceCellAddress = columns[k] + priceIndent;
+      var price = ws.getCell(priceCellAddress)?.value;
+      var discountCellAddress = columns[k] + discountIndent;
+      discount = ws.getCell(discountCellAddress)?.value;
+
+      priceIndent += 5;
+      discountIndent += 5;
+      data.push({
+        nmID: skuNamesAndIds[i].nmID,
+        skuName: skuNamesAndIds[i].skuName,
+        price,
+        discount,
+      });
+
+      if (i == skuNamesAndIds.length - 1) {
+        priceIndent = 5;
+        discountIndent = 5;
+      }
+    }
+
+    k++;
+    columnNum++;
+    pricesAndDiscounts.push(data);
+
+    if (k === columns.length) {
+      k = 0;
+    }
   }
 
   return { pricesAndDiscounts };
