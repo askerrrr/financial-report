@@ -7,8 +7,8 @@ var uploadPricesAndDiscountsFile = async (req, res, next) => {
 
   var fileBuffer = req.file.buffer;
 
-  var { pricesAndDiscounts } = await readWeeklyPricesFile(fileBuffer, listGoods);
-  return res.json({ pricesAndDiscounts });
+  var { weeklyPricesAndDiscounts } = await readWeeklyPricesFile(fileBuffer, listGoods);
+  return res.json({ weeklyPricesAndDiscounts });
 };
 
 module.exports = uploadPricesAndDiscountsFile;

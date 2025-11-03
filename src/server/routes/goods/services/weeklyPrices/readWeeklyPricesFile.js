@@ -32,7 +32,7 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
   var priceCellAddress;
   var discountIndent = 6;
   var discountCellAddress;
-  var pricesAndDiscounts = [];
+  var weeklyPricesAndDiscounts = [];
   var columns = ["B", "C", "D", "E", "F", "G", "H"];
 
   while (columnNum < 9) {
@@ -61,14 +61,14 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
 
     k++;
     columnNum++;
-    pricesAndDiscounts.push(data);
+    weeklyPricesAndDiscounts.push(data);
 
     if (k === columns.length) {
       k = 0;
     }
   }
 
-  return { pricesAndDiscounts };
+  return { weeklyPricesAndDiscounts };
 };
 
 module.exports = readWeeklyPricesFile;

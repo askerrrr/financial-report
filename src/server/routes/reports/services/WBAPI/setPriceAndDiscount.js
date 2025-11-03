@@ -1,12 +1,12 @@
 var { WBAPIError } = require("../../../../customError");
 
-var setPricesAndDiscounts = async (userId, token, pricesAndDiscounts) => {
+var setPricesAndDiscounts = async (userId, token, weeklyPricesAndDiscounts) => {
   try {
     var url = "https://discounts-prices-api.wildberries.ru/api/v2/upload/task";
 
     var options = {
       method: "POST",
-      body: JSON.stringify(pricesAndDiscounts),
+      body: JSON.stringify(weeklyPricesAndDiscounts),
       headers: { "content-type": "application/json", Authorization: "Bearer " + token },
     };
 
