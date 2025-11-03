@@ -13,9 +13,19 @@ var skuSchema = new Schema(
   { _id: false }
 );
 
+var weekDaySchema = new Schema(
+  {
+    nmID: { type: Number, required: true },
+    price: { type: Number, required: true },
+    discount: { type: Number, required: true },
+  },
+  { _id: false }
+);
+
 var goodsSchema = new Schema({
   userId: { type: String, required: true },
   listGoods: [{ type: skuSchema, required: true }],
+  weeklyPricesAndDiscounts: [{ type: [weekDaySchema], required: false }],
 });
 
 module.exports = goodsSchema;
