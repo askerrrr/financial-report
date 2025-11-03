@@ -1,4 +1,5 @@
 var Exceljs = require("exceljs");
+var checkPriceAndDiscount = require("./utils/checkPriceAndDiscount");
 
 var readWeeklyPricesFile = async (buffer, listGoods) => {
   var wb = new Exceljs.Workbook();
@@ -49,17 +50,23 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
       priceIndent += 5;
       discountIndent += 5;
 
+      if (i == skuNamesAndIds.length - 1) {
+        priceIndent = 5;
+        discountIndent = 6;
+      }
+
+      var priceOrDiscountIsValid = checkPriceAndDiscount(price, discount);
+
+      if (!priceOrDiscountIsValid) {
+        continue;
+      }
+
       data.push({
         nmID: skuNamesAndIds[i].nmID,
         skuName: skuNamesAndIds[i].skuName,
         price,
         discount,
       });
-
-      if (i == skuNamesAndIds.length - 1) {
-        priceIndent = 5;
-        discountIndent = 6;
-      }
     }
 
     k++;
