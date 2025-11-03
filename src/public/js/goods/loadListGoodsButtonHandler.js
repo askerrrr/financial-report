@@ -2,6 +2,7 @@ import createListGoodsTable from "./utils/createListGoodsTable.js";
 import enableListGoodsTable from "./utils/enableListGoodsTable.js";
 import enableFlleUploadButton from "./utils/enableFlleUploadButton.js";
 import disableLoadListGoodsButton from "./utils/disableLoadListGoodsButton.js";
+import enableDownloadWeeklyPricesFileButton from "./utils/enableDownloadWeeklyPricesFileButton.js";
 
 var userId = document.cookie.split("=")[1];
 
@@ -26,6 +27,7 @@ var loadListGoodsButtonHandler = async () => {
     enableListGoodsTable();
     enableFlleUploadButton();
     disableLoadListGoodsButton();
+    enableDownloadWeeklyPricesFileButton();
     await createListGoodsTable(listGoods);
   });
 };
