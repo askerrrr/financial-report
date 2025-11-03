@@ -27,6 +27,10 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
     break;
   }
 
+  if (!skuNamesAndIds.length) {
+    throw new Error("Не удалось прочитать наименования артикулов");
+  }
+
   var k = 0;
   var columnNum = 2;
   var price;
