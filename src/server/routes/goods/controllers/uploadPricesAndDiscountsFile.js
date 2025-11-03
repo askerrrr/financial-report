@@ -5,6 +5,10 @@ var uploadPricesAndDiscountsFile = async (req, res, next) => {
   var { getListGoodsFromDb, setWeeklyPricesAndDiscounts } = req.app.locals.goodsCollectionServices;
   var { listGoods } = await getListGoodsFromDb(userId);
 
+  if (!listGoods.length) {
+    return res.sendStatus(400);
+  }
+
   var fileBuffer = req.file.buffer;
 
   var { weeklyPricesAndDiscounts } = await readWeeklyPricesFile(fileBuffer, listGoods);
