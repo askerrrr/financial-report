@@ -28,8 +28,10 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
 
   var k = 0;
   var columnNum = 2;
+  var price;
   var priceIndent = 5;
   var priceCellAddress;
+  var discount;
   var discountIndent = 6;
   var discountCellAddress;
   var weeklyPricesAndDiscounts = [];
@@ -40,12 +42,13 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
 
     for (var i = 0; i < skuNamesAndIds.length; i++) {
       priceCellAddress = columns[k] + priceIndent;
-      var price = ws.getCell(priceCellAddress)?.value;
-      var discountCellAddress = columns[k] + discountIndent;
+      discountCellAddress = columns[k] + discountIndent;
+      price = ws.getCell(priceCellAddress)?.value;
       discount = ws.getCell(discountCellAddress)?.value;
 
       priceIndent += 5;
       discountIndent += 5;
+
       data.push({
         nmID: skuNamesAndIds[i].nmID,
         skuName: skuNamesAndIds[i].skuName,
@@ -55,7 +58,7 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
 
       if (i == skuNamesAndIds.length - 1) {
         priceIndent = 5;
-        discountIndent = 5;
+        discountIndent = 6;
       }
     }
 
