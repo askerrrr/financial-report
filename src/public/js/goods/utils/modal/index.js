@@ -6,7 +6,7 @@ import createDiscountnput from "./createDiscountnput.js";
 import createDiscountedPriceField from "./createDiscountedPriceField.js";
 
 var createModal = (item) => {
-  var modalTitle = (document.createElement("h3").textContent = item.skuName);
+  var modalTitle = (document.createElement("h3").textContent = "Артикул: " + item.skuName);
 
   var modalHeader = createDiv("modal-header");
   modalHeader.append(modalTitle);

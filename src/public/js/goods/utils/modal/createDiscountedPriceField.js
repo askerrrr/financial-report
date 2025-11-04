@@ -1,10 +1,6 @@
 var createDiscountedPriceField = ({ skuName, discountedPrice }) => {
-  var div = document.createElement("div");
-  div.className = "discountedPrice";
-  div.textContent = discountedPrice;
-  div.id = skuName + "_discountedPrice";
-
-  return div;
+  var label = document.createElement("label");
+  label.innerHTML = `цена со скидкой: <div class="price-value" id="${skuName}_discountedPrice">${discountedPrice}</div>`;
+  return label;
 };
-
 export default createDiscountedPriceField;
