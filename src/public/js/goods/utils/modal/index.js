@@ -4,6 +4,7 @@ import createButton from "./createButton.js";
 import createPriceInput from "./createPriceInput.js";
 import createDiscountnput from "./createDiscountnput.js";
 import createDiscountedPriceField from "./createDiscountedPriceField.js";
+import peekWeek from "./peekWeek.js";
 
 var createModal = (item) => {
   var modalTitle = (document.createElement("h3").textContent = "Артикул: " + item.skuName);
@@ -20,7 +21,7 @@ var createModal = (item) => {
   var discountedPriceField = createDiscountedPriceField(item);
 
   var modal = createDiv("modal");
-  modal.append(modalHeader, priceLabel, discountLabel, discountedPriceField);
+  modal.append(modalHeader, priceLabel, discountLabel, discountedPriceField, peekWeek());
 
   var cancelBtnHandler = {
     event: "click",
