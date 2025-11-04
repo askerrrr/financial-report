@@ -1,70 +1,278 @@
+/* === Переменные === */
+:root {
+  --font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --bg: #f8f9fa;
+  --text: #212529;
+  --border: #dee2e6;
+  --primary: #007bff;
+  --primary-hover: #0056b3;
+  --secondary: #6c757d;
+  --secondary-hover: #545b62;
+  --success: #28a745;
+  --radius: 6px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --transition: all 0.2s ease;
+}
+
+/* === Общие === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  padding: 20px;
+  line-height: 1.5;
+}
+
+/* === Верхние кнопки === */
+.top-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.top-controls button {
+  background: white;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.top-controls button:hover {
+  background: #f1f3f5;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+#download-weekly-prices-file[hidden],
+#load-list-goods[hidden] {
+  display: none !important;
+}
+
+/* === Форма загрузки === */
+#upload-form {
+  margin: 16px 0;
+}
+
+.input-file {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.input-file input[type="file"] {
+  display: none;
+}
+
+.input-file span {
+  display: inline-block;
+  background: white;
+  border: 1px dashed var(--border);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.input-file:hover span {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* === Таблица === */
 #list-goods-table {
-  width: auto;
-  max-width: 95%;
-  margin: 20px auto;
-  border: 5px solid #fff;
-  border-top: 5px solid #fff;
-  border-bottom: 3px solid #fff;
-  border-collapse: separate;
-  border-spacing: 15px 10px;
-  outline: 3px solid #ffd300;
-  font-size: 15px;
-  background: #fff !important;
-  table-layout: fixed;
-}
-#list-goods-table th {
-  font-weight: bold;
-  padding: 10px;
-  background: #ffd300;
-  border: none;
-  text-align: center;
-  font-size: 15px;
-  border-top: 3px solid #fff;
-  border-bottom: 3px solid #ffd300;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-#list-goods-table td {
-  padding: 10px;
-  border: none;
-  border-top: 3px solid #fff;
-  border-bottom: 3px solid #fff;
-  font-size: 15px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  text-align: center;
-}
-#list-goods-table tbody tr:nth-child(even) {
-  background: #f8f8f8 !important;
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-top: 16px;
 }
 
 #list-goods-table th,
 #list-goods-table td {
-  white-space: normal;
-  line-height: 1.4;
+  padding: 12px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
 }
 
-#list-goods-table th:last-child,
-#list-goods-table td:last-child {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: normal;
-  min-width: 150px;
-  max-width: 250px;
+#list-goods-table th {
+  background: #f1f3f5;
+  font-weight: 600;
+  color: #495057;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
 }
 
-#load-list-goods {
-  background-color: #343a40;
-  color: #ffffff;
-  border: 2px solid #495057;
-  padding: 24px 48px;
-  border-radius: 8px;
-  font-size: 18px;
+#list-goods-table tbody tr:hover {
+  background: #f5f7fa;
+}
+
+#list-goods-table tbody td {
+  vertical-align: middle;
+}
+
+#list-goods-table tbody button.item {
+  background: transparent;
+  color: var(--primary);
+  font-size: 13px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   cursor: pointer;
-  transition: all 0.3s;
-  position: absolute;
-  top: 300px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+}
+
+#list-goods-table tbody button.item:hover {
+  background: #e7f0ff;
+  border-color: var(--primary);
+}
+
+/* === Модальное окно === */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: white;
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 420px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: modalFadeIn 0.25s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  padding: 16px 20px;
+  background: #f8f9fa;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.modal > label {
+  display: block;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal > label:last-of-type {
+  border-bottom: none;
+}
+
+.modal input.input {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.modal input.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.discountedPrice {
+  padding: 12px 20px;
+  font-weight: 600;
+  color: var(--success);
+  font-size: 15px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  width: 90%;
+  max-width: 420px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.modal-buttons #cancelBtn {
+  background: var(--secondary);
+  color: white;
+}
+
+.modal-buttons #confirmBtn {
+  background: var(--primary);
+  color: white;
+}
+
+.modal-buttons button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* === Адаптивность === */
+@media (max-width: 600px) {
+  .top-controls {
+    justify-content: center;
+  }
+  #list-goods-table th,
+  #list-goods-table td {
+    padding: 8px 6px;
+    font-size: 13px;
+  }
+  .modal,
+  .modal-buttons {
+    width: 95%;
+  }
 }

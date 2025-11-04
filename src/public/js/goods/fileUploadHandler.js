@@ -18,17 +18,23 @@ var sendUploadFile = async (file) => {
 };
 
 var fileUploadHandler = async () => {
-  var inputField = document.getElementById("input-field");
+  var button = document.getElementById("load-list-goods");
+  var input = document.getElementById("input-field");
 
-  inputField.onchange = async (e) => {
+  button.onclick = async (e) => {
     e.preventDefault();
-    var uploadFormData = new FormData();
-    if (inputField.files.length > 1) {
-      alert("Одновременно можно загрузить не больше 1 файла");
-      return;
-    }
-    uploadFormData.append("file", inputField.files[0]);
-    await sendUploadFile(uploadFormData);
+    input.click();
+
+    input.onchange = async () => {
+      var uploadFormData = new FormData();
+      if (input.files.length > 1) {
+        alert("Одновременно можно загрузить не больше 1 файла");
+        return;
+      }
+
+      uploadFormData.append("file", input.files[0]);
+      await sendUploadFile(uploadFormData);
+    };
   };
 };
 
