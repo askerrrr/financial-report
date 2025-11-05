@@ -5,6 +5,7 @@ import createButton from "./createButton.js";
 import createPriceInput from "./createPriceInput.js";
 import getCheckedWeekDays from "./getCheckedWeekDays.js";
 import createDiscountnput from "./createDiscountnput.js";
+import sendPriceAndDiscount from "./sendPriceAndDiscount.js";
 import createDiscountedPriceField from "./createDiscountedPriceField.js";
 import compareCurrentValuesWithNew from "./compareCurrentValuesWithNew.js";
 
@@ -38,9 +39,9 @@ var createModal = (item) => {
     cb: async () => {
       var { checkedWeekDays } = await getCheckedWeekDays();
 
-      var { valuesAreNotEquel } = compareCurrentValuesWithNew(item);
+      var { valuesAreNotEqual } = compareCurrentValuesWithNew(item);
 
-      if (!valuesAreNotEquel) {
+      if (!valuesAreNotEqual) {
         return;
       }
 
