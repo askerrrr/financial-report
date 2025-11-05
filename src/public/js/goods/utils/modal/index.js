@@ -1,11 +1,11 @@
 import createDiv from "./createDiv.js";
 import createLabel from "./createLabel.js";
+import peekWeekDays from "./peekWeekDays.js";
 import createButton from "./createButton.js";
 import createPriceInput from "./createPriceInput.js";
+import getCheckedWeekDays from "./getCheckedWeekDays.js";
 import createDiscountnput from "./createDiscountnput.js";
 import createDiscountedPriceField from "./createDiscountedPriceField.js";
-import peekWeekDays from "./peekWeekDays.js";
-import peekWeekDaysHandler from "./peekWeekDaysHandler.js";
 
 var createModal = (item) => {
   var modalTitle = (document.createElement("h3").textContent = "Артикул: " + item.skuName);
@@ -35,7 +35,7 @@ var createModal = (item) => {
   var saveBtnHandler = {
     event: "click",
     cb: async () => {
-      var { checkedWeekDays } = await peekWeekDaysHandler();
+      var { checkedWeekDays } = await getCheckedWeekDays();
       console.log({ skuName: item.skuName, checkedWeekDays });
       modalOverlay.classList.remove("active");
       document.body.style.overflow = "auto";

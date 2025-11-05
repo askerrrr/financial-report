@@ -1,4 +1,4 @@
-var peekWeekDaysHandler = async () => {
+var getCheckedWeekDays = async () => {
   var checkedCheckboxes = [...document.querySelectorAll("input[type=checkbox]:checked")]
     .map(({ id }) => id)
     .map(Number);
@@ -14,4 +14,4 @@ var peekWeekDaysHandler = async () => {
   return { checkedWeekDays: checkedCheckboxes };
 };
 
-export default peekWeekDaysHandler;
+export default getCheckedWeekDays;
