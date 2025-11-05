@@ -10,7 +10,11 @@ var createPriceInput = ({ skuName, price }) => {
     var newDiscountedPriceValue = +this.value - (+this.value * discount) / 100;
 
     if (typeof +this.value === "number" && !isNaN(+this.value)) {
-      document.getElementById(skuName + "_discountedPrice").textContent = newDiscountedPriceValue;
+      var skuPriceTdElement = document.getElementById(skuName + "-" + "price");
+      skuPriceTdElement.textContent = this.value;
+
+      var modalDiscountedPriceElement = document.getElementById(skuName + "_discountedPrice");
+      modalDiscountedPriceElement.textContent = newDiscountedPriceValue;
     }
   });
 
