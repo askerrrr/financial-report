@@ -1,5 +1,5 @@
+import createTdElement from "./createTdElement.js";
 import openModalButton from "./modal/openModalButton.js";
-import createTdElement from "../../report/table/services/createTdElement.js";
 
 var createListGoodsTable = async (listGoods) => {
   var tbody = document.getElementById("list-goods-tbody");
@@ -8,14 +8,18 @@ var createListGoodsTable = async (listGoods) => {
     let { skuName, price, discount, discountedPrice, clubDiscountedPrice } = item;
 
     var tr = document.createElement("tr");
-    var skuNameTd = createTdElement(skuName, "skuName");
+    var skuNameTd = createTdElement(skuName, skuName, "skuName");
 
-    var priceTd = createTdElement(price, "price");
+    var priceTd = createTdElement(price, skuName, "price");
 
-    var discountTd = createTdElement(discount, "discount");
-
-    var discountedPriceTd = createTdElement(discountedPrice, "discountedPrice");
-    var clubDiscountedPriceTd = createTdElement(clubDiscountedPrice, "clubDiscountedPrice");
+    var discountTd = createTdElement(discount, skuName, "discount");
+    skuName;
+    var discountedPriceTd = createTdElement(discountedPrice, skuName, "discountedPrice");
+    var clubDiscountedPriceTd = createTdElement(
+      clubDiscountedPrice,
+      skuName,
+      "clubDiscountedPrice"
+    );
 
     var modalButton = await openModalButton(item);
 
