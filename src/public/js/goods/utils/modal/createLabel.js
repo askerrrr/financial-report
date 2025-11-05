@@ -5,8 +5,6 @@
 var createLabel = (input, text, wrapStatus) => {
   var label = document.createElement("label");
   label.htmlFor = input.id;
-  console.log(input.id);
-
   label.textContent = text;
 
   if (wrapStatus === "wrapinput - yes") {
