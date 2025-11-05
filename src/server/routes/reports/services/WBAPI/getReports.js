@@ -20,7 +20,10 @@ var getReports = async (userId, dateFrom, dateTo, token) => {
     getAdvertisingCostsForPeriod(dateFrom, dateTo, token, userId),
   ]);
 
-  if ([weeklyFinancialReport, paidStorageReport, totalAdvertisingCosts].every((report) => report.length === 0)) {
+  if (
+    [weeklyFinancialReport, paidStorageReport].every((report) => report.length === 0) &&
+    totalAdvertisingCosts === 0
+  ) {
     throw new WBAPIError(userId, 404, "Нет отчетов за выбранный период");
   }
 

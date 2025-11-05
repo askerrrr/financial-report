@@ -14,7 +14,7 @@ var getAdvertisingCostsForPeriod = async (dateFrom, dateTo, token, userId) => {
     var data = await res.json();
 
     if (!data.length) {
-      return [];
+      return 0;
     }
 
     var totalAdvertisingCosts = await calculateTotalAdvertisingСosts(data);
