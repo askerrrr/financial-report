@@ -1,9 +1,6 @@
-var compareCurrentValuesWithNew = (item) => {
+var compareCurrentValuesWithNew = (item, newPrice, newDiscount) => {
   var currentPrice = item.price;
-  var newPrice = +document.getElementById(item.skuName + "-" + "price").textContent;
-
   var currentDiscount = item.discount;
-  var newDiscount = +document.getElementById(item.skuName + "-" + "discount").textContent;
 
   var newAndCurrentPriceAreEqual = newPrice === currentPrice;
   var newAndCurentDiscountAreEqual = newDiscount === currentDiscount;

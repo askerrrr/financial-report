@@ -39,7 +39,10 @@ var createModal = (item) => {
     cb: async () => {
       var { checkedWeekDays } = await getCheckedWeekDays();
 
-      var { valuesAreNotEqual } = compareCurrentValuesWithNew(item);
+      var newPrice = +priceInput.value;
+      var newDIscount = +discountInput.value;
+
+      var { valuesAreNotEqual } = compareCurrentValuesWithNew(item, newPrice, newDIscount);
 
       if (!valuesAreNotEqual) {
         return;
