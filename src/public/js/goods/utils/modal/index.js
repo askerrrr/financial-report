@@ -34,8 +34,9 @@ var createModal = (item) => {
 
   var saveBtnHandler = {
     event: "click",
-    cb: () => {
-      peekWeekDaysHandler();
+    cb: async () => {
+      var { checkedWeekDays } = await peekWeekDaysHandler();
+      console.log({ skuName: item.skuName, checkedWeekDays });
       modalOverlay.classList.remove("active");
       document.body.style.overflow = "auto";
       modalOverlay.remove();
