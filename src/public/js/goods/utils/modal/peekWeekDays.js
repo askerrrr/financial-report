@@ -4,7 +4,7 @@ import createInput from "./createInput.js";
 
 var weekDays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"];
 
-var peekWeek = () => {
+var peekWeekDays = () => {
   var fieldset = document.createElement("fieldset");
 
   var input = createInput(7, "checkbox", "На всю неделю", "checkbox");
@@ -33,4 +33,4 @@ var peekWeek = () => {
   return fieldset;
 };
 
-export default peekWeek;
+export default peekWeekDays;

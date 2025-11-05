@@ -4,8 +4,8 @@ import createButton from "./createButton.js";
 import createPriceInput from "./createPriceInput.js";
 import createDiscountnput from "./createDiscountnput.js";
 import createDiscountedPriceField from "./createDiscountedPriceField.js";
-import peekWeek from "./peekWeek.js";
-import peekWeekHandler from "./peekWeekHandler.js";
+import peekWeekDays from "./peekWeekDays.js";
+import peekWeekDaysHandler from "./peekWeekDaysHandler.js";
 
 var createModal = (item) => {
   var modalTitle = (document.createElement("h3").textContent = "Артикул: " + item.skuName);
@@ -35,7 +35,7 @@ var createModal = (item) => {
   var saveBtnHandler = {
     event: "click",
     cb: () => {
-      peekWeekHandler();
+      peekWeekDaysHandler();
       modalOverlay.classList.remove("active");
       document.body.style.overflow = "auto";
       modalOverlay.remove();
@@ -49,7 +49,14 @@ var createModal = (item) => {
   var modalButtons = createDiv(null, "modal-buttons");
   modalButtons.append(cancelBtn, saveBtn);
 
-  modal.append(modalHeader, priceLabel, discountLabel, discountedPriceField, peekWeek(), modalButtons);
+  modal.append(
+    modalHeader,
+    priceLabel,
+    discountLabel,
+    discountedPriceField,
+    peekWeekDays(),
+    modalButtons
+  );
 
   modalOverlay.append(modal);
 
