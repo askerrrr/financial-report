@@ -6,6 +6,7 @@ import createPriceInput from "./createPriceInput.js";
 import getCheckedWeekDays from "./getCheckedWeekDays.js";
 import createDiscountnput from "./createDiscountnput.js";
 import createDiscountedPriceField from "./createDiscountedPriceField.js";
+import compareCurrentValuesWithNew from "./compareCurrentValuesWithNew.js";
 
 var createModal = (item) => {
   var modalTitle = (document.createElement("h3").textContent = "Артикул: " + item.skuName);
@@ -36,7 +37,13 @@ var createModal = (item) => {
     event: "click",
     cb: async () => {
       var { checkedWeekDays } = await getCheckedWeekDays();
-      console.log({ skuName: item.skuName, checkedWeekDays });
+
+      var { valuesAreNotEquel } = compareCurrentValuesWithNew(item);
+
+      if (!valuesAreNotEquel) {
+        return;
+      }
+
       modalOverlay.classList.remove("active");
       document.body.style.overflow = "auto";
       modalOverlay.remove();
