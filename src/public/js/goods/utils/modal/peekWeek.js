@@ -1,28 +1,36 @@
+import createDiv from "./createDiv.js";
+import createLabel from "./createLabel.js";
+import createInput from "./createInput.js";
+
 var weekDays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"];
 
 var peekWeek = () => {
-  var select = document.createElement("select");
+  var fieldset = document.createElement("fieldset");
 
-  var options = document.createElement("option");
-  options.label = "На каждый день (По умолчанию)";
-  select.append(options);
-  select.size = 3;
+  var input = createInput(7, "checkbox", "На всю неделю", "checkbox");
+  input.checked = true;
+  var label = createLabel(input, "На всю неделю", "wrapinput - yes");
+  var div = createDiv();
+  div.append(input, label);
 
-  for (var i of weekDays) {
-    options = document.createElement("option");
-    options.label = i;
+  var legeng = document.createElement("legend");
+  legeng.append("Установить цену на");
 
-    select.append(options);
+  fieldset.append(legeng, div);
+
+  var i = 0;
+  for (var day of weekDays) {
+    input = createInput(i, "checkbox", day, "checkbox");
+    label = createLabel(input, day, "wrapinput - yes");
+    div = createDiv();
+    div.append(input, label);
+
+    fieldset.append(div);
+
+    i++;
   }
-  select.multiple = true;
 
-  var labelText = document.createElement("span");
-  labelText.className = "label-text";
-  labelText.textContent; //= "Установить цену на";
-  var label = document.createElement("label");
-  label.append(labelText, select);
-
-  return label;
+  return fieldset;
 };
 
 export default peekWeek;

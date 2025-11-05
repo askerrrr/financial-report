@@ -1,8 +1,18 @@
-var createLabel = (input, text) => {
+/**
+ * @param {"wrapinput - yes" | 'wrapinput - no'} wrapStatus
+ */
+
+var createLabel = (input, text, wrapStatus) => {
   var label = document.createElement("label");
-  label.for = input.id;
+  label.htmlFor = input.id;
+  console.log(input.id);
+
   label.textContent = text;
-  label.append(input);
+
+  if (wrapStatus === "wrapinput - yes") {
+    label.append(input);
+  }
+
   return label;
 };
 

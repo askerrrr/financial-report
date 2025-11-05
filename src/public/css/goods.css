@@ -192,9 +192,33 @@ body {
 }
 
 .modal > label {
-  display: block;
+  display: flex;
+  flex-direction: column;
   padding: 12px 20px;
   border-bottom: 1px solid var(--border);
+  gap: 6px;
+}
+
+.modal > label span.label-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.modal > label:has(select) {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.modal > label:has(select)::before {
+  content: "Установить цену на";
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
 }
 
 .modal > label:last-of-type {
@@ -229,11 +253,14 @@ body {
   gap: 10px;
 }
 
+/* === КНОПКИ — РАБОТАЮТ! === */
 .modal-buttons {
   display: flex;
   gap: 12px;
-  width: 90%;
+  width: min(90%, 420px);
   max-width: 420px;
+  margin: 16px auto 8px;
+  justify-content: center;
 }
 
 .modal-buttons button {
@@ -262,63 +289,7 @@ body {
   transform: translateY(-1px);
 }
 
-/* === Адаптивность === */
-@media (max-width: 600px) {
-  .top-controls {
-    justify-content: center;
-  }
-  #list-goods-table th,
-  #list-goods-table td {
-    padding: 8px 6px;
-    font-size: 13px;
-  }
-  .modal,
-  .modal-buttons {
-    width: 95%;
-  }
-}
-
-.modal > label {
-  display: flex;
-  flex-direction: column;
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
-  gap: 6px;
-}
-
-.modal > label span.label-text {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 4px;
-}
-
-.modal > label:has(select) {
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.modal > label:has(select)::before {
-  content: "Установить цену на";
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  white-space: nowrap;
-}
-
-.modal > label > .label-text {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  flex-shrink: 0;
-}
-
-.modal > label:last-of-type {
-  border-bottom: none;
-}
-
+/* === Селект === */
 .modal select.input {
   flex: 1;
   min-width: 200px;
@@ -359,29 +330,150 @@ body {
   color: var(--text);
   padding: 8px 12px;
   font-size: 14px;
-  border-radius: 4px; /
+  border-radius: 4px;
 }
 
-.modal select option:hover,
-.modal select option:focus {
-  background: var(--primary);
-  color: white;
-}
-
-.modal select option:checked {
-  background: var(--primary);
-  color: white;
-  font-weight: 500;
-}
-
+/* === Адаптивность === */
 @media (max-width: 600px) {
+  .top-controls {
+    justify-content: center;
+  }
+  #list-goods-table th,
+  #list-goods-table td {
+    padding: 8px 6px;
+    font-size: 13px;
+  }
+  .modal,
+  .modal-buttons {
+    width: 95%;
+  }
   .modal > label:has(select) {
     flex-direction: column;
     align-items: flex-start;
   }
-
   .modal select.input[multiple] {
-    height: 100px; 
+    height: 100px;
     width: 100%;
+  }
+}
+
+/* === ЧЕКБОКСЫ ДНЕЙ НЕДЕЛИ В МОДАЛКЕ === */
+.modal fieldset {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px 12px;
+  margin: 0 0 16px;
+  background: #fcfdff;
+}
+
+.modal fieldset legend {
+  padding: 0 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  float: none;
+  width: auto;
+}
+
+/* Контейнеры для чекбоксов */
+.modal fieldset > div {
+  margin: 10px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Скрываем нативный чекбокс */
+.modal .checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Кастомный чекбокс */
+.modal .checkbox + label {
+  position: relative;
+  padding-left: 28px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text);
+  user-select: none;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+
+/* Квадратик */
+.modal .checkbox + label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  background: white;
+  transition: var(--transition);
+}
+
+/* Галочка */
+.modal .checkbox + label::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg) scale(0);
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transition: transform 0.15s ease;
+}
+
+/* Hover */
+.modal .checkbox + label:hover::before {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+}
+
+/* Checked */
+.modal .checkbox:checked + label::before {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.modal .checkbox:checked + label::after {
+  transform: translateY(-50%) rotate(45deg) scale(1);
+}
+
+/* Focus (для клавиатуры) */
+.modal .checkbox:focus-visible + label::before {
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.3);
+}
+
+/* "На всю неделю" — выделяем жирным */
+.modal .checkbox[name="На всю неделю"] + label {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+  .modal fieldset > div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .modal .checkbox + label {
+    padding-left: 26px;
+  }
+
+  .modal .checkbox + label::before,
+  .modal .checkbox + label::after {
+    left: 2px;
   }
 }

@@ -3,7 +3,7 @@
  * @param {'enableHandlers - yes' | 'enableHandlers - no'} enableHandlersStatus
  */
 
-var createDiv = (className, id, text, enableHandlersStatus) => {
+var createDiv = (id, className, text, enableHandlersStatus) => {
   var div = document.createElement("div");
 
   if (className) {
