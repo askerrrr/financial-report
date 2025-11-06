@@ -8,4 +8,5 @@ module.exports = {
   taxParamsCollectionServices: require("./taxParams"),
   reportsTreeCollectionServices: require("./reportTrees"),
   reportLoadingStatesCollectionServices: require("./reportLoadingStates"),
+  weeklyPricesAndDiscountsCollectionServices: require("./weeklyPricesAndDiscounts"),
 };
