@@ -538,3 +538,7 @@ body {
     max-width: 260px;
   }
 }
+
+#week-days[hidden] {
+  display: none !important;
+}

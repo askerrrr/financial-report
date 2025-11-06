@@ -9,10 +9,10 @@
   </head>
   <body>
     <div class="top-controls">
-      <button id="download-weekly-prices-file" hidden="true">Скачать цены на неделю</button>
-      <button id="upload-weekly-prices-and-discounts-file" type="button" hidden="true">Загрузить цены на неделю</button>
+      <button id="download-weekly-prices-file" hidden>Скачать цены на неделю</button>
+      <button id="upload-weekly-prices-and-discounts-file" type="button" hidden>Загрузить цены на неделю</button>
     </div>
-    <div id="week-days" hidden="true">
+    <div id="week-days" hidden>
       <label for="week-days-select">Показать цены на:</label>
       <select name="week-days" id="week-days-select">
         <option value="monday">Понедельник</option>
@@ -24,8 +24,8 @@
         <option value="sunday">Воскресенье</option>
       </select>
     </div>
-    <button id="upload-list-goods" type="button" hidden="true">Загрузить список товаров</button>
-    <table id="list-goods-table" hidden="true">
+    <button id="upload-list-goods" type="button" hidden>Загрузить список товаров</button>
+    <table id="list-goods-table" hidden>
       <thead id="list-goods-thead">
         <tr>
           <th>Артикул</th>
@@ -38,7 +38,7 @@
       </thead>
       <tbody id="list-goods-tbody"></tbody>
     </table>
-    <form enctype="multipart/form-data" id="upload-form" hidden="true">
+    <form enctype="multipart/form-data" id="upload-form" hidden>
       <label for="input-field" class="input-file">
         <input type="file" name="file" id="input-field" multiple accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
       </label>
