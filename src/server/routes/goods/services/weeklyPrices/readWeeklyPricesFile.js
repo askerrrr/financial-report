@@ -31,7 +31,7 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
     throw new Error("Не удалось прочитать наименования артикулов");
   }
 
-  var k = 0;
+  var columnCount = 0;
   var columnNum = 2;
   var price;
   var priceIndent = 5;
@@ -66,19 +66,19 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
       }
 
       data.push({
-        nmID: skuNamesAndIds[i].nmID,
-        skuName: skuNamesAndIds[i].skuName,
         price,
         discount,
+        nmID: skuNamesAndIds[i].nmID,
+        skuName: skuNamesAndIds[i].skuName,
       });
     }
 
-    k++;
     columnNum++;
+    columnCount++;
     weeklyPricesAndDiscounts.push(data);
 
-    if (k === columns.length) {
-      k = 0;
+    if (columnCount === columns.length) {
+      columnCount = 0;
     }
   }
 
