@@ -32,7 +32,7 @@ var showListGoodsTable = async () => {
   }
 
   enableListGoodsTable();
-  disableUploadListGoodsButton();
+  // disableUploadListGoodsButton();
   enableWeeklyPricesAndDiscountsFlleUploadButton();
   enableDownloadWeeklyPricesAndDiscountsFileButton();
   await createListGoodsTable(listGoods);
