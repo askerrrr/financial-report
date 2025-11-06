@@ -477,3 +477,33 @@ body {
     left: 2px;
   }
 }
+
+#upload-list-goods {
+  display: none;
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 14px 32px;
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: var(--transition);
+  margin: 40px auto;
+}
+
+  #list-goods-table[hidden] ~ #upload-list-goods,
+body:has(#list-goods-table[hidden]) #upload-list-goods {
+  display: block;
+}
+
+#upload-list-goods:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 123, 255, 0.25);
+}
+
+#upload-list-goods:active {
+  transform: translateY(0);
+}
