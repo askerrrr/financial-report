@@ -18,7 +18,7 @@ var sendUploadFile = async (file) => {
 };
 
 var fileUploadHandler = async () => {
-  var button = document.getElementById("load-list-goods");
+  var button = document.getElementById("upload-weekly-prices-and-discounts-file");
   var input = document.getElementById("input-field");
 
   button.onclick = async (e) => {
