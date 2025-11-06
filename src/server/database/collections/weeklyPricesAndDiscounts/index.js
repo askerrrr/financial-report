@@ -1,5 +1,8 @@
 var { weeklyPricesAndDiscountsCollection } = require("../../connections/");
+var getWeeklyPricesAndDiscounts = require("./services/getWeeklyPricesAndDiscounts");
 
-var weeklyPricesAndDiscountsCollectionServices = {};
+var weeklyPricesAndDiscountsCollectionServices = {
+  getWeeklyPricesAndDiscountsFromDb: (userId) => getWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId),
+};
 
 module.exports = weeklyPricesAndDiscountsCollectionServices;
