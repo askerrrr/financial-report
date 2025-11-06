@@ -2,7 +2,6 @@ import createListGoodsTable from "./utils/createListGoodsTable.js";
 import enableListGoodsTable from "./utils/enableListGoodsTable.js";
 import loadListGoodsButtonHandler from "./loadListGoodsButtonHandler.js";
 import enableUploadListGoodsButton from "./utils/enableUploadListGoodsButton.js";
-import disableUploadListGoodsButton from "./utils/disableUploadListGoodsButton.js";
 import enableWeeklyPricesAndDiscountsFlleUploadButton from "./utils/enableWeeklyPricesAndDiscountsFlleUploadButton.js";
 import enableDownloadWeeklyPricesAndDiscountsFileButton from "./utils/enableDownloadWeeklyPricesAndDiscountsFileButton.js";
 
@@ -17,13 +16,13 @@ var getListGoods = async () => {
     return;
   }
 
-  var { listGoods } = await res.json();
+  var { listGoods, weeklyPricesAndDiscounts } = await res.json();
 
-  return { listGoods };
+  return { listGoods, weeklyPricesAndDiscounts };
 };
 
 var showListGoodsTable = async () => {
-  var { listGoods } = await getListGoods();
+  var { listGoods, weeklyPricesAndDiscounts } = await getListGoods();
 
   if (!listGoods.length) {
     enableUploadListGoodsButton();
@@ -31,11 +30,13 @@ var showListGoodsTable = async () => {
     return;
   }
 
-  enableListGoodsTable();
-  // disableUploadListGoodsButton();
-  enableWeeklyPricesAndDiscountsFlleUploadButton();
-  enableDownloadWeeklyPricesAndDiscountsFileButton();
-  await createListGoodsTable(listGoods);
+  if (!weeklyPricesAndDiscounts.length) {
+    enableListGoodsTable();
+    enableWeeklyPricesAndDiscountsFlleUploadButton();
+    enableDownloadWeeklyPricesAndDiscountsFileButton();
+    await createListGoodsTable(listGoods);
+    return;
+  }
 };
 
 export default showListGoodsTable;
