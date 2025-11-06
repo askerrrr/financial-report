@@ -1,6 +1,6 @@
 var calcDiscountedPrice = ({ price, discount }) => price - (price * discount) / 100;
 
-var weekDaySelectorHandler = (listGoods, weeklyPricesAndDiscounts) => {
+var weekDaySelectorHandler = async (listGoods, weeklyPricesAndDiscounts) => {
   var weekDaySelector = document.getElementById("week-days-select");
 
   weekDaySelector.addEventListener("change", (e) => {

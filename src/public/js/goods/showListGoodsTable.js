@@ -1,5 +1,7 @@
 import createListGoodsTable from "./utils/createListGoodsTable.js";
 import enableListGoodsTable from "./utils/enableListGoodsTable.js";
+import weekDaySelectorHandler from "./utils/weekDaySelector/index.js";
+import enableWeekDaysSelector from "./utils/enableWeekDaysSelector.js";
 import loadListGoodsButtonHandler from "./loadListGoodsButtonHandler.js";
 import enableUploadListGoodsButton from "./utils/enableUploadListGoodsButton.js";
 import enableWeeklyPricesAndDiscountsFlleUploadButton from "./utils/enableWeeklyPricesAndDiscountsFlleUploadButton.js";
@@ -30,13 +32,16 @@ var showListGoodsTable = async () => {
     return;
   }
 
-  if (!weeklyPricesAndDiscounts.length) {
-    enableListGoodsTable();
-    enableWeeklyPricesAndDiscountsFlleUploadButton();
-    enableDownloadWeeklyPricesAndDiscountsFileButton();
-    await createListGoodsTable(listGoods);
-    return;
+  if (weeklyPricesAndDiscounts.length) {
+    enableWeekDaysSelector();
+    await weekDaySelectorHandler(listGoods, weeklyPricesAndDiscounts);
   }
+
+  enableListGoodsTable();
+  enableWeeklyPricesAndDiscountsFlleUploadButton();
+  enableDownloadWeeklyPricesAndDiscountsFileButton();
+  await createListGoodsTable(listGoods);
+  return;
 };
 
 export default showListGoodsTable;
