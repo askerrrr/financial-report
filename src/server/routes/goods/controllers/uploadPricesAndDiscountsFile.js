@@ -2,7 +2,8 @@ var { readWeeklyPricesFile } = require("../services/weeklyPrices/");
 
 var uploadPricesAndDiscountsFile = async (req, res, next) => {
   var { userId } = req.params;
-  var { getListGoodsFromDb, setWeeklyPricesAndDiscounts } = req.app.locals.goodsCollectionServices;
+  var { getListGoodsFromDb } = req.app.locals.goodsCollectionServices;
+  var { setWeeklyPricesAndDiscounts } = req.app.locals.weeklyPricesAndDiscountsCollectionServices;
   var { listGoods } = await getListGoodsFromDb(userId);
 
   if (!listGoods.length) {
