@@ -4,6 +4,7 @@ import weekDaySelectorHandler from "./utils/weekDaySelector/index.js";
 import enableWeekDaysSelector from "./utils/enableWeekDaysSelector.js";
 import loadListGoodsButtonHandler from "./loadListGoodsButtonHandler.js";
 import enableUploadListGoodsButton from "./utils/enableUploadListGoodsButton.js";
+import setCurrentDayPricesAndDiscounts from "./utils/setCurrentDayPricesAndDiscounts.js";
 import enableWeeklyPricesAndDiscountsFlleUploadButton from "./utils/enableWeeklyPricesAndDiscountsFlleUploadButton.js";
 import enableDownloadWeeklyPricesAndDiscountsFileButton from "./utils/enableDownloadWeeklyPricesAndDiscountsFileButton.js";
 
@@ -34,6 +35,7 @@ var showListGoodsTable = async () => {
 
   if (weeklyPricesAndDiscounts.length) {
     enableWeekDaysSelector();
+    setCurrentDayPricesAndDiscounts();
     await weekDaySelectorHandler(listGoods, weeklyPricesAndDiscounts);
   }
 
