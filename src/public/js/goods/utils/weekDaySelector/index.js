@@ -1,10 +1,32 @@
-var weekDaySelectorHandler = (weeklyPricesAndDiscounts) => {
+var calcDiscountedPrice = ({ price, discount }) => price - (price * discount) / 100;
+
+var weekDaySelectorHandler = (listGoods, weeklyPricesAndDiscounts) => {
   var weekDaySelector = document.getElementById("week-days-select");
 
   weekDaySelector.addEventListener("change", (e) => {
-    var selectedWeekDay = +e.target.value;
-    var pricesAndDiscounts = weeklyPricesAndDiscounts[selectedWeekDay];
+    var selectedWeekDayId = +e.target.value;
+    var pricesAndDiscounts = weeklyPricesAndDiscounts[selectedWeekDayId];
+
+    for (var { skuName, id } of listGoods) {
+      var selectedDay = pricesAndDiscounts.find((item) => item.nmID === id);
+
+      if (selectedDay) {
+        var priceTdElem = document.getElementById(`${skuName}-price`);
+        priceTdElem.textContent = selectedDay.price;
+
+        var discountTdElem = document.getElementById(`${skuName}-discount`);
+        discountTdElem.textContent = selectedDay.discount;
+
+        var discountedPrice = calcDiscountedPrice(selectedDay);
+
+        var discountedPriceTdElem = document.getElementById(`${skuName}-discountedPrice`);
+        discountedPriceTdElem.textContent = discountedPrice;
+
+        var clubDiscountedPriceTdElem = document.getElementById(`${skuName}-clubDiscountedPrice`);
+        clubDiscountedPriceTdElem.textContent = discountedPrice;
+      }
+    }
   });
 };
 
-weekDaySelectorHandler();
+export default weekDaySelectorHandler;
