@@ -12,9 +12,10 @@ var sendUploadFile = async (file) => {
     return;
   }
 
-  var { msg } = await res.json();
-  alert(msg);
-  return;
+  var { weeklyPricesAndDiscounts } = await res.json();
+  alert("Файл успешно загружен");
+
+  return { weeklyPricesAndDiscounts };
 };
 
 var fileUploadHandler = async () => {
