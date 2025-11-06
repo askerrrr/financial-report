@@ -1,27 +1,31 @@
 var columns = ["B", "C", "D", "E", "F", "G", "H"];
 
 var setFormulaToCells = (ws, skusQty) => {
-  columns.map((column, index) => {
+  columns.map((column) => {
     var count = skusQty;
 
-    var cellNum = 5;
+    var indentToPrice = 5;
+    var indentToDiscount = 6;
+    var indentToResult = 7;
 
     while (count > 0) {
-      var cellName = column + cellNum; //price
-      var lowerCellName = column + (cellNum + 1); //discount
+      var priceCellAddress = column + indentToPrice;
+      var discountCellAddress = column + indentToDiscount;
 
-      var formula = `${cellName}  - (${cellName} * ${lowerCellName}) /  100`;
+      var formula = `${priceCellAddress}  - (${priceCellAddress} * ${discountCellAddress}) /  100`;
 
-      var resultCell = column + (cellNum + 2);
-      ws.getCell(resultCell).value = { formula };
+      var resultCellAddress = column + indentToResult;
+      ws.getCell(resultCellAddress).value = { formula };
 
       count--;
-      cellNum += 5;
+      indentToPrice += 5;
+      indentToDiscount += 5;
+      indentToResult += 5;
     }
 
-    cellNum = 5;
-
-    n = skusQty;
+    indentToPrice = 5;
+    indentToDiscount = 6;
+    indentToResult = 7;
   });
 
   return ws;
