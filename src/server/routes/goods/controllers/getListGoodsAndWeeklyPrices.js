@@ -1,4 +1,4 @@
-var getListGoods = async (req, res, next) => {
+var getListGoodsAndWeeklyPrices = async (req, res, next) => {
   var userId = req.params.userId;
   var { getListGoodsFromDb } = req.app.locals.goodsCollectionServices;
 
@@ -7,4 +7,4 @@ var getListGoods = async (req, res, next) => {
   return res.json({ listGoods });
 };
 
-module.exports = getListGoods;
+module.exports = getListGoodsAndWeeklyPrices;
