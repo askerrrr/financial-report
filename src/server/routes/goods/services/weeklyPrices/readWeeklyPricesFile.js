@@ -46,8 +46,8 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
     var data = [];
 
     for (var i = 0; i < skuNamesAndIds.length; i++) {
-      priceCellAddress = columns[k] + priceIndent;
-      discountCellAddress = columns[k] + discountIndent;
+      priceCellAddress = columns[columnCount] + priceIndent;
+      discountCellAddress = columns[columnCount] + discountIndent;
       price = ws.getCell(priceCellAddress)?.value;
       discount = ws.getCell(discountCellAddress)?.value;
 
