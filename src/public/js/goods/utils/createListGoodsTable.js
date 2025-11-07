@@ -8,6 +8,7 @@ var createListGoodsTable = async (listGoods) => {
     let { skuName, price, discount, discountedPrice, clubDiscountedPrice } = item;
 
     var tr = document.createElement("tr");
+    tr.id = skuName;
     var skuNameTd = createTdElement(skuName, skuName, "skuName");
 
     var priceTd = createTdElement(price, skuName, "price");
@@ -15,22 +16,11 @@ var createListGoodsTable = async (listGoods) => {
     var discountTd = createTdElement(discount, skuName, "discount");
     skuName;
     var discountedPriceTd = createTdElement(discountedPrice, skuName, "discountedPrice");
-    var clubDiscountedPriceTd = createTdElement(
-      clubDiscountedPrice,
-      skuName,
-      "clubDiscountedPrice"
-    );
+    var clubDiscountedPriceTd = createTdElement(clubDiscountedPrice, skuName, "clubDiscountedPrice");
 
     var modalButton = await openModalButton(item);
 
-    tr.append(
-      skuNameTd,
-      priceTd,
-      discountTd,
-      discountedPriceTd,
-      clubDiscountedPriceTd,
-      modalButton
-    );
+    tr.append(skuNameTd, priceTd, discountTd, discountedPriceTd, clubDiscountedPriceTd, modalButton);
 
     tbody.append(tr);
   }
