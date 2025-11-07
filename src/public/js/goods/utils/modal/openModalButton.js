@@ -12,7 +12,8 @@ var openModalButton = async (item) => {
     },
   };
 
-  var button = createButton("изменить", "item", item.skuName, buttonHandler);
+  var modalBtnId = item.skuName + "-modal";
+  var button = createButton("изменить", "item", modalBtnId, buttonHandler);
 
   return button;
 };
