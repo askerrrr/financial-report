@@ -16,12 +16,14 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
     var cell = ws.getCell(skuNameCellAddress);
 
     if (cell?.value) {
-      var { id } = listGoods.find((sku) => sku.skuName === cell.value);
+      var { id, disabled } = listGoods.find((sku) => sku.skuName === cell.value);
 
-      skuNamesAndIds.push({ skuName: cell.value, nmID: id });
-      skuNameIndent += 5;
-      skuNameCellAddress = firstColumnName + skuNameIndent;
-      continue;
+      if (!disabled) {
+        skuNamesAndIds.push({ skuName: cell.value, nmID: id });
+        skuNameIndent += 5;
+        skuNameCellAddress = firstColumnName + skuNameIndent;
+        continue;
+      }
     }
 
     break;
