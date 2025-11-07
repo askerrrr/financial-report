@@ -40,7 +40,7 @@ var showListGoodsTable = async () => {
     await weekDaySelectorHandler(enabledSku, weeklyPricesAndDiscounts);
   }
 
-  enableSkusTable('enabled-skus-table');
+  enableSkusTable("enabled-skus-table");
   enableWeeklyPricesAndDiscountsFlleUploadButton();
   enableDownloadWeeklyPricesAndDiscountsFileButton();
   await createSkusTable(enabledSku, "enabled-skus-tbody");

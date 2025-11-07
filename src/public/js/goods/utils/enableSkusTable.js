@@ -5,3 +5,5 @@
 var enableSkusTable = (tableID) => {
   document.getElementById(tableID).hidden = false;
 };
+
+export default enableSkusTable;
