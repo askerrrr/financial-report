@@ -5,6 +5,7 @@ var sendNewDisableStatus = async (skuName, disableStatus) => {
   var res = await fetch(url, {
     method: "POST",
     body: JSON.stringify({ userId, skuName, disableStatus }),
+    headers: { "content-type": "application/json" },
   });
 
   if (!res.ok) {
