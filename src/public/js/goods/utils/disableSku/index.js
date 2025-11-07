@@ -1,4 +1,5 @@
 import createButton from "../modal/createButton.js";
+import disableModalButton from "./disableModalButton.js";
 import insertSkuRowToTable from "./insertSkuRowToTable.js";
 import sendNewDisableStatus from "./sendNewDisableStatus.js";
 import deleteSkuRowFromTable from "./deleteSkuRowFromTable.js";
@@ -18,6 +19,7 @@ var disableSkuButtonHandler = (skuName) => {
         if (statusIsUpdated) {
           var skuRow = document.getElementById(skuName);
 
+          disableModalButton(skuName);
           deleteSkuRowFromTable(skuRow, "enabled-skus-tbody");
           insertSkuRowToTable(skuRow, "disabled-skus-tbody");
         }
