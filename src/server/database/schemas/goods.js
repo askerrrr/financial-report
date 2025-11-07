@@ -8,7 +8,7 @@ var skuSchema = new Schema(
     discount: { type: Number, required: false },
     discountedPrice: { type: Number, required: false },
     clubDiscountedPrice: { type: Number, required: false },
-    hidden: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
   },
   { _id: false }
 );
