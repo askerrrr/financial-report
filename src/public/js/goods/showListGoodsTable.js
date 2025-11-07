@@ -1,3 +1,4 @@
+import getGoodsData from "./utils/getGoodsData.js";
 import createSkusTable from "./utils/createSkusTable.js";
 import enableSkusTable from "./utils/enableSkusTable.js";
 import weekDaySelectorHandler from "./utils/weekDaySelector/index.js";
@@ -8,24 +9,8 @@ import setCurrentDayPricesAndDiscounts from "./utils/setCurrentDayPricesAndDisco
 import enableWeeklyPricesAndDiscountsFlleUploadButton from "./utils/enableWeeklyPricesAndDiscountsFlleUploadButton.js";
 import enableDownloadWeeklyPricesAndDiscountsFileButton from "./utils/enableDownloadWeeklyPricesAndDiscountsFileButton.js";
 
-var getListGoods = async () => {
-  var userId = document.cookie.split("=")[1];
-  var url = "/goods/api/" + userId;
-
-  var res = await fetch(url);
-
-  if (!res.ok) {
-    alert("some error message");
-    return;
-  }
-
-  var { listGoods, weeklyPricesAndDiscounts } = await res.json();
-
-  return { listGoods, weeklyPricesAndDiscounts };
-};
-
 var showListGoodsTable = async () => {
-  var { listGoods, weeklyPricesAndDiscounts } = await getListGoods();
+  var { listGoods, weeklyPricesAndDiscounts } = await getGoodsData();
   var { enabledSku, disabledSku } = listGoods;
 
   if (!enabledSku.length) {
