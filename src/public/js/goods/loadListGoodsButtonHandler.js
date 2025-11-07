@@ -1,4 +1,4 @@
-import createListGoodsTable from "./utils/createListGoodsTable.js";
+import createEnabledSkusTable from "./utils/createEnabledSkusTable.js";
 import enableListGoodsTable from "./utils/enableListGoodsTable.js";
 import enableWeeklyPricesAndDiscountsFlleUploadButton from "./utils/enableWeeklyPricesAndDiscountsFlleUploadButton.js";
 import disableUploadListGoodsButton from "./utils/disableUploadListGoodsButton.js";
@@ -28,7 +28,7 @@ var loadListGoodsButtonHandler = async () => {
     enableWeeklyPricesAndDiscountsFlleUploadButton();
     disableUploadListGoodsButton();
     enableDownloadWeeklyPricesAndDiscountsFileButton();
-    await createListGoodsTable(listGoods);
+    await createEnabledSkusTable(listGoods);
   });
 };
 
