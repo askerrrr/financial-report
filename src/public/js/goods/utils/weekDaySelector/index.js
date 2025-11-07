@@ -1,4 +1,4 @@
-var calcDiscountedPrice = ({ price, discount }) => price - (price * discount) / 100;
+import calcDiscountedPrice from "./calcDiscountedPrice.js";
 
 var weekDaySelectorHandler = async (listGoods, weeklyPricesAndDiscounts) => {
   var weekDaySelector = document.getElementById("week-days-select");
