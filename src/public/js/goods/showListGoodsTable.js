@@ -26,8 +26,9 @@ var getListGoods = async () => {
 
 var showListGoodsTable = async () => {
   var { listGoods, weeklyPricesAndDiscounts } = await getListGoods();
+  var { enabledSku, disabledSku } = listGoods;
 
-  if (!listGoods.length) {
+  if (!enabledSku.length) {
     enableUploadListGoodsButton();
     await loadListGoodsButtonHandler();
     return;
@@ -36,13 +37,13 @@ var showListGoodsTable = async () => {
   if (weeklyPricesAndDiscounts.length) {
     enableWeekDaysSelector();
     setCurrentDayPricesAndDiscounts();
-    await weekDaySelectorHandler(listGoods, weeklyPricesAndDiscounts);
+    await weekDaySelectorHandler(enabledSku, weeklyPricesAndDiscounts);
   }
 
   enableListGoodsTable();
   enableWeeklyPricesAndDiscountsFlleUploadButton();
   enableDownloadWeeklyPricesAndDiscountsFileButton();
-  await createListGoodsTable(listGoods);
+  await createListGoodsTable(enabledSku);
   return;
 };
 
