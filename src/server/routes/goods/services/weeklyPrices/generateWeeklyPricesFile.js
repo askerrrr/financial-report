@@ -19,10 +19,12 @@ var generateWeeklyPricesFile = async (listGoods) => {
   while (listGoods.length) {
     var sku = listGoods.shift();
 
-    ws = writeSKU(sku, ws, cellNumOfSkuName);
-    ws.addRow([]);
+    if (!sku.disabled) {
+      ws = writeSKU(sku, ws, cellNumOfSkuName);
+      ws.addRow([]);
 
-    cellNumOfSkuName += 5;
+      cellNumOfSkuName += 5;
+    }
   }
   ws = setStylesToSheet(ws);
   ws = setFormulaToCells(ws, skusQty);
