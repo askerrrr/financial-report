@@ -15,7 +15,7 @@ var createEnabledSkusTable = async (listGoods) => {
     var priceTd = createTdElement(price, skuName, "price");
 
     var discountTd = createTdElement(discount, skuName, "discount");
-    skuName;
+
     var discountedPriceTd = createTdElement(discountedPrice, skuName, "discountedPrice");
     var clubDiscountedPriceTd = createTdElement(clubDiscountedPrice, skuName, "clubDiscountedPrice");
 
