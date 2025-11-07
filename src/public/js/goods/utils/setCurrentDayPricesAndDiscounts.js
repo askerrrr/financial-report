@@ -1,11 +1,4 @@
-var getCurrentDayMSK = () => {
-  var formatter = new Intl.DateTimeFormat("ru-RU", {
-    timeZone: "Europe/Moscow",
-    weekday: "long",
-  });
-
-  return { currentDayName: formatter.format(new Date()) };
-};
+import getCurrentDayMSK from "./getCurrentDayMSK.js";
 
 var setCurrentDayPricesAndDiscounts = () => {
   var { currentDayName } = getCurrentDayMSK();
