@@ -1,7 +1,7 @@
-import createEnabledSkusTable from "./utils/createEnabledSkusTable.js";
 import enableListGoodsTable from "./utils/enableListGoodsTable.js";
-import enableWeeklyPricesAndDiscountsFlleUploadButton from "./utils/enableWeeklyPricesAndDiscountsFlleUploadButton.js";
+import createSkusTable from "./utils/createSkusTable.js";
 import disableUploadListGoodsButton from "./utils/disableUploadListGoodsButton.js";
+import enableWeeklyPricesAndDiscountsFlleUploadButton from "./utils/enableWeeklyPricesAndDiscountsFlleUploadButton.js";
 import enableDownloadWeeklyPricesAndDiscountsFileButton from "./utils/enableDownloadWeeklyPricesAndDiscountsFileButton.js";
 
 var userId = document.cookie.split("=")[1];
@@ -28,7 +28,7 @@ var loadListGoodsButtonHandler = async () => {
     enableWeeklyPricesAndDiscountsFlleUploadButton();
     disableUploadListGoodsButton();
     enableDownloadWeeklyPricesAndDiscountsFileButton();
-    await createEnabledSkusTable(listGoods);
+    await createSkusTable(listGoods, "enabled-skus-tbody");
   });
 };
 

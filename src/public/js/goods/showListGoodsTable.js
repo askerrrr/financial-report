@@ -1,4 +1,4 @@
-import createEnabledSkusTable from "./utils/createEnabledSkusTable.js";
+import createSkusTable from "./utils/createSkusTable.js";
 import enableListGoodsTable from "./utils/enableListGoodsTable.js";
 import weekDaySelectorHandler from "./utils/weekDaySelector/index.js";
 import enableWeekDaysSelector from "./utils/enableWeekDaysSelector.js";
@@ -43,7 +43,7 @@ var showListGoodsTable = async () => {
   enableListGoodsTable();
   enableWeeklyPricesAndDiscountsFlleUploadButton();
   enableDownloadWeeklyPricesAndDiscountsFileButton();
-  await createEnabledSkusTable(enabledSku);
+  await createSkusTable(enabledSku, "enabled-skus-tbody");
   return;
 };
 
