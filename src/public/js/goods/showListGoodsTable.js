@@ -6,7 +6,7 @@ import weekDaySelectorHandler from "./utils/weekDaySelector/index.js";
 import enableWeekDaysSelector from "./utils/enableWeekDaysSelector.js";
 import loadListGoodsButtonHandler from "./loadListGoodsButtonHandler.js";
 import enableUploadListGoodsButton from "./utils/enableUploadListGoodsButton.js";
-import setCurrentDayPricesAndDiscounts from "./utils/setCurrentDayPricesAndDiscounts.js";
+import setWeekDaySelectorToCurrentDay from "./utils/setWeekDaySelectorToCurrentDay.js";
 import enableWeeklyPricesAndDiscountsFlleUploadButton from "./utils/enableWeeklyPricesAndDiscountsFlleUploadButton.js";
 import enableDownloadWeeklyPricesAndDiscountsFileButton from "./utils/enableDownloadWeeklyPricesAndDiscountsFileButton.js";
 import mergeCurrentDayPricesAndDiscountsIntoListGoods from "./utils/weekDaySelector/mergeCurrentDayPricesAndDiscountsIntoListGoods.js";
@@ -59,7 +59,7 @@ var handleNonEmptyWeeklyPricesAndDiscounts = async function (enabledSku, weeklyP
 
   enableWeekDaysSelector();
   enableSkusTable("enabled-skus-table");
-  setCurrentDayPricesAndDiscounts(currentDayName);
+  setWeekDaySelectorToCurrentDay(currentDayName);
 
   var currentDayData = weeklyPricesAndDiscounts[currentDayIndex];
   var { updatedSkus } = mergeCurrentDayPricesAndDiscountsIntoListGoods(enabledSku, currentDayData);

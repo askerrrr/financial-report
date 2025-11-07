@@ -1,6 +1,6 @@
 import getCurrentDayMSK from "./getCurrentDayMSK.js";
 
-var setCurrentDayPricesAndDiscounts = () => {
+var setWeekDaySelectorToCurrentDay = () => {
   var { currentDayName } = getCurrentDayMSK();
 
   var options = document.querySelectorAll("option");
@@ -12,4 +12,4 @@ var setCurrentDayPricesAndDiscounts = () => {
   }
 };
 
-export default setCurrentDayPricesAndDiscounts;
+export default setWeekDaySelectorToCurrentDay;
