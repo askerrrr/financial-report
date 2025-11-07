@@ -2,7 +2,7 @@ import createTdElement from "./createTdElement.js";
 import openModalButton from "./modal/openModalButton.js";
 
 var createListGoodsTable = async (listGoods) => {
-  var tbody = document.getElementById("list-goods-tbody");
+  var tbody = document.getElementById("enabled-skus-tbody");
 
   for (var item of listGoods) {
     let { skuName, price, discount, discountedPrice, clubDiscountedPrice } = item;

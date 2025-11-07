@@ -1,3 +1,3 @@
-var enableListGoodsTable = () => (document.getElementById("list-goods-table").hidden = false);
+var enableListGoodsTable = () => (document.getElementById("enabled-skus-table").hidden = false);
 
 export default enableListGoodsTable;

@@ -86,7 +86,7 @@ body {
   color: var(--primary);
 }
 
-#list-goods-table {
+#enabled-skus-table {
   width: 100%;
   border-collapse: collapse;
   background: white;
@@ -96,15 +96,15 @@ body {
   margin-top: 16px;
 }
 
-#list-goods-table th,
-#list-goods-table td {
+#enabled-skus-table th,
+#enabled-skus-table td {
   padding: 12px 10px;
   text-align: left;
   border-bottom: 1px solid var(--border);
   font-size: 14px;
 }
 
-#list-goods-table th {
+#enabled-skus-table th {
   background: #f1f3f5;
   font-weight: 600;
   color: #495057;
@@ -113,15 +113,15 @@ body {
   letter-spacing: 0.5px;
 }
 
-#list-goods-table tbody tr:hover {
+#enabled-skus-table tbody tr:hover {
   background: #f5f7fa;
 }
 
-#list-goods-table tbody td {
+#enabled-skus-table tbody td {
   vertical-align: middle;
 }
 
-#list-goods-table tbody button.item {
+#enabled-skus-table tbody button.item {
   background: transparent;
   color: var(--primary);
   font-size: 13px;
@@ -132,7 +132,7 @@ body {
   transition: var(--transition);
 }
 
-#list-goods-table tbody button.item:hover {
+#enabled-skus-table tbody button.item:hover {
   background: #e7f0ff;
   border-color: var(--primary);
 }
@@ -332,8 +332,8 @@ body {
   .top-controls {
     justify-content: center;
   }
-  #list-goods-table th,
-  #list-goods-table td {
+  #enabled-skus-table th,
+  #enabled-skus-table td {
     padding: 8px 6px;
     font-size: 13px;
   }
