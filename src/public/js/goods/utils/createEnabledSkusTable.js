@@ -2,11 +2,11 @@ import createTdElement from "./createTdElement.js";
 import openModalButton from "./modal/openModalButton.js";
 import disableSkuButtonHandler from "./disableSku/index.js";
 
-var createEnabledSkusTable = async (listGoods) => {
+var createEnabledSkusTable = async (enabledSkus) => {
   var tbody = document.getElementById("enabled-skus-tbody");
 
-  for (var item of listGoods) {
-    let { skuName, price, discount, discountedPrice, clubDiscountedPrice } = item;
+  for (var sku of enabledSkus) {
+    let { skuName, price, discount, discountedPrice, clubDiscountedPrice } = sku;
 
     var tr = document.createElement("tr");
     tr.id = skuName;
@@ -19,7 +19,7 @@ var createEnabledSkusTable = async (listGoods) => {
     var discountedPriceTd = createTdElement(discountedPrice, skuName, "discountedPrice");
     var clubDiscountedPriceTd = createTdElement(clubDiscountedPrice, skuName, "clubDiscountedPrice");
 
-    var modalButton = await openModalButton(item);
+    var modalButton = await openModalButton(sku);
     var disableButton = disableSkuButtonHandler(skuName);
 
     tr.append(skuNameTd, priceTd, discountTd, discountedPriceTd, clubDiscountedPriceTd, modalButton, disableButton);
