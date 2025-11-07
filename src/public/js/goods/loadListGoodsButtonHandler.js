@@ -1,4 +1,4 @@
-import enableListGoodsTable from "./utils/enableListGoodsTable.js";
+import enableSkusTable from "./utils/enableSkusTable.js";
 import createSkusTable from "./utils/createSkusTable.js";
 import disableUploadListGoodsButton from "./utils/disableUploadListGoodsButton.js";
 import enableWeeklyPricesAndDiscountsFlleUploadButton from "./utils/enableWeeklyPricesAndDiscountsFlleUploadButton.js";
@@ -24,7 +24,7 @@ var loadListGoodsButtonHandler = async () => {
 
     var { listGoods } = await res.json();
 
-    enableListGoodsTable();
+    enableSkusTable("enabled-skus-table");
     enableWeeklyPricesAndDiscountsFlleUploadButton();
     disableUploadListGoodsButton();
     enableDownloadWeeklyPricesAndDiscountsFileButton();
