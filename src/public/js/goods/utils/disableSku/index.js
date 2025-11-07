@@ -3,6 +3,7 @@ import disableModalButton from "./disableModalButton.js";
 import insertSkuRowToTable from "./insertSkuRowToTable.js";
 import sendNewDisableStatus from "./sendNewDisableStatus.js";
 import deleteSkuRowFromTable from "./deleteSkuRowFromTable.js";
+import changeHiddenStatusOfSkusTable from "./changeSkuTableHiddenStatus.js";
 
 var disableSkuButtonHandler = (skuName) => {
   var btnId = skuName + "-disable";
@@ -22,6 +23,7 @@ var disableSkuButtonHandler = (skuName) => {
           disableModalButton(skuName);
           deleteSkuRowFromTable(skuRow, "enabled-skus-tbody");
           insertSkuRowToTable(skuRow, "disabled-skus-tbody");
+          changeHiddenStatusOfSkusTable("disabled-skus-table");
         }
       }
 
