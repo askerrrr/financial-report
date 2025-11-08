@@ -1,14 +1,15 @@
 /**
  * @param {"enabled-skus-table" | "disabled-skus-table"} tableID
+ * @param {'on' | 'off'} hiddenStatus
  */
 
-var changeHiddenStatusOfSkusTable = (tableID) => {
+var changeHiddenStatusOfSkusTable = (tableID, hiddenStatus) => {
   var skusTable = document.getElementById(tableID);
 
-  if (skusTable.hasAttribute("hidden")) {
-    skusTable.removeAttribute("hidden");
+  if (hiddenStatus === "on") {
+    skusTable.setAttribute("hidden", true);
   } else {
-    skusTable.setAttribute("hidden");
+    skusTable.removeAttribute("hidden");
   }
 };
 
