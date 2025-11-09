@@ -3,17 +3,18 @@ import createLabel from "./createLabel.js";
 import peekWeekDays from "./peekWeekDays.js";
 import createButton from "./createButton.js";
 import createPriceInput from "./createPriceInput.js";
-import getCheckedWeekDays from "./getCheckedWeekDays.js";
+import saveButtonHandler from "./saveButtonHandler.js";
 import createDiscountnput from "./createDiscountnput.js";
-import sendPriceAndDiscount from "./sendPriceAndDiscount.js";
+import cancelButtonHandler from "./cancelButtonHandler.js";
 import createDiscountedPriceField from "./createDiscountedPriceField.js";
-import compareCurrentValuesWithNew from "./compareCurrentValuesWithNew.js";
 
 var createModal = (item) => {
   var modalTitle = (document.createElement("h3").textContent = "Артикул: " + item.skuName);
 
   var modalHeader = createDiv(null, "modal-header");
   modalHeader.append(modalTitle);
+
+  var modalOverlay = createDiv("modalOverlay", "modal-overlay", null, "enableHandlers - yes");
 
   var priceInput = createPriceInput(item);
   var priceLabel = createLabel(priceInput, "цена", "wrapinput - yes");
@@ -25,39 +26,18 @@ var createModal = (item) => {
 
   var modal = createDiv(null, "modal");
 
-  var cancelBtnHandler = {
-    event: "click",
-    cb: () => {
-      modalOverlay.classList.remove("active");
-      document.body.style.overflow = "auto";
-      modalOverlay.remove();
-    },
-  };
+  var cancelBtn = createButton("Закрыть", null, "cancelBtn", cancelButtonHandler(modalOverlay));
 
-  var saveBtnHandler = {
-    event: "click",
-    cb: async () => {
-      var { checkedWeekDays } = await getCheckedWeekDays();
+  var newPrice = +priceInput.value;
+  var newDiscount = +discountInput.value;
 
-      var newPrice = +priceInput.value;
-      var newDIscount = +discountInput.value;
+  var saveBtn = createButton(
+    "Сохранить",
+    "btn btn-primary",
+    "confirmBtn",
+    saveButtonHandler(modalOverlay, item, newPrice, newDiscount)
+  );
 
-      var { valuesAreNotEqual } = compareCurrentValuesWithNew(item, newPrice, newDIscount);
-
-      if (!valuesAreNotEqual) {
-        return;
-      }
-
-      modalOverlay.classList.remove("active");
-      document.body.style.overflow = "auto";
-      modalOverlay.remove();
-    },
-  };
-
-  var cancelBtn = createButton("Закрыть", null, "cancelBtn", cancelBtnHandler);
-  var saveBtn = createButton("Сохранить", "btn btn-primary", "confirmBtn", saveBtnHandler);
-
-  var modalOverlay = createDiv("modalOverlay", "modal-overlay", null, "enableHandlers - yes");
   var modalButtons = createDiv(null, "modal-buttons");
   modalButtons.append(cancelBtn, saveBtn);
 
