@@ -25,12 +25,13 @@ var disableSkuButtonHandler = (skuName) => {
       var confirmed = confirm(msg);
 
       if (confirmed) {
-        var statusIsUpdated = await sendNewDisableStatus(skuName, true);
+        var hasDisblAttribute = button.hasAttribute("disbl");
+        var statusIsUpdated = await sendNewDisableStatus(skuName, hasDisblAttribute);
 
         if (statusIsUpdated) {
           var skuRow = document.getElementById(skuName);
 
-          if (button.hasAttribute("disbl")) {
+          if (hasDisblAttribute) {
             button.removeAttribute("disbl");
             button.textContent = "скрыть";
             deleteSkuRowFromTable(skuRow, "disabled-skus-tbody");
