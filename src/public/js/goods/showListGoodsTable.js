@@ -48,7 +48,6 @@ var handleEmptyEnabledSkus = async function (disabledSku) {
 };
 
 var handleNonEmptyEnabledSkus = async function (enabledSku) {
-  console.log({ disabledSku });
   enableSkusTable("enabled-skus-table");
   enableWeeklyPricesAndDiscountsFlleUploadButton();
   enableDownloadWeeklyPricesAndDiscountsFileButton();
@@ -64,6 +63,8 @@ var handleNonEmptyWeeklyPricesAndDiscounts = async function (
   enableWeekDaysSelector();
   enableSkusTable("enabled-skus-table");
   setWeekDaySelectorToCurrentDay(currentDayName);
+  enableWeeklyPricesAndDiscountsFlleUploadButton();
+  enableDownloadWeeklyPricesAndDiscountsFileButton();
 
   var currentDayData = weeklyPricesAndDiscounts[currentDayIndex];
   var { updatedSkus } = mergeCurrentDayPricesAndDiscountsIntoListGoods(enabledSku, currentDayData);
