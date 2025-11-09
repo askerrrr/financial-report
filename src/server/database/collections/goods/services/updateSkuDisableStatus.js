@@ -4,7 +4,7 @@ var updateSkuDisableStatus = async (collection, userId, skuName, disabled) => {
     { $set: { "listGoods.$.disabled": disabled } }
   );
 
-  return result;
+  return result.acknowledged;
 };
 
 module.exports = updateSkuDisableStatus;

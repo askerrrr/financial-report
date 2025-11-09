@@ -1,8 +1,12 @@
 var changeSkuDisableStatus = async (req, res, next) => {
   var { updateSkuDisableStatusToDb } = req.app.locals.goodsCollectionServices;
   var { userId, skuName, disableStatus } = req.body;
-  var result = await updateSkuDisableStatusToDb(userId, skuName, disableStatus);
-  console.log({ result });
+  var success = await updateSkuDisableStatusToDb(userId, skuName, disableStatus);
+
+  if (!success) {
+    return res.sendStatus(304);
+  }
+
   return res.sendStatus(200);
 };
 
