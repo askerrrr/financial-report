@@ -26,7 +26,7 @@ var showListGoodsTable = async () => {
   }
 
   if (weeklyPricesAndDiscounts.length) {
-    await handleNonEmptyWeeklyPricesAndDiscounts(enabledSku, weeklyPricesAndDiscounts);
+    await handleNonEmptyWeeklyPricesAndDiscounts(listGoods, weeklyPricesAndDiscounts);
     return;
   }
 
@@ -48,22 +48,28 @@ var handleEmptyEnabledSkus = async function (disabledSku) {
 };
 
 var handleNonEmptyEnabledSkus = async function (enabledSku) {
+  console.log({ disabledSku });
   enableSkusTable("enabled-skus-table");
   enableWeeklyPricesAndDiscountsFlleUploadButton();
   enableDownloadWeeklyPricesAndDiscountsFileButton();
   await createSkusTable(enabledSku, "enabled-skus-tbody");
 };
 
-var handleNonEmptyWeeklyPricesAndDiscounts = async function (enabledSku, weeklyPricesAndDiscounts) {
+var handleNonEmptyWeeklyPricesAndDiscounts = async function (
+  { enabledSku, disabledSku },
+  weeklyPricesAndDiscounts
+) {
   var { currentDayName, currentDayIndex } = getCurrentDayMSK();
 
   enableWeekDaysSelector();
   enableSkusTable("enabled-skus-table");
+  enableSkusTable("disabled-skus-table");
   setWeekDaySelectorToCurrentDay(currentDayName);
 
   var currentDayData = weeklyPricesAndDiscounts[currentDayIndex];
   var { updatedSkus } = mergeCurrentDayPricesAndDiscountsIntoListGoods(enabledSku, currentDayData);
 
   await createSkusTable(updatedSkus, "enabled-skus-tbody");
+  await createSkusTable(disabledSku, "disabled-skus-tbody");
   await weekDaySelectorHandler(enabledSku, weeklyPricesAndDiscounts);
 };
