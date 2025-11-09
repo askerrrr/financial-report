@@ -11,7 +11,7 @@ var getReportById = async (collection, userId, reportId) => {
       throw new ReportNotFoundError(userId, reportId);
     }
 
-    return { report: reports[0] };
+    return { report: reports[0].toObject() };
   } catch (e) {
     if (e instanceof ReportNotFoundError) {
       throw e;
