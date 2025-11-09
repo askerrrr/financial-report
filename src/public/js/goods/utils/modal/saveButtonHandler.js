@@ -2,11 +2,13 @@ import getCheckedWeekDays from "./getCheckedWeekDays.js";
 import sendPriceAndDiscount from "./sendPriceAndDiscount.js";
 import compareCurrentValuesWithNew from "./compareCurrentValuesWithNew.js";
 
-var saveButtonHandler = (modalOverlay, item, newPrice, newDiscount) => {
+var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
   return {
     event: "click",
     cb: async () => {
       var { checkedWeekDays } = await getCheckedWeekDays();
+      var newPrice = +priceInput.value;
+      var newDiscount = +discountInput.value;
 
       var { valuesAreNotEqual } = compareCurrentValuesWithNew(item, newPrice, newDiscount);
 

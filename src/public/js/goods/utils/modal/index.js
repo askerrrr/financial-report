@@ -28,14 +28,11 @@ var createModal = (item) => {
 
   var cancelBtn = createButton("Закрыть", null, "cancelBtn", cancelButtonHandler(modalOverlay));
 
-  var newPrice = +priceInput.value;
-  var newDiscount = +discountInput.value;
-
   var saveBtn = createButton(
     "Сохранить",
     "btn btn-primary",
     "confirmBtn",
-    saveButtonHandler(modalOverlay, item, newPrice, newDiscount)
+    saveButtonHandler(modalOverlay, item, priceInput, discountInput)
   );
 
   var modalButtons = createDiv(null, "modal-buttons");
