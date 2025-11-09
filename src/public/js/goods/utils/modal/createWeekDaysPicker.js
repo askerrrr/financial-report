@@ -5,7 +5,7 @@ import getSelectedWeekDayIdFromSelector from "./getSelectedWeekDayIdFromSelector
 
 var weekDays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"];
 
-var peekWeekDays = () => {
+var createWeekDaysPicker = () => {
   var fieldset = document.createElement("fieldset");
   var allDaysId = 7;
 
@@ -47,4 +47,4 @@ var peekWeekDays = () => {
   return fieldset;
 };
 
-export default peekWeekDays;
+export default createWeekDaysPicker;

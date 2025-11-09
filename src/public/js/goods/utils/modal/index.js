@@ -1,11 +1,11 @@
 import createDiv from "./createDiv.js";
 import createLabel from "./createLabel.js";
-import peekWeekDays from "./peekWeekDays.js";
 import createButton from "./createButton.js";
 import createPriceInput from "./createPriceInput.js";
 import saveButtonHandler from "./saveButtonHandler.js";
 import createDiscountnput from "./createDiscountnput.js";
 import cancelButtonHandler from "./cancelButtonHandler.js";
+import createWeekDaysPicker from "./createWeekDaysPicker.js";
 import createDiscountedPriceField from "./createDiscountedPriceField.js";
 
 var createModal = (item) => {
@@ -41,12 +41,14 @@ var createModal = (item) => {
   var modalButtons = createDiv(null, "modal-buttons");
   modalButtons.append(cancelBtn, saveBtn);
 
+  var weekDaysPicker = createWeekDaysPicker();
+
   modal.append(
     modalHeader,
     priceLabel,
     discountLabel,
     discountedPriceField,
-    peekWeekDays(),
+    weekDaysPicker,
     modalButtons
   );
 
