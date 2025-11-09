@@ -16,6 +16,8 @@ var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
         return;
       }
 
+      var result = await sendPriceAndDiscount(item.id, newPrice, newDiscount, checkedWeekDays);
+
       modalOverlay.classList.remove("active");
       document.body.style.overflow = "auto";
       modalOverlay.remove();
