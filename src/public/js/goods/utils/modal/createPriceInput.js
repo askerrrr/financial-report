@@ -15,6 +15,12 @@ var createPriceInput = ({ skuName, price }) => {
 
       var modalDiscountedPriceElement = document.getElementById(skuName + "_modal_discountedPrice_field");
       modalDiscountedPriceElement.textContent = newDiscountedPriceValue;
+
+      var skuDiscountedPriceTdElement = document.getElementById(skuName + "-discountedPrice");
+      skuDiscountedPriceTdElement.textContent = newDiscountedPriceValue;
+
+      var skuClubDiscountedPriceTdElement = document.getElementById(skuName + "-clubDiscountedPrice");
+      skuClubDiscountedPriceTdElement.textContent = newDiscountedPriceValue;
     }
   });
 
