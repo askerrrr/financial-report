@@ -18,7 +18,7 @@ var createQueryAndOptions = (nmID, price, discount, checkedWeekDays) => {
   return { query, arrayFilters };
 };
 
-var updatePriceAnddDiscount = async (collection, userId, nmID, price, discount, checkedWeekDays) => {
+var updatePriceAndDiscount = async (collection, userId, nmID, price, discount, checkedWeekDays) => {
   var { query, arrayFilters } = createQueryAndOptions(nmID, price, discount, checkedWeekDays);
 
   var result = await collection.updateOne({ userId }, { $set: query }, { arrayFilters });
@@ -26,4 +26,4 @@ var updatePriceAnddDiscount = async (collection, userId, nmID, price, discount, 
   return result?.acknowledged;
 };
 
-module.exports = updatePriceAnddDiscount;
+module.exports = updatePriceAndDiscount;
