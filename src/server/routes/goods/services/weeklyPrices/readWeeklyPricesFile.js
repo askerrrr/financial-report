@@ -10,9 +10,10 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
   var skuNamesAndIds = [];
   var skuNameIndent = 4;
   var firstColumnName = "A";
+  var skusQty = listGoods.length;
   var skuNameCellAddress = firstColumnName + skuNameIndent;
 
-  while (true) {
+  while (skusQty) {
     var cell = ws.getCell(skuNameCellAddress);
 
     if (cell?.value) {
@@ -20,13 +21,12 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
 
       if (!disabled) {
         skuNamesAndIds.push({ skuName: cell.value, nmID: id });
-        skuNameIndent += 5;
-        skuNameCellAddress = firstColumnName + skuNameIndent;
-        continue;
       }
     }
 
-    break;
+    skusQty--;
+    skuNameIndent += 5;
+    skuNameCellAddress = firstColumnName + skuNameIndent;
   }
 
   if (!skuNamesAndIds.length) {
