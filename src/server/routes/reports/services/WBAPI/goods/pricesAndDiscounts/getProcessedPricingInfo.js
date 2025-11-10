@@ -1,4 +1,4 @@
-var { WBAPIError } = require("../../../../customError");
+var { WBAPIError } = require("../../../../../../customError");
 
 var getProcessedPricingInfo = async (userId, uploadID, token) => {
   var url = `https://discounts-prices-api.wildberries.ru/api/v2/history/tasks?uploadID=${uploadID}`;

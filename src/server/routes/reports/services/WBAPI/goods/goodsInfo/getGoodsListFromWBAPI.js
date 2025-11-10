@@ -1,4 +1,4 @@
-var { WBAPIError } = require("../../../../customError");
+var { WBAPIError } = require("../../../../../../customError");
 
 var getGoodsListFromWBAPI = async (userId, token) => {
   try {

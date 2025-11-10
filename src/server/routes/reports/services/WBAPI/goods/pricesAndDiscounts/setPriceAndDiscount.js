@@ -1,4 +1,4 @@
-var { WBAPIError } = require("../../../../customError");
+var { WBAPIError } = require("../../../../../../customError");
 
 var setPricesAndDiscounts = async (userId, token, weeklyPricesAndDiscounts) => {
   try {
