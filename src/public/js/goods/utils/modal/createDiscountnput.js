@@ -1,3 +1,5 @@
+import calcDiscountedPrice from "../weekDaySelector/calcDiscountedPrice.js";
+
 var createDiscountnput = ({ skuName, discount }) => {
   var input = document.createElement("input");
   input.type = "text";
@@ -6,12 +8,14 @@ var createDiscountnput = ({ skuName, discount }) => {
   input.id = skuName + "_discount";
 
   input.addEventListener("keyup", function () {
+    var discount = +this.value;
     var price = document.getElementById(skuName + "_price").value;
-    var newDiscountedPriceValue = price - (price * +this.value) / 100;
 
-    if (typeof +this.value === "number" && !isNaN(+this.value)) {
+    var newDiscountedPriceValue = calcDiscountedPrice({ price, discount });
+
+    if (typeof discount === "number" && !isNaN(discount)) {
       var skuDiscountTdElement = document.getElementById(skuName + "-" + "discount");
-      skuDiscountTdElement.textContent = this.value;
+      skuDiscountTdElement.textContent = discount;
 
       var modalDiscountedPriceElement = document.getElementById(skuName + "_modal_discountedPrice_field");
       modalDiscountedPriceElement.textContent = newDiscountedPriceValue;
