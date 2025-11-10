@@ -13,7 +13,7 @@ var createPriceInput = ({ skuName, price }) => {
       var skuPriceTdElement = document.getElementById(skuName + "-" + "price");
       skuPriceTdElement.textContent = this.value;
 
-      var modalDiscountedPriceElement = document.getElementById(skuName + "_discountedPrice");
+      var modalDiscountedPriceElement = document.getElementById(skuName + "_modal_discountedPrice_field");
       modalDiscountedPriceElement.textContent = newDiscountedPriceValue;
     }
   });
