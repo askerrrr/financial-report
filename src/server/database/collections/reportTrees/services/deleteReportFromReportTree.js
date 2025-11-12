@@ -1,23 +1,45 @@
 var { DatabaseError } = require("../../../../customError");
 
-var deleteReportFromReportTree = async (collection, userId, year, month, reportId) => {
+var deleteReportFromReportTree = async (collection, userId, year, month, reportId, session) => {
   try {
-    var result = await collection.updateOne(
-      {
-        userId,
-        "years.year": year,
-        "years.months.month": month,
-        "years.months.reportIds.reportId": reportId,
-      },
-      {
-        $set: {
-          "years.$[y].months.$[m].reportIds.$[r]": null,
+    var result;
+
+    if (session) {
+      result = await collection.updateOne(
+        {
+          userId,
+          "years.year": year,
+          "years.months.month": month,
+          "years.months.reportIds.reportId": reportId,
         },
-      },
-      {
-        arrayFilters: [{ "y.year": year }, { "m.month": month }, { "r.reportId": reportId }],
-      }
-    );
+        {
+          $set: {
+            "years.$[y].months.$[m].reportIds.$[r]": null,
+          },
+        },
+        {
+          arrayFilters: [{ "y.year": year }, { "m.month": month }, { "r.reportId": reportId }],
+          session,
+        }
+      );
+    } else {
+      result = await collection.updateOne(
+        {
+          userId,
+          "years.year": year,
+          "years.months.month": month,
+          "years.months.reportIds.reportId": reportId,
+        },
+        {
+          $set: {
+            "years.$[y].months.$[m].reportIds.$[r]": null,
+          },
+        },
+        {
+          arrayFilters: [{ "y.year": year }, { "m.month": month }, { "r.reportId": reportId }],
+        }
+      );
+    }
 
     return result.modifiedCount;
   } catch (e) {

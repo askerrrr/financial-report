@@ -1,4 +1,4 @@
-var calcTaxPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/taxPerSKU");
+var calc = require("../../reports/services/calcServices");
 
 var recalculateReportsTaxRate = async (newTaxRate, year, reports) => {
   for (var report of reports) {
@@ -6,10 +6,10 @@ var recalculateReportsTaxRate = async (newTaxRate, year, reports) => {
       report.taxRate = newTaxRate;
 
       report.skus.map(async (sku) => {
-        sku.taxPerSKU = await calcTaxPerSKU(sku.retailAmountPerSKU, newTaxRate);
+        sku.tax = calc.sku.tax(sku.retailAmount, newTaxRate);
       });
 
-      report.totalTaxAmount = report.skus.reduce((acc, sku) => acc + sku.taxPerSKU, 0);
+      report.totalTaxAmount = report.skus.reduce((acc, sku) => acc + sku.tax, 0);
     }
   }
 

@@ -9,7 +9,7 @@ var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/:id", require("./controllers/getReportPage"));
 
-router.get("/:userId/:id", require("./controllers/getReport"));
+router.get("/:userId/:reportId", require("./controllers/getReport"));
 
 router.get("/download-report-as-xlsx/:userId/:reportId", require("./controllers/downloadReportAsXLSX"));
 
@@ -24,7 +24,7 @@ router.post(
   require("./controllers/writeReportFromWBAPI")
 );
 
-router.put("/change", require("./controllers/changeReportDetail"));
+router.put("/change", require("./controllers/setCostPriceToSKU"));
 
 router.put("/sku-photo-upload/:skuName", upload.single("sku-photo"), require("./controllers/skuPhotoUpload"));
 

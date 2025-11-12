@@ -1,7 +1,7 @@
 import getReportsData from "./services/getReportsData.js";
-import openLastDetails from "./services/openLastDetails.js";
 import showNoReportsMessage from "./services/showNoReportsMessage.js";
 import createReportsTree from "./services/reportTreeBuilder/createReportTree/index.js";
+import createReportsTable from "./services/reportTreeBuilder/createReportTree/createReportsTable.js";
 
 var sendMonthForDeletion = async (userId, monthsForDeletion) => {
   var res = await fetch("/reports/delete-empty-month/", {
@@ -12,6 +12,29 @@ var sendMonthForDeletion = async (userId, monthsForDeletion) => {
   if (!res.ok) {
     return;
   }
+};
+
+var insertLastReportsToTree = async (tree, lastReports, lastMonthData) => {
+  var { year } = tree[0];
+  var { month, reportIds } = lastMonthData;
+
+  var table = await createReportsTable(year, month, reportIds, lastReports);
+
+  var summary = document.createElement("summary");
+  summary.append(month);
+
+  var reportsContainer = document.createElement("details");
+  reportsContainer.id = `reports_container_${year}_${month}`;
+  reportsContainer.append(summary, table);
+  reportsContainer.open = true;
+
+  var monthsContainerId = `months_container_${year}`;
+  var monthsContainer = document.getElementById(monthsContainerId);
+  monthsContainer.prepend(reportsContainer);
+
+  var lastYearDetailsId = year;
+  var lastYearDetails = document.getElementById(lastYearDetailsId);
+  lastYearDetails.open = true;
 };
 
 var deleteEmptyMonth = async (userId) => {
@@ -36,17 +59,18 @@ var deleteEmptyMonth = async (userId) => {
 };
 
 var buildReportTree = async () => {
-  var { reports, reportTree } = await getReportsData();
+  var { lastReports, reportTree } = await getReportsData();
 
   if (!reportTree.length) {
     return showNoReportsMessage();
   }
 
   var userId = document.cookie.split("=")[1];
+  var lastMonthData = reportTree[0].months.shift();
 
-  await createReportsTree(reportTree, reports);
-
-  await openLastDetails(reportTree);
+  await createReportsTree(reportTree).then(() =>
+    insertLastReportsToTree(reportTree, lastReports, lastMonthData)
+  );
 
   await deleteEmptyMonth(userId);
 };

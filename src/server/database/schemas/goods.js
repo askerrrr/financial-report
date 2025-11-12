@@ -8,10 +8,14 @@ var skuSchema = new Schema(
     discount: { type: Number, required: false },
     discountedPrice: { type: Number, required: false },
     clubDiscountedPrice: { type: Number, required: false },
+    disabled: { type: Boolean, default: false },
   },
   { _id: false }
 );
 
-var goodsSchema = new Schema({ userId: { type: String, required: true }, listGoods: [{ type: skuSchema, required: true }] });
+var goodsSchema = new Schema({
+  userId: { type: String, required: true },
+  listGoods: [{ type: skuSchema, required: true }],
+});
 
 module.exports = goodsSchema;

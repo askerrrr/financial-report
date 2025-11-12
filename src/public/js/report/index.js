@@ -27,11 +27,11 @@ var getReportData = async () => {
 };
 
 var main = async () => {
-  var { report, imageCollection, downloadReportLink } = await getReportData();
+  var { report, skuImages, downloadReportLink } = await getReportData();
 
   await getReportInfo(report);
   await createSKUsTable(report);
-  await injectBase64IntoImgTags(imageCollection);
+  await injectBase64IntoImgTags(skuImages);
   await createTotalsTable(report);
 
   await deleteReportHandler(report);

@@ -1,0 +1,17 @@
+var { Schema } = require("mongoose");
+
+var weekDaySchema = new Schema(
+  {
+    nmID: { type: Number, required: true },
+    price: { type: Number, required: true },
+    discount: { type: Number, required: true },
+  },
+  { _id: false }
+);
+
+var weeklyPricesAndDiscountsSchema = new Schema({
+  userId: { type: String, required: true },
+  weeklyPricesAndDiscounts: [{ type: [weekDaySchema], required: false }],
+});
+
+module.exports = weeklyPricesAndDiscountsSchema;

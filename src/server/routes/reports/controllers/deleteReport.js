@@ -1,23 +1,44 @@
+var { connection } = require("../../../database/");
+
 var deleteReport = async (req, res, next) => {
   var { deleteReportFromDb } = req.app.locals.reportCollectionServices;
   var { deleteReportFromReportTree } = req.app.locals.reportsTreeCollectionServices;
-  var { getTaxParamsFromDb, changePaidTaxAmountToDb, changePaidInsuranceFeeToDb } = req.app.locals.taxParamsCollectionServices;
-
+  var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
   var { userId, reportId, year, month, totalTaxAmount, totalInsuranceFee } = req.body;
-
-  var deletedFromTree = await deleteReportFromReportTree(userId, year, month, reportId);
-
-  var deleteFromReports = await deleteReportFromDb(userId, reportId);
 
   var taxParams = await getTaxParamsFromDb(userId, year);
 
-  taxParams.paidTaxAmount -= totalTaxAmount;
-  taxParams.paidInsuranceFee -= totalInsuranceFee;
+  var session = await connection.startSession();
 
-  await changePaidTaxAmountToDb(userId, year, taxParams.paidTaxAmount);
-  await changePaidInsuranceFeeToDb(userId, year, taxParams.paidInsuranceFee);
+  try {
+    session.startTransaction();
 
-  return deleteFromReports && deletedFromTree ? res.sendStatus(200) : res.sendStatus(304);
+    taxParams.paidTaxAmount -= totalTaxAmount;
+    taxParams.paidInsuranceFee -= totalInsuranceFee;
+    var { paidTaxAmount, paidInsuranceFee } = taxParams;
+
+    var results = await Promise.all([
+      deleteReportFromDb(userId, reportId, session),
+      deleteReportFromReportTree(userId, year, month, reportId, session),
+      changeTaxParamsToDb(userId, year, session, {
+        paidTaxAmount,
+        paidInsuranceFee,
+      }),
+    ]);
+
+    if (!results.every((i) => Boolean(i) === true)) {
+      throw new Error("");
+    }
+
+    await session.commitTransaction();
+
+    return res.sendStatus(200);
+  } catch (e) {
+    await session.abortTransaction();
+    res.sendStatus(304);
+  } finally {
+    await session.endSession();
+  }
 };
 
 module.exports = deleteReport;

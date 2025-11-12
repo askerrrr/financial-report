@@ -5,7 +5,7 @@ var sendWBAuthToken = async (token) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  if (res.status === 304) {
+  if (res.status === 409) {
     alert("Токен совпадает с предыдущим");
     return;
   }

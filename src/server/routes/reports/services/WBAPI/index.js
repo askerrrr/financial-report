@@ -1,7 +1,7 @@
 var wbapi = {};
 
-wbapi.getReports = require("./getReports");
-wbapi.getListGoods = require("./getGoodsListFromWBAPI");
-wbapi.setPricesAndDiscounts = require("./setPriceAndDiscount");
-
+wbapi.getReports = require("./reports");
+wbapi.getListGoods = require("./goods/goodsInfo/getGoodsListFromWBAPI");
+wbapi.setPricesAndDiscounts = require("./goods/pricesAndDiscounts/setPriceAndDiscount");
+wbapi.gestProcessedPricingInfo = require("./goods/pricesAndDiscounts/getProcessedPricingInfo");
 module.exports = wbapi;

@@ -13,21 +13,28 @@ var createSKUsTable = async (id, report, url) => {
 
     var skuName = createTdElement(sku.skuName);
     var qty = createTdElement(sku.qty);
-    var returnAmount = createTdElement(sku.returnAmountPerSKU);
+    var returnAmount = createTdElement(sku.returnAmount);
 
-    var dataToChange = { id, skuIndex, reportId, fieldName: "costPrice", costPrice: sku.costPrice, url };
+    var dataToChange = {
+      id,
+      skuIndex,
+      reportId,
+      fieldName: "costPrice",
+      costPrice: sku.costPrice,
+      url,
+    };
 
     var costPriceInputField = await createInputField(dataToChange);
     var costPrice = createTdElement(costPriceInputField);
     var retailPrice = createTdElement(sku.averageRetailPrice);
-    var deliveryCost = createTdElement(sku.deliveryCostPerSKU);
-    var fines = createTdElement(sku.finesPerSKU);
-    var storageCostPerSKU = createTdElement(sku.storageCostPerSKU);
-    var acceptancePerSKU = createTdElement(sku.acceptancePerSKU);
-    var profitPerSKU = createTdElement(sku.profitPerSKU);
-    var averageProfitPerSKU = createTdElement(sku.averageProfitPerSKU);
+    var deliveryCost = createTdElement(sku.deliveryCost);
+    var fines = createTdElement(sku.fines);
+    var storageCost = createTdElement(sku.storageCost);
+    var acceptance = createTdElement(sku.acceptance);
+    var profit = createTdElement(sku.profit);
+    var averageProfit = createTdElement(sku.averageProfit);
     var profitMargin = createTdElement(sku.profitMargin, "profitMargin", skuIndex);
-    var finalProfitPerSKU = createTdElement(sku.finalProfitPerSKU, "finalProfitPerSKU", skuIndex);
+    var finalProfit = createTdElement(sku.finalProfit, "finalProfit", skuIndex);
 
     tr.append(
       skuName,
@@ -37,12 +44,12 @@ var createSKUsTable = async (id, report, url) => {
       retailPrice,
       deliveryCost,
       fines,
-      storageCostPerSKU,
-      acceptancePerSKU,
-      profitPerSKU,
-      averageProfitPerSKU,
+      storageCost,
+      acceptance,
+      profit,
+      averageProfit,
       profitMargin,
-      finalProfitPerSKU
+      finalProfit
     );
 
     tbody.append(tr);

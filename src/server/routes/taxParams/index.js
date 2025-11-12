@@ -26,4 +26,6 @@ router.post(
   require("./controllers/recalculateReportsParamsAfterChangingMandatoryInsuranceFee")
 );
 
+router.post("/change", require("./controllers/changeTaxParams"));
+
 module.exports = router;

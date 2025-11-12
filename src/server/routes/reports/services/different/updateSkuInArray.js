@@ -1,11 +1,11 @@
-var updateSkuInArray = async (skus, { skuIndex, costPrice, fieldName }) => {
+var updateSkuInArray = (skus, { skuIndex, costPrice }) => {
   var sku = skus[skuIndex];
 
-  sku[fieldName] = costPrice;
+  sku.costPrice = costPrice;
 
   skus[skuIndex] = sku;
 
-  return skus;
+  return { updatedSKUS: skus, updatedSKU: sku };
 };
 
 module.exports = updateSkuInArray;

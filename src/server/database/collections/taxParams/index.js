@@ -2,13 +2,11 @@ var { taxParamsCollection } = require("../../connections");
 var deleteTaxYears = require("./services/deleteTaxYears");
 var addNewTaxYearToDb = require("./services/addNewTaxYear");
 var getTaxParamsFromDb = require("./services/getTaxParamsFromDb");
-var changeTaxRateToDb = require("./services/changeTaxRateToDb");
+var changeTaxParamsToDb = require("./services/changeTaxParamsToDb");
 var saveUpdatedTaxParams = require("./services/saveUpdatedTaxParams");
 var createTaxParamsEntity = require("./services/createTaxParamsEntity");
 var changePaidTaxAmountToDb = require("./services/changePaidTaxAmountToDb");
 var changePaidInsuranceFeeToDb = require("./services/changePaidInsuranceFee");
-var changeInsuranceFeePercentageToDb = require("./services/changeInsuranceFeePercentageToDb");
-var changeMandatoryInsuranceFeeToDb = require("./services/changeMandatoryInsuranceFeeToDb");
 
 var taxParamsCollectionServices = {
   deleteTaxYears: (userId) => deleteTaxYears(taxParamsCollection, userId),
@@ -17,21 +15,19 @@ var taxParamsCollectionServices = {
 
   getTaxParamsFromDb: (userId, year) => getTaxParamsFromDb(taxParamsCollection, userId, year),
 
-  changeTaxRateToDb: (userId, year, taxRate) => changeTaxRateToDb(taxParamsCollection, userId, year, taxRate),
-
   createTaxParamsEntity: (userId, year) => createTaxParamsEntity(taxParamsCollection, userId, year),
 
-  changePaidTaxAmountToDb: (userId, year, paidTaxAmount) => changePaidTaxAmountToDb(taxParamsCollection, userId, year, paidTaxAmount),
+  changeTaxParamsToDb: (userId, year, session, newTaxParam) =>
+    changeTaxParamsToDb(taxParamsCollection, userId, year, session, newTaxParam),
 
-  changeInsuranceFeePercentageToDb: (userId, year, insuranceFeePercentage) =>
-    changeInsuranceFeePercentageToDb(taxParamsCollection, userId, year, insuranceFeePercentage),
+  changePaidTaxAmountToDb: (userId, year, paidTaxAmount) =>
+    changePaidTaxAmountToDb(taxParamsCollection, userId, year, paidTaxAmount),
 
-  changePaidInsuranceFeeToDb: (userId, year, paidInsuranceFee) => changePaidInsuranceFeeToDb(taxParamsCollection, userId, year, paidInsuranceFee),
+  changePaidInsuranceFeeToDb: (userId, year, paidInsuranceFee) =>
+    changePaidInsuranceFeeToDb(taxParamsCollection, userId, year, paidInsuranceFee),
 
-  changeMandatoryInsuranceFeeToDb: (userId, year, mandatoryInsuranceFee) =>
-    changeMandatoryInsuranceFeeToDb(taxParamsCollection, userId, year, mandatoryInsuranceFee),
-
-  saveUpdatedTaxParams: (userId, year, taxParams) => saveUpdatedTaxParams(taxParamsCollection, userId, year, taxParams),
+  saveUpdatedTaxParams: (userId, year, taxParams) =>
+    saveUpdatedTaxParams(taxParamsCollection, userId, year, taxParams),
 };
 
 module.exports = taxParamsCollectionServices;

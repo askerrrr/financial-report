@@ -1,12 +1,12 @@
-var calcProfitMargin = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/profitMargin");
-var calcFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/finalProfitPerSKU");
+var calc = require("../../reports/services/calcServices");
 
 var recalculateReportsParamsAfterChangingMandatoryInsuranceFee = async (req, res, next) => {
   var { userId, year } = req.body;
   var { getReportsByUserId, saveUpdatedReports } = req.app.locals.reportCollectionServices;
-  var { getTaxParamsFromDb, changeInsuranceFeePercentageToDb } = req.app.locals.taxParamsCollectionServices;
+  var { getTaxParamsFromDb, changeInsuranceFeePercentageToDb } =
+    req.app.locals.taxParamsCollectionServices;
 
-  var reports = await getReportsByUserId(userId);
+  var { reports } = await getReportsByUserId(userId);
   var { insuranceFeePercentage, mandatoryInsuranceFee } = await getTaxParamsFromDb(userId, year);
 
   var paidTaxAmount = 0;
@@ -15,18 +15,18 @@ var recalculateReportsParamsAfterChangingMandatoryInsuranceFee = async (req, res
     if (reports[i].recordTo.year == year) {
       await Promise.all(
         reports[i].skus.map(async (sku) => {
-          paidTaxAmount += sku.taxPerSKU;
+          paidTaxAmount += sku.tax;
 
           if (paidTaxAmount >= mandatoryInsuranceFee) {
             insuranceFeePercentage = 0;
             sku.isInsuranceFeeIncluded = false;
-            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, 0, sku.taxPerSKU);
+            sku.finalProfit = calc.sku.finalProfit(sku.preTaxProfit, 0, sku.tax);
           } else {
             sku.isInsuranceFeeIncluded = true;
-            sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, sku.insuranceFee);
+            sku.finalProfit = calc.sku.finalProfit(sku.preTaxProfit, sku.insuranceFee);
           }
 
-          sku.profitMargin = await calcProfitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
+          sku.profitMargin = calc.sku.profitMargin(sku.revenue, sku.finalProfit);
         })
       );
     }

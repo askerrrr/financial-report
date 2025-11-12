@@ -1,6 +1,4 @@
-var calcProfitMargin = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/profitMargin");
-var calcFinalProfitPerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/finalProfitPerSKU");
-var calcInsuranceFeePerSKU = require("../../reports/services/writeAndCalcReportDataFromWBAPI/calcServices/services/insuranceFeePerSKU");
+var calc = require("../../reports/services/calcServices");
 
 var recalculateReportsInsuranceFee = async (year, reports, newPercent, taxParams) => {
   var { paidTaxAmount, mandatoryInsuranceFee } = taxParams;
@@ -12,19 +10,19 @@ var recalculateReportsInsuranceFee = async (year, reports, newPercent, taxParams
       await Promise.all(
         reports[i].skus.map(async (sku) => {
           if (sku.isCostPriceSet) {
-            sku.insuranceFee = await calcInsuranceFeePerSKU(sku.preTaxProfitPerSKU, newPercent);
+            sku.insuranceFee = (sku.preTaxProfit, newPercent);
             recalculatedPaidInsuranceFee += sku.insuranceFee;
 
             if (paidTaxAmount >= mandatoryInsuranceFee) {
               newPercent = 0;
               sku.isInsuranceFeeIncluded = false;
-              sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, 0, sku.taxPerSKU);
+              sku.finalProfit = calc.sku.finalProfit(sku.preTaxProfit, 0, sku.tax);
             } else {
               sku.isInsuranceFeeIncluded = true;
-              sku.finalProfitPerSKU = await calcFinalProfitPerSKU(sku.preTaxProfitPerSKU, sku.insuranceFee);
+              sku.finalProfit = calc.sku.finalProfit(sku.preTaxProfit, sku.insuranceFee);
             }
 
-            sku.profitMargin = await calcProfitMargin(sku.revenuePerSKU, sku.finalProfitPerSKU);
+            sku.profitMargin = calc.sku.profitMargin(sku.revenue, sku.finalProfit);
           }
         })
       );

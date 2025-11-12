@@ -9,35 +9,38 @@ var SKUSchema = new Schema(
     skuName: stringOptions,
     qty: numberOptions,
     costPrice: numberOptions,
-    revenuePerSKU: numberOptions,
-    sellerPayoutAmountPerSKU: numberOptions,
-    finesPerSKU: numberOptions,
-    returnAmountPerSKU: numberOptions,
-    retailAmountPerSKU: numberOptions,
-    deliveryCostPerSKU: numberOptions,
-    storageCostPerSKU: numberOptions,
-    acceptancePerSKU: numberOptions,
+    revenue: numberOptions,
+    sellerPayoutAmount: numberOptions,
+    fines: numberOptions,
+    returnAmount: numberOptions,
+    retailAmount: numberOptions,
+    deliveryCost: numberOptions,
+    storageCost: numberOptions,
+    acceptance: numberOptions,
     deductionOrPayment: numberOptions,
-    additionalPaymentPerSKU: numberOptions,
-    taxPerSKU: numberOptions,
+    additionalPayment: numberOptions,
+    tax: numberOptions,
     insuranceFee: numberOptions,
-    profitPerSKU: numberOptions,
-    preTaxProfitPerSKU: numberOptions,
-    finalProfitPerSKU: numberOptions,
+    profit: numberOptions,
+    preTaxProfit: numberOptions,
+    finalProfit: numberOptions,
     profitMargin: numberOptions,
     isCostPriceSet: { type: Boolean, default: false },
     isInsuranceFeeIncluded: booleanOptions,
-    averageProfitPerSKU: numberOptions,
+    averageProfit: numberOptions,
     averageRetailPrice: numberOptions,
     averageStorageCost: numberOptions,
-    averageAdvertisingCostPerSKU: numberOptions,
+    averageAdvertisingCost: numberOptions,
     schemaVersion: { type: Number },
     id: { type: Number, required: true },
   },
   { _id: false }
 );
 
-var recordToSchema = new Schema({ year: stringOptions, month: stringOptions, schemaVersion: { type: Number } }, { _id: false });
+var recordToSchema = new Schema(
+  { year: stringOptions, month: stringOptions, schemaVersion: { type: Number } },
+  { _id: false }
+);
 
 var reportSchema = new Schema(
   {
