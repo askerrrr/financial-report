@@ -30,7 +30,7 @@ var showListGoodsTable = async () => {
     return;
   }
 
-  handleNonEmptyEnabledSkus(enabledSku);
+  handleNonEmptyEnabledSkus(listGoods);
 };
 
 export default showListGoodsTable;
@@ -47,17 +47,19 @@ var handleEmptyEnabledSkus = async function (disabledSku) {
   await createSkusTable(disabledSku, "disabled-skus-tbody");
 };
 
-var handleNonEmptyEnabledSkus = async function (enabledSku) {
+var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
   enableSkusTable("enabled-skus-table");
   enableWeeklyPricesAndDiscountsFlleUploadButton();
   enableDownloadWeeklyPricesAndDiscountsFileButton();
   await createSkusTable(enabledSku, "enabled-skus-tbody");
+
+  if (disabledSku.length) {
+    enableSkusTable("disabled-skus-table");
+    await createSkusTable(disabledSku, "disabled-skus-tbody");
+  }
 };
 
-var handleNonEmptyWeeklyPricesAndDiscounts = async function (
-  { enabledSku, disabledSku },
-  weeklyPricesAndDiscounts
-) {
+var handleNonEmptyWeeklyPricesAndDiscounts = async function ({ enabledSku, disabledSku }, weeklyPricesAndDiscounts) {
   var { currentDayName, currentDayIndex } = getCurrentDayMSK();
 
   enableWeekDaysSelector();
