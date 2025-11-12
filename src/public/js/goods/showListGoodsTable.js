@@ -49,11 +49,14 @@ var handleEmptyEnabledSkus = async function (disabledSku) {
 
 var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
   enableSkusTable("enabled-skus-table");
-  enableSkusTable("disabled-skus-table");
   enableWeeklyPricesAndDiscountsFlleUploadButton();
   enableDownloadWeeklyPricesAndDiscountsFileButton();
   await createSkusTable(enabledSku, "enabled-skus-tbody");
-  await createSkusTable(disabledSku, "disabled-skus-tbody");
+
+  if (disabledSku.length) {
+    enableSkusTable("disabled-skus-table");
+    await createSkusTable(disabledSku, "disabled-skus-tbody");
+  }
 };
 
 var handleNonEmptyWeeklyPricesAndDiscounts = async function ({ enabledSku, disabledSku }, weeklyPricesAndDiscounts) {
