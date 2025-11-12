@@ -1,3 +1,3 @@
 var loadTodayPricesAndDiscounts = async () => {};
 
-export default loadTodayPricesAndDiscounts;
+module.exports = loadTodayPricesAndDiscounts;
