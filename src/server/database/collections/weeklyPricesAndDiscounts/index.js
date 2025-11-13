@@ -1,4 +1,5 @@
 var { weeklyPricesAndDiscountsCollection } = require("../../connections/");
+var setUploadId  = require('./services/setUploadId')
 var updatePriceAndDiscount = require("./services/updatePriceAndDiscount");
 var getWeeklyPricesAndDiscounts = require("./services/getWeeklyPricesAndDiscounts");
 var setWeeklyPricesAndDiscounts = require("./services/setWeeklyPricesAndDiscounts");
@@ -11,6 +12,8 @@ var weeklyPricesAndDiscountsCollectionServices = {
 
   updatePriceAndDiscount: (userId, nmID, price, discount, checkedWeekDays) =>
     updatePriceAndDiscount(weeklyPricesAndDiscountsCollection, userId, nmID, price, discount, checkedWeekDays),
+
+  setUploadId: (userId, uploadId) => setUploadId(weeklyPricesAndDiscountsCollection, userId, uploadId),
 
   setWeeklyPricesAndDiscountsToDb: (userId, weeklyPricesAndDiscounts) =>
     setWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId, weeklyPricesAndDiscounts),
