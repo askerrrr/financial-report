@@ -2,9 +2,12 @@ var splitSkuByDisabledStatus = require("../services/splitSkuByDisabledStatus");
 
 var getListGoodsAndWeeklyPrices = async (req, res, next) => {
   var userId = req.params.userId;
-  var { getListGoodsFromDb } = req.app.locals.goodsCollectionServices;
-  var { getWeeklyPricesAndDiscountsFromDb } = req.app.locals.weeklyPricesAndDiscountsCollectionServices;
+  var { getListGoodsFromDb, getAllUserListGoodsIds } = req.app.locals.goodsCollectionServices;
+  var { getWeeklyPricesAndDiscountsFromDb } =
+    req.app.locals.weeklyPricesAndDiscountsCollectionServices;
+  var data = await getAllUserListGoodsIds();
 
+  console.log(...data);
   var { listGoods } = await getListGoodsFromDb(userId);
   var { listGoods } = splitSkuByDisabledStatus(listGoods);
   var { weeklyPricesAndDiscounts } = await getWeeklyPricesAndDiscountsFromDb(userId);
