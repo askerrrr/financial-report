@@ -8,4 +8,10 @@ router.post(
   require("./controllers/uploadTodayPricesAndDiscounts")
 );
 
+router.post(
+  "/backround-get-current",
+  require("./controllers/checkAuth"),
+  require("./controllers/updateDataIntoListGoods")
+);
+
 module.exports = router;
