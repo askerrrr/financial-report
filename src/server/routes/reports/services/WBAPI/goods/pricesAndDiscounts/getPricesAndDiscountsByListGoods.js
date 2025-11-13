@@ -11,12 +11,12 @@ var getPricesAndDiscountsByListGoods = async (userId, token, nmList) => {
   var json = await res.json();
 
   if (json.error) {
-    //
+    console.log({ error: json.errorText });
   }
 
   var { listGoods } = json.data;
 
-  return { rawListGoogs: listGoods };
+  return { rawListGoods: listGoods };
 };
 
 module.exports = getPricesAndDiscountsByListGoods;
