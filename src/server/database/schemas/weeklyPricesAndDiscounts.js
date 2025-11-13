@@ -11,6 +11,7 @@ var weekDaySchema = new Schema(
 
 var weeklyPricesAndDiscountsSchema = new Schema({
   userId: { type: String, required: true },
+  uploadId: { type: Number, required: false },
   weeklyPricesAndDiscounts: [{ type: [weekDaySchema], required: false }],
 });
 
