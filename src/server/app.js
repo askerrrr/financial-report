@@ -1,7 +1,6 @@
 var express = require("express");
 var { join } = require("node:path");
 var cookieParser = require("cookie-parser");
-var loadTodayPricesAndDiscounts = require("./routes/goods/services/loadTodayPricesAndDiscounts");
 
 var mainServerIsListen = false;
 var errorServerIsListen = false;
@@ -58,21 +57,6 @@ var runServer = async () => {
   app.use(express.static(join(__dirname, "../public")));
 
   app.use("/decode-report-without-registration/", require("./routes/decodeReportWithoutRegistration"));
-  app.post("/load-prices-discounts", async (req, res) => {
-    var authHeader = req.headers?.authorization;
-
-    if (!authHeader) {
-      return res.sendStatus(401);
-    }
-
-    var [type, secretKey] = authHeader.split(" ");
-
-    if (type !== "Bearer" || secretKey !== process.env.SECRET_KEY) {
-      return res.sendStatus(401);
-    }
-
-    await loadTodayPricesAndDiscounts();
-  });
   app.use("/auth", require("./routes/auth/"));
   app.use("/admin", require("./routes/admin/"));
   app.use("/reg", require("./routes/registration/"));

@@ -1,9 +1,11 @@
-var getCurrentDayMSK = require("./getCurrentDayMSK");
 var wbapi = require("../../reports/services/WBAPI");
-var { getWBTokenByUserId } = require("../../../database/collections/tokens");
-var { getAllUserWeeklyPricesAndDiscounts } = require("../../../database/collections/weeklyPricesAndDiscounts");
+var getCurrentDayMSK = require("../services/getCurrentDayMSK");
 
-var loadTodayPricesAndDiscounts = async () => {
+var uploadTodayPricesAndDiscounts = async (req, res, next) => {
+  var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
+  var { getAllUserWeeklyPricesAndDiscounts } =
+    req.app.locals.weeklyPricesAndDiscountsCollectionServices;
+
   var { currentDayIndex } = getCurrentDayMSK();
   var data = await getAllUserWeeklyPricesAndDiscounts();
 
@@ -18,4 +20,4 @@ var loadTodayPricesAndDiscounts = async () => {
   }
 };
 
-module.exports = loadTodayPricesAndDiscounts;
+module.exports = uploadTodayPricesAndDiscounts;
