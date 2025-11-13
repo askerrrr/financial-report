@@ -1,4 +1,4 @@
-var updatePricesAndDiscountsByListGoods = async (userId, token, nmList) => {
+var getPricesAndDiscountsByListGoods = async (userId, token, nmList) => {
   var url = "https://discounts-prices-api.wildberries.ru/api/v2/list/goods/filter";
   var options = {
     method: "POST",
@@ -19,4 +19,4 @@ var updatePricesAndDiscountsByListGoods = async (userId, token, nmList) => {
   return { rawListGoogs: listGoods };
 };
 
-module.exports = updatePricesAndDiscountsByListGoods;
+module.exports = getPricesAndDiscountsByListGoods;
