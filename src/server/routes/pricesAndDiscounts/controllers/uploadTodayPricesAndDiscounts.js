@@ -3,7 +3,7 @@ var getCurrentDayMSK = require("../services/getCurrentDayMSK");
 
 var uploadTodayPricesAndDiscounts = async (req, res, next) => {
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
-  var { getAllUserWeeklyPricesAndDiscounts } =
+  var { getAllUserWeeklyPricesAndDiscounts, setUploadId } =
     req.app.locals.weeklyPricesAndDiscountsCollectionServices;
 
   var { currentDayIndex } = getCurrentDayMSK();
@@ -15,7 +15,8 @@ var uploadTodayPricesAndDiscounts = async (req, res, next) => {
     if (currentDayData) {
       var token = await getWBTokenByUserId(userId);
       console.log({ userId, token });
-      //await wbapi.setPricesAndDiscounts(userId, token, currentDayData);
+      var { id } = await wbapi.setPricesAndDiscounts(userId, token, currentDayData);
+      await setUploadId(userId, id);
     }
   }
 };
