@@ -10,7 +10,7 @@ var createSkusTable = async (skus, tbodyID) => {
   var tbody = document.getElementById(tbodyID);
 
   for (var sku of skus) {
-    let { skuName, price, discount, discountedPrice, clubDiscountedPrice } = sku;
+    let { id,skuName, price, discount, discountedPrice, clubDiscountedPrice } = sku;
 
     var tr = document.createElement("tr");
     tr.id = skuName;
@@ -26,7 +26,7 @@ var createSkusTable = async (skus, tbodyID) => {
     );
 
     var modalButton = await openModalButton(sku);
-    var disableButton = disableSkuButtonHandler(skuName);
+    var disableButton = disableSkuButtonHandler(skuName, id);
 
     if (tbodyID === "disabled-skus-tbody") {
       modalButton.disabled = true;

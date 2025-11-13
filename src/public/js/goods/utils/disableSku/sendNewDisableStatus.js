@@ -1,4 +1,4 @@
-var sendNewDisableStatus = async (skuName, disableStatus) => {
+var sendNewDisableStatus = async (skuName, nmID, disableStatus) => {
   var url = "/goods/change-sku-disable-status";
   var userId = document.cookie.split("=")[1];
 
@@ -6,7 +6,7 @@ var sendNewDisableStatus = async (skuName, disableStatus) => {
 
   var res = await fetch(url, {
     method: "POST",
-    body: JSON.stringify({ userId, skuName, disableStatus }),
+    body: JSON.stringify({ userId, skuName, nmID, disableStatus }),
     headers: { "content-type": "application/json" },
   });
 

@@ -13,7 +13,7 @@ import changeDisableStatusOfModalButton from "./changeDisableStatusOfModalButton
 var getConfirmMessage = (skuName, msg) =>
   msg === "to-disable" ? `Скрыть товар <${skuName}> из таблицы?\n` : `Включить товар <${skuName}> в таблицу?\n`;
 
-var disableSkuButtonHandler = (skuName) => {
+var disableSkuButtonHandler = (skuName, id) => {
   var btnId = skuName + "-disable";
   var msg = getConfirmMessage(skuName, "to-disable");
 
@@ -24,7 +24,7 @@ var disableSkuButtonHandler = (skuName) => {
 
       if (confirmed) {
         var hasDisblAttribute = button.hasAttribute("disbl");
-        var statusIsUpdated = await sendNewDisableStatus(skuName, hasDisblAttribute);
+        var statusIsUpdated = await sendNewDisableStatus(skuName, id, hasDisblAttribute);
 
         if (statusIsUpdated) {
           var skuRow = document.getElementById(skuName);
