@@ -14,4 +14,10 @@ router.post(
   require("./controllers/updateDataIntoListGoods")
 );
 
+router.post(
+  "/check-processing-of-prices-discounts",
+  require("./controllers/checkAuth"),
+  require("./controllers/checkProcessingOfPricesAndDiscounts")
+);
+
 module.exports = router;
