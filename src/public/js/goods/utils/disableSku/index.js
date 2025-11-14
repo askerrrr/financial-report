@@ -1,7 +1,9 @@
 import createButton from "../modal/createButton.js";
+import unhideSkuElements from "./unhideSkuElements.js";
 import insertSkuRowToTable from "./insertSkuRowToTable.js";
 import sendNewDisableStatus from "./sendNewDisableStatus.js";
 import deleteSkuRowFromTable from "./deleteSkuRowFromTable.js";
+import hideUnnecessaryElements from "./hideUnnecessaryElements.js";
 import disableDisabledTableIfEmpty from "./disableDisabledTableIfEmpty.js";
 import changeHiddenStatusOfSkusTable from "./changeSkuTableHiddenStatus.js";
 import changeDisableStatusOfModalButton from "./changeDisableStatusOfModalButton.js";
@@ -11,7 +13,9 @@ import changeDisableStatusOfModalButton from "./changeDisableStatusOfModalButton
  */
 
 var getConfirmMessage = (skuName, msg) =>
-  msg === "to-disable" ? `Скрыть товар <${skuName}> из таблицы?\n` : `Включить товар <${skuName}> в таблицу?\n`;
+  msg === "to-disable"
+    ? `Скрыть товар <${skuName}> из таблицы?\n`
+    : `Включить товар <${skuName}> в таблицу?\n`;
 
 var disableSkuButtonHandler = (skuName, id) => {
   var btnId = skuName + "-disable";
@@ -35,6 +39,7 @@ var disableSkuButtonHandler = (skuName, id) => {
             changeDisableStatusOfModalButton(skuName, "off");
             deleteSkuRowFromTable(skuRow, "disabled-skus-tbody");
             insertSkuRowToTable(skuRow, "enabled-skus-tbody");
+            unhideSkuElements(skuName);
             msg = getConfirmMessage(skuName, "to-disable");
             disableDisabledTableIfEmpty();
             return;
@@ -48,6 +53,7 @@ var disableSkuButtonHandler = (skuName, id) => {
           msg = getConfirmMessage(skuName, "to-enable");
           changeHiddenStatusOfSkusTable("disabled-skus-table", "off");
           disableDisabledTableIfEmpty();
+          hideUnnecessaryElements(skuName);
         }
       }
 
