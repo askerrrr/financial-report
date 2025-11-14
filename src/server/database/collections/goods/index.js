@@ -15,6 +15,7 @@ var goodsCollectionServices = {
 
   saveListGoodsToDb: (userId, listGoods) => saveListGoodsToDb(goodsCollection, userId, listGoods),
 
+  updateSkusFields: (userId, updatedSkus) => updateSkusFields(goodsCollection, userId, updatedSkus),
   updateSkuDisableStatusToDb: (userId, skuName, disabled) => updateSkuDisableStatus(goodsCollection, userId, skuName, disabled),
 
   createListGoodsCollectionEntity: (userId) => createListGoodsCollectionEntity(goodsCollection, userId),
