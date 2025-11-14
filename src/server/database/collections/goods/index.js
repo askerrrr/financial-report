@@ -2,6 +2,7 @@ var { goodsCollection } = require("../../connections");
 var updateSkusFields = require("./services/updateSkusFields");
 var saveListGoodsToDb = require("./services/saveListGoodsToDb");
 var getListGoodsFromDb = require("./services/getListGoodsFromDb");
+var addNewSkusToListGoods = require("./services/addNewSkusToListGoods");
 var getAllUserListGoodsIds = require("./services/getAllUserListGoodsIds");
 var updateSkuDisableStatus = require("./services/updateSkuDisableStatus");
 var setPriceUpdateTimestampAndUpdateStatus = require("./services/setPriceUpdateTimestampAndUpdateStatus");
@@ -15,7 +16,10 @@ var goodsCollectionServices = {
 
   saveListGoodsToDb: (userId, listGoods) => saveListGoodsToDb(goodsCollection, userId, listGoods),
 
+  addNewSkusToListGoods: (userId, newSkus) => addNewSkusToListGoods(goodsCollection, userId, newSkus),
+
   updateSkusFields: (userId, updatedSkus) => updateSkusFields(goodsCollection, userId, updatedSkus),
+
   updateSkuDisableStatusToDb: (userId, skuName, disabled) => updateSkuDisableStatus(goodsCollection, userId, skuName, disabled),
 
   createListGoodsCollectionEntity: (userId) => createListGoodsCollectionEntity(goodsCollection, userId),
