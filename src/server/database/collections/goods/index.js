@@ -1,4 +1,5 @@
 var { goodsCollection } = require("../../connections");
+var updateSkusFields = require("./services/updateSkusFields");
 var saveListGoodsToDb = require("./services/saveListGoodsToDb");
 var getListGoodsFromDb = require("./services/getListGoodsFromDb");
 var getAllUserListGoodsIds = require("./services/getAllUserListGoodsIds");
