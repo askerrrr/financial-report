@@ -6,7 +6,7 @@ var setPricesAndDiscounts = async (userId, token, weeklyPricesAndDiscounts) => {
 
     var options = {
       method: "POST",
-      body: JSON.stringify(weeklyPricesAndDiscounts),
+      body: JSON.stringify({ data: weeklyPricesAndDiscounts }),
       headers: { "content-type": "application/json", Authorization: "Bearer " + token },
     };
 
