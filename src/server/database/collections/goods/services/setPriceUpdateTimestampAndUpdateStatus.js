@@ -1,0 +1,37 @@
+var getLastModifiedDate = () => new Date(Date.now() + 3 * 60 * 60 * 1000);
+
+var createQuery = (priceData) => {
+  var query = {};
+  var arrayFilters = [];
+
+  var count = 0;
+  for (var { nmID, status } of priceData) {
+    var isPriceUpdated = status === 2;
+
+    /**
+     * 2 - the product is error-free, and the price and/or discount have been updated
+     * https://dev.wildberries.ru/openapi/work-with-products#tag/Ceny-i-skidki/paths/~1api~1v2~1history~1goods~1task/get
+     */
+
+    var priceStatusKey = `listGoods.$[elem${count}].isPriceUpdated`;
+    query[priceStatusKey] = isPriceUpdated;
+
+    var lastUpdated = getLastModifiedDate();
+    var lastUpdatedKey = `listGoods.$[elem${count}].lastUpdated`;
+    query[lastUpdatedKey] = lastUpdated;
+
+    var optionKey = `elem${count}.id`;
+    arrayFilters.push({ [optionKey]: nmID });
+
+    count++;
+  }
+  return { query, arrayFilters };
+};
+
+var setPriceUpdateTimestampAndUpdateStatus = async (collection, userId, priceData) => {
+  var { query, arrayFilters } = createQuery(priceData);
+  var result = await collection.updateOne({ userId }, { $set: query }, { arrayFilters });
+  return result;
+};
+
+module.exports = setPriceUpdateTimestampAndUpdateStatus;
