@@ -1,8 +1,20 @@
-var elementsEnding = ["-price", "-discount", "-discountedPrice", "-clubDiscountedPrice", "-modal"];
+var elementsEnding = [
+  "-price",
+  "-price-expected",
+  "-discount",
+  "-discount-expected",
+  "-discountedPrice",
+  "-discountedPrice-expected",
+  "-clubDiscountedPrice",
+  "-clubDiscountedPrice-expected",
+  "-modal",
+];
 
 var hideUnnecessaryElements = (skuName) => {
   for (var end of elementsEnding) {
-    document.getElementById(skuName + end).hidden = true;
+    var skuRowElem = document.getElementById(skuName + end);
+
+    if (skuRowElem) skuRowElem.hidden = true;
   }
 };
 
