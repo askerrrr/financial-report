@@ -18,16 +18,11 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
     tr.id = skuName;
 
     var skuNameTd = createTdElement(skuName, skuName, "skuName");
-    var lastFetchTime = getTime(sku?.lastFetch);
 
-    var priceTitle;
-    if (lastFetchTime) {
-      priceTitle = "актуальная на " + lastFetchTime;
-    } else {
-      priceTitle = "";
-    }
+    var priceTitle = "актуальная на ";
+    var lastFetchTime = getTime(sku?.lastFetch, priceTitle);
 
-    var actualPriceTd = createTdElement(price, skuName, "price", priceTitle);
+    var actualPriceTd = createTdElement(price, skuName, "price", lastFetchTime);
     var actualDiscountTd = createTdElement(discount, skuName, "discount");
     var actualDiscountedPriceTd = createTdElement(discountedPrice, skuName, "discountedPrice");
     var actualClubDiscountedPriceTd = createTdElement(
@@ -41,20 +36,14 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
 
     if (currentDayData) {
       var skuDataOfCurrentDay = currentDayData.find((item) => item.nmID === id);
-
-      var lastUpdatedTime = getTime(sku?.lastUpdated);
-      var expectedPriceTitle;
-      if (lastUpdatedTime) {
-        expectedPriceTitle = "установлено последний раз " + lastUpdatedTime;
-      } else {
-        expectedPriceTitle = "";
-      }
+      var expectedPriceTitle = "установлено последний раз ";
+      var lastUpdatedTime = getTime(sku?.lastUpdated, expectedPriceTitle);
 
       var expectedPriceTd = createTdElement(
         skuDataOfCurrentDay.price,
         skuName,
         "price-expected",
-        expectedPriceTitle
+        lastUpdatedTime
       );
 
       var expectedDiscountTd = createTdElement(
