@@ -1,10 +1,10 @@
-var getTime = (fullTime, title) => {
-  if (!fullTime) {
+var getTime = (fullDate, title) => {
+  if (!fullDate) {
     return "";
   }
 
-  var time = fullTime?.split("T")[1]?.split(".")[0];
-  return title + time;
+  var [date, time] = fullDate?.split(".")[0].split("T");
+  return title + time + " " + date;
 };
 
 export default getTime;
