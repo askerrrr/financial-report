@@ -38,7 +38,9 @@ var weekDaySelectorHandler = async (skus, weeklyPricesAndDiscounts, currentDayIn
         expectedXlubDiscountedPriceTdElem.textContent = expectedDiscountedPrice;
 
         // if (selectedWeekDayId !== currentDayIndex) {
-        //   actualItemEndings.map((end) => (document.getElementById(skuName + end).textContent = 0));
+        //   actualItemEndings.map(
+        //     (end) => (document.getElementById(skuName + end).textContent = "неизвестно")
+        //   );
         // } else {
         // }
       }

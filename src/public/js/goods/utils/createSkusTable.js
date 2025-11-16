@@ -1,3 +1,4 @@
+import getTime from "./getTime.js";
 import createTdElement from "./createTdElement.js";
 import openModalButton from "./modal/openModalButton.js";
 import createSkuRowVisibilityButtonHandlerHandler from "./toggleSkuRowVisibility/index.js";
@@ -17,7 +18,16 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
     tr.id = skuName;
 
     var skuNameTd = createTdElement(skuName, skuName, "skuName");
-    var actualPriceTd = createTdElement(price, skuName, "price");
+    var lastFetchTime = getTime(sku?.lastFetch);
+
+    var priceTitle;
+    if (lastFetchTime) {
+      priceTitle = "актуальная на " + lastFetchTime;
+    } else {
+      priceTitle = "";
+    }
+
+    var actualPriceTd = createTdElement(price, skuName, "price", priceTitle);
     var actualDiscountTd = createTdElement(discount, skuName, "discount");
     var actualDiscountedPriceTd = createTdElement(discountedPrice, skuName, "discountedPrice");
     var actualClubDiscountedPriceTd = createTdElement(
@@ -31,7 +41,22 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
 
     if (currentDayData) {
       var skuDataOfCurrentDay = currentDayData.find((item) => item.nmID === id);
-      var expectedPriceTd = createTdElement(skuDataOfCurrentDay.price, skuName, "price-expected");
+
+      var lastUpdatedTime = getTime(sku?.lastUpdated);
+      var expectedPriceTitle;
+      if (lastUpdatedTime) {
+        expectedPriceTitle = "установлено последний раз " + lastUpdatedTime;
+      } else {
+        expectedPriceTitle = "";
+      }
+
+      var expectedPriceTd = createTdElement(
+        skuDataOfCurrentDay.price,
+        skuName,
+        "price-expected",
+        expectedPriceTitle
+      );
+
       var expectedDiscountTd = createTdElement(
         skuDataOfCurrentDay.discount,
         skuName,
