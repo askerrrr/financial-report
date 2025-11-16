@@ -1,29 +1,46 @@
 import calcDiscountedPrice from "./calcDiscountedPrice.js";
 
-var weekDaySelectorHandler = async (listGoods, weeklyPricesAndDiscounts) => {
+var actualItemEndings = ["-price", "-discount", "-discountedPrice", "-clubDiscountedPrice"];
+var expectedItemEndings = [
+  "-price-expected",
+  "-discount-expected",
+  "-discountedPrice-expected",
+  "-clubDiscountedPrice-expected",
+];
+
+var weekDaySelectorHandler = async (skus, weeklyPricesAndDiscounts, currentDayIndex) => {
   var weekDaySelector = document.getElementById("week-days-select");
 
   weekDaySelector.addEventListener("change", (e) => {
     var selectedWeekDayId = +e.target.value;
     var pricesAndDiscounts = weeklyPricesAndDiscounts[selectedWeekDayId];
 
-    for (var { skuName, id } of listGoods) {
+    for (var { skuName, id } of skus) {
       var selectedDay = pricesAndDiscounts.find((item) => item.nmID === id);
 
       if (selectedDay) {
-        var priceTdElem = document.getElementById(`${skuName}-price`);
-        priceTdElem.textContent = selectedDay.price;
+        var expectedPriceTdElem = document.getElementById(`${skuName}-price-expected`);
+        expectedPriceTdElem.textContent = selectedDay.price;
 
-        var discountTdElem = document.getElementById(`${skuName}-discount`);
-        discountTdElem.textContent = selectedDay.discount;
+        var expectedDiscountTdElem = document.getElementById(`${skuName}-discount-expected`);
+        expectedDiscountTdElem.textContent = selectedDay.discount;
 
-        var discountedPrice = calcDiscountedPrice(selectedDay);
+        var expectedDiscountedPrice = calcDiscountedPrice(selectedDay);
 
-        var discountedPriceTdElem = document.getElementById(`${skuName}-discountedPrice`);
-        discountedPriceTdElem.textContent = discountedPrice;
+        var expectedDiscountedPriceTdElem = document.getElementById(
+          `${skuName}-discountedPrice-expected`
+        );
+        expectedDiscountedPriceTdElem.textContent = expectedDiscountedPrice;
 
-        var clubDiscountedPriceTdElem = document.getElementById(`${skuName}-clubDiscountedPrice`);
-        clubDiscountedPriceTdElem.textContent = discountedPrice;
+        var expectedXlubDiscountedPriceTdElem = document.getElementById(
+          `${skuName}-clubDiscountedPrice-expected`
+        );
+        expectedXlubDiscountedPriceTdElem.textContent = expectedDiscountedPrice;
+
+        // if (selectedWeekDayId !== currentDayIndex) {
+        //   actualItemEndings.map((end) => (document.getElementById(skuName + end).textContent = 0));
+        // } else {
+        // }
       }
     }
   });

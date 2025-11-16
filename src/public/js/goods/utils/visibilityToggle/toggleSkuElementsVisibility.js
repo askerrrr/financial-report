@@ -10,12 +10,16 @@ var elementsEnding = [
   "-modal",
 ];
 
-var hideUnnecessaryElements = (skuName) => {
+/**
+ * @param {'hide' | 'unhide'} isVisible
+ */
+
+var toggleSkuElementsVisibility = (skuName, isVisible) => {
   for (var end of elementsEnding) {
     var skuRowElem = document.getElementById(skuName + end);
 
-    if (skuRowElem) skuRowElem.hidden = true;
+    if (skuRowElem) skuRowElem.hidden = isVisible === "hide";
   }
 };
 
-export default hideUnnecessaryElements;
+export default toggleSkuElementsVisibility;

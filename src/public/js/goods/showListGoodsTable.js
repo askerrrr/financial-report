@@ -1,15 +1,15 @@
+import setThColSpan from "./utils/setThColSpan.js";
 import getGoodsData from "./utils/getGoodsData.js";
 import createSkusTable from "./utils/createSkusTable.js";
-import enableSkusTable from "./utils/enableSkusTable.js";
 import getCurrentDayMSK from "./utils/getCurrentDayMSK.js";
 import weekDaySelectorHandler from "./utils/weekDaySelector/index.js";
-import enableWeekDaysSelector from "./utils/enableWeekDaysSelector.js";
 import loadListGoodsButtonHandler from "./loadListGoodsButtonHandler.js";
-import enableUploadListGoodsButton from "./utils/enableUploadListGoodsButton.js";
 import setWeekDaySelectorToCurrentDay from "./utils/setWeekDaySelectorToCurrentDay.js";
-import enableWeeklyPricesAndDiscountsFlleUploadButton from "./utils/enableWeeklyPricesAndDiscountsFlleUploadButton.js";
-import enableDownloadWeeklyPricesAndDiscountsFileButton from "./utils/enableDownloadWeeklyPricesAndDiscountsFileButton.js";
-import mergeCurrentDayPricesAndDiscountsIntoListGoods from "./utils/weekDaySelector/mergeCurrentDayPricesAndDiscountsIntoListGoods.js";
+import toggleSkuTableVisibillity from "./utils/visibilityToggle/toggleSkuTableVisibillity.js";
+import toggleWeekDaysSelectorVisibility from "./utils/visibilityToggle/toggleWeekDaysSelectorVisibility.js";
+import toggleUploadListGoodsButtonVisibility from "./utils/visibilityToggle/toggleUploadListGoodsButtonVisibility.js";
+import toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility from "./utils/visibilityToggle/toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility.js";
+import toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility from "./utils/visibilityToggle/toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility.js";
 
 var showListGoodsTable = async () => {
   var { listGoods, weeklyPricesAndDiscounts } = await getGoodsData();
@@ -36,46 +36,49 @@ var showListGoodsTable = async () => {
 export default showListGoodsTable;
 
 var handleEmptySkus = async function () {
-  enableUploadListGoodsButton();
+  toggleUploadListGoodsButtonVisibility("enable");
   await loadListGoodsButtonHandler();
 };
 
 var handleEmptyEnabledSkus = async function (disabledSku) {
-  enableSkusTable("disabled-skus-table");
-  enableWeeklyPricesAndDiscountsFlleUploadButton();
-  enableDownloadWeeklyPricesAndDiscountsFileButton();
+  toggleSkuTableVisibillity("disabled-skus-table", "enable");
+  toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
+  toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
   await createSkusTable(disabledSku, "disabled-skus-tbody");
 };
 
 var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
-  enableSkusTable("enabled-skus-table");
-  enableWeeklyPricesAndDiscountsFlleUploadButton();
-  enableDownloadWeeklyPricesAndDiscountsFileButton();
+  toggleSkuTableVisibillity("enabled-skus-table", "enable");
+  toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
+  toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
   await createSkusTable(enabledSku, "enabled-skus-tbody");
 
   if (disabledSku.length) {
-    enableSkusTable("disabled-skus-table");
+    toggleSkuTableVisibillity("disabled-skus-table", "enable");
     await createSkusTable(disabledSku, "disabled-skus-tbody");
   }
 };
 
-var handleNonEmptyWeeklyPricesAndDiscounts = async function ({ enabledSku, disabledSku }, weeklyPricesAndDiscounts) {
+var handleNonEmptyWeeklyPricesAndDiscounts = async function (
+  { enabledSku, disabledSku },
+  weeklyPricesAndDiscounts
+) {
   var { currentDayName, currentDayIndex } = getCurrentDayMSK();
 
-  enableWeekDaysSelector();
-  enableSkusTable("enabled-skus-table");
+  setThColSpan();
+  toggleWeekDaysSelectorVisibility("enable");
+  toggleSkuTableVisibillity("enabled-skus-table", "enable");
   setWeekDaySelectorToCurrentDay(currentDayName);
-  enableWeeklyPricesAndDiscountsFlleUploadButton();
-  enableDownloadWeeklyPricesAndDiscountsFileButton();
+  toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
+  toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
 
   var currentDayData = weeklyPricesAndDiscounts[currentDayIndex];
-  var { updatedSkus } = mergeCurrentDayPricesAndDiscountsIntoListGoods(enabledSku, currentDayData);
 
-  await createSkusTable(updatedSkus, "enabled-skus-tbody");
-  await weekDaySelectorHandler(enabledSku, weeklyPricesAndDiscounts);
+  await createSkusTable(enabledSku, "enabled-skus-tbody", currentDayData);
+  await weekDaySelectorHandler(enabledSku, weeklyPricesAndDiscounts, currentDayIndex);
 
   if (disabledSku.length) {
-    enableSkusTable("disabled-skus-table");
-    await createSkusTable(disabledSku, "disabled-skus-tbody");
+    toggleSkuTableVisibillity("disabled-skus-table", "enable");
+    await createSkusTable(disabledSku, "disabled-skus-tbody", currentDayData);
   }
 };
