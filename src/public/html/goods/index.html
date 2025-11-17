@@ -10,9 +10,7 @@
   <body>
     <div class="top-controls">
       <button id="download-weekly-prices-file" hidden>Скачать цены на неделю</button>
-      <button id="upload-weekly-prices-and-discounts-file" type="button" hidden>
-        Загрузить цены на неделю
-      </button>
+      <button id="upload-weekly-prices-and-discounts-file" type="button" hidden>Загрузить цены на неделю</button>
     </div>
     <div id="week-days" hidden>
       <label for="week-days-select">Показать цены на:</label>
@@ -39,19 +37,7 @@
           <th>||</th>
         </tr>
       </thead>
-      <tbody id="enabled-skus-tbody">
-        <tr>
-          <td></td>
-          <td>Актуальная</td>
-          <td>Запланированная</td>
-          <td>Актуальная</td>
-          <td>Запланированная</td>
-          <td>Актуальная</td>
-          <td>Запланированная</td>
-          <td>Актуальная</td>
-          <td title="sfsdfsdf">Запланированная</td>
-        </tr>
-      </tbody>
+      <tbody id="enabled-skus-tbody"></tbody>
     </table>
     <table id="disabled-skus-table" class="skus-table" hidden>
       <thead id="disabled-skus-thead">
@@ -64,13 +50,7 @@
     </table>
     <form enctype="multipart/form-data" id="upload-form" hidden>
       <label for="input-field" class="input-file">
-        <input
-          type="file"
-          name="file"
-          id="input-field"
-          multiple
-          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        />
+        <input type="file" name="file" id="input-field" multiple accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
       </label>
     </form>
     <script src="/js/goods/index.js" type="module"></script>

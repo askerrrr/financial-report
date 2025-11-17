@@ -4,6 +4,7 @@ import createSkusTable from "./utils/createSkusTable.js";
 import getCurrentDayMSK from "./utils/getCurrentDayMSK.js";
 import weekDaySelectorHandler from "./utils/weekDaySelector/index.js";
 import loadListGoodsButtonHandler from "./loadListGoodsButtonHandler.js";
+import prependHeaderRowToTbody from "./utils/prependHeaderRowToTbody.js";
 import setWeekDaySelectorToCurrentDay from "./utils/setWeekDaySelectorToCurrentDay.js";
 import toggleSkuTableVisibillity from "./utils/visibilityToggle/toggleSkuTableVisibillity.js";
 import toggleWeekDaysSelectorVisibility from "./utils/visibilityToggle/toggleWeekDaysSelectorVisibility.js";
@@ -59,13 +60,11 @@ var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
   }
 };
 
-var handleNonEmptyWeeklyPricesAndDiscounts = async function (
-  { enabledSku, disabledSku },
-  weeklyPricesAndDiscounts
-) {
+var handleNonEmptyWeeklyPricesAndDiscounts = async function ({ enabledSku, disabledSku }, weeklyPricesAndDiscounts) {
   var { currentDayName, currentDayIndex } = getCurrentDayMSK();
 
   setThColSpan();
+  prependHeaderRowToTbody()
   toggleWeekDaysSelectorVisibility("enable");
   toggleSkuTableVisibillity("enabled-skus-table", "enable");
   setWeekDaySelectorToCurrentDay(currentDayName);
