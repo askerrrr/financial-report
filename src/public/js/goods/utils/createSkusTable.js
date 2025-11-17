@@ -1,47 +1,122 @@
+import getTime from "./getTime.js";
 import createTdElement from "./createTdElement.js";
 import openModalButton from "./modal/openModalButton.js";
-import disableSkuButtonHandler from "./disableSku/index.js";
+import createSkuRowVisibilityButtonHandlerHandler from "./toggleSkuRowVisibility/index.js";
+import calcDiscountedPrice from "./weekDaySelector/calcDiscountedPrice.js";
 
 /**
  * @param {'enabled-skus-tbody' | 'disabled-skus-tbody'} tbodyID
  */
 
-var createSkusTable = async (skus, tbodyID) => {
+var createSkusTable = async (skus, tbodyID, currentDayData) => {
   var tbody = document.getElementById(tbodyID);
 
   for (var sku of skus) {
-    let { skuName, price, discount, discountedPrice, clubDiscountedPrice } = sku;
+    let { id, skuName, price, discount, discountedPrice, clubDiscountedPrice } = sku;
 
     var tr = document.createElement("tr");
     tr.id = skuName;
 
     var skuNameTd = createTdElement(skuName, skuName, "skuName");
-    var priceTd = createTdElement(price, skuName, "price");
-    var discountTd = createTdElement(discount, skuName, "discount");
-    var discountedPriceTd = createTdElement(discountedPrice, skuName, "discountedPrice");
-    var clubDiscountedPriceTd = createTdElement(
+
+    var priceTitle = "актуальная на ";
+    var lastFetchTime = getTime(sku?.lastFetch, priceTitle);
+
+    var actualPriceTd = createTdElement(price, skuName, "price", lastFetchTime);
+    var actualDiscountTd = createTdElement(discount, skuName, "discount");
+    var actualDiscountedPriceTd = createTdElement(discountedPrice, skuName, "discountedPrice");
+    var actualClubDiscountedPriceTd = createTdElement(
       clubDiscountedPrice,
       skuName,
       "clubDiscountedPrice"
     );
 
     var modalButton = await openModalButton(sku);
-    var disableButton = disableSkuButtonHandler(skuName);
+    var skuRowVisibilityButtonHandler = createSkuRowVisibilityButtonHandlerHandler(skuName, id);
+
+    if (currentDayData) {
+      var skuDataOfCurrentDay = currentDayData.find((item) => item.nmID === id);
+      var expectedPriceTitle = "установлено последний раз ";
+      var lastUpdatedTime = getTime(sku?.lastUpdated, expectedPriceTitle);
+
+      var expectedPriceTd = createTdElement(
+        skuDataOfCurrentDay.price,
+        skuName,
+        "price-expected",
+        lastUpdatedTime
+      );
+
+      var expectedDiscountTd = createTdElement(
+        skuDataOfCurrentDay.discount,
+        skuName,
+        "discount-expected"
+      );
+
+      var expectedDiscountedPrice = calcDiscountedPrice(skuDataOfCurrentDay);
+      var expectedDiscountedPriceTd = createTdElement(
+        expectedDiscountedPrice,
+        skuName,
+        "discountedPrice-expected"
+      );
+
+      var expectedClubDiscountedPriceTd = createTdElement(
+        expectedDiscountedPrice,
+        skuName,
+        "clubDiscountedPrice-expected"
+      );
+
+      if (tbodyID === "disabled-skus-tbody") {
+        actualPriceTd.hidden = true;
+        actualDiscountTd.hidden = true;
+        actualDiscountedPriceTd.hidden = true;
+        actualClubDiscountedPriceTd.hidden = true;
+        expectedPriceTd.hidden = true;
+        expectedDiscountTd.hidden = true;
+        expectedDiscountedPriceTd.hidden = true;
+        expectedClubDiscountedPriceTd.hidden = true;
+
+        skuRowVisibilityButtonHandler.setAttribute("disbl", "");
+        skuRowVisibilityButtonHandler.textContent = "включить";
+        modalButton.hidden = true;
+      }
+
+      tr.append(
+        skuNameTd,
+        actualPriceTd,
+        expectedPriceTd,
+        actualDiscountTd,
+        expectedDiscountTd,
+        actualDiscountedPriceTd,
+        expectedDiscountedPriceTd,
+        actualClubDiscountedPriceTd,
+        expectedClubDiscountedPriceTd,
+        modalButton,
+        skuRowVisibilityButtonHandler
+      );
+
+      tbody.append(tr);
+      continue;
+    }
 
     if (tbodyID === "disabled-skus-tbody") {
-      modalButton.disabled = true;
-      disableButton.setAttribute("disbl", "");
-      disableButton.textContent = "включить";
+      actualPriceTd.hidden = true;
+      actualDiscountTd.hidden = true;
+      actualDiscountedPriceTd.hidden = true;
+      actualClubDiscountedPriceTd.hidden = true;
+
+      skuRowVisibilityButtonHandler.setAttribute("disbl", "");
+      skuRowVisibilityButtonHandler.textContent = "включить";
+      modalButton.hidden = true;
     }
 
     tr.append(
       skuNameTd,
-      priceTd,
-      discountTd,
-      discountedPriceTd,
-      clubDiscountedPriceTd,
+      actualPriceTd,
+      actualDiscountTd,
+      actualDiscountedPriceTd,
+      actualClubDiscountedPriceTd,
       modalButton,
-      disableButton
+      skuRowVisibilityButtonHandler
     );
 
     tbody.append(tr);

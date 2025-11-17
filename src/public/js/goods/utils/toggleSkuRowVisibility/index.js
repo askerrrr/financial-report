@@ -1,19 +1,18 @@
 import createButton from "../modal/createButton.js";
+import getConfirmMessage from "./getConfirmMessage.js";
 import insertSkuRowToTable from "./insertSkuRowToTable.js";
 import sendNewDisableStatus from "./sendNewDisableStatus.js";
 import deleteSkuRowFromTable from "./deleteSkuRowFromTable.js";
 import disableDisabledTableIfEmpty from "./disableDisabledTableIfEmpty.js";
 import changeHiddenStatusOfSkusTable from "./changeSkuTableHiddenStatus.js";
 import changeDisableStatusOfModalButton from "./changeDisableStatusOfModalButton.js";
+import toggleSkuElementsVisibility from "../visibilityToggle/toggleSkuElementsVisibility.js";
 
 /**
  * @param {'to-enable' | 'to-disable'} msg
  */
 
-var getConfirmMessage = (skuName, msg) =>
-  msg === "to-disable" ? `Скрыть товар <${skuName}> из таблицы?\n` : `Включить товар <${skuName}> в таблицу?\n`;
-
-var disableSkuButtonHandler = (skuName) => {
+var createSkuRowVisibilityButtonHandler = (skuName, id) => {
   var btnId = skuName + "-disable";
   var msg = getConfirmMessage(skuName, "to-disable");
 
@@ -24,7 +23,7 @@ var disableSkuButtonHandler = (skuName) => {
 
       if (confirmed) {
         var hasDisblAttribute = button.hasAttribute("disbl");
-        var statusIsUpdated = await sendNewDisableStatus(skuName, hasDisblAttribute);
+        var statusIsUpdated = await sendNewDisableStatus(skuName, id, hasDisblAttribute);
 
         if (statusIsUpdated) {
           var skuRow = document.getElementById(skuName);
@@ -35,6 +34,7 @@ var disableSkuButtonHandler = (skuName) => {
             changeDisableStatusOfModalButton(skuName, "off");
             deleteSkuRowFromTable(skuRow, "disabled-skus-tbody");
             insertSkuRowToTable(skuRow, "enabled-skus-tbody");
+            toggleSkuElementsVisibility(skuName, "unhide");
             msg = getConfirmMessage(skuName, "to-disable");
             disableDisabledTableIfEmpty();
             return;
@@ -48,6 +48,7 @@ var disableSkuButtonHandler = (skuName) => {
           msg = getConfirmMessage(skuName, "to-enable");
           changeHiddenStatusOfSkusTable("disabled-skus-table", "off");
           disableDisabledTableIfEmpty();
+          toggleSkuElementsVisibility(skuName, "hide");
         }
       }
 
@@ -55,9 +56,9 @@ var disableSkuButtonHandler = (skuName) => {
     },
   };
 
-  var button = createButton("скрыть", null, btnId, handler);
+  var button = createButton("скрыть", "", btnId, handler);
 
   return button;
 };
 
-export default disableSkuButtonHandler;
+export default createSkuRowVisibilityButtonHandler;

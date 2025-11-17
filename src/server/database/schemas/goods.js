@@ -9,6 +9,10 @@ var skuSchema = new Schema(
     discountedPrice: { type: Number, required: false },
     clubDiscountedPrice: { type: Number, required: false },
     disabled: { type: Boolean, default: false },
+    lastFetch: { type: Date, default: () => new Date(Date.now() + 3 * 60 * 60 * 1000) },
+    lastUpdated: { type: Date, required: false },
+    isPriceUpdated: { type: Boolean, required: false },
+    errorText: { type: String, requred: false },
   },
   { _id: false }
 );
