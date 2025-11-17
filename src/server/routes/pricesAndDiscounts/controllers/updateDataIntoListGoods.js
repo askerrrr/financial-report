@@ -4,8 +4,7 @@ var extractRequiredListGoodsData = require("../../goods/services/extractRequired
 
 var updateDataIntoListGoods = async (req, res, next) => {
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
-  var { getAllUserListGoodsIds, addNewSkusToListGoods, updateSkusFields } =
-    req.app.locals.goodsCollectionServices;
+  var { getAllUserListGoodsIds, addNewSkusToListGoods, updateSkusFields } = req.app.locals.goodsCollectionServices;
 
   var data = await getAllUserListGoodsIds();
 
@@ -13,11 +12,7 @@ var updateDataIntoListGoods = async (req, res, next) => {
     if (listGoodsIds.length) {
       var token = await getWBTokenByUserId(userId);
 
-      var { rawListGoods } = await wbapi.getPricesAndDiscountsByListGoods(
-        userId,
-        token,
-        listGoodsIds
-      );
+      var { rawListGoods } = await wbapi.getPricesAndDiscountsByListGoods(userId, token, listGoodsIds);
 
       var { listGoods } = await extractRequiredListGoodsData(rawListGoods);
       var { newSkus, updatedSkus } = splitListGoodsByExistence(listGoodsIds, listGoods);
@@ -29,6 +24,8 @@ var updateDataIntoListGoods = async (req, res, next) => {
       await updateSkusFields(userId, updatedSkus);
     }
   }
+
+  return res.sendStatus(200);
 };
 
 module.exports = updateDataIntoListGoods;
