@@ -18,6 +18,8 @@ var uploadTodayPricesAndDiscounts = async (req, res, next) => {
       await setUploadId(userId, id);
     }
   }
+
+  return res.sendStatus(200);
 };
 
 module.exports = uploadTodayPricesAndDiscounts;
