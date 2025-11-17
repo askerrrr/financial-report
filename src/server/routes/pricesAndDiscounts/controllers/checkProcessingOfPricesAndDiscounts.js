@@ -12,6 +12,8 @@ var checkProcessingOfPricesAndDiscounts = async (req, res, next) => {
     var { historyGoods } = await wbapi.getPriceUploadDetails(userId, uploadId, token);
     await setPriceUpdateTimestampAndUpdateStatus(userId, historyGoods);
   }
+
+  return res.sendStatus(200);
 };
 
 module.exports = checkProcessingOfPricesAndDiscounts;
