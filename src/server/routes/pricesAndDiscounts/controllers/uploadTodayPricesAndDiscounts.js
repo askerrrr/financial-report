@@ -9,6 +9,10 @@ var uploadTodayPricesAndDiscounts = async (req, res, next) => {
   var data = await getAllUserWeeklyPricesAndDiscounts();
 
   for (var { userId, weeklyPricesAndDiscounts } of data) {
+    if (!weeklyPricesAndDiscounts.length) {
+      continue;
+    }
+
     var currentDayData = weeklyPricesAndDiscounts[currentDayIndex];
 
     if (currentDayData) {
