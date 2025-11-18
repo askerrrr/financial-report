@@ -13,7 +13,7 @@ var uploadTodayPricesAndDiscounts = async (req, res, next) => {
 
     if (currentDayData) {
       var token = await getWBTokenByUserId(userId);
-      console.log({ userId, token });
+
       var { id } = await wbapi.setPricesAndDiscounts(userId, token, currentDayData);
       await setUploadId(userId, id);
     }
