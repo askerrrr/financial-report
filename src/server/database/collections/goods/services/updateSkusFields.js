@@ -1,3 +1,5 @@
+var getCurrentTime = () => new Date(Date.now() + 3 * 60 * 60 * 1000);
+
 var createQuery = (skus) => {
   var query = {};
   var arrayFilters = [];
@@ -17,6 +19,8 @@ var createQuery = (skus) => {
     var clubDiscountedPriceKey = `listGoods.$[elem${count}].clubDiscountedPrice`;
     query[clubDiscountedPriceKey] = sku.clubDiscountedPrice;
 
+    var lastFetchDateKey = `listGoods.$[elem${count}].lastFetch`;
+    query[lastFetchDateKey] = getCurrentTime();
     var optionKey = `elem${count}.id`;
 
     arrayFilters.push({ [optionKey]: sku.id });
@@ -30,6 +34,7 @@ var createQuery = (skus) => {
 var updateSkusFields = async (collection, userId, updatedSkus) => {
   var { query, arrayFilters } = createQuery(updatedSkus);
   var result = await collection.updateOne({ userId }, { $set: query }, { arrayFilters });
+  console.log({ result });
   return result;
 };
 
