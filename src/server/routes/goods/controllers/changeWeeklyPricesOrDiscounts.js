@@ -1,4 +1,4 @@
-var setPriceOrDiscounts = async (req, res, next) => {
+var changeWeeklyPricesOrDiscounts = async (req, res, next) => {
   var { updatePriceAndDiscount } = req.app.locals.weeklyPricesAndDiscountsCollectionServices;
 
   var { userId, skuId, price, discount, checkedWeekDays } = req.body;
@@ -6,4 +6,4 @@ var setPriceOrDiscounts = async (req, res, next) => {
   return res.sendStatus(200);
 };
 
-module.exports = setPriceOrDiscounts;
+module.exports = changeWeeklyPricesOrDiscounts;

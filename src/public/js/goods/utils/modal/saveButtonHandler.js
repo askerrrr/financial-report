@@ -16,7 +16,23 @@ var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
         return;
       }
 
-      var result = await sendPriceAndDiscount(item.id, newPrice, newDiscount, checkedWeekDays);
+      var setNewPriceNow = false;
+
+      var confirmed = confirm("Установить новую цену прямо сейчас?");
+
+      if (confirmed) {
+        setNewPriceNow = true;
+      }
+
+      console.log({ setNewPriceNow });
+
+      var result = await sendPriceAndDiscount(
+        item.id,
+        newPrice,
+        newDiscount,
+        checkedWeekDays,
+        setNewPriceNow
+      );
 
       modalOverlay.classList.remove("active");
       document.body.style.overflow = "auto";
