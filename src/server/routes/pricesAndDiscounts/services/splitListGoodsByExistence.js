@@ -3,7 +3,7 @@ var splitListGoodsByExistence = (listGoodsIds, newListGoodsData) => {
   var updatedSkus = [];
 
   for (var sku of newListGoodsData) {
-    var existSku = listGoodsIds.find((item) => item.id === sku.id);
+    var existSku = listGoodsIds.find((id) => id === sku.id);
 
     if (existSku) {
       updatedSkus.push(sku);
