@@ -16,10 +16,10 @@ var createModal = (item) => {
 
   var modalOverlay = createDiv("modalOverlay", "modal-overlay", null, "enableHandlers - yes");
 
-  var priceInput = createPriceInput(item);
+  var priceInput = createPriceInput(item.skuName);
   var priceLabel = createLabel(priceInput, "цена", "wrapinput - yes");
 
-  var discountInput = createDiscountnput(item);
+  var discountInput = createDiscountnput(item.skuName);
   var discountLabel = createLabel(discountInput, "скидка", "wrapinput - yes");
 
   var discountedPriceField = createDiscountedPriceField(item);

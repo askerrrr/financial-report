@@ -1,5 +1,7 @@
 import getCheckedWeekDays from "./getCheckedWeekDays.js";
 import sendPriceAndDiscount from "./sendPriceAndDiscount.js";
+import updateSkuRowActualFields from "./updateSkuRowActualFields.js";
+import updateSkuRowExpectedFields from "./updateSkuRowExpectedFields.js";
 import compareCurrentValuesWithNew from "./compareCurrentValuesWithNew.js";
 
 var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
@@ -17,6 +19,7 @@ var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
       }
 
       var setNewPriceNow = false;
+      var expectedPriceExists = document.getElementById(item.skuName + "-price-expected");
 
       var confirmed = confirm("Установить новую цену прямо сейчас?");
 
@@ -24,19 +27,25 @@ var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
         setNewPriceNow = true;
       }
 
-      console.log({ setNewPriceNow });
-
       var result = await sendPriceAndDiscount(
         item.id,
         newPrice,
         newDiscount,
         checkedWeekDays,
-        setNewPriceNow
+        setNewPriceNow,
+        expectedPriceExists
       );
 
       modalOverlay.classList.remove("active");
       document.body.style.overflow = "auto";
       modalOverlay.remove();
+
+      if (expectedPriceExists) {
+        updateSkuRowExpectedFields(item.skuName, newPrice, newDiscount);
+        return;
+      }
+
+      updateSkuRowActualFields(item.skuName, newPrice, newDiscount);
     },
   };
 };
