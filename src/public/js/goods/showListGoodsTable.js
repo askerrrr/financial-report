@@ -60,11 +60,14 @@ var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
   }
 };
 
-var handleNonEmptyWeeklyPricesAndDiscounts = async function ({ enabledSku, disabledSku }, weeklyPricesAndDiscounts) {
+var handleNonEmptyWeeklyPricesAndDiscounts = async function (
+  { enabledSku, disabledSku },
+  weeklyPricesAndDiscounts
+) {
   var { currentDayName, currentDayIndex } = getCurrentDayMSK();
 
   setThColSpan();
-  prependHeaderRowToTbody()
+  prependHeaderRowToTbody();
   toggleWeekDaysSelectorVisibility("enable");
   toggleSkuTableVisibillity("enabled-skus-table", "enable");
   setWeekDaySelectorToCurrentDay(currentDayName);
