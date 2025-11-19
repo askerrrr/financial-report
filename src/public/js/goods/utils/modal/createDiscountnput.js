@@ -1,30 +1,25 @@
 import calcDiscountedPrice from "../weekDaySelector/calcDiscountedPrice.js";
 
-var createDiscountnput = ({ skuName, discount }) => {
+var createDiscountnput = (skuName) => {
+  var actualDiscount = document.getElementById(skuName + "-discount");
+  var expectedDiscount = document.getElementById(skuName + "-discount-expected");
+
   var input = document.createElement("input");
   input.type = "text";
-  input.value = discount;
   input.className = "input";
-  input.id = skuName + "_discount";
+  input.id = skuName + "-discount-input-modal";
+  input.value = +expectedDiscount?.textContent || +actualDiscount.textContent;
 
   input.addEventListener("keyup", function () {
     var discount = +this.value;
-    var price = document.getElementById(skuName + "_price").value;
+    var price = document.getElementById(skuName + "-price-input-modal").value;
 
     var newDiscountedPriceValue = calcDiscountedPrice({ price, discount });
 
     if (typeof discount === "number" && !isNaN(discount)) {
-      var skuDiscountTdElement = document.getElementById(skuName + "-" + "discount");
-      skuDiscountTdElement.textContent = discount;
+      var modalDiscountedPriceElement = document.getElementById(skuName + "-discountedPrice-modal");
 
-      var modalDiscountedPriceElement = document.getElementById(skuName + "_modal_discountedPrice_field");
       modalDiscountedPriceElement.textContent = newDiscountedPriceValue;
-
-      var skuDiscountedPriceTdElement = document.getElementById(skuName + "-discountedPrice");
-      skuDiscountedPriceTdElement.textContent = newDiscountedPriceValue;
-
-      var skuClubDiscountedPriceTdElement = document.getElementById(skuName + "-clubDiscountedPrice");
-      skuClubDiscountedPriceTdElement.textContent = newDiscountedPriceValue;
     }
   });
 

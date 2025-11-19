@@ -1,4 +1,4 @@
-var sendPriceAndDiscount = async (skuId, price, discount, checkedWeekDays) => {
+var sendPriceAndDiscount = async (sku, checkedWeekDays, setNewPriceNow, expectedPriceExists) => {
   var userId = document.cookie.split("=")[1];
 
   var url = "/goods/set-price-or-discount";
@@ -6,7 +6,13 @@ var sendPriceAndDiscount = async (skuId, price, discount, checkedWeekDays) => {
   var res = await fetch(url, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ userId, skuId, price, discount, checkedWeekDays }),
+    body: JSON.stringify({
+      userId,
+      sku,
+      checkedWeekDays,
+      setNewPriceNow,
+      expectedPriceExists,
+    }),
   });
 
   if (!res.ok) {

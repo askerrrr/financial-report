@@ -1,5 +1,7 @@
 import getCheckedWeekDays from "./getCheckedWeekDays.js";
 import sendPriceAndDiscount from "./sendPriceAndDiscount.js";
+import updateSkuRowActualFields from "./updateSkuRowActualFields.js";
+import updateSkuRowExpectedFields from "./updateSkuRowExpectedFields.js";
 import compareCurrentValuesWithNew from "./compareCurrentValuesWithNew.js";
 
 var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
@@ -16,11 +18,35 @@ var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
         return;
       }
 
-      var result = await sendPriceAndDiscount(item.id, newPrice, newDiscount, checkedWeekDays);
+      var setNewPriceNow = true;
+      var expectedPriceExists = document.getElementById(item.skuName + "-price-expected");
+
+      if (expectedPriceExists) {
+        var confirmed = confirm("Установить новую цену прямо сейчас?");
+
+        if (!confirmed) {
+          setNewPriceNow = false;
+        }
+      }
+
+      var sku = { nmID: item.id, price: newPrice, discount: newDiscount };
 
       modalOverlay.classList.remove("active");
       document.body.style.overflow = "auto";
       modalOverlay.remove();
+
+      var success = await sendPriceAndDiscount(sku, checkedWeekDays, setNewPriceNow, expectedPriceExists);
+      console.log({ success });
+      if (!success) {
+        return;
+      }
+
+      if (expectedPriceExists) {
+        updateSkuRowExpectedFields(item.skuName, newPrice, newDiscount);
+        return;
+      }
+
+      updateSkuRowActualFields(item.skuName, newPrice, newDiscount);
     },
   };
 };
