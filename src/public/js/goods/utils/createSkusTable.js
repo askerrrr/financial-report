@@ -1,8 +1,8 @@
 import getTime from "./getTime.js";
 import createTdElement from "./createTdElement.js";
 import openModalButton from "./modal/openModalButton.js";
-import createSkuRowVisibilityButtonHandlerHandler from "./toggleSkuRowVisibility/index.js";
 import calcDiscountedPrice from "./weekDaySelector/calcDiscountedPrice.js";
+import createSkuRowVisibilityButtonHandler from "./toggleSkuRowVisibility/index.js";
 
 /**
  * @param {'enabled-skus-tbody' | 'disabled-skus-tbody'} tbodyID
@@ -32,27 +32,35 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
     );
 
     var modalButton = await openModalButton(sku);
-    var skuRowVisibilityButtonHandler = createSkuRowVisibilityButtonHandlerHandler(skuName, id);
+    var skuRowVisibilityButtonHandler = createSkuRowVisibilityButtonHandler(skuName, id);
 
     if (currentDayData) {
       var skuDataOfCurrentDay = currentDayData.find((item) => item.nmID === id);
+
       var expectedPriceTitle = "установлено последний раз ";
       var lastUpdatedTime = getTime(sku?.lastUpdated, expectedPriceTitle);
 
       var expectedPriceTd = createTdElement(
-        skuDataOfCurrentDay.price,
+        skuDataOfCurrentDay?.price,
         skuName,
         "price-expected",
         lastUpdatedTime
       );
 
       var expectedDiscountTd = createTdElement(
-        skuDataOfCurrentDay.discount,
+        skuDataOfCurrentDay?.discount,
         skuName,
         "discount-expected"
       );
 
-      var expectedDiscountedPrice = calcDiscountedPrice(skuDataOfCurrentDay);
+      var expectedDiscountedPrice;
+
+      if (skuDataOfCurrentDay) {
+        expectedDiscountedPrice = calcDiscountedPrice(skuDataOfCurrentDay);
+      } else {
+        expectedDiscountedPrice = "не назначего";
+      }
+
       var expectedDiscountedPriceTd = createTdElement(
         expectedDiscountedPrice,
         skuName,
