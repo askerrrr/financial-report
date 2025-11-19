@@ -1,4 +1,5 @@
 var { goodsCollection } = require("../../connections");
+var updateSingleSku = require("./services/updateSingleSku");
 var updateSkusFields = require("./services/updateSkusFields");
 var saveListGoodsToDb = require("./services/saveListGoodsToDb");
 var getListGoodsFromDb = require("./services/getListGoodsFromDb");
@@ -17,6 +18,8 @@ var goodsCollectionServices = {
   saveListGoodsToDb: (userId, listGoods) => saveListGoodsToDb(goodsCollection, userId, listGoods),
 
   addNewSkusToListGoods: (userId, newSkus) => addNewSkusToListGoods(goodsCollection, userId, newSkus),
+
+  updateSingleSku: (userId, sku) => updateSingleSku(goodsCollection, userId, sku),
 
   updateSkusFields: (userId, updatedSkus) => updateSkusFields(goodsCollection, userId, updatedSkus),
 
