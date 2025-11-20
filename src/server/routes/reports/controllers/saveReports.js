@@ -1,10 +1,13 @@
-var { connection } = require("../../../database/");
+var { connection } = require("../../../database");
 var sortYearsTree = require("../services/different/sortYearTree");
 var insertReportToReportTree = require("../services/reportTreeBuilder");
 var parseReports = require("../services/writeAndCalcReportDataFromWBAPI/index");
-var { reportSchemaVersion, recordToSchemaVersion } = require("../../../database/migration/schemaVersioning/reportsCollection");
+var {
+  reportSchemaVersion,
+  recordToSchemaVersion,
+} = require("../../../database/migration/schemaVersioning/reportsCollection");
 
-var writeReportFromWBAPI = async (req, res, next) => {
+var saveReports = async (req, res, next) => {
   try {
     var { saveReportToDb } = req.app.locals.reportCollectionServices;
     var { getReportTree, updateReportTree } = req.app.locals.reportsTreeCollectionServices;
@@ -20,7 +23,12 @@ var writeReportFromWBAPI = async (req, res, next) => {
     try {
       session.startTransaction();
 
-      var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
+      var { years, year, month } = await insertReportToReportTree(
+        dateFrom,
+        dateTo,
+        reportId,
+        reportTree
+      );
       var sortedYears = sortYearsTree(years);
 
       var { taxRate, paidTaxAmount } = await addNewTaxYearToDb(userId, year, session);
@@ -40,10 +48,14 @@ var writeReportFromWBAPI = async (req, res, next) => {
 
       session.commitTransaction();
 
-      res.status(200).json({ reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount });
+      res
+        .status(200)
+        .json({ reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount });
     } catch (e) {
       await session.abortTransaction();
-      return res.status(400).json({ msg: "Произошла ошибка, попробуйте повторить еще раз через 1 минуту" });
+      return res
+        .status(400)
+        .json({ msg: "Произошла ошибка, попробуйте повторить еще раз через 1 минуту" });
     } finally {
       await session.endSession();
     }
@@ -52,4 +64,4 @@ var writeReportFromWBAPI = async (req, res, next) => {
   }
 };
 
-module.exports = writeReportFromWBAPI;
+module.exports = saveReports;
