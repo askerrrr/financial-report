@@ -19,7 +19,7 @@ var deleteReportFromReportTree = async (collection, userId, year, month, reportI
         },
         {
           arrayFilters: [{ "y.year": year }, { "m.month": month }, { "r.reportId": reportId }],
-          session,
+          session: session,
         }
       );
     } else {

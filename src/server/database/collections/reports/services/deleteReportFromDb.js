@@ -10,7 +10,7 @@ var deleteReportFromDb = async (collection, userId, reportId, session) => {
         {
           $pull: { reports: { reportId } },
         },
-        { session }
+        { session: session }
       );
     } else {
       result = await collection.updateOne(

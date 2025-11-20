@@ -19,7 +19,7 @@ var createSaveButton = async (modal, dateFromInput, dateToInput) => {
       var dateTo = dateToInput?.value;
 
       var { validDateTo, isPeriodWithinSameWeek } = await checkDateTo(dateTo, validDateFrom);
-
+      console.log({ validDateTo, isPeriodWithinSameWeek });
       if (!isPeriodWithinSameWeek) {
         await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
         return;

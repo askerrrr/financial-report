@@ -4,7 +4,7 @@ import getDateToByDateFrom from "../../dateUtils/index.js";
 
 var checkDateTo = async (dateTo, dateFrom) => {
   var expectedDateTo = await getDateToByDateFrom(dateFrom);
-
+  console.log({ expectedDateTo });
   if (!dateTo) {
     if (await isFutureDate(expectedDateTo)) {
       throw new Error("Отчет еще не готов...");

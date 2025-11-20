@@ -12,7 +12,11 @@ var changeTaxParamsToDb = async (collection, userId, year, session, ...newTaxPar
 
     var result;
     if (session) {
-      result = await collection.updateOne({ userId, "years.year": year }, { $set: query }, session);
+      result = await collection.updateOne(
+        { userId, "years.year": year },
+        { $set: query },
+        { session: session }
+      );
     } else {
       result = await collection.updateOne({ userId, "years.year": year }, { $set: query });
     }

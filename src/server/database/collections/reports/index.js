@@ -20,7 +20,8 @@ var reportCollectionServices = {
 
   createReportsEntity: (userId) => createReportsEntity(reportCollection, userId),
 
-  saveReportToDb: (userId, report) => saveReportToDb(reportCollection, userId, report),
+  saveReportToDb: (userId, report, session) =>
+    saveReportToDb(reportCollection, userId, report, session),
   saveUpdatedReports: (userId, reports) => saveUpdatedReports(reportCollection, userId, reports),
   saveUpdatedReport: (userId, reportId, report) =>
     saveUpdatedReport(reportCollection, userId, reportId, report),

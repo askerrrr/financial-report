@@ -27,7 +27,6 @@ router.post(
   require("./controllers/reportLoadDelegate"),
   require("./controllers/checkReportExists"),
   require("./controllers/checkReportsLoadingProgress"),
-  require("./controllers/getReportsFromWBAPI"),
   require("./controllers/saveReports")
 );
 
