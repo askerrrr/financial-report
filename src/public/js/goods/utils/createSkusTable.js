@@ -41,14 +41,14 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
       var lastUpdatedTime = getTime(sku?.lastUpdated, expectedPriceTitle);
 
       var expectedPriceTd = createTdElement(
-        skuDataOfCurrentDay?.price,
+        skuDataOfCurrentDay?.price || "",
         skuName,
         "price-expected",
         lastUpdatedTime
       );
 
       var expectedDiscountTd = createTdElement(
-        skuDataOfCurrentDay?.discount,
+        skuDataOfCurrentDay?.discount || "",
         skuName,
         "discount-expected"
       );
@@ -58,7 +58,7 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
       if (skuDataOfCurrentDay) {
         expectedDiscountedPrice = calcDiscountedPrice(skuDataOfCurrentDay);
       } else {
-        expectedDiscountedPrice = "не назначего";
+        expectedDiscountedPrice = "";
       }
 
       var expectedDiscountedPriceTd = createTdElement(

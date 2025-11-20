@@ -5,7 +5,7 @@ var createQuery = (priceData) => {
   var arrayFilters = [];
 
   var count = 0;
-  for (var { nmID, status } of priceData) {
+  for (var { nmID, status, errorText } of priceData) {
     var isPriceUpdated = status === 2;
 
     /**
@@ -19,6 +19,9 @@ var createQuery = (priceData) => {
     var lastUpdated = getLastModifiedDate();
     var lastUpdatedKey = `listGoods.$[elem${count}].lastUpdated`;
     query[lastUpdatedKey] = lastUpdated;
+
+    var errorTextKey = `listGoods.$[elem${count}].errorText`;
+    query[errorTextKey] = errorText;
 
     var optionKey = `elem${count}.id`;
     arrayFilters.push({ [optionKey]: nmID });
