@@ -4,46 +4,56 @@ import sendReportPeriod from "./sendReportPeriod.js";
 import { showLoader, deleteLoader } from "./loader.js";
 import insertNewReportToTree from "../../reportTreeBuilder/insertNewReportToTree/index.js";
 
-var createSaveButton = async (modal, dateFromInput, dateToInput) => {
+var createSaveButton = async (modal, dateFromInput, dateToInput, uploadAllReportsCheckbox) => {
   var button = document.createElement("button");
   button.className = "modal-button modal-button-save";
-  button.textContent = "Сохранить";
+  button.textContent = "Отправить";
 
   button.onclick = async () => {
     try {
       document.body.removeChild(modal);
 
-      var dateFrom = dateFromInput.value;
-      var { validDateFrom } = await checkDateFrom(dateFrom);
+      var uploadAllReports = uploadAllReportsCheckbox.checked;
 
-      var dateTo = dateToInput?.value;
+      if (!uploadAllReports) {
+        var dateFrom = dateFromInput.value;
+        var { validDateFrom } = await checkDateFrom(dateFrom);
 
-      var { validDateTo, isPeriodWithinSameWeek } = await checkDateTo(dateTo, validDateFrom);
-      console.log({ validDateTo, isPeriodWithinSameWeek });
-      if (!isPeriodWithinSameWeek) {
-        await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
-        return;
-      }
+        var dateTo = dateToInput?.value;
 
-      var reportData = await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
+        var { validDateTo, isPeriodWithinSameWeek } = await checkDateTo(dateTo, validDateFrom);
 
-      await showLoader();
+        if (!isPeriodWithinSameWeek) {
+          await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
+          return;
+        }
 
-      if (!reportData) {
+        var reportData = await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
+
+        await showLoader();
+
+        if (!reportData) {
+          await deleteLoader();
+          return;
+        }
+
         await deleteLoader();
+        await insertNewReportToTree(reportData);
+
+        var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
+
+        if (confirmed) {
+          window.location.href = "/reports/" + reportData.reportId;
+        }
+
+        return;
+      } else {
+        var validDateFrom = "";
+        var validDateTo = "";
+        var isPeriodWithinSameWeek;
+        await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek, uploadAllReports);
         return;
       }
-
-      await deleteLoader();
-      await insertNewReportToTree(reportData);
-
-      var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
-
-      if (confirmed) {
-        window.location.href = "/reports/" + reportData.reportId;
-      }
-
-      return;
     } catch (e) {
       console.log(e);
       alert(e.message);
