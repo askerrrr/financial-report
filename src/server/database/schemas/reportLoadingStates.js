@@ -9,6 +9,7 @@ var report_loading_states_schema = new Schema({
   reportsQueue: { type: Array, required: false },
   loadingInProgress: { type: Boolean, default: false },
   abandonedReports: { type: Array, required: false },
+  freshReportPeriodIndex: { type: Number, required: false },
 });
 
 module.exports = report_loading_states_schema;

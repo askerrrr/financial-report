@@ -2,6 +2,7 @@ var urls = [
   { url: "https://advert-api.wildberries.ru/ping", category: "Маркетинг" },
   { url: "https://statistics-api.wildberries.ru/ping", category: "Статистика" },
   { url: "https://seller-analytics-api.wildberries.ru/ping", category: "Аналитика" },
+  { url: "https://discounts-prices-api.wildberries.ru/ping", category: "Цены и скидки" },
 ];
 
 var getStatus = async (url, token) => {

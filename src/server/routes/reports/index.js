@@ -11,22 +11,32 @@ router.get("/:id", require("./controllers/getReportPage"));
 
 router.get("/:userId/:reportId", require("./controllers/getReport"));
 
-router.get("/download-report-as-xlsx/:userId/:reportId", require("./controllers/downloadReportAsXLSX"));
+router.get(
+  "/download-report-as-xlsx/:userId/:reportId",
+  require("./controllers/downloadReportAsXLSX")
+);
 
-router.post("/download-reports-as-zip/", require("./controllers/checkAllCostPricesNonZero"), require("./controllers/downloadReportsAsZip"));
+router.post(
+  "/download-reports-as-zip/",
+  require("./controllers/checkAllCostPricesNonZero"),
+  require("./controllers/downloadReportsAsZip")
+);
 
 router.post(
   "/save-new-report",
   require("./controllers/reportLoadDelegate"),
   require("./controllers/checkReportExists"),
   require("./controllers/checkReportsLoadingProgress"),
-  require("./controllers/getReportsFromWBAPI"),
-  require("./controllers/writeReportFromWBAPI")
+  require("./controllers/saveReports")
 );
 
 router.put("/change", require("./controllers/setCostPriceToSKU"));
 
-router.put("/sku-photo-upload/:skuName", upload.single("sku-photo"), require("./controllers/skuPhotoUpload"));
+router.put(
+  "/sku-photo-upload/:skuName",
+  upload.single("sku-photo"),
+  require("./controllers/skuPhotoUpload")
+);
 
 router.delete("/delete/", require("./controllers/deleteReport"));
 
