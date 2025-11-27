@@ -4,6 +4,7 @@ import createTotalsTable from "./table/createTotalsTable.js";
 import deleteReportHandler from "./table/deleteReportHandler.js";
 import injectBase64IntoImgTags from "./table/services/injectBase64IntoImgTags.js";
 import downloadReportAsXLSXButtonHandler from "./downloadReportAsXLSXButtonHandler.js";
+import setSkusLastCostPricesButtonHandler from "./setSkusLastCostPricesButtonHandler.js";
 
 var userId = document.cookie.split("=")[1];
 
@@ -36,6 +37,7 @@ var main = async () => {
 
   await deleteReportHandler(report);
   await downloadReportAsXLSXButtonHandler(report, downloadReportLink);
+  await setSkusLastCostPricesButtonHandler(skusLastCostPrice)
 };
 
 main();
