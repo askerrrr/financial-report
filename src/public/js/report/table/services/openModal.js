@@ -2,7 +2,7 @@ import sendChangedData from "./sendChangedData.js";
 import updateTotalsTableFields from "./updateTotalsTableFields.js";
 import updateSKUsTableFields from "./updateSKUsTableFields.js";
 
-var openModal = async (costPriceData, valueDisplay) => {
+var openModal = async (skuData, valueDisplay) => {
   var modal = document.createElement("div");
   modal.className = "modal-overlay";
 
@@ -11,7 +11,7 @@ var openModal = async (costPriceData, valueDisplay) => {
 
   var title = document.createElement("h3");
   title.className = "modal-title";
-  title.textContent = "Изменить себестоимость";
+  title.textContent = `Изменить себестоимость для "${skuData.skuName}"`;
 
   var input = document.createElement("input");
   input.className = "modal-input";
@@ -26,11 +26,11 @@ var openModal = async (costPriceData, valueDisplay) => {
   saveButton.textContent = "Сохранить";
   saveButton.addEventListener("click", async () => {
     valueDisplay.textContent = input.value;
-    costPriceData.costPrice = +input.value;
+    skuData.costPrice = +input.value;
 
     document.body.removeChild(modal);
 
-    var { total, sku } = await sendChangedData(costPriceData);
+    var { total, sku } = await sendChangedData(skuData);
 
     await updateSKUsTableFields(sku);
 

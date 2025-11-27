@@ -27,8 +27,8 @@ var getReportData = async () => {
 };
 
 var main = async () => {
-  var { report, skuImages, downloadReportLink } = await getReportData();
-
+  var { report, skuImages, skusLastCostPrice, downloadReportLink } = await getReportData();
+  console.log({ skusLastCostPrice });
   reportInfo(report);
   await createSKUsTable(report);
   await injectBase64IntoImgTags(skuImages);

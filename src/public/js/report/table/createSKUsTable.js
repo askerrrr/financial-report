@@ -15,6 +15,7 @@ var createSKUsTable = async (report) => {
     var dataToChange = {
       userId,
       skuIndex,
+      skuName: sku.skuName,
       reportId,
       skuId: sku.id,
       year: +recordTo.year,
