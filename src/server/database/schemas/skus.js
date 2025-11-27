@@ -1,16 +1,14 @@
 var { Schema } = require("mongoose");
 
-var SKUSchema = new Schema(
+var skuSchema = new Schema(
   {
-    name: { type: String, required: true },
     id: { type: Number, required: true },
-    price: { type: Number, default: 0 },
-    discont: { type: Number, default: 0 },
-    discountedPrice: { type: Number, default: 0 },
+    name: { type: String, required: true },
+    lastCostPrice: { type: Number, required: false },
   },
   { _id: false }
 );
 
-var SKUsSchema = new Schema({ userId: { type: String, required: true }, skus: [{ type: SKUSchema, required: false }] });
+var skusSchema = new Schema({ userId: { type: String, required: true }, skus: [{ type: skuSchema, required: false }] });
 
-module.exports = SKUsSchema;
+module.exports = skusSchema;
