@@ -16,6 +16,7 @@ var createSKUsTable = async (report) => {
       userId,
       skuIndex,
       reportId,
+      skuId: sku.id,
       year: +recordTo.year,
       costPrice: sku.costPrice,
       url: "/reports/change",
@@ -24,12 +25,7 @@ var createSKUsTable = async (report) => {
     var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, null);
     var costPriceInputField = await createInputField(dataToChange);
 
-    var SKUPhotoUploaderTd = createTdElement(
-      SKUPhotoUploader,
-      "photo-cell",
-      skuIndex,
-      "photo-cell"
-    );
+    var SKUPhotoUploaderTd = createTdElement(SKUPhotoUploader, "photo-cell", skuIndex, "photo-cell");
     var skuName = createTdElement(sku.skuName);
     var qty = createTdElement(sku.qty);
     var returnAmount = createTdElement(sku.returnAmount);

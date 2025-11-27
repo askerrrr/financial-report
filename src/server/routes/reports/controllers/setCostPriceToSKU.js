@@ -3,7 +3,8 @@ var { connection } = require("../../../database");
 var updateSkuInArray = require("../services/different/updateSkuInArray");
 
 var setCostPriceToSKU = async (req, res, next) => {
-  var { userId, reportId, skuIndex, costPrice, year } = req.body;
+  var { userId, reportId, skuIndex, costPrice, skuId, year } = req.body;
+  var { updateSkuLastCostPrice } = req.app.locals.goodsCollectionServices;
   var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
@@ -25,6 +26,7 @@ var setCostPriceToSKU = async (req, res, next) => {
     await session.withTransaction(async () => {
       await saveUpdatedReport(userId, reportId, updatedReport, session);
       await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
+      await updateSkuLastCostPrice(userId, skuId, costPrice, session);
     });
 
     var { totalFinalProfit, totalProfitMargin } = updatedReport;
@@ -41,6 +43,7 @@ var setCostPriceToSKU = async (req, res, next) => {
       total: { totalFinalProfit, totalProfitMargin },
     });
   } catch (err) {
+    console.log({ err });
     //log error
     return res.sendStatus(304);
   } finally {
