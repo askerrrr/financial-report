@@ -1,4 +1,5 @@
 var calc = require("../services/calcServices");
+var { connection } = require("../../../database");
 var updateSkuInArray = require("../services/different/updateSkuInArray");
 
 var setCostPriceToSKU = async (req, res, next) => {
@@ -6,27 +7,30 @@ var setCostPriceToSKU = async (req, res, next) => {
   var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
-  var taxParams = await getTaxParamsFromDb(userId, year);
-  var { report } = await getReportById(userId, reportId);
-  var { skus, ...totalParams } = report;
+  var session = await connection.startSession();
 
-  var { updatedSKUS, updatedSKU } = updateSkuInArray(skus, req.body);
+  try {
+    var taxParams = await getTaxParamsFromDb(userId, year);
+    var { report } = await getReportById(userId, reportId);
+    var { skus, ...totalParams } = report;
 
-  var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } =
-    calc.sku.restParams(updatedSKU, costPrice, taxParams);
-  var updatedTaxParams = { insuranceFeePercentage, paidInsuranceFee: recalculatedPaidInsuranceFee };
-  updatedSKUS[skuIndex] = skuWithCalculatedParams;
+    var { updatedSKUS, updatedSKU } = updateSkuInArray(skus, req.body);
 
-  var updatedReport = await calc.total.restParams(totalParams, updatedSKUS);
+    var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = calc.sku.restParams(updatedSKU, costPrice, taxParams);
+    var updatedTaxParams = { insuranceFeePercentage, paidInsuranceFee: recalculatedPaidInsuranceFee };
+    updatedSKUS[skuIndex] = skuWithCalculatedParams;
 
-  var success = await saveUpdatedReport(userId, reportId, updatedReport);
-  await changeTaxParamsToDb(userId, year, (session = null), updatedTaxParams);
+    var updatedReport = await calc.total.restParams(totalParams, updatedSKUS);
 
-  if (success) {
+    await session.withTransaction(async () => {
+      await saveUpdatedReport(userId, reportId, updatedReport, session);
+      await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
+    });
+
     var { totalFinalProfit, totalProfitMargin } = updatedReport;
     var { profitMargin, finalProfit } = skuWithCalculatedParams;
 
-    return res.status(200).json({
+    res.json({
       sku: {
         skuIndex,
         data: {
@@ -36,9 +40,14 @@ var setCostPriceToSKU = async (req, res, next) => {
       },
       total: { totalFinalProfit, totalProfitMargin },
     });
+  } catch (err) {
+    //log error
+    return res.sendStatus(304);
+  } finally {
+    if (session) {
+      await session.endSession();
+    }
   }
-
-  return res.sendStatus(304);
 };
 
 module.exports = setCostPriceToSKU;

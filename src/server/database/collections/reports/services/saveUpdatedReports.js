@@ -1,11 +1,14 @@
 var { DatabaseError } = require("../../../../customError");
 
-var saveUpdatedReports = async (collection, userId, reports) => {
+var saveUpdatedReports = async (collection, userId, reports, session) => {
   try {
     var result = await collection.updateOne(
       { userId },
       {
         $set: { reports },
+      },
+      {
+        session: session,
       }
     );
 
