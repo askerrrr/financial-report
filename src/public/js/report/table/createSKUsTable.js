@@ -1,5 +1,5 @@
 import createTdElement from "./services/createTdElement.js";
-import createInputField from "./services/createInputField.js";
+import openCostPriceModal from "./services/modal/openCostPriceModal.js";
 import createSKUPhotoUploader from "./services/skuPhotoUploader/index.js";
 
 var table = document.getElementById("skus-table");
@@ -24,7 +24,7 @@ var createSKUsTable = async (report) => {
     };
 
     var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, null);
-    var costPriceInputField = await createInputField(dataToChange);
+    var costPriceInputField = await openCostPriceModal(dataToChange);
 
     var SKUPhotoUploaderTd = createTdElement(SKUPhotoUploader, "photo-cell", skuIndex, "photo-cell");
     var skuName = createTdElement(sku.skuName);
