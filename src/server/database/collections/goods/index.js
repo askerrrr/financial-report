@@ -3,6 +3,7 @@ var updateSingleSku = require("./services/updateSingleSku");
 var updateSkusFields = require("./services/updateSkusFields");
 var saveListGoodsToDb = require("./services/saveListGoodsToDb");
 var getListGoodsFromDb = require("./services/getListGoodsFromDb");
+var getSkusLastCostPrice = require("./services/getSkusLastCostPrice");
 var addNewSkusToListGoods = require("./services/addNewSkusToListGoods");
 var getAllUserListGoodsIds = require("./services/getAllUserListGoodsIds");
 var updateSkuDisableStatus = require("./services/updateSkuDisableStatus");
@@ -13,6 +14,8 @@ var createListGoodsCollectionEntity = require("./services/createListGoodsCollect
 
 var goodsCollectionServices = {
   getAllUserListGoodsIds: () => getAllUserListGoodsIds(goodsCollection),
+
+  getSkusLastCostPrice: (userId) => getSkusLastCostPrice(goodsCollection, userId),
 
   getListGoodsFromDb: (userId) => getListGoodsFromDb(goodsCollection, userId),
 
