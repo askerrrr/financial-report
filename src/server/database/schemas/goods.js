@@ -14,6 +14,7 @@ var skuSchema = new Schema(
     lastCostPrice: { type: Number, required: false },
     isPriceUpdated: { type: Boolean, required: false },
     errorText: { type: String, requred: false },
+    deleted: { type: Boolean, default: false },
   },
   { _id: false }
 );
