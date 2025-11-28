@@ -1,8 +1,14 @@
 var { WBAPIError } = require("../../../../customError");
 
-var saveListGoodsToDb = async (collection, userId, listGoods) => {
+var saveListGoodsToDb = async (collection, userId, listGoods, session) => {
   try {
-    var result = await collection.updateOne({ userId }, { $set: { listGoods } });
+    var result;
+
+    if (session) {
+      result = await collection.updateOne({ userId }, { $set: { listGoods } }, { session: session });
+    } else {
+      result = await collection.updateOne({ userId }, { $set: { listGoods } });
+    }
 
     return result;
   } catch (e) {

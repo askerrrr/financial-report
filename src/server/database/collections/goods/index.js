@@ -19,7 +19,7 @@ var goodsCollectionServices = {
 
   getListGoodsFromDb: (userId) => getListGoodsFromDb(goodsCollection, userId),
 
-  saveListGoodsToDb: (userId, listGoods) => saveListGoodsToDb(goodsCollection, userId, listGoods),
+  saveListGoodsToDb: (userId, listGoods, session) => saveListGoodsToDb(goodsCollection, userId, listGoods, session),
 
   addNewSkusToListGoods: (userId, newSkus) => addNewSkusToListGoods(goodsCollection, userId, newSkus),
 
