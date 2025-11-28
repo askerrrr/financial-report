@@ -2,7 +2,27 @@ import createDiv from "./utils/createDiv.js";
 import createTitle from "./utils/createTitle.js";
 import createButton from "./utils/createButton.js";
 
-var skusLastCostPriceModal = () => {
+var getSkusCostPriceContainer = (skusCostPrice) => {
+  var container = createDiv("last-cost-prices-modal");
+
+  var list = createDiv("last-cost-prices-modal__list");
+
+  skusCostPrice.forEach((sku) => {
+    var item = createDiv("last-cost-prices-modal__item");
+
+    var name = createDiv("last-cost-prices-modal__name", sku.skuName);
+
+    var costPrice = createDiv("last-cost-prices-modal__price", sku.lastCostPrice);
+    item.appendChild(name);
+    item.appendChild(costPrice);
+    list.appendChild(item);
+  });
+
+  container.appendChild(list);
+  return container;
+};
+
+var skusLastCostPriceModal = (skusLastCostPrice) => {
   var modal = createDiv("modal-overlay");
   var modalContent = createDiv("modal-content");
 
@@ -23,7 +43,7 @@ var skusLastCostPriceModal = () => {
   var cancelButton = createButton("modal-button modal-button-cancel", cancelButtonTextContent, { event, cb });
 
   buttonsContainer.append(cancelButton, saveButton);
-  modalContent.append(title, buttonsContainer);
+  modalContent.append(title, getSkusCostPriceContainer(skusLastCostPrice), buttonsContainer);
   modal.append(modalContent);
   document.body.append(modal);
 
