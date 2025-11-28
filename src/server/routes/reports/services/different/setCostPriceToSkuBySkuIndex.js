@@ -1,4 +1,4 @@
-var updateSkuInArray = (skus, skuIndex, costPrice) => {
+var setCostPriceToSkuBySkuIndex = (skus, skuIndex, costPrice) => {
   var sku = skus[skuIndex];
 
   sku.costPrice = costPrice;
@@ -8,4 +8,4 @@ var updateSkuInArray = (skus, skuIndex, costPrice) => {
   return { updatedSKUS: skus, updatedSKU: sku };
 };
 
-module.exports = updateSkuInArray;
+module.exports = setCostPriceToSkuBySkuIndex;

@@ -1,6 +1,6 @@
 var calc = require("../services/calcServices");
 var { connection } = require("../../../database");
-var updateSkuInArray = require("../services/different/updateSkuInArray");
+var setCostPriceToSkuBySkuIndex = require("../services/different/setCostPriceToSkuBySkuIndex");
 
 var setCostPriceToSKU = async (req, res, next) => {
   var { userId, reportId, skuIndex, costPrice, skuId, year } = req.body;
@@ -15,7 +15,7 @@ var setCostPriceToSKU = async (req, res, next) => {
     var { report } = await getReportById(userId, reportId);
     var { skus, ...totalParams } = report;
 
-    var { updatedSKUS, updatedSKU } = updateSkuInArray(skus, skuIndex, costPrice);
+    var { updatedSKUS, updatedSKU } = setCostPriceToSkuBySkuIndex(skus, skuIndex, costPrice);
 
     var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = calc.sku.restParams(updatedSKU, taxParams);
     var updatedTaxParams = { insuranceFeePercentage, paidInsuranceFee: recalculatedPaidInsuranceFee };
