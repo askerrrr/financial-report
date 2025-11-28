@@ -5,7 +5,6 @@ var checkPasswd = require("../services/checkPasswd");
 var createUserReportPhotosFolder = require("../services/createUserReportPhotosFolder");
 
 var createUser = async (req, res, next) => {
-  var { createSKUsEntity } = req.app.locals.skusCollectionServices;
   var { createReportsEntity } = req.app.locals.reportCollectionServices;
   var { createTaxParamsEntity } = req.app.locals.taxParamsCollectionServices;
   var { createUserToDb, getUserByLogin } = req.app.locals.userCollectionServices;
@@ -26,7 +25,6 @@ var createUser = async (req, res, next) => {
   }
 
   var userId = randomBytes(10).toString("hex");
-  await createSKUsEntity(userId);
   await createReportsEntity(userId);
   await createTaxParamsEntity(userId);
   await createReportTreeEntity(userId);
