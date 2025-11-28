@@ -17,7 +17,7 @@ var setCostPriceToSKU = async (req, res, next) => {
 
     var { updatedSKUS, updatedSKU } = updateSkuInArray(skus, req.body);
 
-    var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = calc.sku.restParams(updatedSKU, costPrice, taxParams);
+    var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = calc.sku.restParams(updatedSKU, taxParams);
     var updatedTaxParams = { insuranceFeePercentage, paidInsuranceFee: recalculatedPaidInsuranceFee };
     updatedSKUS[skuIndex] = skuWithCalculatedParams;
 
