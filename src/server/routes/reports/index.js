@@ -30,7 +30,7 @@ router.post(
   require("./controllers/saveReports")
 );
 
-router.patch("/change", require("./controllers/setCostPriceToSKU"));
+router.patch("/set-cost-price-to-sku", require("./controllers/setCostPriceToSKU"));
 
 router.patch('/set-cost-price-to-skus', require('./controllers/setCostPriceToSkus'))
 

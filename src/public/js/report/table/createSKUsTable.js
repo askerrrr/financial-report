@@ -20,7 +20,7 @@ var createSKUsTable = async (report) => {
       skuId: sku.id,
       year: +recordTo.year,
       costPrice: sku.costPrice,
-      url: "/reports/change",
+      url: "/reports/set-cost-price-to-sku",
     };
 
     var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, null);
