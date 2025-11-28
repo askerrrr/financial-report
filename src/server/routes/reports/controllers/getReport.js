@@ -9,6 +9,7 @@ var getReport = async (req, res, next) => {
 
   var { report } = await getReportById(userId, reportId);
   var { skusLastCostPrice } = await getSkusLastCostPrice(userId);
+  console.log({ skus: report.skus, skusLastCostPrice });
   var { skuImages } = await collectImagesAsBase64(userId, report.skus);
 
   var { skusLastCostPrice } = await filterCostsForReportSkus(report.skus, skusLastCostPrice);
