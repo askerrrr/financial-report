@@ -32,6 +32,8 @@ router.post(
 
 router.put("/change", require("./controllers/setCostPriceToSKU"));
 
+router.patch('/set-cost-price-to-skus', require('./controllers/setCostPriceToSkus'))
+
 router.put(
   "/sku-photo-upload/:skuName",
   upload.single("sku-photo"),

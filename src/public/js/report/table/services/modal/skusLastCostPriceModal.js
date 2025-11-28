@@ -1,5 +1,6 @@
 import createDiv from "./utils/createDiv.js";
 import createTitle from "./utils/createTitle.js";
+import sendCostPrices from "./sendCostPrices.js";
 import createButton from "./utils/createButton.js";
 
 var getSkusCostPriceContainer = (skusCostPrice) => {
@@ -22,7 +23,7 @@ var getSkusCostPriceContainer = (skusCostPrice) => {
   return container;
 };
 
-var skusLastCostPriceModal = (skusLastCostPrice) => {
+var skusLastCostPriceModal = (reportId, taxYear, skusLastCostPrice) => {
   var modal = createDiv("modal-overlay");
   var modalContent = createDiv("modal-content");
 
@@ -34,6 +35,8 @@ var skusLastCostPriceModal = (skusLastCostPrice) => {
   var saveButtonTextContent = "Установить";
   var event = "click";
   var cb = async () => {
+    var userId = document.cookie.split("=")[1];
+    await sendCostPrices(userId, reportId, taxYear, skusLastCostPrice);
     document.body.removeChild(modal);
   };
   var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb });
