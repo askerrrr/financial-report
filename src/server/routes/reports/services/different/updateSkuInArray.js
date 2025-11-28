@@ -1,4 +1,4 @@
-var updateSkuInArray = (skus, { skuIndex, costPrice }) => {
+var updateSkuInArray = (skus, skuIndex, costPrice) => {
   var sku = skus[skuIndex];
 
   sku.costPrice = costPrice;
