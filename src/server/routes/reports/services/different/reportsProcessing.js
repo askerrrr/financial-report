@@ -16,17 +16,12 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
   var reportId = reports.weeklyFinancialReport[0].realizationreport_id;
 
-  var { years, year, month } = await insertReportToReportTree(
-    dateFrom,
-    dateTo,
-    reportId,
-    reportTree
-  );
+  var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
 
   var sortedYears = sortYearsTree(years);
 
   var { taxRate, paidTaxAmount } = await addNewTaxYearToDb(userId, year, session);
-  var { report } = await parseReports(taxRate, reports);
+  var { report, skuNamesAndIds } = await parseReports(taxRate, reports);
   paidTaxAmount += report.totalTaxAmount;
 
   report.dateTo = dateTo;
