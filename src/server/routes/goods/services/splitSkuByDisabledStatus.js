@@ -2,7 +2,9 @@ var splitSkuByDisabledStatus = (listGoods) => {
   var enabledSku = [];
   var disabledSku = [];
 
-  for (var sku of listGoods) {
+  var filteredListGoods = listGoods.filter((sku) => !sku.deleted);
+
+  for (var sku of filteredListGoods) {
     if (sku.disabled) {
       disabledSku.push(sku);
     } else {
