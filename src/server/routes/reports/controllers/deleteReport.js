@@ -6,35 +6,25 @@ var deleteReport = async (req, res, next) => {
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
   var { userId, reportId, year, month, totalTaxAmount, totalInsuranceFee } = req.body;
 
-  var taxParams = await getTaxParamsFromDb(userId, year);
-
   var session = await connection.startSession();
 
   try {
-    session.startTransaction();
+    await session.withTransaction(async () => {
+      var taxParams = await getTaxParamsFromDb(userId, year, session);
 
-    taxParams.paidTaxAmount -= totalTaxAmount;
-    taxParams.paidInsuranceFee -= totalInsuranceFee;
-    var { paidTaxAmount, paidInsuranceFee } = taxParams;
+      taxParams.paidTaxAmount -= totalTaxAmount;
+      taxParams.paidInsuranceFee -= totalInsuranceFee;
 
-    var results = await Promise.all([
-      deleteReportFromDb(userId, reportId, session),
-      deleteReportFromReportTree(userId, year, month, reportId, session),
-      changeTaxParamsToDb(userId, year, session, {
-        paidTaxAmount,
-        paidInsuranceFee,
-      }),
-    ]);
+      var { paidTaxAmount, paidInsuranceFee } = taxParams;
+      var recalculatedTaxParams = { paidTaxAmount, paidInsuranceFee };
 
-    if (!results.every((i) => Boolean(i) === true)) {
-      throw new Error("");
-    }
-
-    await session.commitTransaction();
+      await deleteReportFromDb(userId, reportId, session);
+      await changeTaxParamsToDb(userId, year, session, recalculatedTaxParams);
+      await deleteReportFromReportTree(userId, year, month, reportId, session);
+    });
 
     return res.sendStatus(200);
   } catch (e) {
-    await session.abortTransaction();
     res.sendStatus(304);
   } finally {
     await session.endSession();

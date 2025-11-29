@@ -1,14 +1,20 @@
 var { DatabaseError } = require("../../../../customError");
 
-var getTaxParamsFromDb = async (collection, userId, year) => {
+var getTaxParamsFromDb = async (collection, userId, year, session) => {
   try {
-    var { years } = await collection.findOne({ userId });
+    var data;
 
-    if (year) {
-      return years.find((date) => date.year == year);
+    if (session) {
+      data = await collection.findOne({ userId }, { session: session });
+    } else {
+      data = await collection.findOne({ userId });
     }
 
-    return years;
+    if (year) {
+      return data.years.find((date) => date.year == year);
+    }
+
+    return data.years;
   } catch (e) {
     throw new DatabaseError(userId, e);
   }
