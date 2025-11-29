@@ -1,5 +1,4 @@
 module.exports = {
-  skusCollectionServices: require("./skus"),
   userCollectionServices: require("./users"),
   goodsCollectionServices: require("./goods"),
   adminCollectionServices: require("./admins"),

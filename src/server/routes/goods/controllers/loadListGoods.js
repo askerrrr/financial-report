@@ -1,5 +1,4 @@
-var wbapi = require("../../reports/services/WBAPI");
-var extractRequiredListGoodsData = require("../services/extractRequiredListGoodsData");
+var listGoodsLoader = require("../services/listGoodsLoader");
 
 var loadListGoods = async (req, res, next) => {
   var { userId } = req.body;
@@ -8,9 +7,11 @@ var loadListGoods = async (req, res, next) => {
 
   var token = await getWBTokenByUserId(userId);
 
-  var { rawListGoogs } = await wbapi.getListGoods(userId, token);
+  if (!token) {
+    return res.sendStatus(304);
+  }
 
-  var { listGoods } = await extractRequiredListGoodsData(rawListGoogs);
+  var { listGoods } = await listGoodsLoader(userId, token);
 
   var success = await saveListGoodsToDb(userId, listGoods);
 

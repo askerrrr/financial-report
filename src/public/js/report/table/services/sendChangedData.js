@@ -2,7 +2,7 @@ var sendChangedData = async (data) => {
   var { url } = data;
 
   var res = await fetch(url, {
-    method: "PUT",
+    method: "PATCH",
     body: JSON.stringify({ ...data }),
     headers: { "Content-Type": "application/json" },
   });

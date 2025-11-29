@@ -4,8 +4,8 @@ var calcFinalProfitPerSKU = require("./finalProfit");
 var calcInsuranceFeePerSKU = require("./insuranceFee");
 var calcPreTaxProfitPerSKU = require("./preTaxProfit");
 
-var calcRestSKUParams = (sku, costPrice, taxParams) => {
-  sku.preTaxProfit = calcPreTaxProfitPerSKU(sku, costPrice);
+var calcRestSKUParams = (sku, taxParams) => {
+  sku.preTaxProfit = calcPreTaxProfitPerSKU(sku);
 
   var { insuranceFeePercentage, paidTaxAmount, mandatoryInsuranceFee } = taxParams;
 

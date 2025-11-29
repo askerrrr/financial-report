@@ -73,7 +73,7 @@ var parseReports = async (taxRate, reports) => {
     totalDeductionOrPayment,
   };
 
-  return { report };
+  return { report, skuNamesAndIds };
 };
 
 module.exports = parseReports;

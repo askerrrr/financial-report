@@ -23,8 +23,10 @@ var reportCollectionServices = {
   saveReportToDb: (userId, report, session) =>
     saveReportToDb(reportCollection, userId, report, session),
   saveUpdatedReports: (userId, reports) => saveUpdatedReports(reportCollection, userId, reports),
-  saveUpdatedReport: (userId, reportId, report) =>
-    saveUpdatedReport(reportCollection, userId, reportId, report),
+
+
+  saveUpdatedReport: (userId, reportId, report, session) =>
+    saveUpdatedReport(reportCollection, userId, reportId, report, session),
 
   updateReportPeriod: (userId, reportId, period) =>
     updateReportPeriod(reportCollection, userId, reportId, period),

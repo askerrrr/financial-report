@@ -11,8 +11,10 @@ var skuSchema = new Schema(
     disabled: { type: Boolean, default: false },
     lastFetch: { type: Date, default: () => new Date(Date.now() + 3 * 60 * 60 * 1000) },
     lastUpdated: { type: Date, required: false },
+    lastCostPrice: { type: Number, required: false },
     isPriceUpdated: { type: Boolean, required: false },
     errorText: { type: String, requred: false },
+    deleted: { type: Boolean, default: false },
   },
   { _id: false }
 );

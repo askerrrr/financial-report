@@ -11,16 +11,9 @@ router.get("/:id", require("./controllers/getReportPage"));
 
 router.get("/:userId/:reportId", require("./controllers/getReport"));
 
-router.get(
-  "/download-report-as-xlsx/:userId/:reportId",
-  require("./controllers/downloadReportAsXLSX")
-);
+router.get("/download-report-as-xlsx/:userId/:reportId", require("./controllers/downloadReportAsXLSX"));
 
-router.post(
-  "/download-reports-as-zip/",
-  require("./controllers/checkAllCostPricesNonZero"),
-  require("./controllers/downloadReportsAsZip")
-);
+router.post("/download-reports-as-zip/", require("./controllers/checkAllCostPricesNonZero"), require("./controllers/downloadReportsAsZip"));
 
 router.post(
   "/save-new-report",
@@ -30,13 +23,11 @@ router.post(
   require("./controllers/saveReports")
 );
 
-router.put("/change", require("./controllers/setCostPriceToSKU"));
+router.patch("/set-cost-price-to-sku", require("./controllers/setCostPriceToSku"));
 
-router.put(
-  "/sku-photo-upload/:skuName",
-  upload.single("sku-photo"),
-  require("./controllers/skuPhotoUpload")
-);
+router.patch("/set-cost-price-to-skus", require("./controllers/setCostPriceToSkus"));
+
+router.put("/sku-photo-upload/:skuName", upload.single("sku-photo"), require("./controllers/skuPhotoUpload"));
 
 router.delete("/delete/", require("./controllers/deleteReport"));
 

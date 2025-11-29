@@ -8,6 +8,10 @@ var checkProcessingOfPricesAndDiscounts = async (req, res, next) => {
   var data = await getAllUserWeeklyPricesAndDiscounts();
 
   for (var { userId, uploadId } of data) {
+    if (!uploadId) {
+      continue;
+    }
+
     var token = await getWBTokenByUserId(userId);
     var { historyGoods } = await wbapi.getPriceUploadDetails(userId, uploadId, token);
     await setPriceUpdateTimestampAndUpdateStatus(userId, historyGoods);
