@@ -2,7 +2,7 @@ var calc = require("../services/calcServices");
 var { connection } = require("../../../database");
 var setCostPriceToSkuBySkuIndex = require("../services/different/setCostPriceToSkuBySkuIndex");
 
-var setCostPriceToSKU = async (req, res, next) => {
+var setCostPriceToSku = async (req, res, next) => {
   var { userId, reportId, skuIndex, costPrice, skuId, year } = req.body;
   var { updateSkuLastCostPrice } = req.app.locals.goodsCollectionServices;
   var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
@@ -53,4 +53,4 @@ var setCostPriceToSKU = async (req, res, next) => {
   }
 };
 
-module.exports = setCostPriceToSKU;
+module.exports = setCostPriceToSku;
