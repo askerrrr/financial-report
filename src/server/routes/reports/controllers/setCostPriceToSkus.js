@@ -29,7 +29,7 @@ var setCostPriceToSkus = async (req, res, next) => {
         updatedSKUS[skuIndex] = skuWithCalculatedParams;
         var { profitMargin, finalProfit } = skuWithCalculatedParams;
 
-        skusDataToClient.push({ sku: { skuIndex, data: { profitMargin, finalProfit } } });
+        skusDataToClient.push({ skuIndex, data: { profitMargin, finalProfit, costprice: lastCostPrice } });
       }
 
       var updatedReport = await calc.total.restParams(totalParams, updatedSKUS);

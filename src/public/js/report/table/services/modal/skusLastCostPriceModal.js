@@ -2,6 +2,8 @@ import createDiv from "./utils/createDiv.js";
 import createTitle from "./utils/createTitle.js";
 import sendCostPrices from "./sendCostPrices.js";
 import createButton from "./utils/createButton.js";
+import updateSKUsTableFields from "../updateSKUsTableFields.js";
+import updateTotalsTableFields from "../updateTotalsTableFields.js";
 
 var getSkusCostPriceContainer = (skusCostPrice) => {
   var container = createDiv("last-cost-prices-modal");
@@ -36,7 +38,15 @@ var skusLastCostPriceModal = (reportId, taxYear, skusLastCostPrice) => {
   var event = "click";
   var cb = async () => {
     var userId = document.cookie.split("=")[1];
-    await sendCostPrices(userId, reportId, taxYear, skusLastCostPrice);
+
+    var { skusDataToClient, total } = await sendCostPrices(userId, reportId, taxYear, skusLastCostPrice);
+
+    await updateTotalsTableFields(total);
+
+    for (var sku of skusDataToClient) {
+      await updateSKUsTableFields(sku);
+    }
+
     document.body.removeChild(modal);
   };
   var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb });
