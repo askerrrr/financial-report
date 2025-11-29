@@ -1,5 +1,6 @@
 var { goodsCollection } = require("../../connections");
 var updateSingleSku = require("./services/updateSingleSku");
+var deleteListGoods = require("./services/deleteListGoods");
 var updateSkusFields = require("./services/updateSkusFields");
 var saveListGoodsToDb = require("./services/saveListGoodsToDb");
 var getListGoodsFromDb = require("./services/getListGoodsFromDb");
@@ -34,6 +35,8 @@ var goodsCollectionServices = {
   createListGoodsCollectionEntity: (userId) => createListGoodsCollectionEntity(goodsCollection, userId),
 
   setPriceUpdateTimestampAndUpdateStatus: (userId, priceData) => setPriceUpdateTimestampAndUpdateStatus(goodsCollection, userId, priceData),
+
+  deleteListGoodsFromDb: (userId, session) => deleteListGoods(goodsCollection, userId, session),
 };
 
 module.exports = goodsCollectionServices;
