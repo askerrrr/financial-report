@@ -29,7 +29,7 @@ var skusLastCostPriceModal = (reportId, taxYear, skusLastCostPrice) => {
   var modal = createDiv("modal-overlay");
   var modalContent = createDiv("modal-content");
 
-  var titleContent = `Себестоимость будет изменена для этих товаров`;
+  var titleContent = `Последние себестоимости для:`;
   var title = createTitle("modal-title", titleContent);
 
   var buttonsContainer = createDiv("modal-buttons");
