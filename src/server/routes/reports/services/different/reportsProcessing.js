@@ -6,7 +6,7 @@ var addNewSkusToListGoods = require("./addNewSkusToListGoods");
 var insertReportToReportTree = require("../reportTreeBuilder");
 var schemaVersioning = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
-var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
+var reportsProcessing = async (userId, dateFrom, dateTo, isCrossYearReport, session) => {
   var { saveReportToDb } = dbutils.reportCollectionServices;
   var { getWBTokenByUserId } = dbutils.tokenCollectionServices;
   var { getListGoodsFromDb, saveListGoodsToDb } = dbutils.goodsCollectionServices;
@@ -18,7 +18,12 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
   var reportId = reports.weeklyFinancialReport[0].realizationreport_id;
 
-  var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
+  var { years, year, month } = await insertReportToReportTree(
+    dateFrom,
+    dateTo,
+    reportId,
+    reportTree
+  );
 
   var sortedYears = sortYearsTree(years);
 

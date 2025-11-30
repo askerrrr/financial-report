@@ -7,8 +7,18 @@ var saveReports = async (req, res, next) => {
   try {
     var session = await connection.startSession();
     await session.withTransaction(async () => {
+      var startYear = dateFrom.split("-")[0];
+      var endYear = dateTo.split("-")[0];
       try {
-        var data = await reportsProcessing(userId, dateFrom, dateTo, session);
+        var data;
+        var isCrossYearReport = false;
+
+        if (startYear === endYear) {
+          data = await reportsProcessing(userId, dateFrom, dateTo, isCrossYearReport, session);
+        } else {
+          isCrossYearReport = true;
+          data = await reportsProcessing(userId, dateFrom, dateTo, isCrossYearReport, session);
+        }
 
         res.json(data);
       } catch (e) {
