@@ -64,10 +64,17 @@ var reportSchema = new Schema(
     totalFinalProfit: numberOptions,
     totalProfitMargin: numberOptions,
     taxRate: { type: Number, default: 6 },
+    nextYearTaxRate: { type: Number, required: false },
     recordTo: { type: recordToSchema, requred: true },
     skus: [{ type: SKUSchema, required: true }],
     schemaVersion: { type: Number },
     crossesTaxYears: { type: Boolean, default: false },
+    currentYearRetailAmount: { type: Number, required: false },
+    nextYearRetailAmount: { type: Number, required: false },
+    currentYearTaxAmount: { type: Number, required: false },
+    nextYearTaxAmount: { type: Number, required: false },
+    currentYearInsuranceFee: { type: Number, required: false },
+    nextYearInsuranceFee: { type: Number, required: false },
   },
   { _id: false }
 );
