@@ -56,7 +56,7 @@ var reportSchema = new Schema(
     totalPaidAcceptance: numberOptions,
     totalAdvertisingCosts: numberOptions,
     totalDeductionOrPayment: numberOptions,
-    TotalAdditionalPayment: numberOptions,
+    totalAdditionalPayment: numberOptions,
     totalTaxAmount: numberOptions,
     totalInsuranceFee: numberOptions,
     totalProfit: numberOptions,
