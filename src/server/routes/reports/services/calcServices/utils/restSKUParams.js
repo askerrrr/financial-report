@@ -1,4 +1,4 @@
-var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
+var shortNum = require("../../reportParsing/shortNum");
 var calcProfitMargin = require("./profitMargin");
 var calcFinalProfitPerSKU = require("./finalProfit");
 var calcInsuranceFeePerSKU = require("./insuranceFee");

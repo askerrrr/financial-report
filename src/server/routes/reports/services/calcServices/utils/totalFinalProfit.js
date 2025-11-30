@@ -1,4 +1,4 @@
-var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
+var shortNum = require("../../reportParsing/shortNum");
 
 var calcTotalFinalProfit = (skus) => {
   var totalFinalProfit = skus.reduce((acc, sku) => acc + sku.finalProfit, 0);

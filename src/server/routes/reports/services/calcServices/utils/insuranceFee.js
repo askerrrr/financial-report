@@ -1,4 +1,4 @@
-var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
+var shortNum = require("../../reportParsing/shortNum");
 
 var calcInsuranceFeePerSKU = (preTaxProfit, insuranceFeePercentage) => {
   if (insuranceFeePercentage == 0) {

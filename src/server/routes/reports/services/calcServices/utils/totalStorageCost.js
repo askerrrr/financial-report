@@ -1,4 +1,4 @@
-var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
+var shortNum = require("../../reportParsing/shortNum");
 
 var calcTotalStorageCost = async (report) => {
   var totalStorageCost = report.reduce((acc, sku) => acc + sku.storage_fee, 0);

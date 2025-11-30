@@ -1,4 +1,4 @@
-var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
+var shortNum = require("../../reportParsing/shortNum");
 
 var calcTotalPreTaxProfit = (skus) => {
   var totalPreTaxProfit = skus.reduce((acc, sku) => acc + sku.preTaxProfit, 0);

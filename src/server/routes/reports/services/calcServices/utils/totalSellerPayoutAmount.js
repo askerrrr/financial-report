@@ -1,4 +1,4 @@
-var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
+var shortNum = require("../../reportParsing/shortNum");
 
 var calcTotalSellerPayoutAmount = (skus) => {
   var totalSellerPayoutAmount = skus.reduce((acc, sku) => acc + sku.sellerPayoutAmount, 0);

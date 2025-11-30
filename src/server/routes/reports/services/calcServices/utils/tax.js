@@ -1,4 +1,4 @@
-var shortNum = require("../../writeAndCalcReportDataFromWBAPI/shortNum");
+var shortNum = require("../../reportParsing/shortNum");
 
 var calcTaxPerSKU = (retailAmount, taxRate) => {
   if (taxRate === 0) {
