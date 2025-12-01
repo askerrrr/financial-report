@@ -3,8 +3,10 @@ var sortYearsTree = require("./sortYearTree");
 var parseReports = require("../reportParsing");
 var dbutils = require("../../../../database/collections");
 var addNewSkusToListGoods = require("./addNewSkusToListGoods");
+var splitReportSkusByYear = require("./splitReportSkusByYear");
 var insertReportToReportTree = require("../reportTreeBuilder");
 var schemaVersioning = require("../../../../database/migration/schemaVersioning/reportsCollection");
+const calc = require("../calcServices");
 
 var reportsProcessing = async (userId, dateFrom, dateTo, isCrossYearReport, session) => {
   var { saveReportToDb } = dbutils.reportCollectionServices;
@@ -18,12 +20,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, isCrossYearReport, sess
   var reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
   var reportId = reports.weeklyFinancialReport[0].realizationreport_id;
 
-  var { years, year, month } = await insertReportToReportTree(
-    dateFrom,
-    dateTo,
-    reportId,
-    reportTree
-  );
+  var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
 
   var sortedYears = sortYearsTree(years);
 
@@ -39,8 +36,16 @@ var reportsProcessing = async (userId, dateFrom, dateTo, isCrossYearReport, sess
   report.userId = userId;
   report.dateFrom = dateFrom;
   report.reportId = reportId;
+  report.crossesTaxYears = isCrossYearReport;
   report.schemaVersion = schemaVersioning.reportSchemaVersion;
   report.recordTo = { year, month, schemaVersion: schemaVersioning.recordToSchemaVersion };
+
+  if (isCrossYearReport) {
+    var { startYearSkus, endYearSkus } = splitReportSkusByYear(reports.weeklyFinancialReport);
+    var startYearSkusRetailAmount = calc.total.retailAmount(startYearSkus);
+    var endYearSkusRetailAmount = calc.total.retailAmount(endYearSkus);
+    
+  }
 
   await saveReportToDb(userId, report, session);
   await updateReportTree(userId, sortedYears, session);

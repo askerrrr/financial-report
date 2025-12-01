@@ -40,7 +40,7 @@ var parseReports = async (taxRate, reports) => {
     sku.profit = calc.sku.profit(sku);
     sku.averageProfit = calc.sku.averageProfit(sku);
 
-    skus.push({ ...sku });
+    skus.push(sku);
   }
 
   skus = await truncateSKUNums(skus);
