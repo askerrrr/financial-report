@@ -42,5 +42,6 @@ total.restParams = require("./utils/restReportTotalParams");
 
 calc.sku = sku;
 calc.total = total;
+calc.sum = require("./utils/sum");
 
 module.exports = calc;
