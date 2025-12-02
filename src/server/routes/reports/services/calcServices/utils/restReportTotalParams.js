@@ -1,19 +1,13 @@
+var sum = require("./sum");
 var calcProductCosts = require("./totalProductCosts");
-var calcTotalInsuranceFee = require("./totalInsuranceFee");
-var calcTotalFinalProfit = require("./totalFinalProfit");
 var calcTotalProfitMargin = require("./totalProfitMargin");
-var calcTotalPreTaxProfit = require("./totalPreTaxProfit");
 
 var calcRestReportTotalParams = (totals, skus) => {
-  totals.totalPreTaxProfit = calcTotalPreTaxProfit(skus);
-
-  totals.totalFinalProfit = calcTotalFinalProfit(skus);
-
+  totals.totalPreTaxProfit = sum(skus, "preTaxProfit").truncate();
+  totals.totalFinalProfit = sum(skus, "finalProfit").truncate();
   totals.totalProductCosts = calcProductCosts(skus);
-
-  totals.totalInsuranceFee = calcTotalInsuranceFee(skus);
-
-  totals.totalProfitMargin = calcTotalProfitMargin(totals.totalRetailAmount, totals.totalFinalProfit);
+  totals.totalInsuranceFee = sum(skus, "insuranceFee");
+  totals.totalProfitMargin = calcTotalProfitMargin(totals).truncate();
 
   return { ...totals, skus };
 };

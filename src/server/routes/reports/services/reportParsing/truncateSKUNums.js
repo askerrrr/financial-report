@@ -1,16 +1,12 @@
-var shortNum = require("./shortNum");
-
 var truncateSKUNums = (skus) =>
-  Promise.all(
-    skus.map((sku) => {
-      for (var key of Object.keys(sku)) {
-        if (typeof sku[key] == "number") {
-          sku[key] = shortNum(sku[key]);
-        }
+  skus.map((sku) => {
+    for (var key of Object.keys(sku)) {
+      if (typeof sku[key] == "number" && !isNaN(sku[key])) {
+        sku[key] = sku[key].truncate();
       }
+    }
 
-      return sku;
-    })
-  );
+    return sku;
+  });
 
 module.exports = truncateSKUNums;

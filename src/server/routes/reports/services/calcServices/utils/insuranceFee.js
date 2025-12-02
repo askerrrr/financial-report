@@ -1,5 +1,3 @@
-var shortNum = require("../../reportParsing/shortNum");
-
 var calcInsuranceFeePerSKU = (preTaxProfit, insuranceFeePercentage) => {
   if (insuranceFeePercentage == 0) {
     return 0;
@@ -7,7 +5,7 @@ var calcInsuranceFeePerSKU = (preTaxProfit, insuranceFeePercentage) => {
 
   var insuranceFee = (preTaxProfit * insuranceFeePercentage) / 100;
 
-  return shortNum(insuranceFee);
+  return insuranceFee;
 };
 
 module.exports = calcInsuranceFeePerSKU;

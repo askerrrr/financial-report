@@ -18,12 +18,9 @@ sku.storageCostFromPaidStorageReport = require("./utils/SKUStorageCostFromPaidSt
 sku.restParams = require("./utils/restSKUParams");
 
 total.sold = require("./utils/totalSold");
-total.taxAmount = require("./utils/totalTaxAmount");
 total.storageCost = require("./utils/totalStorageCost");
 total.profitMargin = require("./utils/totalProfitMargin");
 total.restParams = require("./utils/restReportTotalParams");
-total.deliveryCost = require("./utils/totalDeliveryCost");
-total.sellerPayoutAmount = require('./utils/totalSellerPayoutAmount')
 
 calc.sku = sku;
 calc.total = total;

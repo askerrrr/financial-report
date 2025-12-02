@@ -1,17 +1,21 @@
-var shortNum = (num) => {
-  var str = num + "";
+var hasDot = (num) => String(num).split("").includes(".");
 
-  var strIncludesDot = str.split("").includes(".");
-
-  if (!strIncludesDot) {
-    return +str;
+Number.prototype.truncate = function () {
+  if (hasDot(this)) {
+    return +this.toFixed(2);
   }
 
-  var [start, end] = str.split(".");
+  return this;
+};
 
-  var shortenedNum = +[start, end.slice(0, 2)].join(".");
+var shortNum = (n) => {
+  var hasDot = String(n).split("").includes(".");
 
-  return shortenedNum;
+  if (!hasDot) {
+    return n;
+  }
+
+  return +n.toFixed(2);
 };
 
 module.exports = shortNum;

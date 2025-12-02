@@ -1,5 +1,3 @@
-var shortNum = require("../../reportParsing/shortNum");
-
 var calcTaxPerSKU = (retailAmount, taxRate) => {
   if (taxRate === 0) {
     return 0;
@@ -7,7 +5,7 @@ var calcTaxPerSKU = (retailAmount, taxRate) => {
 
   var tax = (retailAmount * taxRate) / 100;
 
-  return shortNum(tax);
+  return tax.truncate();
 };
 
 module.exports = calcTaxPerSKU;

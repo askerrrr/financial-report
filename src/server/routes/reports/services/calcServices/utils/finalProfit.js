@@ -1,9 +1,4 @@
-var shortNum = require("../../reportParsing/shortNum");
-
-var calcFinalProfitPerSKU = (preTaxProfit, insuranceFee, tax = 0) => {
-  var finalProfit = preTaxProfit - insuranceFee - tax;
-
-  return shortNum(finalProfit);
-};
+var calcFinalProfitPerSKU = (preTaxProfit, insuranceFee, tax = 0) =>
+  preTaxProfit - insuranceFee - tax;
 
 module.exports = calcFinalProfitPerSKU;

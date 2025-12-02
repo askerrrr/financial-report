@@ -1,15 +1,14 @@
-var shortNum = require("../../reportParsing/shortNum");
 var calcProfitMargin = require("./profitMargin");
 var calcFinalProfitPerSKU = require("./finalProfit");
 var calcInsuranceFeePerSKU = require("./insuranceFee");
 var calcPreTaxProfitPerSKU = require("./preTaxProfit");
 
 var calcRestSKUParams = (sku, taxParams) => {
-  sku.preTaxProfit = calcPreTaxProfitPerSKU(sku);
+  sku.preTaxProfit = calcPreTaxProfitPerSKU(sku).truncate();
 
   var { insuranceFeePercentage, paidTaxAmount, mandatoryInsuranceFee } = taxParams;
 
-  var newInsuranceFee = calcInsuranceFeePerSKU(sku.preTaxProfit, insuranceFeePercentage);
+  var newInsuranceFee = calcInsuranceFeePerSKU(sku.preTaxProfit, insuranceFeePercentage).truncate();
 
   var isInsuranceFeeIncluded = true;
 
@@ -25,8 +24,8 @@ var calcRestSKUParams = (sku, taxParams) => {
   sku.isCostPriceSet = true;
   sku.insuranceFee = newInsuranceFee;
   sku.isInsuranceFeeIncluded = isInsuranceFeeIncluded;
-  sku.finalProfit = calcFinalProfitPerSKU(sku.preTaxProfit, 0, sku.tax);
-  sku.profitMargin = calcProfitMargin(sku);
+  sku.finalProfit = calcFinalProfitPerSKU(sku.preTaxProfit, 0, sku.tax).truncate();
+  sku.profitMargin = calcProfitMargin(sku).truncate();
 
   var recalculatedPaidInsuranceFee = mandatoryInsuranceFee - sku.insuranceFee + newInsuranceFee;
 

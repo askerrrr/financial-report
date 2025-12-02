@@ -10,7 +10,7 @@ var parseReports = async (taxRate, reports) => {
   var { weeklyFinancialReport, paidStorageReport, totalAdvertisingCosts } = reports;
 
   var totalSold = await calc.total.sold(weeklyFinancialReport);
-  var totalStorageCost = await calc.total.storageCost(weeklyFinancialReport);
+  var totalStorageCost = (await calc.total.storageCost(weeklyFinancialReport)).truncate();
 
   var skuNamesAndIds = getSkuNamesAndIds(weeklyFinancialReport);
 
@@ -38,10 +38,11 @@ var parseReports = async (taxRate, reports) => {
     sku.averageRetailPrice = calc.sku.averageRetailPrice(sku.qty, skuFilteredReport);
     sku.storageCost = calc.sku.storageCost(name, storageDataFromPaidStorageReport);
     sku.averageStorageCost = calc.sku.averageStorageCost(totalStorageCost, totalSold, sku.qty);
-    sku.averageAdvertisingCost = calc.sku.averageAdvertisingCost(
-      skuNamesAndIds.length,
-      totalAdvertisingCosts
-    );
+
+    sku.averageAdvertisingCost = calc.sku
+      .averageAdvertisingCost(skuNamesAndIds.length, totalAdvertisingCosts)
+      .truncate();
+
     sku.profit = calc.sku.profit(sku);
     sku.averageProfit = calc.sku.averageProfit(sku);
 
@@ -51,15 +52,15 @@ var parseReports = async (taxRate, reports) => {
   skus = await truncateSKUNums(skus);
 
   var totalFines = calc.sum(skus, "fines");
-  var totalProfit = calc.sum(skus, "profit");
-  var totalTaxAmount = calc.total.taxAmount(skus);
+  var totalTaxAmount = calc.sum(skus, "tax").truncate();
   var totalReturnAmount = calc.sum(skus, "returnAmount");
-  var totalDeliveryCost = calc.total.deliveryCost(skus);
   var totalRetailAmount = calc.sum(skus, "retailAmount");
   var totalPaidAcceptance = calc.sum(skus, "acceptance");
+  var totalProfit = calc.sum(skus, "profit").truncate();
   var totalAdditionalPayment = calc.sum(skus, "additionalPayment");
+  var totalDeliveryCost = calc.sum(skus, "deliveryCost").truncate();
   var totalDeductionOrPayment = calc.sum(skus, "deductionOrPayment");
-  var totalSellerPayoutAmount = calc.total.sellerPayoutAmount(skus, "sellerPayoutAmount");
+  var totalSellerPayoutAmount = calc.sum(skus, "sellerPayoutAmount").truncate();
 
   var report = {
     skus,
