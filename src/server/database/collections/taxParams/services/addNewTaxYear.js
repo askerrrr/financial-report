@@ -7,7 +7,7 @@ var mandatoryInsuranceFees = [
   { year: 2027, value: 61154 },
 ];
 
-var addNewTaxYearToDb = async (collection, userId, year) => {
+var addNewTaxYearToDb = async (collection, userId, year, session) => {
   try {
     var mandatoryInsuranceFee;
 
@@ -24,7 +24,16 @@ var addNewTaxYearToDb = async (collection, userId, year) => {
         await collection.updateOne(
           { userId },
           {
-            $push: { years: { year: nextYear, mandatoryInsuranceFee, paidTaxAmount: nextYearPaidTaxAmount } },
+            $push: {
+              years: {
+                year: nextYear,
+                mandatoryInsuranceFee,
+                paidTaxAmount: nextYearPaidTaxAmount,
+              },
+            },
+          },
+          {
+            session: session,
           }
         );
       }
@@ -33,7 +42,9 @@ var addNewTaxYearToDb = async (collection, userId, year) => {
     }
 
     var previousYear = year - 1;
-    var previousYearMandatoryInsuranceFee = mandatoryInsuranceFees.find((item) => item.year === previousYear).value;
+    var previousYearMandatoryInsuranceFee = mandatoryInsuranceFees.find(
+      (item) => item.year === previousYear
+    ).value;
     mandatoryInsuranceFee = mandatoryInsuranceFees.find((item) => item.year === year).value;
     var paidTaxAmount = -previousYearMandatoryInsuranceFee;
 
@@ -41,6 +52,9 @@ var addNewTaxYearToDb = async (collection, userId, year) => {
       { userId },
       {
         $push: { years: { year, mandatoryInsuranceFee } },
+      },
+      {
+        session: session,
       }
     );
 
