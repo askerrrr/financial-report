@@ -1,4 +1,4 @@
-var calcAverageProfitPerSKU = (sku) => {
+var calcAverageProfit = (sku) => {
   if (sku.profit == 0 || sku.qty == 0) {
     return 0;
   }
@@ -8,4 +8,4 @@ var calcAverageProfitPerSKU = (sku) => {
   return averageProfit;
 };
 
-module.exports = calcAverageProfitPerSKU;
+module.exports = calcAverageProfit;

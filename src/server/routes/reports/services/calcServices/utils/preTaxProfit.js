@@ -1,6 +1,6 @@
 var truncateNum = require("../../reportParsing/truncateNum");
 
-var calcPreTaxProfitPerSKU = ({ qty, profit, costPrice }) => {
+var calcPreTaxProfit = ({ qty, profit, costPrice }) => {
   if (profit === 0 || qty === 0) {
     return 0;
   }
@@ -9,4 +9,4 @@ var calcPreTaxProfitPerSKU = ({ qty, profit, costPrice }) => {
   return truncateNum(preTaxProfit);
 };
 
-module.exports = calcPreTaxProfitPerSKU;
+module.exports = calcPreTaxProfit;

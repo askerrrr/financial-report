@@ -1,4 +1,4 @@
-var calcInsuranceFeePerSKU = (preTaxProfit, insuranceFeePercentage) => {
+var calcInsuranceFee = (preTaxProfit, insuranceFeePercentage) => {
   if (insuranceFeePercentage == 0) {
     return 0;
   }
@@ -8,4 +8,4 @@ var calcInsuranceFeePerSKU = (preTaxProfit, insuranceFeePercentage) => {
   return insuranceFee;
 };
 
-module.exports = calcInsuranceFeePerSKU;
+module.exports = calcInsuranceFee;

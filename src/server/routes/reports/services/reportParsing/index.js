@@ -27,27 +27,27 @@ var parseReports = async (taxRate, reports) => {
     sku.id = id;
     sku.skuName = name;
     sku.schemaVersion = skuSchemaVersion;
-    sku.qty = await calc.sku.quantity(skuFilteredReport);
+    sku.qty = await calc.quantity(skuFilteredReport);
     sku.fines = calc.sum(skuFilteredReport, "penalty");
     sku.acceptance = calc.sum(skuFilteredReport, "acceptance");
     sku.retailAmount = calc.sum(skuFilteredReport, "retail_amount");
-    sku.tax = calc.sku.tax(sku.retailAmount, taxRate);
+    sku.tax = calc.taxAmount(sku.retailAmount, taxRate);
     sku.returnAmount = calc.sum(skuFilteredReport, "return_amount");
     sku.deliveryCost = calc.sum(skuFilteredReport, "delivery_rub");
     sku.deductionOrPayment = calc.sum(skuFilteredReport, "deduction");
     sku.additionalPayment = calc.sum(skuFilteredReport, "additional_payment");
     sku.sellerPayoutAmount = calc.sum(skuFilteredReport, "ppvz_for_pay");
-    sku.averageRetailPrice = calc.sku.averageRetailPrice(sku.qty, skuFilteredReport);
-    sku.storageCost = calc.sku.storageCost(name, storageDataFromPaidStorageReport);
-    sku.averageStorageCost = calc.sku.averageStorageCost(report.totalStorageCost, report.totalSold, sku.qty);
+    sku.averageRetailPrice = calc.averageRetailPrice(sku.qty, skuFilteredReport);
+    sku.storageCost = calc.storageCost(name, storageDataFromPaidStorageReport);
+    sku.averageStorageCost = calc.averageStorageCost(report.totalStorageCost, report.totalSold, sku.qty);
 
-    sku.averageAdvertisingCost = calc.sku.averageAdvertisingCost(
+    sku.averageAdvertisingCost = calc.averageAdvertisingCost(
       skuNamesAndIds.length,
       totalAdvertisingCosts
     );
 
-    sku.profit = calc.sku.profit(sku);
-    sku.averageProfit = calc.sku.averageProfit(sku);
+    sku.profit = calc.profit(sku);
+    sku.averageProfit = calc.averageProfit(sku);
 
     skus.push({ ...sku });
   }

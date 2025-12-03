@@ -1,4 +1,4 @@
-var calcTaxPerSKU = (retailAmount, taxRate) => {
+var taxAmount = (retailAmount, taxRate) => {
   if (taxRate === 0) {
     return 0;
   }
@@ -8,4 +8,4 @@ var calcTaxPerSKU = (retailAmount, taxRate) => {
   return tax;
 };
 
-module.exports = calcTaxPerSKU;
+module.exports = taxAmount;

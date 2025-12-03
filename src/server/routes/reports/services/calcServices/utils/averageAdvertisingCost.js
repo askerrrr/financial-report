@@ -1,4 +1,4 @@
-var caclAverageAdvertisingCostPerSKU = (totalSKUs, totalAdCampaignCosts) =>
+var caclAverageAdvertisingCost = (totalSKUs, totalAdCampaignCosts) =>
   totalAdCampaignCosts / totalSKUs;
 
-module.exports = caclAverageAdvertisingCostPerSKU;
+module.exports = caclAverageAdvertisingCost;
