@@ -51,8 +51,10 @@ var reportsProcessing = async (userId, dateFrom, dateTo, isCrossYearReport, sess
     report.currentYearRetailAmount = calc.sum(startYearSkus, "retail_amount");
     report.currentYearTaxAmount = calc.taxAmount(report.currentYearRetailAmount, taxRate);
 
+    var nextYear = year + 1;
+    var nextYearTaxParams = await addNewTaxYearToDb(userId, nextYear, session);
     report.nextYearRetailAmount = calc.sum(endYearSkus, "retail_amount");
-    report.nextYearTaxAmount = calc.taxAmount(report.nextYearRetailAmount, taxRate);
+    report.nextYearTaxAmount = calc.taxAmount(report.nextYearRetailAmount, nextYearTaxParams.taxRate);
   }
 
   await saveReportToDb(userId, report, session);
