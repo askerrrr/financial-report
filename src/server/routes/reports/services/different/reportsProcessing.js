@@ -20,7 +20,12 @@ var reportsProcessing = async (userId, dateFrom, dateTo, isCrossYearReport, sess
   var reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
   var reportId = reports.weeklyFinancialReport[0].realizationreport_id;
 
-  var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
+  var { years, year, month } = await insertReportToReportTree(
+    dateFrom,
+    dateTo,
+    reportId,
+    reportTree
+  );
 
   var sortedYears = sortYearsTree(years);
 
@@ -42,9 +47,12 @@ var reportsProcessing = async (userId, dateFrom, dateTo, isCrossYearReport, sess
 
   if (isCrossYearReport) {
     var { startYearSkus, endYearSkus } = splitReportSkusByYear(reports.weeklyFinancialReport);
-    var startYearSkusRetailAmount = calc.total.retailAmount(startYearSkus);
-    var endYearSkusRetailAmount = calc.total.retailAmount(endYearSkus);
-    
+
+    report.currentYearRetailAmount = calc.sum(startYearSkus, "retail_amount");
+    report.currentYearTaxAmount = calc.taxAmount(report.currentYearRetailAmount, taxRate);
+
+    report.nextYearRetailAmount = calc.sum(endYearSkus, "retail_amount");
+    report.nextYearTaxAmount = calc.taxAmount(report.nextYearRetailAmount, taxRate);
   }
 
   await saveReportToDb(userId, report, session);
