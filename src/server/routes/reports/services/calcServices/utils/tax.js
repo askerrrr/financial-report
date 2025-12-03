@@ -5,7 +5,7 @@ var calcTaxPerSKU = (retailAmount, taxRate) => {
 
   var tax = (retailAmount * taxRate) / 100;
 
-  return tax.truncate();
+  return tax;
 };
 
 module.exports = calcTaxPerSKU;

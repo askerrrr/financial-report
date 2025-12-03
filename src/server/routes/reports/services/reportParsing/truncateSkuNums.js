@@ -1,6 +1,6 @@
 var truncateNum = require("./truncateNum");
 
-var truncateSKUNums = (skus) =>
+var truncateSkuNums = (skus) =>
   skus.map((sku) => {
     for (var key in sku) {
       sku[key] = truncateNum(sku[key]);
@@ -9,4 +9,4 @@ var truncateSKUNums = (skus) =>
     return sku;
   });
 
-module.exports = truncateSKUNums;
+module.exports = truncateSkuNums;
