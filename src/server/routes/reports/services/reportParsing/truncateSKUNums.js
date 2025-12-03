@@ -1,9 +1,9 @@
+var truncateNum = require("./truncateNum");
+
 var truncateSKUNums = (skus) =>
   skus.map((sku) => {
-    for (var key of Object.keys(sku)) {
-      if (typeof sku[key] == "number" && !isNaN(sku[key])) {
-        sku[key] = sku[key].truncate();
-      }
+    for (var key in sku) {
+      sku[key] = truncateNum(sku[key]);
     }
 
     return sku;
