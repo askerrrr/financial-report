@@ -3,11 +3,9 @@ var truncateTotals = require("./truncateTotals");
 var truncateSkuNums = require("./truncateSkuNums");
 var getSkuNamesAndIds = require("./getSkuNamesAndIds");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
-var {
-  skuSchemaVersion,
-} = require("../../../../database/migration/schemaVersioning/reportsCollection");
+var { skuSchemaVersion } = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
-var parseReports = async (taxRate, reports) => {
+var parseReports = async (taxRate, reports, isCrossYearReport) => {
   var sku = {};
   var skus = [];
   var report = {};
@@ -31,7 +29,11 @@ var parseReports = async (taxRate, reports) => {
     sku.fines = calc.sum(skuFilteredReport, "penalty");
     sku.acceptance = calc.sum(skuFilteredReport, "acceptance");
     sku.retailAmount = calc.sum(skuFilteredReport, "retail_amount");
-    sku.tax = calc.taxAmount(sku.retailAmount, taxRate);
+
+    if (!isCrossYearReport) {
+      sku.tax = calc.taxAmount(sku.retailAmount, taxRate);
+    }
+
     sku.returnAmount = calc.sum(skuFilteredReport, "return_amount");
     sku.deliveryCost = calc.sum(skuFilteredReport, "delivery_rub");
     sku.deductionOrPayment = calc.sum(skuFilteredReport, "deduction");
@@ -40,11 +42,7 @@ var parseReports = async (taxRate, reports) => {
     sku.averageRetailPrice = calc.averageRetailPrice(sku.qty, skuFilteredReport);
     sku.storageCost = calc.storageCost(name, storageDataFromPaidStorageReport);
     sku.averageStorageCost = calc.averageStorageCost(report.totalStorageCost, report.totalSold, sku.qty);
-
-    sku.averageAdvertisingCost = calc.averageAdvertisingCost(
-      skuNamesAndIds.length,
-      totalAdvertisingCosts
-    );
+    sku.averageAdvertisingCost = calc.averageAdvertisingCost(skuNamesAndIds.length, totalAdvertisingCosts);
 
     sku.profit = calc.profit(sku);
     sku.averageProfit = calc.averageProfit(sku);
@@ -56,7 +54,11 @@ var parseReports = async (taxRate, reports) => {
 
   report.totalFines = calc.sum(skus, "fines");
   report.totalProfit = calc.sum(skus, "profit");
-  report.totalTaxAmount = calc.sum(skus, "tax");
+
+  if (!isCrossYearReport) {
+    report.totalTaxAmount = calc.sum(skus, "tax");
+  }
+
   report.totalDeliveryCost = calc.sum(skus, "deliveryCost");
   report.totalReturnAmount = calc.sum(skus, "returnAmount");
   report.totalRetailAmount = calc.sum(skus, "retailAmount");
