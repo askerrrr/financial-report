@@ -1,5 +1,7 @@
 var getReportTreeDto = require("../services/getReportTreeDto");
 
+var getLastNonEmptyReportIds = (lastYear) => lastYear.months.find((item) => item?.reportIds.length).reportIds.map(({ reportId }) => reportId);
+
 var projectonFields = ["reports.reportId", "reports.totalTaxAmount", "reports.totalFinalProfit", "reports.totalProductCosts"];
 
 var getLastReportsAndTree = async (req, res, next) => {
@@ -16,7 +18,8 @@ var getLastReportsAndTree = async (req, res, next) => {
 
   var reportTreeDto = await getReportTreeDto(reportTree);
 
-  var lastReportIds = reportTreeDto[0].months[0].reportIds.map((item) => item.reportId);
+  var lastYear = reportTreeDto[0];
+  var lastReportIds = getLastNonEmptyReportIds(lastYear);
 
   if (!lastReportIds.length) {
     return res.json({ lastReports: [], reportTree: [] });
