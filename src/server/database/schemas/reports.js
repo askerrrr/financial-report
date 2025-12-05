@@ -33,11 +33,16 @@ var SKUSchema = new Schema(
     averageAdvertisingCost: numberOptions,
     schemaVersion: { type: Number },
     id: { type: Number, required: true },
+    qtyInCurrentYear: { type: Number, required: false },
+    qtyInNextYear: { type: Number, required: false },
   },
   { _id: false }
 );
 
-var recordToSchema = new Schema({ year: stringOptions, month: stringOptions, schemaVersion: { type: Number } }, { _id: false });
+var recordToSchema = new Schema(
+  { year: stringOptions, month: stringOptions, schemaVersion: { type: Number } },
+  { _id: false }
+);
 
 var reportSchema = new Schema(
   {
