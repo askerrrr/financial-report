@@ -33,10 +33,6 @@ var SKUSchema = new Schema(
     averageAdvertisingCost: numberOptions,
     schemaVersion: { type: Number },
     id: { type: Number, required: true },
-    saleDate: { type: Date, required: true },
-    saleDay: { type: Number, required: true },
-    saleYear: { type: Number, required: true },
-    saleMonth: { type: Number, required: true },
   },
   { _id: false }
 );
