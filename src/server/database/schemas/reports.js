@@ -35,6 +35,8 @@ var SKUSchema = new Schema(
     id: { type: Number, required: true },
     qtyInCurrentYear: { type: Number, required: false },
     qtyInNextYear: { type: Number, required: false },
+    taxInCurrentYear: { type: Number, required: false },
+    taxInNextYear: { type: Number, required: false },
   },
   { _id: false }
 );
