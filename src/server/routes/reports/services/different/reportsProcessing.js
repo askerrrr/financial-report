@@ -31,7 +31,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
     var startYearTaxParams = await addNewTaxYearToDb(userId, startYear, session);
     var endYearTaxParams = await addNewTaxYearToDb(userId, endYear, session);
 
-    var { report, skuNamesAndIds } = await parseReports((taxRate = null), reports, isCrossYearReport);
+    var { report, skuNamesAndIds } = await parseReports((taxRate = null), reports, isCrossYearReport, startYear, endYear);
 
     var { startYearSkus, endYearSkus } = splitReportSkusByYear(reports.weeklyFinancialReport);
 

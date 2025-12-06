@@ -1,11 +1,12 @@
 var calc = require("../calcServices");
 var truncateTotals = require("./truncateTotals");
+var getSkuQtyByYear = require('./getSkuQtyByYear')
 var truncateSkuNums = require("./truncateSkuNums");
 var getSkuNamesAndIds = require("./getSkuNamesAndIds");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 var { skuSchemaVersion } = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
-var parseReports = async (taxRate, reports, isCrossYearReport) => {
+var parseReports = async (taxRate, reports, isCrossYearReport, startYear, endYear) => {
   var sku = {};
   var skus = [];
   var report = {};
@@ -32,7 +33,11 @@ var parseReports = async (taxRate, reports, isCrossYearReport) => {
 
     if (!isCrossYearReport) {
       sku.tax = calc.taxAmount(sku.retailAmount, taxRate);
+    }else {
+      sku.qtyInCurrentYear = getSkuQtyByYear(skuFilteredReport, startYear);
+      sku.qtyInNextYear = getSkuQtyByYear(skuFilteredReport, endYear);
     }
+
 
     sku.returnAmount = calc.sum(skuFilteredReport, "return_amount");
     sku.deliveryCost = calc.sum(skuFilteredReport, "delivery_rub");
