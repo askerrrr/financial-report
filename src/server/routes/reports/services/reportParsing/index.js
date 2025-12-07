@@ -1,17 +1,23 @@
 var calc = require("../calcServices");
 var truncateTotals = require("./truncateTotals");
-var getSkuQtyByYear = require('./getSkuQtyByYear')
+var getSkuQtyByYear = require("./getSkuQtyByYear");
 var truncateSkuNums = require("./truncateSkuNums");
 var getSkuNamesAndIds = require("./getSkuNamesAndIds");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
-var { skuSchemaVersion } = require("../../../../database/migration/schemaVersioning/reportsCollection");
+var {
+  skuSchemaVersion,
+} = require("../../../../database/migration/schemaVersioning/reportsCollection");
+
+var calculateTotalAdvertisingCosts = async (data) => data.reduce((acc, i) => acc + i.updSum, 0);
 
 var parseReports = async (taxRate, reports, isCrossYearReport, startYear, endYear) => {
   var sku = {};
   var skus = [];
   var report = {};
 
-  var { weeklyFinancialReport, paidStorageReport, totalAdvertisingCosts } = reports;
+  var { weeklyFinancialReport, paidStorageReport, advertisingReport } = reports;
+
+  var totalAdvertisingCosts = await calculateTotalAdvertisingCosts(advertisingReport);
 
   report.totalSold = await calc.total.sold(weeklyFinancialReport);
   report.totalStorageCost = await calc.total.storageCost(weeklyFinancialReport);
@@ -33,11 +39,10 @@ var parseReports = async (taxRate, reports, isCrossYearReport, startYear, endYea
 
     if (!isCrossYearReport) {
       sku.tax = calc.taxAmount(sku.retailAmount, taxRate);
-    }else {
+    } else {
       sku.qtyInCurrentYear = getSkuQtyByYear(skuFilteredReport, startYear);
       sku.qtyInNextYear = getSkuQtyByYear(skuFilteredReport, endYear);
     }
-
 
     sku.returnAmount = calc.sum(skuFilteredReport, "return_amount");
     sku.deliveryCost = calc.sum(skuFilteredReport, "delivery_rub");
@@ -46,8 +51,15 @@ var parseReports = async (taxRate, reports, isCrossYearReport, startYear, endYea
     sku.sellerPayoutAmount = calc.sum(skuFilteredReport, "ppvz_for_pay");
     sku.averageRetailPrice = calc.averageRetailPrice(sku.qty, skuFilteredReport);
     sku.storageCost = calc.storageCost(name, storageDataFromPaidStorageReport);
-    sku.averageStorageCost = calc.averageStorageCost(report.totalStorageCost, report.totalSold, sku.qty);
-    sku.averageAdvertisingCost = calc.averageAdvertisingCost(skuNamesAndIds.length, totalAdvertisingCosts);
+    sku.averageStorageCost = calc.averageStorageCost(
+      report.totalStorageCost,
+      report.totalSold,
+      sku.qty
+    );
+    sku.averageAdvertisingCost = calc.averageAdvertisingCost(
+      skuNamesAndIds.length,
+      totalAdvertisingCosts
+    );
 
     sku.profit = calc.profit(sku);
     sku.averageProfit = calc.averageProfit(sku);
