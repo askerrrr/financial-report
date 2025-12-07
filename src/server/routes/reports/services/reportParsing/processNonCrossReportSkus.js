@@ -7,7 +7,6 @@ var {
 } = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
 var processNonCrossReportSkus = async (reports, taxRate) => {
-  var sku = {};
   var skus = [];
 
   var { weeklyFinancialReport, paidStorageReport, advertisingReport } = reports;
@@ -22,6 +21,8 @@ var processNonCrossReportSkus = async (reports, taxRate) => {
 
   for (var { id, name } of skuNamesAndIds) {
     var skuFilteredReport = weeklyFinancialReport.filter((sku) => sku.sa_name === name);
+
+    var sku = {};
 
     sku.id = id;
     sku.skuName = name;
@@ -47,7 +48,7 @@ var processNonCrossReportSkus = async (reports, taxRate) => {
     sku.profit = calc.profit(sku);
     sku.averageProfit = calc.averageProfit(sku);
 
-    skus.push({ ...sku });
+    skus.push(sku);
   }
 
   skus = await truncateSkuNums(skus);
