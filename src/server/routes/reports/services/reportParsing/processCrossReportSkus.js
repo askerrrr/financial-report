@@ -6,9 +6,12 @@ var getSkuNamesAndIds = require("./getSkuNamesAndIds");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 var splitPaidStorageReportByYear = require("./splitPaidStorageReportByYear");
 var splitAdvertisingReportByYear = require("./splitAdvertisingReportByYear");
+var splitWeeklyFinancialReportByYear = require("./splitWeeklyFinancialReportByYear");
 var {
   skuSchemaVersion,
 } = require("../../../../database/migration/schemaVersioning/reportsCollection");
+
+var calculateTotalAdvertisingCosts = async (data) => data.reduce((acc, i) => acc + i.updSum, 0);
 
 var processCrossReportSkus = async (reports, taxParams) => {
   var { startYearTaxParams, endYearTaxParams } = taxParams;
@@ -23,7 +26,18 @@ var processCrossReportSkus = async (reports, taxParams) => {
     startYearTaxParams.year
   );
 
+  var { startYearWeeklyFinancialReport, endYearWeeklyFinancialReport } =
+    await splitWeeklyFinancialReportByYear(weeklyFinancialReport, startYearTaxParams.year);
+
   var startYearTotals = {};
+  startYearTotals.totalSold = await calc.total.sold(startYearWeeklyFinancialReport);
+  startYearTotals.totalStorageCost = await calc.total.storageCost(startYearWeeklyFinancialReport);
+  startYearTotals.totalAdvertisingCosts = await calculateTotalAdvertisingCosts(startYearAd);
+
+  var endYearTotals = {};
+  endYearTotals.totalSold = await calc.total.sold(endYearWeeklyFinancialReport);
+  endYearTotals.totalStorageCost = await calc.total.storageCost(endYearWeeklyFinancialReport);
+  endYearTotals.totalAdvertisingCosts = await calculateTotalAdvertisingCosts(endYearAd);
 
   var skus = [];
   var skuNamesAndIds = getSkuNamesAndIds(weeklyFinancialReport);
@@ -40,7 +54,7 @@ var processCrossReportSkus = async (reports, taxParams) => {
       startYearSku,
       startYearStorageData,
       startYearTaxParams.taxRate,
-      "totals",
+      startYearTotals,
       currentYearPropPostfix
     );
 
@@ -49,7 +63,7 @@ var processCrossReportSkus = async (reports, taxParams) => {
       endYearSku,
       endYearStorageData,
       endYearTaxParams.taxRate,
-      "totals",
+      endYearTotals,
       nextYearPropPostfix
     );
 
