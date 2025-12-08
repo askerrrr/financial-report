@@ -1,3 +1,4 @@
+var parseSku = require("./parseSku");
 var calc = require("../calcServices");
 var splitSkuByYear = require("./splitSkuByYear");
 var truncateSkuNums = require("./truncateSkuNums");
@@ -22,37 +23,38 @@ var processCrossReportSkus = async (reports, taxParams) => {
     startYearTaxParams.year
   );
 
+  var startYearTotals = {};
+
+  var skus = [];
   var skuNamesAndIds = getSkuNamesAndIds(weeklyFinancialReport);
 
   for (var { id, name } of skuNamesAndIds) {
     var skuFilteredReport = weeklyFinancialReport.filter((sku) => sku.sa_name === name);
     var { startYearSku, endYearSku } = splitSkuByYear(skuFilteredReport, startYearTaxParams.year);
 
-    var sku = {};
+    var currentYearPropPostfix = "InCurrentYear";
+    var nextYearPropPostfix = "InNextYear";
 
-    sku.id = id;
-    sku.skuName = name;
-    sku.schemaVersion = skuSchemaVersion;
-    sku.qty = await calc.quantity(skuFilteredReport);
-    sku.fines = calc.sum(skuFilteredReport, "penalty");
-    sku.acceptance = calc.sum(skuFilteredReport, "acceptance");
-    sku.retailAmount = calc.sum(skuFilteredReport, "retail_amount");
-    sku.tax = calc.taxAmount(sku.retailAmount, taxRate);
-    sku.returnAmount = calc.sum(skuFilteredReport, "return_amount");
-    sku.deliveryCost = calc.sum(skuFilteredReport, "delivery_rub");
-    sku.deductionOrPayment = calc.sum(skuFilteredReport, "deduction");
-    sku.additionalPayment = calc.sum(skuFilteredReport, "additional_payment");
-    sku.sellerPayoutAmount = calc.sum(skuFilteredReport, "ppvz_for_pay");
-    sku.averageRetailPrice = calc.averageRetailPrice(sku.qty, skuFilteredReport);
-    sku.storageCost = calc.storageCost(name, storageDataFromPaidStorageReport);
-    sku.averageStorageCost = calc.averageStorageCost(totalStorageCost, totalSold, sku.qty);
-    sku.averageAdvertisingCost = calc.averageAdvertisingCost(
-      skuNamesAndIds.length,
-      totalAdvertisingCosts
+    var currentYearSkuData = await parseSku(
+      name,
+      startYearSku,
+      startYearStorageData,
+      startYearTaxParams.taxRate,
+      "totals",
+      currentYearPropPostfix
     );
 
-    sku.profit = calc.profit(sku);
-    sku.averageProfit = calc.averageProfit(sku);
+    var nextYearSkuData = await parseSku(
+      name,
+      endYearSku,
+      endYearStorageData,
+      endYearTaxParams.taxRate,
+      "totals",
+      nextYearPropPostfix
+    );
+
+    var sku = Object.assign({}, currentYearSkuData, nextYearSkuData);
+    sku.id = id;
 
     skus.push(sku);
   }
