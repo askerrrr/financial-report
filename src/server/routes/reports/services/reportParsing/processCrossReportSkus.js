@@ -47,6 +47,7 @@ var processCrossReportSkus = async (reports, taxParams) => {
 
     var currentYearSkuData = await parseSku(
       name,
+      skuNamesAndIds.length,
       startYearSku,
       startYearStorageData,
       startYearTaxParams.taxRate,
@@ -54,7 +55,15 @@ var processCrossReportSkus = async (reports, taxParams) => {
       currentYearPropPostfix
     );
 
-    var nextYearSkuData = await parseSku(name, endYearSku, endYearStorageData, endYearTaxParams.taxRate, endYearTotals, nextYearPropPostfix);
+    var nextYearSkuData = await parseSku(
+      name,
+      skuNamesAndIds.length,
+      endYearSku,
+      endYearStorageData,
+      endYearTaxParams.taxRate,
+      endYearTotals,
+      nextYearPropPostfix
+    );
 
     var sku = Object.assign({}, currentYearSkuData, nextYearSkuData);
     sku.id = id;

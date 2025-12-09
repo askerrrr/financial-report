@@ -21,7 +21,7 @@ var processNonCrossReportSkus = async (reports, { taxRate }) => {
   for (var { id, name } of skuNamesAndIds) {
     var skuFilteredReport = weeklyFinancialReport.filter((sku) => sku.sa_name === name);
 
-    var sku = await parseSku(name, skuFilteredReport, storageDataFromPaidStorageReport, taxRate, totals);
+    var sku = await parseSku(name, skuNamesAndIds.length, skuFilteredReport, storageDataFromPaidStorageReport, taxRate, totals);
 
     sku.id = id;
     sku.skuName = name;

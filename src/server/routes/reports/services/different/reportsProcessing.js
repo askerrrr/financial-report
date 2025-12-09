@@ -7,6 +7,7 @@ var addNewSkusToListGoods = require("./addNewSkusToListGoods");
 var splitReportSkusByYear = require("./splitReportSkusByYear");
 var insertReportToReportTree = require("../reportTreeBuilder");
 var schemaVersioning = require("../../../../database/migration/schemaVersioning/reportsCollection");
+var parseReportsV1 = require("../reportParsing/indexV1");
 
 var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var { saveReportToDb } = dbutils.reportCollectionServices;
@@ -26,35 +27,40 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
 
   var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
   var sortedYears = sortYearsTree(years);
+  console.log({ isCrossYearReport });
 
   if (isCrossYearReport) {
     var startYearTaxParams = await addNewTaxYearToDb(userId, startYear, session);
     var endYearTaxParams = await addNewTaxYearToDb(userId, endYear, session);
+    var taxParams = { startYearTaxParams, endYearTaxParams };
 
-    var { report, skuNamesAndIds } = await parseReports((taxRate = null), reports, isCrossYearReport, startYear, endYear);
+    var { report, skuNamesAndIds } = await parseReportsV1(reports, taxParams, isCrossYearReport);
+
+    // var { report, skuNamesAndIds } = await parseReports((taxRate = null), reports, isCrossYearReport, startYear, endYear);
 
     var { startYearSkus, endYearSkus } = splitReportSkusByYear(reports.weeklyFinancialReport);
 
-    report.currentYearRetailAmount = calc.sum(startYearSkus, "retail_amount");
-    report.currentYearTaxAmount = calc.taxAmount(report.currentYearRetailAmount, startYearTaxParams.taxRate);
-    startYearTaxParams.paidTaxAmount += report.currentYearTaxAmount;
+    // report.currentYearRetailAmount = calc.sum(startYearSkus, "retail_amount");
+    // report.currentYearTaxAmount = calc.taxAmount(report.currentYearRetailAmount, startYearTaxParams.taxRate);
+    // startYearTaxParams.paidTaxAmount += report.currentYearTaxAmount;
 
-    report.nextYearRetailAmount = calc.sum(endYearSkus, "retail_amount");
-    report.nextYearTaxAmount = calc.taxAmount(report.nextYearRetailAmount, endYearTaxParams.taxRate);
-    endYearTaxParams.paidTaxAmount += report.nextYearTaxAmount;
+    // report.nextYearRetailAmount = calc.sum(endYearSkus, "retail_amount");
+    // report.nextYearTaxAmount = calc.taxAmount(report.nextYearRetailAmount, endYearTaxParams.taxRate);
+    // endYearTaxParams.paidTaxAmount += report.nextYearTaxAmount;
 
-    report.totalTaxAmount = report.currentYearTaxAmount + report.nextYearTaxAmount;
+    // report.totalTaxAmount = report.currentYearTaxAmount + report.nextYearTaxAmount;
 
-    await changeTaxParamsToDb(userId, startYear, session, { paidTaxAmount: endYearTaxParams.paidTaxAmount });
-    await changeTaxParamsToDb(userId, endYear, session, { paidTaxAmount: startYearTaxParams.paidTaxAmount });
+    // await changeTaxParamsToDb(userId, startYear, session, { paidTaxAmount: report.totalTaxAmountInCurrentYear });
+    // await changeTaxParamsToDb(userId, endYear, session, { paidTaxAmount: report.totalTaxAmountInNextYear });
   } else {
     var { taxRate, paidTaxAmount } = await addNewTaxYearToDb(userId, year, session);
-    var { report, skuNamesAndIds } = await parseReports(taxRate, reports, isCrossYearReport);
-
+    //var { report, skuNamesAndIds } = await parseReports(taxRate, reports, isCrossYearReport);
+    var { report, skuNamesAndIds } = await parseReportsV1(reports, { taxRate });
     paidTaxAmount += report.totalTaxAmount;
     await changeTaxParamsToDb(userId, year, session, { paidTaxAmount });
   }
-
+  console.log(report);
+  return;
   report.dateTo = dateTo;
   report.userId = userId;
   report.dateFrom = dateFrom;

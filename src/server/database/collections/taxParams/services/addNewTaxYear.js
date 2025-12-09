@@ -58,7 +58,7 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
       }
     );
 
-    return { taxRate: 6, paidTaxAmount };
+    return { taxRate: 6, paidTaxAmount, year };
   } catch (e) {
     throw new DatabaseError(userId, e);
   }

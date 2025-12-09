@@ -1,4 +1,5 @@
 var splitAdvertisingReportByYear = (advertisingReport, startYear) => {
+  console.log({ startYear });
   if (!advertisingReport.length) {
     return { startYearAd: [], endYearAd: [] };
   }

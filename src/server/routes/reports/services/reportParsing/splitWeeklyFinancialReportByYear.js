@@ -3,7 +3,7 @@ var splitWeeklyFinancialReportByYear = async (report, startYear) => {
   var endYearWeeklyFinancialReport = [];
 
   for (var item of report) {
-    var saleYear = +item.split("T")[0].split("-")[0];
+    var saleYear = +item.sale_dt.split("T")[0].split("-")[0];
 
     if (saleYear === startYear) {
       startYearWeeklyFinancialReport.push(item);
@@ -16,3 +16,4 @@ var splitWeeklyFinancialReportByYear = async (report, startYear) => {
 };
 
 module.exports = splitWeeklyFinancialReportByYear;
+
