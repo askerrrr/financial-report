@@ -80,10 +80,7 @@ var SKUSchema = new Schema(
   { _id: false }
 );
 
-var recordToSchema = new Schema(
-  { year: stringOptions, month: stringOptions, schemaVersion: { type: Number } },
-  { _id: false }
-);
+var recordToSchema = new Schema({ year: stringOptions, month: stringOptions, schemaVersion: { type: Number } }, { _id: false });
 
 var reportSchema = new Schema(
   {
@@ -115,6 +112,42 @@ var reportSchema = new Schema(
     skus: [{ type: SKUSchema, required: true }],
     schemaVersion: { type: Number },
     crossesTaxYears: { type: Boolean, default: false },
+    totalSellerPayoutAmountInCurrentYear: nonRequiredNumberOptions,
+    totalSoldInCurrentYear: nonRequiredNumberOptions,
+    totalFinesInCurrentYear: nonRequiredNumberOptions,
+    totalProductCostsInCurrentYear: nonRequiredNumberOptions,
+    totalReturnAmountInCurrentYear: nonRequiredNumberOptions,
+    totalStorageCostInCurrentYear: nonRequiredNumberOptions,
+    totalDeliveryCostInCurrentYear: nonRequiredNumberOptions,
+    totalRetailAmountInCurrentYear: nonRequiredNumberOptions,
+    totalPaidAcceptanceInCurrentYear: nonRequiredNumberOptions,
+    totalAdvertisingCostsInCurrentYear: nonRequiredNumberOptions,
+    totalDeductionOrPaymentInCurrentYear: nonRequiredNumberOptions,
+    totalAdditionalPaymentInCurrentYear: nonRequiredNumberOptions,
+    totalTaxAmountInCurrentYear: nonRequiredNumberOptions,
+    totalInsuranceFeeInCurrentYear: nonRequiredNumberOptions,
+    totalProfitInCurrentYear: nonRequiredNumberOptions,
+    totalPreTaxProfitInCurrentYear: nonRequiredNumberOptions,
+    totalFinalProfitInCurrentYear: nonRequiredNumberOptions,
+    totalProfitMarginInCurrentYear: nonRequiredNumberOptions,
+    totalSellerPayoutAmountInNextYear: nonRequiredNumberOptions,
+    totalSoldInNextYear: nonRequiredNumberOptions,
+    totalFinesInNextYear: nonRequiredNumberOptions,
+    totalProductCostsInNextYear: nonRequiredNumberOptions,
+    totalReturnAmountInNextYear: nonRequiredNumberOptions,
+    totalStorageCostInNextYear: nonRequiredNumberOptions,
+    totalDeliveryCostInNextYear: nonRequiredNumberOptions,
+    totalRetailAmountInNextYear: nonRequiredNumberOptions,
+    totalPaidAcceptanceInNextYear: nonRequiredNumberOptions,
+    totalAdvertisingCostsInNextYear: nonRequiredNumberOptions,
+    totalDeductionOrPaymentInNextYear: nonRequiredNumberOptions,
+    totalAdditionalPaymentInNextYear: nonRequiredNumberOptions,
+    totalTaxAmountInNextYear: nonRequiredNumberOptions,
+    totalInsuranceFeeInNextYear: nonRequiredNumberOptions,
+    totalProfitInNextYear: nonRequiredNumberOptions,
+    totalPreTaxProfitInNextYear: nonRequiredNumberOptions,
+    totalFinalProfitInNextYear: nonRequiredNumberOptions,
+    totalProfitMarginInNextYear: nonRequiredNumberOptions,
     currentYearRetailAmount: nonRequiredNumberOptions,
     nextYearRetailAmount: nonRequiredNumberOptions,
     currentYearTaxAmount: nonRequiredNumberOptions,
