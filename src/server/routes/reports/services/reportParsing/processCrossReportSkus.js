@@ -3,13 +3,9 @@ var calc = require("../calcServices");
 var splitSkuByYear = require("./splitSkuByYear");
 var truncateSkuNums = require("./truncateSkuNums");
 var getSkuNamesAndIds = require("./getSkuNamesAndIds");
-var parsePaidStorageReport = require("./parsePaidStorageReport");
 var splitPaidStorageReportByYear = require("./splitPaidStorageReportByYear");
 var splitAdvertisingReportByYear = require("./splitAdvertisingReportByYear");
 var splitWeeklyFinancialReportByYear = require("./splitWeeklyFinancialReportByYear");
-var {
-  skuSchemaVersion,
-} = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
 var calculateTotalAdvertisingCosts = async (data) => data.reduce((acc, i) => acc + i.updSum, 0);
 
@@ -17,17 +13,13 @@ var processCrossReportSkus = async (reports, taxParams) => {
   var { startYearTaxParams, endYearTaxParams } = taxParams;
   var { weeklyFinancialReport, paidStorageReport, advertisingReport } = reports;
 
-  var { startYearAd, endYearAd } = splitAdvertisingReportByYear(
-    advertisingReport,
-    startYearTaxParams.year
-  );
-  var { startYearStorageData, endYearStorageData } = splitPaidStorageReportByYear(
-    paidStorageReport,
-    startYearTaxParams.year
-  );
+  var { startYearAd, endYearAd } = splitAdvertisingReportByYear(advertisingReport, startYearTaxParams.year);
+  var { startYearStorageData, endYearStorageData } = splitPaidStorageReportByYear(paidStorageReport, startYearTaxParams.year);
 
-  var { startYearWeeklyFinancialReport, endYearWeeklyFinancialReport } =
-    await splitWeeklyFinancialReportByYear(weeklyFinancialReport, startYearTaxParams.year);
+  var { startYearWeeklyFinancialReport, endYearWeeklyFinancialReport } = await splitWeeklyFinancialReportByYear(
+    weeklyFinancialReport,
+    startYearTaxParams.year
+  );
 
   var startYearTotals = {};
   startYearTotals.totalSold = await calc.total.sold(startYearWeeklyFinancialReport);
@@ -38,6 +30,10 @@ var processCrossReportSkus = async (reports, taxParams) => {
   endYearTotals.totalSold = await calc.total.sold(endYearWeeklyFinancialReport);
   endYearTotals.totalStorageCost = await calc.total.storageCost(endYearWeeklyFinancialReport);
   endYearTotals.totalAdvertisingCosts = await calculateTotalAdvertisingCosts(endYearAd);
+
+  var totalSold = startYearTotals.totalSold + endYearTotals.totalSold;
+  var totalStorageCost = startYearTotals.totalStorageCost + endYearTotals.totalStorageCost;
+  var totalAdvertisingCosts = startYearTotals.totalAdvertisingCosts + endYearTotals.totalAdvertisingCosts;
 
   var skus = [];
   var skuNamesAndIds = getSkuNamesAndIds(weeklyFinancialReport);
@@ -58,20 +54,17 @@ var processCrossReportSkus = async (reports, taxParams) => {
       currentYearPropPostfix
     );
 
-    var nextYearSkuData = await parseSku(
-      name,
-      endYearSku,
-      endYearStorageData,
-      endYearTaxParams.taxRate,
-      endYearTotals,
-      nextYearPropPostfix
-    );
+    var nextYearSkuData = await parseSku(name, endYearSku, endYearStorageData, endYearTaxParams.taxRate, endYearTotals, nextYearPropPostfix);
 
     var sku = Object.assign({}, currentYearSkuData, nextYearSkuData);
     sku.id = id;
 
     skus.push(sku);
   }
+
+  skus = await truncateSkuNums(skus);
+
+  return { skus, skuNamesAndIds, totalSold, totalStorageCost, totalAdvertisingCosts };
 };
 
 module.exports = processCrossReportSkus;

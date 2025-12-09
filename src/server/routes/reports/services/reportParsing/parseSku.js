@@ -1,4 +1,5 @@
 var calc = require("../calcServices");
+var { skuSchemaVersion } = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
 var parseSku = async (name, skuFilteredReport, storageData, taxRate, totals, propPostfix = "") => {
   var { totalSold, totalStorageCost, totalAdvertisingCosts } = totals;
@@ -14,23 +15,13 @@ var parseSku = async (name, skuFilteredReport, storageData, taxRate, totals, pro
   sku["deductionOrPayment" + propPostfix] = calc.sum(skuFilteredReport, "deduction");
   sku["additionalPayment" + propPostfix] = calc.sum(skuFilteredReport, "additional_payment");
   sku["sellerPayoutAmount" + propPostfix] = calc.sum(skuFilteredReport, "ppvz_for_pay");
-  sku["averageRetailPrice" + propPostfix] = calc.averageRetailPrice(
-    sku["qty" + propPostfix],
-    skuFilteredReport
-  );
+  sku["averageRetailPrice" + propPostfix] = calc.averageRetailPrice(sku["qty" + propPostfix], skuFilteredReport);
   sku["storageCost" + propPostfix] = calc.storageCost(name, storageData);
-  sku["averageStorageCost" + propPostfix] = calc.averageStorageCost(
-    totalStorageCost,
-    totalSold,
-    sku["qty" + propPostfix]
-  );
-  sku["averageAdvertisingCost" + propPostfix] = calc.averageAdvertisingCost(
-    skuNamesAndIds.length,
-    totalAdvertisingCosts
-  );
-
+  sku["averageStorageCost" + propPostfix] = calc.averageStorageCost(totalStorageCost, totalSold, sku["qty" + propPostfix]);
+  sku["averageAdvertisingCost" + propPostfix] = calc.averageAdvertisingCost(skuNamesAndIds.length, totalAdvertisingCosts);
   sku["profit" + propPostfix] = calc.profit(sku);
   sku["averageProfit" + propPostfix] = calc.averageProfit(sku);
+  sku.schemaVersion = skuSchemaVersion;
   return sku;
 };
 
