@@ -16,10 +16,7 @@ var processCrossReportSkus = async (reports, taxParams) => {
   var { startYearAd, endYearAd } = splitAdvertisingReportByYear(advertisingReport, startYearTaxParams.year);
   var { startYearStorageData, endYearStorageData } = splitPaidStorageReportByYear(paidStorageReport, startYearTaxParams.year);
 
-  var { startYearWeeklyFinancialReport, endYearWeeklyFinancialReport } = await splitWeeklyFinancialReportByYear(
-    weeklyFinancialReport,
-    startYearTaxParams.year
-  );
+  var { startYearWeeklyFinancialReport, endYearWeeklyFinancialReport } = await splitWeeklyFinancialReportByYear(weeklyFinancialReport);
 
   var startYearTotals = {};
   startYearTotals.totalSold = await calc.total.sold(startYearWeeklyFinancialReport);
