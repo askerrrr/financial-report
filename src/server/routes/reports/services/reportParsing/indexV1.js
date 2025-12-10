@@ -12,7 +12,7 @@ var parseReports = async (reports, taxParams, isCrossYearReport) => {
     var nextYearPropPostfix = "InNextYear";
 
     var currentYearTotals = await processReportTotals(skus, currentYearPropPostfix);
-    var nextYearTotals = await processCrossReportSkus(skus, nextYearPropPostfix);
+    var nextYearTotals = await processReportTotals(skus, nextYearPropPostfix);
     var generalTotals = await processReportTotals(skus);
 
     report = Object.assign(report, firstTotals, currentYearTotals, nextYearTotals, generalTotals);
