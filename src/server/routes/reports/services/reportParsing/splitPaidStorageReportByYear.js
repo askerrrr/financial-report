@@ -1,4 +1,4 @@
-var splitPaidStorageReportByYear = (storageReport, startYear) => {
+var splitPaidStorageReportByYear = async (storageReport, startYear) => {
   if (!storageReport.length) {
     return { startYearStorageData: [], endYearStorageData: [] };
   }
