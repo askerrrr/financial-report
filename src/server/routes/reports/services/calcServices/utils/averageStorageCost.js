@@ -1,7 +1,11 @@
 var calcAverageStorageCost = (totalStorageCost, totalSold, qty) => {
-  var averageStorageCostPerSKU = (totalStorageCost / totalSold) * qty;
+  if (!qty) {
+    return 0;
+  }
 
-  return averageStorageCostPerSKU;
+  var averageStorageCost = (totalStorageCost / totalSold) * qty;
+
+  return averageStorageCost;
 };
 
 module.exports = calcAverageStorageCost;
