@@ -1,5 +1,4 @@
 var splitAdvertisingReportByYear = async (advertisingReport, startYear) => {
-  console.log({ startYear });
   if (!advertisingReport.length) {
     return { startYearAd: [], endYearAd: [] };
   }
@@ -8,7 +7,7 @@ var splitAdvertisingReportByYear = async (advertisingReport, startYear) => {
   var endYearAd = [];
 
   for (var i of advertisingReport) {
-    var year = +i.updTime.split("T")[0].split("-")[0];
+    var year = +i.updTime.split("-")[0];
 
     if (year === startYear) {
       startYearAd.push(i);
