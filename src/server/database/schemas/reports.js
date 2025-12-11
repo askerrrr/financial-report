@@ -65,6 +65,8 @@ var SKUSchema = new Schema(
     profitMarginInNextYear: nonRequiredNumberOptions,
     isCostPriceSet: { type: Boolean, default: false },
     isInsuranceFeeIncluded: booleanOptions,
+    isInsuranceFeeIncludedInCurrentYear: booleanOptions,
+    isInsuranceFeeIncludedInNextYear: booleanOptions,
     averageProfit: numberOptions,
     averageProfitInCurrentYear: nonRequiredNumberOptions,
     averageProfitInNextYear: nonRequiredNumberOptions,
