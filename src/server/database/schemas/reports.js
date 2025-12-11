@@ -80,7 +80,10 @@ var SKUSchema = new Schema(
   { _id: false }
 );
 
-var recordToSchema = new Schema({ year: stringOptions, month: stringOptions, schemaVersion: { type: Number } }, { _id: false });
+var recordToSchema = new Schema(
+  { year: stringOptions, month: stringOptions, schemaVersion: { type: Number } },
+  { _id: false }
+);
 
 var reportSchema = new Schema(
   {
@@ -109,7 +112,6 @@ var reportSchema = new Schema(
     taxRate: { type: Number, default: 6 },
     nextYearTaxRate: nonRequiredNumberOptions,
     recordTo: { type: recordToSchema, requred: true },
-    skus: [{ type: SKUSchema, required: true }],
     schemaVersion: { type: Number },
     crossesTaxYears: { type: Boolean, default: false },
     totalSellerPayoutAmountInCurrentYear: nonRequiredNumberOptions,
@@ -154,6 +156,7 @@ var reportSchema = new Schema(
     nextYearTaxAmount: nonRequiredNumberOptions,
     currentYearInsuranceFee: nonRequiredNumberOptions,
     nextYearInsuranceFee: nonRequiredNumberOptions,
+    skus: [{ type: SKUSchema, required: true }],
   },
   { _id: false }
 );
