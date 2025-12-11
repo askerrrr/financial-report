@@ -25,7 +25,7 @@ var calcRestSKUParams = (sku, taxParams) => {
   sku.insuranceFee = newInsuranceFee;
   sku.isInsuranceFeeIncluded = isInsuranceFeeIncluded;
   sku.finalProfit = calcFinalProfit(sku.preTaxProfit, 0, sku.tax);
-  sku.profitMargin = calcProfitMargin(sku);
+  sku.profitMargin = calcProfitMargin(sku.finalProfit, sku.retailAmount);
 
   var recalculatedPaidInsuranceFee = mandatoryInsuranceFee - sku.insuranceFee + newInsuranceFee;
 

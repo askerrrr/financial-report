@@ -1,6 +1,6 @@
 var truncateNum = require("../../reportParsing/truncateNum");
 
-var calcProfitMargin = ({ finalProfit, retailAmount }) => {
+var calcProfitMargin = (finalProfit, retailAmount) => {
   if (finalProfit === 0) {
     return 0;
   }
