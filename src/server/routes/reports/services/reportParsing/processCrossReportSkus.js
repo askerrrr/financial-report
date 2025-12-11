@@ -41,6 +41,8 @@ var processCrossReportSkus = async (reports, taxParams) => {
 
   var skus = [];
   var skuNamesAndIds = getSkuNamesAndIds(weeklyFinancialReport);
+  var skuNamesAndIdsInCurrentYear = getSkuNamesAndIds(startYearWeeklyFinancialReport);
+  var skuNamesAndIdsInNextYear = getSkuNamesAndIds(endYearWeeklyFinancialReport);
 
   for (var { id, name } of skuNamesAndIds) {
     var skuFilteredReport = weeklyFinancialReport.filter((sku) => sku.sa_name === name);
@@ -51,7 +53,7 @@ var processCrossReportSkus = async (reports, taxParams) => {
 
     var currentYearSkuData = await parseSku(
       name,
-      skuNamesAndIds.length,
+      skuNamesAndIdsInCurrentYear.length,
       startYearSku,
       startYearStorageData,
       startYearTaxParams.taxRate,
@@ -61,7 +63,7 @@ var processCrossReportSkus = async (reports, taxParams) => {
 
     var nextYearSkuData = await parseSku(
       name,
-      skuNamesAndIds.length,
+      skuNamesAndIdsInNextYear.length,
       endYearSku,
       endYearStorageData,
       endYearTaxParams.taxRate,
