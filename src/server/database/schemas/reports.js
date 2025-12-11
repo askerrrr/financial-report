@@ -26,7 +26,7 @@ var SKUSchema = new Schema(
     returnAmountInNextYear: nonRequiredNumberOptions,
     retailAmount: numberOptions,
     retailAmountInCurrentYear: nonRequiredNumberOptions,
-    retailAmountNextYear: nonRequiredNumberOptions,
+    retailAmountInNextYear: nonRequiredNumberOptions,
     deliveryCost: numberOptions,
     deliveryCostInCurrentYear: nonRequiredNumberOptions,
     deliveryCostInNextYear: nonRequiredNumberOptions,
