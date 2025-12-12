@@ -3,7 +3,7 @@ var { skuSchemaVersion } = require("../../../../database/migration/schemaVersion
 
 var parseSku = async (name, skuQty, skuFilteredReport, storageData, taxParams, totals, propPostfix = "") => {
   try {
-    var { taxRate, insuranceFeePercentage } = taxParams;
+    var { taxRate } = taxParams;
     var { totalSold, totalStorageCost, totalAdvertisingCosts } = totals;
 
     var sku = {};
