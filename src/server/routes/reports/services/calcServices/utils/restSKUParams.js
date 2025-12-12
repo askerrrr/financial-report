@@ -6,30 +6,36 @@ var calcPreTaxProfit = require("./preTaxProfit");
 var calcRestSKUParams = (sku, taxParams) => {
   sku.preTaxProfit = calcPreTaxProfit(sku.qty, sku.profit, sku.costPrice);
 
-  var { insuranceFeePercentage, paidTaxAmount, mandatoryInsuranceFee } = taxParams;
+  if (taxParams.isInsuranceFeePaid) {
+    sku.insuranceFee = 0;
+    sku.isInsuranceFeeIncluded = false;
+    sku.finalProfit = calcFinalProfit(sku.preTaxProfit, sku.insuranceFee, sku.tax);
+  } else {
+    sku.previousInsuranceFee = sku.insuranceFee;
+    sku.insuranceFee = calcInsuranceFee(sku.preTaxProfit, taxParams.insuranceFeePercentage);
+    sku.isInsuranceFeeIncluded = true;
 
-  var newInsuranceFee = calcInsuranceFee(sku.preTaxProfit, insuranceFeePercentage);
+    taxParams.paidInsuranceFee =
+      taxParams.paidInsuranceFee - sku.previousInsuranceFee + sku.insuranceFee;
 
-  var isInsuranceFeeIncluded = true;
+    if (taxParams.paidInsuranceFee >= taxParams.mandatoryInsuranceFee) {
+      taxParams.paidInsuranceFee = taxParams.mandatoryInsuranceFee;
+      taxParams.isInsuranceFeePaid = true;
+      taxParams.insuranceFeePercentage = 0;
 
-  // if (paidTaxAmount >= mandatoryInsuranceFee) {
-  //   insuranceFeePercentage = 0;
-  //   isInsuranceFeeIncluded = false;
-
-  //   finalProfit = calcFinalProfit(preTaxProfit, 0, sku.tax);
-  // } else {
-  //   finalProfit = calcFinalProfit(preTaxProfit, newInsuranceFee);
-  // }
+      sku.insuranceFee = 0;
+      sku.isInsuranceFeeIncluded = false;
+      sku.finalProfit = calcFinalProfit(sku.preTaxProfit, sku.insuranceFee, sku.tax);
+    } else {
+      sku.tax = 0;
+      sku.finalProfit = calcFinalProfit(sku.preTaxProfit, sku.insuranceFee, sku.tax);
+    }
+  }
 
   sku.isCostPriceSet = true;
-  sku.insuranceFee = newInsuranceFee;
-  sku.isInsuranceFeeIncluded = isInsuranceFeeIncluded;
-  sku.finalProfit = calcFinalProfit(sku.preTaxProfit, 0, sku.tax);
   sku.profitMargin = calcProfitMargin(sku.finalProfit, sku.retailAmount);
 
-  var recalculatedPaidInsuranceFee = mandatoryInsuranceFee - sku.insuranceFee + newInsuranceFee;
-
-  return { recalculatedPaidInsuranceFee, insuranceFeePercentage, skuWithCalculatedParams: sku };
+  return { updatedTaxParams: taxParams, skuWithCalculatedParams: sku };
 };
 
 module.exports = calcRestSKUParams;
