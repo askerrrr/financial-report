@@ -39,10 +39,11 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
     await changeTaxParamsToDb(userId, startYear, session, recalculatedStartYearTaxParams);
     await changeTaxParamsToDb(userId, endYear, session, recalculatedEndYearTaxParams);
   } else {
-    var { taxRate, paidTaxAmount } = await addNewTaxYearToDb(userId, year, session);
-    var { report, skuNamesAndIds } = await parseReports(reports, { taxRate });
-    paidTaxAmount += report.totalTaxAmount;
-    await changeTaxParamsToDb(userId, year, session, { paidTaxAmount });
+    var taxParams = await addNewTaxYearToDb(userId, year, session);
+    var { report, skuNamesAndIds } = await parseReports(reports, taxParams);
+
+    var recalculatedTaxParams = recalculatePaidTaxAmount(report, taxParams);
+    await changeTaxParamsToDb(userId, year, session, recalculatedTaxParams);
   }
 
   report.dateTo = dateTo;
