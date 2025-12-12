@@ -33,8 +33,8 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
 
     var { report, skuNamesAndIds } = await parseReports(reports, taxParams, isCrossYearReport);
 
-    var recalculatedStartYearTaxParams = recalculatePaidTaxAmount(report, startYearTaxParams, "inCurrentYear");
-    var recalculatedEndYearTaxParams = recalculatePaidTaxAmount(report, endYearTaxParams, "inNextYear");
+    var recalculatedStartYearTaxParams = recalculatePaidTaxAmount(report, startYearTaxParams, "InCurrentYear");
+    var recalculatedEndYearTaxParams = recalculatePaidTaxAmount(report, endYearTaxParams, "InNextYear");
 
     await changeTaxParamsToDb(userId, startYear, session, recalculatedStartYearTaxParams);
     await changeTaxParamsToDb(userId, endYear, session, recalculatedEndYearTaxParams);
