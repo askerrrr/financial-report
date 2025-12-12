@@ -1,8 +1,9 @@
 var calc = require("../calcServices");
 var { skuSchemaVersion } = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
-var parseSku = async (name, skuQty, skuFilteredReport, storageData, taxRate, totals, propPostfix = "") => {
+var parseSku = async (name, skuQty, skuFilteredReport, storageData, taxParams, totals, propPostfix = "") => {
   try {
+    var { taxRate, insuranceFeePercentage } = taxParams;
     var { totalSold, totalStorageCost, totalAdvertisingCosts } = totals;
 
     var sku = {};

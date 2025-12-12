@@ -56,7 +56,7 @@ var processCrossReportSkus = async (reports, taxParams) => {
       skuNamesAndIdsInCurrentYear.length,
       startYearSku,
       startYearStorageData,
-      startYearTaxParams.taxRate,
+      startYearTaxParams,
       startYearTotals,
       currentYearPropPostfix
     );
@@ -66,12 +66,12 @@ var processCrossReportSkus = async (reports, taxParams) => {
       skuNamesAndIdsInNextYear.length,
       endYearSku,
       endYearStorageData,
-      endYearTaxParams.taxRate,
+      endYearTaxParams,
       endYearTotals,
       nextYearPropPostfix
     );
 
-    console.log()
+    console.log();
 
     var middleTaxRate = (startYearTaxParams.taxRate + endYearTaxParams.taxRate) / 2;
 

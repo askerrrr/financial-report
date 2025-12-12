@@ -4,7 +4,7 @@ var truncateSkuNums = require("./truncateSkuNums");
 var getSkuNamesAndIds = require("./getSkuNamesAndIds");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
 
-var processNonCrossReportSkus = async (reports, { taxRate }) => {
+var processNonCrossReportSkus = async (reports, taxParams) => {
   var skus = [];
 
   var { weeklyFinancialReport, paidStorageReport, advertisingReport } = reports;
@@ -21,7 +21,7 @@ var processNonCrossReportSkus = async (reports, { taxRate }) => {
   for (var { id, name } of skuNamesAndIds) {
     var skuFilteredReport = weeklyFinancialReport.filter((sku) => sku.sa_name === name);
 
-    var sku = await parseSku(name, skuNamesAndIds.length, skuFilteredReport, storageDataFromPaidStorageReport, taxRate, totals);
+    var sku = await parseSku(name, skuNamesAndIds.length, skuFilteredReport, storageDataFromPaidStorageReport, taxParams, totals);
 
     sku.id = id;
     sku.skuName = name;
