@@ -1,6 +1,7 @@
 var calc = require("../services/calcServices");
 var { connection } = require("../../../database");
 var setCostPriceToSkuBySkuIndex = require("../services/different/setCostPriceToSkuBySkuIndex");
+var processOfSkuCostPriceSetting = require("../services/different/processOfSkuCostPriceSetting");
 
 var setCostPriceToSku = async (req, res, next) => {
   var { userId, reportId, skuIndex, costPrice, skuId, year } = req.body;
@@ -11,68 +12,33 @@ var setCostPriceToSku = async (req, res, next) => {
   var session = await connection.startSession();
 
   try {
-    var taxParams = await getTaxParamsFromDb(userId, year);
     var { report } = await getReportById(userId, reportId);
-    var { skus, ...totalParams } = report;
-
+    var { skus, crossesTaxYears, ...totalParams } = report;
     var { updatedSKUS, updatedSKU } = setCostPriceToSkuBySkuIndex(skus, skuIndex, costPrice);
 
     await session.withTransaction(async () => {
-      if (report.crossesTaxYears) {
+      if (crossesTaxYears) {
         var startYear = +report.dateFrom.split("-")[0];
         var endYear = +report.dateTo.split("-")[0];
         var startYearTaxParams = await getTaxParamsFromDb(userId, startYear);
         var endYearTaxParams = await getTaxParamsFromDb(userId, endYear);
+        var taxParams = { startYearTaxParams, endYearTaxParams };
 
-        var resultOfStartYearUpdation = calc.sku.restParams(
-          updatedSKU,
-          startYearTaxParams,
-          "InCurrentYear"
-        );
+        var result = await processOfSkuCostPriceSetting(updatedSKU, taxParams, crossesTaxYears);
+        updatedSKU = result.updatedSku;
 
-        await changeTaxParamsToDb(
-          userId,
-          startYear,
-          session,
-          resultOfStartYearUpdation.updatedTaxParams
-        );
-
-        updatedSKU = resultOfStartYearUpdation.skuWithCalculatedParams;
-
-        var resultOfEndYearUpdation = calc.sku.restParams(
-          updatedSKU,
-          endYearTaxParams,
-          "InNextYear"
-        );
-
-        await changeTaxParamsToDb(
-          userId,
-          endYear,
-          session,
-          resultOfEndYearUpdation.updatedTaxParams
-        );
-        var { skuWithCalculatedParams } = resultOfEndYearUpdation;
-        skuWithCalculatedParams.finalProfit =
-          skuWithCalculatedParams.finalProfitInCurrentYear +
-          skuWithCalculatedParams.finalProfitInNextYear;
-
-        skuWithCalculatedParams.insuranceFee =
-          skuWithCalculatedParams.insuranceFeeInCurrentYear +
-          skuWithCalculatedParams.insuranceFeeInNextYear;
-
-        skuWithCalculatedParams.profitMargin =
-          (skuWithCalculatedParams.profitMarginInCurrentYear =
-            skuWithCalculatedParams.profitMarginInNextYear) / 2;
+        var { startYearTaxParams, endYearTaxParams } = result.taxParams;
+        await changeTaxParamsToDb(userId, startYear, session, startYearTaxParams);
+        await changeTaxParamsToDb(userId, endYear, session, endYearTaxParams);
       } else {
-        var { skuWithCalculatedParams, updatedTaxParams } = calc.sku.restParams(
-          updatedSKU,
-          taxParams
-        );
+        var taxParams = await getTaxParamsFromDb(userId, year);
+        var result = await processOfSkuCostPriceSetting(updatedSKU, taxParams);
 
-        await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
+        updatedSKU = result.updatedSku;
+        await changeTaxParamsToDb(userId, year, session, result.taxParams);
       }
 
-      updatedSKUS[skuIndex] = skuWithCalculatedParams;
+      updatedSKUS[skuIndex] = updatedSKU;
 
       var updatedReport = await calc.total.restParams(
         totalParams,
@@ -83,7 +49,7 @@ var setCostPriceToSku = async (req, res, next) => {
       await saveUpdatedReport(userId, reportId, updatedReport, session);
       await updateSkuLastCostPrice(userId, skuId, costPrice, session);
       var { totalFinalProfit, totalProfitMargin } = updatedReport;
-      var { profitMargin, finalProfit } = skuWithCalculatedParams;
+      var { profitMargin, finalProfit } = updatedSKU;
 
       res.json({
         sku: {
