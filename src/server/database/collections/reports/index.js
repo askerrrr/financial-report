@@ -14,7 +14,7 @@ var getAllDataFromReportCollection = require("./services/getAllDataFromReportCol
 
 var reportCollectionServices = {
   getAllDataFromReportCollection: () => getAllDataFromReportCollection(reportCollection),
-  getReportById: (userId, reportId) => getReportById(reportCollection, userId, reportId),
+  getReportById: (userId, reportId, session) => getReportById(reportCollection, userId, reportId, session),
   getReportsByUserId: (userId, projectQuery, reportIds) =>
     getReportsByUserId(reportCollection, userId, projectQuery, reportIds),
 
