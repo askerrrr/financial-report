@@ -1,5 +1,5 @@
 import createTdElement from "../report/table/services/createTdElement.js";
-import createInputField from "../report/table/services/createInputField.js";
+import openCostPriceModal from "../report/table/services/modal/openCostPriceModal.js";
 
 var table = document.getElementById("skus-table");
 
@@ -24,7 +24,7 @@ var createSKUsTable = async (id, report, url) => {
       url,
     };
 
-    var costPriceInputField = await createInputField(dataToChange);
+    var costPriceInputField = await openCostPriceModal(dataToChange);
     var costPrice = createTdElement(costPriceInputField);
     var retailPrice = createTdElement(sku.averageRetailPrice);
     var deliveryCost = createTdElement(sku.deliveryCost);

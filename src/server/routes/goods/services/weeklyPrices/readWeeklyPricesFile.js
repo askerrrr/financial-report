@@ -17,10 +17,10 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
     var cell = ws.getCell(skuNameCellAddress);
 
     if (cell?.value) {
-      var { id, disabled } = listGoods.find((sku) => sku.skuName === cell.value);
+      var existSku = listGoods.find((sku) => sku.skuName === cell.value);
 
-      if (!disabled) {
-        skuNamesAndIds.push({ skuName: cell.value, nmID: id });
+      if (existSku && !existSku?.disabled) {
+        skuNamesAndIds.push({ skuName: cell.value, nmID: existSku.id });
       }
     }
 

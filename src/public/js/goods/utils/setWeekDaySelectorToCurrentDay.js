@@ -1,8 +1,4 @@
-import getCurrentDayMSK from "./getCurrentDayMSK.js";
-
-var setWeekDaySelectorToCurrentDay = () => {
-  var { currentDayName } = getCurrentDayMSK();
-
+var setWeekDaySelectorToCurrentDay = (currentDayName) => {
   var options = document.querySelectorAll("option");
   for (var option of options) {
     if (option.text === currentDayName) {

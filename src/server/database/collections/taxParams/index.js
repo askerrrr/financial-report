@@ -11,7 +11,7 @@ var changePaidInsuranceFeeToDb = require("./services/changePaidInsuranceFee");
 var taxParamsCollectionServices = {
   deleteTaxYears: (userId) => deleteTaxYears(taxParamsCollection, userId),
 
-  addNewTaxYearToDb: (userId, year) => addNewTaxYearToDb(taxParamsCollection, userId, year),
+  addNewTaxYearToDb: (userId, year, session) => addNewTaxYearToDb(taxParamsCollection, userId, year, session),
 
   getTaxParamsFromDb: (userId, year, session) => getTaxParamsFromDb(taxParamsCollection, userId, year, session),
 

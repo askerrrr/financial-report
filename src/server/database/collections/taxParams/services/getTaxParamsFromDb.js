@@ -5,7 +5,7 @@ var getTaxParamsFromDb = async (collection, userId, year, session) => {
     var data;
 
     if (session) {
-      data = await collection.findOne({ userId }, { session: session });
+      data = await collection.findOne({ userId }, null, { session: session });
     } else {
       data = await collection.findOne({ userId });
     }

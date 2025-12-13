@@ -1,6 +1,6 @@
 var { randomBytes } = require("node:crypto");
 var wbapi = require("../../reports/services/WBAPI");
-var parseReports = require("../../reports/services/writeAndCalcReportDataFromWBAPI");
+var parseReports = require("../../reports/services/reportParsing");
 
 var getReportFromWBAPI = async (req, res, next) => {
   var { dateFrom, dateTo, token, taxRate } = req.body;

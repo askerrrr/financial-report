@@ -12,6 +12,8 @@ import toggleUploadListGoodsButtonVisibility from "./utils/visibilityToggle/togg
 import toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility from "./utils/visibilityToggle/toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility.js";
 import toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility from "./utils/visibilityToggle/toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility.js";
 
+var { currentDayName, currentDayIndex } = getCurrentDayMSK();
+
 var showListGoodsTable = async () => {
   var { listGoods, weeklyPricesAndDiscounts } = await getGoodsData();
   var { enabledSku, disabledSku } = listGoods;
@@ -49,6 +51,7 @@ var handleEmptyEnabledSkus = async function (disabledSku) {
 };
 
 var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
+  setWeekDaySelectorToCurrentDay(currentDayName);
   toggleSkuTableVisibillity("enabled-skus-table", "enable");
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
@@ -60,12 +63,7 @@ var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
   }
 };
 
-var handleNonEmptyWeeklyPricesAndDiscounts = async function (
-  { enabledSku, disabledSku },
-  weeklyPricesAndDiscounts
-) {
-  var { currentDayName, currentDayIndex } = getCurrentDayMSK();
-
+var handleNonEmptyWeeklyPricesAndDiscounts = async function ({ enabledSku, disabledSku }, weeklyPricesAndDiscounts) {
   setThColSpan();
   prependHeaderRowToTbody();
   toggleWeekDaysSelectorVisibility("enable");

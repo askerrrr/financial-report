@@ -17,30 +17,84 @@ var setCostPriceToSku = async (req, res, next) => {
 
     var { updatedSKUS, updatedSKU } = setCostPriceToSkuBySkuIndex(skus, skuIndex, costPrice);
 
-    var { skuWithCalculatedParams, insuranceFeePercentage, recalculatedPaidInsuranceFee } = calc.sku.restParams(updatedSKU, taxParams);
-    var updatedTaxParams = { insuranceFeePercentage, paidInsuranceFee: recalculatedPaidInsuranceFee };
-    updatedSKUS[skuIndex] = skuWithCalculatedParams;
-
-    var updatedReport = await calc.total.restParams(totalParams, updatedSKUS);
-
     await session.withTransaction(async () => {
+      if (report.crossesTaxYears) {
+        var startYear = +report.dateFrom.split("-")[0];
+        var endYear = +report.dateTo.split("-")[0];
+        var startYearTaxParams = await getTaxParamsFromDb(userId, startYear);
+        var endYearTaxParams = await getTaxParamsFromDb(userId, endYear);
+
+        var resultOfStartYearUpdation = calc.sku.restParams(
+          updatedSKU,
+          startYearTaxParams,
+          "InCurrentYear"
+        );
+
+        await changeTaxParamsToDb(
+          userId,
+          startYear,
+          session,
+          resultOfStartYearUpdation.updatedTaxParams
+        );
+
+        updatedSKU = resultOfStartYearUpdation.skuWithCalculatedParams;
+
+        var resultOfEndYearUpdation = calc.sku.restParams(
+          updatedSKU,
+          endYearTaxParams,
+          "InNextYear"
+        );
+
+        await changeTaxParamsToDb(
+          userId,
+          endYear,
+          session,
+          resultOfEndYearUpdation.updatedTaxParams
+        );
+        var { skuWithCalculatedParams } = resultOfEndYearUpdation;
+        skuWithCalculatedParams.finalProfit =
+          skuWithCalculatedParams.finalProfitInCurrentYear +
+          skuWithCalculatedParams.finalProfitInNextYear;
+
+        skuWithCalculatedParams.insuranceFee =
+          skuWithCalculatedParams.insuranceFeeInCurrentYear +
+          skuWithCalculatedParams.insuranceFeeInNextYear;
+
+        skuWithCalculatedParams.profitMargin =
+          (skuWithCalculatedParams.profitMarginInCurrentYear =
+            skuWithCalculatedParams.profitMarginInNextYear) / 2;
+      } else {
+        var { skuWithCalculatedParams, updatedTaxParams } = calc.sku.restParams(
+          updatedSKU,
+          taxParams
+        );
+
+        await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
+      }
+
+      updatedSKUS[skuIndex] = skuWithCalculatedParams;
+
+      var updatedReport = await calc.total.restParams(
+        totalParams,
+        updatedSKUS,
+        report.crossesTaxYears
+      );
+
       await saveUpdatedReport(userId, reportId, updatedReport, session);
-      await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
       await updateSkuLastCostPrice(userId, skuId, costPrice, session);
-    });
+      var { totalFinalProfit, totalProfitMargin } = updatedReport;
+      var { profitMargin, finalProfit } = skuWithCalculatedParams;
 
-    var { totalFinalProfit, totalProfitMargin } = updatedReport;
-    var { profitMargin, finalProfit } = skuWithCalculatedParams;
-
-    res.json({
-      sku: {
-        skuIndex,
-        data: {
-          profitMargin,
-          finalProfit,
+      res.json({
+        sku: {
+          skuIndex,
+          data: {
+            profitMargin,
+            finalProfit,
+          },
         },
-      },
-      total: { totalFinalProfit, totalProfitMargin },
+        total: { totalFinalProfit, totalProfitMargin },
+      });
     });
   } catch (err) {
     console.log({ err });

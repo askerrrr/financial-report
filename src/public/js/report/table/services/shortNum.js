@@ -1,15 +1,11 @@
-var shortNum = async (num) => {
-  var str = num + "";
+var shortNum = async (n) => {
+  var hasDot = String(n).split("").includes(".");
 
-  var strIncludesDot = str.split("").includes(".");
-
-  if (!strIncludesDot) {
-    return +str;
+  if (!hasDot) {
+    return n;
   }
 
-  var [start, end] = str.split(".");
-
-  return [start, end.slice(0, 3)].join(".");
+  return +n.toFixed(2);
 };
 
 export default shortNum;

@@ -1,19 +1,40 @@
+var sum = require("./sum");
 var calcProductCosts = require("./totalProductCosts");
-var calcTotalInsuranceFee = require("./totalInsuranceFee");
-var calcTotalFinalProfit = require("./totalFinalProfit");
 var calcTotalProfitMargin = require("./totalProfitMargin");
-var calcTotalPreTaxProfit = require("./totalPreTaxProfit");
 
-var calcRestReportTotalParams = (totals, skus) => {
-  totals.totalPreTaxProfit = calcTotalPreTaxProfit(skus);
-
-  totals.totalFinalProfit = calcTotalFinalProfit(skus);
-
+var calcRestReportTotalParams = (totals, skus, isCrossYearReport) => {
+  totals.totalPreTaxProfit = sum(skus, "preTaxProfit", "truncate-on");
+  totals.totalFinalProfit = sum(skus, "finalProfit", "truncate-on");
   totals.totalProductCosts = calcProductCosts(skus);
+  totals.totalInsuranceFee = sum(skus, "insuranceFee");
+  totals.totalProfitMargin = calcTotalProfitMargin(totals);
 
-  totals.totalInsuranceFee = calcTotalInsuranceFee(skus);
+  if (isCrossYearReport) {
+    totals.totalFinalProfitInCurrentYear = skus.reduce(
+      (acc, i) => acc + i.finalProfitInCurrentYear,
+      0
+    );
 
-  totals.totalProfitMargin = calcTotalProfitMargin(totals.totalRetailAmount, totals.totalFinalProfit);
+    totals.totalFinalProfitInNextYear = skus.reduce((acc, i) => acc + i.finalProfitInNextYear, 0);
+
+    totals.totalInsuranceFeeInCurrentYear = skus.reduce(
+      (acc, i) => acc + i.insuranceFeeInCurrentYear,
+      0
+    );
+
+    totals.totalInsuranceFeeInNextYear = skus.reduce((acc, i) => acc + i.insuranceFeeInNextYear, 0);
+
+    totals.totalProfitMarginInCurrentYear =
+      skus.reduce((acc, i) => acc + i.profitMarginInCurrentYear, 0) / skus.length;
+
+    totals.totalProfitMarginInNextYear =
+      skus.reduce((acc, i) => acc + i.profitMarginInNextYear, 0) / skus.length;
+
+    totals.totalProfitMargin =
+      (totals.totalProfitMarginInCurrentYear + totals.totalProfitMarginInNextYear) / 2;
+  } else {
+    totals.totalProfitMargin = calcTotalProfitMargin(totals);
+  }
 
   return { ...totals, skus };
 };

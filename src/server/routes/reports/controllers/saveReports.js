@@ -8,9 +8,8 @@ var saveReports = async (req, res, next) => {
     var session = await connection.startSession();
     await session.withTransaction(async () => {
       try {
-        var data = await reportsProcessing(userId, dateFrom, dateTo, session);
-
-        res.json(data);
+        var reportData = await reportsProcessing(userId, dateFrom, dateTo, session);
+        return res.json(reportData);
       } catch (e) {
         throw e;
       }
