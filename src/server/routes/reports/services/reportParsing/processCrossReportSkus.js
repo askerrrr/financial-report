@@ -71,8 +71,6 @@ var processCrossReportSkus = async (reports, taxParams) => {
       nextYearPropPostfix
     );
 
-    console.log();
-
     var middleTaxRate = (startYearTaxParams.taxRate + endYearTaxParams.taxRate) / 2;
 
     var totalSkuData = await parseSku(name, totalSold, skuFilteredReport, paidStorageReport, middleTaxRate, {
