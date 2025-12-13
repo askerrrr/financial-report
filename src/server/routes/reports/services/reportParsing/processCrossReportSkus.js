@@ -56,7 +56,7 @@ var processCrossReportSkus = async (reports, taxParams) => {
       skuNamesAndIdsInCurrentYear.length,
       startYearSku,
       startYearStorageData,
-      startYearTaxParams,
+      startYearTaxParams.taxRate,
       startYearTotals,
       currentYearPropPostfix
     );
@@ -66,7 +66,7 @@ var processCrossReportSkus = async (reports, taxParams) => {
       skuNamesAndIdsInNextYear.length,
       endYearSku,
       endYearStorageData,
-      endYearTaxParams,
+      endYearTaxParams.taxRate,
       endYearTotals,
       nextYearPropPostfix
     );
