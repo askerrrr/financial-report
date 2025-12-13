@@ -4,8 +4,8 @@ var truncateNum = require("../../reportParsing/truncateNum");
  * @param {'truncate-on' | 'truncate-off'} truncate
  */
 
-var sum = (report, filedName, truncate) => {
-  var result = report.reduce((acc, i) => acc + i[filedName], 0);
+var sum = (data, filedName, truncate) => {
+  var result = data.reduce((acc, i) => acc + (i?.[filedName] ?? 0), 0);
 
   if (truncate === "truncate-on") {
     return truncateNum(result);
