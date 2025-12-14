@@ -14,17 +14,17 @@ var setCostPriceToSku = async (req, res, next) => {
   try {
     await session.withTransaction(async () => {
       var { report } = await getReportById(userId, reportId, session);
-      var { skus, crossesTaxYears, ...totalParams } = report;
+      var { skus, ...totalParams } = report;
       var { updatedSKUS, updatedSKU } = setCostPriceToSkuBySkuIndex(skus, skuIndex, costPrice);
 
-      if (crossesTaxYears) {
+      if (report.crossesTaxYears) {
         var startYear = +report.dateFrom.split("-")[0];
         var endYear = +report.dateTo.split("-")[0];
         var startYearTaxParams = await getTaxParamsFromDb(userId, startYear, session);
         var endYearTaxParams = await getTaxParamsFromDb(userId, endYear, session);
         var taxParams = { startYearTaxParams, endYearTaxParams };
 
-        var result = await processOfSkuCostPriceSetting(updatedSKU, taxParams, crossesTaxYears);
+        var result = await processOfSkuCostPriceSetting(updatedSKU, taxParams, report.crossesTaxYears);
         updatedSKU = result.updatedSku;
 
         var { startYearTaxParams, endYearTaxParams } = result.taxParams;
@@ -40,11 +40,7 @@ var setCostPriceToSku = async (req, res, next) => {
 
       updatedSKUS[skuIndex] = updatedSKU;
 
-      var updatedReport = await calc.total.restParams(
-        totalParams,
-        updatedSKUS,
-        report.crossesTaxYears
-      );
+      var updatedReport = await calc.total.restParams(totalParams, updatedSKUS, report.crossesTaxYears);
 
       await saveUpdatedReport(userId, reportId, updatedReport, session);
       await updateSkuLastCostPrice(userId, skuId, costPrice, session);
