@@ -18,20 +18,13 @@ var calcRestReportTotalParams = (totals, skus, isCrossYearReport) => {
     totals.totalFinalProfitInCurrentYear = sum(skus, "finalProfitInCurrentYear", "truncate-on");
     totals.totalFinalProfitInNextYear = sum(skus, "finalProfitInNextYear", "truncate-on");
 
-    totals.totalProfitMarginInCurrentYear = calcProfitMargin(
-      totals.totalFinalProfitInCurrentYear,
-      totals.totalRetailAmountInCurrentYear
-    );
+    totals.totalProfitMarginInCurrentYear = calcProfitMargin(totals.totalFinalProfitInCurrentYear, totals.totalRetailAmountInCurrentYear);
 
-    totals.totalProfitMarginInNextYear = calcProfitMargin(
-      totals.totalFinalProfitInNextYear,
-      totals.totalRetailAmountInNextYear
-    );
+    totals.totalProfitMarginInNextYear = calcProfitMargin(totals.totalFinalProfitInNextYear, totals.totalRetailAmountInNextYear);
 
-    totals.totalProfitMargin =
-      (totals.totalProfitMarginInCurrentYear + totals.totalProfitMarginInNextYear) / 2;
+    totals.totalProfitMargin = (totals.totalProfitMarginInCurrentYear + totals.totalProfitMarginInNextYear) / 2;
   } else {
-    totals.totalProfitMargin = calcProfitMargin(totals.finalProfit, totals.totalRetailAmount);
+    totals.totalProfitMargin = calcProfitMargin(totals.totalFinalProfit, totals.totalRetailAmount);
   }
 
   return { ...totals, skus };
