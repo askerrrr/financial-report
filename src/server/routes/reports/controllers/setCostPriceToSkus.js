@@ -23,7 +23,7 @@ var setCostPriceToSkus = async (req, res, next) => {
         taxParams.startYearTaxParams = allTaxParams.find((param) => param.year == startYear);
         taxParams.endYearTaxParams = allTaxParams.find((param) => param.year == endYear);
       } else {
-        taxParams = await getTaxParamsFromDb(userId, taxYear);
+        taxParams = await getTaxParamsFromDb(userId, taxYear, session);
       }
 
       for (var { id, lastCostPrice } of costPrices) {
