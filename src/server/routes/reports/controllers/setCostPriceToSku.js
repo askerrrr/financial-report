@@ -1,6 +1,5 @@
 var calc = require("../services/calcServices");
 var { connection } = require("../../../database");
-var setCostPriceToSkuBySkuIndex = require("../services/different/setCostPriceToSkuBySkuIndex");
 var processOfSkuCostPriceSetting = require("../services/different/processOfSkuCostPriceSetting");
 
 var setCostPriceToSku = async (req, res, next) => {
@@ -15,7 +14,12 @@ var setCostPriceToSku = async (req, res, next) => {
     await session.withTransaction(async () => {
       var { report } = await getReportById(userId, reportId, session);
       var { skus, ...totalParams } = report;
-      var { updatedSKUS, updatedSKU } = setCostPriceToSkuBySkuIndex(skus, skuIndex, costPrice);
+
+      if (skus[skuIndex].costPrice === costPrice) {
+        return res.sendStatus(409);
+      }
+
+      skus[skuIndex].costPrice = costPrice;
 
       if (report.crossesTaxYears) {
         var startYear = +report.dateFrom.split("-")[0];
@@ -24,28 +28,26 @@ var setCostPriceToSku = async (req, res, next) => {
         var endYearTaxParams = await getTaxParamsFromDb(userId, endYear, session);
         var taxParams = { startYearTaxParams, endYearTaxParams };
 
-        var result = await processOfSkuCostPriceSetting(updatedSKU, taxParams, report.crossesTaxYears);
-        updatedSKU = result.updatedSku;
+        var result = await processOfSkuCostPriceSetting(skus[skuIndex], taxParams, report.crossesTaxYears);
+        skus[skuIndex] = result.updatedSku;
 
         var { startYearTaxParams, endYearTaxParams } = result.taxParams;
         await changeTaxParamsToDb(userId, startYear, session, startYearTaxParams);
         await changeTaxParamsToDb(userId, endYear, session, endYearTaxParams);
       } else {
         var taxParams = await getTaxParamsFromDb(userId, year, session);
-        var result = await processOfSkuCostPriceSetting(updatedSKU, taxParams);
+        var result = await processOfSkuCostPriceSetting(skus[skuIndex], taxParams);
 
-        updatedSKU = result.updatedSku;
+        skus[skuIndex] = result.updatedSku;
         await changeTaxParamsToDb(userId, year, session, result.taxParams);
       }
 
-      updatedSKUS[skuIndex] = updatedSKU;
-
-      var updatedReport = await calc.total.restParams(totalParams, updatedSKUS, report.crossesTaxYears);
+      var updatedReport = await calc.total.restParams(totalParams, skus, report.crossesTaxYears);
 
       await saveUpdatedReport(userId, reportId, updatedReport, session);
       await updateSkuLastCostPrice(userId, skuId, costPrice, session);
       var { totalFinalProfit, totalProfitMargin } = updatedReport;
-      var { profitMargin, finalProfit } = updatedSKU;
+      var { profitMargin, finalProfit } = skus[skuIndex];
 
       res.json({
         sku: {
