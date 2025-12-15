@@ -1,6 +1,5 @@
 var calc = require("../services/calcServices");
 var { connection } = require("../../../database");
-var setCostPriceToSkuBySkuIndex = require("../services/different/setCostPriceToSkuBySkuIndex");
 var processOfSkuCostPriceSetting = require("../services/different/processOfSkuCostPriceSetting");
 
 var setCostPriceToSkus = async (req, res, next) => {
@@ -8,10 +7,8 @@ var setCostPriceToSkus = async (req, res, next) => {
   var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
-  var session = await connection.startSession();
-
-  var total = {};
   var skusDataToClient = [];
+  var session = await connection.startSession();
 
   try {
     await session.withTransaction(async () => {
@@ -22,9 +19,9 @@ var setCostPriceToSkus = async (req, res, next) => {
       if (report.crossesTaxYears) {
         var startYear = +report.dateFrom.split("-")[0];
         var endYear = +report.dateTo.split("-")[0];
-        var startYearTaxParams = await getTaxParamsFromDb(userId, startYear, session);
-        var endYearTaxParams = await getTaxParamsFromDb(userId, endYear, session);
-        taxParams = { startYearTaxParams, endYearTaxParams };
+        var allTaxParams = await getTaxParamsFromDb(userId, (year = null), session);
+        taxParams.startYearTaxParams = allTaxParams.find((param) => param.year == startYear);
+        taxParams.endYearTaxParams = allTaxParams.find((param) => param.year == endYear);
       } else {
         taxParams = await getTaxParamsFromDb(userId, taxYear);
       }
@@ -32,29 +29,33 @@ var setCostPriceToSkus = async (req, res, next) => {
       for (var { id, lastCostPrice } of costPrices) {
         var skuIndex = skus.findIndex((sku) => sku.id === id);
 
-        var { updatedSKUS, updatedSKU } = setCostPriceToSkuBySkuIndex(
-          skus,
-          skuIndex,
-          lastCostPrice
-        );
+        if (skus[skuIndex].costPrice === lastCostPrice) {
+          continue;
+        }
+
+        skus[skuIndex].costPrice = lastCostPrice;
 
         if (report.crossesTaxYears) {
-          var result = await processOfSkuCostPriceSetting(updatedSKU, taxParams, report.crossesTaxYears);
-          console.log(result.updatedSku)
-          updatedSKUS[skuIndex] = result.updatedSku;
+          var result = await processOfSkuCostPriceSetting(skus[skuIndex], taxParams, report.crossesTaxYears);
+
+          skus[skuIndex] = result.updatedSku;
           taxParams = result.taxParams;
         } else {
-          var result = await processOfSkuCostPriceSetting(updatedSKU, taxParams, report.crossesTaxYears);
-          updatedSKUS[skuIndex] = result.updatedSku;
+          var result = await processOfSkuCostPriceSetting(skus[skuIndex], taxParams, report.crossesTaxYears);
+          skus[skuIndex] = result.updatedSku;
           taxParams = result.taxParams;
         }
 
-        var { profitMargin, finalProfit } = result.updatedSku;
+        var { profitMargin, finalProfit } = skus[skuIndex];
 
         skusDataToClient.push({
           skuIndex,
           data: { profitMargin, finalProfit, costprice: lastCostPrice },
         });
+      }
+
+      if (!skusDataToClient.length) {
+        return res.sendStatus(409);
       }
 
       if (report.crossesTaxYears) {
@@ -65,15 +66,15 @@ var setCostPriceToSkus = async (req, res, next) => {
         await changeTaxParamsToDb(userId, taxYear, session, taxParams);
       }
 
-      var updatedReport = await calc.total.restParams(totalParams, updatedSKUS, report.crossesTaxYears);
+      var updatedReport = await calc.total.restParams(totalParams, skus, report.crossesTaxYears);
 
       await saveUpdatedReport(userId, reportId, updatedReport, session);
 
-      var { totalFinalProfit, totalProfitMargin } = updatedReport;
-      total = { totalFinalProfit, totalProfitMargin };
+      res.json({
+        skusDataToClient,
+        total: { totalFinalProfit: totalParams.totalFinalProfit, totalProfitMargin: totalParams.totalProfitMargin },
+      });
     });
-
-    return res.json({ skusDataToClient, total });
   } catch (e) {
     console.log(e);
     res.sendStatus(304);
