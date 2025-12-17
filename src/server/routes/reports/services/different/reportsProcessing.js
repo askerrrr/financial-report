@@ -54,7 +54,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   report.schemaVersion = schemaVersioning.reportSchemaVersion;
   report.recordTo = { year, month, schemaVersion: schemaVersioning.recordToSchemaVersion };
 
-  var { listGoods } = await getListGoodsFromDb(userId);
+  var { listGoods } = await getListGoodsFromDb(userId, session);
   var { updatedListGoods } = await addNewSkusToListGoods(listGoods, skuNamesAndIds);
 
   await saveReportToDb(userId, report, session);
