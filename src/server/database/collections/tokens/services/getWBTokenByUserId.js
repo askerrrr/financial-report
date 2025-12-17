@@ -1,10 +1,14 @@
 var { DatabaseError } = require("../../../../customError");
 
-var getWBTokenByUserId = async (collection, userId) => {
+var getWBTokenByUserId = async (collection, userId, session) => {
   try {
-    var user = await collection.findOne({ userId });
-
-    return user.token;
+    var data;
+    if (session) {
+      data = await collection.findOne({ userId }, null, { session: session });
+    } else {
+      data = await collection.findOne({ userId });
+    }
+    return data.token;
   } catch (e) {
     throw new DatabaseError(userId, e);
   }

@@ -4,7 +4,7 @@ var getWBTokenByUserId = require("./services/getWBTokenByUserId");
 var createTokenCollectionEntity = require("./services/createTokenCollectionEntity");
 
 var tokenCollectionServices = {
-  getWBTokenByUserId: (userId) => getWBTokenByUserId(tokenCollection, userId),
+  getWBTokenByUserId: (userId, session) => getWBTokenByUserId(tokenCollection, userId, session),
 
   saveWBTokenToDb: (userId, token, session) => saveWBTokenToDb(tokenCollection, userId, token, session),
 
