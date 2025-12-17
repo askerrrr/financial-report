@@ -11,7 +11,7 @@ var reportsTreeCollectionServices = {
 
   updateReportTree: (userId, years) => updateReportTree(reportsTreeCollection, userId, years),
 
-  getReportTree: (userId) => getReportTree(reportsTreeCollection, userId),
+  getReportTree: (userId, session) => getReportTree(reportsTreeCollection, userId, session),
 
   deleteReportFromReportTree: (userId, year, month, reportId, session) =>
     deleteReportFromReportTree(reportsTreeCollection, userId, year, month, reportId, session),
