@@ -11,7 +11,7 @@ var saveToken = async (req, res, next) => {
 
   try {
     await session.withTransaction(async () => {
-      var currentToken = await getWBTokenByUserId(userId);
+      var currentToken = await getWBTokenByUserId(userId).token;
 
       if (currentToken === token) {
         return res.sendStatus(409);

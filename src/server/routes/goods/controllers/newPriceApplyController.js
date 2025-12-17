@@ -6,7 +6,7 @@ var newPriceApplyController = async (req, res, next) => {
   var { userId, sku, setNewPriceNow, expectedPriceExists } = req.body;
 
   if (setNewPriceNow) {
-    var token = await getWBTokenByUserId(userId);
+    var { token } = await getWBTokenByUserId(userId);
     var data = [{ ...sku }];
 
     await updateSingleSku(userId, sku);

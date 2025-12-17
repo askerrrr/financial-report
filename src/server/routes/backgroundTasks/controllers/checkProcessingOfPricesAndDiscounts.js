@@ -12,7 +12,7 @@ var checkProcessingOfPricesAndDiscounts = async (req, res, next) => {
       continue;
     }
 
-    var token = await getWBTokenByUserId(userId);
+    var { token } = await getWBTokenByUserId(userId);
     var { historyGoods } = await wbapi.getPriceUploadDetails(userId, uploadId, token);
     await setPriceUpdateTimestampAndUpdateStatus(userId, historyGoods);
   }
