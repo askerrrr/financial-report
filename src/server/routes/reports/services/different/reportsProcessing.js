@@ -18,7 +18,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var endYear = +dateTo.split("-")[0];
   var isCrossYearReport = startYear !== endYear;
 
-  var token = await getWBTokenByUserId(userId);
+  var token = await getWBTokenByUserId(userId, session);
   var { reportTree } = await getReportTree(userId);
   var reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
   var reportId = reports.weeklyFinancialReport[0].realizationreport_id;
