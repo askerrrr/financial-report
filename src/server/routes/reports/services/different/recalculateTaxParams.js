@@ -1,4 +1,4 @@
-var recalculatePaidTaxAmount = function (report, taxParams, propPostfix = "") {
+var recalculateTaxParams = function (report, taxParams, propPostfix = "") {
   taxParams.paidTaxAmount += report["totalTaxAmount" + propPostfix];
 
   if (taxParams.paidTaxAmount >= 0) {
@@ -9,4 +9,4 @@ var recalculatePaidTaxAmount = function (report, taxParams, propPostfix = "") {
   return taxParams;
 };
 
-module.exports = recalculatePaidTaxAmount;
+module.exports = recalculateTaxParams;
