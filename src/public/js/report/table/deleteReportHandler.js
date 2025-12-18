@@ -17,16 +17,23 @@ var deleteReportHandler = async (report) =>
     var confirmed = confirm("Удалить отчет?");
 
     if (confirmed) {
-      var { userId, reportId, recordTo, totalInsuranceFee, totalTaxAmount } = report;
+      var { userId, reportId, dateFrom, dateTo, recordTo, totalInsuranceFee, totalTaxAmount } = report;
       var { year, month } = recordTo;
 
       var reportData = {
         year,
         month,
         userId,
+        dateFrom,
+        dateTo,
         reportId,
         totalTaxAmount,
+        isCrossYearReport: report.crossesTaxYears,
         totalInsuranceFee,
+        totalInsuranceFeeInCurrentYear: report?.totalInsuranceFeeInCurrentYear ?? 0,
+        totalInsuranceFeeInNextYear: report?.totalInsuranceFeeInNextYear ?? 0,
+        totalTaxAmountInCurrentYear: report?.totalTaxAmountInCurrentYear ?? 0,
+        totalTaxAmountInNextYear: report?.totalTaxAmountInNextYear ?? 0,
       };
 
       var success = await sendDeletionRequest(reportData);
