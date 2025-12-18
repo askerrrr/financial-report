@@ -2,12 +2,12 @@ var { DatabaseError } = require("../../../../customError");
 
 var defaultTaxRate = 6;
 
-var mandatoryInsuranceFees = [
-  { year: 2023, value: 45842 },
-  { year: 2024, value: 49500 },
-  { year: 2025, value: 53658 },
-  { year: 2026, value: 57390 },
-  { year: 2027, value: 61154 },
+var defaultTaxParams = [
+  { year: 2023, mandatoryInsuranceFee: 45842, paidTaxAmount: -45842, maxInsuranceFee },
+  { year: 2024, mandatoryInsuranceFee: 49500, paidTaxAmount: -49500, maxInsuranceFee: 277571 },
+  { year: 2025, mandatoryInsuranceFee: 53658, paidTaxAmount: -53658, maxInsuranceFee: 300888 },
+  { year: 2026, mandatoryInsuranceFee: 57390, paidTaxAmount: -57390, maxInsuranceFee: 0 },
+  { year: 2027, mandatoryInsuranceFee: 61154, paidTaxAmount: -61154, maxInsuranceFee: 0 },
 ];
 
 var addNewTaxYearToDb = async (collection, userId, year, session) => {
@@ -22,8 +22,7 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
       var nextYearTaxParams = taxYears.find((params) => params.year === nextYear);
 
       if (!nextYearTaxParams) {
-        var nextYearMandatoryInsuranceFee = mandatoryInsuranceFees.find((i) => i.year === nextYear).value;
-        var nextYearPaidTaxAmount = -nextYearMandatoryInsuranceFee;
+        var defaultNextYearTaxParams = defaultTaxParams.find((i) => i.year);
 
         await collection.updateOne(
           { userId },
@@ -32,8 +31,9 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
               years: {
                 year: nextYear,
                 taxRate: defaultTaxRate,
-                paidTaxAmount: nextYearPaidTaxAmount,
-                mandatoryInsuranceFee: nextYearMandatoryInsuranceFee,
+                paidTaxAmount: defaultNextYearTaxParams.paidTaxAmount,
+                maxInsuranceFee: defaultNextYearTaxParams.maxInsuranceFee,
+                mandatoryInsuranceFee: defaultNextYearTaxParams.mandatoryInsuranceFee,
               },
             },
           },
@@ -46,8 +46,7 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
       return existTaxParams;
     }
 
-    var currentYearMandatoryInsuranceFee = mandatoryInsuranceFees.find((i) => i.year === year).value;
-    var currentYearPaidTaxAmount = -currentYearMandatoryInsuranceFee;
+    var defaultCurrentYearTaxParams = defaultTaxParams.find((i) => i.year === year);
 
     await collection.updateOne(
       { userId },
@@ -56,8 +55,9 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
           years: {
             year,
             taxRate: defaultTaxRate,
-            paidTaxAmount: currentYearPaidTaxAmount,
-            mandatoryInsuranceFee: currentYearMandatoryInsuranceFee,
+            paidTaxAmount: defaultCurrentYearTaxParams.paidTaxAmount,
+            maxInsuranceFee: defaultCurrentYearTaxParams.maxInsuranceFee,
+            mandatoryInsuranceFee: defaultCurrentYearTaxParams.mandatoryInsuranceFee,
           },
         },
       },
