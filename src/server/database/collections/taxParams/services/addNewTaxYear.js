@@ -11,7 +11,7 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
   try {
     var mandatoryInsuranceFee;
 
-    var { years } = await collection.findOne({ userId });
+    var { years } = await collection.findOne({ userId }, null, { session: session });
     var existTaxYear = years.find((date) => date.year === year);
 
     if (existTaxYear) {
@@ -42,9 +42,7 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
     }
 
     var previousYear = year - 1;
-    var previousYearMandatoryInsuranceFee = mandatoryInsuranceFees.find(
-      (item) => item.year === previousYear
-    ).value;
+    var previousYearMandatoryInsuranceFee = mandatoryInsuranceFees.find((item) => item.year === previousYear).value;
     mandatoryInsuranceFee = mandatoryInsuranceFees.find((item) => item.year === year).value;
     var paidTaxAmount = -previousYearMandatoryInsuranceFee;
 
