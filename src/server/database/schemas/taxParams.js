@@ -12,6 +12,7 @@ var taxYear = new Schema(
     isInsuranceFeePaid: { type: Boolean, default: false },
     additionalInsuranceFee: { type: Number, default: 0 },
     requiresAdditionalInsuranceFee: { type: Boolean, default: false },
+    hasExcessIncomeForInsurance: { type: Boolean, default: false },
     schemaVersion: { type: Number },
   },
   { _id: false }
