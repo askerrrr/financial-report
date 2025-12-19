@@ -6,6 +6,8 @@ var parsePaidStorageReport = require("./parsePaidStorageReport");
 
 var processNonCrossReportSkus = async (reports, taxParams) => {
   var skus = [];
+  var paidTaxAmount = taxParams.paidTaxAmount;
+  var retailAmount = taxParams.retailAmount;
 
   var { weeklyFinancialReport, paidStorageReport, advertisingReport } = reports;
 
@@ -26,12 +28,24 @@ var processNonCrossReportSkus = async (reports, taxParams) => {
     sku.id = id;
     sku.skuName = name;
 
+    retailAmount += sku.retailAmount;
+    paidTaxAmount += sku.tax;
+
+    if (paidTaxAmount <= 0) {
+      sku.tax = 0;
+    } else {
+      var difference = paidTaxAmount - sku.tax;
+
+      if (difference < 0) {
+        sku.tax += difference;
+      }
+    }
     skus.push(sku);
   }
 
   skus = await truncateSkuNums(skus);
 
-  return { skus, skuNamesAndIds, ...totals };
+  return { skus, recalculatedTaxParams: { paidTaxAmount, retailAmount }, skuNamesAndIds, ...totals };
 };
 
 module.exports = processNonCrossReportSkus;

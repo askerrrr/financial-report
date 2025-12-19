@@ -14,6 +14,11 @@ var processCrossReportSkus = async (reports, taxParams) => {
   var { startYearTaxParams, endYearTaxParams } = taxParams;
   var { weeklyFinancialReport, paidStorageReport, advertisingReport } = reports;
 
+  var startYearPaidTaxAmount = startYearTaxParams.paidTaxAmount;
+  var startYearRetailAmount = startYearTaxParams.retailAmount;
+  var endYearPaidTaxAmount = endYearTaxParams.paidTaxAmount;
+  var endYearRetailAmount = endYearTaxParams.retailAmount;
+
   var { startYearAd, endYearAd } = await splitAdvertisingReportByYear(advertisingReport, startYearTaxParams.year);
   var { startYearStorageData, endYearStorageData } = await splitPaidStorageReportByYear(paidStorageReport, startYearTaxParams.year);
   startYearStorageData = await parsePaidStorageReport(startYearStorageData);
@@ -61,6 +66,19 @@ var processCrossReportSkus = async (reports, taxParams) => {
       currentYearPropPostfix
     );
 
+    startYearRetailAmount += currentYearSkuData.retailAmountInCurrentYear;
+    startYearPaidTaxAmount += currentYearSkuData.taxInCurrentYear;
+
+    if (startYearPaidTaxAmount <= 0) {
+      currentYearSkuData.taxInCurrentYear = 0;
+    } else {
+      var difference = startYearPaidTaxAmount - currentYearSkuData.taxInCurrentYear;
+
+      if (difference < 0) {
+        currentYearSkuData.taxInCurrentYear += difference;
+      }
+    }
+
     var nextYearSkuData = await parseSku(
       name,
       skuNamesAndIdsInNextYear.length,
@@ -70,6 +88,19 @@ var processCrossReportSkus = async (reports, taxParams) => {
       endYearTotals,
       nextYearPropPostfix
     );
+
+    endYearRetailAmount += nextYearSkuData.retailAmountInNext;
+    endYearPaidTaxAmount += nextYearSkuData.taxInNext;
+
+    if (endYearPaidTaxAmount <= 0) {
+      nextYearSkuData.taxInNext = 0;
+    } else {
+      var difference = endYearPaidTaxAmount - nextYearSkuData.taxInNext;
+
+      if (difference < 0) {
+        nextYearSkuData.taxInNext += difference;
+      }
+    }
 
     var middleTaxRate = (startYearTaxParams.taxRate + endYearTaxParams.taxRate) / 2;
 
@@ -88,7 +119,12 @@ var processCrossReportSkus = async (reports, taxParams) => {
 
   skus = await truncateSkuNums(skus);
 
-  return { skus, skuNamesAndIds, totalSold, totalStorageCost, totalAdvertisingCosts };
+  var recalculatedTaxParams = {
+    startYearTaxParams: { paidTaxAmount: startYearPaidTaxAmount, retailAmount: startYearRetailAmount },
+    endYearTaxParams: { paidTaxAmount: endYearPaidTaxAmount, retailAmount: endYearRetailAmount },
+  };
+
+  return { skus, skuNamesAndIds, totalSold, totalStorageCost, totalAdvertisingCosts, recalculatedTaxParams };
 };
 
 module.exports = processCrossReportSkus;

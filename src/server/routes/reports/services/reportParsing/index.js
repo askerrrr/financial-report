@@ -4,7 +4,7 @@ var processNonCrossReportSkus = require("./processNonCrossReportSkus");
 
 var parseReports = async (reports, taxParams, isCrossYearReport) => {
   if (isCrossYearReport) {
-    var { skus, skuNamesAndIds, ...firstTotals } = await processCrossReportSkus(reports, taxParams);
+    var { skus, skuNamesAndIds, recalculatedTaxParams, ...firstTotals } = await processCrossReportSkus(reports, taxParams);
 
     var currentYearPropPostfix = "InCurrentYear";
     var nextYearPropPostfix = "InNextYear";
@@ -15,14 +15,14 @@ var parseReports = async (reports, taxParams, isCrossYearReport) => {
 
     var report = Object.assign({}, firstTotals, currentYearTotals, nextYearTotals, generalTotals);
     report.skus = skus;
-    return { report, skuNamesAndIds };
+    return { report, skuNamesAndIds, recalculatedTaxParams };
   } else {
-    var { skus, skuNamesAndIds, ...firstTotals } = await processNonCrossReportSkus(reports, taxParams);
+    var { skus, skuNamesAndIds, recalculatedTaxParams, ...firstTotals } = await processNonCrossReportSkus(reports, taxParams);
     var restTotals = await processReportTotals(skus);
 
     var report = Object.assign({}, firstTotals, restTotals);
     report.skus = skus;
-    return { report, skuNamesAndIds };
+    return { report, skuNamesAndIds, recalculatedTaxParams };
   }
 };
 
