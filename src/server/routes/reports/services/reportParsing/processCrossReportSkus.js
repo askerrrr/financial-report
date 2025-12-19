@@ -4,6 +4,7 @@ var splitSkuByYear = require("./splitSkuByYear");
 var truncateSkuNums = require("./truncateSkuNums");
 var getSkuNamesAndIds = require("./getSkuNamesAndIds");
 var parsePaidStorageReport = require("./parsePaidStorageReport");
+var recalculateSkuAndTaxParams = require("./recalculateSkuAndTaxParams");
 var splitPaidStorageReportByYear = require("./splitPaidStorageReportByYear");
 var splitAdvertisingReportByYear = require("./splitAdvertisingReportByYear");
 var splitWeeklyFinancialReportByYear = require("./splitWeeklyFinancialReportByYear");
@@ -11,13 +12,11 @@ var splitWeeklyFinancialReportByYear = require("./splitWeeklyFinancialReportByYe
 var calculateTotalAdvertisingCosts = async (data) => data.reduce((acc, i) => acc + i.updSum, 0);
 
 var processCrossReportSkus = async (reports, taxParams) => {
-  var { startYearTaxParams, endYearTaxParams } = taxParams;
-  var { weeklyFinancialReport, paidStorageReport, advertisingReport } = reports;
+  var recalculatedTaxParams = {};
+  recalculatedTaxParams.startYearTaxParams = Object.assign({}, taxParams.startYearTaxParams);
+  recalculatedTaxParams.endYearTaxParams = Object.assign({}, taxParams.endYearTaxParams);
 
-  var startYearPaidTaxAmount = startYearTaxParams.paidTaxAmount;
-  var startYearRetailAmount = startYearTaxParams.retailAmount;
-  var endYearPaidTaxAmount = endYearTaxParams.paidTaxAmount;
-  var endYearRetailAmount = endYearTaxParams.retailAmount;
+  var { weeklyFinancialReport, paidStorageReport, advertisingReport } = reports;
 
   var { startYearAd, endYearAd } = await splitAdvertisingReportByYear(advertisingReport, startYearTaxParams.year);
   var { startYearStorageData, endYearStorageData } = await splitPaidStorageReportByYear(paidStorageReport, startYearTaxParams.year);
@@ -66,18 +65,11 @@ var processCrossReportSkus = async (reports, taxParams) => {
       currentYearPropPostfix
     );
 
-    startYearRetailAmount += currentYearSkuData.retailAmountInCurrentYear;
-    startYearPaidTaxAmount += currentYearSkuData.taxInCurrentYear;
-
-    if (startYearPaidTaxAmount <= 0) {
-      currentYearSkuData.taxInCurrentYear = 0;
-    } else {
-      var difference = startYearPaidTaxAmount - currentYearSkuData.taxInCurrentYear;
-
-      if (difference < 0) {
-        currentYearSkuData.taxInCurrentYear += difference;
-      }
-    }
+    var resultOfStartYearRecalculation = recalculateSkuAndTaxParams(
+      currentYearSkuData,
+      recalculatedTaxParams.startYearTaxParams,
+      currentYearPropPostfix
+    );
 
     var nextYearSkuData = await parseSku(
       name,
@@ -89,18 +81,7 @@ var processCrossReportSkus = async (reports, taxParams) => {
       nextYearPropPostfix
     );
 
-    endYearRetailAmount += nextYearSkuData.retailAmountInNext;
-    endYearPaidTaxAmount += nextYearSkuData.taxInNext;
-
-    if (endYearPaidTaxAmount <= 0) {
-      nextYearSkuData.taxInNext = 0;
-    } else {
-      var difference = endYearPaidTaxAmount - nextYearSkuData.taxInNext;
-
-      if (difference < 0) {
-        nextYearSkuData.taxInNext += difference;
-      }
-    }
+    var resultOfEndYearRecalculation = recalculateSkuAndTaxParams(nextYearSkuData, recalculatedTaxParams.endYearTaxParams, nextYearPropPostfix);
 
     var middleTaxRate = (startYearTaxParams.taxRate + endYearTaxParams.taxRate) / 2;
 
@@ -110,19 +91,17 @@ var processCrossReportSkus = async (reports, taxParams) => {
       totalAdvertisingCosts,
     });
 
-    var sku = Object.assign({}, currentYearSkuData, nextYearSkuData, totalSkuData);
+    var sku = Object.assign({}, resultOfStartYearRecalculation.updatedSku, resultOfEndYearRecalculation.updatedSku, totalSkuData);
     sku.id = id;
     sku.skuName = name;
+
+    recalculatedTaxParams.startYearTaxParams = resultOfStartYearRecalculation.recalculatedTaxParams;
+    recalculatedTaxParams.endYearTaxParams = resultOfStartYearRecalculation.recalculatedTaxParams;
 
     skus.push(sku);
   }
 
   skus = await truncateSkuNums(skus);
-
-  var recalculatedTaxParams = {
-    startYearTaxParams: { paidTaxAmount: startYearPaidTaxAmount, retailAmount: startYearRetailAmount },
-    endYearTaxParams: { paidTaxAmount: endYearPaidTaxAmount, retailAmount: endYearRetailAmount },
-  };
 
   return { skus, skuNamesAndIds, totalSold, totalStorageCost, totalAdvertisingCosts, recalculatedTaxParams };
 };
