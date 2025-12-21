@@ -1,7 +1,7 @@
 var { connection } = require("../../../database/");
 
 var deleteReport = async (req, res, next) => {
-  var { reportTotals } = req.body;
+  var { report } = req.body;
   var { deleteReportFromDb } = req.app.locals.reportCollectionServices;
   var { deleteReportFromReportTree } = req.app.locals.reportsTreeCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
@@ -10,41 +10,42 @@ var deleteReport = async (req, res, next) => {
 
   try {
     await session.withTransaction(async () => {
-      var { userId } = reportTotals;
-      var { year, month } = reportTotals.recordTo;
+      var { userId } = report;
+      var { year, month } = report.recordTo;
 
-      if (reportTotals.crossesTaxYears) {
-        var startYear = +reportTotals.dateFrom.split("-")[0];
-        var endYear = +reportTotals.dateTo.split("-")[0];
+      if (report.crossesTaxYears) {
+        var startYear = +report.dateFrom.split("-")[0];
+        var endYear = +report.dateTo.split("-")[0];
 
         var taxParams = await getTaxParamsFromDb(userId, null, session);
         var startYearTaxParams = taxParams.find((params) => params.year === startYear);
         var endYearTaxParams = taxParams.find((params) => params.year === endYear);
 
-        startYearTaxParams.paidTaxAmount -= reportTotals.totalTaxAmountInCurrentYear;
-        startYearTaxParams.retailAmount -= reportTotals.totalRetailAmountInCurrentYear;
-        startYearTaxParams.paidInsuranceFee -= reportTotals.totalInsuranceFeeInCurrentYear;
-        startYearTaxParams.additionalInsuranceFee -= reportTotals.totalAdditionalInsuranceFeeInCurrentYear;
+        startYearTaxParams.paidTaxAmount -= report.totalTaxAmountInCurrentYear;
+        startYearTaxParams.retailAmount -= report.totalRetailAmountInCurrentYear;
+        startYearTaxParams.paidInsuranceFee -= report.totalInsuranceFeeInCurrentYear;
+        startYearTaxParams.additionalInsuranceFee -= report.totalAdditionalInsuranceFeeInCurrentYear;
 
-        endYearTaxParams.paidTaxAmount -= reportTotals.totalTaxAmountInNextYear;
-        endYearTaxParams.retailAmount -= reportTotals.totalRetailAmountInNextYear;
-        endYearTaxParams.paidInsuranceFee -= reportTotals.totalInsuranceFeeInNextYear;
-        endYearTaxParams.additionalInsuranceFee -= reportTotals.totalAdditionalInsuranceFeeInNextYear;
+        endYearTaxParams.paidTaxAmount -= report.totalTaxAmountInNextYear;
+        endYearTaxParams.retailAmount -= report.totalRetailAmountInNextYear;
+        endYearTaxParams.paidInsuranceFee -= report.totalInsuranceFeeInNextYear;
+        endYearTaxParams.additionalInsuranceFee -= report.totalAdditionalInsuranceFeeInNextYear;
 
         await changeTaxParamsToDb(userId, startYear, session, startYearTaxParams);
         await changeTaxParamsToDb(userId, endYear, session, endYearTaxParams);
       } else {
         var taxParams = await getTaxParamsFromDb(userId, year, session);
 
-        taxParams.paidTaxAmount -= reportTotals.totalTaxAmount;
-        taxParams.retailAmount -= reportTotals.totalRetailAmount;
-        taxParams.paidInsuranceFee -= reportTotals.totalInsuranceFee;
+        taxParams.paidTaxAmount -= report.totalTaxAmount;
+        taxParams.retailAmount -= report.totalRetailAmount;
+        taxParams.paidInsuranceFee -= report.totalInsuranceFee;
+        taxParams.additionalInsuranceFee -= report.additionalInsuranceFee;
 
         await changeTaxParamsToDb(userId, year, session, taxParams);
       }
 
-      await deleteReportFromDb(userId, reportTotals.reportId, session);
-      await deleteReportFromReportTree(userId, year, month, reportTotals.reportId, session);
+      await deleteReportFromDb(userId, report.reportId, session);
+      await deleteReportFromReportTree(userId, year, month, report.reportId, session);
     });
 
     return res.sendStatus(200);

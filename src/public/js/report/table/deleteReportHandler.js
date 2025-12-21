@@ -18,7 +18,7 @@ var deleteReportHandler = async (report) =>
 
     if (confirmed) {
       var { skus, ...totals } = report;
-      var reportData = { reportTotals: totals };
+      var reportData = { report: totals };
       var success = await sendDeletionRequest(reportData);
 
       if (success) {
