@@ -39,7 +39,7 @@ var deleteReport = async (req, res, next) => {
         taxParams.paidTaxAmount -= report.totalTaxAmount;
         taxParams.retailAmount -= report.totalRetailAmount;
         taxParams.paidInsuranceFee -= report.totalInsuranceFee;
-        taxParams.additionalInsuranceFee -= report.additionalInsuranceFee;
+        taxParams.additionalInsuranceFee -= report.totalAdditionalInsuranceFee;
 
         await changeTaxParamsToDb(userId, year, session, taxParams);
       }
