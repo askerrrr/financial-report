@@ -35,7 +35,7 @@ var processNonCrossReportSkus = async (reports, taxParams) => {
 
   skus = await truncateSkuNums(skus);
 
-  return { skus, recalculatedTaxParams: { paidTaxAmount, retailAmount }, skuNamesAndIds, ...totals };
+  return { skus, recalculatedTaxParams, skuNamesAndIds, ...totals };
 };
 
 module.exports = processNonCrossReportSkus;
