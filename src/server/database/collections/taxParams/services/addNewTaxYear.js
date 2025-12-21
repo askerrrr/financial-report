@@ -3,11 +3,11 @@ var { DatabaseError } = require("../../../../customError");
 var defaultTaxRate = 6;
 
 var defaultTaxParams = [
-  { year: 2023, mandatoryInsuranceFee: 45842, paidTaxAmount: -45842, maxInsuranceFee: 0 },
-  { year: 2024, mandatoryInsuranceFee: 49500, paidTaxAmount: -49500, maxInsuranceFee: 277571 },
-  { year: 2025, mandatoryInsuranceFee: 53658, paidTaxAmount: -53658, maxInsuranceFee: 300888 },
-  { year: 2026, mandatoryInsuranceFee: 57390, paidTaxAmount: -57390, maxInsuranceFee: 0 },
-  { year: 2027, mandatoryInsuranceFee: 61154, paidTaxAmount: -61154, maxInsuranceFee: 0 },
+  { year: 2023, taxRate: 6, mandatoryInsuranceFee: 45842, paidTaxAmount: -45842, maxInsuranceFee: 0, retailAmount: 0 },
+  { year: 2024, taxRate: 6, mandatoryInsuranceFee: 49500, paidTaxAmount: -49500, maxInsuranceFee: 277571, retailAmount: 0 },
+  { year: 2025, taxRate: 6, mandatoryInsuranceFee: 53658, paidTaxAmount: -53658, maxInsuranceFee: 300888, retailAmount: 0 },
+  { year: 2026, taxRate: 6, mandatoryInsuranceFee: 57390, paidTaxAmount: -57390, maxInsuranceFee: 0, retailAmount: 0 },
+  { year: 2027, taxRate: 6, mandatoryInsuranceFee: 61154, paidTaxAmount: -61154, maxInsuranceFee: 0, retailAmount: 0 },
 ];
 
 var addNewTaxYearToDb = async (collection, userId, year, session) => {
@@ -53,11 +53,7 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
       {
         $push: {
           years: {
-            year,
-            taxRate: defaultTaxRate,
-            paidTaxAmount: defaultCurrentYearTaxParams.paidTaxAmount,
-            maxInsuranceFee: defaultCurrentYearTaxParams.maxInsuranceFee,
-            mandatoryInsuranceFee: defaultCurrentYearTaxParams.mandatoryInsuranceFee,
+            ...defaultCurrentYearTaxParams,
           },
         },
       },
@@ -66,7 +62,7 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
       }
     );
 
-    return { year, taxRate: defaultTaxRate, paidTaxAmount: currentYearPaidTaxAmount, mandatoryInsuranceFee: currentYearMandatoryInsuranceFee };
+    return defaultCurrentYearTaxParams;
   } catch (e) {
     throw new DatabaseError(userId, e);
   }
