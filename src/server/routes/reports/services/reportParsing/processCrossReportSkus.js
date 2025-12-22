@@ -16,6 +16,8 @@ var processCrossReportSkus = async (reports, taxParams) => {
   recalculatedTaxParams.startYearTaxParams = Object.assign({}, taxParams.startYearTaxParams);
   recalculatedTaxParams.endYearTaxParams = Object.assign({}, taxParams.endYearTaxParams);
 
+  var { endYearTaxParams, startYearTaxParams } = recalculatedTaxParams;
+
   var { weeklyFinancialReport, paidStorageReport, advertisingReport } = reports;
 
   var { startYearAd, endYearAd } = await splitAdvertisingReportByYear(advertisingReport, startYearTaxParams.year);
