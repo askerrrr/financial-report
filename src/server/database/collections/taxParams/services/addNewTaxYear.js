@@ -1,7 +1,5 @@
 var { DatabaseError } = require("../../../../customError");
 
-var defaultTaxRate = 6;
-
 var defaultTaxParams = [
   { year: 2023, taxRate: 6, mandatoryInsuranceFee: 45842, paidTaxAmount: -45842, maxInsuranceFee: 0, retailAmount: 0 },
   { year: 2024, taxRate: 6, mandatoryInsuranceFee: 49500, paidTaxAmount: -49500, maxInsuranceFee: 277571, retailAmount: 0 },
@@ -16,31 +14,12 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
     var taxYears = data.toObject().years;
 
     var existTaxParams = taxYears.find((params) => params.year === year);
-
     if (existTaxParams) {
       var nextYear = year + 1;
       var nextYearTaxParams = taxYears.find((params) => params.year === nextYear);
-
       if (!nextYearTaxParams) {
-        var defaultNextYearTaxParams = defaultTaxParams.find((i) => i.year);
-
-        await collection.updateOne(
-          { userId },
-          {
-            $push: {
-              years: {
-                year: nextYear,
-                taxRate: defaultTaxRate,
-                paidTaxAmount: defaultNextYearTaxParams.paidTaxAmount,
-                maxInsuranceFee: defaultNextYearTaxParams.maxInsuranceFee,
-                mandatoryInsuranceFee: defaultNextYearTaxParams.mandatoryInsuranceFee,
-              },
-            },
-          },
-          {
-            session: session,
-          }
-        );
+        var defaultNextYearTaxParams = defaultTaxParams.find((i) => i.year === nextYear);
+        await collection.updateOne({ userId }, { $push: { years: { ...defaultNextYearTaxParams } } }, { session: session });
       }
 
       return existTaxParams;
@@ -48,19 +27,7 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
 
     var defaultCurrentYearTaxParams = defaultTaxParams.find((i) => i.year === year);
 
-    await collection.updateOne(
-      { userId },
-      {
-        $push: {
-          years: {
-            ...defaultCurrentYearTaxParams,
-          },
-        },
-      },
-      {
-        session: session,
-      }
-    );
+    await collection.updateOne({ userId }, { $push: { years: { ...defaultCurrentYearTaxParams } } }, { session: session });
 
     return defaultCurrentYearTaxParams;
   } catch (e) {
