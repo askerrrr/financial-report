@@ -21,30 +21,15 @@ var deleteReport = async (req, res, next) => {
         var startYearTaxParams = taxParams.find((params) => params.year === startYear);
         var endYearTaxParams = taxParams.find((params) => params.year === endYear);
 
-        startYearTaxParams.finalProfit -= report.totalFinalProfitInCurrentYear;
-        startYearTaxParams.paidTaxAmount -= report.totalTaxAmountInCurrentYear;
-        startYearTaxParams.retailAmount -= report.totalRetailAmountInCurrentYear;
-        startYearTaxParams.paidInsuranceFee -= report.totalInsuranceFeeInCurrentYear;
-        startYearTaxParams.additionalInsuranceFee -= report.totalAdditionalInsuranceFeeInCurrentYear;
-
-        endYearTaxParams.finalProfit -= report.totalFinalProfitInNextYear;
-        endYearTaxParams.paidTaxAmount -= report.totalTaxAmountInNextYear;
-        endYearTaxParams.retailAmount -= report.totalRetailAmountInNextYear;
-        endYearTaxParams.paidInsuranceFee -= report.totalInsuranceFeeInNextYear;
-        endYearTaxParams.additionalInsuranceFee -= report.totalAdditionalInsuranceFeeInNextYear;
+        startYearTaxParams = recalculateTaxParams(startYearTaxParams, report, "InCurrentYear").updatedTaxParams;
+        endYearTaxParams = recalculateTaxParams(endYearTaxParams, report, "InNextYear").updatedTaxParams;
 
         await changeTaxParamsToDb(userId, startYear, session, startYearTaxParams);
         await changeTaxParamsToDb(userId, endYear, session, endYearTaxParams);
       } else {
         var taxParams = await getTaxParamsFromDb(userId, year, session);
-
-        taxParams.finalProfit -= report.totalFinalProfit;
-        taxParams.paidTaxAmount -= report.totalTaxAmount;
-        taxParams.retailAmount -= report.totalRetailAmount;
-        taxParams.paidInsuranceFee -= report.totalInsuranceFee;
-        taxParams.additionalInsuranceFee -= report.totalAdditionalInsuranceFee;
-
-        await changeTaxParamsToDb(userId, year, session, taxParams);
+        var { updatedTaxParams } = recalculateTaxParams(taxParams, report);
+        await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
       }
 
       await deleteReportFromDb(userId, report.reportId, session);
@@ -60,3 +45,12 @@ var deleteReport = async (req, res, next) => {
 };
 
 module.exports = deleteReport;
+
+var recalculateTaxParams = function (taxParams, report, propPostfix = "") {
+  taxParams.finalProfit = (taxParams.finalProfit - report["totalFinalProfit" + propPostfix]).toFixed(2);
+  taxParams.paidTaxAmount = (taxParams.paidTaxAmount - report["totalTaxAmount" + propPostfix]).toFixed(2);
+  taxParams.retailAmount = (taxParams.retailAmount - report["totalRetailAmount" + propPostfix]).toFixed(2);
+  taxParams.paidInsuranceFee = (taxParams.paidInsuranceFee - report["totalInsuranceFee" + propPostfix]).toFixed(2);
+  taxParams.additionalInsuranceFee = (taxParams.additionalInsuranceFee - report["totalAdditionalInsuranceFee" + propPostfix]).toFixed(2);
+  return { updatedTaxParams: taxParams };
+};
