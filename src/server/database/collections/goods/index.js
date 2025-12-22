@@ -18,7 +18,7 @@ var goodsCollectionServices = {
 
   getSkusLastCostPrice: (userId) => getSkusLastCostPrice(goodsCollection, userId),
 
-  getListGoodsFromDb: (userId) => getListGoodsFromDb(goodsCollection, userId),
+  getListGoodsFromDb: (userId, session) => getListGoodsFromDb(goodsCollection, userId, session),
 
   saveListGoodsToDb: (userId, listGoods, session) => saveListGoodsToDb(goodsCollection, userId, listGoods, session),
 

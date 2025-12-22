@@ -1,10 +1,16 @@
 var { DatabaseError } = require("../../../../customError");
 
-var getReportTree = async (collection, userId) => {
+var getReportTree = async (collection, userId, session) => {
   try {
-    var { years } = await collection.findOne({ userId }).exec();
+    var data;
 
-    return { reportTree: years };
+    if (session) {
+      data = await collection.findOne({ userId }, null, { session: session });
+    } else {
+      data = await collection.findOne({ userId });
+    }
+
+    return { reportTree: data.years };
   } catch (e) {
     throw new DatabaseError(userId, e);
   }

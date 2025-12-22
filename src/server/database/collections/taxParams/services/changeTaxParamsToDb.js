@@ -1,16 +1,18 @@
 var { DatabaseError } = require("../../../../customError");
 
-var changeTaxParamsToDb = async (collection, userId, year, session, ...newTaxParams) => {
+var changeTaxParamsToDb = async (collection, userId, year, session, newTaxParams) => {
   try {
     var query = {};
 
-    newTaxParams.map((item) => {
-      for (var key of Object.keys(item)) {
-        query[`years.$.${key}`] = item[key];
-      }
-    });
+    for (var key of Object.keys(newTaxParams)) {
+      query[`years.$.${key}`] = newTaxParams[key];
+    }
 
-    var result = await collection.updateOne({ userId, "years.year": year }, { $set: query }, { session: session });
+    var result = await collection.updateOne(
+      { userId, "years.year": year },
+      { $set: query },
+      { session: session }
+    );
 
     return result.acknowledged;
   } catch (e) {

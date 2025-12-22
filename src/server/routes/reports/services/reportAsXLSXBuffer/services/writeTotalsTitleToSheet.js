@@ -14,20 +14,22 @@ var totalTitles = [
   "Реклама",
   "Себестоимость",
   "Налоги",
+  "Cтраховые взносы",
+  "Доп. страховые взносы",
   "Маржинальность %",
   "Итого",
 ];
 
 var fontStyles = { bold: true, font: 10 };
-
 var alignmentStyles = { vertical: "middle", horizontal: "left" };
 
 var writeTotalsTitleToSheet = async (sheet, cellNum) => {
   var cellName = "A";
+  var firstColumnNum = 1;
 
-  sheet.getColumn(1).width = 27;
-  sheet.getColumn(1).font = fontStyles;
-  sheet.getColumn(1).alignment = alignmentStyles;
+  sheet.getColumn(firstColumnNum).width = 27;
+  sheet.getColumn(firstColumnNum).font = fontStyles;
+  sheet.getColumn(firstColumnNum).alignment = alignmentStyles;
 
   for (var title of totalTitles) {
     var currentCell = cellName + cellNum;

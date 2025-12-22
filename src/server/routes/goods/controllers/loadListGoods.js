@@ -5,7 +5,7 @@ var loadListGoods = async (req, res, next) => {
   var { saveListGoodsToDb } = req.app.locals.goodsCollectionServices;
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
 
-  var token = await getWBTokenByUserId(userId);
+  var { token } = await getWBTokenByUserId(userId);
 
   if (!token) {
     return res.sendStatus(304);

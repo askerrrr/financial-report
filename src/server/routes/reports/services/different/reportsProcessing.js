@@ -4,7 +4,6 @@ var parseReports = require("../reportParsing");
 var dbutils = require("../../../../database/collections");
 var addNewSkusToListGoods = require("./addNewSkusToListGoods");
 var insertReportToReportTree = require("../reportTreeBuilder");
-var recalculatePaidTaxAmount = require("./recalculatePaidTaxAmount");
 var schemaVersioning = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
 var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
@@ -18,8 +17,8 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var endYear = +dateTo.split("-")[0];
   var isCrossYearReport = startYear !== endYear;
 
-  var token = await getWBTokenByUserId(userId);
-  var { reportTree } = await getReportTree(userId);
+  var { token } = await getWBTokenByUserId(userId, session);
+  var { reportTree } = await getReportTree(userId, session);
   var reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
   var reportId = reports.weeklyFinancialReport[0].realizationreport_id;
 
@@ -31,18 +30,14 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
     var endYearTaxParams = await addNewTaxYearToDb(userId, endYear, session);
     var taxParams = { startYearTaxParams, endYearTaxParams };
 
-    var { report, skuNamesAndIds } = await parseReports(reports, taxParams, isCrossYearReport);
+    var { report, skuNamesAndIds, recalculatedTaxParams } = await parseReports(reports, taxParams, isCrossYearReport);
 
-    var recalculatedStartYearTaxParams = recalculatePaidTaxAmount(report, startYearTaxParams, "InCurrentYear");
-    var recalculatedEndYearTaxParams = recalculatePaidTaxAmount(report, endYearTaxParams, "InNextYear");
-
-    await changeTaxParamsToDb(userId, startYear, session, recalculatedStartYearTaxParams);
-    await changeTaxParamsToDb(userId, endYear, session, recalculatedEndYearTaxParams);
+    await changeTaxParamsToDb(userId, startYear, session, recalculatedTaxParams.startYearTaxParams);
+    await changeTaxParamsToDb(userId, endYear, session, recalculatedTaxParams.endYearTaxParams);
   } else {
     var taxParams = await addNewTaxYearToDb(userId, year, session);
-    var { report, skuNamesAndIds } = await parseReports(reports, taxParams);
+    var { report, skuNamesAndIds, recalculatedTaxParams } = await parseReports(reports, taxParams);
 
-    var recalculatedTaxParams = recalculatePaidTaxAmount(report, taxParams);
     await changeTaxParamsToDb(userId, year, session, recalculatedTaxParams);
   }
 
@@ -54,7 +49,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   report.schemaVersion = schemaVersioning.reportSchemaVersion;
   report.recordTo = { year, month, schemaVersion: schemaVersioning.recordToSchemaVersion };
 
-  var { listGoods } = await getListGoodsFromDb(userId);
+  var { listGoods } = await getListGoodsFromDb(userId, session);
   var { updatedListGoods } = await addNewSkusToListGoods(listGoods, skuNamesAndIds);
 
   await saveReportToDb(userId, report, session);

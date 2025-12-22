@@ -11,10 +11,10 @@ var getTaxParamsFromDb = async (collection, userId, year, session) => {
     }
 
     if (year) {
-      return data.years.find((date) => date.year == year);
+      return data.toObject().years.find((date) => date.year == year);
     }
 
-    return data.years;
+    return data.toObject().years;
   } catch (e) {
     throw new DatabaseError(userId, e);
   }

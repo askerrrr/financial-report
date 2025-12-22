@@ -1,39 +1,30 @@
 var sum = require("./sum");
+var calcProfitMargin = require("./profitMargin");
 var calcProductCosts = require("./totalProductCosts");
-var calcTotalProfitMargin = require("./totalProfitMargin");
 
 var calcRestReportTotalParams = (totals, skus, isCrossYearReport) => {
   totals.totalPreTaxProfit = sum(skus, "preTaxProfit", "truncate-on");
   totals.totalFinalProfit = sum(skus, "finalProfit", "truncate-on");
   totals.totalProductCosts = calcProductCosts(skus);
   totals.totalInsuranceFee = sum(skus, "insuranceFee");
-  totals.totalProfitMargin = calcTotalProfitMargin(totals);
 
   if (isCrossYearReport) {
-    totals.totalFinalProfitInCurrentYear = skus.reduce(
-      (acc, i) => acc + i.finalProfitInCurrentYear,
-      0
-    );
+    totals.totalPreTaxProfitInCurrentYear = sum(skus, "preTaxProfitInCurrentYear", "truncate-on");
+    totals.totalPreTaxProfitInNextYear = sum(skus, "preTaxProfitInNextYear", "truncate-on");
 
-    totals.totalFinalProfitInNextYear = skus.reduce((acc, i) => acc + i.finalProfitInNextYear, 0);
+    totals.totalInsuranceFeeInCurrentYear = sum(skus, "insuranceFeeInCurrentYear");
+    totals.totalInsuranceFeeInNextYear = sum(skus, "insuranceFeeInNextYear");
 
-    totals.totalInsuranceFeeInCurrentYear = skus.reduce(
-      (acc, i) => acc + i.insuranceFeeInCurrentYear,
-      0
-    );
+    totals.totalFinalProfitInCurrentYear = sum(skus, "finalProfitInCurrentYear", "truncate-on");
+    totals.totalFinalProfitInNextYear = sum(skus, "finalProfitInNextYear", "truncate-on");
 
-    totals.totalInsuranceFeeInNextYear = skus.reduce((acc, i) => acc + i.insuranceFeeInNextYear, 0);
+    totals.totalProfitMarginInCurrentYear = calcProfitMargin(totals.totalFinalProfitInCurrentYear, totals.totalRetailAmountInCurrentYear);
 
-    totals.totalProfitMarginInCurrentYear =
-      skus.reduce((acc, i) => acc + i.profitMarginInCurrentYear, 0) / skus.length;
+    totals.totalProfitMarginInNextYear = calcProfitMargin(totals.totalFinalProfitInNextYear, totals.totalRetailAmountInNextYear);
 
-    totals.totalProfitMarginInNextYear =
-      skus.reduce((acc, i) => acc + i.profitMarginInNextYear, 0) / skus.length;
-
-    totals.totalProfitMargin =
-      (totals.totalProfitMarginInCurrentYear + totals.totalProfitMarginInNextYear) / 2;
+    totals.totalProfitMargin = (totals.totalProfitMarginInCurrentYear + totals.totalProfitMarginInNextYear) / 2;
   } else {
-    totals.totalProfitMargin = calcTotalProfitMargin(totals);
+    totals.totalProfitMargin = calcProfitMargin(totals.totalFinalProfit, totals.totalRetailAmount);
   }
 
   return { ...totals, skus };

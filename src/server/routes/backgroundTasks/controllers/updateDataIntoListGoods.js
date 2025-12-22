@@ -10,7 +10,7 @@ var updateDataIntoListGoods = async (req, res, next) => {
 
   for (var { userId, listGoodsIds } of data) {
     if (listGoodsIds.length) {
-      var token = await getWBTokenByUserId(userId);
+      var { token } = await getWBTokenByUserId(userId);
 
       var { rawListGoods } = await wbapi.getPricesAndDiscountsByListGoods(userId, token, listGoodsIds);
 
