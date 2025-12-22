@@ -21,11 +21,13 @@ var deleteReport = async (req, res, next) => {
         var startYearTaxParams = taxParams.find((params) => params.year === startYear);
         var endYearTaxParams = taxParams.find((params) => params.year === endYear);
 
+        startYearTaxParams.finalProfit -= report.totalFinalProfitInCurrentYear;
         startYearTaxParams.paidTaxAmount -= report.totalTaxAmountInCurrentYear;
         startYearTaxParams.retailAmount -= report.totalRetailAmountInCurrentYear;
         startYearTaxParams.paidInsuranceFee -= report.totalInsuranceFeeInCurrentYear;
         startYearTaxParams.additionalInsuranceFee -= report.totalAdditionalInsuranceFeeInCurrentYear;
 
+        endYearTaxParams.finalProfit -= report.totalFinalProfitInNextYear;
         endYearTaxParams.paidTaxAmount -= report.totalTaxAmountInNextYear;
         endYearTaxParams.retailAmount -= report.totalRetailAmountInNextYear;
         endYearTaxParams.paidInsuranceFee -= report.totalInsuranceFeeInNextYear;
@@ -36,6 +38,7 @@ var deleteReport = async (req, res, next) => {
       } else {
         var taxParams = await getTaxParamsFromDb(userId, year, session);
 
+        taxParams.finalProfit -= report.totalFinalProfit;
         taxParams.paidTaxAmount -= report.totalTaxAmount;
         taxParams.retailAmount -= report.totalRetailAmount;
         taxParams.paidInsuranceFee -= report.totalInsuranceFee;
