@@ -17,6 +17,8 @@ var createTotalsTable = async (report) => {
   var totalFinesTd = createTdElement(report.totalFines);
   var totalAdvertisingCostsTd = createTdElement(report.totalAdvertisingCosts);
   var totalTaxAmountTd = createTdElement(report.totalTaxAmount);
+  var totalInsuranceFeeTd = createTdElement(report.totalInsuranceFee);
+  var totalAdditionalInsuranceFeeTd = createTdElement(report.totalAdditionalInsuranceFee);
   var totalFinalProfitTd = createTdElement(report.totalFinalProfit, "totalFinalProfit");
 
   if (report.totalFinalProfit < 0) {
@@ -40,6 +42,8 @@ var createTotalsTable = async (report) => {
     totalStorageCostTd,
     totalAdvertisingCostsTd,
     totalTaxAmountTd,
+    totalInsuranceFeeTd,
+    totalAdditionalInsuranceFeeTd,
     totalProfitMarginTd,
     totalFinalProfitTd
   );
