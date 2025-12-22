@@ -9,6 +9,8 @@ var requiredSKUsFieldsName = [
   "storageCost",
   "acceptance",
   "profit",
+  "insuranceFee",
+  "additionalInsuranceFee",
   "profitMargin",
   "finalProfit",
 ];
@@ -26,6 +28,8 @@ var getRequiredSKUFieldsName = async (skus) =>
       storageCost: sku.storageCost,
       acceptance: sku.acceptance,
       profit: sku.profit,
+      insuranceFee: sku.insuranceFee,
+      additionalInsuranceFee: sku.additionalInsuranceFee,
       profitMargin: sku.profitMargin,
       finalProfit: sku.finalProfit,
     };
