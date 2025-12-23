@@ -1,10 +1,11 @@
 var getTaxParamKeyName = require("../services/getTaxParamKeyName");
 var defaultTaxParams = require("../../../database/defaultTaxParams");
-var recalculateReportsWithNewTaxRate = require('../services/recalculateReportsWithNewTaxRate')
+var recalculateReportsWithNewTaxRate = require("../services/recalculateReportsWithNewTaxRate");
 
 var changeTaxParams = async (req, res, next) => {
   var userId = req.app.locals.userId;
   var { year, oldTaxParams, recalculate, data } = req.body;
+  var { getReportsByUserId } = req.app.locals.reportCollectionServices;
   var { changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
   var success = await changeTaxParamsToDb(userId, year, (session = null), data);
