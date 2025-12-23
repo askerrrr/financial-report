@@ -1,3 +1,4 @@
+var { dbClient } = require("../../../database");
 var getTaxParamKeyName = require("../services/getTaxParamKeyName");
 var defaultTaxParams = require("../../../database/defaultTaxParams");
 var recalculateReportsWithNewTaxRate = require("../services/recalculateReportsWithNewTaxRate");
