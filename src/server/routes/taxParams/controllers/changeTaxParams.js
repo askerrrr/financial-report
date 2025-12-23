@@ -8,8 +8,11 @@ var changeTaxParams = async (req, res, next) => {
   var { getReportsByUserId } = req.app.locals.reportCollectionServices;
   var { changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
+  var { taxParamKeyName } = getTaxParamKeyName(data);
+
   var data = await getReportsByUserId(userId);
   var reports = data.reports.filter((report) => report.recordTo.year === year);
+
   var success = await changeTaxParamsToDb(userId, year, (session = null), data);
 
   if (success) {
