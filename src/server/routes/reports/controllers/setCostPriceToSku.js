@@ -46,8 +46,9 @@ var setCostPriceToSku = async (req, res, next) => {
 
       await saveUpdatedReport(userId, reportId, updatedReport, session);
       await updateSkuLastCostPrice(userId, skuId, costPrice, session);
-      var { totalFinalProfit, totalProfitMargin } = updatedReport;
+
       var { profitMargin, finalProfit } = skus[skuIndex];
+      var { totalFinalProfit, totalProfitMargin, totalInsuranceFee } = updatedReport;
 
       res.json({
         sku: {
@@ -57,7 +58,7 @@ var setCostPriceToSku = async (req, res, next) => {
             finalProfit,
           },
         },
-        total: { totalFinalProfit, totalProfitMargin },
+        total: { totalFinalProfit, totalProfitMargin, totalInsuranceFee },
       });
     });
   } catch (err) {

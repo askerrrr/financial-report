@@ -17,7 +17,7 @@ var createTotalsTable = async (report) => {
   var totalFinesTd = createTdElement(report.totalFines);
   var totalAdvertisingCostsTd = createTdElement(report.totalAdvertisingCosts);
   var totalTaxAmountTd = createTdElement(report.totalTaxAmount);
-  var totalInsuranceFeeTd = createTdElement(report.totalInsuranceFee);
+  var totalInsuranceFeeTd = createTdElement(report.totalInsuranceFee, "totalInsuranceFee");
   var totalAdditionalInsuranceFeeTd = createTdElement(report.totalAdditionalInsuranceFee);
   var totalFinalProfitTd = createTdElement(report.totalFinalProfit, "totalFinalProfit");
 
