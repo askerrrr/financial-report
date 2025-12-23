@@ -1,3 +1,5 @@
+var calc = require("../../reports/services/calcServices");
+
 var recalculateReportsWithNewTaxRate = (reports, paidTaxAmount, newTaxRate) => {
   var finalProfit = 0;
 
