@@ -14,8 +14,8 @@ var changeTaxParams = async (req, res, next) => {
   var session = await dbClient.startSession();
 
   await session.withTransaction(async () => {
-    var data = await getReportsByUserId(userId, session);
-    var reports = data.reports.filter((report) => report.recordTo.year === year);
+    var reportsData = await getReportsByUserId(userId, session);
+    var reports = reportsData.reports.filter((report) => report.recordTo.year === year);
 
     var success = await changeTaxParamsToDb(userId, year, session, data);
   });
