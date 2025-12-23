@@ -83,4 +83,4 @@ var runDB = async () => {
   //await runDBMigration().then(() => console.log("\n     migration completed\n-------------------------\n"));
 };
 
-module.exports = { runDB, connection: mongoose.connection };
+module.exports = { runDB, dbClient: mongoose.connection };

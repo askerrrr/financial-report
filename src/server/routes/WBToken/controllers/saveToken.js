@@ -1,4 +1,4 @@
-var { connection } = require("../../../database");
+var { dbClient } = require("../../../database");
 var listGoodsLoader = require("../../goods/services/listGoodsLoader");
 
 var saveToken = async (req, res, next) => {
@@ -7,7 +7,7 @@ var saveToken = async (req, res, next) => {
   var { saveListGoodsToDb } = req.app.locals.goodsCollectionServices;
   var { saveWBTokenToDb, getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
 
-  var session = await connection.startSession();
+  var session = await dbClient.startSession();
 
   try {
     await session.withTransaction(async () => {

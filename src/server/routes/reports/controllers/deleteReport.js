@@ -1,4 +1,4 @@
-var { connection } = require("../../../database/");
+var { dbClient } = require("../../../database/");
 
 var deleteReport = async (req, res, next) => {
   var { report } = req.body;
@@ -6,7 +6,7 @@ var deleteReport = async (req, res, next) => {
   var { deleteReportFromReportTree } = req.app.locals.reportsTreeCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
-  var session = await connection.startSession();
+  var session = await dbClient.startSession();
 
   try {
     await session.withTransaction(async () => {

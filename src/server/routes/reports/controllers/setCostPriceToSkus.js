@@ -1,5 +1,5 @@
 var calc = require("../services/calcServices");
-var { connection } = require("../../../database");
+var { dbClient } = require("../../../database");
 var processOfSkuCostPriceSetting = require("../services/different/processOfSkuCostPriceSetting");
 
 var setCostPriceToSkus = async (req, res, next) => {
@@ -8,7 +8,7 @@ var setCostPriceToSkus = async (req, res, next) => {
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
   var skusDataToClient = [];
-  var session = await connection.startSession();
+  var session = await dbClient.startSession();
 
   try {
     await session.withTransaction(async () => {
