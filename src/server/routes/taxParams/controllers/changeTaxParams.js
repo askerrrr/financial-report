@@ -8,6 +8,7 @@ var changeTaxParams = async (req, res, next) => {
   var { getReportsByUserId } = req.app.locals.reportCollectionServices;
   var { changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
+  var { reports } = await getReportsByUserId(userId);
   var success = await changeTaxParamsToDb(userId, year, (session = null), data);
 
   if (success) {
