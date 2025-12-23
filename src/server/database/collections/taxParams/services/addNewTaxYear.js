@@ -1,12 +1,5 @@
 var { DatabaseError } = require("../../../../customError");
-
-var defaultTaxParams = [
-  { year: 2023, taxRate: 6, mandatoryInsuranceFee: 45842, paidTaxAmount: -45842, maxInsuranceFee: 0, retailAmount: 0 },
-  { year: 2024, taxRate: 6, mandatoryInsuranceFee: 49500, paidTaxAmount: -49500, maxInsuranceFee: 277571, retailAmount: 0 },
-  { year: 2025, taxRate: 6, mandatoryInsuranceFee: 53658, paidTaxAmount: -53658, maxInsuranceFee: 300888, retailAmount: 0 },
-  { year: 2026, taxRate: 6, mandatoryInsuranceFee: 57390, paidTaxAmount: -57390, maxInsuranceFee: 0, retailAmount: 0 },
-  { year: 2027, taxRate: 6, mandatoryInsuranceFee: 61154, paidTaxAmount: -61154, maxInsuranceFee: 0, retailAmount: 0 },
-];
+var defaultTaxParams = require("../../../defaultTaxParams");
 
 var addNewTaxYearToDb = async (collection, userId, year, session) => {
   try {
