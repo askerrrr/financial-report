@@ -3,7 +3,7 @@ var defaultTaxParams = require("../../../database/defaultTaxParams");
 
 var changeTaxParams = async (req, res, next) => {
   var userId = req.app.locals.userId;
-  var { year, recalculate, data } = req.body;
+  var { year, oldTaxParams, recalculate, data } = req.body;
   var { changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
   var success = await changeTaxParamsToDb(userId, year, (session = null), data);

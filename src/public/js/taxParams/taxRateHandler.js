@@ -32,7 +32,7 @@ var taxRateHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var success = await sendNewTaxParam(selectedYear, recalculate, { taxRate: newTaxRate });
+    var success = await sendNewTaxParam(selectedYear, recalculate, yearTaxParams, { taxRate: newTaxRate });
 
     input.value = "";
 
