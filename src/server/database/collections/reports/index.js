@@ -15,27 +15,20 @@ var getAllDataFromReportCollection = require("./services/getAllDataFromReportCol
 var reportCollectionServices = {
   getAllDataFromReportCollection: () => getAllDataFromReportCollection(reportCollection),
   getReportById: (userId, reportId, session) => getReportById(reportCollection, userId, reportId, session),
-  getReportsByUserId: (userId, projectQuery, reportIds) =>
-    getReportsByUserId(reportCollection, userId, projectQuery, reportIds),
+  getReportsByUserId: (userId, session, projectQuery, reportIds) => getReportsByUserId(reportCollection, userId, session, projectQuery, reportIds),
 
   createReportsEntity: (userId) => createReportsEntity(reportCollection, userId),
 
-  saveReportToDb: (userId, report, session) =>
-    saveReportToDb(reportCollection, userId, report, session),
+  saveReportToDb: (userId, report, session) => saveReportToDb(reportCollection, userId, report, session),
   saveUpdatedReports: (userId, reports) => saveUpdatedReports(reportCollection, userId, reports),
 
+  saveUpdatedReport: (userId, reportId, report, session) => saveUpdatedReport(reportCollection, userId, reportId, report, session),
 
-  saveUpdatedReport: (userId, reportId, report, session) =>
-    saveUpdatedReport(reportCollection, userId, reportId, report, session),
+  updateReportPeriod: (userId, reportId, period) => updateReportPeriod(reportCollection, userId, reportId, period),
 
-  updateReportPeriod: (userId, reportId, period) =>
-    updateReportPeriod(reportCollection, userId, reportId, period),
+  checkReportExistsToDb: (userId, dateFrom, dateTo) => checkReportExistsToDb(reportCollection, userId, dateFrom, dateTo),
 
-  checkReportExistsToDb: (userId, dateFrom, dateTo) =>
-    checkReportExistsToDb(reportCollection, userId, dateFrom, dateTo),
-
-  deleteReportFromDb: (userId, reportId, session) =>
-    deleteReportFromDb(reportCollection, userId, reportId, session),
+  deleteReportFromDb: (userId, reportId, session) => deleteReportFromDb(reportCollection, userId, reportId, session),
   deleteAllReportsByUserId: (userId) => deleteAllReportsByUserId(reportCollection, userId),
 };
 

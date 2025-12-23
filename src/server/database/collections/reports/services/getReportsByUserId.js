@@ -1,6 +1,6 @@
 var { DatabaseError } = require("../../../../customError");
 
-var getReportsByUserId = async (collection, userId, projectQueries, reportIds) => {
+var getReportsByUserId = async (collection, userId, session, projectQueries, reportIds) => {
   try {
     if (reportIds) {
       var projectFields = {};
@@ -44,7 +44,7 @@ var getReportsByUserId = async (collection, userId, projectQueries, reportIds) =
       return { reports };
     }
 
-    var data = await collection.findOne({ userId });
+    var data = await collection.findOne({ userId }, null, { session, session });
 
     return { reports: data.toObject().reports };
   } catch (e) {
