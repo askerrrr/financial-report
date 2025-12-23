@@ -11,10 +11,14 @@ var changeTaxParams = async (req, res, next) => {
 
   var { taxParamKeyName } = getTaxParamKeyName(data);
 
-  var data = await getReportsByUserId(userId, session);
-  var reports = data.reports.filter((report) => report.recordTo.year === year);
+  var session = await dbClient.startSession();
 
-  var success = await changeTaxParamsToDb(userId, year, (session = null), data);
+  await session.withTransaction(async () => {
+    var data = await getReportsByUserId(userId, session);
+    var reports = data.reports.filter((report) => report.recordTo.year === year);
+
+    var success = await changeTaxParamsToDb(userId, year, session, data);
+  });
 
   if (success) {
     return res.sendStatus(200);
