@@ -44,9 +44,9 @@ var getReportsByUserId = async (collection, userId, projectQueries, reportIds) =
       return { reports };
     }
 
-    var { reports } = await collection.findOne({ userId });
+    var data = await collection.findOne({ userId });
 
-    return { reports };
+    return { reports: data.toObject().reports };
   } catch (e) {
     throw new DatabaseError(userId, e);
   }
