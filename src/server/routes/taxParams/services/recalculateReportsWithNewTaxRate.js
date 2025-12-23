@@ -1,6 +1,5 @@
-var recalculateReportsWithNewTaxRate = (reports, taxParams) => {
+var recalculateReportsWithNewTaxRate = (reports, paidTaxAmount, newTaxRate) => {
   var finalProfit = 0;
-  var paidTaxAmount = -taxParams.mandatoryInsuranceFee;
 
   for (var report of reports) {
     for (sku of report.skus) {
