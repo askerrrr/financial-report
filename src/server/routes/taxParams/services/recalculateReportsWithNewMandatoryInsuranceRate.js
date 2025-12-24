@@ -78,6 +78,8 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (reports, mandatoryInsuran
       report.totalFinalProfit = calc.sum(report.skus, "finalProfit", "truncate-on");
     }
   }
+
+  return { reports, finalProfit, mandatoryInsuranceFeeIsPaid, paidInsuranceFee, mandatoryInsuranceRate };
 };
 
 module.exports = recalculateReportsWithNewMandatoryInsuranceRate;

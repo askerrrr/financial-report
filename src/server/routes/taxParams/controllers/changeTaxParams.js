@@ -2,6 +2,7 @@ var { dbClient } = require("../../../database");
 var getTaxParamKeyName = require("../services/getTaxParamKeyName");
 var defaultTaxParams = require("../../../database/defaultTaxParams");
 var recalculateReportsWithNewTaxRate = require("../services/recalculateReportsWithNewTaxRate");
+var recalculateReportsWithNewMandatoryInsuranceRate = require("../services/recalculateReportsWithNewMandatoryInsuranceRate");
 
 var changeTaxParams = async (req, res, next) => {
   var userId = req.app.locals.userId;
@@ -33,11 +34,22 @@ var changeTaxParams = async (req, res, next) => {
         case "taxRate":
           var newTaxRate = data[taxParamKeyName];
           var resetPaidTaxAmount = -oldTaxParams.mandatoryInsuranceFee;
-          var { reports, finalProfit, paidTaxAmount } = recalculateReportsWithNewTaxRate(reports, resetPaidTaxAmount, newTaxRate);
+          var { reports, finalProfit, paidTaxAmount } = recalculateReportsWithNewTaxRate(reports, resetPaidTaxAmount, newTaxRate, year);
           await saveUpdatedReports(userId, reports, session);
           await changeTaxParamsToDb(userId, year, session, { finalProfit, paidTaxAmount, taxRate: newTaxRate });
           break;
         case "mandatoryInsuranceRate":
+          var { mandatoryInsuranceFee } = oldTaxParams;
+          var newMandatoryInsuranceRate = data[taxParamKeyName];
+          var { reports, ...updatedTaxParams } = recalculateReportsWithNewMandatoryInsuranceRate(
+            reports,
+            mandatoryInsuranceFee,
+            newMandatoryInsuranceRate,
+            year
+          );
+
+          await saveUpdatedReports(userId, reports, session);
+          await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
           break;
       }
     });
