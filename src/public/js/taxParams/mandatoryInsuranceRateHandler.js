@@ -3,11 +3,11 @@ import sendNewTaxParam from "./sendNewTaxParam.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
 
 var mandatoryInsuranceRateHandler = async () => {
-  var input = document.getElementById("insurance-fee-percentage");
+  var input = document.getElementById("mandatory-insurance-fee-rate");
 
-  var radioButton = document.getElementById("recalculate-all-reports-insurance-fee-percentage");
+  var radioButton = document.getElementById("recalculate-all-reports-mandatory-insurance-fee-rate");
 
-  var button = document.getElementById("insurance-fee-percentage-button");
+  var button = document.getElementById("mandatory-insurance-fee-rate-button");
 
   button.onclick = async (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ var mandatoryInsuranceRateHandler = async () => {
     var taxParams = await getTaxParams();
 
     var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
-    var currentPercent = yearTaxParams.insuranceFeePercentage;
+    var currentPercent = yearTaxParams.mandatoryInsuranceFeeRate;
     var recalculate = radioButton.checked;
     var newPercent = +input.value;
 
@@ -32,19 +32,15 @@ var mandatoryInsuranceRateHandler = async () => {
       return alert("Недопустимое значение");
     }
     var success = await sendNewTaxParam(selectedYear, recalculate, {
-      insuranceFeePercentage: newPercent,
+      mandatoryInsuranceFeeRate: newPercent,
     });
 
     input.value = "";
 
     if (success) {
       input.placeholder = "сейчас процент равен " + newPercent;
-
-      var insuranceFeePercentageTdElement = document.getElementById(
-        "insuranceFeePercentage-" + selectedYear
-      );
-
-      insuranceFeePercentageTdElement.textContent = newPercent;
+      var mandatoryInsuranceFeeRateTdElement = document.getElementById("mandatoryInsuranceFeeRate-" + selectedYear);
+      mandatoryInsuranceFeeRateTdElement.textContent = newPercent;
 
       return alert("Процент успешно установлен");
     }

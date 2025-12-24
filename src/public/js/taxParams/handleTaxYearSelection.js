@@ -10,14 +10,9 @@ var handleTaxYearSelection = async (taxParams) => {
 
         var selectedTaxYear = taxParams.find((date) => date.year == taxYear);
 
-        document.getElementById("tax-rate").placeholder =
-          "сейчас процент равен " + selectedTaxYear.taxRate;
-
-        document.getElementById("mandatory-insurance-premiums").placeholder =
-          "сейчас сумма равна " + selectedTaxYear.mandatoryInsuranceFee + "р.";
-
-        document.getElementById("insurance-fee-percentage").placeholder =
-          "сейчас процент равен " + selectedTaxYear.insuranceFeePercentage;
+        document.getElementById("tax-rate").placeholder = "сейчас процент равен " + selectedTaxYear.taxRate;
+        document.getElementById("mandatory-insurance-premiums").placeholder = "сейчас сумма равна " + selectedTaxYear.mandatoryInsuranceFee + "р.";
+        document.getElementById("mandatory-insurance-fee-rate").placeholder = "сейчас процент равен " + selectedTaxYear.insuranceFeePercentage;
       }
     }
   };

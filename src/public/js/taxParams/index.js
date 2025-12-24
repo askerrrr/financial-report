@@ -13,16 +13,11 @@ var main = async () => {
     return;
   }
 
-  var { taxRate, insuranceFeePercentage, mandatoryInsuranceFee } = taxParams[0];
+  var { taxRate, mandatoryInsuranceFeeRate, mandatoryInsuranceFee } = taxParams[0];
 
-  document.getElementById("tax-rate").placeholder =
-    "сейчас процент равен " + taxRate;
-
-  document.getElementById("mandatory-insurance-premiums").placeholder =
-    "сейчас сумма равна " + mandatoryInsuranceFee + "р.";
-
-  document.getElementById("insurance-fee-percentage").placeholder =
-    "сейчас процент равен " + insuranceFeePercentage;
+  document.getElementById("tax-rate").placeholder = "сейчас процент равен " + taxRate;
+  document.getElementById("mandatory-insurance-premiums").placeholder = "сейчас сумма равна " + mandatoryInsuranceFee + "р.";
+  document.getElementById("mandatory-insurance-fee-rate").placeholder = "сейчас процент равен " + mandatoryInsuranceFeeRate;
 
   await createTaxTable(taxParams);
 
