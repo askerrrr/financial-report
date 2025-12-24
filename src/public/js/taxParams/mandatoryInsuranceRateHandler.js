@@ -2,7 +2,7 @@ import getTaxParams from "./getTaxParams.js";
 import sendNewTaxParam from "./sendNewTaxParam.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
 
-var insuranceFeePercentageHandler = async () => {
+var mandatoryInsuranceRateHandler = async () => {
   var input = document.getElementById("insurance-fee-percentage");
 
   var radioButton = document.getElementById("recalculate-all-reports-insurance-fee-percentage");
@@ -53,4 +53,4 @@ var insuranceFeePercentageHandler = async () => {
   };
 };
 
-export default insuranceFeePercentageHandler;
+export default mandatoryInsuranceRateHandler;

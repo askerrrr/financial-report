@@ -4,7 +4,7 @@ import taxRateHandler from "./taxRateHandler.js";
 import handleTaxYearSelection from "./handleTaxYearSelection.js";
 import insertTaxYearsToSelectElem from "./insertTaxYearsToSelectElem.js";
 import mandatoryInsuranceFeeHandler from "./mandatoryInsuranceFeeHandler.js";
-import insuranceFeePercentageHandler from "./insuranceFeePercentageHandler.js";
+import mandatoryInsuranceRateHandler from "./mandatoryInsuranceRateHandler.js";
 
 var main = async () => {
   var taxParams = await getTaxParams();
@@ -28,7 +28,7 @@ var main = async () => {
 
   await taxRateHandler();
   await mandatoryInsuranceFeeHandler();
-  await insuranceFeePercentageHandler();
+  await mandatoryInsuranceRateHandler();
   await handleTaxYearSelection(taxParams);
   await insertTaxYearsToSelectElem(taxParams);
 };
