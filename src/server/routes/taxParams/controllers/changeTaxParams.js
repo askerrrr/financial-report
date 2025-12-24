@@ -37,6 +37,8 @@ var changeTaxParams = async (req, res, next) => {
           await saveUpdatedReports(userId, reports, session);
           await changeTaxParamsToDb(userId, year, session, { finalProfit, paidTaxAmount, taxRate: newTaxRate });
           break;
+        case "mandatoryInsuranceRate":
+          break;
       }
     });
 
