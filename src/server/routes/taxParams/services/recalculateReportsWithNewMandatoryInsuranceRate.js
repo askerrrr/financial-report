@@ -83,11 +83,3 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (reports, mandatoryInsuran
 };
 
 module.exports = recalculateReportsWithNewMandatoryInsuranceRate;
-
-//sku = 15;
-//max = 100;
-//last = 90;
-//after = 105;
-//diff = after = max;
-//diff = 5;
-//sku = sku = diff
