@@ -6,8 +6,8 @@ var recalculateReportsWithNewTaxRate = require("../services/recalculateReportsWi
 var changeTaxParams = async (req, res, next) => {
   var userId = req.app.locals.userId;
   var { year, oldTaxParams, recalculate, data } = req.body;
-  var { getReportsByUserId } = req.app.locals.reportCollectionServices;
   var { changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
+  var { getReportsByUserId, saveUpdatedReports } = req.app.locals.reportCollectionServices;
 
   var { taxParamKeyName } = getTaxParamKeyName(data);
 
@@ -15,16 +15,20 @@ var changeTaxParams = async (req, res, next) => {
 
   await session.withTransaction(async () => {
     var reportsData = await getReportsByUserId(userId, session);
-    var reports = reportsData.reports.filter((report) => report.recordTo.year === year);
+    var reports = reportsData.reports.filter((report) => report.recordTo.year == year);
 
-    var success = await changeTaxParamsToDb(userId, year, session, data);
+    switch (taxParamKeyName) {
+      case "taxRate":
+        var newTaxRate = data[taxParamKeyName];
+        var resetPaidTaxAmount = -oldTaxParams.mandatoryInsuranceFee;
+        var { reports, finalProfit, paidTaxAmount } = recalculateReportsWithNewTaxRate(reports, resetPaidTaxAmount, newTaxRate);
+        await saveUpdatedReports(userId, reports, session);
+        await changeTaxParamsToDb(userId, year, session, { finalProfit, paidTaxAmount, taxRate: newTaxRate});
+        break;
+    }
   });
 
-  if (success) {
-    return res.sendStatus(200);
-  }
-
-  return res.sendStatus(304);
+  return res.sendStatus(200);
 };
 
 module.exports = changeTaxParams;

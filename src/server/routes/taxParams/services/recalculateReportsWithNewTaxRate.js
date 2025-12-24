@@ -14,26 +14,28 @@ var recalculateReportsWithNewTaxRate = (reports, paidTaxAmount, newTaxRate, taxY
     }
 
     for (sku of report.skus) {
-      if (sku.isCostPriceSet) {
-        if (report.crossesTaxYears) {
-          sku["tax" + postfix] = calc.taxAmount(sku["retailAmount" + postfix], newTaxRate);
-          sku.tax = sku.taxInCurrentYear + sku.taxInNextYear;
+      if (report.crossesTaxYears) {
+        sku["tax" + postfix] = calc.taxAmount(sku["retailAmount" + postfix], newTaxRate);
+        sku.tax = sku.taxInCurrentYear + sku.taxInNextYear;
+        paidTaxAmount += sku["tax" + postfix];
 
+        if (sku.isCostPriceSet) {
           sku["finalProfit" + postfix] = calc.finalProfit(
             sku["preTaxProfit" + postfix],
             sku["insuranceFee" + postfix],
             sku["tax" + postfix],
             sku["additionalInsuranceFee" + postfix]
           );
+
           sku.finalProfit = sku.finalProfitInCurrentYear + sku.finalProfitInNextYear;
-
-          paidTaxAmount += sku["tax" + postfix];
           finalProfit += sku["finalProfit" + postfix];
-        } else {
-          sku.tax = calc.taxAmount(sku.retailAmount, newTaxRate);
-          sku.finalProfit = calc.finalProfit(sku.preTaxProfit, sku.insuranceFee, sku.tax, sku.additionalInsuranceFee);
+        }
+      } else {
+        sku.tax = calc.taxAmount(sku.retailAmount, newTaxRate);
+        paidTaxAmount += sku.tax;
 
-          paidTaxAmount += sku.tax;
+        if (sku.isCostPriceSet) {
+          sku.finalProfit = calc.finalProfit(sku.preTaxProfit, sku.insuranceFee, sku.tax, sku.additionalInsuranceFee);
           finalProfit += sku.finalProfit;
         }
       }
