@@ -31,7 +31,7 @@ var mandatoryInsuranceRateHandler = async () => {
     if (newPercent <= 0 && newPercent >= 100) {
       return alert("Недопустимое значение");
     }
-    var success = await sendNewTaxParam(selectedYear, recalculate, {
+    var success = await sendNewTaxParam(selectedYear, recalculate, yearTaxParams, {
       mandatoryInsuranceFeeRate: newPercent,
     });
 
