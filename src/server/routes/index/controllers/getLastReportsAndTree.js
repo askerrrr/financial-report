@@ -25,7 +25,7 @@ var getLastReportsAndTree = async (req, res, next) => {
     return res.json({ lastReports: [], reportTree: [] });
   }
 
-  var { reports } = await getReportsByUserId(userId, projectonFields, lastReportIds);
+  var { reports } = await getReportsByUserId(userId, null, projectonFields, lastReportIds);
   return res.json({ lastReports: reports, reportTree: reportTreeDto });
 };
 

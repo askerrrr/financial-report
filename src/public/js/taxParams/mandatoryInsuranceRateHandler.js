@@ -2,12 +2,12 @@ import getTaxParams from "./getTaxParams.js";
 import sendNewTaxParam from "./sendNewTaxParam.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
 
-var insuranceFeePercentageHandler = async () => {
-  var input = document.getElementById("insurance-fee-percentage");
+var mandatoryInsuranceRateHandler = async () => {
+  var input = document.getElementById("mandatory-insurance-fee-rate");
 
-  var radioButton = document.getElementById("recalculate-all-reports-insurance-fee-percentage");
+  var radioButton = document.getElementById("recalculate-all-reports-mandatory-insurance-fee-rate");
 
-  var button = document.getElementById("insurance-fee-percentage-button");
+  var button = document.getElementById("mandatory-insurance-fee-rate-button");
 
   button.onclick = async (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ var insuranceFeePercentageHandler = async () => {
     var taxParams = await getTaxParams();
 
     var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
-    var currentPercent = yearTaxParams.insuranceFeePercentage;
+    var currentPercent = yearTaxParams.mandatoryInsuranceFeeRate;
     var recalculate = radioButton.checked;
     var newPercent = +input.value;
 
@@ -31,20 +31,16 @@ var insuranceFeePercentageHandler = async () => {
     if (newPercent <= 0 && newPercent >= 100) {
       return alert("Недопустимое значение");
     }
-    var success = await sendNewTaxParam(selectedYear, recalculate, {
-      insuranceFeePercentage: newPercent,
+    var success = await sendNewTaxParam(selectedYear, recalculate, yearTaxParams, {
+      mandatoryInsuranceFeeRate: newPercent,
     });
 
     input.value = "";
 
     if (success) {
       input.placeholder = "сейчас процент равен " + newPercent;
-
-      var insuranceFeePercentageTdElement = document.getElementById(
-        "insuranceFeePercentage-" + selectedYear
-      );
-
-      insuranceFeePercentageTdElement.textContent = newPercent;
+      var mandatoryInsuranceFeeRateTdElement = document.getElementById("mandatoryInsuranceFeeRate-" + selectedYear);
+      mandatoryInsuranceFeeRateTdElement.textContent = newPercent;
 
       return alert("Процент успешно установлен");
     }
@@ -53,4 +49,4 @@ var insuranceFeePercentageHandler = async () => {
   };
 };
 
-export default insuranceFeePercentageHandler;
+export default mandatoryInsuranceRateHandler;

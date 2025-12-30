@@ -60,19 +60,19 @@
       <button id="mandatory-insurance-premiums-button">Сохранить</button>
     </form>
     <form>
-      <label for="insurance-fee-percentage"
+      <label for="mandatory-insurance-fee-rate"
         >Установить процент от чистой прибыли, который будет уходить на
         погашение обязательных страховых взносов</label
-      ><input id="insurance-fee-percentage" type="text" />
+      ><input id="mandatory-insurance-fee-rate" type="text" />
       <div class="radio-group">
         <div class="radio-item">
           <input
             type="radio"
-            id="recalculate-all-reports-insurance-fee-percentage"
-            name="insurance-fee-percentage"
+            id="recalculate-all-reports-mandatory-insurance-fee-rate"
+            name="mandatory-insurance-fee-rate"
             checked
           />
-          <label for="recalculate-all-reports-insurance-fee-percentage"
+          <label for="recalculate-all-reports-mandatory-insurance-fee-rate"
             >Пересчитать сумму погашения обязательных страховых взносов с новым
             значением % в отчетах (если есть)</label
           >
@@ -80,15 +80,15 @@
         <div class="radio-item">
           <input
             type="radio"
-            id="calculate-insurance-fee-percentage-for-future-reports"
-            name="insurance-fee-percentage"
+            id="calculate-mandatory-insurance-fee-rate-for-future-reports"
+            name="mandatory-insurance-fee-rate"
           />
-          <label for="calculate-insurance-fee-percentage-for-future-reports"
+          <label for="calculate-mandatory-insurance-fee-rate-for-future-reports"
             >Применить новое значение к будущим отчетам</label
           >
         </div>
       </div>
-      <button id="insurance-fee-percentage-button">Сохранить</button>
+      <button id="mandatory-insurance-fee-rate-button">Сохранить</button>
     </form>
 
     <script src="/js/taxParams/index.js" type="module"></script>

@@ -1,11 +1,11 @@
-var { connection } = require("../../../database");
+var { dbClient } = require("../../../database");
 var reportsProcessing = require("../services/different/reportsProcessing");
 
 var saveReports = async (req, res, next) => {
   var { dateTo, dateFrom, userId } = req.body;
 
   try {
-    var session = await connection.startSession();
+    var session = await dbClient.startSession();
     await session.withTransaction(async () => {
       try {
         var reportData = await reportsProcessing(userId, dateFrom, dateTo, session);

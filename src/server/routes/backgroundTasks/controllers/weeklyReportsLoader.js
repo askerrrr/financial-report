@@ -1,4 +1,4 @@
-var { connection } = require("../../../database");
+var { dbClient } = require("../../../database");
 var reportsProcessing = require("../../reports/services/different/reportsProcessing");
 
 var weeklyReportsLoader = async (req, res) => {
@@ -10,7 +10,7 @@ var weeklyReportsLoader = async (req, res) => {
 
   for (var { userId } of users) {
     try {
-      var session = await connection.startSession();
+      var session = await dbClient.startSession();
 
       await session.withTransaction(async () => {
         await reportsProcessing(userId, dateFrom, dateTo, session);

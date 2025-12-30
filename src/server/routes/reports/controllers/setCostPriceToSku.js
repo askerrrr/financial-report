@@ -1,5 +1,5 @@
 var calc = require("../services/calcServices");
-var { connection } = require("../../../database");
+var { dbClient } = require("../../../database");
 var processOfSkuCostPriceSetting = require("../services/different/processOfSkuCostPriceSetting");
 
 var setCostPriceToSku = async (req, res, next) => {
@@ -8,7 +8,7 @@ var setCostPriceToSku = async (req, res, next) => {
   var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
-  var session = await connection.startSession();
+  var session = await dbClient.startSession();
 
   try {
     await session.withTransaction(async () => {
@@ -46,8 +46,9 @@ var setCostPriceToSku = async (req, res, next) => {
 
       await saveUpdatedReport(userId, reportId, updatedReport, session);
       await updateSkuLastCostPrice(userId, skuId, costPrice, session);
-      var { totalFinalProfit, totalProfitMargin } = updatedReport;
+
       var { profitMargin, finalProfit } = skus[skuIndex];
+      var { totalFinalProfit, totalProfitMargin, totalInsuranceFee } = updatedReport;
 
       res.json({
         sku: {
@@ -57,7 +58,7 @@ var setCostPriceToSku = async (req, res, next) => {
             finalProfit,
           },
         },
-        total: { totalFinalProfit, totalProfitMargin },
+        total: { totalFinalProfit, totalProfitMargin, totalInsuranceFee },
       });
     });
   } catch (err) {
