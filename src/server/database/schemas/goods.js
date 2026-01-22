@@ -1,5 +1,26 @@
 var { Schema } = require("mongoose");
 
+var skuMetrictSchema = new Schema(
+  {
+    year: { type: Number, required: true },
+    qty: { type: Number, required: true, default: 0 },
+    tax: { type: Number, required: true, default: 0 },
+    fines: { type: Number, required: true, default: 0 },
+    netProfit: { type: Number, required: true, default: 0 },
+    profitMargin: { type: Number, required: true, default: 0 },
+    retailAmount: { type: Number, required: true, default: 0 },
+    returnAmount: { type: Number, required: true, default: 0 },
+    storageCost: { type: Number, required: true, default: 0 },
+    deliveryCost: { type: Number, required: true, default: 0 },
+    acceptance: { type: Number, required: true, default: 0 },
+    insuranceFee: { type: Number, required: true, default: 0 },
+    sellerPayoutAmount: { type: Number, required: true, default: 0 },
+    deductionOrPayment: { type: Number, required: true, default: 0 },
+    additionalInsuranceFee: { type: Number, required: true, default: 0 },
+  },
+  { _id: false }
+);
+
 var skuSchema = new Schema(
   {
     id: { type: Number, required: true },
@@ -15,6 +36,7 @@ var skuSchema = new Schema(
     isPriceUpdated: { type: Boolean, required: false },
     errorText: { type: String, requred: false },
     deleted: { type: Boolean, default: false },
+    metricts: [{ type: skuMetrictSchema, required: false }],
   },
   { _id: false }
 );
