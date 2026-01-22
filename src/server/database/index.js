@@ -74,9 +74,12 @@ var setupMongooseEvents = () => {
   });
 };
 
+var killAllSessions = async () => await mongoose.connection.db.command({ killAllSessions: [] }).then(() => console.log("old sessions killed"));
+
 var runDB = async () => {
   setupMongooseEvents();
   await mongooseConnection();
+  await killAllSessions();
 
   var runDBMigration = require("./migration/");
 
