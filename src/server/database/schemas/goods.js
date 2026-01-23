@@ -36,7 +36,7 @@ var skuSchema = new Schema(
     isPriceUpdated: { type: Boolean, required: false },
     errorText: { type: String, requred: false },
     deleted: { type: Boolean, default: false },
-    metricts: [{ type: skuMetrictSchema, required: false }],
+    metrics: [{ type: skuMetrictSchema, required: false }],
   },
   { _id: false }
 );

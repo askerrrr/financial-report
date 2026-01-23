@@ -4,6 +4,7 @@ var parseReports = require("../reportParsing");
 var dbutils = require("../../../../database/collections");
 var addNewSkusToListGoods = require("./addNewSkusToListGoods");
 var insertReportToReportTree = require("../reportTreeBuilder");
+var updateListGoodsMetrics = require("../different/updateListGoodsMetrics");
 var schemaVersioning = require("../../../../database/migration/schemaVersioning/reportsCollection");
 
 var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
@@ -50,11 +51,12 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   report.recordTo = { year, month, schemaVersion: schemaVersioning.recordToSchemaVersion };
 
   var { listGoods } = await getListGoodsFromDb(userId, session);
-  var { updatedListGoods } = await addNewSkusToListGoods(listGoods, skuNamesAndIds);
+  var { updatedListGoods } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearReport, startYear, endYear);
+  var { listGoods } = await updateListGoodsMetrics(report, updatedListGoods);
 
   await saveReportToDb(userId, report, session);
   await updateReportTree(userId, sortedYears, session);
-  await saveListGoodsToDb(userId, updatedListGoods, session);
+  await saveListGoodsToDb(userId, listGoods, session);
 
   return { reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount };
 };
