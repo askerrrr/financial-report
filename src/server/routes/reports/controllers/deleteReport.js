@@ -12,7 +12,6 @@ var deleteReport = async (req, res, next) => {
     await session.withTransaction(async () => {
       var { userId } = report;
       var { year, month } = report.recordTo;
-
       if (report.crossesTaxYears) {
         var startYear = +report.dateFrom.split("-")[0];
         var endYear = +report.dateTo.split("-")[0];
@@ -23,7 +22,6 @@ var deleteReport = async (req, res, next) => {
 
         startYearTaxParams = recalculateTaxParams(startYearTaxParams, report, "InCurrentYear").updatedTaxParams;
         endYearTaxParams = recalculateTaxParams(endYearTaxParams, report, "InNextYear").updatedTaxParams;
-
         await changeTaxParamsToDb(userId, startYear, session, startYearTaxParams);
         await changeTaxParamsToDb(userId, endYear, session, endYearTaxParams);
       } else {
@@ -38,6 +36,7 @@ var deleteReport = async (req, res, next) => {
 
     return res.sendStatus(200);
   } catch (e) {
+    console.log({ e });
     res.sendStatus(304);
   } finally {
     await session.endSession();
@@ -47,10 +46,13 @@ var deleteReport = async (req, res, next) => {
 module.exports = deleteReport;
 
 var recalculateTaxParams = function (taxParams, report, propPostfix = "") {
-  taxParams.finalProfit = (taxParams.finalProfit - report["totalFinalProfit" + propPostfix]).toFixed(2);
+  if (report["totalFinalProfit" + propPostfix]) {
+    taxParams.finalProfit = (taxParams.finalProfit - report["totalFinalProfit" + propPostfix]).toFixed(2);
+    taxParams.paidInsuranceFee = (taxParams.paidInsuranceFee - report["totalInsuranceFee" + propPostfix]).toFixed(2);
+  }
+
   taxParams.paidTaxAmount = (taxParams.paidTaxAmount - report["totalTaxAmount" + propPostfix]).toFixed(2);
   taxParams.retailAmount = (taxParams.retailAmount - report["totalRetailAmount" + propPostfix]).toFixed(2);
-  taxParams.paidInsuranceFee = (taxParams.paidInsuranceFee - report["totalInsuranceFee" + propPostfix]).toFixed(2);
   taxParams.additionalInsuranceFee = (taxParams.additionalInsuranceFee - report["totalAdditionalInsuranceFee" + propPostfix]).toFixed(2);
   return { updatedTaxParams: taxParams };
 };
