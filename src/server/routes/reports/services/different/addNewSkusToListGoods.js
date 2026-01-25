@@ -33,8 +33,6 @@ var addMetricsToSku = (listGoods, isCrossYearReport, startYear, endYear) => {
 };
 
 var addNewSkusToListGoods = async (listGoods, skusFromFinancialReports, isCrossYearReport, startYear, endYear) => {
-  listGoods = addMetricsToSku(listGoods, isCrossYearReport, startYear, endYear);
-
   for (var { name, id } of skusFromFinancialReports) {
     var existSku = listGoods.find((item) => item.id === id);
 
@@ -47,6 +45,8 @@ var addNewSkusToListGoods = async (listGoods, skusFromFinancialReports, isCrossY
       listGoods.push({ ...existSku, skuName: name, deleted: false });
     }
   }
+
+  listGoods = addMetricsToSku(listGoods, isCrossYearReport, startYear, endYear);
 
   return { updatedListGoods: listGoods };
 };
