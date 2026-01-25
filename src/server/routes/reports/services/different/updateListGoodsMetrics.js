@@ -15,18 +15,28 @@ var aggregateSkuMetrics = (skuMetrics, sku, postfix = "") => {
 };
 
 var updateListGoodsMetrics = async (report, listGoods) => {
-  var currentYearPropPostfix = "InCurrentYear";
-  var nextYearPropPostfix = "InNextYear";
+  var startYearPropPostfix = "InCurrentYear";
+  var endYearPropPostfix = "InNextYear";
+
+  if (report.crossesTaxYears) {
+    var startYear = +report.dateFrom.split("-")[0];
+    var endYear = +report.dateTo.split("-")[0];
+  }
+
+  var { year } = report.recordTo;
 
   for (var sku of report.skus) {
     if (report.crossesTaxYears) {
-      var startYear = report.dateFrom.split("-")[0];
-      var endYear = report.dateTo.split("-")[0];
+      var skuMetrics = listGoods.find((i) => i.id === sku.id).metrics;
+      var indexOfStartYearMetrics = skuMetrics.findIndex((i) => i.year === startYear);
+      var indexOfEndYearMetrics = skuMetrics.findIndex((i) => i.year === endYear);
+
+      skuMetrics[indexOfStartYearMetrics] = aggregateSkuMetrics(skuMetrics[indexOfStartYearMetrics], sku, startYearPropPostfix);
+      skuMetrics[indexOfStartYearMetrics] = aggregateSkuMetrics(skuMetrics[indexOfEndYearMetrics], sku, endYearPropPostfix);
     } else {
-      var { year } = report.recordTo;
-      var skuFromListGoods = listGoods.find((i) => i.id === sku.id);
-      var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === year);
-      skuMetrics = aggregateSkuMetrics(skuMetrics, sku);
+      var skuMetrics = listGoods.find((i) => i.id === sku.id).metrics;
+      var indexOfCurrentYearMetrics = skuMetrics.findIndex((i) => i.year === year);
+      skuMetrics[indexOfCurrentYearMetrics] = aggregateSkuMetrics(skuMetrics[indexOfCurrentYearMetrics], sku);
     }
   }
 
