@@ -14,14 +14,13 @@ var defaultSkuMetricsField = {
 
 var addMetricsToSku = (listGoods, isCrossYearReport, startYear, endYear) => {
   for (var sku of listGoods) {
-    console.log(sku);
     if (isCrossYearReport) {
       if (!sku.metrics.find((i) => i.year === startYear)) {
         sku.metrics.push({ ...defaultSkuMetricsField, year: startYear });
       }
 
       if (!sku.metrics.find((i) => i.year === endYear)) {
-        sku.metrics.push = [{ ...defaultSkuMetricsField, year: endYear }];
+        sku.metrics.push({ ...defaultSkuMetricsField, year: endYear });
       }
     } else {
       if (!sku.metrics.find((i) => i.year === startYear)) {
