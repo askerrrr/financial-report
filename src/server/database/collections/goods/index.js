@@ -4,6 +4,7 @@ var deleteListGoods = require("./services/deleteListGoods");
 var updateSkusFields = require("./services/updateSkusFields");
 var saveListGoodsToDb = require("./services/saveListGoodsToDb");
 var getListGoodsFromDb = require("./services/getListGoodsFromDb");
+var getSkuFromListGoods = require("./services/getSkuFromListGoods");
 var getSkusLastCostPrice = require("./services/getSkusLastCostPrice");
 var addNewSkusToListGoods = require("./services/addNewSkusToListGoods");
 var getAllUserListGoodsIds = require("./services/getAllUserListGoodsIds");
@@ -19,6 +20,8 @@ var goodsCollectionServices = {
   getSkusLastCostPrice: (userId) => getSkusLastCostPrice(goodsCollection, userId),
 
   getListGoodsFromDb: (userId, session) => getListGoodsFromDb(goodsCollection, userId, session),
+
+  getSkuFromListGoods: (userId, skuId, session) => getSkuFromListGoods(goodsCollection, userId, skuId, session),
 
   saveListGoodsToDb: (userId, listGoods, session) => saveListGoodsToDb(goodsCollection, userId, listGoods, session),
 
