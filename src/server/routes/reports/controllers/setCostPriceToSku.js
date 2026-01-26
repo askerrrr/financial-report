@@ -4,15 +4,16 @@ var processOfSkuCostPriceSetting = require("../services/different/processOfSkuCo
 
 var setCostPriceToSku = async (req, res, next) => {
   var { userId, reportId, skuIndex, costPrice, skuId, year } = req.body;
-  var { updateSkuLastCostPrice } = req.app.locals.goodsCollectionServices;
   var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
+  var { updateSkuLastCostPrice, getSkuFromListGoods, saveUpdatedSkuMetrics } = req.app.locals.goodsCollectionServices;
 
   var session = await dbClient.startSession();
 
   try {
     await session.withTransaction(async () => {
       var { report } = await getReportById(userId, reportId, session);
+      var { skuFromListGoods } = await getSkuFromListGoods(userId, skuId, session);
       var { skus, ...totalParams } = report;
 
       if (skus[skuIndex].costPrice === costPrice) {
@@ -46,6 +47,7 @@ var setCostPriceToSku = async (req, res, next) => {
 
       await saveUpdatedReport(userId, reportId, updatedReport, session);
       await updateSkuLastCostPrice(userId, skuId, costPrice, session);
+      await saveUpdatedSkuMetrics(userId, skuId, metrics, session);
 
       var { profitMargin, finalProfit } = skus[skuIndex];
       var { totalFinalProfit, totalProfitMargin, totalInsuranceFee } = updatedReport;
