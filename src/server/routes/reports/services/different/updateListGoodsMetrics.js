@@ -32,7 +32,7 @@ var updateListGoodsMetrics = async (report, listGoods) => {
       var indexOfEndYearMetrics = skuMetrics.findIndex((i) => i.year === endYear);
 
       skuMetrics[indexOfStartYearMetrics] = aggregateSkuMetrics(skuMetrics[indexOfStartYearMetrics], sku, startYearPropPostfix);
-      skuMetrics[indexOfStartYearMetrics] = aggregateSkuMetrics(skuMetrics[indexOfEndYearMetrics], sku, endYearPropPostfix);
+      skuMetrics[indexOfEndYearMetrics] = aggregateSkuMetrics(skuMetrics[indexOfEndYearMetrics], sku, endYearPropPostfix);
     } else {
       var skuMetrics = listGoods.find((i) => i.id === sku.id).metrics;
       var indexOfCurrentYearMetrics = skuMetrics.findIndex((i) => i.year === year);
