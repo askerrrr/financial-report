@@ -2,14 +2,16 @@ var calc = require("../calcServices");
 
 var processOfSkuCostPriceSetting = async (sku, taxParams, isCrossYearReport) => {
   if (isCrossYearReport) {
+    var currentYearPropPostfix = "InCurrentYear";
+    var nextYearPropPostfix = "InNextYear";
     var { startYearTaxParams, endYearTaxParams } = taxParams;
 
-    var updatingOfStartYear = calc.sku.restParams(sku, startYearTaxParams, "InCurrentYear");
+    var updatingOfStartYear = calc.sku.restParams(sku, startYearTaxParams, currentYearPropPostfix);
 
     var skuWithCalculatedParamsOfStartYear = updatingOfStartYear.skuWithCalculatedParams;
     startYearTaxParams = updatingOfStartYear.updatedTaxParams;
 
-    var updatingOfEndYear = calc.sku.restParams(skuWithCalculatedParamsOfStartYear, endYearTaxParams, "InNextYear");
+    var updatingOfEndYear = calc.sku.restParams(skuWithCalculatedParamsOfStartYear, endYearTaxParams, nextYearPropPostfix);
 
     var skuWithCalculatedParamsOfEndYear = updatingOfEndYear.skuWithCalculatedParams;
     endYearTaxParams = updatingOfEndYear.updatedTaxParams;
