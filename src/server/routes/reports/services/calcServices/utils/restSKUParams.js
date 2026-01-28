@@ -10,6 +10,10 @@ var calcRestSKUParams = (sku, taxParams, propPostfix = "") => {
 
   var { sku, taxParams } = recalculateInsuranceFee(sku, taxParams, propPostfix);
 
+  if (!sku["finalProfit" + propPostfix]) {
+    sku["finalProfit" + propPostfix] = 0;
+  }
+
   var previousSkuFinalProfit = sku["finalProfit" + propPostfix];
   sku["profitMargin" + propPostfix] = calcProfitMargin(sku["finalProfit" + propPostfix], sku["retailAmount" + propPostfix]);
 
@@ -17,7 +21,7 @@ var calcRestSKUParams = (sku, taxParams, propPostfix = "") => {
     sku["preTaxProfit" + propPostfix],
     sku["insuranceFee" + propPostfix],
     sku["tax" + propPostfix],
-    sku["additionalInsuranceFee" + propPostfix]
+    sku["additionalInsuranceFee" + propPostfix],
   );
 
   taxParams.finalProfit = taxParams.finalProfit - previousSkuFinalProfit + sku["finalProfit" + propPostfix];
