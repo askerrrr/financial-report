@@ -15,13 +15,15 @@ var deleteReport = async (req, res, next) => {
       if (report.crossesTaxYears) {
         var startYear = +report.dateFrom.split("-")[0];
         var endYear = +report.dateTo.split("-")[0];
+        var currentYearPropPostfix = "InCurrentYear";
+        var nextYearPropPostfix = "InNextYear";
 
         var taxParams = await getTaxParamsFromDb(userId, null, session);
         var startYearTaxParams = taxParams.find((params) => params.year === startYear);
         var endYearTaxParams = taxParams.find((params) => params.year === endYear);
 
-        startYearTaxParams = recalculateTaxParams(startYearTaxParams, report, "InCurrentYear").updatedTaxParams;
-        endYearTaxParams = recalculateTaxParams(endYearTaxParams, report, "InNextYear").updatedTaxParams;
+        startYearTaxParams = recalculateTaxParams(startYearTaxParams, report, currentYearPropPostfix).updatedTaxParams;
+        endYearTaxParams = recalculateTaxParams(endYearTaxParams, report, nextYearPropPostfix).updatedTaxParams;
         await changeTaxParamsToDb(userId, startYear, session, startYearTaxParams);
         await changeTaxParamsToDb(userId, endYear, session, endYearTaxParams);
       } else {
