@@ -2,26 +2,10 @@ var { DatabaseError } = require("../../../../customError");
 
 var deleteReportFromDb = async (collection, userId, reportId, session) => {
   try {
-    var result;
-
-    if (session) {
-      result = await collection.updateOne(
-        { userId },
-        {
-          $pull: { reports: { reportId } },
-        },
-        { session: session }
-      );
-    } else {
-      result = await collection.updateOne(
-        { userId },
-        {
-          $pull: { reports: { reportId } },
-        }
-      );
-    }
-
-    return result.modifiedCount;
+    var doc = await collection.findOne({ userId, "reports.reportId": reportId }, { "reports.$": 1 }, { session: session });
+    await collection.updateOne({ userId, "reports.reportId": reportId }, { $pull: { reports: { reportId } } }, { session: session });
+    var report = doc.reports[0].toObject();
+    return report;
   } catch (e) {
     throw new DatabaseError(userId, e);
   }
