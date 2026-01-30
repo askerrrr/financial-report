@@ -7,7 +7,7 @@ var recalculateMetrics = (skuMetrics, sku, postfix = "") => {
   skuMetrics.qty -= sku["qty" + postfix];
   skuMetrics.tax -= sku["tax" + postfix];
   skuMetrics.fines -= sku["fines" + postfix];
-  skuMetrics.netProfit -= sku["netProfit" + postfix];
+  skuMetrics.netProfit -= sku["finalProfit" + postfix];
   skuMetrics.retailAmount -= sku["retailAmount" + postfix];
   skuMetrics.insuranceFee -= sku["insuranceFee" + postfix];
   skuMetrics.returnAmount -= sku["returnAmount" + postfix];
@@ -31,25 +31,25 @@ var recalculateSkuMetricsAfterReportDeletion = (startYear, endYear, listGoods, r
       var indexOfStartYearSkuMetrics = skuFromListGoods.metrics.findIndex((i) => i.year === startYear);
       var indexOfEndYearSkuMetrics = skuFromListGoods.metrics.findIndex((i) => i.year === endYear);
 
-      var startYearMetrics = skuFromListGoods[indexOfStartYearSkuMetrics];
-      var endYearMetrics = skuFromListGoods[indexOfEndYearSkuMetrics];
+      var startYearMetrics = skuFromListGoods.metrics[indexOfStartYearSkuMetrics];
+      var endYearMetrics = skuFromListGoods.metrics[indexOfEndYearSkuMetrics];
 
       var recalculatedStartYearSkuMetrics = recalculateMetrics(startYearMetrics, sku, startYearPostfix);
       var recalculatedEndYearSkuMetrics = recalculateMetrics(endYearMetrics, sku, endYearPostfix);
 
-      skuFromListGoods[indexOfStartYearSkuMetrics] = recalculatedStartYearSkuMetrics;
-      skuFromListGoods[indexOfEndYearSkuMetrics] = recalculatedEndYearSkuMetrics;
+      skuFromListGoods.metrics[indexOfStartYearSkuMetrics] = recalculatedStartYearSkuMetrics;
+      skuFromListGoods.metrics[indexOfEndYearSkuMetrics] = recalculatedEndYearSkuMetrics;
     } else {
-      var indexOfSkuMetrics = skuFromListGoods.findIndex((i) => i.year === startYear);
-      var skuMetrics = skuFromListGoods[indexOfSkuMetrics];
+      var indexOfSkuMetrics = skuFromListGoods.metrics.findIndex((i) => i.year === startYear);
+      var skuMetrics = skuFromListGoods.metrics[indexOfSkuMetrics];
       var recalculatedSkuMetrics = recalculateMetrics(skuMetrics, sku);
-      skuFromListGoods[indexOfSkuMetrics] = recalculatedSkuMetrics;
+      skuFromListGoods.metrics[indexOfSkuMetrics] = recalculatedSkuMetrics;
     }
   }
 
   listGoods[indexOfSkuFromListGoods] = skuFromListGoods;
 
-  return listGoods;
+  return { listGoodsWithRecalculatedSkuMetrics: listGoods };
 };
 
 module.exports = recalculateSkuMetricsAfterReportDeletion;
