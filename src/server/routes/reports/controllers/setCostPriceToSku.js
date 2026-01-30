@@ -47,7 +47,7 @@ var setCostPriceToSku = async (req, res, next) => {
       var updatedReport = await calc.total.restParams(totalParams, skus, report.crossesTaxYears);
 
       await saveUpdatedReport(userId, reportId, updatedReport, session);
-      await updateSkuInListGoods(userId, skuId, { costPrice, metrics: result.updatedSkuMetrics }, session);
+      await updateSkuInListGoods(userId, skuId, { lastCostPrice: costPrice, metrics: result.updatedSkuMetrics }, session);
 
       var { profitMargin, finalProfit } = skus[skuIndex];
       var { totalFinalProfit, totalProfitMargin, totalInsuranceFee } = updatedReport;
