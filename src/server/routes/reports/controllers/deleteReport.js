@@ -2,17 +2,15 @@ var { dbClient } = require("../../../database/");
 
 var deleteReport = async (req, res, next) => {
   var { reportId } = req.body;
+  var { userId } = req.app.locals;
   var { deleteReportFromDb } = req.app.locals.reportCollectionServices;
   var { deleteReportFromReportTree } = req.app.locals.reportsTreeCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
   var session = await dbClient.startSession();
-
   try {
     await session.withTransaction(async () => {
       var report = await deleteReportFromDb(userId, reportId, session);
-
-      var { userId } = report;
       var { year, month } = report.recordTo;
 
       if (report.crossesTaxYears) {
