@@ -7,7 +7,7 @@ var deleteReport = async (req, res, next) => {
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
   var session = await dbClient.startSession();
-
+  console.log(report);
   try {
     await session.withTransaction(async () => {
       var { userId } = report;
