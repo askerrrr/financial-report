@@ -35,7 +35,7 @@ var main = async () => {
   await injectBase64IntoImgTags(skuImages);
   await createTotalsTable(report);
 
-  await deleteReportHandler(report);
+  await deleteReportHandler(report.reportId);
   await downloadReportAsXLSXButtonHandler(report, downloadReportLink);
 
   var { reportId, recordTo } = report;
