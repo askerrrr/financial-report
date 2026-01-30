@@ -10,9 +10,10 @@ var deleteReport = async (req, res, next) => {
 
   try {
     await session.withTransaction(async () => {
+      var report = await deleteReportFromDb(userId, reportId, session);
+
       var { userId } = report;
       var { year, month } = report.recordTo;
-      var report = await deleteReportFromDb(userId, reportId, session);
 
       if (report.crossesTaxYears) {
         var startYear = +report.dateFrom.split("-")[0];
