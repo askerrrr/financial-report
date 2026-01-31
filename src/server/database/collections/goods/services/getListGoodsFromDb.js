@@ -10,7 +10,7 @@ var getListGoodsFromDb = async (collection, userId, session) => {
       data = await collection.findOne({ userId });
     }
 
-    return { listGoods: data.listGoods };
+    return { listGoods: data.listGoods.toObject() };
   } catch (e) {
     throw new WBAPIError(userId, 500, e);
   }
