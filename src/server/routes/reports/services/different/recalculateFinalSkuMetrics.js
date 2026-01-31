@@ -1,16 +1,19 @@
 var calc = require("../calcServices");
+var truncateNum = require("../reportParsing/truncateNum");
 
 var recalculateFinalSkuMetrics = (year, skuFromListGoods, sku, previousFinalSkuData, postfix = "") => {
   var indexOfYearMetrics = skuFromListGoods.metrics.findIndex((i) => i.year === year);
+  var skuMetrics = skuFromListGoods.metrics[indexOfYearMetrics];
 
-  var newNetProfit = sku["finalProfit" + postfix] - previousFinalSkuData["finalProfit" + postfix];
-  skuFromListGoods.metrics[indexOfYearMetrics].netProfit += newNetProfit;
+  var recalculatedNetProfit = skuMetrics.netProfit - previousFinalSkuData["finalProfit" + postfix] + sku["finalProfit" + postfix];
+  skuMetrics.netProfit = truncateNum(recalculatedNetProfit);
 
-  var newInsuranceFee = sku["insuranceFee" + postfix] - previousFinalSkuData["insuranceFee" + postfix];
-  skuFromListGoods.metrics[indexOfYearMetrics].insuranceFee += newInsuranceFee;
-  var { retailAmount, netProfit } = skuFromListGoods.metrics[indexOfYearMetrics];
+  var recalculatedInsuranceFee = skuMetrics.insuranceFee - previousFinalSkuData["insuranceFee" + postfix] + sku["insuranceFee" + postfix];
+  skuMetrics.insuranceFee = truncateNum(recalculatedInsuranceFee);
 
-  skuFromListGoods.metrics[indexOfYearMetrics].profitMargin = calc.profitMargin(netProfit, retailAmount);
+  skuMetrics.profitMargin = calc.profitMargin(skuMetrics.netProfit, skuMetrics.retailAmount);
+
+  skuFromListGoods[indexOfYearMetrics] = skuMetrics;
   return skuFromListGoods;
 };
 
