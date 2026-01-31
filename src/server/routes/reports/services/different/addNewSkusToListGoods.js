@@ -48,7 +48,7 @@ var addNewSkusToListGoods = async (listGoods, skusFromReport, isCrossYearReport,
 
   listGoods = addMetricsToSku(listGoods, isCrossYearReport, startYear, endYear);
 
-  return { updatedListGoods: listGoods };
+  return { listGoodsWithNewSkus: listGoods };
 };
 
 module.exports = addNewSkusToListGoods;

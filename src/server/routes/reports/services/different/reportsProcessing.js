@@ -51,12 +51,12 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   report.recordTo = { year, month, schemaVersion: schemaVersioning.recordToSchemaVersion };
 
   var { listGoods } = await getListGoodsFromDb(userId, session);
-  var { updatedListGoods } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearReport, startYear, endYear);
-  var { listGoods } = await updateListGoodsMetrics(report, updatedListGoods);
+  var { listGoodsWithNewSkus } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearReport, startYear, endYear);
+  var { listGoodsWithUpdatedSkuMetrics } = await updateListGoodsMetrics(report, listGoodsWithNewSkus);
 
   await saveReportToDb(userId, report, session);
   await updateReportTree(userId, sortedYears, session);
-  await saveListGoodsToDb(userId, listGoods, session);
+  await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
 
   return { reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount };
 };
