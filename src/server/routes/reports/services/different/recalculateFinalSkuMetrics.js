@@ -13,7 +13,7 @@ var recalculateFinalSkuMetrics = (year, skuFromListGoods, sku, previousFinalSkuD
 
   skuMetrics.profitMargin = calc.profitMargin(skuMetrics.netProfit, skuMetrics.retailAmount);
 
-  skuFromListGoods[indexOfYearMetrics] = skuMetrics;
+  skuFromListGoods.metrics[indexOfYearMetrics] = skuMetrics;
   return skuFromListGoods;
 };
 
