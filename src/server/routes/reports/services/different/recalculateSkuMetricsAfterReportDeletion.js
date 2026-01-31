@@ -1,4 +1,5 @@
 var calc = require("../calcServices");
+var truncateNum = require("../reportParsing/truncateNum");
 
 var startYearPostfix = "InCurrentYear";
 var endYearPostfix = "InNextYear";
@@ -17,6 +18,10 @@ var recalculateMetrics = (skuMetrics, sku, postfix = "") => {
   skuMetrics.sellerPayoutAmount -= sku["sellerPayoutAmount" + postfix];
   skuMetrics.deductionOrPayment -= sku["deductionOrPayment" + postfix];
   skuMetrics.additionalInsuranceFee -= sku["additionalInsuranceFee" + postfix];
+
+  for (var key in skuMetrics) {
+    skuMetrics[key] = truncateNum(skuMetrics[key]);
+  }
 
   skuMetrics.profitMargin = calc.profitMargin(skuMetrics.netProfit, skuMetrics.retailAmount);
   return skuMetrics;

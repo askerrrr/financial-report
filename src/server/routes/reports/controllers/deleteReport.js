@@ -1,21 +1,25 @@
 var { dbClient } = require("../../../database/");
+var recalculateSkuMetricsAfterReportDeletion = require("../services/different/recalculateSkuMetricsAfterReportDeletion");
 
 var deleteReport = async (req, res, next) => {
   var { reportId } = req.body;
   var { userId } = req.app.locals;
   var { deleteReportFromDb } = req.app.locals.reportCollectionServices;
   var { deleteReportFromReportTree } = req.app.locals.reportsTreeCollectionServices;
+  var { getListGoodsFromDb, saveListGoodsToDb } = req.app.locals.goodsCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
 
   var session = await dbClient.startSession();
   try {
     await session.withTransaction(async () => {
+      var { listGoods } = await getListGoodsFromDb(userId, session);
+
       var report = await deleteReportFromDb(userId, reportId, session);
       var { year, month } = report.recordTo;
+      var startYear = +report.dateFrom.split("-")[0];
+      var endYear = +report.dateTo.split("-")[0];
 
       if (report.crossesTaxYears) {
-        var startYear = +report.dateFrom.split("-")[0];
-        var endYear = +report.dateTo.split("-")[0];
         var currentYearPropPostfix = "InCurrentYear";
         var nextYearPropPostfix = "InNextYear";
 
@@ -33,7 +37,10 @@ var deleteReport = async (req, res, next) => {
         await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
       }
 
-      await deleteReportFromReportTree(userId, year, month, report.reportId, session);
+      var { listGoodsWithRecalculatedSkuMetrics } = recalculateSkuMetricsAfterReportDeletion(startYear, endYear, listGoods, report);
+
+      await saveListGoodsToDb(userId, listGoodsWithRecalculatedSkuMetrics, session);
+      await deleteReportFromReportTree(userId, year, month, reportId, session);
     });
 
     return res.sendStatus(200);
