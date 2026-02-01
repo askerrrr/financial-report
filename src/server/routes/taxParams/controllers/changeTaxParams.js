@@ -36,6 +36,7 @@ var changeTaxParams = async (req, res, next) => {
         case "taxRate":
           var newTaxRate = data[taxParamKeyName];
           var resetPaidTaxAmount = -oldTaxParams.mandatoryInsuranceFee;
+
           var { reports, finalProfit, paidTaxAmount, listGoodsWithUpdatedSkuMetrics } = recalculateReportsWithNewTaxRate(
             reports,
             listGoods,
@@ -43,22 +44,27 @@ var changeTaxParams = async (req, res, next) => {
             newTaxRate,
             year,
           );
+
           await saveUpdatedReports(userId, reports, session);
           await changeTaxParamsToDb(userId, year, session, { finalProfit, paidTaxAmount, taxRate: newTaxRate });
           await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
+
           break;
         case "mandatoryInsuranceFeeRate":
           var { mandatoryInsuranceFee } = oldTaxParams;
           var newMandatoryInsuranceRate = data[taxParamKeyName];
           var { reports, ...updatedTaxParams } = recalculateReportsWithNewMandatoryInsuranceRate(
+            year,
             reports,
+            listGoods,
             mandatoryInsuranceFee,
             newMandatoryInsuranceRate,
-            year,
+            listGoodsWithUpdatedSkuMetrics,
           );
 
           await saveUpdatedReports(userId, reports, session);
           await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
+
           break;
         case "mandatoryInsuranceFee":
           var newMandatoryInsuranceFee = data[taxParamKeyName];
