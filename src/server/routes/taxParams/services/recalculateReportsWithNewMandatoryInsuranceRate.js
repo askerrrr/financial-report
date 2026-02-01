@@ -104,7 +104,14 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (reports, listGoods, manda
     }
   }
 
-  return { reports, finalProfit, mandatoryInsuranceFeeIsPaid, paidInsuranceFee, mandatoryInsuranceRate, listGoodsWithUpdatedSkuMetrics: listGoods };
+  return {
+    updatedReports: reports,
+    finalProfit,
+    mandatoryInsuranceFeeIsPaid,
+    paidInsuranceFee,
+    mandatoryInsuranceRate,
+    listGoodsWithUpdatedSkuMetrics: listGoods,
+  };
 };
 
 module.exports = recalculateReportsWithNewMandatoryInsuranceRate;

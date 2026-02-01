@@ -29,23 +29,23 @@ var changeTaxParams = async (req, res, next) => {
   try {
     await session.withTransaction(async () => {
       var { listGoods } = await getListGoodsFromDb(userId, session);
-      var reportsData = await getReportsByUserId(userId, session);
-      var reports = reportsData.reports.filter((report) => report.recordTo.year == year);
+      var { reports } = await getReportsByUserId(userId, session);
+      var requiredReports = reports.filter((report) => report.recordTo.year == year);
 
       switch (taxParamKeyName) {
         case "taxRate":
           var newTaxRate = data[taxParamKeyName];
           var resetPaidTaxAmount = -oldTaxParams.mandatoryInsuranceFee;
 
-          var { reports, finalProfit, paidTaxAmount, listGoodsWithUpdatedSkuMetrics } = recalculateReportsWithNewTaxRate(
-            reports,
+          var { updatedReports, finalProfit, paidTaxAmount, listGoodsWithUpdatedSkuMetrics } = recalculateReportsWithNewTaxRate(
+            requiredReports,
             listGoods,
             resetPaidTaxAmount,
             newTaxRate,
             year,
           );
-
-          await saveUpdatedReports(userId, reports, session);
+          console.log({ updatedReports });
+          await saveUpdatedReports(userId, updatedReports, session);
           await changeTaxParamsToDb(userId, year, session, { finalProfit, paidTaxAmount, taxRate: newTaxRate });
           await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
 
@@ -53,16 +53,16 @@ var changeTaxParams = async (req, res, next) => {
         case "mandatoryInsuranceFeeRate":
           var { mandatoryInsuranceFee } = oldTaxParams;
           var newMandatoryInsuranceRate = data[taxParamKeyName];
-          var { reports, ...updatedTaxParams } = recalculateReportsWithNewMandatoryInsuranceRate(
+          var { updatedReports, ...updatedTaxParams } = recalculateReportsWithNewMandatoryInsuranceRate(
             year,
-            reports,
+            requiredReports,
             listGoods,
             mandatoryInsuranceFee,
             newMandatoryInsuranceRate,
             listGoodsWithUpdatedSkuMetrics,
           );
 
-          await saveUpdatedReports(userId, reports, session);
+          await saveUpdatedReports(userId, updatedReports, session);
           await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
 
           break;

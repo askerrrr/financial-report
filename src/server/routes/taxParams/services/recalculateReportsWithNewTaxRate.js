@@ -73,12 +73,13 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
       report["totalFinalProfit" + postfix] = calc.sum(report.skus, "finalProfit" + postfix, "truncate-on");
       report.totalFinalProfit = report.totalFinalProfitInCurrentYear + report.totalFinalProfitInNextYear;
     } else {
+      report.taxRate = newTaxRate;
       report.totalTaxAmount = calc.sum(report.skus, "tax", "truncate-on");
       report.totalFinalProfit = calc.sum(report.skus, "finalProfit", "truncate-on");
     }
   }
 
-  return { finalProfit, paidTaxAmount, reports, listGoodsWithUpdatedSkuMetrics: listGoods };
+  return { finalProfit, paidTaxAmount, updatedReports: reports, listGoodsWithUpdatedSkuMetrics: listGoods };
 };
 
 module.exports = recalculateReportsWithNewTaxRate;
