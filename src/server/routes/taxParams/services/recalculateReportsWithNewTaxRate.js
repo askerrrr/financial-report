@@ -15,8 +15,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
     }
 
     for (sku of report.skus) {
-      var indexOfSkuFromListGoods = listGoods.findIndex((i) => i.id === sku.id);
-      var skuFromListGoods = listGoods[indexOfSkuFromListGoods];
+      var skuFromListGoods = listGoods.find((i) => i.id === sku.id);
 
       if (report.crossesTaxYears) {
         var prevSkuTax = sku["tax" + postfix];
@@ -24,8 +23,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
         sku.tax = sku.taxInCurrentYear + sku.taxInNextYear;
         paidTaxAmount += sku["tax" + postfix];
 
-        var indexOfStartYearSkuMetrics = skuFromListGoods.metrics.findIndex((i) => i.year === startYear);
-        var startYearSkuMetrics = skuFromListGoods.metrics[indexOfStartYearSkuMetrics];
+        var startYearSkuMetrics = skuFromListGoods.metrics.find((i) => i.year === startYear);
 
         var recalculatedTaxToSkuMetrics = startYearSkuMetrics.tax - prevSkuTax + sku["tax" + postfix];
         startYearSkuMetrics.tax = truncateNum(recalculatedTaxToSkuMetrics);
@@ -47,15 +45,12 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
           startYearSkuMetrics.netProfit = truncateNum(recalculatedNetProfitToSkuMetrics);
           skuMetrics.profitMargin = calc.profitMargin(skuMetrics.netProfit, skuMetrics.retailAmount);
         }
-
-        skuFromListGoods.metrics[indexOfStartYearSkuMetrics] = startYearSkuMetrics;
       } else {
         var prevSkuTax = sku.tax;
         sku.tax = calc.taxAmount(sku.retailAmount, newTaxRate);
         paidTaxAmount += sku.tax;
 
-        var indexOfYearSkuMetrics = skuFromListGoods.metrics.findIndex((i) => i.year === taxYear);
-        var skuMetrics = skuFromListGoods.metrics[indexOfYearSkuMetrics];
+        var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === taxYear);
         skuMetrics.tax = skuMetrics.tax - prevSkuTax + sku.tax;
 
         if (sku.isCostPriceSet) {
@@ -68,11 +63,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
           skuMetrics.netProfit = truncateNum(recalculatedNetProfitToSkuMetrics);
           skuMetrics.profitMargin = calc.profitMargin(skuMetrics.netProfit, skuMetrics.retailAmount);
         }
-
-        skuFromListGoods.metrics[indexOfYearSkuMetrics] = skuMetrics;
       }
-
-      listGoods[indexOfSkuFromListGoods] = skuFromListGoods;
     }
 
     if (postfix) {
