@@ -29,30 +29,19 @@ var recalculateMetrics = (skuMetrics, sku, postfix = "") => {
 
 var recalculateSkuMetricsAfterReportDeletion = (startYear, endYear, listGoods, report) => {
   for (var sku of report.skus) {
-    var indexOfSkuFromListGoods = listGoods.findIndex((i) => i.id === sku.id);
-    var skuFromListGoods = listGoods[indexOfSkuFromListGoods];
+    var skuFromListGoods = listGoods.find((i) => i.id === sku.id);
 
     if (report.crossesTaxYears) {
-      var indexOfStartYearSkuMetrics = skuFromListGoods.metrics.findIndex((i) => i.year === startYear);
-      var indexOfEndYearSkuMetrics = skuFromListGoods.metrics.findIndex((i) => i.year === endYear);
+      var startYearMetrics = skuFromListGoods.metrics.find((i) => i.year === startYear);
+      var endYearMetrics = skuFromListGoods.metrics.find((i) => i.year === endYear);
 
-      var startYearMetrics = skuFromListGoods.metrics[indexOfStartYearSkuMetrics];
-      var endYearMetrics = skuFromListGoods.metrics[indexOfEndYearSkuMetrics];
-
-      var recalculatedStartYearSkuMetrics = recalculateMetrics(startYearMetrics, sku, startYearPostfix);
-      var recalculatedEndYearSkuMetrics = recalculateMetrics(endYearMetrics, sku, endYearPostfix);
-
-      skuFromListGoods.metrics[indexOfStartYearSkuMetrics] = recalculatedStartYearSkuMetrics;
-      skuFromListGoods.metrics[indexOfEndYearSkuMetrics] = recalculatedEndYearSkuMetrics;
+      startYearMetrics = recalculateMetrics(startYearMetrics, sku, startYearPostfix);
+      endYearMetrics = recalculateMetrics(endYearMetrics, sku, endYearPostfix);
     } else {
-      var indexOfSkuMetrics = skuFromListGoods.metrics.findIndex((i) => i.year === startYear);
-      var skuMetrics = skuFromListGoods.metrics[indexOfSkuMetrics];
-      var recalculatedSkuMetrics = recalculateMetrics(skuMetrics, sku);
-      skuFromListGoods.metrics[indexOfSkuMetrics] = recalculatedSkuMetrics;
+      var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === startYear);
+      skuMetrics = recalculateMetrics(skuMetrics, sku);
     }
   }
-
-  listGoods[indexOfSkuFromListGoods] = skuFromListGoods;
 
   return { listGoodsWithRecalculatedSkuMetrics: listGoods };
 };
