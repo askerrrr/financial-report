@@ -9,6 +9,7 @@ import setWeekDaySelectorToCurrentDay from "./utils/setWeekDaySelectorToCurrentD
 import toggleSkuTableVisibillity from "./utils/visibilityToggle/toggleSkuTableVisibillity.js";
 import toggleWeekDaysSelectorVisibility from "./utils/visibilityToggle/toggleWeekDaysSelectorVisibility.js";
 import toggleUploadListGoodsButtonVisibility from "./utils/visibilityToggle/toggleUploadListGoodsButtonVisibility.js";
+import toggleSkusMetricsFileUploadButtonVisibility from "./utils/visibilityToggle/toggleSkusMetricsFileUploadButtonVisibility.js";
 import toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility from "./utils/visibilityToggle/toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility.js";
 import toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility from "./utils/visibilityToggle/toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility.js";
 
@@ -45,6 +46,7 @@ var handleEmptySkus = async function () {
 
 var handleEmptyEnabledSkus = async function (disabledSku) {
   toggleSkuTableVisibillity("disabled-skus-table", "enable");
+  toggleSkusMetricsFileUploadButtonVisibility("enable");
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
   await createSkusTable(disabledSku, "disabled-skus-tbody");
@@ -53,6 +55,7 @@ var handleEmptyEnabledSkus = async function (disabledSku) {
 var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
   setWeekDaySelectorToCurrentDay(currentDayName);
   toggleSkuTableVisibillity("enabled-skus-table", "enable");
+  toggleSkusMetricsFileUploadButtonVisibility("enable");
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
   await createSkusTable(enabledSku, "enabled-skus-tbody");
@@ -69,6 +72,7 @@ var handleNonEmptyWeeklyPricesAndDiscounts = async function ({ enabledSku, disab
   toggleWeekDaysSelectorVisibility("enable");
   toggleSkuTableVisibillity("enabled-skus-table", "enable");
   setWeekDaySelectorToCurrentDay(currentDayName);
+  toggleSkusMetricsFileUploadButtonVisibility("enable");
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
 
