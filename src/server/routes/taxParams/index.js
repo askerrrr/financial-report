@@ -8,12 +8,6 @@ router.get("/api", require("./controllers/getTaxParams"));
 
 router.get("/years", require("./controllers/getReportYears"));
 
-router.post(
-  "/insurance-fee-percentage",
-  require("./controllers/changeInsuranceFeePercentage"),
-  require("./controllers/recalculateReportsParamsAfterChangingInsuranceFeePergentage")
-);
-
 router.post("/change", require("./controllers/changeTaxParams"));
 
 module.exports = router;
