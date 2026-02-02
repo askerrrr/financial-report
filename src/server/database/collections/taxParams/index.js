@@ -5,7 +5,6 @@ var getTaxParamsFromDb = require("./services/getTaxParamsFromDb");
 var changeTaxParamsToDb = require("./services/changeTaxParamsToDb");
 var saveUpdatedTaxParams = require("./services/saveUpdatedTaxParams");
 var createTaxParamsEntity = require("./services/createTaxParamsEntity");
-var changePaidTaxAmountToDb = require("./services/changePaidTaxAmountToDb");
 
 var taxParamsCollectionServices = {
   deleteTaxYears: (userId) => deleteTaxYears(taxParamsCollection, userId),
@@ -17,8 +16,6 @@ var taxParamsCollectionServices = {
   createTaxParamsEntity: (userId, year) => createTaxParamsEntity(taxParamsCollection, userId, year),
 
   changeTaxParamsToDb: (userId, year, session, newTaxParam) => changeTaxParamsToDb(taxParamsCollection, userId, year, session, newTaxParam),
-
-  changePaidTaxAmountToDb: (userId, year, paidTaxAmount) => changePaidTaxAmountToDb(taxParamsCollection, userId, year, paidTaxAmount),
 
   saveUpdatedTaxParams: (userId, year, taxParams) => saveUpdatedTaxParams(taxParamsCollection, userId, year, taxParams),
 };
