@@ -16,5 +16,6 @@ router.post("/", require("./controllers/loadListGoods"));
 router.post("/change-prices-discounts/:userId", require("./controllers/changePricesAndDiscounts"));
 router.post("/change-sku-disable-status", require("./controllers/changeSkuDisableStatus"));
 router.post("/upload-prices-discount-file/:userId", upload.single("file"), require("./controllers/uploadPricesAndDiscountsFile"));
+router.post("/download-skus-metrics", require("./controllers/downloadSkusMetrics"));
 
 module.exports = router;
