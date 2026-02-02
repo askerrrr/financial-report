@@ -42,9 +42,9 @@ var changeTaxParams = async (req, res, next) => {
             listGoods,
             resetPaidTaxAmount,
             newTaxRate,
-            year,
+            year
           );
-          console.log({ updatedReports });
+
           await saveUpdatedReports(userId, updatedReports, session);
           await changeTaxParamsToDb(userId, year, session, { finalProfit, paidTaxAmount, taxRate: newTaxRate });
           await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
@@ -59,7 +59,7 @@ var changeTaxParams = async (req, res, next) => {
             listGoods,
             mandatoryInsuranceFee,
             newMandatoryInsuranceRate,
-            listGoodsWithUpdatedSkuMetrics,
+            listGoodsWithUpdatedSkuMetrics
           );
 
           await saveUpdatedReports(userId, updatedReports, session);
