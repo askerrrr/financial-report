@@ -13,7 +13,7 @@ var setCostPriceToSkus = async (req, res, next) => {
 
   try {
     await session.withTransaction(async () => {
-      var taxParams;
+      var taxParams = {};
       var { report } = await getReportById(userId, reportId);
       var { listGoods } = await getListGoodsFromDb(userId, session);
       var { skus, ...totalParams } = report;
@@ -21,7 +21,7 @@ var setCostPriceToSkus = async (req, res, next) => {
       if (report.crossesTaxYears) {
         var startYear = +report.dateFrom.split("-")[0];
         var endYear = +report.dateTo.split("-")[0];
-        var allTaxParams = await getTaxParamsFromDb(userId, (year = null), session);
+        var allTaxParams = await getTaxParamsFromDb(userId, null, session);
         taxParams.startYearTaxParams = allTaxParams.find((param) => param.year == startYear);
         taxParams.endYearTaxParams = allTaxParams.find((param) => param.year == endYear);
       } else {
