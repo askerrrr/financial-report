@@ -1,5 +1,6 @@
 var Exceljs = require("exceljs");
 var writeSkuDataToCells = require("./writeSkuDataToCells");
+var writeYearsToColumns = require("./writeYearsToColumns");
 var setStylesToSkuNameCell = require("./setStylesToSkuNameCell");
 var setStylesToFirstColumn = require("./setStylesToFirstColumn");
 var writeCellNamesToFirstColumn = require("./writeCellNamesToFirstColumn");
@@ -12,10 +13,12 @@ var generageSKusMetricsFile = async (listGoods) => {
 
   var indentToNextSku = 1;
 
+  ws = writeYearsToColumns(ws, listGoods);
+
   for (var sku of listGoods) {
     ws = writeCellNamesToFirstColumn(ws, sku, indentToNextSku);
     ws = setStylesToSkuNameCell(ws, indentToNextSku);
-    //ws = writeSkuDataToCells(ws, sku);
+    ws = writeSkuDataToCells(ws, sku);
     indentToNextSku += 16;
   }
 
