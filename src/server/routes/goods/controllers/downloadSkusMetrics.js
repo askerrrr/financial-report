@@ -4,7 +4,7 @@ var downloadSkusMetrics = async (req, res, next) => {
 
   var { listGoods } = await getListGoodsFromDb(userId);
 
-  //   var skuMetricsFile = await generageSKuMetricsFile(listGoods);
+  //   var skusMetricsFile = await generageSKusMetricsFile(listGoods);
 };
 
 module.exports = downloadSkusMetrics;
