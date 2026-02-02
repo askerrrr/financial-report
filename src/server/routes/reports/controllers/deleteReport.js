@@ -45,7 +45,7 @@ var deleteReport = async (req, res, next) => {
 
     return res.sendStatus(200);
   } catch (e) {
-    console.log({ e });
+    // console.log({ e });
     res.sendStatus(304);
   } finally {
     await session.endSession();
