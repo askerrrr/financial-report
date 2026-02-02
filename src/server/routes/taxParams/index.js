@@ -14,12 +14,6 @@ router.post(
   require("./controllers/recalculateReportsParamsAfterChangingInsuranceFeePergentage")
 );
 
-router.post(
-  "/mandatory-insurance-premiums",
-  require("./controllers/changeMandatoryInsuranceFee"),
-  require("./controllers/recalculateReportsParamsAfterChangingMandatoryInsuranceFee")
-);
-
 router.post("/change", require("./controllers/changeTaxParams"));
 
 module.exports = router;
