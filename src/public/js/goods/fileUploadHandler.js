@@ -13,7 +13,7 @@ var sendUploadFile = async (file) => {
   }
 
   var { weeklyPricesAndDiscounts } = await res.json();
-  alert("Файл успешно загружен");
+  alert("Цены успешно установлены");
 
   return { weeklyPricesAndDiscounts };
 };
