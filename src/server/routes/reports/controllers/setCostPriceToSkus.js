@@ -8,6 +8,10 @@ var setCostPriceToSkus = async (req, res, next) => {
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
   var { getListGoodsFromDb, saveUpdatedSkuMetrics } = req.app.locals.goodsCollectionServices;
 
+  if (!costPrices.length) {
+    return res.sendStatus(304);
+  }
+
   var skusDataToClient = [];
   var session = await dbClient.startSession();
 
