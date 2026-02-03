@@ -19,8 +19,8 @@ var generageSKusMetricsFile = async (listGoods) => {
     indentToNextSku += 16;
   }
 
-  var skuMetricsFileBuffer = await wb.xlsx.writeBuffer("file.xlsx");
-  return { skuMetricsFileBuffer };
+  var skusMetricsFileBuffer = await wb.xlsx.writeBuffer("file.xlsx");
+  return { skusMetricsFileBuffer };
 };
 
 module.exports = generageSKusMetricsFile;
