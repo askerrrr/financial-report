@@ -10,7 +10,7 @@ var router = Router({ caseSensitive: true, strict: true });
 router.get("/", require("./controllers/getListGoodsPage"));
 router.get("/api/:userId", require("./controllers/getListGoodsAndWeeklyPrices"));
 router.get("/weekly-prices/:userId", require("./controllers/getWeeklyPricesFile"));
-router.get("/download-skus-metrics", require("./controllers/downloadSkusMetrics"));
+router.get("/download-skus-metrics", require("./controllers/getSkusMetrics"));
 
 router.post("/set-price-or-discount", require("./controllers/newPriceApplyController"), require("./controllers/changeWeeklyPricesOrDiscounts"));
 router.post("/", require("./controllers/loadListGoods"));

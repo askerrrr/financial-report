@@ -1,6 +1,6 @@
 var generageSKusMetricsFile = require("../services/skusMetrics");
 
-var downloadSkusMetrics = async (req, res, next) => {
+var getSkusMetrics = async (req, res, next) => {
   var { userId } = req.app.locals;
   var { getListGoodsFromDb } = req.app.locals.goodsCollectionServices;
 
@@ -15,4 +15,4 @@ var downloadSkusMetrics = async (req, res, next) => {
   res.send(skusMetricsFileBuffer);
 };
 
-module.exports = downloadSkusMetrics;
+module.exports = getSkusMetrics;
