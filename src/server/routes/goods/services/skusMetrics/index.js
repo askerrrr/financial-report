@@ -3,12 +3,14 @@ var writeSkuDataToCells = require("./writeSkuDataToCells");
 var setStylesToSkuNameCell = require("./setStylesToSkuNameCell");
 var setStylesToFirstColumn = require("./setStylesToFirstColumn");
 var writeCellNamesToFirstColumn = require("./writeCellNamesToFirstColumn");
+var setColumnHeaderWidths = require("./setColumnHeaderWidths");
 
 var generageSKusMetricsFile = async (listGoods) => {
   var wb = new Exceljs.Workbook();
   var ws = wb.addWorksheet("Лист1");
 
   ws = setStylesToFirstColumn(ws);
+  ws = setColumnHeaderWidths(ws, listGoods);
 
   var indentToNextSku = 1;
 
