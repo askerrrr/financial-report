@@ -8,6 +8,7 @@ var changeTaxParams = async (req, res, next) => {
   var userId = req.app.locals.userId;
   var { year, oldTaxParams, recalculate, data } = req.body;
   var { changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
+  var { getListGoodsFromDb, saveListGoodsToDb } = req.app.locals.goodsCollectionServices;
   var { getReportsByUserId, saveUpdatedReports } = req.app.locals.reportCollectionServices;
 
   var { taxParamKeyName } = getTaxParamKeyName(data);
@@ -27,39 +28,64 @@ var changeTaxParams = async (req, res, next) => {
 
   try {
     await session.withTransaction(async () => {
-      var reportsData = await getReportsByUserId(userId, session);
-      var reports = reportsData.reports.filter((report) => report.recordTo.year == year);
+      var { listGoods } = await getListGoodsFromDb(userId, session);
+      var { reports } = await getReportsByUserId(userId, session);
+      var requiredReports = reports.filter((report) => report.recordTo.year == year);
 
       switch (taxParamKeyName) {
         case "taxRate":
           var newTaxRate = data[taxParamKeyName];
-          var resetPaidTaxAmount = -oldTaxParams.mandatoryInsuranceFee;
-          var { reports, finalProfit, paidTaxAmount } = recalculateReportsWithNewTaxRate(reports, resetPaidTaxAmount, newTaxRate, year);
-          await saveUpdatedReports(userId, reports, session);
-          await changeTaxParamsToDb(userId, year, session, { finalProfit, paidTaxAmount, taxRate: newTaxRate });
+
+          if (requiredReports.length) {
+            var resetPaidTaxAmount = -oldTaxParams.mandatoryInsuranceFee;
+
+            var { updatedReports, finalProfit, paidTaxAmount, listGoodsWithUpdatedSkuMetrics } = recalculateReportsWithNewTaxRate(
+              requiredReports,
+              listGoods,
+              resetPaidTaxAmount,
+              newTaxRate,
+              year
+            );
+
+            await saveUpdatedReports(userId, updatedReports, session);
+            await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
+            await changeTaxParamsToDb(userId, year, session, { finalProfit, paidTaxAmount, taxRate: newTaxRate });
+          } else {
+            await changeTaxParamsToDb(userId, year, session, { taxRate: newTaxRate });
+          }
+
           break;
         case "mandatoryInsuranceFeeRate":
-          var { mandatoryInsuranceFee } = oldTaxParams;
-          var newMandatoryInsuranceRate = data[taxParamKeyName];
-          var { reports, ...updatedTaxParams } = recalculateReportsWithNewMandatoryInsuranceRate(
-            reports,
-            mandatoryInsuranceFee,
-            newMandatoryInsuranceRate,
-            year
-          );
+          var newMandatoryInsuranceFeeRate = data[taxParamKeyName];
 
-          await saveUpdatedReports(userId, reports, session);
-          await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
+          if (requiredReports.length) {
+            var { mandatoryInsuranceFee } = oldTaxParams;
+            var { updatedReports, ...updatedTaxParams } = recalculateReportsWithNewMandatoryInsuranceRate(
+              year,
+              requiredReports,
+              listGoods,
+              mandatoryInsuranceFee,
+              newMandatoryInsuranceFeeRate,
+              listGoodsWithUpdatedSkuMetrics
+            );
+
+            await saveUpdatedReports(userId, updatedReports, session);
+            await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
+          } else {
+            await changeTaxParamsToDb(userId, year, session, { mandatoryInsuranceFeeRate: newMandatoryInsuranceFeeRate });
+          }
+
           break;
-	case "mandatoryInsuranceFee": 
+        case "mandatoryInsuranceFee":
           var newMandatoryInsuranceFee = data[taxParamKeyName];
-          
+
           break;
       }
     });
 
     res.sendStatus(200);
   } catch (e) {
+    console.log({ e });
     res.sendStatus(304);
   } finally {
     if (session && session.inTransaction()) {

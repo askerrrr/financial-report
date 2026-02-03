@@ -85,13 +85,10 @@ var SKUSchema = new Schema(
     schemaVersion: { type: Number },
     id: { type: Number, required: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
-var recordToSchema = new Schema(
-  { year: stringOptions, month: stringOptions, schemaVersion: { type: Number } },
-  { _id: false }
-);
+var recordToSchema = new Schema({ year: { type: Number, required: true }, month: stringOptions, schemaVersion: { type: Number } }, { _id: false });
 
 var reportSchema = new Schema(
   {
@@ -169,7 +166,7 @@ var reportSchema = new Schema(
     nextYearInsuranceFee: nonRequiredNumberOptions,
     skus: [{ type: SKUSchema, required: true }],
   },
-  { _id: false }
+  { _id: false },
 );
 
 var reportsSchema = new Schema({

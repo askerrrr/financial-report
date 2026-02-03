@@ -11,11 +11,16 @@
     <title>Отчёты</title>
   </head>
   <body id="main">
-    <button class="options" id="options" onclick="window.location.href='/tax_params'">
-      Настройки
-    </button>
+    <div class="top-actions">
+      <button id="options" onclick="window.location.href='/tax_params'">Настройки</button>
+      <button id="products-button" onclick="window.location.href='/goods'">Товары</button>
+      <button id="token-button">Загрузить токен</button>
+      <button id="period-button">Загрузить отчёты</button>
+    </div>
+    <!-- <button class="options" id="options" onclick="window.location.href='/tax_params'">Настройки</button
+    ><button class="token-button" id="products-button">Товары</button>
     <button class="token-button" id="token-button">Загрузить токен</button>
-    <button class="period-button" id="period-button">Загрузить отчёты</button>
+    <button class="period-button" id="period-button">Загрузить отчёты</button> -->
     <!-- <form enctype="multipart/form-data" id="upload-form">
       <label for="fileinput" class="input-file">
         <input

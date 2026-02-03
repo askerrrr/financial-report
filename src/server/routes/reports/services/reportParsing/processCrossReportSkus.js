@@ -1,5 +1,6 @@
 var parseSku = require("./parseSku");
 var calc = require("../calcServices");
+var truncateNum = require("./truncateNum");
 var splitSkuByYear = require("./splitSkuByYear");
 var truncateSkuNums = require("./truncateSkuNums");
 var getSkuNamesAndIds = require("./getSkuNamesAndIds");
@@ -42,8 +43,8 @@ var processCrossReportSkus = async (reports, taxParams) => {
   endYearTotals.totalAdvertisingCosts = await calculateTotalAdvertisingCosts(endYearAd);
 
   var totalSold = startYearTotals.totalSold + endYearTotals.totalSold;
-  var totalStorageCost = startYearTotals.totalStorageCost + endYearTotals.totalStorageCost;
-  var totalAdvertisingCosts = startYearTotals.totalAdvertisingCosts + endYearTotals.totalAdvertisingCosts;
+  var totalStorageCost = truncateNum(startYearTotals.totalStorageCost + endYearTotals.totalStorageCost);
+  var totalAdvertisingCosts = truncateNum(startYearTotals.totalAdvertisingCosts + endYearTotals.totalAdvertisingCosts);
 
   var skus = [];
   var skuNamesAndIds = getSkuNamesAndIds(weeklyFinancialReport);

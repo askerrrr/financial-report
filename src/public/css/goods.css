@@ -52,6 +52,17 @@ body {
   color: var(--primary);
 }
 
+.btn-to-main {
+  background: white;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
 #download-weekly-prices-file[hidden],
 #load-list-goods[hidden] {
   display: none !important;

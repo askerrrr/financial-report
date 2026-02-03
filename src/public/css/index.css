@@ -166,77 +166,46 @@ button:hover {
   }
 }
 
-#options {
-  position: absolute;
-  top: 80px;
-  right: 100px;
-  padding: 15px;
+.top-actions {
+  position: fixed;
+  top: 3rem;
+  right: 4.5rem;
+  z-index: 1000;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.top-actions button {
   background-color: #343a40;
+  color: #f8f9fa;
   border: 1px solid #495057;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  font-size: 14px;
+  border-radius: 6px;
+  padding: 0.65rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
-#options h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  color: #f8f9fa;
-  border-bottom: 1px solid #495057;
-  padding-bottom: 5px;
+.top-actions button:hover {
+  background-color: #495057;
+  border-color: #6c757d;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
-#options {
-  margin: 5px 0;
-  color: #f8f9fa;
+.top-actions button:active {
+  transform: translateY(0);
 }
 
-#token-button {
-  position: absolute;
-  top: 80px;
-  right: 1000px;
-  padding: 15px;
-  background-color: #343a40;
-  border: 1px solid #495057;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  font-size: 14px;
+.top-actions button.primary {
+  background-color: #0d6efd;
+  border-color: #0b5ed7;
+  color: white;
 }
 
-#token-button h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  color: #f8f9fa;
-  border-bottom: 1px solid #495057;
-  padding-bottom: 5px;
-}
-
-#token-button {
-  margin: 5px 0;
-  color: #f8f9fa;
-}
-
-#period-button {
-  position: absolute;
-  top: 80px;
-  right: 500px;
-  padding: 15px;
-  background-color: #343a40;
-  border: 1px solid #495057;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  font-size: 14px;
-}
-
-#period-button h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  color: #f8f9fa;
-  border-bottom: 1px solid #495057;
-  padding-bottom: 5px;
-}
-
-#period-button {
-  margin: 5px 0;
-  color: #f8f9fa;
+.top-actions button.primary:hover {
+  background-color: #0b5ed7;
 }
