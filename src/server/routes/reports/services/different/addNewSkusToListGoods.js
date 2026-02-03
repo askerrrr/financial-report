@@ -2,6 +2,8 @@ var defaultSkuMetricsField = {
   qty: 0,
   tax: 0,
   fines: 0,
+  netProfit: 0,
+  profitMargin: 0,
   retailAmount: 0,
   returnAmount: 0,
   storageCost: 0,
@@ -11,7 +13,6 @@ var defaultSkuMetricsField = {
   deductionOrPayment: 0,
   additionalInsuranceFee: 0,
 };
-
 var addMetricsToSku = (listGoods, isCrossYearReport, startYear, endYear) => {
   for (var sku of listGoods) {
     if (isCrossYearReport) {
