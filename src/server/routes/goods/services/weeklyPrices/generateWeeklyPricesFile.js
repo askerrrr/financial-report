@@ -14,10 +14,12 @@ var generateWeeklyPricesFile = async (listGoods) => {
   ws.addRow([]);
 
   var cellNumOfSkuName = 4;
-  var skusQty = listGoods.length;
 
-  while (listGoods.length) {
-    var sku = listGoods.shift();
+  var listGoodsFilteredByNonDeletedSku = listGoods.filter((sku) => !sku.deleted && !sku.disabled);
+  var skusQty = listGoodsFilteredByNonDeletedSku.length;
+
+  while (listGoodsFilteredByNonDeletedSku.length) {
+    var sku = listGoodsFilteredByNonDeletedSku.shift();
 
     if (!sku.disabled) {
       ws = writeSKU(sku, ws, cellNumOfSkuName);
