@@ -13,12 +13,12 @@ var generageSKusMetricsFile = async (listGoods) => {
 
   var indentToNextSku = 1;
 
-  ws = writeYearsToColumns(ws, listGoods);
+  // ws = writeYearsToColumns(ws, listGoods);
 
   for (var sku of listGoods) {
     ws = writeCellNamesToFirstColumn(ws, sku, indentToNextSku);
     ws = setStylesToSkuNameCell(ws, indentToNextSku);
-    ws = writeSkuDataToCells(ws, sku);
+    ws = writeSkuDataToCells(ws, sku, indentToNextSku);
     indentToNextSku += 16;
   }
 

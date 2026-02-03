@@ -1,11 +1,10 @@
 var columns = ["B", "C", "D", "E", "F", "G", "H"];
 
-var writeSkuDataToCells = (ws, sku) => {
-  var skuDataIndent = 1;
-
+var writeSkuDataToCells = (ws, sku, skuDataIndent) => {
   for (var i = 0; i < sku.metrics.length; i++) {
     var metric = sku.metrics[i];
 
+    var indentToYear = skuDataIndent;
     var indentToQty = skuDataIndent + 1;
     var indentToTax = skuDataIndent + 2;
     var indentToFines = skuDataIndent + 3;
@@ -20,20 +19,22 @@ var writeSkuDataToCells = (ws, sku) => {
     var indentToAdditionalInsuranceFee = skuDataIndent + 12;
     var indentToNetProfit = skuDataIndent + 13;
     var indentToProfitMargin = skuDataIndent + 14;
-    ws.getCell(columns[i] + indentToQty).value = sku.metrics[i].qty; // "Количество";
-    ws.getCell(columns[i] + indentToTax).value = sku.metrics[i].tax; // "Налоги";
-    ws.getCell(columns[i] + indentToFines).value = sku.metrics[i].fines; // "Штрафы";
-    ws.getCell(columns[i] + indentToSellerPayoutAmount).value = sku.metrics[i].sellerPayoutAmount; // "Выплаты продавцу";
-    ws.getCell(columns[i] + indentToDeductionOrPayment).value = sku.metrics[i].deductionOrPayment; // "Удержания/Выплаты";
-    ws.getCell(columns[i] + indentToRetailAmount).value = sku.metrics[i].retailAmount; // "Сумма продаж";
-    ws.getCell(columns[i] + indentToReturnAmount).value = sku.metrics[i].returnAmount; // "Возвратов";
-    ws.getCell(columns[i] + indentToStorageCost).value = sku.metrics[i].storageCost; // "Хранение";
-    ws.getCell(columns[i] + indentToDeliveryCost).value = sku.metrics[i].deliveryCost; // "Доставка";
-    ws.getCell(columns[i] + indentToAcceptance).value = sku.metrics[i].acceptance; // "Приёмка";
-    ws.getCell(columns[i] + indentToInsuranceFee).value = sku.metrics[i].insuranceFee; // "Обязательные страховые взновы";
-    ws.getCell(columns[i] + indentToAdditionalInsuranceFee).value = sku.metrics[i].additionalInsuranceFee; // "Дополнительные страховые взновы";
-    ws.getCell(columns[i] + indentToNetProfit).value = sku.metrics[i].netProfit; // "Чистая прибыль";
-    ws.getCell(columns[i] + indentToProfitMargin).value = sku.metrics[i].profitMargin; // "Маржинальность";
+
+    ws.getCell(columns[i] + indentToYear).value = metric.year;
+    ws.getCell(columns[i] + indentToQty).value = metric.qty;
+    ws.getCell(columns[i] + indentToTax).value = metric.tax;
+    ws.getCell(columns[i] + indentToFines).value = metric.fines;
+    ws.getCell(columns[i] + indentToSellerPayoutAmount).value = metric.sellerPayoutAmount;
+    ws.getCell(columns[i] + indentToDeductionOrPayment).value = metric.deductionOrPayment;
+    ws.getCell(columns[i] + indentToRetailAmount).value = metric.retailAmount;
+    ws.getCell(columns[i] + indentToReturnAmount).value = metric.returnAmount;
+    ws.getCell(columns[i] + indentToStorageCost).value = metric.storageCost;
+    ws.getCell(columns[i] + indentToDeliveryCost).value = metric.deliveryCost;
+    ws.getCell(columns[i] + indentToAcceptance).value = metric.acceptance;
+    ws.getCell(columns[i] + indentToInsuranceFee).value = metric.insuranceFee;
+    ws.getCell(columns[i] + indentToAdditionalInsuranceFee).value = metric.additionalInsuranceFee;
+    ws.getCell(columns[i] + indentToNetProfit).value = metric.netProfit;
+    ws.getCell(columns[i] + indentToProfitMargin).value = metric.profitMargin;
   }
 
   return ws;
