@@ -51,7 +51,8 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
         paidTaxAmount += sku.tax;
 
         var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === taxYear);
-        skuMetrics.tax = skuMetrics.tax - prevSkuTax + sku.tax;
+        var recalculatedTaxToSkuMetrics = skuMetrics.tax - prevSkuTax + sku.tax;
+        skuMetrics.tax = truncateNum(recalculatedTaxToSkuMetrics);
 
         if (sku.isCostPriceSet) {
           var prevSkuFinalProfit = sku.finalProfit;
