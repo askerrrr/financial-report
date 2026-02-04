@@ -1,14 +1,9 @@
 var { WBAPIError } = require("../../../../customError");
 
 var getListGoodsFromDb = async (collection, userId, session) => {
+  var sessionOption = session ? { session } : {};
   try {
-    var data;
-
-    if (session) {
-      data = await collection.findOne({ userId }, null, { session: session });
-    } else {
-      data = await collection.findOne({ userId });
-    }
+    var data = await collection.findOne({ userId }, null, { ...sessionOption });
 
     return { listGoods: data.listGoods.toObject() };
   } catch (e) {
