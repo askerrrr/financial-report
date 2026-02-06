@@ -8,7 +8,7 @@ var loadListGoods = async (req, res, next) => {
   var { token } = await getWBTokenByUserId(userId);
 
   if (!token) {
-    return res.sendStatus(304);
+    return res.status(400).json({ msg: "В первую очередь нужно загрузить токен личного кабинета WB" });
   }
 
   var { listGoods } = await listGoodsLoader(userId, token);

@@ -17,8 +17,8 @@ var weeklyPricesAndDiscountsCollectionServices = {
   getUploadId: (userId) => getUploadId(weeklyPricesAndDiscountsCollection, userId),
   setUploadId: (userId, uploadId) => setUploadId(weeklyPricesAndDiscountsCollection, userId, uploadId),
 
-  setWeeklyPricesAndDiscountsToDb: (userId, weeklyPricesAndDiscounts) =>
-    setWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId, weeklyPricesAndDiscounts),
+  setWeeklyPricesAndDiscountsToDb: (userId, weeklyPricesAndDiscounts, session) =>
+    setWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId, weeklyPricesAndDiscounts, session),
 
   createWeeklyPricesAndDiscountsCollectionEntity: (userId) =>
     createWeeklyPricesAndDiscountsCollectionEntity(weeklyPricesAndDiscountsCollection, userId),

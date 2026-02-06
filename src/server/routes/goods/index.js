@@ -14,7 +14,6 @@ router.get("/download-skus-metrics", require("./controllers/getSkusMetricsFile")
 
 router.post("/set-price-or-discount", require("./controllers/newPriceApplyController"), require("./controllers/changeWeeklyPricesOrDiscounts"));
 router.post("/", require("./controllers/loadListGoods"));
-router.post("/change-prices-discounts/:userId", require("./controllers/changePricesAndDiscounts"));
 router.post("/change-sku-disable-status", require("./controllers/changeSkuDisableStatus"));
 router.post("/upload-prices-discount-file/:userId", upload.single("file"), require("./controllers/uploadPricesAndDiscountsFile"));
 
