@@ -5,7 +5,8 @@ var filterCostsForReportSkus = async (skusFromReport, skusLastCostPrice) => {
     var skuLastCostPrice = skusLastCostPrice.shift();
 
     if (skuLastCostPrice.lastCostPrice) {
-      if (skusFromReport.find((sku) => sku.id === skuLastCostPrice.id)) {
+      if (skusFromReport.find((sku) => sku.id === skuLastCostPrice.id && sku.skuName === skuLastCostPrice.skuName)) {
+        console.log(skuLastCostPrice);
         filteredSkusLastCostPrice.push(skuLastCostPrice);
       }
     }
