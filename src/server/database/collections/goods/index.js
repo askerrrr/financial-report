@@ -22,7 +22,7 @@ var goodsCollectionServices = {
 
   getListGoodsFromDb: (userId, session) => getListGoodsFromDb(goodsCollection, userId, session),
 
-  getSkuFromListGoods: (userId, skuId, session) => getSkuFromListGoods(goodsCollection, userId, skuId, session),
+  getSkuFromListGoods: (userId, skuId, skuName, session) => getSkuFromListGoods(goodsCollection, userId, skuId, skuName, session),
 
   saveListGoodsToDb: (userId, listGoods, session) => saveListGoodsToDb(goodsCollection, userId, listGoods, session),
 

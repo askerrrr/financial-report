@@ -13,8 +13,10 @@ var setCostPriceToSku = async (req, res, next) => {
   try {
     await session.withTransaction(async () => {
       var { report } = await getReportById(userId, reportId, session);
-      var { skuFromListGoods } = await getSkuFromListGoods(userId, skuId, session);
       var { skus, ...totalParams } = report;
+      var { skuName } = skus[skuIndex];
+
+      var { skuFromListGoods } = await getSkuFromListGoods(userId, skuId, skuName, session);
 
       if (skus[skuIndex].costPrice === costPrice) {
         return res.sendStatus(409);
