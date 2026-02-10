@@ -8,6 +8,7 @@ var upload = multer({ storage, fileFilter });
 var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/", require("./controllers/getListGoodsPage"));
+router.get("/listgoodsonly/:userId", require("./controllers/getListGoods"));
 router.get("/api/:userId", require("./controllers/getListGoodsAndWeeklyPrices"));
 router.get("/weekly-prices/:userId", require("./controllers/getWeeklyPricesFile"));
 router.get("/download-skus-metrics", require("./controllers/getSkusMetricsFile"));
