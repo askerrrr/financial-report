@@ -32,15 +32,15 @@ var setCostPriceToSkus = async (req, res, next) => {
         taxParams = await getTaxParamsFromDb(userId, taxYear, session);
       }
 
-      for (var { id, lastCostPrice } of costPrices) {
-        var skuIndex = skus.findIndex((sku) => sku.id === id);
+      for (var { id, skuName, lastCostPrice } of costPrices) {
+        var skuIndex = skus.findIndex((sku) => sku.id === id && sku.skuName === skuName);
 
         if (skus[skuIndex].costPrice === lastCostPrice) {
           continue;
         }
 
         skus[skuIndex].costPrice = lastCostPrice;
-        var skuFromListGoods = listGoods.find((sku) => sku.id === id);
+        var skuFromListGoods = listGoods.find((sku) => sku.id === id && sku.skuName === skuName);
 
         if (report.crossesTaxYears) {
           var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, report.crossesTaxYears);
