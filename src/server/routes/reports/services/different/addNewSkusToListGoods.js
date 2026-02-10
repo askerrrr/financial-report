@@ -33,7 +33,7 @@ var addMetricsToSku = (listGoods, isCrossYearReport, startYear, endYear) => {
   return listGoods;
 };
 
-var addNewSkusToListGoods = async (listGoods, skusFromReport, isCrossYearReport, startYear, endYear) => {
+var addNewSkusToListGoods = async (listGoods, skusFromFinancialReports, isCrossYearReport, startYear, endYear) => {
   var metrics = [];
 
   for (var { name, id } of skusFromFinancialReports) {
