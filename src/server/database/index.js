@@ -5,7 +5,7 @@ var timerId = null;
 var connectionAttempts = 0;
 var eventsConfigured = false;
 var mongooseReconnected = false;
-const MAX_CONNECTION_ATTEMPTS = 5;
+var MAX_CONNECTION_ATTEMPTS = 5;
 
 var mongooseConnection = async () => {
   if (process.env.MONGO_HOST) {

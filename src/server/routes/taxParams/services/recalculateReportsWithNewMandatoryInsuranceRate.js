@@ -17,7 +17,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (reports, listGoods, manda
     }
 
     for (sku of report.skus) {
-      var skuFromListGoods = listGoods.find((i) => i.id === sku.id);
+      var skuFromListGoods = listGoods.find((i) => i.id === sku.id && i.skuName === sku.skuName);
 
       if (report.crossesTaxYears) {
         var prevSkuInsuranceFee = sku["insuranceFee" + postfix];
