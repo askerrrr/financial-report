@@ -11,7 +11,7 @@ var reportLoadingStatesCollectionServices = {
   deleteReportLoadingStates: (userId, session) => deleteReportLoadingStates(reportLoadingStatesCollection, userId, session),
   prependToReportsQueue: (userId, dateFrom, dateTo) => prependToReportsQueue(reportLoadingStatesCollection, userId, dateFrom, dateTo),
   createReportsLoadingStatesCollectionEntity: (userId) => createReportsLoadingStatesCollectionEntity(reportLoadingStatesCollection, userId),
-  setLastReportRequestTimestamp: (userId, session) => setLastReportRequestTimestamp(reportLoadingStatesCollection, userId, session);
+  setLastReportRequestTimestamp: (userId, session) => setLastReportRequestTimestamp(reportLoadingStatesCollection, userId, session),
 };
 
 module.exports = reportLoadingStatesCollectionServices;
