@@ -8,7 +8,7 @@ var shouldWaitBeforeNextRequest = (lastReportRequestTimestamp) => {
   }
 
   var currentTimeMs = new Date().getTime();
-  var difference = currentTimeMs - lastReportRequestTimestamp > oneMinuteMs;
+  var difference = currentTimeMs - lastReportRequestTimestamp;
   var hasMinutePassed = difference > oneMinuteMs;
 
   if (hasMinutePassed) {
