@@ -8,6 +8,7 @@ var report_loading_states_schema = new Schema({
   abandonedReports: { type: Array, required: false },
   lastReportRequestTimestamp: { type: Number, default: 0 },
   freshReportPeriodIndex: { type: Number, required: false },
+  isReportLoadingDelayed: { type: Boolean, requred: true, default: false },
 });
 
 module.exports = report_loading_states_schema;
