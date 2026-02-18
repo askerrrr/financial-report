@@ -12,6 +12,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var { getWBTokenByUserId } = dbutils.tokenCollectionServices;
   var { getListGoodsFromDb, saveListGoodsToDb } = dbutils.goodsCollectionServices;
   var { getReportTree, updateReportTree } = dbutils.reportsTreeCollectionServices;
+  var { setLastReportRequestTimestamp } = dbutils.reportLoadingStatesCollectionServices;
   var { addNewTaxYearToDb, changeTaxParamsToDb } = dbutils.taxParamsCollectionServices;
 
   var startYear = +dateFrom.split("-")[0];
@@ -57,6 +58,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   await saveReportToDb(userId, report, session);
   await updateReportTree(userId, sortedYears, session);
   await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
+  await setLastReportRequestTimestamp(userId, session);
 
   return { reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount };
 };
