@@ -1,11 +1,5 @@
 var multer = require("multer");
-var {
-  WBAPIError,
-  FormDataError,
-  DatabaseError,
-  ReportNotFoundError,
-  DatabaseConnectionError,
-} = require("../../customError");
+var { WBAPIError, FormDataError, DatabaseError, ReportNotFoundError, DatabaseConnectionError } = require("../../customError");
 
 var errorHandler = async (e, req, res, next) => {
   console.error({
@@ -36,7 +30,7 @@ var errorHandler = async (e, req, res, next) => {
     return res.status(e.status).json({ msg: e.message, invalidField: e.invalidField });
   }
   console.log(e.cause);
-  res.status(e?.status || 500).json({ msg: e.message || "Произошла ошибка..." });
+  res.status(e?.status || 500).json({ msg: "Произошла ошибка..." });
 };
 
 module.exports = errorHandler;
