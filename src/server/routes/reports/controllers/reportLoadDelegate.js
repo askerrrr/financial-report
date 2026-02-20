@@ -3,6 +3,7 @@ var sendReportPeriodsToReportLoader = require("../services/different/sendReportP
 
 var reportLoadDelegate = async (req, res, next) => {
   var { uploadAllReports } = req.body;
+  var { getReportLoadingState } = req.app.locals.reportLoadingStatesCollectionServices;
 
   if (uploadAllReports) {
     try {
@@ -21,6 +22,20 @@ var reportLoadDelegate = async (req, res, next) => {
       return res.status(status).json({ msg: "Загрузка отчётов началась. Они будут отображаться по мере их добавления" });
     } catch {
       return res.status(503).json({ msg: "Не удалось загрузить отчёты за выбранный период.\nВременно доступна загрузка отчётов по одному" });
+    }
+  }
+
+  var { lastReportRequestTimestamp } = await getReportLoadingState(req.body.userId);
+
+  var { nextRequestDelayMs } = shouldWaitBeforeNextRequest(lastReportRequestTimestamp);
+  if (nextRequestDelayMs) {
+    try {
+      req.body.needsReportLoadingDelay = true;
+      req.body.nextRequestDelayMs = nextRequestDelayMs;
+      var { status } = await sendReportPeriodsToReportLoader(req.body);
+      return res.status(status).json({ msg: "Отчет скоро будет добавлен." });
+    } catch (e) {
+      return res.status(500).json({ msg: "Произошла ошибка при добавлении отчета.\nПопробуйте повторить через минуту." });
     }
   }
 
