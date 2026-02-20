@@ -1,7 +1,7 @@
-var sendReportPeriodsToReportLoader = async ({ userId, dateFrom, dateTo }) => {
+var sendReportPeriodsToReportLoader = async (data) => {
   var res = await fetch(process.env.REPORT_LOADER_URL, {
     method: "POST",
-    body: JSON.stringify({ userId, dateFrom, dateTo }),
+    body: JSON.stringify({ ...data }),
     headers: { "content-type": "application/json", Authorization: "Bearer " + process.env.SECRET_KEY },
   });
 
