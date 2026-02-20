@@ -25,7 +25,6 @@ var updateDataIntoListGoods = async (req, res, next) => {
     }
   }
 
-  console.log(new Date(Date.now() + 3 * 1000 * 60 * 60));
   return res.sendStatus(200);
 };
 
