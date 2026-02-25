@@ -5,6 +5,7 @@ import deleteReportHandler from "./deleteReportHandler.js";
 import injectBase64IntoImgTags from "./table/services/injectBase64IntoImgTags.js";
 import downloadReportAsXLSXButtonHandler from "./downloadReportAsXLSXButtonHandler.js";
 import setSkusLastCostPricesButtonHandler from "./setSkusLastCostPricesButtonHandler.js";
+import financialAccountingStatusButtonHander from "./financialAccountingStatusButtonHander.js";
 
 var userId = document.cookie.split("=")[1];
 
@@ -29,6 +30,7 @@ var getReportData = async () => {
 
 var main = async () => {
   var { report, skuImages, skusLastCostPrice, downloadReportLink } = await getReportData();
+  var { reportId, recordTo } = report;
 
   reportInfo(report);
   await createSKUsTable(report);
@@ -38,8 +40,7 @@ var main = async () => {
   await deleteReportHandler(report.reportId);
   await downloadReportAsXLSXButtonHandler(report, downloadReportLink);
 
-  var { reportId, recordTo } = report;
-
+  financialAccountingStatusButtonHander(reportId);
   setSkusLastCostPricesButtonHandler(reportId, recordTo.year, skusLastCostPrice);
 };
 
