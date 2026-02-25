@@ -13,7 +13,7 @@ var createReportsTable = async (year, month, reportIds, reports) => {
 
     var report = reports.find((report) => report.reportId == reportId);
 
-    var { totalFinalProfit, totalProductCosts, totalTaxAmount } = report;
+    var { totalFinalProfit, totalProductCosts, totalTaxAmount, isFinancesAccounted } = report;
 
     var fullPeriodTd = await getReportPeriod(dateFrom, dateTo);
 
@@ -23,7 +23,16 @@ var createReportsTable = async (year, month, reportIds, reports) => {
     var totalTaxAmountTd = createTdElement(totalTaxAmount);
     var reportLink = await getReportLink(reportId);
 
-    tr.append(fullPeriodTd, totalFinalProfitTd, totalProductCostsTd, totalTaxAmountTd, reportLink);
+    var financesAccountedTd = createTdElement();
+
+    financesAccountedTd.textContent = "";
+    if (isFinancesAccounted) {
+      financesAccountedTd.innerHTML = "<p> &#9989;</p>";
+    } else {
+      financesAccountedTd.innerHTML = '<span style="color: red;">&#10008;</span>';
+    }
+
+    tr.append(fullPeriodTd, totalFinalProfitTd, totalProductCostsTd, totalTaxAmountTd, financesAccountedTd, reportLink);
 
     tbody.append(tr);
   }

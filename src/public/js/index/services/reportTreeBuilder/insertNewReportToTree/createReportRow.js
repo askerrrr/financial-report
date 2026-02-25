@@ -16,6 +16,11 @@ var createReportRow = async (reportData, monthName, reportTbody = null) => {
 
   var totalFinalProfitTd = createTdElement(0, null, null, "totalFinalProfit");
 
+  var financesAccountedTd = createTdElement();
+
+  financesAccountedTd.textContent = "";
+  financesAccountedTd.innerHTML = '<span style="color: red;">&#10008;</span>';
+
   var tr = document.createElement("tr");
 
   tr.append(reportPeriod, totalFinalProfitTd, totalProductCostsTd, totalTaxAmountTd, reportLink);

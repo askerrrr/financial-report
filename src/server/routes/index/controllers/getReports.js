@@ -3,6 +3,7 @@ var projectonFields = [
   "reports.totalTaxAmount",
   "reports.totalFinalProfit",
   "reports.totalProductCosts",
+  "reports.isFinancesAccounted",
 ];
 
 var getReports = async (req, res, next) => {
