@@ -7,8 +7,13 @@ var reportInfo = (report) => {
   reportsItemsCountElement.textContent = report.skus.length;
 
   var financialAccountingStatusElement = document.getElementById("financial-accounting-status");
-  financialAccountingStatusElement.textContent = report.isFinancesAccounted ? "Да" : "Нет";
-  financialAccountingStatusElement.setAttribute("status", report.isFinancesAccounted ? true : "");
+
+  if (report.isFinancesAccounted) {
+    financialAccountingStatusElement.textContent = "Да";
+    financialAccountingStatusElement.setAttribute("is-finances-accounted");
+  } else {
+    financialAccountingStatusElement.textContent = "Нет";
+  }
 };
 
 export default reportInfo;
