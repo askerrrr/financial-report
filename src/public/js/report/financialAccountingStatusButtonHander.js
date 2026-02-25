@@ -41,6 +41,10 @@ export default financialAccountingStatusButtonHander;
 async function sendNewFinancialAccountingStatus(reportId, newStatus) {
   var userId = document.cookie.split("=")[1];
   var url = "/reports/change-financial-accounting-status";
-  var res = await fetch(url, { method: "PATCH", body: JSON.stringify({ userId, reportId, newStatus }) });
+  var res = await fetch(url, {
+    method: "PATCH",
+    body: JSON.stringify({ userId, reportId, newStatus }),
+    headers: { "Content-type": "application/json" },
+  });
   return res.status === 200;
 }
