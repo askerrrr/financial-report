@@ -23,7 +23,7 @@ var createReportRow = async (reportData, monthName, reportTbody = null) => {
 
   var tr = document.createElement("tr");
 
-  tr.append(reportPeriod, totalFinalProfitTd, totalProductCostsTd, totalTaxAmountTd, reportLink);
+  tr.append(reportPeriod, totalFinalProfitTd, totalProductCostsTd, totalTaxAmountTd, financesAccountedTd, reportLink);
 
   if (!reportTbody) {
     reportTbody = document.createElement("tbody");
