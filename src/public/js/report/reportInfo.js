@@ -10,7 +10,7 @@ var reportInfo = (report) => {
 
   if (report.isFinancesAccounted) {
     financialAccountingStatusElement.textContent = "Да";
-    financialAccountingStatusElement.setAttribute("is-finances-accounted");
+    financialAccountingStatusElement.setAttribute("is-finances-accounted", "");
   } else {
     financialAccountingStatusElement.textContent = "Нет";
   }
