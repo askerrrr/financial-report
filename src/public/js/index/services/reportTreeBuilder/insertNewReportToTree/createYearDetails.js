@@ -1,12 +1,14 @@
 import createReportRow from "./createReportRow.js";
+import createReportsTable from "./createReportsTable.js";
 
 var createMonthDetails = async (reportData, monthName) => {
   var { year } = reportData;
 
-  var summary = document.createElement("summary");
-  summary.append(monthName);
+  var summaryToMonthReportsContainer = document.createElement("summary");
+  summaryToMonthReportsContainer.append(monthName);
 
-  var reportRow = await createReportRow(reportData, monthName);
+  var reportRow = await createReportRow(reportData);
+  var reportsTable = await createReportsTable(reportRow);
 
   var monthReportsContainerId = `reports_container_${year}_${monthName}`;
   var monthReportsContainer = document.getElementById(monthReportsContainerId);
@@ -16,7 +18,7 @@ var createMonthDetails = async (reportData, monthName) => {
     monthReportsContainer.id = `reports_container_${year}_${monthName}`;
   }
 
-  monthReportsContainer.append(summary, reportRow);
+  monthReportsContainer.append(summaryToMonthReportsContainer, reportsTable);
   return monthReportsContainer;
 };
 
@@ -46,8 +48,3 @@ var createYearDetails = async (reportData, monthName) => {
 };
 
 export default createYearDetails;
-// var div = document.createElement("div");
-//   div.class = "details";
-//   div.append(details);
-
-//   return div;
