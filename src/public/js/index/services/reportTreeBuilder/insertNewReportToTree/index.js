@@ -44,13 +44,23 @@ var insertNewReportToTree = async (reportData) => {
 
     monthReportsContainer.open = true;
   } else {
+    monthReportsContainer.addEventListener("click", async () => {
+      var reportRow = await createReportRowOnly(reportData);
+
+      await delayForCreatingTableBody();
+
+      var reportTbody = document.getElementById(reportTbodyId);
+
+      reportTbody.append(reportRow);
+    });
+
     monthReportsContainer.click();
     monthReportsContainer.open = true;
-
-    var reportRow = await createReportRowOnly(reportData);
-    var reportTbody = document.getElementById(reportTbodyId);
-    reportTbody.append(reportRow);
   }
 };
 
 export default insertNewReportToTree;
+
+async function delayForCreatingTableBody() {
+  return new Promise((res) => setTimeout(res, 20));
+}
