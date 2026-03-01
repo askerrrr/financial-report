@@ -1,6 +1,15 @@
+var Joi = require("joi");
 var { getReportAsXLSXBuffer } = require("../services/reportAsXLSXBuffer");
 
+var schema = Joi.object({ userId: Joi.string().required(), reportId: Joi.number().required() });
+
 var downloadReportAsXLSX = async (req, res, next) => {
+  var { error } = schema.validate(req.params);
+
+  if (error) {
+    return res.sendStatus(400);
+  }
+
   var { userId, reportId } = req.params;
   var { getReportById } = req.app.locals.reportCollectionServices;
 
