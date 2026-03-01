@@ -3,7 +3,7 @@ var { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer } = require("../servi
 
 var downloadReportsAsZip = async (req, res, next) => {
   var reports = req.reports;
-
+  console.log(reports);
   var zip = new JSZip();
 
   var folder = zip.folder("Отчеты");
