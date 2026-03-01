@@ -1,7 +1,22 @@
+var Joi = require("joi");
 var shouldWaitBeforeNextRequest = require("../services/different/shouldWaitBeforeNextRequest");
 var sendReportPeriodsToReportLoader = require("../services/different/sendReportPeriodsToReportLoader");
 
+var schema = Joi.object({
+  userId: Joi.string().required(),
+  dateFrom: Joi.string().allow("").required(),
+  dateTo: Joi.string().allow("").required(),
+  uploadAllReports: Joi.boolean().required(),
+  isPeriodWithinSameWeek: Joi.boolean().required(),
+});
+
 var reportLoadDelegate = async (req, res, next) => {
+  var { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.sendStatus(400);
+  }
+
   var { uploadAllReports } = req.body;
   var { getReportLoadingState } = req.app.locals.reportLoadingStatesCollectionServices;
 
