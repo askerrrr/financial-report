@@ -2,6 +2,7 @@ import getReportsData from "./services/getReportsData.js";
 import showNoReportsMessage from "./services/showNoReportsMessage.js";
 import createReportsTree from "./services/reportTreeBuilder/createReportTree/index.js";
 import createReportsTable from "./services/reportTreeBuilder/createReportTree/createReportsTable.js";
+import createMonthlyReportDownloadButton from "./services/reportTreeBuilder/createReportTree/createMonthlyReportDownloadButton.js";
 
 var sendMonthForDeletion = async (userId, monthsForDeletion) => {
   var res = await fetch("/reports/delete-empty-month/", {
@@ -23,14 +24,19 @@ var insertLastReportsToTree = async (tree, lastReports, lastMonthData) => {
   var summary = document.createElement("summary");
   summary.append(month);
 
-  var reportsContainer = document.createElement("details");
-  reportsContainer.id = `reports_container_${year}_${month}`;
-  reportsContainer.append(summary, table);
-  reportsContainer.open = true;
+  var monthReportsContainerId = `reports_container_${year}_${month}`;
+  var monthReportsContainer = document.createElement("details");
+  monthReportsContainer.id = monthReportsContainerId;
+
+  var lastReportIds = lastReports.map(({ reportId }) => reportId);
+  var downloadBtn = await createMonthlyReportDownloadButton(lastReportIds, year, month);
+
+  monthReportsContainer.append(summary, table, downloadBtn);
+  monthReportsContainer.open = true;
 
   var monthsContainerId = `months_container_${year}`;
   var monthsContainer = document.getElementById(monthsContainerId);
-  monthsContainer.prepend(reportsContainer);
+  monthsContainer.prepend(monthReportsContainer);
 
   var lastYearDetailsId = year;
   var lastYearDetails = document.getElementById(lastYearDetailsId);
@@ -68,9 +74,7 @@ var buildReportTree = async () => {
   var userId = document.cookie.split("=")[1];
   var lastMonthData = reportTree[0].months.shift();
 
-  await createReportsTree(reportTree).then(() =>
-    insertLastReportsToTree(reportTree, lastReports, lastMonthData)
-  );
+  await createReportsTree(reportTree).then(() => insertLastReportsToTree(reportTree, lastReports, lastMonthData));
 
   await deleteEmptyMonth(userId);
 };
