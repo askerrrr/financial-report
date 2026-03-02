@@ -3,6 +3,7 @@ var { dbClient } = require("../../../database");
 var processOfSkuCostPriceSetting = require("../services/different/processOfSkuCostPriceSetting");
 
 var setCostPriceToSku = async (req, res, next) => {
+  console.log({ data: req.body });
   var { userId, reportId, skuIndex, costPrice, skuId, year } = req.body;
   var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;

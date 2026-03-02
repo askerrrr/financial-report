@@ -12,19 +12,18 @@ var createSKUsTable = async (report) => {
   for (var [skuIndex, sku] of Object.entries(skus)) {
     var tr = document.createElement("tr");
 
-    var dataToChange = {
+    var data = {
       userId,
-      skuIndex,
-      skuName: sku.skuName,
       reportId,
       skuId: sku.id,
+      skuIndex: +skuIndex,
       year: +recordTo.year,
+      skuName: sku.skuName,
       costPrice: sku.costPrice,
-      url: "/reports/set-cost-price-to-sku",
     };
 
     var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, null);
-    var costPriceInputField = await openCostPriceModal(dataToChange);
+    var costPriceInputField = await openCostPriceModal(data);
 
     var SKUPhotoUploaderTd = createTdElement(SKUPhotoUploader, "photo-cell", skuIndex, "photo-cell");
     var skuName = createTdElement(sku.skuName);
@@ -61,7 +60,7 @@ var createSKUsTable = async (report) => {
       profit,
       costPrice,
       profitMargin,
-      finalProfit
+      finalProfit,
     );
 
     tbody.append(tr);

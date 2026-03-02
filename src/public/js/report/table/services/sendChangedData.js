@@ -1,9 +1,9 @@
-var sendChangedData = async (data) => {
-  var { url } = data;
+var url = "/reports/set-cost-price-to-sku";
 
+var sendChangedData = async (data) => {
   var res = await fetch(url, {
     method: "PATCH",
-    body: JSON.stringify({ ...data }),
+    body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" },
   });
 
