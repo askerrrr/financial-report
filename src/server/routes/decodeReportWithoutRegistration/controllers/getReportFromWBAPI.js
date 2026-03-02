@@ -4,13 +4,19 @@ var wbapi = require("../../reports/services/WBAPI");
 var parseReports = require("../../reports/services/reportParsing");
 
 var schema = Joi.object({
-  dataFrom: Joi.string().required(),
+  dateFrom: Joi.string().required(),
   dateTo: Joi.string().required(),
   token: Joi.string().required(),
   taxRate: Joi.number().required(),
 });
 
 var getReportFromWBAPI = async (req, res, next) => {
+  var { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.sendStatus(400);
+  }
+
   var { dateFrom, dateTo, token, taxRate } = req.body;
 
   var reports = await wbapi.getReports("decode-without-auth", dateFrom, dateTo, token);
