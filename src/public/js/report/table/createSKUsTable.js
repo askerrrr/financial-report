@@ -2,6 +2,7 @@ import createTdElement from "./services/createTdElement.js";
 import openCostPriceModal from "./services/modal/openCostPriceModal.js";
 import createSKUPhotoUploader from "./services/skuPhotoUploader/index.js";
 
+var skuIndex = 0;
 var table = document.getElementById("skus-table");
 
 var createSKUsTable = async (report) => {
@@ -9,15 +10,15 @@ var createSKUsTable = async (report) => {
 
   var { reportId, recordTo, skus, userId } = report;
 
-  for (var [skuIndex, sku] of Object.entries(skus)) {
+  for (var sku of skus) {
     var tr = document.createElement("tr");
 
     var data = {
       userId,
       reportId,
+      skuIndex,
       skuId: sku.id,
-      skuIndex: +skuIndex,
-      year: +recordTo.year,
+      year: recordTo.year,
       skuName: sku.skuName,
       costPrice: sku.costPrice,
     };
@@ -64,6 +65,7 @@ var createSKUsTable = async (report) => {
     );
 
     tbody.append(tr);
+    skuIndex++;
   }
 
   table.append(tbody);
