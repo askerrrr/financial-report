@@ -1,6 +1,24 @@
+var Joi = require("joi");
 var wbapi = require("../../reports/services/WBAPI");
 
+var checkedWeekDaysArraySchema = Joi.array().items(Joi.number().required()).required();
+var skuObjectSchema = Joi.object({ nmID: Joi.number().required(), price: Joi.number().required(), discount: Joi.number().required() });
+
+var schema = Joi.object({
+  sku: skuObjectSchema,
+  userId: Joi.string().required(),
+  setNewPriceNow: Joi.boolean().required(),
+  expectedPriceExists: Joi.boolean().required(),
+  checkedWeekDays: checkedWeekDaysArraySchema,
+});
+
 var newPriceApplyController = async (req, res, next) => {
+  var { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.sendStatus(400);
+  }
+
   var { updateSingleSku } = req.app.locals.goodsCollectionServices;
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
   var { userId, sku, setNewPriceNow, expectedPriceExists } = req.body;
