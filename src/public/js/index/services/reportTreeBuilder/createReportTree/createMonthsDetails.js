@@ -18,16 +18,20 @@ var getRequiredReports = async (reportIds) => {
 };
 
 var createDetailsToReportsContainer = (year, month, reportIds) => {
-  var summary = document.createElement("summary");
-  summary.append(month);
+  var summaryToMonthReportsContainer = document.createElement("summary");
+  summaryToMonthReportsContainer.append(month);
 
-  var details = document.createElement("details");
-  details.id = `reports_container_${year}_${month}`;
-  details.append(summary);
+  var monthReportsContainerId = `reports_container_${year}_${month}`;
+  var monthReportsContainer = document.createElement("details");
+  monthReportsContainer.id = monthReportsContainerId;
 
-  details.addEventListener("click", async () => {
-    if (!details.open) {
-      if (!document.getElementById(`tbody_year_${year}_month_${month}`)) {
+  monthReportsContainer.append(summaryToMonthReportsContainer);
+
+  monthReportsContainer.addEventListener("click", async () => {
+    if (!monthReportsContainer.open) {
+      var reportTbodyId = `tbody_year_${year}_month_${month}`;
+
+      if (!document.getElementById(reportTbodyId)) {
         var { reports } = await getRequiredReports(reportIds);
 
         var [reportsTable, downloadBtn] = await Promise.all([
@@ -35,13 +39,13 @@ var createDetailsToReportsContainer = (year, month, reportIds) => {
           createMonthlyReportDownloadButton(reportIds, year, month),
         ]);
 
-        details.append(reportsTable, downloadBtn);
-        details.open = true;
+        monthReportsContainer.append(reportsTable, downloadBtn);
+        monthReportsContainer.open = true;
       }
     }
   });
 
-  return details;
+  return monthReportsContainer;
 };
 
 var createMonthsDetails = async (months, year) => {
