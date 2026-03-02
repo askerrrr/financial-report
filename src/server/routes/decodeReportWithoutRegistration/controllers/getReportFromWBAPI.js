@@ -1,6 +1,14 @@
+var Joi = require("joi");
 var { randomBytes } = require("node:crypto");
 var wbapi = require("../../reports/services/WBAPI");
 var parseReports = require("../../reports/services/reportParsing");
+
+var schema = Joi.object({
+  dataFrom: Joi.string().required(),
+  dateTo: Joi.string().required(),
+  token: Joi.string().required(),
+  taxRate: Joi.number().required(),
+});
 
 var getReportFromWBAPI = async (req, res, next) => {
   var { dateFrom, dateTo, token, taxRate } = req.body;
@@ -17,7 +25,7 @@ var getReportFromWBAPI = async (req, res, next) => {
   report.reportId = reports.weeklyFinancialReport[0].realizationreport_id;
 
   report.skus.map((sku) => {
-    (sku.costPrice = 0), (sku.finalProfit = 0), (sku.profitMargin = 0);
+    ((sku.costPrice = 0), (sku.finalProfit = 0), (sku.profitMargin = 0));
   });
 
   var id = randomBytes(15).toString("hex");
