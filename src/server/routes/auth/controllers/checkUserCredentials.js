@@ -1,8 +1,16 @@
+var Joi = require("joi");
 var JWT = require("jsonwebtoken");
-
 var checkCredentials = require("../services/checkCredentials");
 
+var schema = Joi.object({ login: Joi.string().required(), passwd: Joi.string().required() });
+
 var checkUserCredentials = async (req, res, next) => {
+  var { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.sendStatus(400);
+  }
+
   var { getUserByLogin } = req.app.locals.userCollectionServices;
 
   var existUser = await getUserByLogin(req.body.login);
