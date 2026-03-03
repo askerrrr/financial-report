@@ -30,6 +30,25 @@
         <button type="button" id="get-report">Получить отчет</button>
       </form>
     </dialog>
+    <table id="totals-table">
+      <thead>
+        <th>WB реализовал</th>
+        <th>Продано шт.</th>
+        <th>Возвратов</th>
+        <th>К перечислению продавцу</th>
+        <th>Себестоимость проданного товара</th>
+        <th>Доставка</th>
+        <th>Приёмка</th>
+        <th>Штрафы</th>
+        <th>Удержания/Выплаты</th>
+        <th>Хранение</th>
+        <th>Реклама</th>
+        <th>Налоги</th>
+        <th>Маржинальность %</th>
+        <th>Итого</th>
+      </thead>
+      <tbody id="totals-tbody"></tbody>
+    </table>
     <table id="skus-table">
       <thead>
         <tr>
@@ -50,25 +69,7 @@
       </thead>
       <tbody id="skus-tbody"></tbody>
     </table>
-    <table id="totals-table">
-      <thead>
-        <th>WB реализовал</th>
-        <th>Продано шт.</th>
-        <th>Возвратов</th>
-        <th>К перечислению продавцу</th>
-        <th>Себестоимость проданного товара</th>
-        <th>Доставка</th>
-        <th>Приёмка</th>
-        <th>Штрафы</th>
-        <th>Удержания/Выплаты</th>
-        <th>Хранение</th>
-        <th>Реклама</th>
-        <th>Налоги</th>
-        <th>Маржинальность %</th>
-        <th>Итого</th>
-      </thead>
-      <tbody id="totals-tbody"></tbody>
-    </table>
+
     <button id="download-report-as-xlsx-button">Скачать отчет как эксель</button>
     <script src="/js/decodeReportWithoutRegistration/index.js" type="module"></script>
     <script src="/js/decodeReportWithoutRegistration/decodeReportWithoutRegistrationButtonHandler.js" type="module"></script>
