@@ -1,4 +1,4 @@
-/src/server/routes/reports/services/WBAPI/reports/reports.js
+src/server/routes/reports/services/WBAPI/reports/reports.js
 /node_modules
 /logs
 .httpd.conf
