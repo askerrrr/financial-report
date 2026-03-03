@@ -38,6 +38,12 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   var { dateFrom, dateTo, token, taxRate } = req.body;
 
+  var existReportData = req.app.locals?.reports?.find((item) => item.report.dateFrom === dateFrom);
+
+  if (existReportData) {
+    return res.json(existReportData);
+  }
+
   var reports = await wbapi.getReports("decode-without-auth", dateFrom, dateTo, token);
 
   var { report } = await parseReports(reports, { taxRate, ...taxParamsStub });
