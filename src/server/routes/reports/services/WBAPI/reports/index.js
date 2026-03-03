@@ -6,25 +6,26 @@ var checkPaidStorageReportCreationStatus = require("./checkPaidStorageReportCrea
 var getPaidStorageReportByTaskIdFromWBAPI = require("./getPaidStorageReportByTaskIdFromWBAPI");
 
 var getReports = async (userId, dateFrom, dateTo, token) => {
-  var { taskId } = await createPaidStorageReportTask(dateFrom, dateTo, token, userId);
+  // var { taskId } = await createPaidStorageReportTask(dateFrom, dateTo, token, userId);
 
-  var statusIsDone = await checkPaidStorageReportCreationStatus(taskId, token, userId);
+  // var statusIsDone = await checkPaidStorageReportCreationStatus(taskId, token, userId);
 
-  if (!statusIsDone) {
-    throw new WBAPIError(userId, 304, "can not create paid storage report task");
-  }
+  // if (!statusIsDone) {
+  //   throw new WBAPIError(userId, 304, "can not create paid storage report task");
+  // }
 
-  var [weeklyFinancialReport, paidStorageReport, advertisingReport] = await Promise.all([
-    getWeeklyFinancialReportFromWBAPI(dateFrom, dateTo, token, userId),
-    getPaidStorageReportByTaskIdFromWBAPI(taskId, token, userId),
-    getAdvertisingCostsForPeriod(dateFrom, dateTo, token, userId),
-  ]);
+  // var [weeklyFinancialReport, paidStorageReport, advertisingReport] = await Promise.all([
+  //   getWeeklyFinancialReportFromWBAPI(dateFrom, dateTo, token, userId),
+  //   getPaidStorageReportByTaskIdFromWBAPI(taskId, token, userId),
+  //   getAdvertisingCostsForPeriod(dateFrom, dateTo, token, userId),
+  // ]);
 
-  if ([weeklyFinancialReport, paidStorageReport, advertisingReport].every((i) => !i.length)) {
-    throw new WBAPIError(userId, 404, "Нет отчетов за выбранный период");
-  }
+  // if ([weeklyFinancialReport, paidStorageReport, advertisingReport].every((i) => !i.length)) {
+  //   throw new WBAPIError(userId, 404, "Нет отчетов за выбранный период");
+  // }
 
-  return { weeklyFinancialReport, paidStorageReport, advertisingReport };
+  // return { weeklyFinancialReport, paidStorageReport, advertisingReport };
+  return require("./reports");
 };
 
 module.exports = getReports;
