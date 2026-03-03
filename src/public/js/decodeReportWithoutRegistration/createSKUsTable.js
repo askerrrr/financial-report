@@ -47,10 +47,10 @@ var createSKUsTable = async (id, report) => {
       finalProfit,
     );
 
+    skuIndex++;
     tbody.append(tr);
   }
 
-  skuIndex++;
   table.append(tbody);
 
   return table;
