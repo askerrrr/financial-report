@@ -57,10 +57,9 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   req.app.locals.reports = [{ id, taxRate, report }];
 
-  var setCostPriceLink = "/decode-report-without-registration/report/set-cost-price";
   var downloadReportLink = "/decode-report-without-registration/xlsx/" + id + "/" + report.reportId;
 
-  return res.json({ id, report, setCostPriceLink, downloadReportLink });
+  return res.json({ id, report, downloadReportLink });
 };
 
 module.exports = getReportFromWBAPI;

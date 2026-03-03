@@ -3,7 +3,7 @@ import openCostPriceModal from "../report/table/services/modal/openCostPriceModa
 
 var table = document.getElementById("skus-table");
 
-var createSKUsTable = async (id, report, url) => {
+var createSKUsTable = async (id, report) => {
   var tbody = document.getElementById("skus-tbody");
 
   var { reportId, skus } = report;
@@ -21,7 +21,6 @@ var createSKUsTable = async (id, report, url) => {
       reportId,
       fieldName: "costPrice",
       costPrice: sku.costPrice,
-      url,
     };
 
     var costPriceInputField = await openCostPriceModal(dataToChange);
@@ -49,7 +48,7 @@ var createSKUsTable = async (id, report, url) => {
       profit,
       averageProfit,
       profitMargin,
-      finalProfit
+      finalProfit,
     );
 
     tbody.append(tr);
