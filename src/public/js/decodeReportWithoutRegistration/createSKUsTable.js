@@ -17,14 +17,9 @@ var createSKUsTable = async (id, report) => {
     var qty = createTdElement(sku.qty);
     var returnAmount = createTdElement(sku.returnAmount);
 
-    var dataToChange = {
-      id,
-      skuIndex,
-      reportId,
-      costPrice: sku.costPrice,
-    };
+    var data = { id, skuIndex, reportId, costPrice: sku.costPrice };
 
-    var costPriceInputField = await openCostPriceModal(dataToChange, isGuestAccess);
+    var costPriceInputField = await openCostPriceModal(data, isGuestAccess);
     var costPrice = createTdElement(costPriceInputField);
     var retailPrice = createTdElement(sku.averageRetailPrice);
     var deliveryCost = createTdElement(sku.deliveryCost);
