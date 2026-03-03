@@ -1,6 +1,8 @@
 import createTdElement from "../report/table/services/createTdElement.js";
 import openCostPriceModal from "../report/table/services/modal/openCostPriceModal.js";
 
+var skuIndex = 0;
+var isGuestAccess = true;
 var table = document.getElementById("skus-table");
 
 var createSKUsTable = async (id, report) => {
@@ -8,7 +10,7 @@ var createSKUsTable = async (id, report) => {
 
   var { reportId, skus } = report;
 
-  for (var [skuIndex, sku] of Object.entries(skus)) {
+  for (var sku of skus) {
     var tr = document.createElement("tr");
 
     var skuName = createTdElement(sku.skuName);
@@ -19,11 +21,10 @@ var createSKUsTable = async (id, report) => {
       id,
       skuIndex,
       reportId,
-      fieldName: "costPrice",
       costPrice: sku.costPrice,
     };
 
-    var costPriceInputField = await openCostPriceModal(dataToChange);
+    var costPriceInputField = await openCostPriceModal(dataToChange, isGuestAccess);
     var costPrice = createTdElement(costPriceInputField);
     var retailPrice = createTdElement(sku.averageRetailPrice);
     var deliveryCost = createTdElement(sku.deliveryCost);
@@ -54,6 +55,7 @@ var createSKUsTable = async (id, report) => {
     tbody.append(tr);
   }
 
+  skuIndex++;
   table.append(tbody);
 
   return table;
