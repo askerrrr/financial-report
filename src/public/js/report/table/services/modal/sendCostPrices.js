@@ -1,11 +1,5 @@
-var sendCostPrices = async (userId, reportId, taxYear, costPrices, isGuestAccess = false) => {
-  var url;
-
-  if (isGuestAccess) {
-    url = "/reports/set-cost-price-to-skus";
-  } else {
-    url = "/decode-report-without-registration/report/set-cost-price";
-  }
+var sendCostPrices = async (userId, reportId, taxYear, costPrices) => {
+  var url = "/reports/set-cost-price-to-skus";
 
   var res = await fetch(url, {
     method: "PATCH",
