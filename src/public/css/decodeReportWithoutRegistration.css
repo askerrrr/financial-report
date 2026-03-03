@@ -152,11 +152,11 @@ table {
 }
 
 #skus-table {
-  margin-top: 500px;
+  margin-top: 60;
 }
 
 #totals-table {
-  margin-top: 60px;
+  margin-top: 500px;
 }
 
 #download-report-as-xlsx-button {
