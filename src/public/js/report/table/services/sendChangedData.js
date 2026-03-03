@@ -1,6 +1,12 @@
-var url = "/reports/set-cost-price-to-sku";
+var sendChangedData = async (data, isGuestAccess = false) => {
+  var url;
 
-var sendChangedData = async (data) => {
+  if (isGuestAccess) {
+    url = "/decode-report-without-registration/report/set-cost-price";
+  } else {
+    url = "/reports/set-cost-price-to-sku";
+  }
+
   var res = await fetch(url, {
     method: "PATCH",
     body: JSON.stringify(data),
