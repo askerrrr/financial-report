@@ -10,6 +10,25 @@ var schema = Joi.object({
   taxRate: Joi.number().required(),
 });
 
+var taxParamsStub = {
+  paidTaxAmount: 0,
+  mandatoryInsuranceFee: 0,
+  insuranceFeePercentage: 10,
+  paidInsuranceFee: 0,
+  retailAmount: 0,
+  finalProfit: 0,
+  isInsuranceFeePaid: false,
+  additionalInsuranceFee: 0,
+  requiresAdditionalInsuranceFee: false,
+  excessIncomeForAdditionalInsuranceFee: 300000,
+  maxInsuranceFee: 300000,
+  mandatoryInsuranceFeeRate: 10,
+  hasExcessIncomeForInsurance: false,
+  mandatoryInsuranceFeeIsPaid: false,
+  additionalInsuranceFeeIsPaid: false,
+  excessInsuranceRate: 1,
+};
+
 var getReportFromWBAPI = async (req, res, next) => {
   var { error } = schema.validate(req.body);
 
@@ -21,7 +40,7 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   var reports = await wbapi.getReports("decode-without-auth", dateFrom, dateTo, token);
 
-  var { report } = await parseReports(taxRate, reports);
+  var { report } = await parseReports(reports, { taxRate, ...taxParamsStub });
 
   report.dateTo = dateTo;
   report.dateFrom = dateFrom;
