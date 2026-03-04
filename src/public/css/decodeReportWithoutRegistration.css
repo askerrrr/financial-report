@@ -142,7 +142,7 @@ body {
 }
 
 #skus-table {
-  margin-top: 60;
+  margin-top: 60px;
 }
 
 #totals-table {
@@ -165,7 +165,7 @@ body {
 
 table {
   width: 100%;
-  max-width: 1700px;
+  max-width: 1800px;
   margin: 150px auto 60px;
   border-collapse: separate;
   border-spacing: 0;
