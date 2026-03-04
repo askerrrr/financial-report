@@ -1,9 +1,8 @@
 import getReportLink from "./table/getReportLink.js";
 import getReportPeriod from "./table/getReportPeriod.js";
-import createReportsTableHead from "./table/createReportsTableHead.js";
 import createTdElement from "../../../../report/table/services/createTdElement.js";
 
-var createReportRow = async (reportData, monthName, reportTbody = null) => {
+var createReportRow = async (reportData) => {
   var { dateFrom, dateTo, reportId, totalTaxAmount } = reportData;
 
   var reportPeriod = await getReportPeriod(dateFrom, dateTo);
@@ -16,29 +15,16 @@ var createReportRow = async (reportData, monthName, reportTbody = null) => {
 
   var totalFinalProfitTd = createTdElement(0, null, null, "totalFinalProfit");
 
+  var financesAccountedTd = createTdElement();
+
+  financesAccountedTd.textContent = "";
+  financesAccountedTd.innerHTML = '<span style="color: red;">&#10008;</span>';
+
   var tr = document.createElement("tr");
 
-  tr.append(reportPeriod, totalFinalProfitTd, totalProductCostsTd, totalTaxAmountTd, reportLink);
+  tr.append(reportPeriod, totalFinalProfitTd, totalProductCostsTd, totalTaxAmountTd, financesAccountedTd, reportLink);
 
-  if (!reportTbody) {
-    reportTbody = document.createElement("tbody");
-
-    var { year } = reportData;
-
-    reportTbody.id = `tbody_year_${year}_month_${monthName}`;
-    reportTbody.append(tr);
-
-    var tableHead = await createReportsTableHead();
-
-    var table = document.createElement("table");
-    table.append(tableHead, reportTbody);
-
-    return table;
-  }
-
-  reportTbody.append(tr);
-
-  return reportTbody;
+  return tr;
 };
 
 export default createReportRow;

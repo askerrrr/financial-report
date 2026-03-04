@@ -11,6 +11,7 @@ var updateReportPeriod = require("./services/updateReportPeriod");
 var createReportsEntity = require("./services/createReportsEntity");
 var deleteAllReportsByUserId = require("./services/deleteAllReportsByUserId");
 var getAllDataFromReportCollection = require("./services/getAllDataFromReportCollection");
+var updateReportFinancialAccountingStatus = require("./services/updateReportFinancialAccountingStatus");
 
 var reportCollectionServices = {
   getAllDataFromReportCollection: () => getAllDataFromReportCollection(reportCollection),
@@ -25,6 +26,8 @@ var reportCollectionServices = {
   saveUpdatedReport: (userId, reportId, report, session) => saveUpdatedReport(reportCollection, userId, reportId, report, session),
 
   updateReportPeriod: (userId, reportId, period) => updateReportPeriod(reportCollection, userId, reportId, period),
+  updateReportFinancialAccountingStatus: (userId, reportId, newStatus) =>
+    updateReportFinancialAccountingStatus(reportCollection, userId, reportId, newStatus),
 
   checkReportExistsToDb: (userId, dateFrom, dateTo) => checkReportExistsToDb(reportCollection, userId, dateFrom, dateTo),
 

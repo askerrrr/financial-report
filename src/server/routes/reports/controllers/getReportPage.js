@@ -1,5 +1,5 @@
 var { join } = require("node:path");
 
-var getReportPage = async (req, res, next) => res.sendFile(join(__dirname, "../../../../public/html/report/report.html"));
+var getReportPage = async (req, res, next) => res.sendFile(join(__dirname, "../../../../public/html/report/index.html"));
 
 module.exports = getReportPage;

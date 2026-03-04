@@ -1,8 +1,23 @@
+var Joi = require("joi");
 var calc = require("../services/calcServices");
 var { dbClient } = require("../../../database");
 var processOfSkuCostPriceSetting = require("../services/different/processOfSkuCostPriceSetting");
 
+var costPricesItemSchema = Joi.object({ id: Joi.number().required(), skuName: Joi.string().required(), lastCostPrice: Joi.number().required() });
+var schema = Joi.object({
+  userId: Joi.string().required(),
+  reportId: Joi.number().required(),
+  taxYear: Joi.number().required(),
+  costPrices: Joi.array().items(costPricesItemSchema).required(),
+});
+
 var setCostPriceToSkus = async (req, res, next) => {
+  var { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.sendStatus(400);
+  }
+
   var { userId, reportId, taxYear, costPrices } = req.body;
   var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;

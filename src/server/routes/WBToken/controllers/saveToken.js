@@ -1,7 +1,16 @@
+var Joi = require("joi");
 var { dbClient } = require("../../../database");
 var listGoodsLoader = require("../../goods/services/listGoodsLoader");
 
+var schema = Joi.object({ token: Joi.string().required() });
+
 var saveToken = async (req, res, next) => {
+  var { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.sendStatus(400);
+  }
+
   var { token } = req.body;
   var userId = req.app.locals.userId;
   var { saveListGoodsToDb } = req.app.locals.goodsCollectionServices;

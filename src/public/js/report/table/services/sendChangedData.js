@@ -1,9 +1,15 @@
-var sendChangedData = async (data) => {
-  var { url } = data;
+var sendChangedData = async (data, isGuestAccess = false) => {
+  var url;
+
+  if (isGuestAccess) {
+    url = "/decode-report-without-registration/report/set-cost-price";
+  } else {
+    url = "/reports/set-cost-price-to-sku";
+  }
 
   var res = await fetch(url, {
     method: "PATCH",
-    body: JSON.stringify({ ...data }),
+    body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" },
   });
 

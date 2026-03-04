@@ -1,5 +1,6 @@
-import createReportRow from "./createReportRow.js";
 import createYearDetails from "./createYearDetails.js";
+import createReportsTable from "./createReportsTable.js";
+import createReportRow from "./createReportRow.js";
 import removeNoReportsMessage from "./removeNoReportsMessage.js";
 
 var insertNewReportToTree = async (reportData) => {
@@ -21,30 +22,44 @@ var insertNewReportToTree = async (reportData) => {
   }
 
   var reportTbodyId = `tbody_year_${year}_month_${month}`;
+  var monthReportsContainerId = `reports_container_${year}_${month}`;
 
-  var reportTbody = document.getElementById(reportTbodyId);
+  var monthReportsContainer = document.getElementById(monthReportsContainerId);
 
-  if (!reportTbody) {
-    var summary = document.createElement("summary");
-    summary.append(month);
+  if (!monthReportsContainer) {
+    var summaryToMonthReportsContainer = document.createElement("summary");
+    summaryToMonthReportsContainer.append(month);
 
-    var reportTable = await createReportRow(reportData, month);
+    monthReportsContainer = document.createElement("details");
+    monthReportsContainer.id = monthReportsContainerId;
 
-    var details = document.createElement("details");
-    details.id = `reports_container_${year}_${month}`;
-    details.append(summary, reportTable);
+    var monthsContainerId = `months_container_${year}`;
+    var monthsContainer = document.getElementById(monthsContainerId);
+    monthsContainer.append(monthReportsContainer);
 
-    var div = document.createElement("div");
-    div.class = "details";
-    div.append(details);
+    var reportRow = await createReportRow(reportData);
+    var reportsTable = await createReportsTable(reportRow, month);
+    monthReportsContainer.append(summaryToMonthReportsContainer, reportsTable);
 
-    var year = document.getElementById(year);
-    year.append(div);
+    monthReportsContainer.open = true;
+  } else {
+    monthReportsContainer.addEventListener("click", async () => {
+      var reportRow = await createReportRow(reportData);
 
-    return;
+      await delayForCreatingTableBody();
+
+      var reportTbody = document.getElementById(reportTbodyId);
+
+      reportTbody.append(reportRow);
+    });
+
+    monthReportsContainer.click();
+    monthReportsContainer.open = true;
   }
-
-  return await createReportRow(reportData, month, reportTbody);
 };
 
 export default insertNewReportToTree;
+
+async function delayForCreatingTableBody() {
+  return new Promise((res) => setTimeout(res, 20));
+}

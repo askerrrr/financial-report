@@ -1,10 +1,19 @@
-var reportInfo = ({ dateFrom, dateTo, skus }) => {
+var reportInfo = (report) => {
   var reportPeriodElement = document.getElementById("report-period");
-  var reportPediod = `${dateFrom} ----  ${dateTo}`;
+  var reportPediod = `${report.dateFrom} ----  ${report.dateTo}`;
   reportPeriodElement.textContent = reportPediod;
 
   var reportsItemsCountElement = document.getElementById("report-items-count");
-  reportsItemsCountElement.textContent = skus.length;
+  reportsItemsCountElement.textContent = report.skus.length;
+
+  var financialAccountingStatusElement = document.getElementById("financial-accounting-status");
+
+  if (report.isFinancesAccounted) {
+    financialAccountingStatusElement.textContent = "Да";
+    financialAccountingStatusElement.setAttribute("is-finances-accounted", "");
+  } else {
+    financialAccountingStatusElement.textContent = "Нет";
+  }
 };
 
 export default reportInfo;

@@ -9,17 +9,13 @@ var createReportsTableHead = async () => {
 
   var totalTaxAmount = await createThElement("Налоги");
 
+  var financesAccounted = await createThElement("Финансы учтены");
+
   var reportLink = await createThElement("");
 
   var tr = document.createElement("tr");
 
-  tr.append(
-    reportPeriod,
-    totalFinalProfit,
-    totalProductCosts,
-    totalTaxAmount,
-    reportLink
-  );
+  tr.append(reportPeriod, totalFinalProfit, totalProductCosts, totalTaxAmount, financesAccounted, reportLink);
 
   var thead = document.createElement("thead");
   thead.append(tr);

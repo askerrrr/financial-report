@@ -7,6 +7,7 @@ import createButtonsContainer from "../utils/createButtonsContainer.js";
 
 var openWBTokenLoader = async () => {
   var input = createInputField("token");
+  input.type = "password";
 
   var modal = createModal("modal-overlay");
 

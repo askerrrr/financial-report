@@ -1,10 +1,48 @@
+var Joi = require("joi");
 var { dbClient } = require("../../../database");
 var getTaxParamKeyName = require("../services/getTaxParamKeyName");
 var defaultTaxParams = require("../../../database/defaultTaxParams");
 var recalculateReportsWithNewTaxRate = require("../services/recalculateReportsWithNewTaxRate");
 var recalculateReportsWithNewMandatoryInsuranceRate = require("../services/recalculateReportsWithNewMandatoryInsuranceRate");
 
+var dataObjectSchema = Joi.object({ taxRate: Joi.number(), mandatoryInsuranceFeeRate: Joi.number(), mandatoryInsuranceFee: Joi.number() });
+
+var oldTaxParamsObjectSchema = Joi.object({
+  year: Joi.number(),
+  taxRate: Joi.number(),
+  paidTaxAmount: Joi.number(),
+  mandatoryInsuranceFee: Joi.number(),
+  insuranceFeePercentage: Joi.number(),
+  paidInsuranceFee: Joi.number(),
+  retailAmount: Joi.number(),
+  finalProfit: Joi.number(),
+  isInsuranceFeePaid: Joi.boolean(),
+  additionalInsuranceFee: Joi.number(),
+  requiresAdditionalInsuranceFee: Joi.boolean(),
+  excessIncomeForAdditionalInsuranceFee: Joi.number(),
+  maxInsuranceFee: Joi.number(),
+  mandatoryInsuranceFeeRate: Joi.number(),
+  hasExcessIncomeForInsurance: Joi.boolean(),
+  mandatoryInsuranceFeeIsPaid: Joi.boolean(),
+  additionalInsuranceFeeIsPaid: Joi.boolean(),
+  excessInsuranceRate: Joi.number(),
+  schemaVersion: Joi.number(),
+});
+
+var schema = Joi.object({
+  year: Joi.number().required(),
+  recalculate: Joi.boolean().required(),
+  data: dataObjectSchema,
+  oldTaxParams: oldTaxParamsObjectSchema,
+});
+
 var changeTaxParams = async (req, res, next) => {
+  var { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.sendStatus(400);
+  }
+
   var userId = req.app.locals.userId;
   var { year, oldTaxParams, recalculate, data } = req.body;
   var { changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
@@ -44,7 +82,7 @@ var changeTaxParams = async (req, res, next) => {
               listGoods,
               resetPaidTaxAmount,
               newTaxRate,
-              year
+              year,
             );
 
             await saveUpdatedReports(userId, updatedReports, session);
@@ -66,7 +104,7 @@ var changeTaxParams = async (req, res, next) => {
               listGoods,
               mandatoryInsuranceFee,
               newMandatoryInsuranceFeeRate,
-              listGoodsWithUpdatedSkuMetrics
+              listGoodsWithUpdatedSkuMetrics,
             );
 
             await saveUpdatedReports(userId, updatedReports, session);

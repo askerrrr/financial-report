@@ -6,7 +6,7 @@ import sendChangedData from "../sendChangedData.js";
 import updateSKUsTableFields from "../updateSKUsTableFields.js";
 import updateTotalsTableFields from "../updateTotalsTableFields.js";
 
-var costPriceModal = async (skuData, tdElement) => {
+var costPriceModal = async (skuData, tdElement, isGuestAccess) => {
   var modal = createDiv("modal-overlay");
   var modalContent = createDiv("modal-content");
 
@@ -25,7 +25,7 @@ var costPriceModal = async (skuData, tdElement) => {
 
     document.body.removeChild(modal);
 
-    var { total, sku } = await sendChangedData(skuData);
+    var { total, sku } = await sendChangedData(skuData, isGuestAccess);
 
     await updateSKUsTableFields(sku);
 

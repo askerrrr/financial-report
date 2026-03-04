@@ -164,6 +164,7 @@ var reportSchema = new Schema(
     nextYearTaxAmount: nonRequiredNumberOptions,
     currentYearInsuranceFee: nonRequiredNumberOptions,
     nextYearInsuranceFee: nonRequiredNumberOptions,
+    isFinancesAccounted: { type: Boolean, default: false },
     skus: [{ type: SKUSchema, required: true }],
   },
   { _id: false },

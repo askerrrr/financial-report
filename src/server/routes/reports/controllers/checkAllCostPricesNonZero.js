@@ -1,4 +1,15 @@
+var Joi = require("joi");
+
+var reportIdsItemSchema = Joi.object({ reportId: Joi.number().required(), dateFrom: Joi.string().required(), dateTo: Joi.string().required() });
+var schema = Joi.object({ userId: Joi.string().required(), reportIds: Joi.array().items(reportIdsItemSchema).required() });
+
 var checkAllCostPricesNonZero = async (req, res, next) => {
+  var { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.sendStatus(400);
+  }
+
   var { userId, reportIds } = req.body;
   var { getReportById } = req.app.locals.reportCollectionServices;
 
@@ -10,9 +21,7 @@ var checkAllCostPricesNonZero = async (req, res, next) => {
     reports.push(report);
   }
 
-  var allCostPricesNonZero = reports.every((report) =>
-    report.skus.every((sku) => sku.costPrice > 0)
-  );
+  var allCostPricesNonZero = reports.every((report) => report.skus.every((sku) => sku.costPrice > 0));
 
   if (!allCostPricesNonZero) {
     return res.sendStatus(400);

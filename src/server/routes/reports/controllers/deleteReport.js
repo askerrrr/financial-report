@@ -1,7 +1,16 @@
+var Joi = require("joi");
 var { dbClient } = require("../../../database/");
 var recalculateSkuMetricsAfterReportDeletion = require("../services/different/recalculateSkuMetricsAfterReportDeletion");
 
+var schema = Joi.object({ reportId: Joi.number().required() });
+
 var deleteReport = async (req, res, next) => {
+  var { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.sendStatus(400);
+  }
+
   var { reportId } = req.body;
   var { userId } = req.app.locals;
   var { deleteReportFromDb } = req.app.locals.reportCollectionServices;

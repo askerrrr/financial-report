@@ -20,10 +20,12 @@ router.post(
   require("./controllers/reportLoadDelegate"),
   require("./controllers/checkReportExists"),
   require("./controllers/checkReportsLoadingProgress"),
-  require("./controllers/saveReports")
+  require("./controllers/saveReports"),
 );
 
 router.patch("/set-cost-price-to-sku", require("./controllers/setCostPriceToSku"));
+
+router.patch("/change-financial-accounting-status", require("./controllers/changeFinancialAccountingStatus"));
 
 router.patch("/set-cost-price-to-skus", require("./controllers/setCostPriceToSkus"));
 

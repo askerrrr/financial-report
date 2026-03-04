@@ -10,6 +10,6 @@ router.get("/xlsx/:id/:reportId", require("./controllers/downloadReportAsXLSX"))
 
 router.post("/", require("./controllers/getReportFromWBAPI"));
 
-router.put("/report/set-cost-price", require("./controllers/setCostPrice"));
+router.patch("/report/set-cost-price", require("./controllers/setCostPrice"));
 
 module.exports = router;

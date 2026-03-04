@@ -1,7 +1,7 @@
 import costPriceModal from "./costPriceModal.js";
 import createButton from "./utils/createButton.js";
 
-var openCostPriceModal = async (skuData) => {
+var openCostPriceModal = async (skuData, isGuestAccess) => {
   var container = document.createElement("div");
   container.className = "editable-field";
 
@@ -11,7 +11,7 @@ var openCostPriceModal = async (skuData) => {
   costPriceTdElement.id = `costprice-${skuData.skuIndex}`;
 
   var event = "click";
-  var cb = async () => await costPriceModal(skuData, costPriceTdElement);
+  var cb = async () => await costPriceModal(skuData, costPriceTdElement, isGuestAccess);
   var buttonTextContent = "Изменить";
   var openCostPriceModalButton = createButton("editable-field-button", buttonTextContent, { event, cb });
 
