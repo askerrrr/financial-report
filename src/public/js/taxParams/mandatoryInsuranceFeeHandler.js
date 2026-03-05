@@ -40,7 +40,9 @@ var mandatoryInsuranceFeeHandler = async () => {
 
       var mandatoryInsuranceFeeTdElement = document.getElementById("mandatoryInsuranceFee-" + selectedYear);
 
-      mandatoryInsuranceFeeTdElement.textContent = newMandatoryInsuranceFee;
+      var { textContent } = mandatoryInsuranceFeeTdElement;
+      var paidInsuranceFee = textContent.split("/")[0];
+      mandatoryInsuranceFeeTdElement.textContent = `${paidInsuranceFee} / ${newMandatoryInsuranceFee}`;
 
       return alert("Сумма обязательных страховых взносов установлена");
     }
