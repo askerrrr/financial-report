@@ -17,7 +17,7 @@ var mandatoryInsuranceRateHandler = async () => {
 
     var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
     var currentPercent = yearTaxParams.mandatoryInsuranceFeeRate;
-    var recalculate = radioButton.checked;
+    var reportsNeedRecalculation = radioButton.checked;
     var newPercent = +input.value;
 
     if (typeof newPercent === "number" && isNaN(newPercent)) {
@@ -31,7 +31,7 @@ var mandatoryInsuranceRateHandler = async () => {
     if (newPercent <= 0 && newPercent >= 100) {
       return alert("Недопустимое значение");
     }
-    var success = await sendNewTaxParam(selectedYear, recalculate, yearTaxParams, {
+    var success = await sendNewTaxParam(selectedYear, reportsNeedRecalculation, yearTaxParams, {
       mandatoryInsuranceFeeRate: newPercent,
     });
 

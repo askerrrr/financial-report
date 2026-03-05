@@ -31,7 +31,7 @@ var oldTaxParamsObjectSchema = Joi.object({
 
 var schema = Joi.object({
   year: Joi.number().required(),
-  recalculate: Joi.boolean().required(),
+  reportsNeedRecalculation: Joi.boolean().required(),
   data: dataObjectSchema,
   oldTaxParams: oldTaxParamsObjectSchema,
 });
@@ -44,14 +44,14 @@ var changeTaxParams = async (req, res, next) => {
   }
 
   var userId = req.app.locals.userId;
-  var { year, oldTaxParams, recalculate, data } = req.body;
+  var { year, oldTaxParams, reportsNeedRecalculation, data } = req.body;
   var { changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
   var { getListGoodsFromDb, saveListGoodsToDb } = req.app.locals.goodsCollectionServices;
   var { getReportsByUserId, saveUpdatedReports } = req.app.locals.reportCollectionServices;
 
   var { taxParamKeyName } = getTaxParamKeyName(data);
 
-  if (!recalculate) {
+  if (!reportsNeedRecalculation) {
     try {
       await changeTaxParamsToDb(userId, year, null, data);
       res.sendStatus(200);

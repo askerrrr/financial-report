@@ -17,7 +17,7 @@ var taxRateHandler = async () => {
 
     var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
     var currentTaxRate = yearTaxParams.taxRate;
-    var recalculate = radioButton.checked;
+    var reportsNeedRecalculation = radioButton.checked;
     var newTaxRate = +input.value;
 
     if (typeof newTaxRate === "number" && isNaN(newTaxRate)) {
@@ -32,7 +32,7 @@ var taxRateHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var success = await sendNewTaxParam(selectedYear, recalculate, yearTaxParams, { taxRate: newTaxRate });
+    var success = await sendNewTaxParam(selectedYear, reportsNeedRecalculation, yearTaxParams, { taxRate: newTaxRate });
 
     input.value = "";
 
