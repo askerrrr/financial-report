@@ -3,9 +3,9 @@ import sendNewTaxParam from "./sendNewTaxParam.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
 
 var mandatoryInsuranceFeeHandler = async () => {
-  var input = document.getElementById("mandatory-insurance-premiums");
+  var input = document.getElementById("mandatory-insurance-fee");
 
-  var button = document.getElementById("mandatory-insurance-premiums-button");
+  var button = document.getElementById("mandatory-insurance-fee-button");
 
   button.onclick = async (e) => {
     e.preventDefault();
