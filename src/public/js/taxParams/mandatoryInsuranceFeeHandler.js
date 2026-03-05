@@ -29,7 +29,7 @@ var mandatoryInsuranceFeeHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var success = await sendNewTaxParam(selectedYear, null, {
+    var success = await sendNewTaxParam(selectedYear, false, {
       mandatoryInsuranceFee: newMandatoryInsuranceFee,
     });
 
@@ -38,9 +38,7 @@ var mandatoryInsuranceFeeHandler = async () => {
     if (success) {
       input.placeholder = "сейчас сумма равна " + newMandatoryInsuranceFee + "р.";
 
-      var mandatoryInsuranceFeeTdElement = document.getElementById(
-        "mandatoryInsuranceFee-" + selectedYear
-      );
+      var mandatoryInsuranceFeeTdElement = document.getElementById("mandatoryInsuranceFee-" + selectedYear);
 
       mandatoryInsuranceFeeTdElement.textContent = newMandatoryInsuranceFee;
 
