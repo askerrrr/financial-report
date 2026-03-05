@@ -1,4 +1,4 @@
-var sendNewTaxParam = async (year, recalculate, oldTaxParams, newTaxParam) => {
+var sendNewTaxParam = async (year, recalculate = false, oldTaxParams, newTaxParam) => {
   var url = "/tax_params/change";
 
   var res = await fetch(url, {
