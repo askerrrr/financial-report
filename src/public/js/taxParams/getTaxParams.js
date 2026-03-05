@@ -3,7 +3,7 @@ var getTaxParams = async () => {
 
   var { taxParams } = await res.json();
 
-  return taxParams;
+  return { taxParams };
 };
 
 export default getTaxParams;

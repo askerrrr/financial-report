@@ -13,7 +13,7 @@ var taxRateHandler = async () => {
     e.preventDefault();
 
     var selectedYear = await getSelectedTaxYear();
-    var taxParams = await getTaxParams();
+    var { taxParams } = await getTaxParams();
 
     var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
     var currentTaxRate = yearTaxParams.taxRate;

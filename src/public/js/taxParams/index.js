@@ -7,7 +7,7 @@ import mandatoryInsuranceFeeHandler from "./mandatoryInsuranceFeeHandler.js";
 import mandatoryInsuranceRateHandler from "./mandatoryInsuranceRateHandler.js";
 
 var main = async () => {
-  var taxParams = await getTaxParams();
+  var { taxParams } = await getTaxParams();
 
   if (taxParams.length == 0) {
     return;
