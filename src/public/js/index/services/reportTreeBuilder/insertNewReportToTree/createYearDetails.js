@@ -8,7 +8,7 @@ var createMonthDetails = async (reportData, monthName) => {
   summaryToMonthReportsContainer.append(monthName);
 
   var reportRow = await createReportRow(reportData);
-  var reportsTable = await createReportsTable(reportRow, monthName);
+  var reportsTable = await createReportsTable(reportData, reportRow, monthName);
 
   var monthReportsContainerId = `reports_container_${year}_${monthName}`;
   var monthReportsContainer = document.getElementById(monthReportsContainerId);
