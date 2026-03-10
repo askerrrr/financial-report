@@ -6,17 +6,49 @@ var createTaxTable = async (taxParams) => {
   for (var taxYear of taxParams) {
     var tr = document.createElement("tr");
 
-    var { year, taxRate, paidInsuranceFee, mandatoryInsuranceFee, mandatoryInsuranceFeeRate } = taxYear;
+    var {
+      year,
+      taxRate,
+      finalProfit,
+      retailAmount,
+      paidTaxAmount,
+      paidInsuranceFee,
+      mandatoryInsuranceFee,
+      additionalInsuranceFee,
+      mandatoryInsuranceFeeRate,
+    } = taxYear;
 
     var yearTd = createTdElement(year, "year-" + year);
     var taxRateTd = createTdElement(taxRate, "taxRate-" + year);
-    var mandatoryInsuranceFeeTd = createTdElement(mandatoryInsuranceFee, "mandatoryInsuranceFee-" + year);
+
+    var insuranceFeeInfoElemId = "mandatoryInsuranceFee-" + year;
+    var insuranceFeeInfoContent = `${paidInsuranceFee} / ${mandatoryInsuranceFee}`;
+    var insuranceFeeInfoTdElem = createTdElement(insuranceFeeInfoContent, insuranceFeeInfoElemId);
 
     var mandatoryInsuranceFeeRateTd = createTdElement(mandatoryInsuranceFeeRate, "mandatoryInsuranceFeeRate-" + year);
 
-    var paidInsuranceFeeTd = createTdElement(paidInsuranceFee, "paidInsuranceFee-" + year);
+    var retailAmountTd = createTdElement(retailAmount);
 
-    tr.append(yearTd, taxRateTd, mandatoryInsuranceFeeTd, paidInsuranceFeeTd, mandatoryInsuranceFeeRateTd);
+    if (paidTaxAmount <= 0) {
+      paidTaxAmount = 0;
+    }
+
+    var paidTaxAmountTd = createTdElement(paidTaxAmount);
+
+    var additionalInsuranceFeeTd = createTdElement(additionalInsuranceFee);
+
+    var finalProfitTd = createTdElement(finalProfit);
+
+    tr.append(
+      yearTd,
+      taxRateTd,
+      insuranceFeeInfoTdElem,
+      mandatoryInsuranceFeeRateTd,
+      retailAmountTd,
+      paidTaxAmountTd,
+      additionalInsuranceFeeTd,
+      finalProfitTd,
+    );
     tbody.append(tr);
   }
 

@@ -1,20 +1,20 @@
-import getTaxParams from "./getTaxParams.js";
 import sendNewTaxParam from "./sendNewTaxParam.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
+import updateTaxParamsIntoLocalStorage from "./updateTaxParamsIntoLocalStorage.js";
+import getSelectedYearTaxParamsFromLocalStorage from "./getSelectedYearTaxParamsFromLocalStorage.js";
 
 var mandatoryInsuranceFeeHandler = async () => {
-  var input = document.getElementById("mandatory-insurance-premiums");
+  var input = document.getElementById("mandatory-insurance-fee");
 
-  var button = document.getElementById("mandatory-insurance-premiums-button");
+  var button = document.getElementById("mandatory-insurance-fee-button");
 
   button.onclick = async (e) => {
     e.preventDefault();
 
     var selectedYear = await getSelectedTaxYear();
-    var taxParams = await getTaxParams();
+    var { selectedYearTaxParams } = getSelectedYearTaxParamsFromLocalStorage(selectedYear);
 
-    var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
-    var currentMandatoryInsuranceFee = yearTaxParams.mandatoryInsuranceFee;
+    var currentMandatoryInsuranceFee = selectedYearTaxParams.mandatoryInsuranceFee;
     var newMandatoryInsuranceFee = +input.value;
 
     if (typeof newMandatoryInsuranceFee === "number" && isNaN(newMandatoryInsuranceFee)) {
@@ -29,7 +29,7 @@ var mandatoryInsuranceFeeHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var success = await sendNewTaxParam(selectedYear, null, {
+    var success = await sendNewTaxParam(selectedYear, false, selectedYearTaxParams, {
       mandatoryInsuranceFee: newMandatoryInsuranceFee,
     });
 
@@ -38,12 +38,13 @@ var mandatoryInsuranceFeeHandler = async () => {
     if (success) {
       input.placeholder = "сейчас сумма равна " + newMandatoryInsuranceFee + "р.";
 
-      var mandatoryInsuranceFeeTdElement = document.getElementById(
-        "mandatoryInsuranceFee-" + selectedYear
-      );
+      var mandatoryInsuranceFeeTdElement = document.getElementById("mandatoryInsuranceFee-" + selectedYear);
 
-      mandatoryInsuranceFeeTdElement.textContent = newMandatoryInsuranceFee;
+      var { textContent } = mandatoryInsuranceFeeTdElement;
+      var paidInsuranceFee = textContent.split("/")[0];
+      mandatoryInsuranceFeeTdElement.textContent = `${paidInsuranceFee} / ${newMandatoryInsuranceFee}`;
 
+      updateTaxParamsIntoLocalStorage(selectedYear, "mandatoryInsuranceFee", newMandatoryInsuranceFee);
       return alert("Сумма обязательных страховых взносов установлена");
     }
 

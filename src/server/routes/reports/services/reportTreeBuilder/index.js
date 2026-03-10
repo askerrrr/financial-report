@@ -30,7 +30,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
 
           return { years, year: endYear, month: endMonthName };
         } else {
-          var reportIds = utils.insertReportIdAndFullPeriodToReportIds(dateTo, fullPeriod, reportId, "overlap - no");
+          var reportIds = utils.insertReportIdAndFullPeriodToReportIds(dateTo, fullPeriod, reportId, "overlap - yes");
 
           var months = utils.createNextYearMonths(reportIds);
 
@@ -66,7 +66,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
       var nextYearIsExist = utils.checkYearExists(years, endYear);
 
       if (!nextYearIsExist) {
-        var reportIds = utils.insertReportIdAndFullPeriodToReportIds(dateTo, fullPeriod, reportId, "overlap - no");
+        var reportIds = utils.insertReportIdAndFullPeriodToReportIds(dateTo, fullPeriod, reportId, "overlap - yes");
         
         var months = utils.createNextYearMonths(reportIds);
 
@@ -77,7 +77,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
         var yearIndex = utils.getYearIndex(years, endYear);
         var { months } = years[yearIndex];
 
-        years[yearIndex] = await utils.updateYearStructure(months, endYear, endMonth, dateTo, reportId, fullPeriod, "overlap - no");
+        years[yearIndex] = await utils.updateYearStructure(months, endYear, endMonth, dateTo, reportId, fullPeriod, "overlap - yes");
 
         return { years, year: endYear, month: endMonthName };
       }

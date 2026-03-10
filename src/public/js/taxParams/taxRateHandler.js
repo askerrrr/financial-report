@@ -1,6 +1,7 @@
-import getTaxParams from "./getTaxParams.js";
 import sendNewTaxParam from "./sendNewTaxParam.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
+import updateTaxParamsIntoLocalStorage from "./updateTaxParamsIntoLocalStorage.js";
+import getSelectedYearTaxParamsFromLocalStorage from "./getSelectedYearTaxParamsFromLocalStorage.js";
 
 var taxRateHandler = async () => {
   var input = document.getElementById("tax-rate");
@@ -13,11 +14,11 @@ var taxRateHandler = async () => {
     e.preventDefault();
 
     var selectedYear = await getSelectedTaxYear();
-    var taxParams = await getTaxParams();
+    var { selectedYearTaxParams } = getSelectedYearTaxParamsFromLocalStorage(selectedYear);
 
-    var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
-    var currentTaxRate = yearTaxParams.taxRate;
-    var recalculate = radioButton.checked;
+    var currentTaxRate = selectedYearTaxParams.taxRate;
+
+    var reportsNeedRecalculation = radioButton.checked;
     var newTaxRate = +input.value;
 
     if (typeof newTaxRate === "number" && isNaN(newTaxRate)) {
@@ -32,7 +33,7 @@ var taxRateHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var success = await sendNewTaxParam(selectedYear, recalculate, yearTaxParams, { taxRate: newTaxRate });
+    var success = await sendNewTaxParam(selectedYear, reportsNeedRecalculation, selectedYearTaxParams, { taxRate: newTaxRate });
 
     input.value = "";
 
@@ -41,6 +42,8 @@ var taxRateHandler = async () => {
 
       var taxRateTdElement = document.getElementById("taxRate-" + selectedYear);
       taxRateTdElement.textContent = newTaxRate;
+
+      updateTaxParamsIntoLocalStorage(selectedYear, "taxRate", newTaxRate);
 
       return alert("Изменение успешно применено");
     }

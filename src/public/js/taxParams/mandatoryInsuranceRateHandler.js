@@ -1,6 +1,7 @@
-import getTaxParams from "./getTaxParams.js";
 import sendNewTaxParam from "./sendNewTaxParam.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
+import updateTaxParamsIntoLocalStorage from "./updateTaxParamsIntoLocalStorage.js";
+import getSelectedYearTaxParamsFromLocalStorage from "./getSelectedYearTaxParamsFromLocalStorage.js";
 
 var mandatoryInsuranceRateHandler = async () => {
   var input = document.getElementById("mandatory-insurance-fee-rate");
@@ -13,11 +14,10 @@ var mandatoryInsuranceRateHandler = async () => {
     e.preventDefault();
 
     var selectedYear = await getSelectedTaxYear();
-    var taxParams = await getTaxParams();
+    var { selectedYearTaxParams } = getSelectedYearTaxParamsFromLocalStorage(selectedYear);
 
-    var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
-    var currentPercent = yearTaxParams.mandatoryInsuranceFeeRate;
-    var recalculate = radioButton.checked;
+    var currentPercent = selectedYearTaxParams.mandatoryInsuranceFeeRate;
+    var reportsNeedRecalculation = radioButton.checked;
     var newPercent = +input.value;
 
     if (typeof newPercent === "number" && isNaN(newPercent)) {
@@ -31,7 +31,7 @@ var mandatoryInsuranceRateHandler = async () => {
     if (newPercent <= 0 && newPercent >= 100) {
       return alert("Недопустимое значение");
     }
-    var success = await sendNewTaxParam(selectedYear, recalculate, yearTaxParams, {
+    var success = await sendNewTaxParam(selectedYear, reportsNeedRecalculation, selectedYearTaxParams, {
       mandatoryInsuranceFeeRate: newPercent,
     });
 
@@ -41,6 +41,8 @@ var mandatoryInsuranceRateHandler = async () => {
       input.placeholder = "сейчас процент равен " + newPercent;
       var mandatoryInsuranceFeeRateTdElement = document.getElementById("mandatoryInsuranceFeeRate-" + selectedYear);
       mandatoryInsuranceFeeRateTdElement.textContent = newPercent;
+
+      updateTaxParamsIntoLocalStorage(selectedYear, "mandatoryInsuranceFeeRate", newPercent);
 
       return alert("Процент успешно установлен");
     }
