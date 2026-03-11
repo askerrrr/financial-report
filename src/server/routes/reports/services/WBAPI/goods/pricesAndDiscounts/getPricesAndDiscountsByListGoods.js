@@ -1,32 +1,42 @@
 var { WBAPIError } = require("../../../../../../customError");
 
 var getPricesAndDiscountsByListGoods = async (userId, token, nmList) => {
-  try {
-    var url = "https://discounts-prices-api.wildberries.ru/api/v2/list/goods/filter";
-    var options = {
-      method: "POST",
-      body: JSON.stringify({ nmList }),
-      headers: { Authorization: "Bearer " + token },
-    };
+  var url = "https://discounts-prices-api.wildberries.ru/api/v2/list/goods/filter";
+  var options = {
+    method: "POST",
+    body: JSON.stringify({ nmList }),
+    headers: { Authorization: "Bearer " + token },
+  };
 
-    var res = await fetch(url, options);
+  var res = await fetch(url, options);
+  var { data, errorText } = await res.json();
 
-    var json = await res.json();
-
-    if (json.error) {
-      throw new WBAPIError(userId, res.status, json.errorText);
-    }
-
-    var { listGoods } = json.data;
-
+  if (res.status === 200) {
+    var { listGoods } = data;
     return { rawListGoods: listGoods };
-  } catch (e) {
-    if (e instanceof WBAPIError) {
-      throw e;
-    }
-
-    throw new WBAPIError(userId, 500, e);
   }
+
+  switch (res.status) {
+    case 400:
+      errMsg = "Неправильный запрос\nДетали:" + errorText;
+      break;
+    case 401:
+      errMsg = "Не удалось авторизоваться для получения списка товаров по артикулам с помощью сохраненного токена\nДетали:" + errorText;
+      break;
+    case 402:
+      errMsg = "Требуется платеж\nДетали:" + errorText;
+      break;
+    case 403:
+      errMsg = "Доступ запрещен\nДетали:" + errorText;
+      break;
+    case 429:
+      errMsg = "Подождите минуту перед получением списка товаров по артикулам\nДетали:" + errorText;
+      break;
+    default:
+      errMsg = "Возникла ошибка при получении списка товаров по артикулам, попробуйте позже\nДетали:" + errorText;
+  }
+
+  throw new WBAPIError(userId, 400, errMsg);
 };
 
 module.exports = getPricesAndDiscountsByListGoods;
