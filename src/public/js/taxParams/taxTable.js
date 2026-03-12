@@ -3,7 +3,9 @@ import createTdElement from "../report/table/services/createTdElement.js";
 var createTaxTable = async (taxParams) => {
   var tbody = document.getElementById("tax-tbody");
 
-  for (var taxYear of taxParams) {
+  var sortedByYearTaxParams = taxParams.sort((a, b) => a.year - b.year);
+
+  for (var taxYear of sortedByYearTaxParams) {
     var tr = document.createElement("tr");
 
     var {
