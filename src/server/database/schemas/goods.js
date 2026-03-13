@@ -14,11 +14,12 @@ var skuMetrictSchema = new Schema(
     deliveryCost: { type: Number, required: true, default: 0 },
     acceptance: { type: Number, required: true, default: 0 },
     insuranceFee: { type: Number, required: true, default: 0 },
+    otherExpenses: { type: Number, required: true, default: 0 },
     sellerPayoutAmount: { type: Number, required: true, default: 0 },
     deductionOrPayment: { type: Number, required: true, default: 0 },
     additionalInsuranceFee: { type: Number, required: true, default: 0 },
   },
-  { _id: false }
+  { _id: false },
 );
 
 var skuSchema = new Schema(
@@ -38,7 +39,7 @@ var skuSchema = new Schema(
     deleted: { type: Boolean, default: false },
     metrics: [{ type: skuMetrictSchema, required: false }],
   },
-  { _id: false }
+  { _id: false },
 );
 
 var goodsSchema = new Schema({
