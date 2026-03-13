@@ -1,6 +1,7 @@
 import createTdElement from "./services/createTdElement.js";
 import openCostPriceModal from "./services/modal/openCostPriceModal.js";
 import createSKUPhotoUploader from "./services/skuPhotoUploader/index.js";
+import openOtherExpensesModal from "./services/modal/openOtherExpensesModal.js";
 
 var skuIndex = 0;
 var table = document.getElementById("skus-table");
@@ -21,16 +22,19 @@ var createSKUsTable = async (report) => {
       year: recordTo.year,
       skuName: sku.skuName,
       costPrice: sku.costPrice,
+      otherExpenses: sku.otherExpenses,
     };
 
     var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, null);
     var costPriceInputField = await openCostPriceModal(data);
+    var otherExpensesInputField = await openOtherExpensesModal(data);
 
     var SKUPhotoUploaderTd = createTdElement(SKUPhotoUploader, "photo-cell", skuIndex, "photo-cell");
     var skuName = createTdElement(sku.skuName);
     var qty = createTdElement(sku.qty);
     var returnAmount = createTdElement(sku.returnAmount);
     var costPrice = createTdElement(costPriceInputField);
+    var otherExpenses = createTdElement(otherExpensesInputField);
     var deliveryCost = createTdElement(sku.deliveryCost);
     var deductionOrPayment = createTdElement(sku.deductionOrPayment);
     var fines = createTdElement(sku.fines);
@@ -60,6 +64,7 @@ var createSKUsTable = async (report) => {
       acceptance,
       profit,
       costPrice,
+      otherExpenses,
       profitMargin,
       finalProfit,
     );

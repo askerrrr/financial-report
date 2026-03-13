@@ -27,6 +27,8 @@ router.patch("/set-cost-price-to-sku", require("./controllers/setCostPriceToSku"
 
 router.patch("/change-financial-accounting-status", require("./controllers/changeFinancialAccountingStatus"));
 
+router.patch("/set-other-expenses-to-sku", require("./controllers/setOtherExpensesToSku"));
+
 router.patch("/set-cost-price-to-skus", require("./controllers/setCostPriceToSkus"));
 
 router.put("/sku-photo-upload/:skuName", upload.single("sku-photo"), require("./controllers/skuPhotoUpload"));
