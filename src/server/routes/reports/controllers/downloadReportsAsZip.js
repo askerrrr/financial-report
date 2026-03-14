@@ -11,7 +11,7 @@ var downloadReportsAsZip = async (req, res, next) => {
   for (var report of reports) {
     var buffer = await getReportAsXLSXBuffer(report);
 
-    var fileName = `Расшифровка отчета от ${report.dateFrom} по ${report.dateTo}.xlsx`;
+    var fileName = `Детали отчета от ${report.dateFrom} по ${report.dateTo}.xlsx`;
 
     folder.file(fileName, buffer);
   }
