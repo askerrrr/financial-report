@@ -7,6 +7,7 @@ var totalRetailAmount = 0,
   totalFines = 0,
   totalDeductionOrPayment = 0,
   totalAdvertisingCosts = 0,
+  totalOtherExpenses = 0,
   totalProductsCosts = 0,
   totalTaxAmount = 0,
   totalProfitMargin = 0,
@@ -23,6 +24,7 @@ var getMonthlySummary = async (reports) => {
     totalStorageCost += report.totalStorageCost;
     totalPaidAcceptance += report.totalPaidAcceptance;
     totalFines += report.totalFines;
+    totalOtherExpenses += report.totalOtherExpenses;
     totalDeductionOrPayment += report.totalDeductionOrPayment;
     totalAdvertisingCosts += report.totalAdvertisingCosts;
     totalProductsCosts += report.totalProductCosts;
@@ -43,6 +45,7 @@ var getMonthlySummary = async (reports) => {
     totalStorageCost,
     totalPaidAcceptance,
     totalFines,
+    totalOtherExpenses,
     totalDeductionOrPayment,
     totalAdvertisingCosts,
     totalProductsCosts,
