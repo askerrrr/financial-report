@@ -4,6 +4,9 @@ var truncateNum = require("../reportParsing/truncateNum");
 var recalculateFinalSkuMetrics = (year, skuFromListGoods, sku, previousFinalSkuData, postfix = "") => {
   var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === year);
 
+  var recalculatedOtherExpenses = skuMetrics.otherExpenses - previousFinalSkuData["otherExpenses" + postfix] + sku["otherExpenses" + postfix];
+  skuMetrics.otherExpenses = truncateNum(recalculatedOtherExpenses);
+
   var recalculatedNetProfit = skuMetrics.netProfit - previousFinalSkuData["finalProfit" + postfix] + sku["finalProfit" + postfix];
   skuMetrics.netProfit = truncateNum(recalculatedNetProfit);
 

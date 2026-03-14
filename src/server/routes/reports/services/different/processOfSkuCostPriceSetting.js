@@ -1,17 +1,20 @@
 var calc = require("../calcServices");
 var recalculateFinalSkuMetrics = require("./recalculateFinalSkuMetrics");
 
-var processOfSkuCostPriceSetting = async (sku, skuFromListGoods, taxParams, isCrossYearReport) => {
-  var previousFinalSkuData = {};
-
+var processOfSkuCostPriceSetting = async (sku, skuFromListGoods, taxParams, isCrossYearReport, previousFinalSkuData = null) => {
   if (isCrossYearReport) {
     var currentYearPropPostfix = "InCurrentYear";
     var nextYearPropPostfix = "InNextYear";
 
-    previousFinalSkuData["finalProfit" + currentYearPropPostfix] = sku["finalProfit" + currentYearPropPostfix] ?? 0;
-    previousFinalSkuData["insuranceFee" + currentYearPropPostfix] = sku["insuranceFee" + currentYearPropPostfix] ?? 0;
-    previousFinalSkuData["finalProfit" + nextYearPropPostfix] = sku["finalProfit" + nextYearPropPostfix] ?? 0;
-    previousFinalSkuData["insuranceFee" + nextYearPropPostfix] = sku["insuranceFee" + nextYearPropPostfix] ?? 0;
+    if (!previousFinalSkuData) {
+      var previousFinalSkuData = {};
+      previousFinalSkuData["finalProfit" + currentYearPropPostfix] = sku["finalProfit" + currentYearPropPostfix] ?? 0;
+      previousFinalSkuData["insuranceFee" + currentYearPropPostfix] = sku["insuranceFee" + currentYearPropPostfix] ?? 0;
+      previousFinalSkuData["otherExpenses" + currentYearPropPostfix] = sku["otherExpenses" + currentYearPropPostfix];
+      previousFinalSkuData["finalProfit" + nextYearPropPostfix] = sku["finalProfit" + nextYearPropPostfix] ?? 0;
+      previousFinalSkuData["insuranceFee" + nextYearPropPostfix] = sku["insuranceFee" + nextYearPropPostfix] ?? 0;
+      previousFinalSkuData["otherExpenses" + nextYearPropPostfix] = sku["otherExpenses" + nextYearPropPostfix];
+    }
 
     var { startYearTaxParams, endYearTaxParams } = taxParams;
 
@@ -56,8 +59,13 @@ var processOfSkuCostPriceSetting = async (sku, skuFromListGoods, taxParams, isCr
 
     return { updatedSkuMetrics: skuFromListGoods.metrics, taxParams: { startYearTaxParams, endYearTaxParams }, updatedSku };
   } else {
-    previousFinalSkuData.finalProfit = sku.finalProfit ?? 0;
-    previousFinalSkuData.insuranceFee = sku.insuranceFee ?? 0;
+    if (!previousFinalSkuData) {
+      var previousFinalSkuData = {};
+
+      previousFinalSkuData.finalProfit = sku.finalProfit ?? 0;
+      previousFinalSkuData.insuranceFee = sku.insuranceFee ?? 0;
+      previousFinalSkuData.otherExpenses = sku.otherExpenses;
+    }
 
     var { year } = taxParams;
     var result = calc.sku.restParams(sku, taxParams);
