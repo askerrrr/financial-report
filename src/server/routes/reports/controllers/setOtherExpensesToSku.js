@@ -92,9 +92,7 @@ var setOtherExpensesToSku = async (req, res, next) => {
         skuMetrics.otherExpenses = skuMetrics.otherExpenses - prevSkuOtherExpenses + otherExpenses;
         await updateSkuInListGoods(userId, skuId, { metrics: skuMetrics });
 
-        var previousTotalOtherExpenses = totalParams.totalOtherExpenses;
-        totalParams.totalOtherExpenses = totalParams.totalOtherExpenses - previousTotalOtherExpenses + otherExpenses;
-
+        totalParams.totalOtherExpenses = totalParams.totalOtherExpenses - prevSkuOtherExpenses + otherExpenses;
         updatedReport = { ...totalParams, skus };
       }
 
@@ -102,7 +100,7 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
       if (skus[skuIndex].isCostPriceSet) {
         var { profitMargin, finalProfit } = skus[skuIndex];
-        var { totalFinalProfit, totalProfitMargin, totalInsuranceFee } = updatedReport;
+        var { totalFinalProfit, totalProfitMargin, totalInsuranceFee, totalOtherExpenses } = updatedReport;
 
         return res.status(200).json({
           sku: {
@@ -112,7 +110,7 @@ var setOtherExpensesToSku = async (req, res, next) => {
               finalProfit,
             },
           },
-          total: { totalFinalProfit, totalProfitMargin, totalInsuranceFee },
+          total: { totalFinalProfit, totalProfitMargin, totalInsuranceFee, totalOtherExpenses },
         });
       } else {
         return res.status(200).json({
@@ -123,7 +121,7 @@ var setOtherExpensesToSku = async (req, res, next) => {
               finalProfit: 0,
             },
           },
-          total: { totalFinalProfit: 0, totalProfitMargin: 0, totalInsuranceFee: 0 },
+          total: { totalFinalProfit: 0, totalProfitMargin: 0, totalInsuranceFee: 0, totalOtherExpenses: updatedReport.totalOtherExpenses },
         });
       }
     });
