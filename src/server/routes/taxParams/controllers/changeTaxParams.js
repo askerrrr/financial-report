@@ -42,7 +42,7 @@ var changeTaxParams = async (req, res, next) => {
   if (error) {
     return res.sendStatus(400);
   }
-
+  console.log(req.body);
   var userId = req.app.locals.userId;
   var { year, oldTaxParams, reportsNeedRecalculation, data } = req.body;
   var { changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;

@@ -31,12 +31,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
         if (sku.isCostPriceSet) {
           var prevSkuFinalProfit = sku["finalProfit" + postfix];
 
-          sku["finalProfit" + postfix] = calc.finalProfit(
-            sku["preTaxProfit" + postfix],
-            sku["insuranceFee" + postfix],
-            sku["tax" + postfix],
-            sku["additionalInsuranceFee" + postfix],
-          );
+          sku["finalProfit" + postfix] = calc.finalProfit(sku, postfix);
 
           sku.finalProfit = sku.finalProfitInCurrentYear + sku.finalProfitInNextYear;
           finalProfit += sku["finalProfit" + postfix];
@@ -56,7 +51,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
 
         if (sku.isCostPriceSet) {
           var prevSkuFinalProfit = sku.finalProfit;
-          sku.finalProfit = calc.finalProfit(sku.preTaxProfit, sku.insuranceFee, sku.tax, sku.additionalInsuranceFee);
+          sku.finalProfit = calc.finalProfit(sku, postfix);
           finalProfit += sku.finalProfit;
 
           var recalculatedNetProfitToSkuMetrics = skuMetrics.netProfit - prevSkuFinalProfit + sku.finalProfit;
