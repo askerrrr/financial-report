@@ -1,4 +1,5 @@
 var getMonthlySummary = async (reports) => {
+  var reportIds = "";
   var totalRetailAmount = 0,
     totalSellerPayoutAmount = 0,
     totalSold = 0,
@@ -16,6 +17,7 @@ var getMonthlySummary = async (reports) => {
     totalReturnAmount = 0;
 
   for (var report of reports) {
+    reportIds += report.reportId + "; ";
     totalRetailAmount += report.totalRetailAmount;
     totalSellerPayoutAmount += report.totalSellerPayoutAmount;
     totalSold += report.totalSold;
@@ -34,7 +36,7 @@ var getMonthlySummary = async (reports) => {
   }
 
   return {
-    reportId: null,
+    reportId: reportIds,
     dateFrom: reports.at(-1).dateFrom,
     dateTo: reports[0].dateTo,
     totalRetailAmount,
