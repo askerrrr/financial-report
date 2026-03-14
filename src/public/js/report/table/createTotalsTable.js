@@ -7,6 +7,7 @@ var createTotalsTable = async (report) => {
   var totalRetailAmountTd = createTdElement(report.totalRetailAmount);
   var totalSellerPayoutAmountTd = createTdElement(report.totalSellerPayoutAmount);
   var totalProductCostsTd = createTdElement(report.totalProductCosts);
+  var totalOtherExpensesTd = createTdElement(report.totalOtherExpenses, "totalOtherExpenses");
   var totalDeductionOrPaymentTd = createTdElement(report.totalDeductionOrPayment);
   var totalStorageCostTd = createTdElement(report.totalStorageCost);
   var totalDeliveryCostTd = createTdElement(report.totalDeliveryCost);
@@ -35,6 +36,7 @@ var createTotalsTable = async (report) => {
     totalReturnAmountTd,
     totalSellerPayoutAmountTd,
     totalProductCostsTd,
+    totalOtherExpensesTd,
     totalDeliveryCostTd,
     totalPaidAcceptanceTd,
     totalFinesTd,
@@ -45,7 +47,7 @@ var createTotalsTable = async (report) => {
     totalInsuranceFeeTd,
     totalAdditionalInsuranceFeeTd,
     totalProfitMarginTd,
-    totalFinalProfitTd
+    totalFinalProfitTd,
   );
 
   tbody.append(tr);
