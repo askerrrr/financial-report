@@ -53,10 +53,11 @@ var getReportFromWBAPI = async (req, res, next) => {
   report.totalFinalProfit = 0;
   report.totalProductCosts = 0;
   report.totalProfitMargin = 0;
+  report.totalOtherExpenses = 0;
   report.reportId = reports.weeklyFinancialReport[0].realizationreport_id;
 
   report.skus.map((sku) => {
-    ((sku.costPrice = 0), (sku.finalProfit = 0), (sku.profitMargin = 0));
+    ((sku.costPrice = 0), (sku.otherExpenses = 0), (sku.finalProfit = 0), (sku.profitMargin = 0));
   });
 
   var id = randomBytes(15).toString("hex");
