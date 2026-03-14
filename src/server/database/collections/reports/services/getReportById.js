@@ -5,7 +5,7 @@ var getReportById = async (collection, userId, reportId, session) => {
   try {
     var data = await collection.findOne({ userId, "reports.reportId": reportId }, { "reports.$": 1 }, { ...sessionOpt });
 
-    if (!data.reports.length) {
+    if (!data?.reports.length) {
       throw new ReportNotFoundError(userId, reportId);
     }
 

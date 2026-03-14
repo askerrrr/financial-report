@@ -1,11 +1,9 @@
 var Joi = require("joi");
 
-var reportIdsItemSchema = Joi.object({ reportId: Joi.number().required(), dateFrom: Joi.string().required(), dateTo: Joi.string().required() });
-var schema = Joi.object({ userId: Joi.string().required(), reportIds: Joi.array().items(reportIdsItemSchema).required() });
+var schema = Joi.object({ userId: Joi.string().required(), reportIds: Joi.array().items(Joi.number()).required() });
 
 var checkAllCostPricesNonZero = async (req, res, next) => {
   var { error } = schema.validate(req.body);
-
   if (error) {
     return res.sendStatus(400);
   }
@@ -15,7 +13,7 @@ var checkAllCostPricesNonZero = async (req, res, next) => {
 
   var reports = [];
 
-  for (var { reportId } of reportIds) {
+  for (var reportId of reportIds) {
     var { report } = await getReportById(userId, reportId);
 
     reports.push(report);
