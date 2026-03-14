@@ -1,4 +1,6 @@
 var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
+  reportIds = extractNumericReportIds(reportIds);
+
   var button = document.createElement("button");
 
   button.id = reportIds;
@@ -43,3 +45,11 @@ var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
 };
 
 export default createMonthlyReportDownloadButton;
+
+var extractNumericReportIds = function (reportIds) {
+  if (typeof reportIds[0] === "number" && !isNaN(reportIds[0])) {
+    return reportIds;
+  }
+
+  return reportIds.map(({ reportId }) => reportId);
+};
