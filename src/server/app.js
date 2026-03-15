@@ -63,7 +63,7 @@ var runServer = async () => {
   app.use("/background-tasks", require("./routes/backgroundTasks"));
 
   app.use(cookieParser());
-  app.use(require("./middleware/verifyJWTToken"));
+  app.use(require("./middleware/verifyAuthentication"), require("./middleware/verifyAuthorization"));
   app.use("/", require("./routes/index/"));
   app.use("/token", require("./routes/WBToken/"));
   app.use("/tax_params", require("./routes/taxParams/"));
