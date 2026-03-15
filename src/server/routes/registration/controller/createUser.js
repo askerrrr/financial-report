@@ -1,8 +1,11 @@
-var JWT = require("jsonwebtoken");
+var jose = require("jose");
 var { randomBytes } = require("node:crypto");
 var checkLogin = require("../services/checkLogin");
 var checkPasswd = require("../services/checkPasswd");
 var createUserReportPhotosFolder = require("../services/createUserReportPhotosFolder");
+
+var alg = "RS256";
+var oneDayMs = 24 * 3600 * 1000;
 
 var createUser = async (req, res, next) => {
   var { createReportsEntity } = req.app.locals.reportCollectionServices;
@@ -43,12 +46,12 @@ var createUser = async (req, res, next) => {
   }
 
   var payload = { userId, role: "user" };
-
-  var token = JWT.sign(payload, process.env.SECRET_KEY, { expiresIn: "2h" });
+  var privateKey = await jose.importPKCS8(process.env.pkcs8, alg);
+  var token = await new jose.SignJWT(payload).setExpirationTime("1 day").setProtectedHeader({ alg }).sign(privateKey, {});
 
   return res
-    .cookie("token", token, { httpOnly: true, maxAge: 2000 * 60 * 60 })
-    .cookie("userId", userId, { httpOnly: false, maxAge: 2000 * 60 * 60 })
+    .cookie("token", token, { httpOnly: true, maxAge: oneDayMs })
+    .cookie("userId", userId, { httpOnly: false, maxAge: oneDayMs })
     .json({ redirectUrl: "/" });
 };
 

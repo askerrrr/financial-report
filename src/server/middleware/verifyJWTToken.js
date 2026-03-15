@@ -1,25 +1,29 @@
-var JWT = require("jsonwebtoken");
+var jose = require("jose");
 var { join } = require("node:path");
+
+var alg = "RS256";
 
 var verifyJWTToken = async (req, res, next) => {
   try {
     var token = req.cookies?.token;
+    var joseToken = req.cookies?.joseToken;
+
+    var publicKey = await jose.importSPKI(process.env.spki, alg);
+    var { payload, protectedHeader } = await jose.jwtVerify(joseToken, publicKey);
 
     if (!token) {
       return res.sendFile(join(__dirname, "../../public/html/decodeReportWithoutRegistration/index.html"));
     }
 
-    var user = JWT.verify(token, process.env.SECRET_KEY);
-
-    if (user.role == "user") {
-      req.app.locals.userId = user.userId;
+    if (payload.role == "user") {
+      req.app.locals.userId = payload.userId;
 
       return next();
     }
 
     return next({ status: 403 });
   } catch (e) {
-    res.clearCookie("token");
+    // res.clearCookie("token");
     next(e);
   }
 };
