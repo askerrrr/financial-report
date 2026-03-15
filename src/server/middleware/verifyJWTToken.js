@@ -6,14 +6,13 @@ var alg = "RS256";
 var verifyJWTToken = async (req, res, next) => {
   try {
     var token = req.cookies?.token;
-    var joseToken = req.cookies?.joseToken;
-
-    var publicKey = await jose.importSPKI(process.env.spki, alg);
-    var { payload, protectedHeader } = await jose.jwtVerify(joseToken, publicKey);
 
     if (!token) {
       return res.sendFile(join(__dirname, "../../public/html/decodeReportWithoutRegistration/index.html"));
     }
+
+    var publicKey = await jose.importSPKI(process.env.spki, alg);
+    var { payload, protectedHeader } = await jose.jwtVerify(token, publicKey);
 
     if (payload.role == "user") {
       req.app.locals.userId = payload.userId;
@@ -23,7 +22,7 @@ var verifyJWTToken = async (req, res, next) => {
 
     return next({ status: 403 });
   } catch (e) {
-    // res.clearCookie("token");
+    res.clearCookie("token");
     next(e);
   }
 };
