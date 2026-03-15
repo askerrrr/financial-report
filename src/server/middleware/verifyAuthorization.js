@@ -8,7 +8,7 @@ var verifyAuthorization = (req, res, next) => {
 
   if (payload.role == "user") {
     req.app.locals.userId = payload.userId;
-    next();
+    return next();
   }
 
   res.clearCookie("token");
