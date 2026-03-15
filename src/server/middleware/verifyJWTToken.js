@@ -14,6 +14,10 @@ var verifyJWTToken = async (req, res, next) => {
     var publicKey = await jose.importSPKI(process.env.spki, alg);
     var { payload, protectedHeader } = await jose.jwtVerify(token, publicKey);
 
+    if (!payload?.role) {
+      return res.sendFile(join(__dirname, "../../public/html/decodeReportWithoutRegistration/index.html"));
+    }
+
     if (payload.role == "user") {
       req.app.locals.userId = payload.userId;
 
