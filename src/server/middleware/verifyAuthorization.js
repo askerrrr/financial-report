@@ -1,18 +1,18 @@
 var verifyAuthorization = (req, res, next) => {
-  try {
-    var { payload } = req;
+  var { payload } = req;
 
-    if (!payload?.role) {
-      return res.sendFile(join(__dirname, "../../public/html/decodeReportWithoutRegistration/index.html"));
-    }
+  if (!payload?.role) {
+    res.clearCookie("token");
+    return res.sendFile(join(__dirname, "../../public/html/decodeReportWithoutRegistration/index.html"));
+  }
 
-    if (payload.role == "user") {
-      req.app.locals.userId = payload.userId;
-      return next();
-    }
+  if (payload.role == "user") {
+    req.app.locals.userId = payload.userId;
+    next();
+  }
 
-    return next({ status: 403 });
-  } catch (e) {}
+  res.clearCookie("token");
+  return res.sendStatus(403);
 };
 
 module.exports = verifyAuthorization;
