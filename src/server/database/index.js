@@ -23,15 +23,15 @@ var setupMongooseEvents = () => {
   }
 
   eventsConfigured = true;
-  console.log("connection to mongoose...\n");
+  console.log("connection to mongodb...\n");
 
   mongoose.connection.on("error", (e) => {
-    console.log("mongoose connection error: ", { name: e.name, msg: e.message });
+    console.log("mongodb connection error: ", { name: e.name, msg: e.message });
     mongoose.disconnect();
   });
 
   mongoose.connection.on("disconnected", async () => {
-    console.log("mongoose disconnected\n");
+    console.log("mongodb disconnected\n");
 
     if (timerId) {
       clearTimeout(timerId);
@@ -45,7 +45,7 @@ var setupMongooseEvents = () => {
       clearTimeout(timerId);
       timerId = null;
       mongoose.connection.removeAllListeners();
-      console.log("mongoose connection was been destroed");
+      console.log("mongodb connection was been destroed");
 
       return;
     }
@@ -56,7 +56,7 @@ var setupMongooseEvents = () => {
   mongoose.connection.on("connected", async () => {
     if (timerId) {
       console.clear();
-      console.log("mongoose reconnected\n");
+      console.log("mongodb reconnected\n");
 
       mongooseReconnected = true;
       clearTimeout(timerId);
@@ -66,7 +66,7 @@ var setupMongooseEvents = () => {
 
     if (!mongooseReconnected) {
       console.clear();
-      console.log("mongoose connected\n");
+      console.log("mongodb connected\n");
     }
 
     mongooseReconnected = false;
