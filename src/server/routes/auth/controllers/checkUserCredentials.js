@@ -27,6 +27,7 @@ var checkUserCredentials = async (req, res, next) => {
     return res.sendStatus(403);
   }
 
+  jose = await jose;
   var payload = { role: "user", userId: existUser.userId };
   var privateKey = await jose.importPKCS8(process.env.pkcs8, alg);
   var token = await new jose.SignJWT(payload).setExpirationTime("1 day").setProtectedHeader({ alg }).sign(privateKey, {});

@@ -11,6 +11,7 @@ var verifyAuthentication = async (req, res, next) => {
   }
 
   try {
+    jose = await jose;
     var publicKey = await jose.importSPKI(process.env.spki, alg);
     var { payload } = await jose.jwtVerify(token, publicKey);
   } catch (e) {

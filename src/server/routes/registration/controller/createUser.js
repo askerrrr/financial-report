@@ -44,7 +44,7 @@ var createUser = async (req, res, next) => {
   if (!success) {
     return res.status(500).json({ msg: "cannot create user" });
   }
-
+  jose = await jose;
   var payload = { userId, role: "user" };
   var privateKey = await jose.importPKCS8(process.env.pkcs8, alg);
   var token = await new jose.SignJWT(payload).setExpirationTime("1 day").setProtectedHeader({ alg }).sign(privateKey, {});
