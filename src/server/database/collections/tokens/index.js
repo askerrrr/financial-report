@@ -8,7 +8,7 @@ var tokenCollectionServices = {
 
   saveWBTokenToDb: (userId, token, session) => saveWBTokenToDb(tokenCollection, userId, token, session),
 
-  createTokenCollectionEntity: (userId) => createTokenCollectionEntity(tokenCollection, userId),
+  createTokenCollectionEntity: (userId, session) => createTokenCollectionEntity(tokenCollection, userId, session),
 };
 
 module.exports = tokenCollectionServices;

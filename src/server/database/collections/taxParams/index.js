@@ -13,7 +13,7 @@ var taxParamsCollectionServices = {
 
   getTaxParamsFromDb: (userId, year, session) => getTaxParamsFromDb(taxParamsCollection, userId, year, session),
 
-  createTaxParamsEntity: (userId, year) => createTaxParamsEntity(taxParamsCollection, userId, year),
+  createTaxParamsEntity: (userId, session) => createTaxParamsEntity(taxParamsCollection, userId, session),
 
   changeTaxParamsToDb: (userId, year, session, newTaxParam) => changeTaxParamsToDb(taxParamsCollection, userId, year, session, newTaxParam),
 

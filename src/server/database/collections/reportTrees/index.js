@@ -7,7 +7,7 @@ var deleteReportTreeByUserId = require("./services/deleteReportTreeByUserId");
 var deleteReportFromReportTree = require("./services/deleteReportFromReportTree");
 
 var reportsTreeCollectionServices = {
-  createReportTreeEntity: (userId) => createReportTreeEntity(reportsTreeCollection, userId),
+  createReportTreeEntity: (userId, session) => createReportTreeEntity(reportsTreeCollection, userId, session),
 
   updateReportTree: (userId, years) => updateReportTree(reportsTreeCollection, userId, years),
 

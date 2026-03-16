@@ -20,8 +20,8 @@ var weeklyPricesAndDiscountsCollectionServices = {
   setWeeklyPricesAndDiscountsToDb: (userId, weeklyPricesAndDiscounts, session) =>
     setWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId, weeklyPricesAndDiscounts, session),
 
-  createWeeklyPricesAndDiscountsCollectionEntity: (userId) =>
-    createWeeklyPricesAndDiscountsCollectionEntity(weeklyPricesAndDiscountsCollection, userId),
+  createWeeklyPricesAndDiscountsCollectionEntity: (userId, session) =>
+    createWeeklyPricesAndDiscountsCollectionEntity(weeklyPricesAndDiscountsCollection, userId, session),
 
   deleteWeeklyPricesAndDiscountsFromDb: (userId) => deleteWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId),
 };

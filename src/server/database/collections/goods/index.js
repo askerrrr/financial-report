@@ -36,7 +36,7 @@ var goodsCollectionServices = {
 
   updateSkuDisableStatusToDb: (userId, skuName, disabled) => updateSkuDisableStatus(goodsCollection, userId, skuName, disabled),
 
-  createListGoodsCollectionEntity: (userId) => createListGoodsCollectionEntity(goodsCollection, userId),
+  createListGoodsCollectionEntity: (userId, userId) => createListGoodsCollectionEntity(goodsCollection, userId, userId),
 
   setPriceUpdateTimestampAndUpdateStatus: (userId, priceData) => setPriceUpdateTimestampAndUpdateStatus(goodsCollection, userId, priceData),
 

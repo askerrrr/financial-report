@@ -1,11 +1,9 @@
 var { DatabaseError } = require("../../../../customError");
 
-var createReportTreeEntity = async (collection, userId) => {
+var createReportTreeEntity = async (collection, userId, session) => {
+  var sessionOpt = session ? { session: session } : {};
   try {
-    var reportingPeriodsEntity = await collection.insertOne({
-      userId,
-      years: [],
-    });
+    var reportingPeriodsEntity = await collection.insertOne({ userId, years: [] }, sessionOpt);
 
     var result = await reportingPeriodsEntity.save();
 

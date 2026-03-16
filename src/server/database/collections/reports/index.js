@@ -18,7 +18,7 @@ var reportCollectionServices = {
   getReportById: (userId, reportId, session) => getReportById(reportCollection, userId, reportId, session),
   getReportsByUserId: (userId, session, projectQuery, reportIds) => getReportsByUserId(reportCollection, userId, session, projectQuery, reportIds),
 
-  createReportsEntity: (userId) => createReportsEntity(reportCollection, userId),
+  createReportsEntity: (userId, session) => createReportsEntity(reportCollection, userId, session),
 
   saveReportToDb: (userId, report, session) => saveReportToDb(reportCollection, userId, report, session),
   saveUpdatedReports: (userId, reports) => saveUpdatedReports(reportCollection, userId, reports),

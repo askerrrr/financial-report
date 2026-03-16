@@ -32,7 +32,7 @@ var createUser = async (req, res, next) => {
   await createTaxParamsEntity(userId);
   await createReportTreeEntity(userId);
   await createTokenCollectionEntity(userId);
-  await createUserReportPhotosFolder(userId);
+  await createUserReportPhotosFolder(userId); 
   await createListGoodsCollectionEntity(userId);
   await createReportsLoadingStatesCollectionEntity(userId);
   await createWeeklyPricesAndDiscountsCollectionEntity(userId);
