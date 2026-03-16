@@ -5,14 +5,12 @@ var prependToReportsQueue = require("./services/prependToReportsQueue");
 var getLoadingProgressStatus = require("./services/getLoadingProgressStatus");
 var deleteReportLoadingStates = require("./services/deleteReportLoadingStates");
 var setLastReportRequestTimestamp = require("./services/setLastReportRequestTimestamp");
-var createReportsLoadingStatesCollectionEntity = require("./services/createReportsLoadingStatesCollectionEntity");
 
 var reportLoadingStatesCollectionServices = {
   getReportLoadingState: (userId, session) => getReportLoadingState(reportLoadingStatesCollection, userId, session),
   getLoadingProgressStatus: (userId) => getLoadingProgressStatus(reportLoadingStatesCollection, userId),
   deleteReportLoadingStates: (userId, session) => deleteReportLoadingStates(reportLoadingStatesCollection, userId, session),
   prependToReportsQueue: (userId, dateFrom, dateTo) => prependToReportsQueue(reportLoadingStatesCollection, userId, dateFrom, dateTo),
-  createReportsLoadingStatesCollectionEntity: (userId, session) => createReportsLoadingStatesCollectionEntity(reportLoadingStatesCollection, userId, session),
   setLastReportRequestTimestamp: (userId, session) => setLastReportRequestTimestamp(reportLoadingStatesCollection, userId, session),
 };
 

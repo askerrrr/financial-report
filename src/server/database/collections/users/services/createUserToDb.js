@@ -1,19 +1,28 @@
 var argon2 = require("argon2");
-var { DatabaseError } = require("../../../../customError");
+var {
+  userCollection,
+  goodsCollection,
+  tokenCollection,
+  reportCollection,
+  taxParamsCollection,
+  reportsTreeCollection,
+  reportLoadingStatesCollection,
+  weeklyPricesAndDiscountsCollection,
+} = require("../../../connections");
+var { tokenSchemaVersion } = require("../../../migration/schemaVersioning/tokenCollection");
+var { reportsSchemaVersion } = require("../../../migration/schemaVersioning/reportsCollection");
 
-var createUserToDb = async (collection, { userId, login, passwd }, session) => {
-  var sessionOpt = session ? { session: session } : {};
-  try {
-    passwd = await argon2.hash(passwd + "", "youSecretKey");
+var createUserToDb = async ({ userId, login, passwd }, session) => {
+  var hashedPasswd = await argon2.hash(passwd + "", "youSecretKey");
 
-    var newUser = await collection.insertOne({ login, passwd, userId }, sessionOpt);
-
-    var result = await newUser.save();
-
-    return result == newUser;
-  } catch (e) {
-    throw new DatabaseError(userId, e);
-  }
+  await taxParamsCollection.insertOne({ userId }, session);
+  await reportLoadingStatesCollection.insertOne({ userId }, session);
+  await goodsCollection.insertOne({ userId, listGoods: [] }, session);
+  await reportsTreeCollection.insertOne({ userId, years: [] }, session);
+  await weeklyPricesAndDiscountsCollection.insertOne({ userId }, session);
+  await userCollection.insertOne({ login, userId, passwd: hashedPasswd }, session);
+  await tokenCollection.insertOne({ userId, schemaVersion: tokenSchemaVersion }, session);
+  await reportCollection.insertOne({ userId, schemaVersion: reportsSchemaVersion }, session);
 };
 
 module.exports = createUserToDb;

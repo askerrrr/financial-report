@@ -13,8 +13,6 @@ var updateSkuDisableStatus = require("./services/updateSkuDisableStatus");
 var updateSkuInListGoods = require("./services/updateSkuInListGoods");
 var setPriceUpdateTimestampAndUpdateStatus = require("./services/setPriceUpdateTimestampAndUpdateStatus");
 
-var createListGoodsCollectionEntity = require("./services/createListGoodsCollectionEntity");
-
 var goodsCollectionServices = {
   getAllUserListGoodsIds: () => getAllUserListGoodsIds(goodsCollection),
 
@@ -35,8 +33,6 @@ var goodsCollectionServices = {
   updateSkuInListGoods: (userId, skuId, costPrice, session) => updateSkuInListGoods(goodsCollection, userId, skuId, costPrice, session),
 
   updateSkuDisableStatusToDb: (userId, skuName, disabled) => updateSkuDisableStatus(goodsCollection, userId, skuName, disabled),
-
-  createListGoodsCollectionEntity: (userId, session) => createListGoodsCollectionEntity(goodsCollection, userId, session),
 
   setPriceUpdateTimestampAndUpdateStatus: (userId, priceData) => setPriceUpdateTimestampAndUpdateStatus(goodsCollection, userId, priceData),
 
