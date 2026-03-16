@@ -1,4 +1,4 @@
-var jose = require("jose");
+var jose = import("jose");
 var { join } = require("node:path");
 
 var alg = "RS256";

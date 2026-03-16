@@ -1,4 +1,4 @@
-var jose = require("jose");
+var jose = import("jose");
 var { randomBytes } = require("node:crypto");
 var checkLogin = require("../services/checkLogin");
 var checkPasswd = require("../services/checkPasswd");

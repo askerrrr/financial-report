@@ -1,5 +1,5 @@
 var Joi = require("joi");
-var jose = require("jose");
+var jose = import("jose");
 var checkCredentials = require("../services/checkCredentials");
 
 var alg = "RS256";
