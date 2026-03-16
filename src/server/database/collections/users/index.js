@@ -6,7 +6,7 @@ var createUserToDb = require("./services/createUserToDb");
 var getUserById = require("./services/getUserByUserId");
 
 var userCollectionServices = {
-  createUserToDb: (user) => createUserToDb(userCollection, user),
+  createUserToDb: (user, session) => createUserToDb(userCollection, user, session),
 
   getUserByLogin: (login) => getUserByLogin(userCollection, login),
 
