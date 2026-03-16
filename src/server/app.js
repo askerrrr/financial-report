@@ -70,6 +70,7 @@ var runServer = async () => {
   app.use("/tax_params", checkRoles(["user"]), require("./routes/taxParams/"));
   app.use("/reports", checkRoles(["user"]), require("./routes/reports/"));
   app.use("/goods", checkRoles(["user"]), require("./routes/goods"));
+  app.use("/delete", require("./routes/delete"));
 
   app.all(/.*/, require("./middleware/notFoundHandler/"));
 
