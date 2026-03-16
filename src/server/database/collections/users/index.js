@@ -8,7 +8,7 @@ var getUserById = require("./services/getUserByUserId");
 var userCollectionServices = {
   createUserToDb: (user, session) => createUserToDb(userCollection, user, session),
 
-  getUserByLogin: (login) => getUserByLogin(userCollection, login),
+  getUserByLogin: (login, session) => getUserByLogin(userCollection, login, session),
 
   getUserById: (userId) => getUserById(userCollection, userId),
 
