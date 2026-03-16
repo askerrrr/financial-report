@@ -2,7 +2,6 @@ var jose = import("jose");
 var { randomBytes } = require("node:crypto");
 var checkLogin = require("../services/checkLogin");
 var checkPasswd = require("../services/checkPasswd");
-var createUserReportPhotosFolder = require("../services/createUserReportPhotosFolder");
 
 var alg = "RS256";
 var oneDayMs = 24 * 3600 * 1000;
@@ -32,7 +31,6 @@ var createUser = async (req, res, next) => {
   await createTaxParamsEntity(userId);
   await createReportTreeEntity(userId);
   await createTokenCollectionEntity(userId);
-  await createUserReportPhotosFolder(userId); 
   await createListGoodsCollectionEntity(userId);
   await createReportsLoadingStatesCollectionEntity(userId);
   await createWeeklyPricesAndDiscountsCollectionEntity(userId);
