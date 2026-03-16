@@ -24,7 +24,7 @@ var checkUserCredentials = async (req, res, next) => {
   var success = await checkCredentials(req.body, existUser);
 
   if (!success) {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
   jose = await jose;
