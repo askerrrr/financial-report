@@ -1,6 +1,7 @@
 var express = require("express");
 var { join } = require("node:path");
 var cookieParser = require("cookie-parser");
+var checkRoles = require("./middleware/checkRoles");
 
 var mainServerIsListen = false;
 var errorServerIsListen = false;
@@ -64,11 +65,11 @@ var runServer = async () => {
 
   app.use(cookieParser());
   app.use(require("./middleware/verifyAuthentication"), require("./middleware/verifyAuthorization"));
-  app.use("/", require("./routes/index/"));
-  app.use("/token", require("./routes/WBToken/"));
-  app.use("/tax_params", require("./routes/taxParams/"));
-  app.use("/reports", require("./routes/reports/"));
-  app.use("/goods", require("./routes/goods"));
+  app.use("/", checkRoles(["user"]), require("./routes/index/"));
+  app.use("/token", checkRoles(["user"]), require("./routes/WBToken/"));
+  app.use("/tax_params", checkRoles(["user"]), require("./routes/taxParams/"));
+  app.use("/reports", checkRoles(["user"]), require("./routes/reports/"));
+  app.use("/goods", checkRoles(["user"]), require("./routes/goods"));
 
   app.all(/.*/, require("./middleware/notFoundHandler/"));
 
