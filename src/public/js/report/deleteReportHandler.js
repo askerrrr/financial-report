@@ -10,7 +10,7 @@ var sendDeletionRequest = async (reportId) => {
   return res.ok;
 };
 
-var deleteReportHandler = async (reportId) =>
+var deleteReportHandler = (reportId) =>
   button.addEventListener("click", async (e) => {
     e.preventDefault();
 
