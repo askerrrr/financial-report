@@ -20,8 +20,8 @@ var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
       headers: { "Content-Type": "application/json" },
     });
 
-    if (!res.ok) {
-      return alert("Для скачивания отчетов нужно установить себестоимость для товаров");
+    if (res.status !== 200) {
+      return alert("Не удалось создать месячную сводку...");
     }
 
     var blob = await res.blob();

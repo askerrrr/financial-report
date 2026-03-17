@@ -13,7 +13,7 @@ router.get("/:userId/:reportId", require("./controllers/getReport"));
 
 router.get("/download-report-as-xlsx/:userId/:reportId", require("./controllers/downloadReportAsXLSX"));
 
-router.post("/download-reports-as-zip/", require("./controllers/checkAllCostPricesNonZero"), require("./controllers/downloadReportsAsZip"));
+router.post("/download-reports-as-zip/", require("./controllers/downloadReportsAsZip"));
 
 router.post(
   "/save-new-report",
