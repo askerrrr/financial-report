@@ -38,7 +38,7 @@ var main = async () => {
   await createTotalsTable(report);
 
   await deleteReportHandler(report.reportId);
-  await downloadReportAsXLSXButtonHandler(report, downloadReportLink);
+  downloadReportAsXLSXButtonHandler(report, downloadReportLink);
 
   financialAccountingStatusButtonHander(reportId);
   setSkusLastCostPricesButtonHandler(reportId, recordTo.year, skusLastCostPrice);
