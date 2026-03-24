@@ -5,7 +5,7 @@ var calcTaxableAmountOfBuybackReport = (report) => {
 
   var sellerPayoutExcludingReturns = buybackReport
     .filter((item) => item.doc_type_name === "Продажа")
-    .reduce((acc, item) => acc + item.ppvz_for_pay, 0);
+    .reduce((acc, item) => acc + (item.ppvz_for_pay ?? item.retail_amount), 0);
 
   var taxableAmount = sellerPayoutExcludingReturns - deliveryCost;
 
