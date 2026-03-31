@@ -68,7 +68,17 @@ var changeTaxParams = async (req, res, next) => {
     await session.withTransaction(async () => {
       var { listGoods } = await getListGoodsFromDb(userId, session);
       var { reports } = await getReportsByUserId(userId, session);
-      var requiredReports = reports.filter((report) => report.recordTo.year == year);
+      var requiredReports = reports.filter((report) => {
+        if (report.crossesTaxYears) {
+          var startYear = +report.dateFrom.split("-")[0];
+          var endYear = +report.dateTo.split("-")[0];
+          if (startYear === year || endYear === year) {
+            return report;
+          }
+        } else {
+          return report.recordTo.year === year;
+        }
+      });
 
       switch (taxParamKeyName) {
         case "taxRate":
