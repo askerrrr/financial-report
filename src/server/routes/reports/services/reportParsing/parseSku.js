@@ -6,10 +6,11 @@ var parseSku = async (name, skuQty, skuFilteredReport, storageData, taxRate, tot
 
   var sku = {};
   sku["qty" + propPostfix] = await calc.quantity(skuFilteredReport);
+  sku["taxableAmount" + propPostfix] = calc.taxableAmount(skuFilteredReport);
   sku["fines" + propPostfix] = calc.sum(skuFilteredReport, "penalty", "truncate-on");
   sku["acceptance" + propPostfix] = calc.sum(skuFilteredReport, "acceptance", "truncate-on");
   sku["retailAmount" + propPostfix] = calc.retailAmount(skuFilteredReport);
-  sku["tax" + propPostfix] = calc.taxAmount(sku["retailAmount" + propPostfix], taxRate);
+  sku["tax" + propPostfix] = calc.taxAmount(sku["taxableAmount" + propPostfix], taxRate);
   sku["returnAmount" + propPostfix] = calc.returnAmount(skuFilteredReport);
   sku["deliveryCost" + propPostfix] = calc.sum(skuFilteredReport, "delivery_rub", "truncate-on");
   sku["deductionOrPayment" + propPostfix] = calc.sum(skuFilteredReport, "deduction", "truncate-on");
