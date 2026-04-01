@@ -27,6 +27,7 @@ var oldTaxParamsObjectSchema = Joi.object({
   additionalInsuranceFeeIsPaid: Joi.boolean(),
   excessInsuranceRate: Joi.number(),
   schemaVersion: Joi.number(),
+  taxableAmount: Joi.number().required(),
 });
 
 var schema = Joi.object({
