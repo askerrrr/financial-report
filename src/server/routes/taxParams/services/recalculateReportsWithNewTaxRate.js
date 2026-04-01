@@ -19,7 +19,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
 
       if (report.crossesTaxYears) {
         var prevSkuTax = sku["tax" + postfix];
-        sku["tax" + postfix] = calc.taxAmount(sku["retailAmount" + postfix], newTaxRate);
+        sku["tax" + postfix] = calc.taxAmount(sku["taxableAmount" + postfix], newTaxRate);
         sku.tax = sku.taxInCurrentYear + sku.taxInNextYear;
         paidTaxAmount += sku["tax" + postfix];
 
@@ -42,7 +42,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
         }
       } else {
         var prevSkuTax = sku.tax;
-        sku.tax = calc.taxAmount(sku.retailAmount, newTaxRate);
+        sku.tax = calc.taxAmount(sku.taxableAmount, newTaxRate);
         paidTaxAmount += sku.tax;
 
         var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === taxYear);
