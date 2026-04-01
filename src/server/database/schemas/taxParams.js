@@ -9,6 +9,7 @@ var taxYear = new Schema(
     insuranceFeePercentage: { type: Number, default: 10 },
     paidInsuranceFee: { type: Number, default: 0 },
     retailAmount: { type: Number, default: 0 },
+    taxableAmount: { type: Number, default: 0 },
     finalProfit: { type: Number, default: 0 },
     isInsuranceFeePaid: { type: Boolean, default: false },
     additionalInsuranceFee: { type: Number, default: 0 },
@@ -22,7 +23,7 @@ var taxYear = new Schema(
     excessInsuranceRate: { type: Number, default: 1 },
     schemaVersion: { type: Number },
   },
-  { _id: false }
+  { _id: false },
 );
 
 var taxParamsSchema = new Schema({

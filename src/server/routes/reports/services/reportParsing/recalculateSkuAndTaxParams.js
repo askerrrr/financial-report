@@ -5,8 +5,10 @@ var recalculateSkuAndTaxParams = (sku, taxParams, skuPropPostfix = "") => {
   var { sku, taxParams } = recalculateRetailAmount(sku, taxParams, skuPropPostfix);
   var { sku, taxParams } = recalculateInsuranceFee(sku, taxParams, skuPropPostfix);
   var { sku, taxParams } = recalculatePaidTaxAmount(sku, taxParams, skuPropPostfix);
+  var { sku, taxParams } = recalculateTaxableAmount(sku, taxParams, skuPropPostfix);
 
   taxParams.retailAmount = truncateNum(taxParams.retailAmount);
+  taxParams.taxableAmount = truncateNum(taxParams.taxableAmount);
   taxParams.paidTaxAmount = truncateNum(taxParams.paidTaxAmount);
   taxParams.additionalInsuranceFee = truncateNum(taxParams.additionalInsuranceFee);
 
@@ -83,5 +85,10 @@ var recalculateInsuranceFee = function (sku, taxParams, skuPropPostfix) {
 var recalculatePaidTaxAmount = function (sku, taxParams, skuPropPostfix) {
   taxParams.paidTaxAmount += sku["tax" + skuPropPostfix];
 
+  return { sku, taxParams };
+};
+
+var recalculateTaxableAmount = function (sku, taxParams, skuPropPostfix) {
+  taxParams.taxableAmount += sku["taxableAmount" + skuPropPostfix];
   return { sku, taxParams };
 };
