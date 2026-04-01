@@ -1,55 +1,55 @@
-var JWT = require("jsonwebtoken");
+var jose = import("jose");
 var { randomBytes } = require("node:crypto");
+var { dbClient } = require("../../../database");
 var checkLogin = require("../services/checkLogin");
 var checkPasswd = require("../services/checkPasswd");
-var createUserReportPhotosFolder = require("../services/createUserReportPhotosFolder");
+
+var alg = "RS256";
+var oneDayMs = 24 * 3600 * 1000;
 
 var createUser = async (req, res, next) => {
-  var { createReportsEntity } = req.app.locals.reportCollectionServices;
-  var { createTaxParamsEntity } = req.app.locals.taxParamsCollectionServices;
+  var candidate = req.body;
+
+  await checkLogin(candidate.login);
+  await checkPasswd(candidate.passwd);
+
+  var session = await dbClient.startSession();
   var { createUserToDb, getUserByLogin } = req.app.locals.userCollectionServices;
-  var { createTokenCollectionEntity } = req.app.locals.tokenCollectionServices;
-  var { createReportTreeEntity } = req.app.locals.reportsTreeCollectionServices;
-  var { createListGoodsCollectionEntity } = req.app.locals.goodsCollectionServices;
-  var { createReportsLoadingStatesCollectionEntity } = req.app.locals.reportLoadingStatesCollectionServices;
-  var { createWeeklyPricesAndDiscountsCollectionEntity } = req.app.locals.weeklyPricesAndDiscountsCollectionServices;
-  var user = req.body;
 
-  await checkLogin(user.login);
-  await checkPasswd(user.passwd);
+  try {
+    await session.withTransaction(async () => {
+      try {
+        var userIsExist = await getUserByLogin(candidate.login, session);
 
-  var userIsExist = await getUserByLogin(user.login);
+        if (userIsExist) {
+          return res.sendStatus(409);
+        }
 
-  if (userIsExist) {
-    return res.sendStatus(409);
-  }
+        var userId = randomBytes(10).toString("hex");
+        candidate.userId = userId;
+        await createUserToDb(candidate, session);
 
-  var userId = randomBytes(10).toString("hex");
-  await createReportsEntity(userId);
-  await createTaxParamsEntity(userId);
-  await createReportTreeEntity(userId);
-  await createTokenCollectionEntity(userId);
-  await createUserReportPhotosFolder(userId);
-  await createListGoodsCollectionEntity(userId);
-  await createReportsLoadingStatesCollectionEntity(userId);
-  await createWeeklyPricesAndDiscountsCollectionEntity(userId);
+        jose = await jose;
+        var payload = { userId, role: "user" };
+        var privateKey = await jose.importPKCS8(process.env.pkcs8, alg);
+        var token = await new jose.SignJWT(payload).setExpirationTime("1 day").setProtectedHeader({ alg }).sign(privateKey);
 
-  user.userId = userId;
-
-  var success = await createUserToDb(user);
-
-  if (!success) {
+        return res
+          .cookie("token", token, { httpOnly: true, maxAge: oneDayMs })
+          .cookie("userId", userId, { httpOnly: false, maxAge: oneDayMs })
+          .json({ redirectUrl: "/" });
+      } catch (e) {
+        console.log(e);
+        return res.status(500).json({ msg: "cannot create user" });
+      }
+    });
+  } catch (e) {
     return res.status(500).json({ msg: "cannot create user" });
+  } finally {
+    if (session) {
+      await session.endSession();
+    }
   }
-
-  var payload = { userId, role: "user" };
-
-  var token = JWT.sign(payload, process.env.SECRET_KEY, { expiresIn: "2h" });
-
-  return res
-    .cookie("token", token, { httpOnly: true, maxAge: 2000 * 60 * 60 })
-    .cookie("userId", userId, { httpOnly: false, maxAge: 2000 * 60 * 60 })
-    .json({ redirectUrl: "/" });
 };
 
 module.exports = createUser;

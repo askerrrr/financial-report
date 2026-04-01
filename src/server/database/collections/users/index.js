@@ -1,18 +1,23 @@
 var { userCollection } = require("../../connections");
 
+var getUserById = require("./services/getUserByUserId");
 var getUserByLogin = require("./services/getUserByLogin");
 var getAllUsersFromDb = require("./services/getAllUsers");
 var createUserToDb = require("./services/createUserToDb");
-var getUserById = require("./services/getUserByUserId");
+var deleteUserFromDb = require("./services/deleteUserFromDb");
+var deleteUsersFromDb = require("./services/deleteUsersFromDb");
 
 var userCollectionServices = {
-  createUserToDb: (user) => createUserToDb(userCollection, user),
+  createUserToDb: (user, session) => createUserToDb(user, session),
 
-  getUserByLogin: (login) => getUserByLogin(userCollection, login),
+  getUserByLogin: (login, session) => getUserByLogin(userCollection, login, session),
 
   getUserById: (userId) => getUserById(userCollection, userId),
 
   getAllUsersFromDb: () => getAllUsersFromDb(userCollection),
+
+  deleteUserFromDb: (userId, session) => deleteUserFromDb(userId, session),
+  deleteUsersFromDb: (session) => deleteUsersFromDb(session),
 };
 
 module.exports = userCollectionServices;

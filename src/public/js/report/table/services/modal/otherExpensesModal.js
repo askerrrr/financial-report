@@ -6,26 +6,26 @@ import sendChangedData from "../sendChangedData.js";
 import updateSKUsTableFields from "../updateSKUsTableFields.js";
 import updateTotalsTableFields from "../updateTotalsTableFields.js";
 
-var costPriceModal = async (skuData, tdElement, isGuestAccess) => {
+var otherExpensesModal = async (skuData, tdElement, isGuestAccess) => {
   var modal = createDiv("modal-overlay");
   var modalContent = createDiv("modal-content");
 
-  var titleContent = `Изменить себестоимость для "${skuData.skuName}"`;
+  var titleContent = `Изменить прочие расходы для "${skuData.skuName}"`;
   var title = createTitle("modal-title", titleContent);
 
-  var costPriceInput = createInput("modal-input", tdElement);
+  var otherExpensesInput = createInput("modal-input", tdElement);
 
   var buttonsContainer = createDiv("modal-buttons");
 
   var saveButtonTextContent = "Сохранить";
   var event = "click";
   var cb = async () => {
-    tdElement.textContent = costPriceInput.value;
-    skuData.costPrice = +costPriceInput.value;
+    tdElement.textContent = otherExpensesInput.value;
+    skuData.otherExpenses = +otherExpensesInput.value;
 
     document.body.removeChild(modal);
 
-    var { total, sku } = await sendChangedData(skuData, isGuestAccess, "setcostprice");
+    var { total, sku } = await sendChangedData(skuData, isGuestAccess, "setotherexpenses");
 
     await updateSKUsTableFields(sku);
 
@@ -38,11 +38,11 @@ var costPriceModal = async (skuData, tdElement, isGuestAccess) => {
   var cancelButton = createButton("modal-button modal-button-cancel", cancelButtonTextContent, { event, cb });
 
   buttonsContainer.append(cancelButton, saveButton);
-  modalContent.append(title, costPriceInput, buttonsContainer);
+  modalContent.append(title, otherExpensesInput, buttonsContainer);
   modal.append(modalContent);
   document.body.append(modal);
 
-  costPriceInput.focus();
+  otherExpensesInput.focus();
 
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
@@ -51,4 +51,4 @@ var costPriceModal = async (skuData, tdElement, isGuestAccess) => {
   });
 };
 
-export default costPriceModal;
+export default otherExpensesModal;

@@ -1,7 +1,9 @@
 var truncateNum = require("../../reportParsing/truncateNum");
 
-var calcFinalProfit = (preTaxProfit, insuranceFee, tax = 0, additionalInsuranceFee = 0) => {
-  var finalProfit = preTaxProfit - insuranceFee - tax - additionalInsuranceFee;
+var calcFinalProfit = (sku, propPostfix = "") => {
+  var finalProfit =
+    sku["preTaxProfit" + propPostfix] - sku["tax" + propPostfix] - sku["insuranceFee" + propPostfix] - sku["additionalInsuranceFee" + propPostfix];
+
   return truncateNum(finalProfit);
 };
 

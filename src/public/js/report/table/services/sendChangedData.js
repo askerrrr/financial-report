@@ -1,10 +1,16 @@
-var sendChangedData = async (data, isGuestAccess = false) => {
+/**
+ * @param {'setcostprice' | 'setotherexpenses'} changedData
+ */
+
+var sendChangedData = async (data, isGuestAccess = false, changedData) => {
   var url;
 
   if (isGuestAccess) {
     url = "/decode-report-without-registration/report/set-cost-price";
-  } else {
+  } else if (changedData === "setcostprice") {
     url = "/reports/set-cost-price-to-sku";
+  } else if (changedData === "setotherexpenses") {
+    url = "/reports/set-other-expenses-to-sku";
   }
 
   var res = await fetch(url, {

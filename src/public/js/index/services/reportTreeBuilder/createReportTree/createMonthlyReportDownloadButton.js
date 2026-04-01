@@ -1,4 +1,6 @@
 var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
+  reportIds = extractNumericReportIds(reportIds);
+
   var button = document.createElement("button");
 
   button.id = reportIds;
@@ -18,8 +20,8 @@ var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
       headers: { "Content-Type": "application/json" },
     });
 
-    if (!res.ok) {
-      return alert("Для скачивания отчетов нужно установить себестоимость для товаров");
+    if (res.status !== 200) {
+      return alert("Не удалось создать месячную сводку...");
     }
 
     var blob = await res.blob();
@@ -43,3 +45,11 @@ var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
 };
 
 export default createMonthlyReportDownloadButton;
+
+var extractNumericReportIds = function (reportIds) {
+  if (typeof reportIds[0] === "number" && !isNaN(reportIds[0])) {
+    return reportIds;
+  }
+
+  return reportIds.map(({ reportId }) => reportId);
+};

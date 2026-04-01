@@ -11,6 +11,7 @@ var schema = Joi.object({
   year: Joi.number().required(),
   skuName: Joi.string().required(),
   costPrice: Joi.number().required(),
+  otherExpenses: Joi.number().required(),
 });
 
 var setCostPriceToSku = async (req, res, next) => {

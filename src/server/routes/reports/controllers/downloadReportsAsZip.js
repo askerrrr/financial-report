@@ -1,8 +1,26 @@
+var Joi = require("joi");
 var JSZip = require("jszip");
 var { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer } = require("../services/reportAsXLSXBuffer");
 
+var schema = Joi.object({ userId: Joi.string().required(), reportIds: Joi.array().items(Joi.number()).required() });
+
 var downloadReportsAsZip = async (req, res, next) => {
-  var reports = req.reports;
+  var { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.sendStatus(400);
+  }
+
+  var { userId, reportIds } = req.body;
+  var { getReportById } = req.app.locals.reportCollectionServices;
+
+  var reports = [];
+
+  for (var reportId of reportIds) {
+    var { report } = await getReportById(userId, reportId);
+
+    reports.push(report);
+  }
 
   var zip = new JSZip();
 
@@ -11,7 +29,7 @@ var downloadReportsAsZip = async (req, res, next) => {
   for (var report of reports) {
     var buffer = await getReportAsXLSXBuffer(report);
 
-    var fileName = `Расшифровка отчета от ${report.dateFrom} по ${report.dateTo}.xlsx`;
+    var fileName = `Детали отчета от ${report.dateFrom} по ${report.dateTo}.xlsx`;
 
     folder.file(fileName, buffer);
   }

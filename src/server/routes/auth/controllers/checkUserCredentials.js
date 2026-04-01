@@ -1,7 +1,9 @@
 var Joi = require("joi");
-var JWT = require("jsonwebtoken");
+var jose = import("jose");
 var checkCredentials = require("../services/checkCredentials");
 
+var alg = "RS256";
+var oneDayMs = 24 * 3600 * 1000;
 var schema = Joi.object({ login: Joi.string().required(), passwd: Joi.string().required() });
 
 var checkUserCredentials = async (req, res, next) => {
@@ -22,18 +24,19 @@ var checkUserCredentials = async (req, res, next) => {
   var success = await checkCredentials(req.body, existUser);
 
   if (!success) {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 
+  jose = await jose;
   var payload = { role: "user", userId: existUser.userId };
-
-  var token = JWT.sign(payload, process.env.SECRET_KEY, { expiresIn: "2h" });
+  var privateKey = await jose.importPKCS8(process.env.pkcs8, alg);
+  var token = await new jose.SignJWT(payload).setExpirationTime("1 day").setProtectedHeader({ alg }).sign(privateKey, {});
 
   var userId = existUser.userId;
 
   return res
-    .cookie("token", token, { httpOnly: true, maxAge: 2000 * 60 * 60 })
-    .cookie("userId", userId, { httpOnly: false, maxAge: 2000 * 60 * 60 })
+    .cookie("token", token, { httpOnly: true, maxAge: oneDayMs })
+    .cookie("userId", userId, { httpOnly: false, maxAge: oneDayMs })
     .json({ redirectUrl: "/" });
 };
 

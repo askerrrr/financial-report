@@ -6,7 +6,6 @@ var getWeeklyPricesAndDiscounts = require("./services/getWeeklyPricesAndDiscount
 var setWeeklyPricesAndDiscounts = require("./services/setWeeklyPricesAndDiscounts");
 var deleteWeeklyPricesAndDiscounts = require("./services/deleteWeeklyPricesAndDiscounts");
 var getAllUserWeeklyPricesAndDiscounts = require("./services/getAllUserWeeklyPricesAndDiscounts");
-var createWeeklyPricesAndDiscountsCollectionEntity = require("./services/createWeeklyPricesAndDiscountsCollectionEntity");
 
 var weeklyPricesAndDiscountsCollectionServices = {
   getWeeklyPricesAndDiscountsFromDb: (userId) => getWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId),
@@ -19,9 +18,6 @@ var weeklyPricesAndDiscountsCollectionServices = {
 
   setWeeklyPricesAndDiscountsToDb: (userId, weeklyPricesAndDiscounts, session) =>
     setWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId, weeklyPricesAndDiscounts, session),
-
-  createWeeklyPricesAndDiscountsCollectionEntity: (userId) =>
-    createWeeklyPricesAndDiscountsCollectionEntity(weeklyPricesAndDiscountsCollection, userId),
 
   deleteWeeklyPricesAndDiscountsFromDb: (userId) => deleteWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId),
 };

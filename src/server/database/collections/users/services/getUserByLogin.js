@@ -1,11 +1,3 @@
-var { DatabaseError } = require("../../../../customError");
-
-var getUserByLogin = async (collection, login) => {
-  try {
-    return await collection.findOne({ login }).exec();
-  } catch (e) {
-    throw new DatabaseError(login, e);
-  }
-};
+var getUserByLogin = async (collection, login, session) => await collection.findOne({ login }, null, session);
 
 module.exports = getUserByLogin;

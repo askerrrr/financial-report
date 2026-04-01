@@ -41,12 +41,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (reports, listGoods, manda
 
           var skuMetrics = skuFromListGoods.find((i) => i.year === taxYear);
 
-          sku["finalProfit" + postfix] = calc.finalProfit(
-            sku["preTaxProfit" + postfix],
-            newSkuInsuranceFee,
-            sku["tax" + postfix],
-            sku["additionalInsuranceFee" + postfix],
-          );
+          sku["finalProfit" + postfix] = calc.finalProfit(sku, postfix);
 
           sku.insuranceFee = sku.insuranceFeeInCurrentYear + sku.insuranceFeeInNextYear;
           sku.finalProfit = sku.finalProfitInCurrentYear + sku.finalProfitInNextYear;
@@ -79,7 +74,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (reports, listGoods, manda
           }
 
           sku.insuranceFee = newSkuInsuranceFee;
-          sku.finalProfit = calc.finalProfit(sku.preTaxProfit, newSkuInsuranceFee, sku.tax, sku.additionalInsuranceFee);
+          sku.finalProfit = calc.finalProfit(sku, postfix);
 
           var recalculatedInsuranceFeeForSkuMetrics = skuMetrics.insuranceFee - prevSkuInsuranceFee + newSkuInsuranceFee;
           var recalculatedNetProfitForSkuMetrics = skuMetrics.netProfit - prevSkuFinalProfit + sku.finalProfit;

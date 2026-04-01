@@ -14,6 +14,7 @@ var getRequiredTotalsField = async (report) => {
     totalDeductionOrPayment: report.totalDeductionOrPayment,
     totalAdvertisingCosts: report.totalAdvertisingCosts,
     totalProductCosts: report.totalProductCosts,
+    totalOtherExpenses: report.totalOtherExpenses,
     totalTaxAmount: report.totalTaxAmount,
     totalInsuranceFee: report.totalInsuranceFee,
     totalAdditionalInsuranceFee: report.totalAdditionalInsuranceFee,
