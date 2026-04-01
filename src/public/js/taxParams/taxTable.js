@@ -14,6 +14,7 @@ var createTaxTable = async (taxParams) => {
       finalProfit,
       retailAmount,
       paidTaxAmount,
+      taxableAmount,
       paidInsuranceFee,
       mandatoryInsuranceFee,
       additionalInsuranceFee,
@@ -30,6 +31,7 @@ var createTaxTable = async (taxParams) => {
     var mandatoryInsuranceFeeRateTd = createTdElement(mandatoryInsuranceFeeRate, "mandatoryInsuranceFeeRate-" + year);
 
     var retailAmountTd = createTdElement(retailAmount);
+    var taxableAmountTd = createTdElement(taxableAmount);
 
     if (paidTaxAmount <= 0) {
       paidTaxAmount = 0;
@@ -47,6 +49,7 @@ var createTaxTable = async (taxParams) => {
       insuranceFeeInfoTdElem,
       mandatoryInsuranceFeeRateTd,
       retailAmountTd,
+      taxableAmountTd,
       paidTaxAmountTd,
       additionalInsuranceFeeTd,
       finalProfitTd,
