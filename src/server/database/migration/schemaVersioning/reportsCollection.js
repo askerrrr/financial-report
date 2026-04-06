@@ -1,6 +1,6 @@
-module.exports = {
-  skuSchemaVersion: 1,
-  reportSchemaVersion: 1,
-  reportsSchemaVersion: 1,
-  recordToSchemaVersion: 1,
-};
+var skuSchemaVersion = 1;
+var reportSchemaVersion = 1;
+var reportsSchemaVersion = 1;
+var recordToSchemaVersion = 1;
+
+export { skuSchemaVersion, reportSchemaVersion, reportsSchemaVersion, recordToSchemaVersion };

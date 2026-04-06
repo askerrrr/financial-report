@@ -1,4 +1,4 @@
-var excludeFutureTaxParams = require("../services/excludeFutureTaxParams");
+import excludeFutureTaxParams from "../services/excludeFutureTaxParams.js";
 
 var getTaxParams = async (req, res, next) => {
   var { getTaxParamsFromDb } = req.app.locals.taxParamsCollectionServices;
@@ -11,4 +11,4 @@ var getTaxParams = async (req, res, next) => {
   return res.json({ taxParams: filteredTaxParams });
 };
 
-module.exports = getTaxParams;
+export default getTaxParams;

@@ -1,5 +1,4 @@
-var { DatabaseError } = require("../../../../customError");
-
+import { DatabaseError } from "../../../../customError/index.js";
 var deleteReportFromDb = async (collection, userId, reportId, session) => {
   try {
     var doc = await collection.findOne({ userId, "reports.reportId": reportId }, { "reports.$": 1 }, { session: session });
@@ -11,4 +10,4 @@ var deleteReportFromDb = async (collection, userId, reportId, session) => {
   }
 };
 
-module.exports = deleteReportFromDb;
+export default deleteReportFromDb;

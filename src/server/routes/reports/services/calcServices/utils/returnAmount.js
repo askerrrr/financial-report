@@ -4,4 +4,4 @@ var calcReturnAmount = (report) => {
   return returnAmount;
 };
 
-module.exports = calcReturnAmount;
+export default calcReturnAmount;

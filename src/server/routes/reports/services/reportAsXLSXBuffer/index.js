@@ -1,9 +1,9 @@
-var ExcelJS = require("exceljs");
-var createSKUsSheet = require("./services/createSKUsSheet");
-var getMonthlySummary = require("./services/getMonthlySummary");
-var createTotalsSheet = require("./services/createTotalsSheet");
-var writeTotalsTitleToSheet = require("./services/writeTotalsTitleToSheet");
-var writeTotalValuesToSheet = require("./services/writeTotalValuesToSheet");
+import ExcelJS from "exceljs";
+import createSKUsSheet from "./services/createSKUsSheet.js";
+import getMonthlySummary from "./services/getMonthlySummary.js";
+import createTotalsSheet from "./services/createTotalsSheet.js";
+import writeTotalsTitleToSheet from "./services/writeTotalsTitleToSheet.js";
+import writeTotalValuesToSheet from "./services/writeTotalValuesToSheet.js";
 
 var getReportAsXLSXBuffer = async (report) => {
   var workbook = new ExcelJS.Workbook();
@@ -39,4 +39,4 @@ var getMonthlySummaryAsXLSXBuffer = async (reports) => {
   return buffer;
 };
 
-module.exports = { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer };
+export { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer };

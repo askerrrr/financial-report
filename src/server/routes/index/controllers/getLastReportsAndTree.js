@@ -1,4 +1,4 @@
-var getReportTreeDto = require("../services/getReportTreeDto");
+import getReportTreeDto from "../services/getReportTreeDto.js";
 
 var getLastNonEmptyReportIds = (lastYear) => lastYear?.months.find((item) => item?.reportIds.length)?.reportIds.map(({ reportId }) => reportId);
 
@@ -35,4 +35,4 @@ var getLastReportsAndTree = async (req, res, next) => {
   return res.json({ lastReports: reports, reportTree: reportTreeDto });
 };
 
-module.exports = getLastReportsAndTree;
+export default getLastReportsAndTree;

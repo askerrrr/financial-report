@@ -1,7 +1,7 @@
-var Joi = require("joi");
-var { randomBytes } = require("node:crypto");
-var wbapi = require("../../reports/services/WBAPI");
-var parseReports = require("../../reports/services/reportParsing");
+import Joi from "joi";
+import { randomBytes } from "node:crypto";
+import wbapi from "../../reports/services/WBAPI/index.js";
+import parseReports from "../../reports/services/reportParsing/index.js";
 
 var schema = Joi.object({
   dateFrom: Joi.string().required(),
@@ -69,4 +69,4 @@ var getReportFromWBAPI = async (req, res, next) => {
   return res.json({ id, report, downloadReportLink });
 };
 
-module.exports = getReportFromWBAPI;
+export default getReportFromWBAPI;

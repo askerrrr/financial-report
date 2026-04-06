@@ -1,6 +1,6 @@
-var Joi = require("joi");
-var { dbClient } = require("../../../database/");
-var recalculateSkuMetricsAfterReportDeletion = require("../services/different/recalculateSkuMetricsAfterReportDeletion");
+import Joi from "joi";
+import { dbClient } from "../../../database/index.js";
+import recalculateSkuMetricsAfterReportDeletion from "../services/different/recalculateSkuMetricsAfterReportDeletion.js";
 
 var schema = Joi.object({ reportId: Joi.number().required() });
 
@@ -54,14 +54,14 @@ var deleteReport = async (req, res, next) => {
 
     return res.sendStatus(200);
   } catch (e) {
-    // console.log({ e });
+    console.log({ e });
     res.sendStatus(304);
   } finally {
     await session.endSession();
   }
 };
 
-module.exports = deleteReport;
+export default deleteReport;
 
 var recalculateTaxParams = function (taxParams, report, propPostfix = "") {
   if (report["totalFinalProfit" + propPostfix]) {

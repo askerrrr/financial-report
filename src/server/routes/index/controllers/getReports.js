@@ -1,4 +1,4 @@
-var Joi = require("joi");
+import Joi from "joi";
 
 var schema = Joi.object({ userId: Joi.string().required(), reportIds: Joi.array().items(Joi.number().required()).required() });
 
@@ -26,4 +26,4 @@ var getReports = async (req, res, next) => {
   return res.json({ reports });
 };
 
-module.exports = getReports;
+export default getReports;

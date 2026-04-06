@@ -1,4 +1,4 @@
-var { getReportAsXLSXBuffer } = require("../../reports/services/reportAsXLSXBuffer");
+import { getReportAsXLSXBuffer } from "../../reports/services/reportAsXLSXBuffer/index.js";
 
 var downloadReportAsXLSX = async (req, res, next) => {
   var { id, reportId } = req.params;
@@ -19,4 +19,4 @@ var downloadReportAsXLSX = async (req, res, next) => {
   return res.send(buffer);
 };
 
-module.exports = downloadReportAsXLSX;
+export default downloadReportAsXLSX;

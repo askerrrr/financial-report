@@ -1,4 +1,4 @@
-var Joi = require("joi");
+import Joi from "joi";
 
 var schema = Joi.object({
   userId: Joi.string().required(),
@@ -25,4 +25,4 @@ var changeSkuDisableStatus = async (req, res, next) => {
   return res.sendStatus(200);
 };
 
-module.exports = changeSkuDisableStatus;
+export default changeSkuDisableStatus;

@@ -4,4 +4,4 @@ var getAllUsersFromDb = async (collection) => {
   return { users };
 };
 
-module.exports = getAllUsersFromDb;
+export default getAllUsersFromDb;

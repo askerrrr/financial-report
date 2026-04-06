@@ -8,4 +8,4 @@ var saveUpdatedSkuMetrics = async (collection, userId, skuId, metrics, session) 
   return result;
 };
 
-module.exports = saveUpdatedSkuMetrics;
+export default saveUpdatedSkuMetrics;

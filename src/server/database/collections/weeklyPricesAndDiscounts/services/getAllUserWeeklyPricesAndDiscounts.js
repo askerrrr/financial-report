@@ -7,4 +7,4 @@ var getAllUserWeeklyPricesAndDiscounts = async (collection) => {
   return data;
 };
 
-module.exports = getAllUserWeeklyPricesAndDiscounts;
+export default getAllUserWeeklyPricesAndDiscounts;

@@ -1,4 +1,4 @@
-var { WBAPIError } = require("../../../../../customError");
+import { WBAPIError } from "../../../../../customError/index.js";
 
 var getCreationStatus = async (url, token, userId) => {
   var res = await fetch(url, {
@@ -13,6 +13,8 @@ var getCreationStatus = async (url, token, userId) => {
 
     return { status };
   }
+
+  var errMsg;
 
   switch (res.status) {
     case 400:
@@ -70,4 +72,4 @@ var checkPaidStorageReportCreationStatus = async (taskId, token, userId) => {
   });
 };
 
-module.exports = checkPaidStorageReportCreationStatus;
+export default checkPaidStorageReportCreationStatus;

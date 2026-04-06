@@ -1,4 +1,4 @@
-var { WBAPIError } = require("../../../../../../customError");
+import { WBAPIError } from "../../../../../../customError/index.js";
 
 var getGoodsListFromWBAPI = async (userId, token) => {
   var url = "https://discounts-prices-api.wildberries.ru/api/v2/list/goods/filter?limit=1000";
@@ -11,6 +11,8 @@ var getGoodsListFromWBAPI = async (userId, token) => {
     var { listGoods } = data.data;
     return { rawListGoogs: listGoods };
   }
+
+  var errMsg;
 
   switch (res.status) {
     case 400:
@@ -35,4 +37,4 @@ var getGoodsListFromWBAPI = async (userId, token) => {
   throw new WBAPIError(userId, 400, errMsg);
 };
 
-module.exports = getGoodsListFromWBAPI;
+export default getGoodsListFromWBAPI;

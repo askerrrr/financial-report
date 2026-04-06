@@ -1,5 +1,5 @@
-var Joi = require("joi");
-var s3 = require("../services/s3");
+import Joi from "joi";
+import s3 from "../services/s3/index.js";
 
 var schema = Joi.object({ skuName: Joi.string().required() });
 
@@ -18,4 +18,4 @@ var skuPhotoUpload = async (req, res, next) => {
   return res.sendStatus(httpStatusCode);
 };
 
-module.exports = skuPhotoUpload;
+export default skuPhotoUpload;

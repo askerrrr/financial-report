@@ -3,4 +3,4 @@ var getWeeklyPricesAndDiscounts = async (collection, userId) => {
   return { weeklyPricesAndDiscounts };
 };
 
-module.exports = getWeeklyPricesAndDiscounts;
+export default getWeeklyPricesAndDiscounts;

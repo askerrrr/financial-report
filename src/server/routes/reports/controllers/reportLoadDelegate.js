@@ -1,6 +1,6 @@
-var Joi = require("joi");
-var shouldWaitBeforeNextRequest = require("../services/different/shouldWaitBeforeNextRequest");
-var sendReportPeriodsToReportLoader = require("../services/different/sendReportPeriodsToReportLoader");
+import Joi from "joi";
+import shouldWaitBeforeNextRequest from "../services/different/shouldWaitBeforeNextRequest.js";
+import sendReportPeriodsToReportLoader from "../services/different/sendReportPeriodsToReportLoader.js";
 
 var schema = Joi.object({
   userId: Joi.string().required(),
@@ -57,4 +57,4 @@ var reportLoadDelegate = async (req, res, next) => {
   next();
 };
 
-module.exports = reportLoadDelegate;
+export default reportLoadDelegate;

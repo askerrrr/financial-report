@@ -14,4 +14,4 @@ var filterCostsForReportSkus = async (skusFromReport, skusLastCostPrice) => {
   return { skusLastCostPrice: filteredSkusLastCostPrice };
 };
 
-module.exports = filterCostsForReportSkus;
+export default filterCostsForReportSkus;

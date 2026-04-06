@@ -1,4 +1,4 @@
-var { fontStyles, alignmentStyles } = require("./styles");
+import { fontStyles, alignmentStyles } from "./styles.js";
 
 var writeSKU = (sku, ws, cellNumOfSkuName) => {
   var { id, skuName, price, discount, discountedPrice } = sku;
@@ -15,4 +15,4 @@ var writeSKU = (sku, ws, cellNumOfSkuName) => {
   return ws;
 };
 
-module.exports = writeSKU;
+export default writeSKU;

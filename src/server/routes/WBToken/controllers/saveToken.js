@@ -1,6 +1,6 @@
-var Joi = require("joi");
-var { dbClient } = require("../../../database");
-var listGoodsLoader = require("../../goods/services/listGoodsLoader");
+import Joi from "joi";
+import { dbClient } from "../../../database/index.js";
+import listGoodsLoader from "../../goods/services/listGoodsLoader.js";
 
 var schema = Joi.object({ token: Joi.string().required() });
 
@@ -43,4 +43,4 @@ var saveToken = async (req, res, next) => {
   }
 };
 
-module.exports = saveToken;
+export default saveToken;

@@ -1,4 +1,4 @@
-var { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 var uploadFile = async (Key, Body) => {
   var client = new S3Client(JSON.parse(process.env.S3_CLIENT_OPTIONS));
@@ -7,4 +7,4 @@ var uploadFile = async (Key, Body) => {
   return { httpStatusCode: res["$metadata"].httpStatusCode };
 };
 
-module.exports = uploadFile;
+export default uploadFile;

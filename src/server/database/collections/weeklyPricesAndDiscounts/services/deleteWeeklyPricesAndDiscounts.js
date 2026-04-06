@@ -4,4 +4,4 @@ var deleteWeeklyPricesAndDiscounts = async (collection, userId) => {
   return result;
 };
 
-module.exports = deleteWeeklyPricesAndDiscounts;
+export default deleteWeeklyPricesAndDiscounts;

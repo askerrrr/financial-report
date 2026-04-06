@@ -3,7 +3,7 @@ var verifyAuthorization = (req, res, next) => {
 
   if (!payload?.role) {
     res.clearCookie("token");
-    return res.sendFile(join(__dirname, "../../public/html/decodeReportWithoutRegistration/index.html"));
+    return res.sendFile(join(import.meta.dirname, "../../public/html/decodeReportWithoutRegistration/index.html"));
   }
 
   if (payload.role == "user") {
@@ -15,4 +15,4 @@ var verifyAuthorization = (req, res, next) => {
   return res.sendStatus(403);
 };
 
-module.exports = verifyAuthorization;
+export default verifyAuthorization;

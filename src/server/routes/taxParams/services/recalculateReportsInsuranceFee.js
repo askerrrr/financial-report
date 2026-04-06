@@ -1,4 +1,4 @@
-var calc = require("../../reports/services/calcServices");
+import calc from "../../reports/services/calcServices/index.js";
 
 var recalculateReportsInsuranceFee = async (year, reports, newPercent, taxParams) => {
   var { paidTaxAmount, mandatoryInsuranceFee } = taxParams;
@@ -24,7 +24,7 @@ var recalculateReportsInsuranceFee = async (year, reports, newPercent, taxParams
 
             sku.profitMargin = calc.sku.profitMargin(sku.revenue, sku.finalProfit);
           }
-        })
+        }),
       );
     }
   }
@@ -32,4 +32,4 @@ var recalculateReportsInsuranceFee = async (year, reports, newPercent, taxParams
   return { reports, newPercent, recalculatedPaidInsuranceFee };
 };
 
-module.exports = recalculateReportsInsuranceFee;
+export default recalculateReportsInsuranceFee;

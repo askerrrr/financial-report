@@ -1,8 +1,8 @@
-var { FormDataError } = require("../../../customError");
+import { FormDataError } from "../../../customError/index.js";
 
 var checkPasswd = async (pwd) => {
-if(!pwd){
-    throw new FormDataError('Пароль не может быть пустым')
+  if (!pwd) {
+    throw new FormDataError("Пароль не может быть пустым");
   }
 
   pwd = pwd.trim();
@@ -24,4 +24,4 @@ if(!pwd){
   return true;
 };
 
-module.exports = checkPasswd
+export default checkPasswd;

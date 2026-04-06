@@ -20,19 +20,16 @@ var getDateToByDateFrom = async (dateFrom) => {
   }
 
   var { mondays } = getMondaysOrSundaysOfMonth(dateFrom, "monday");
-  console.log({ mondays });
   var dateFromISO = new Date(dateFrom).toISOString();
   var mondayIndex = mondays.indexOf(dateFromISO);
 
   var { sundays } = getMondaysOrSundaysOfMonth(dateFrom, "sunday");
   var sundayIndex = mondayIndex + 1;
 
-  console.log({ mondayIndex, sundayIndex, sundays });
-
   if (mondays.length > sundays.length) {
     sundayIndex--;
   }
-  console.log({ sundayIndex });
+
   dateTo = sundays[sundayIndex];
 
   var trancatedDate = dateTo.split("T")[0];

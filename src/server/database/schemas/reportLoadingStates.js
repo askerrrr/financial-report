@@ -1,6 +1,6 @@
-var { Schema } = require("mongoose");
+import { Schema } from "mongoose";
 
-var report_loading_states_schema = new Schema({
+var reportLoadingStatesSchema = new Schema({
   userId: { type: String, required: true },
   requiredReportPeriods: { type: Array, required: false },
   reportsQueue: { type: Array, required: false },
@@ -11,4 +11,4 @@ var report_loading_states_schema = new Schema({
   isReportLoadingDelayed: { type: Boolean, requred: true, default: false },
 });
 
-module.exports = report_loading_states_schema;
+export default reportLoadingStatesSchema;

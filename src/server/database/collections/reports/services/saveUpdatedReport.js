@@ -1,12 +1,11 @@
-var { DatabaseError } = require("../../../../customError");
-
+import { DatabaseError } from "../../../../customError/index.js";
 var saveUpdatedReport = async (collection, userId, reportId, report) => {
   try {
     var result = await collection.updateOne(
       { userId, "reports.reportId": reportId },
       {
         $set: { "reports.$": report },
-      }
+      },
     );
 
     return result.acknowledged;
@@ -15,4 +14,4 @@ var saveUpdatedReport = async (collection, userId, reportId, report) => {
   }
 };
 
-module.exports = saveUpdatedReport;
+export default saveUpdatedReport;

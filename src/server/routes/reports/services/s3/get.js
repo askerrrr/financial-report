@@ -1,4 +1,4 @@
-var { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 
 var getFile = async (Key) => {
   try {
@@ -14,4 +14,4 @@ var getFile = async (Key) => {
   }
 };
 
-module.exports = getFile;
+export default getFile;

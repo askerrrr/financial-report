@@ -18,4 +18,4 @@ var setStylesToSkuNameCell = function (ws, indentToNextSku) {
   return ws;
 };
 
-module.exports = setStylesToSkuNameCell;
+export default setStylesToSkuNameCell;

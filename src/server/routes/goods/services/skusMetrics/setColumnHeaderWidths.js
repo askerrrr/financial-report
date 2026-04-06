@@ -11,4 +11,4 @@ var setColumnHeaderWidths = (ws, listGoods) => {
   return ws;
 };
 
-module.exports = setColumnHeaderWidths;
+export default setColumnHeaderWidths;

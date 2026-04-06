@@ -1,3 +1,3 @@
 var adminCollectionServices= {}
 
-module.exports = adminCollectionServices
+export default adminCollectionServices

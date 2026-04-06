@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../../customError");
+import { DatabaseError } from "../../../../customError/index.js";
 
 var deleteReportFromReportTree = async (collection, userId, year, month, reportId, session) => {
   try {
@@ -28,4 +28,4 @@ var deleteReportFromReportTree = async (collection, userId, year, month, reportI
   }
 };
 
-module.exports = deleteReportFromReportTree;
+export default deleteReportFromReportTree;

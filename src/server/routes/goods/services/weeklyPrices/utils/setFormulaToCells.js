@@ -31,4 +31,4 @@ var setFormulaToCells = (ws, skusQty) => {
   return ws;
 };
 
-module.exports = setFormulaToCells;
+export default setFormulaToCells;

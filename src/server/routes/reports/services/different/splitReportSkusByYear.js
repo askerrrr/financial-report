@@ -16,4 +16,4 @@ var splitReportSkusByYear = (report) => {
   return { startYearSkus, endYearSkus };
 };
 
-module.exports = splitReportSkusByYear;
+export default splitReportSkusByYear;

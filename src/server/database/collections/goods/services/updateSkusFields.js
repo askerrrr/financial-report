@@ -38,4 +38,4 @@ var updateSkusFields = async (collection, userId, updatedSkus) => {
   return result;
 };
 
-module.exports = updateSkusFields;
+export default updateSkusFields;

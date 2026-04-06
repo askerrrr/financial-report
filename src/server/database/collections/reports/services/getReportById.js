@@ -1,4 +1,4 @@
-var { DatabaseError, ReportNotFoundError } = require("../../../../customError");
+import { DatabaseError, ReportNotFoundError } from "../../../../customError/index.js";
 
 var getReportById = async (collection, userId, reportId, session) => {
   var sessionOpt = session ? { session: session } : {};
@@ -19,4 +19,4 @@ var getReportById = async (collection, userId, reportId, session) => {
   }
 };
 
-module.exports = getReportById;
+export default getReportById;

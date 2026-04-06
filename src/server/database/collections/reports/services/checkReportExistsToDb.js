@@ -1,5 +1,4 @@
-var { DatabaseError } = require("../../../../customError");
-
+import { DatabaseError } from "../../../../customError/index.js";
 var checkReportExistsToDb = async (collection, userId, dateFrom, dateTo) => {
   try {
     var report = await collection.findOne({ userId, "reports.dateFrom": dateFrom, "reports.dateTo": dateTo });
@@ -10,4 +9,4 @@ var checkReportExistsToDb = async (collection, userId, dateFrom, dateTo) => {
   }
 };
 
-module.exports = checkReportExistsToDb;
+export default checkReportExistsToDb;

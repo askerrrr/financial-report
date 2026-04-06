@@ -1,1 +1,4 @@
-module.exports = { taxYearSchemaVersion: 1, taxParamsSchemaVersion: 1 };
+var taxYearSchemaVersion = 1;
+var taxParamsSchemaVersion = 1;
+
+export { taxYearSchemaVersion, taxParamsSchemaVersion };

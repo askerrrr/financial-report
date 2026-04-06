@@ -1,16 +1,16 @@
-var { reportCollection } = require("../../connections");
+import { reportCollection } from "../../connections/index.js";
 
-var getReportById = require("./services/getReportById");
-var saveReportToDb = require("./services/saveReportToDb");
-var saveUpdatedReport = require("./services/saveUpdatedReport");
-var checkReportExistsToDb = require("./services/checkReportExistsToDb");
-var saveUpdatedReports = require("./services/saveUpdatedReports");
-var deleteReportFromDb = require("./services/deleteReportFromDb");
-var getReportsByUserId = require("./services/getReportsByUserId");
-var updateReportPeriod = require("./services/updateReportPeriod");
-var deleteAllReportsByUserId = require("./services/deleteAllReportsByUserId");
-var getAllDataFromReportCollection = require("./services/getAllDataFromReportCollection");
-var updateReportFinancialAccountingStatus = require("./services/updateReportFinancialAccountingStatus");
+import getReportById from "./services/getReportById.js";
+import saveReportToDb from "./services/saveReportToDb.js";
+import saveUpdatedReport from "./services/saveUpdatedReport.js";
+import checkReportExistsToDb from "./services/checkReportExistsToDb.js";
+import saveUpdatedReports from "./services/saveUpdatedReports.js";
+import deleteReportFromDb from "./services/deleteReportFromDb.js";
+import getReportsByUserId from "./services/getReportsByUserId.js";
+import updateReportPeriod from "./services/updateReportPeriod.js";
+import deleteAllReportsByUserId from "./services/deleteAllReportsByUserId.js";
+import getAllDataFromReportCollection from "./services/getAllDataFromReportCollection.js";
+import updateReportFinancialAccountingStatus from "./services/updateReportFinancialAccountingStatus.js";
 
 var reportCollectionServices = {
   getAllDataFromReportCollection: () => getAllDataFromReportCollection(reportCollection),
@@ -32,4 +32,4 @@ var reportCollectionServices = {
   deleteAllReportsByUserId: (userId) => deleteAllReportsByUserId(reportCollection, userId),
 };
 
-module.exports = reportCollectionServices;
+export default reportCollectionServices;

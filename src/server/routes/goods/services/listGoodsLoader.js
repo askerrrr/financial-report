@@ -1,5 +1,5 @@
-var wbapi = require("../../reports/services/WBAPI");
-var extractRequiredListGoodsData = require("./extractRequiredListGoodsData");
+import wbapi from "../../reports/services/WBAPI/index.js";
+import extractRequiredListGoodsData from "./extractRequiredListGoodsData.js";
 
 var listGoodsLoader = async (userId, token) => {
   var { rawListGoogs } = await wbapi.getListGoods(userId, token);
@@ -8,4 +8,4 @@ var listGoodsLoader = async (userId, token) => {
   return { listGoods };
 };
 
-module.exports = listGoodsLoader;
+export default listGoodsLoader;

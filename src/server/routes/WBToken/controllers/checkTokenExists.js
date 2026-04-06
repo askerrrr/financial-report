@@ -5,4 +5,4 @@ var checkTokenExists = async (req, res, next) => {
   return token.length ? res.sendStatus(200) : res.sendStatus(404);
 };
 
-module.exports = checkTokenExists;
+export default checkTokenExists;

@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../../customError");
+import { DatabaseError } from "../../../../customError/index.js";
 
 var saveWBTokenToDb = async (collection, userId, token, session) => {
   try {
@@ -9,7 +9,7 @@ var saveWBTokenToDb = async (collection, userId, token, session) => {
       },
       {
         session: session,
-      }
+      },
     );
 
     return result.modifiedCount;
@@ -18,4 +18,4 @@ var saveWBTokenToDb = async (collection, userId, token, session) => {
   }
 };
 
-module.exports = saveWBTokenToDb;
+export default saveWBTokenToDb;

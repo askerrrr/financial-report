@@ -1,6 +1,6 @@
-var wbapi = require("../../reports/services/WBAPI");
-var splitListGoodsByExistence = require("../services/splitListGoodsByExistence");
-var extractRequiredListGoodsData = require("../../goods/services/extractRequiredListGoodsData");
+import wbapi from "../../reports/services/WBAPI/index.js";
+import splitListGoodsByExistence from "../services/splitListGoodsByExistence.js";
+import extractRequiredListGoodsData from "../../goods/services/extractRequiredListGoodsData.js";
 
 var updateDataIntoListGoods = async (req, res, next) => {
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
@@ -28,4 +28,4 @@ var updateDataIntoListGoods = async (req, res, next) => {
   return res.sendStatus(200);
 };
 
-module.exports = updateDataIntoListGoods;
+export default updateDataIntoListGoods;

@@ -1,5 +1,5 @@
-var calc = require("../calcServices");
-var recalculateFinalSkuMetrics = require("./recalculateFinalSkuMetrics");
+import calc from "../calcServices/index.js";
+import recalculateFinalSkuMetrics from "./recalculateFinalSkuMetrics.js";
 
 var processOfSkuCostPriceSetting = async (sku, skuFromListGoods, taxParams, isCrossYearReport, previousFinalSkuData = null) => {
   if (isCrossYearReport) {
@@ -76,4 +76,4 @@ var processOfSkuCostPriceSetting = async (sku, skuFromListGoods, taxParams, isCr
   }
 };
 
-module.exports = processOfSkuCostPriceSetting;
+export default processOfSkuCostPriceSetting;

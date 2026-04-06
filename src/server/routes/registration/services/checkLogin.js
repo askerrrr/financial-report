@@ -1,8 +1,8 @@
-var { FormDataError } = require("../../../customError");
+import { FormDataError } from "../../../customError/index.js";
 
 var checkLogin = async (login) => {
-  if(!login){
-    throw new FormDataError('Логин не может быть пустым', login)
+  if (!login) {
+    throw new FormDataError("Логин не может быть пустым", login);
   }
 
   login = login.trim();
@@ -15,9 +15,9 @@ var checkLogin = async (login) => {
     throw new FormDataError("Максимальная длина логина равна 20", login);
   }
 
-  var regExp = /[a-zA-Z0-9]/gi
+  var regExp = /[a-zA-Z0-9]/gi;
 
-  var result = login.match(regExp)
+  var result = login.match(regExp);
 
   if (result.length !== login.length) {
     throw new FormDataError("Логин должен содержать только латинские буквы или цифры", login);
@@ -26,4 +26,4 @@ var checkLogin = async (login) => {
   return true;
 };
 
-module.exports = checkLogin
+export default checkLogin;

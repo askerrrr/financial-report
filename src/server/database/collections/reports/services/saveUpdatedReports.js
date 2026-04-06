@@ -1,5 +1,4 @@
-var { DatabaseError } = require("../../../../customError");
-
+import { DatabaseError } from "../../../../customError/index.js";
 var createQuery = (reports) => {
   var query = {};
   var arrayFilters = [];
@@ -27,4 +26,4 @@ var saveUpdatedReports = async (collection, userId, reports, session) => {
   }
 };
 
-module.exports = saveUpdatedReports;
+export default saveUpdatedReports;

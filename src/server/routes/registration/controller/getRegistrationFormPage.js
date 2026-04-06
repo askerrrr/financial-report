@@ -1,5 +1,5 @@
-var { join } = require("node:path");
+import { join } from "node:path";
 
-var getRegistrationFormPage = async (req, res, next) => res.sendFile(join(__dirname, "../../../../public/html/registration/index.html"));
+var getRegistrationFormPage = async (req, res, next) => res.sendFile(join(import.meta.dirname, "../../../../public/html/registration/index.html"));
 
-module.exports = getRegistrationFormPage;
+export default getRegistrationFormPage;

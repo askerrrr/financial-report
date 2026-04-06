@@ -8,4 +8,4 @@ var setCostPriceToSkuBySkuIndex = (skus, skuIndex, costPrice) => {
   return { updatedSKUS: skus, updatedSKU: sku };
 };
 
-module.exports = setCostPriceToSkuBySkuIndex;
+export default setCostPriceToSkuBySkuIndex;

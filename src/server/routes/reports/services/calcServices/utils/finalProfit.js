@@ -1,4 +1,4 @@
-var truncateNum = require("../../reportParsing/truncateNum");
+import truncateNum from "../../reportParsing/truncateNum.js";
 
 var calcFinalProfit = (sku, propPostfix = "") => {
   var finalProfit =
@@ -7,4 +7,4 @@ var calcFinalProfit = (sku, propPostfix = "") => {
   return truncateNum(finalProfit);
 };
 
-module.exports = calcFinalProfit;
+export default calcFinalProfit;

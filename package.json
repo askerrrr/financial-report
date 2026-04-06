@@ -24,7 +24,7 @@
     "mongoose": "^8.14.1",
     "multer": "^1.4.5-lts.2"
   },
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
     "@babel/core": "^7.28.4",
     "@babel/preset-env": "^7.28.3",

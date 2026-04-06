@@ -1,4 +1,4 @@
-var { WBAPIError } = require("../../../../../../customError");
+import { WBAPIError } from "../../../../../../customError/index.js";
 
 var setPricesAndDiscounts = async (userId, token, weeklyPricesAndDiscounts) => {
   var url = "https://discounts-prices-api.wildberries.ru/api/v2/upload/task";
@@ -16,6 +16,8 @@ var setPricesAndDiscounts = async (userId, token, weeklyPricesAndDiscounts) => {
     var { id, alreadyExists } = data;
     return { id, alreadyExists };
   }
+
+  var errMsg;
 
   switch (res.status) {
     case 400:
@@ -42,4 +44,4 @@ var setPricesAndDiscounts = async (userId, token, weeklyPricesAndDiscounts) => {
   throw new WBAPIError(userId, 400, errMsg);
 };
 
-module.exports = setPricesAndDiscounts;
+export default setPricesAndDiscounts;

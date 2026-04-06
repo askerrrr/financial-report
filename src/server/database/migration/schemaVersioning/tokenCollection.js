@@ -1,1 +1,2 @@
-module.exports = { tokenSchemaVersion: 1 };
+var tokenSchemaVersion = 1;
+export default tokenSchemaVersion;

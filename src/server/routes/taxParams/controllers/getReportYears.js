@@ -10,4 +10,4 @@ var getReportYears = async (req, res, next) => {
   return res.json({ years });
 };
 
-module.exports = getReportYears;
+export default getReportYears;

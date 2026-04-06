@@ -5,4 +5,4 @@ var setStylesToFirstColumn = function (ws) {
   return ws;
 };
 
-module.exports = setStylesToFirstColumn;
+export default setStylesToFirstColumn;

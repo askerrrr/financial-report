@@ -1,11 +1,11 @@
-var wbapi = require("../WBAPI");
-var sortYearsTree = require("./sortYearTree");
-var parseReports = require("../reportParsing");
-var dbutils = require("../../../../database/collections");
-var addNewSkusToListGoods = require("./addNewSkusToListGoods");
-var insertReportToReportTree = require("../reportTreeBuilder");
-var updateListGoodsMetrics = require("../different/updateListGoodsMetrics");
-var schemaVersioning = require("../../../../database/migration/schemaVersioning/reportsCollection");
+import wbapi from "../WBAPI/index.js";
+import sortYearsTree from "./sortYearTree.js";
+import parseReports from "../reportParsing/index.js";
+import addNewSkusToListGoods from "./addNewSkusToListGoods.js";
+import dbutils from "../../../../database/collections/index.js";
+import insertReportToReportTree from "../reportTreeBuilder/index.js";
+import updateListGoodsMetrics from "../different/updateListGoodsMetrics.js";
+import { recordToSchemaVersion, reportSchemaVersion } from "../../../../database/migration/schemaVersioning/reportsCollection.js";
 
 var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var { saveReportToDb } = dbutils.reportCollectionServices;
@@ -48,8 +48,8 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   report.dateFrom = dateFrom;
   report.reportId = reportId;
   report.crossesTaxYears = isCrossYearReport;
-  report.schemaVersion = schemaVersioning.reportSchemaVersion;
-  report.recordTo = { year, month, schemaVersion: schemaVersioning.recordToSchemaVersion };
+  report.schemaVersion = reportSchemaVersion;
+  report.recordTo = { year, month, schemaVersion: recordToSchemaVersion };
 
   var { listGoods } = await getListGoodsFromDb(userId, session);
   var { listGoodsWithNewSkus } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearReport, startYear, endYear);
@@ -63,4 +63,4 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   return { reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount };
 };
 
-module.exports = reportsProcessing;
+export default reportsProcessing;

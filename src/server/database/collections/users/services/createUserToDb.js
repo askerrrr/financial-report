@@ -1,5 +1,5 @@
-var argon2 = require("argon2");
-var {
+import argon2 from "argon2";
+import {
   userCollection,
   goodsCollection,
   tokenCollection,
@@ -8,9 +8,9 @@ var {
   reportsTreeCollection,
   reportLoadingStatesCollection,
   weeklyPricesAndDiscountsCollection,
-} = require("../../../connections");
-var { tokenSchemaVersion } = require("../../../migration/schemaVersioning/tokenCollection");
-var { reportsSchemaVersion } = require("../../../migration/schemaVersioning/reportsCollection");
+} from "../../../connections/index.js";
+import tokenSchemaVersion from "../../../migration/schemaVersioning/tokenCollection.js";
+import { reportsSchemaVersion } from "../../../migration/schemaVersioning/reportsCollection.js";
 
 var createUserToDb = async ({ userId, login, passwd }, session) => {
   var hashedPasswd = await argon2.hash(passwd + "", "youSecretKey");
@@ -25,4 +25,4 @@ var createUserToDb = async ({ userId, login, passwd }, session) => {
   await reportCollection.insertOne({ userId, schemaVersion: reportsSchemaVersion }, session);
 };
 
-module.exports = createUserToDb;
+export default createUserToDb;

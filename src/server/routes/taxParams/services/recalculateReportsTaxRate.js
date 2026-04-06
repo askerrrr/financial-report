@@ -1,4 +1,4 @@
-var calc = require("../../reports/services/calcServices");
+import calc from "../../reports/services/calcServices/index.js";
 
 var recalculateReportsTaxRate = async (newTaxRate, year, reports) => {
   for (var report of reports) {
@@ -15,4 +15,4 @@ var recalculateReportsTaxRate = async (newTaxRate, year, reports) => {
 
   return reports;
 };
-module.exports = recalculateReportsTaxRate;
+export default recalculateReportsTaxRate;

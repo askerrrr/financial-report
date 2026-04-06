@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../../customError");
+import { DatabaseError } from "../../../../customError/index.js";
 
 var getTaxParamsFromDb = async (collection, userId, year, session) => {
   try {
@@ -15,4 +15,4 @@ var getTaxParamsFromDb = async (collection, userId, year, session) => {
   }
 };
 
-module.exports = getTaxParamsFromDb;
+export default getTaxParamsFromDb;

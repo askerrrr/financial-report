@@ -3,4 +3,4 @@ var getTaxParamKeyName = (data) => {
   return { taxParamKeyName };
 };
 
-module.exports = getTaxParamKeyName;
+export default getTaxParamKeyName;

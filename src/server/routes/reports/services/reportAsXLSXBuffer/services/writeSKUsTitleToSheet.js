@@ -1,4 +1,4 @@
-var { columns } = require("./writeSKUsToSheet");
+import { columns } from "./writeSKUsToSheet.js";
 
 var titles = [
   "Артикул",
@@ -48,4 +48,4 @@ var writeSKUsTitleToSheet = async (sheet) => {
   return sheet;
 };
 
-module.exports = writeSKUsTitleToSheet;
+export default writeSKUsTitleToSheet;

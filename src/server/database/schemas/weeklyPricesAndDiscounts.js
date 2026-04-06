@@ -1,4 +1,4 @@
-var { Schema } = require("mongoose");
+import { Schema } from "mongoose";
 
 var weekDaySchema = new Schema(
   {
@@ -6,7 +6,7 @@ var weekDaySchema = new Schema(
     price: { type: Number, required: true },
     discount: { type: Number, required: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 var weeklyPricesAndDiscountsSchema = new Schema({
@@ -15,4 +15,4 @@ var weeklyPricesAndDiscountsSchema = new Schema({
   weeklyPricesAndDiscounts: [{ type: [weekDaySchema], required: false }],
 });
 
-module.exports = weeklyPricesAndDiscountsSchema;
+export default weeklyPricesAndDiscountsSchema;

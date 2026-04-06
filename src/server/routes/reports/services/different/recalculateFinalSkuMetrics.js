@@ -1,5 +1,5 @@
-var calc = require("../calcServices");
-var truncateNum = require("../reportParsing/truncateNum");
+import calc from "../calcServices/index.js";
+import truncateNum from "../reportParsing/truncateNum.js";
 
 var recalculateFinalSkuMetrics = (year, skuFromListGoods, sku, previousFinalSkuData, postfix = "") => {
   var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === year);
@@ -18,4 +18,4 @@ var recalculateFinalSkuMetrics = (year, skuFromListGoods, sku, previousFinalSkuD
   return skuFromListGoods;
 };
 
-module.exports = recalculateFinalSkuMetrics;
+export default recalculateFinalSkuMetrics;

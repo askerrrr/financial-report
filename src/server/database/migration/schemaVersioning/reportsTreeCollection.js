@@ -1,7 +1,7 @@
-module.exports = {
-  reportSchemaVersion: 1,
-  fullPeriodSchemaVersion: 1,
-  reportsTreeSchemaVersion: 1,
-  yearsPeriodSchemaVersion: 1,
-  monthPeriodSchemaVersion: 1,
-};
+var reportSchemaVersion = 1;
+var fullPeriodSchemaVersion = 1;
+var reportsTreeSchemaVersion = 1;
+var yearsPeriodSchemaVersion = 1;
+var monthPeriodSchemaVersion = 1;
+
+export { reportSchemaVersion, fullPeriodSchemaVersion, reportsTreeSchemaVersion, yearsPeriodSchemaVersion, monthPeriodSchemaVersion };

@@ -23,4 +23,4 @@ var getRequiredTotalsField = async (report) => {
   };
 };
 
-module.exports = getRequiredTotalsField;
+export default getRequiredTotalsField;

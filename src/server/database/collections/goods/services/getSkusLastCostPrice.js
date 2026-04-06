@@ -4,4 +4,4 @@ var getSkusLastCostPrice = async (collection, userId) => {
   return { skusLastCostPrice: data.listGoods };
 };
 
-module.exports = getSkusLastCostPrice;
+export default getSkusLastCostPrice;

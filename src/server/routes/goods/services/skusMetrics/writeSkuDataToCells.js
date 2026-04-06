@@ -40,4 +40,4 @@ var writeSkuDataToCells = (ws, sku, skuDataIndent) => {
   return ws;
 };
 
-module.exports = writeSkuDataToCells;
+export default writeSkuDataToCells;

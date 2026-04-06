@@ -1,4 +1,4 @@
-var { Schema } = require("mongoose");
+import { Schema } from "mongoose";
 
 var usersSchema = new Schema({
   userId: { type: String, required: true },
@@ -8,4 +8,4 @@ var usersSchema = new Schema({
   schemaVersion: { type: Number },
 });
 
-module.exports = usersSchema;
+export default usersSchema;

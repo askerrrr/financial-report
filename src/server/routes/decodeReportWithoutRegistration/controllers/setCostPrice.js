@@ -1,5 +1,5 @@
-var Joi = require("joi");
-var calc = require("../../reports/services/calcServices");
+import Joi from "joi";
+import calc from "../../reports/services/calcServices/index.js";
 
 var schema = Joi.object({
   id: Joi.string().required(),
@@ -67,4 +67,4 @@ var setCostPrice = async (req, res, next) => {
   });
 };
 
-module.exports = setCostPrice;
+export default setCostPrice;

@@ -15,4 +15,4 @@ var splitListGoodsByExistence = (listGoodsIds, newListGoodsData) => {
   return { newSkus, updatedSkus };
 };
 
-module.exports = splitListGoodsByExistence;
+export default splitListGoodsByExistence;

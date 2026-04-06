@@ -1,5 +1,5 @@
-var Joi = require("joi");
-var { getReportAsXLSXBuffer } = require("../services/reportAsXLSXBuffer");
+import Joi from "joi";
+import { getReportAsXLSXBuffer } from "../services/reportAsXLSXBuffer/index.js";
 
 var schema = Joi.object({ userId: Joi.string().required(), reportId: Joi.number().required() });
 
@@ -25,4 +25,4 @@ var downloadReportAsXLSX = async (req, res, next) => {
   return res.send(buffer);
 };
 
-module.exports = downloadReportAsXLSX;
+export default downloadReportAsXLSX;

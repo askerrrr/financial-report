@@ -1,4 +1,4 @@
-var { dbClient } = require("../../../database");
+import { dbClient } from "../../../database/index.js";
 var reportsProcessing = require("../../reports/services/different/reportsProcessing");
 
 var weeklyReportsLoader = async (req, res) => {
@@ -23,4 +23,4 @@ var weeklyReportsLoader = async (req, res) => {
   }
 };
 
-module.exports = weeklyReportsLoader;
+export default weeklyReportsLoader;

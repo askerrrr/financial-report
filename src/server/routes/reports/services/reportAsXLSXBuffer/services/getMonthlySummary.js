@@ -57,4 +57,4 @@ var getMonthlySummary = async (reports) => {
   };
 };
 
-module.exports = getMonthlySummary;
+export default getMonthlySummary;

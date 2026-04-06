@@ -1,5 +1,5 @@
-var wbapi = require("../../reports/services/WBAPI");
-var getCurrentDayMSK = require("../services/getCurrentDayMSK");
+import wbapi from "../../reports/services/WBAPI/index.js";
+import getCurrentDayMSK from "../services/getCurrentDayMSK.js";
 
 var uploadTodayPricesAndDiscounts = async (req, res, next) => {
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
@@ -28,4 +28,4 @@ var uploadTodayPricesAndDiscounts = async (req, res, next) => {
   return res.sendStatus(200);
 };
 
-module.exports = uploadTodayPricesAndDiscounts;
+export default uploadTodayPricesAndDiscounts;

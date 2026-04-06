@@ -1,9 +1,9 @@
-var Exceljs = require("exceljs");
-var writeSkuDataToCells = require("./writeSkuDataToCells");
-var setStylesToSkuNameCell = require("./setStylesToSkuNameCell");
-var setStylesToFirstColumn = require("./setStylesToFirstColumn");
-var writeCellNamesToFirstColumn = require("./writeCellNamesToFirstColumn");
-var setColumnHeaderWidths = require("./setColumnHeaderWidths");
+import Exceljs from "exceljs";
+import writeSkuDataToCells from "./writeSkuDataToCells.js";
+import setColumnHeaderWidths from "./setColumnHeaderWidths.js";
+import setStylesToSkuNameCell from "./setStylesToSkuNameCell.js";
+import setStylesToFirstColumn from "./setStylesToFirstColumn.js";
+import writeCellNamesToFirstColumn from "./writeCellNamesToFirstColumn.js";
 
 var generageSKusMetricsFile = async (listGoods) => {
   var wb = new Exceljs.Workbook();
@@ -25,4 +25,4 @@ var generageSKusMetricsFile = async (listGoods) => {
   return { skusMetricsFileBuffer };
 };
 
-module.exports = generageSKusMetricsFile;
+export default generageSKusMetricsFile;

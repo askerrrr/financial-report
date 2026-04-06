@@ -13,4 +13,4 @@ var extractRequiredListGoodsData = async (rawListGoods) => {
   return { listGoods };
 };
 
-module.exports = extractRequiredListGoodsData;
+export default extractRequiredListGoodsData;

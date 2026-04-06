@@ -8,4 +8,4 @@ var changeReportPeriod = async (req, res, next) => {
   return res.sendStatus(200);
 };
 
-module.exports = changeReportPeriod;
+export default changeReportPeriod;

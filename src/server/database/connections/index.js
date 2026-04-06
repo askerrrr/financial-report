@@ -1,15 +1,23 @@
-var { dbClient } = require("../index");
+import { dbClient } from "../index.js";
+import usersSchema from "../schemas/users.js";
+import goodsSchema from "../schemas/goods.js";
+import tokenSchema from "../schemas/token.js";
+import taxParamsSchema from "../schemas/taxParams.js";
+import { reportsSchema } from "../schemas/reports.js";
+import reportsTreeSchema from "../schemas/reportsTree.js";
+import reportLoadingStatesSchema from "../schemas/reportLoadingStates.js";
+import weeklyPricesAndDiscountsSchema from "../schemas/weeklyPricesAndDiscounts.js";
 
-var userCollection = dbClient.model("User", require("../schemas/users"));
-var goodsCollection = dbClient.model("Goods", require("../schemas/goods"));
-var tokenCollection = dbClient.model("Token", require("../schemas/token"));
-var taxParamsCollection = dbClient.model("Tax_Param", require("../schemas/taxParams"));
-var reportCollection = dbClient.model("Report", require("../schemas/reports").reportsSchema);
-var reportsTreeCollection = dbClient.model("Reports_Tree", require("../schemas/reportsTree"));
-var reportLoadingStatesCollection = dbClient.model("Report_Loading_States", require("../schemas/reportLoadingStates"));
-var weeklyPricesAndDiscountsCollection = dbClient.model("Weekly_prices_and_discounts", require("../schemas/weeklyPricesAndDiscounts"));
+var userCollection = dbClient.model("User", usersSchema);
+var goodsCollection = dbClient.model("Goods", goodsSchema);
+var tokenCollection = dbClient.model("Token", tokenSchema);
+var reportCollection = dbClient.model("Report", reportsSchema);
+var taxParamsCollection = dbClient.model("Tax_Param", taxParamsSchema);
+var reportsTreeCollection = dbClient.model("Reports_Tree", reportsTreeSchema);
+var reportLoadingStatesCollection = dbClient.model("Report_Loading_States", reportLoadingStatesSchema);
+var weeklyPricesAndDiscountsCollection = dbClient.model("Weekly_prices_and_discounts", weeklyPricesAndDiscountsSchema);
 
-module.exports = {
+export {
   userCollection,
   goodsCollection,
   reportCollection,

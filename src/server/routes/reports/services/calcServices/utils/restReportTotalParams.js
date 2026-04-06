@@ -1,6 +1,6 @@
-var sum = require("./sum");
-var calcProfitMargin = require("./profitMargin");
-var calcProductCosts = require("./totalProductCosts");
+import sum from "./sum.js";
+import calcProfitMargin from "./profitMargin.js";
+import calcProductCosts from "./totalProductCosts.js";
 
 var calcRestReportTotalParams = (totals, skus, isCrossYearReport) => {
   totals.totalPreTaxProfit = sum(skus, "preTaxProfit", "truncate-on");
@@ -34,4 +34,4 @@ var calcRestReportTotalParams = (totals, skus, isCrossYearReport) => {
   return { ...totals, skus };
 };
 
-module.exports = calcRestReportTotalParams;
+export default calcRestReportTotalParams;

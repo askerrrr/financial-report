@@ -1,8 +1,8 @@
-var Exceljs = require("exceljs");
-var writeSKU = require("./utils/writeSKU");
-var writeTitles = require("./utils/writeTitles");
-var setStylesToSheet = require("./utils/setStylesToSheet");
-var setFormulaToCells = require("./utils/setFormulaToCells");
+import Exceljs from "exceljs";
+import writeSKU from "./utils/writeSKU.js";
+import writeTitles from "./utils/writeTitles.js";
+import setStylesToSheet from "./utils/setStylesToSheet.js";
+import setFormulaToCells from "./utils/setFormulaToCells.js";
 
 var generateWeeklyPricesFile = async (listGoods) => {
   var wb = new Exceljs.Workbook();
@@ -35,4 +35,4 @@ var generateWeeklyPricesFile = async (listGoods) => {
   return { buffer };
 };
 
-module.exports = generateWeeklyPricesFile;
+export default generateWeeklyPricesFile;

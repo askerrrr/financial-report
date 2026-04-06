@@ -43,4 +43,4 @@ var writeTotalsTitleToSheet = async (sheet, cellNum) => {
   return sheet;
 };
 
-module.exports = writeTotalsTitleToSheet;
+export default writeTotalsTitleToSheet;

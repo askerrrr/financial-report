@@ -4,4 +4,4 @@ var getUploadId = async (collection, userId) => {
   return { uploadId };
 };
 
-module.exports = getUploadId;
+export default getUploadId;

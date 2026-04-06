@@ -1,6 +1,6 @@
-var Joi = require("joi");
-var collectImagesAsBase64 = require("../services/different/collectImagesAsBase64");
-var filterCostsForReportSkus = require("../services/different/filterCostsForReportSkus");
+import Joi from "joi";
+import collectImagesAsBase64 from "../services/different/collectImagesAsBase64.js";
+import filterCostsForReportSkus from "../services/different/filterCostsForReportSkus.js";
 
 var schema = Joi.object({ userId: Joi.string().required(), reportId: Joi.number().required() });
 
@@ -28,4 +28,4 @@ var getReport = async (req, res, next) => {
   return res.json({ report, skuImages, skusLastCostPrice, downloadReportLink });
 };
 
-module.exports = getReport;
+export default getReport;

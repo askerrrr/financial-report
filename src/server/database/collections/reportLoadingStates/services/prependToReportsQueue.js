@@ -3,4 +3,4 @@ var prependToReportsQueue = async (collection, userId, dateFrom, dateTo) => {
   return result;
 };
 
-module.exports = prependToReportsQueue;
+export default prependToReportsQueue;

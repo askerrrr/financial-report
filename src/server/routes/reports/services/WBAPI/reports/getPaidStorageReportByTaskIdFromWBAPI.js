@@ -1,4 +1,4 @@
-var { WBAPIError } = require("../../../../../customError");
+import { WBAPIError } from "../../../../../customError/index.js";
 
 var getPaidStorageReportByTaskIdFromWBAPI = async (taskId, token, userId) => {
   var url = `https://seller-analytics-api.wildberries.ru/api/v1/paid_storage/tasks/${taskId}/download`;
@@ -20,6 +20,8 @@ var getPaidStorageReportByTaskIdFromWBAPI = async (taskId, token, userId) => {
     return paidStorageReport;
   }
 
+  var errMsg;
+  
   if (res.status === 429) {
   } else if (res.status === 401) {
     errMsg =
@@ -46,4 +48,4 @@ var getPaidStorageReportByTaskIdFromWBAPI = async (taskId, token, userId) => {
   throw new WBAPIError(userId, res.status, errMsg);
 };
 
-module.exports = getPaidStorageReportByTaskIdFromWBAPI;
+export default getPaidStorageReportByTaskIdFromWBAPI;

@@ -11,4 +11,4 @@ var getCurrentDayMSK = () => {
   return { currentDayName, currentDayIndex };
 };
 
-module.exports = getCurrentDayMSK;
+export default getCurrentDayMSK;
