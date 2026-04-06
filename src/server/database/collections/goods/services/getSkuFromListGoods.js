@@ -5,4 +5,4 @@ var getSkuFromListGoods = async (collection, userId, skuId, skuName, session) =>
   return { skuFromListGoods };
 };
 
-module.exports = getSkuFromListGoods;
+export default getSkuFromListGoods;

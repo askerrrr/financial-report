@@ -1,9 +1,9 @@
-var { reportsTreeCollection } = require("../../connections");
+import { reportsTreeCollection } from "../../connections/index.js";
 
-var getReportTree = require("./services/getReportTree");
-var updateReportTree = require("./services/updateReportTree");
-var deleteReportTreeByUserId = require("./services/deleteReportTreeByUserId");
-var deleteReportFromReportTree = require("./services/deleteReportFromReportTree");
+import getReportTree from "./services/getReportTree.js";
+import updateReportTree from "./services/updateReportTree.js";
+import deleteReportTreeByUserId from "./services/deleteReportTreeByUserId.js";
+import deleteReportFromReportTree from "./services/deleteReportFromReportTree.js";
 
 var reportsTreeCollectionServices = {
   updateReportTree: (userId, years) => updateReportTree(reportsTreeCollection, userId, years),
@@ -16,4 +16,4 @@ var reportsTreeCollectionServices = {
   deleteReportTreeByUserId: (userId) => deleteReportTreeByUserId(reportsTreeCollection, userId),
 };
 
-module.exports = reportsTreeCollectionServices;
+export default reportsTreeCollectionServices;

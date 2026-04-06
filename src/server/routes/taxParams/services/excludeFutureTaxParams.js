@@ -4,4 +4,4 @@ var excludeFutureTaxParams = (taxParams) => {
   return { filteredTaxParams };
 };
 
-module.exports = excludeFutureTaxParams;
+export default excludeFutureTaxParams;

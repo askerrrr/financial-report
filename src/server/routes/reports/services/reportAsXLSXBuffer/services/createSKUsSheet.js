@@ -1,6 +1,6 @@
-var { writeSKUsToSheet } = require("./writeSKUsToSheet");
-var writeSKUsTitleToSheet = require("./writeSKUsTitleToSheet");
-var { getRequiredSKUFieldsName } = require("./getRequiredSKUFieldsName");
+import { writeSKUsToSheet } from "./writeSKUsToSheet.js";
+import writeSKUsTitleToSheet from "./writeSKUsTitleToSheet.js";
+import { getRequiredSKUFieldsName } from "./getRequiredSKUFieldsName.js";
 
 var createSKUsSheet = async (report, sheet) => {
   var skus = await getRequiredSKUFieldsName(report.skus);
@@ -11,4 +11,4 @@ var createSKUsSheet = async (report, sheet) => {
   return sheet;
 };
 
-module.exports = createSKUsSheet;
+export default createSKUsSheet;

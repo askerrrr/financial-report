@@ -1,6 +1,6 @@
-var Joi = require("joi");
+import Joi from "joi";
 var jose = import("jose");
-var checkCredentials = require("../services/checkCredentials");
+import checkCredentials from "../services/checkCredentials.js";
 
 var alg = "RS256";
 var oneDayMs = 24 * 3600 * 1000;
@@ -40,4 +40,4 @@ var checkUserCredentials = async (req, res, next) => {
     .json({ redirectUrl: "/" });
 };
 
-module.exports = checkUserCredentials;
+export default checkUserCredentials;

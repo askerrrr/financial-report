@@ -1,5 +1,5 @@
-var getReportDate = require("../services/writeAndCalcReportDataServices/getReportDate");
-var getReportDataFromXLSX = require("../services/writeAndCalcReportDataServices/getReportDataFromXLSX");
+import getReportDate from "../services/writeAndCalcReportDataServices/getReportDate.js";
+import getReportDataFromXLSX from "../services/writeAndCalcReportDataServices/getReportDataFromXLSX.js";
 
 var writeReport = async (req, res, next) => {
   if (!req.fileMimeTypeIsValid) {
@@ -25,4 +25,4 @@ var writeReport = async (req, res, next) => {
   }
 };
 
-module.exports = writeReport;
+export default writeReport;

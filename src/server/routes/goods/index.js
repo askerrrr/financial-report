@@ -1,21 +1,31 @@
-var multer = require("multer");
-var { Router } = require("express");
-var fileFilter = require("./services/fileFilter");
+import multer from "multer";
+import { Router } from "express";
+import fileFilter from "./services/fileFilter/index.js";
+import getListGoods from "./controllers/getListGoods.js";
+import loadListGoods from "./controllers/loadListGoods.js";
+import getListGoodsPage from "./controllers/getListGoodsPage.js";
+import getSkusMetricsFile from "./controllers/getSkusMetricsFile.js";
+import getWeeklyPricesFile from "./controllers/getWeeklyPricesFile.js";
+import changeSkuDisableStatus from "./controllers/changeSkuDisableStatus.js";
+import newPriceApplyController from "./controllers/newPriceApplyController.js";
+import getListGoodsAndWeeklyPrices from "./controllers/getListGoodsAndWeeklyPrices.js";
+import uploadPricesAndDiscountsFile from "./controllers/uploadPricesAndDiscountsFile.js";
+import changeWeeklyPricesOrDiscounts from "./controllers/changeWeeklyPricesOrDiscounts.js";
 
 var storage = multer.memoryStorage();
 var upload = multer({ storage, fileFilter });
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.get("/", require("./controllers/getListGoodsPage"));
-router.get("/listgoodsonly/:userId", require("./controllers/getListGoods"));
-router.get("/api/:userId", require("./controllers/getListGoodsAndWeeklyPrices"));
-router.get("/weekly-prices/:userId", require("./controllers/getWeeklyPricesFile"));
-router.get("/download-skus-metrics", require("./controllers/getSkusMetricsFile"));
+router.get("/", getListGoodsPage);
+router.get("/listgoodsonly/:userId", getListGoods);
+router.get("/api/:userId", getListGoodsAndWeeklyPrices);
+router.get("/weekly-prices/:userId", getWeeklyPricesFile);
+router.get("/download-skus-metrics", getSkusMetricsFile);
 
-router.post("/set-price-or-discount", require("./controllers/newPriceApplyController"), require("./controllers/changeWeeklyPricesOrDiscounts"));
-router.post("/", require("./controllers/loadListGoods"));
-router.post("/change-sku-disable-status", require("./controllers/changeSkuDisableStatus"));
-router.post("/upload-prices-discount-file/:userId", upload.single("file"), require("./controllers/uploadPricesAndDiscountsFile"));
+router.post("/set-price-or-discount", newPriceApplyController, changeWeeklyPricesOrDiscounts);
+router.post("/", loadListGoods);
+router.post("/change-sku-disable-status", changeSkuDisableStatus);
+router.post("/upload-prices-discount-file/:userId", upload.single("file"), uploadPricesAndDiscountsFile);
 
-module.exports = router;
+export default router;

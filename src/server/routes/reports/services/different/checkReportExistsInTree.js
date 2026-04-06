@@ -14,4 +14,4 @@ var checkReportExistsInTree = (date, tree) => {
   return { reportIsExist };
 };
 
-module.exports = checkReportExistsInTree;
+export default checkReportExistsInTree;

@@ -1,15 +1,6 @@
-var { fontStyles, alignmentStyles } = require("./styles");
+import { fontStyles, alignmentStyles } from "./styles.js";
 
-var titles = [
-  "Артикул",
-  "Понедельник",
-  "Вторник",
-  "Среда",
-  "Четверг",
-  "Пятница",
-  "Суббота",
-  "Воскресенье",
-];
+var titles = ["Артикул", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"];
 
 var writeTitles = (ws) => {
   ws.addRow(titles).font = fontStyles;
@@ -18,4 +9,4 @@ var writeTitles = (ws) => {
   return ws;
 };
 
-module.exports = writeTitles;
+export default writeTitles;

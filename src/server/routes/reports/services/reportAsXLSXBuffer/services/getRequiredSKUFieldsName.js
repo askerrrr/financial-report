@@ -37,4 +37,4 @@ var getRequiredSKUFieldsName = async (skus) =>
     };
   });
 
-module.exports = { getRequiredSKUFieldsName, requiredSKUsFieldsName };
+export { getRequiredSKUFieldsName, requiredSKUsFieldsName };

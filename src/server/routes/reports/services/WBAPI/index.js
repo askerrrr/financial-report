@@ -1,9 +1,8 @@
-var wbapi = {};
+import getReports from "./reports/index.js";
+import getListGoods from "./goods/goodsInfo/getGoodsListFromWBAPI.js";
+import setPricesAndDiscounts from "./goods/pricesAndDiscounts/setPriceAndDiscount.js";
+import getPriceUploadDetails from "./goods/pricesAndDiscounts/getPriceUploadDetails.js";
+import getProcessedPricingInfo from "./goods/pricesAndDiscounts/getProcessedPricingInfo.js";
+import getPricesAndDiscountsByListGoods from "./goods/pricesAndDiscounts/getPricesAndDiscountsByListGoods.js";
 
-wbapi.getReports = require("./reports");
-wbapi.getListGoods = require("./goods/goodsInfo/getGoodsListFromWBAPI");
-wbapi.setPricesAndDiscounts = require("./goods/pricesAndDiscounts/setPriceAndDiscount");
-wbapi.gestProcessedPricingInfo = require("./goods/pricesAndDiscounts/getProcessedPricingInfo");
-wbapi.getPriceUploadDetails = require("./goods/pricesAndDiscounts/getPriceUploadDetails");
-wbapi.getPricesAndDiscountsByListGoods = require("./goods/pricesAndDiscounts/getPricesAndDiscountsByListGoods");
-module.exports = wbapi;
+export default { getReports, getListGoods, setPricesAndDiscounts, getPriceUploadDetails, getProcessedPricingInfo, getPricesAndDiscountsByListGoods };

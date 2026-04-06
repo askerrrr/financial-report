@@ -1,9 +1,9 @@
-var { WBAPIError } = require("../../../../../customError");
-var getWeeklyFinancialReportFromWBAPI = require("./getWeeklyFinancialReportFromWBAPI");
-var createPaidStorageReportTask = require("./createPaidStorageReportTask");
-var getAdvertisingCostsForPeriod = require("./getAdvertisingCostsForPeriod");
-var checkPaidStorageReportCreationStatus = require("./checkPaidStorageReportCreationStatus");
-var getPaidStorageReportByTaskIdFromWBAPI = require("./getPaidStorageReportByTaskIdFromWBAPI");
+import { WBAPIError } from "../../../../../customError/index.js";
+import createPaidStorageReportTask from "./createPaidStorageReportTask.js";
+import getAdvertisingCostsForPeriod from "./getAdvertisingCostsForPeriod.js";
+import getWeeklyFinancialReportFromWBAPI from "./getWeeklyFinancialReportFromWBAPI.js";
+import checkPaidStorageReportCreationStatus from "./checkPaidStorageReportCreationStatus.js";
+import getPaidStorageReportByTaskIdFromWBAPI from "./getPaidStorageReportByTaskIdFromWBAPI.js";
 
 var getReports = async (userId, dateFrom, dateTo, token) => {
   var { taskId } = await createPaidStorageReportTask(dateFrom, dateTo, token, userId);
@@ -27,4 +27,4 @@ var getReports = async (userId, dateFrom, dateTo, token) => {
   return { weeklyFinancialReport, paidStorageReport, advertisingReport };
 };
 
-module.exports = getReports;
+export default getReports;

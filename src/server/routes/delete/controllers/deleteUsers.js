@@ -1,4 +1,4 @@
-var { dbClient } = require("../../../database");
+import { dbClient } from "../../../database/index.js";
 
 var deleteUsers = async (req, res, next) => {
   var { deleteUsersFromDb } = req.app.locals.userCollectionServices;
@@ -19,4 +19,4 @@ var deleteUsers = async (req, res, next) => {
   }
 };
 
-module.exports = deleteUsers;
+export default deleteUsers;

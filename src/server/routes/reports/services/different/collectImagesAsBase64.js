@@ -1,4 +1,4 @@
-var s3 = require("../s3");
+import s3 from "../s3/index.js";
 
 var collectImagesAsBase64 = async (userId, skus) => {
   var skuImages = [];
@@ -13,4 +13,4 @@ var collectImagesAsBase64 = async (userId, skus) => {
   return { skuImages };
 };
 
-module.exports = collectImagesAsBase64;
+export default collectImagesAsBase64;

@@ -8,4 +8,4 @@ var sendReportPeriodsToReportLoader = async (data) => {
   return { status: res.status };
 };
 
-module.exports = sendReportPeriodsToReportLoader;
+export default sendReportPeriodsToReportLoader;

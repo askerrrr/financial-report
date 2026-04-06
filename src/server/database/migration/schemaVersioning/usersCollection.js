@@ -1,1 +1,2 @@
-module.exports = { usersSchemaVersion: 1 };
+var usersSchemaVersion = 1;
+export default usersSchemaVersion;

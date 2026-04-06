@@ -1,10 +1,9 @@
-var { generageWeeklyPricesFile } = require("../services/weeklyPrices");
+import { generageWeeklyPricesFile } from "../services/weeklyPrices/index.js";
 
 var getWeeklyPricesFile = async (req, res, next) => {
   var { userId } = req.params;
   var { getListGoodsFromDb } = req.app.locals.goodsCollectionServices;
-  var { getWeeklyPricesAndDiscountsFromDb } =
-    req.app.locals.weeklyPricesAndDiscountsCollectionServices;
+  var { getWeeklyPricesAndDiscountsFromDb } = req.app.locals.weeklyPricesAndDiscountsCollectionServices;
 
   var { listGoods } = await getListGoodsFromDb(userId);
   var { buffer } = await generageWeeklyPricesFile(listGoods);
@@ -17,4 +16,4 @@ var getWeeklyPricesFile = async (req, res, next) => {
   return res.send(buffer);
 };
 
-module.exports = getWeeklyPricesFile;
+export default getWeeklyPricesFile;

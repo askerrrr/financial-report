@@ -37,4 +37,4 @@ var writeCellNamesToFirstColumn = function (ws, sku, indentToNextSku) {
   return ws;
 };
 
-module.exports = writeCellNamesToFirstColumn;
+export default writeCellNamesToFirstColumn;

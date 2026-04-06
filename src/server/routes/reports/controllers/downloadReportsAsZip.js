@@ -1,6 +1,6 @@
-var Joi = require("joi");
-var JSZip = require("jszip");
-var { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer } = require("../services/reportAsXLSXBuffer");
+import Joi from "joi";
+import JSZip from "jszip";
+import { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer } from "../services/reportAsXLSXBuffer/index.js";
 
 var schema = Joi.object({ userId: Joi.string().required(), reportIds: Joi.array().items(Joi.number()).required() });
 
@@ -49,4 +49,4 @@ var downloadReportsAsZip = async (req, res, next) => {
   return res.send(zipBuffer);
 };
 
-module.exports = downloadReportsAsZip;
+export default downloadReportsAsZip;

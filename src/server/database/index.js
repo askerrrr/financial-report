@@ -1,11 +1,13 @@
-var mongoose = require("mongoose");
-var serverEmitter = require("../customEvent");
+import mongoose from "mongoose";
+import serverEmitter from "../customEvent/index.js";
 
 var timerId = null;
 var connectionAttempts = 0;
 var eventsConfigured = false;
 var mongooseReconnected = false;
 var MAX_CONNECTION_ATTEMPTS = 5;
+
+var dbClient = mongoose.connection;
 
 var mongooseConnection = async () => {
   if (process.env.MONGO_HOST) {
@@ -25,12 +27,12 @@ var setupMongooseEvents = () => {
   eventsConfigured = true;
   console.log("connection to mongodb...\n");
 
-  mongoose.connection.on("error", (e) => {
+  dbClient.on("error", (e) => {
     console.log("mongodb connection error: ", { name: e.name, msg: e.message });
     mongoose.disconnect();
   });
 
-  mongoose.connection.on("disconnected", async () => {
+  dbClient.on("disconnected", async () => {
     console.log("mongodb disconnected\n");
 
     if (timerId) {
@@ -44,7 +46,7 @@ var setupMongooseEvents = () => {
     if (connectionAttempts === MAX_CONNECTION_ATTEMPTS) {
       clearTimeout(timerId);
       timerId = null;
-      mongoose.connection.removeAllListeners();
+      dbClient.removeAllListeners();
       console.log("mongodb connection was been destroed");
 
       return;
@@ -53,7 +55,7 @@ var setupMongooseEvents = () => {
     connectionAttempts++;
   });
 
-  mongoose.connection.on("connected", async () => {
+  dbClient.on("connected", async () => {
     if (timerId) {
       console.clear();
       console.log("mongodb reconnected\n");
@@ -74,16 +76,14 @@ var setupMongooseEvents = () => {
   });
 };
 
-var killAllSessions = async () => await mongoose.connection.db.command({ killAllSessions: [] }).then(() => console.log("old sessions killed"));
+var killAllSessions = async () => await dbClient.db.command({ killAllSessions: [] }).then(() => console.log("old sessions killed"));
 
 var runDB = async () => {
   setupMongooseEvents();
   await mongooseConnection();
   await killAllSessions();
 
-  var runDBMigration = require("./migration/");
-
   //await runDBMigration().then(() => console.log("\n     migration completed\n-------------------------\n"));
 };
 
-module.exports = { runDB, dbClient: mongoose.connection };
+export { runDB, dbClient };

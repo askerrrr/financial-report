@@ -1,12 +1,11 @@
-var { DatabaseError } = require("../../../../customError");
-
+import { DatabaseError } from "../../../../customError/index.js";
 var updateReportPeriod = async (collecton, userId, reportId, period) => {
   try {
     var result = await collecton.updateOne(
       { userId, "reports.reportId": reportId },
       {
         $set: { "reports.$.period": period },
-      }
+      },
     );
 
     return result.modifiedCount;
@@ -15,4 +14,4 @@ var updateReportPeriod = async (collecton, userId, reportId, period) => {
   }
 };
 
-module.exports = updateReportPeriod;
+export default updateReportPeriod;

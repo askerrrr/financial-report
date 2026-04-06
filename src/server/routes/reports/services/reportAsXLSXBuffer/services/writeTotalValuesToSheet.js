@@ -19,4 +19,4 @@ var writeTotalValuesToSheet = async (sheet, cellNum, totalValues) => {
   return sheet;
 };
 
-module.exports = writeTotalValuesToSheet;
+export default writeTotalValuesToSheet;

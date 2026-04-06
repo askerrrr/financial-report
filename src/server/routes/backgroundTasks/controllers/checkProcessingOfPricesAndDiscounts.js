@@ -1,4 +1,4 @@
-var wbapi = require("../../reports/services/WBAPI");
+import wbapi from "../../reports/services/WBAPI/index.js";
 
 var checkProcessingOfPricesAndDiscounts = async (req, res, next) => {
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
@@ -20,4 +20,4 @@ var checkProcessingOfPricesAndDiscounts = async (req, res, next) => {
   return res.sendStatus(200);
 };
 
-module.exports = checkProcessingOfPricesAndDiscounts;
+export default checkProcessingOfPricesAndDiscounts;

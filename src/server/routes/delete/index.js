@@ -1,8 +1,10 @@
-var { Router } = require("express");
+import { Router } from "express";
+import deleteUser from "./controllers/deleteUser.js";
+import deleteUsers from "./controllers/deleteUsers.js";
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.delete("/user", require("./controllers/deleteUser"));
-router.delete("/users", require("./controllers/deleteUsers"));
+router.delete("/user", deleteUser);
+router.delete("/users", deleteUsers);
 
-module.exports = router;
+export default router;

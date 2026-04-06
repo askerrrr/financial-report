@@ -1,4 +1,4 @@
-var splitSkuByDisabledStatus = require("../services/splitSkuByDisabledStatus");
+import splitSkuByDisabledStatus from "../services/splitSkuByDisabledStatus.js";
 
 var getListGoodsAndWeeklyPrices = async (req, res, next) => {
   var { userId } = req.params;
@@ -12,4 +12,4 @@ var getListGoodsAndWeeklyPrices = async (req, res, next) => {
   return res.json({ listGoods, weeklyPricesAndDiscounts });
 };
 
-module.exports = getListGoodsAndWeeklyPrices;
+export default getListGoodsAndWeeklyPrices;

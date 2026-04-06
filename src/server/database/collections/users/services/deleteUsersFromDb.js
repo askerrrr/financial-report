@@ -1,4 +1,4 @@
-var {
+import {
   userCollection,
   goodsCollection,
   tokenCollection,
@@ -7,7 +7,7 @@ var {
   reportsTreeCollection,
   reportLoadingStatesCollection,
   weeklyPricesAndDiscountsCollection,
-} = require("../../../connections");
+} from "../../../connections/index.js";
 
 var deleteUsersFromDb = async (session) => {
   await userCollection.deleteMany({}, session);
@@ -19,4 +19,5 @@ var deleteUsersFromDb = async (session) => {
   await reportLoadingStatesCollection.deleteMany({}, session);
   await weeklyPricesAndDiscountsCollection.deleteMany({}, session);
 };
-module.exports = deleteUsersFromDb;
+
+export default deleteUsersFromDb;

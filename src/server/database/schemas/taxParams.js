@@ -1,4 +1,4 @@
-var { Schema } = require("mongoose");
+import { Schema } from "mongoose";
 
 var taxYear = new Schema(
   {
@@ -32,4 +32,4 @@ var taxParamsSchema = new Schema({
   schemaVersion: { type: Number },
 });
 
-module.exports = taxParamsSchema;
+export default taxParamsSchema;

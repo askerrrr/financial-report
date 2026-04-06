@@ -1,8 +1,8 @@
 var jose = import("jose");
-var { randomBytes } = require("node:crypto");
-var { dbClient } = require("../../../database");
-var checkLogin = require("../services/checkLogin");
-var checkPasswd = require("../services/checkPasswd");
+import { randomBytes } from "node:crypto";
+import checkLogin from "../services/checkLogin.js";
+import checkPasswd from "../services/checkPasswd.js";
+import { dbClient } from "../../../database/index.js";
 
 var alg = "RS256";
 var oneDayMs = 24 * 3600 * 1000;
@@ -52,4 +52,4 @@ var createUser = async (req, res, next) => {
   }
 };
 
-module.exports = createUser;
+export default createUser;

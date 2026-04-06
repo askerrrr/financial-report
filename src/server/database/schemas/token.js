@@ -1,4 +1,4 @@
-var { Schema } = require("mongoose");
+import { Schema } from "mongoose";
 
 var tokenSchema = new Schema({
   userId: { type: String, required: true },
@@ -6,4 +6,4 @@ var tokenSchema = new Schema({
   schemaVersion: { type: Number },
 });
 
-module.exports = tokenSchema;
+export default tokenSchema;

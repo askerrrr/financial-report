@@ -6,4 +6,4 @@ var getListGoods = async (req, res) => {
   res.json({ listGoodsLength: listGoods.length, listGoods });
 };
 
-module.exports = getListGoods;
+export default getListGoods;

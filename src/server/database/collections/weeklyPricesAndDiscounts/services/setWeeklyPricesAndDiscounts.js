@@ -3,4 +3,4 @@ var setWeeklyPricesAndDiscounts = async (collection, userId, weeklyPricesAndDisc
   return result.acknowledged;
 };
 
-module.exports = setWeeklyPricesAndDiscounts;
+export default setWeeklyPricesAndDiscounts;

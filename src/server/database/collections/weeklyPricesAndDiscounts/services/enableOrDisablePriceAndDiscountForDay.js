@@ -10,4 +10,4 @@ var createQuery = (disableStatus, nmID) => {
 
 var enableOrDisablePriceAndDiscountForDay = async (collection, userId, disableStatus, nmID) => {};
 
-module.exports = enableOrDisablePriceAndDiscountForDay;
+export default enableOrDisablePriceAndDiscountForDay;

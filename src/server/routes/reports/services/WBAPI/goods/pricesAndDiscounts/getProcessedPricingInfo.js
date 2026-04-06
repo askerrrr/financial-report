@@ -1,4 +1,4 @@
-var { WBAPIError } = require("../../../../../../customError");
+import { WBAPIError } from "../../../../../../customError/index.js";
 
 var getProcessedPricingInfo = async (userId, uploadID, token) => {
   var url = `https://discounts-prices-api.wildberries.ru/api/v2/history/tasks?uploadID=${uploadID}`;
@@ -13,6 +13,8 @@ var getProcessedPricingInfo = async (userId, uploadID, token) => {
   if (res.status === 200) {
     return data;
   }
+
+  var errMsg;
 
   switch (res.status) {
     case 400:
@@ -37,4 +39,4 @@ var getProcessedPricingInfo = async (userId, uploadID, token) => {
   throw new WBAPIError(userId, 400, errMsg);
 };
 
-module.exports = getProcessedPricingInfo;
+export default getProcessedPricingInfo;

@@ -1,5 +1,5 @@
-var Joi = require("joi");
-var s3 = require("../services/s3");
+import Joi from "joi";
+import s3 from "../services/s3/index.js";
 
 var schema = Joi.object({ userId: Joi.string().required(), skuName: Joi.string().required() });
 
@@ -16,4 +16,4 @@ var deleteImage = async (req, res, next) => {
   return success ? res.sendStatus(200) : res.sendStatus(304);
 };
 
-module.exports = deleteImage;
+export default deleteImage;

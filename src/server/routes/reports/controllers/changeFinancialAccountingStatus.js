@@ -1,5 +1,5 @@
-var Joi = require("joi");
-var dbUtils = require("../../../database/collections");
+import Joi from "joi";
+import dbUtils from "../../../database/collections/index.js";
 
 var schema = Joi.object({ userId: Joi.string().required(), reportId: Joi.number().required(), newStatus: Joi.boolean().required() });
 
@@ -18,4 +18,4 @@ var changeFinancialAccountingStatus = async (req, res) => {
   return res.sendStatus(200);
 };
 
-module.exports = changeFinancialAccountingStatus;
+export default changeFinancialAccountingStatus;

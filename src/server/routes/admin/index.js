@@ -1,8 +1,10 @@
-var { Router } = require("express");
+import { Router } from "express";
+import getAdminAuthPage from "./controllers/getAdminAuthPage.js";
+import checkAuthAdminData from "./controllers/checkAuthAdminData.js";
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.get("/", require("./controllers/getAdminAuthPage"));
-router.post("/", require("./controllers/checkAuthAdminData"));
+router.get("/", getAdminAuthPage);
+router.post("/", checkAuthAdminData);
 
-module.exports = router;
+export default router;

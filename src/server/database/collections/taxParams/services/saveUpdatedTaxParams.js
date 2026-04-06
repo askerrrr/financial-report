@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../../customError");
+import { DatabaseError } from "../../../../customError/index.js";
 
 var saveUpdatedTaxParams = async (collection, userId, year, taxParams) => {
   try {
@@ -6,7 +6,7 @@ var saveUpdatedTaxParams = async (collection, userId, year, taxParams) => {
       { userId, "years.year": year },
       {
         $set: { "years.$": taxParams },
-      }
+      },
     );
 
     return result.acknowledged;
@@ -15,4 +15,4 @@ var saveUpdatedTaxParams = async (collection, userId, year, taxParams) => {
   }
 };
 
-module.exports = saveUpdatedTaxParams;
+export default saveUpdatedTaxParams;

@@ -1,15 +1,20 @@
-var { Router } = require("express");
+import { Router } from "express";
+import setCostPrice from "./controllers/setCostPrice.js";
+import getReportPage from "./controllers/getReportPage.js";
+import getReportFromWBAPI from "./controllers/getReportFromWBAPI.js";
+import downloadReportAsXLSX from "./controllers/downloadReportAsXLSX.js";
+import getDecodeReportWithoutRegistrationPage from "./controllers/getDecodeReportWithoutRegistrationPage.js";
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.get("/", require("./controllers/getDecodeReportWithoutRegistrationPage"));
+router.get("/", getDecodeReportWithoutRegistrationPage);
 
-router.get("/report/:id", require("./controllers/getReportPage"));
+router.get("/report/:id", getReportPage);
 
-router.get("/xlsx/:id/:reportId", require("./controllers/downloadReportAsXLSX"));
+router.get("/xlsx/:id/:reportId", downloadReportAsXLSX);
 
-router.post("/", require("./controllers/getReportFromWBAPI"));
+router.post("/", getReportFromWBAPI);
 
-router.patch("/report/set-cost-price", require("./controllers/setCostPrice"));
+router.patch("/report/set-cost-price", setCostPrice);
 
-module.exports = router;
+export default router;

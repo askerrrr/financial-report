@@ -1,4 +1,4 @@
-var utils = require("./utils");
+import utils from "./utils/index.js";
 
 var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
   var [startYear, startMonth] = dateFrom.split("-").map(Number);
@@ -67,7 +67,7 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
 
       if (!nextYearIsExist) {
         var reportIds = utils.insertReportIdAndFullPeriodToReportIds(dateTo, fullPeriod, reportId, "overlap - yes");
-        
+
         var months = utils.createNextYearMonths(reportIds);
 
         years.push({ year: endYear, months });
@@ -108,4 +108,4 @@ var insertReportToReportTree = async (dateFrom, dateTo, reportId, years) => {
   return { years, year: startYear, month: startMonthName };
 };
 
-module.exports = insertReportToReportTree;
+export default insertReportToReportTree;

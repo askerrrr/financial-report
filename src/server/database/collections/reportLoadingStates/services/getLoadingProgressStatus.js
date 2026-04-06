@@ -4,4 +4,4 @@ var getLoadingProgressStatus = async (collection, userId) => {
   return { loadingInProgress };
 };
 
-module.exports = getLoadingProgressStatus;
+export default getLoadingProgressStatus;

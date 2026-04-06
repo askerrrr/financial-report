@@ -61,11 +61,4 @@ class DBMigrationError extends Error {
   }
 }
 
-module.exports = {
-  WBAPIError,
-  FormDataError,
-  DatabaseError,
-  DBMigrationError,
-  ReportNotFoundError,
-  DatabaseConnectionError,
-};
+export { WBAPIError, FormDataError, DatabaseError, DBMigrationError, ReportNotFoundError, DatabaseConnectionError };

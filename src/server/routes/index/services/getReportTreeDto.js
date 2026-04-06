@@ -12,4 +12,4 @@ var getReportTreeDto = async (years) =>
     })
     .filter((year) => year.months.length);
 
-module.exports = getReportTreeDto;
+export default getReportTreeDto;

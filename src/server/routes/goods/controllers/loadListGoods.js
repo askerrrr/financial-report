@@ -1,5 +1,5 @@
-var Joi = require("joi");
-var listGoodsLoader = require("../services/listGoodsLoader");
+import Joi from "joi";
+import listGoodsLoader from "../services/listGoodsLoader.js";
 
 var schema = Joi.object({ userId: Joi.string().required() });
 
@@ -31,4 +31,4 @@ var loadListGoods = async (req, res, next) => {
   return res.sendStatus(304);
 };
 
-module.exports = loadListGoods;
+export default loadListGoods;

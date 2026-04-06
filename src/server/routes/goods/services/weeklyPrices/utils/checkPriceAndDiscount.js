@@ -14,4 +14,4 @@ var checkPriceAndDiscount = (price, discount) => {
   return true;
 };
 
-module.exports = checkPriceAndDiscount;
+export default checkPriceAndDiscount;

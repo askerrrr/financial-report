@@ -1,9 +1,9 @@
-var { taxParamsCollection } = require("../../connections");
-var deleteTaxYears = require("./services/deleteTaxYears");
-var addNewTaxYearToDb = require("./services/addNewTaxYear");
-var getTaxParamsFromDb = require("./services/getTaxParamsFromDb");
-var changeTaxParamsToDb = require("./services/changeTaxParamsToDb");
-var saveUpdatedTaxParams = require("./services/saveUpdatedTaxParams");
+import { taxParamsCollection } from "../../connections/index.js";
+import deleteTaxYears from "./services/deleteTaxYears.js";
+import addNewTaxYearToDb from "./services/addNewTaxYear.js";
+import getTaxParamsFromDb from "./services/getTaxParamsFromDb.js";
+import changeTaxParamsToDb from "./services/changeTaxParamsToDb.js";
+import saveUpdatedTaxParams from "./services/saveUpdatedTaxParams.js";
 
 var taxParamsCollectionServices = {
   deleteTaxYears: (userId) => deleteTaxYears(taxParamsCollection, userId),
@@ -17,4 +17,4 @@ var taxParamsCollectionServices = {
   saveUpdatedTaxParams: (userId, year, taxParams) => saveUpdatedTaxParams(taxParamsCollection, userId, year, taxParams),
 };
 
-module.exports = taxParamsCollectionServices;
+export default taxParamsCollectionServices;

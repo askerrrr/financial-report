@@ -1,3 +1,3 @@
 var recalculateReportsWithNewMandatoryInsuranceFee = () => {};
 
-module.exports = recalculateReportsWithNewMandatoryInsuranceFee;
+export default recalculateReportsWithNewMandatoryInsuranceFee;

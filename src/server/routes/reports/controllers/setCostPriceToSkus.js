@@ -1,7 +1,7 @@
-var Joi = require("joi");
-var calc = require("../services/calcServices");
-var { dbClient } = require("../../../database");
-var processOfSkuCostPriceSetting = require("../services/different/processOfSkuCostPriceSetting");
+import Joi from "joi";
+import calc from "../services/calcServices/index.js";
+import { dbClient } from "../../../database/index.js";
+import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 
 var costPricesItemSchema = Joi.object({ id: Joi.number().required(), skuName: Joi.string().required(), lastCostPrice: Joi.number().required() });
 var schema = Joi.object({
@@ -110,4 +110,4 @@ var setCostPriceToSkus = async (req, res, next) => {
   }
 };
 
-module.exports = setCostPriceToSkus;
+export default setCostPriceToSkus;

@@ -1,9 +1,12 @@
-var { Router } = require("express");
+import { Router } from "express";
+import getReports from "./controllers/getReports.js";
+import getMainPage from "./controllers/getMainPage.js";
+import getLastReportsAndTree from "./controllers/getLastReportsAndTree.js";
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.get("/", require("./controllers/getMainPage"));
-router.get("/api/:userId", require("./controllers/getLastReportsAndTree"));
-router.post("/api/required-reports/", require("./controllers/getReports"));
+router.get("/", getMainPage);
+router.get("/api/:userId", getLastReportsAndTree);
+router.post("/api/required-reports/", getReports);
 
-module.exports = router;
+export default router;

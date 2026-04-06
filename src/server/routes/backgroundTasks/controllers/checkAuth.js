@@ -14,4 +14,4 @@ var checkAuth = async (req, res, next) => {
   next();
 };
 
-module.exports = checkAuth;
+export default checkAuth;

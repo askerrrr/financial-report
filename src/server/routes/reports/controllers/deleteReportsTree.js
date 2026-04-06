@@ -8,4 +8,4 @@ var deleteAllReportingPeriods = async (req, res, next) => {
   return successDelete ? res.sendStatus(200) : res.sendStatus(304);
 };
 
-module.exports = deleteAllReportingPeriods;
+export default deleteAllReportingPeriods;

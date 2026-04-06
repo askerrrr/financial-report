@@ -12,4 +12,4 @@ var deleteAllReports = async (req, res, next) => {
   return taxYearsIdDeleted && reportsIsDeleted && reportTreeIsDeleted ? res.sendStatus(200) : res.sendStatus(304);
 };
 
-module.exports = deleteAllReports;
+export default deleteAllReports;

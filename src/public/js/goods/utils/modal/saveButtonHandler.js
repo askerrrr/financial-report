@@ -37,7 +37,7 @@ var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
       modalOverlay.remove();
 
       var success = await sendPriceAndDiscount(sku, checkedWeekDays, setNewPriceNow, expectedPriceExists);
-      console.log({ success });
+
       if (!success) {
         return;
       }

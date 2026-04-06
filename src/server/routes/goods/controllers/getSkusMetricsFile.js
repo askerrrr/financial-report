@@ -1,4 +1,4 @@
-var generageSKusMetricsFile = require("../services/skusMetrics");
+import generageSKusMetricsFile from "../services/skusMetrics/index.js";
 
 var getSkusMetricsFile = async (req, res, next) => {
   var { userId } = req.app.locals;
@@ -15,4 +15,4 @@ var getSkusMetricsFile = async (req, res, next) => {
   res.send(skusMetricsFileBuffer);
 };
 
-module.exports = getSkusMetricsFile;
+export default getSkusMetricsFile;

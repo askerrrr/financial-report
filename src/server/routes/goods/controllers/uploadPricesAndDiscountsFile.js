@@ -1,5 +1,5 @@
-var { dbClient } = require("../../../database");
-var { readWeeklyPricesFile } = require("../services/weeklyPrices/");
+import { dbClient } from "../../../database/index.js";
+import { readWeeklyPricesFile } from "../services/weeklyPrices/index.js";
 
 var uploadPricesAndDiscountsFile = async (req, res, next) => {
   var { userId } = req.params;
@@ -30,4 +30,4 @@ var uploadPricesAndDiscountsFile = async (req, res, next) => {
   }
 };
 
-module.exports = uploadPricesAndDiscountsFile;
+export default uploadPricesAndDiscountsFile;

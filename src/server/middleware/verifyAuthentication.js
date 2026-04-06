@@ -1,5 +1,5 @@
 var jose = import("jose");
-var { join } = require("node:path");
+import { join } from "node:path";
 
 var alg = "RS256";
 
@@ -7,7 +7,7 @@ var verifyAuthentication = async (req, res, next) => {
   var token = req.cookies?.token;
 
   if (!token) {
-    return res.sendFile(join(__dirname, "../../public/html/decodeReportWithoutRegistration/index.html"));
+    return res.sendFile(join(import.meta.dirname, "../../public/html/decodeReportWithoutRegistration/index.html"));
   }
 
   try {
@@ -23,4 +23,4 @@ var verifyAuthentication = async (req, res, next) => {
   next();
 };
 
-module.exports = verifyAuthentication;
+export default verifyAuthentication;

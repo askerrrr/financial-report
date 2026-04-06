@@ -1,5 +1,4 @@
-var { DatabaseError } = require("../../../../customError");
-
+import { DatabaseError } from "../../../../customError/index.js";
 var getReportsByUserId = async (collection, userId, session, projectQueries, reportIds) => {
   try {
     if (reportIds) {
@@ -51,4 +50,4 @@ var getReportsByUserId = async (collection, userId, session, projectQueries, rep
     throw new DatabaseError(userId, e);
   }
 };
-module.exports = getReportsByUserId;
+export default getReportsByUserId;

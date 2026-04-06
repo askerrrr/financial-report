@@ -1,4 +1,4 @@
-var { Schema } = require("mongoose");
+import { Schema } from "mongoose";
 
 var reportSchema = new Schema(
   {
@@ -7,7 +7,7 @@ var reportSchema = new Schema(
     dateTo: { type: String, required: true },
     schemaVersion: { type: Number },
   },
-  { _id: false }
+  { _id: false },
 );
 
 var monthPeriodSchema = new Schema(
@@ -16,7 +16,7 @@ var monthPeriodSchema = new Schema(
     reportIds: [{ type: reportSchema, required: false }],
     schemaVersion: { type: Number },
   },
-  { _id: false }
+  { _id: false },
 );
 
 var yearsPeriodSchema = new Schema(
@@ -25,7 +25,7 @@ var yearsPeriodSchema = new Schema(
     months: [{ type: monthPeriodSchema }],
     schemaVersion: { type: Number },
   },
-  { _id: false }
+  { _id: false },
 );
 
 var reportsTreeSchema = new Schema({
@@ -34,4 +34,4 @@ var reportsTreeSchema = new Schema({
   schemaVersion: { type: Number },
 });
 
-module.exports = reportsTreeSchema;
+export default reportsTreeSchema;

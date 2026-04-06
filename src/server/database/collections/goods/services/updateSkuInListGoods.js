@@ -18,4 +18,4 @@ var updateSkuInListGoods = async (collection, userId, skuId, data, session) => {
   return result;
 };
 
-module.exports = updateSkuInListGoods;
+export default updateSkuInListGoods;

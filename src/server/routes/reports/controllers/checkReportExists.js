@@ -1,4 +1,4 @@
-var checkReportExistsInTree = require("../services/different/checkReportExistsInTree");
+import checkReportExistsInTree from "../services/different/checkReportExistsInTree.js";
 
 var checkReportExists = async (req, res, next) => {
   var { dateFrom, userId } = req.body;
@@ -14,4 +14,4 @@ var checkReportExists = async (req, res, next) => {
   next();
 };
 
-module.exports = checkReportExists;
+export default checkReportExists;

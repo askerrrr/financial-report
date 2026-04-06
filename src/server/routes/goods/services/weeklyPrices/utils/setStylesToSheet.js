@@ -10,4 +10,4 @@ var setStylesToSheet = (ws) => {
   return ws;
 };
 
-module.exports = setStylesToSheet;
+export default setStylesToSheet;

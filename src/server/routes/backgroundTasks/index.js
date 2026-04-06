@@ -1,23 +1,15 @@
-var { Router } = require("express");
+import { Router } from "express";
+import checkAuth from "./controllers/checkAuth.js";
+import updateDataIntoListGoods from "./controllers/updateDataIntoListGoods.js";
+import uploadTodayPricesAndDiscounts from "./controllers/uploadTodayPricesAndDiscounts.js";
+import checkProcessingOfPricesAndDiscounts from "./controllers/checkProcessingOfPricesAndDiscounts.js";
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.post(
-  "/upload-new-prices-discounts",
-  require("./controllers/checkAuth"),
-  require("./controllers/uploadTodayPricesAndDiscounts")
-);
+router.post("/upload-new-prices-discounts", checkAuth, uploadTodayPricesAndDiscounts);
 
-router.post(
-  "/get-current-prices-discounts",
-  require("./controllers/checkAuth"),
-  require("./controllers/updateDataIntoListGoods")
-);
+router.post("/get-current-prices-discounts", checkAuth, updateDataIntoListGoods);
 
-router.post(
-  "/check-processing-of-prices-discounts",
-  require("./controllers/checkAuth"),
-  require("./controllers/checkProcessingOfPricesAndDiscounts")
-);
+router.post("/check-processing-of-prices-discounts", checkAuth, checkProcessingOfPricesAndDiscounts);
 
-module.exports = router;
+export default router;

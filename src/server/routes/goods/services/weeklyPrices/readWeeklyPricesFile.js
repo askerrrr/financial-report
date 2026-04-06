@@ -1,5 +1,5 @@
-var Exceljs = require("exceljs");
-var checkPriceAndDiscount = require("./utils/checkPriceAndDiscount");
+import Exceljs from "exceljs";
+import checkPriceAndDiscount from "./utils/checkPriceAndDiscount.js";
 
 var readWeeklyPricesFile = async (buffer, listGoods) => {
   var wb = new Exceljs.Workbook();
@@ -87,4 +87,4 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
   return { weeklyPricesAndDiscounts };
 };
 
-module.exports = readWeeklyPricesFile;
+export default readWeeklyPricesFile;

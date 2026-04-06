@@ -37,4 +37,4 @@ var setPriceUpdateTimestampAndUpdateStatus = async (collection, userId, priceDat
   return result;
 };
 
-module.exports = setPriceUpdateTimestampAndUpdateStatus;
+export default setPriceUpdateTimestampAndUpdateStatus;

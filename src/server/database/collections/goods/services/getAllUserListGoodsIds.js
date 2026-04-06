@@ -1,8 +1,5 @@
 var getAllUserListGoodsIds = async (collection) => {
-  var data = await collection.find(
-    {},
-    { _id: 0, userId: 1, "listGoods.id": 1, "listGoods.disabled": 1 }
-  );
+  var data = await collection.find({}, { _id: 0, userId: 1, "listGoods.id": 1, "listGoods.disabled": 1 });
 
   return data.map(({ userId, listGoods }) => {
     return {
@@ -13,4 +10,4 @@ var getAllUserListGoodsIds = async (collection) => {
   });
 };
 
-module.exports = getAllUserListGoodsIds;
+export default getAllUserListGoodsIds;

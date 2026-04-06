@@ -1,4 +1,4 @@
-var { Schema } = require("mongoose");
+import { Schema } from "mongoose";
 
 var booleanOptions = { type: Boolean };
 var numberOptions = { type: Number, default: 0 };
@@ -189,4 +189,4 @@ var reportsSchema = new Schema({
   schemaVersion: { type: Number },
 });
 
-module.exports = { SKUSchema, reportSchema, reportsSchema };
+export { SKUSchema, reportSchema, reportsSchema };

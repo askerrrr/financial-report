@@ -1,4 +1,4 @@
-var truncateNum = require("../../reportParsing/truncateNum");
+import truncateNum from "../../reportParsing/truncateNum.js";
 
 var calcPreTaxProfit = (sku, propPostfix = "") => {
   if (sku["profit" + propPostfix] === 0 || sku["qty" + propPostfix] === 0) {
@@ -9,4 +9,4 @@ var calcPreTaxProfit = (sku, propPostfix = "") => {
   return truncateNum(preTaxProfit);
 };
 
-module.exports = calcPreTaxProfit;
+export default calcPreTaxProfit;

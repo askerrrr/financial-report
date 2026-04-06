@@ -6,4 +6,4 @@ var changeWeeklyPricesOrDiscounts = async (req, res, next) => {
   return res.sendStatus(200);
 };
 
-module.exports = changeWeeklyPricesOrDiscounts;
+export default changeWeeklyPricesOrDiscounts;

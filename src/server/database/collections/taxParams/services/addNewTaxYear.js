@@ -1,5 +1,5 @@
-var { DatabaseError } = require("../../../../customError");
-var defaultTaxParams = require("../../../defaultTaxParams");
+import defaultTaxParams from "../../../defaultTaxParams.js";
+import { DatabaseError } from "../../../../customError/index.js";
 
 var addNewTaxYearToDb = async (collection, userId, year, session) => {
   try {
@@ -28,4 +28,4 @@ var addNewTaxYearToDb = async (collection, userId, year, session) => {
   }
 };
 
-module.exports = addNewTaxYearToDb;
+export default addNewTaxYearToDb;

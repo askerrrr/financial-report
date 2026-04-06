@@ -1,11 +1,11 @@
-var { weeklyPricesAndDiscountsCollection } = require("../../connections/");
-var setUploadId = require("./services/setUploadId");
-var getUploadId = require("./services/getUploadId");
-var updatePriceAndDiscount = require("./services/updatePriceAndDiscount");
-var getWeeklyPricesAndDiscounts = require("./services/getWeeklyPricesAndDiscounts");
-var setWeeklyPricesAndDiscounts = require("./services/setWeeklyPricesAndDiscounts");
-var deleteWeeklyPricesAndDiscounts = require("./services/deleteWeeklyPricesAndDiscounts");
-var getAllUserWeeklyPricesAndDiscounts = require("./services/getAllUserWeeklyPricesAndDiscounts");
+import { weeklyPricesAndDiscountsCollection } from "../../connections/index.js";
+import setUploadId from "./services/setUploadId.js";
+import getUploadId from "./services/getUploadId.js";
+import updatePriceAndDiscount from "./services/updatePriceAndDiscount.js";
+import getWeeklyPricesAndDiscounts from "./services/getWeeklyPricesAndDiscounts.js";
+import setWeeklyPricesAndDiscounts from "./services/setWeeklyPricesAndDiscounts.js";
+import deleteWeeklyPricesAndDiscounts from "./services/deleteWeeklyPricesAndDiscounts.js";
+import getAllUserWeeklyPricesAndDiscounts from "./services/getAllUserWeeklyPricesAndDiscounts.js";
 
 var weeklyPricesAndDiscountsCollectionServices = {
   getWeeklyPricesAndDiscountsFromDb: (userId) => getWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId),
@@ -22,4 +22,4 @@ var weeklyPricesAndDiscountsCollectionServices = {
   deleteWeeklyPricesAndDiscountsFromDb: (userId) => deleteWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId),
 };
 
-module.exports = weeklyPricesAndDiscountsCollectionServices;
+export default weeklyPricesAndDiscountsCollectionServices;

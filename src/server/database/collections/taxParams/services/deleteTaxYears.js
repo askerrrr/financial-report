@@ -1,4 +1,4 @@
-var { DatabaseError } = require("../../../../customError");
+import { DatabaseError } from "../../../../customError/index.js";
 
 var deleteTaxYears = async (collection, userId) => {
   try {
@@ -6,7 +6,7 @@ var deleteTaxYears = async (collection, userId) => {
       { userId },
       {
         $set: { years: [] },
-      }
+      },
     );
 
     return result.modifiedCount;
@@ -15,4 +15,4 @@ var deleteTaxYears = async (collection, userId) => {
   }
 };
 
-module.exports = deleteTaxYears;
+export default deleteTaxYears;

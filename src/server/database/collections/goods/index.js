@@ -1,17 +1,17 @@
-var { goodsCollection } = require("../../connections");
-var updateSingleSku = require("./services/updateSingleSku");
-var deleteListGoods = require("./services/deleteListGoods");
-var updateSkusFields = require("./services/updateSkusFields");
-var saveListGoodsToDb = require("./services/saveListGoodsToDb");
-var getListGoodsFromDb = require("./services/getListGoodsFromDb");
-var getSkuFromListGoods = require("./services/getSkuFromListGoods");
-var getSkusLastCostPrice = require("./services/getSkusLastCostPrice");
-var addNewSkusToListGoods = require("./services/addNewSkusToListGoods");
-var saveUpdatedSkuMetrics = require("./services/saveUpdatedSkuMetrics");
-var getAllUserListGoodsIds = require("./services/getAllUserListGoodsIds");
-var updateSkuDisableStatus = require("./services/updateSkuDisableStatus");
-var updateSkuInListGoods = require("./services/updateSkuInListGoods");
-var setPriceUpdateTimestampAndUpdateStatus = require("./services/setPriceUpdateTimestampAndUpdateStatus");
+import { goodsCollection } from "../../connections/index.js";
+import updateSingleSku from "./services/updateSingleSku.js";
+import deleteListGoods from "./services/deleteListGoods.js";
+import updateSkusFields from "./services/updateSkusFields.js";
+import saveListGoodsToDb from "./services/saveListGoodsToDb.js";
+import getListGoodsFromDb from "./services/getListGoodsFromDb.js";
+import getSkuFromListGoods from "./services/getSkuFromListGoods.js";
+import getSkusLastCostPrice from "./services/getSkusLastCostPrice.js";
+import addNewSkusToListGoods from "./services/addNewSkusToListGoods.js";
+import saveUpdatedSkuMetrics from "./services/saveUpdatedSkuMetrics.js";
+import getAllUserListGoodsIds from "./services/getAllUserListGoodsIds.js";
+import updateSkuDisableStatus from "./services/updateSkuDisableStatus.js";
+import updateSkuInListGoods from "./services/updateSkuInListGoods.js";
+import setPriceUpdateTimestampAndUpdateStatus from "./services/setPriceUpdateTimestampAndUpdateStatus.js";
 
 var goodsCollectionServices = {
   getAllUserListGoodsIds: () => getAllUserListGoodsIds(goodsCollection),
@@ -41,4 +41,4 @@ var goodsCollectionServices = {
   deleteListGoodsFromDb: (userId, session) => deleteListGoods(goodsCollection, userId, session),
 };
 
-module.exports = goodsCollectionServices;
+export default goodsCollectionServices;

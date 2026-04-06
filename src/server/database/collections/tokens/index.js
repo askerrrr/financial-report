@@ -1,6 +1,6 @@
-var { tokenCollection } = require("../../connections");
-var saveWBTokenToDb = require("./services/saveWBTokenToDb");
-var getWBTokenByUserId = require("./services/getWBTokenByUserId");
+import { tokenCollection } from  "../../connections/index.js";
+import saveWBTokenToDb from  "./services/saveWBTokenToDb.js";
+import getWBTokenByUserId from  "./services/getWBTokenByUserId.js";
 
 var tokenCollectionServices = {
   getWBTokenByUserId: (userId, session) => getWBTokenByUserId(tokenCollection, userId, session),
@@ -8,4 +8,4 @@ var tokenCollectionServices = {
   saveWBTokenToDb: (userId, token, session) => saveWBTokenToDb(tokenCollection, userId, token, session),
 };
 
-module.exports = tokenCollectionServices;
+export default tokenCollectionServices;

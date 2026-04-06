@@ -1,5 +1,5 @@
-var calc = require("../../reports/services/calcServices");
-var truncateNum = require("../../reports/services/reportParsing/truncateNum");
+import calc from "../../reports/services/calcServices/index.js";
+import truncateNum from "../../reports/services/reportParsing/truncateNum.js";
 
 var recalculateReportsWithNewMandatoryInsuranceRate = (reports, listGoods, mandatoryInsuranceFee, mandatoryInsuranceRate, taxYear) => {
   var finalProfit = 0;
@@ -109,4 +109,4 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (reports, listGoods, manda
   };
 };
 
-module.exports = recalculateReportsWithNewMandatoryInsuranceRate;
+export default recalculateReportsWithNewMandatoryInsuranceRate;

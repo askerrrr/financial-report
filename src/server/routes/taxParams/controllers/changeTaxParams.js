@@ -1,9 +1,9 @@
-var Joi = require("joi");
-var { dbClient } = require("../../../database");
-var getTaxParamKeyName = require("../services/getTaxParamKeyName");
-var defaultTaxParams = require("../../../database/defaultTaxParams");
-var recalculateReportsWithNewTaxRate = require("../services/recalculateReportsWithNewTaxRate");
-var recalculateReportsWithNewMandatoryInsuranceRate = require("../services/recalculateReportsWithNewMandatoryInsuranceRate");
+import Joi from "joi";
+import { dbClient } from "../../../database/index.js";
+import getTaxParamKeyName from "../services/getTaxParamKeyName.js";
+import defaultTaxParams from "../../../database/defaultTaxParams.js";
+import recalculateReportsWithNewTaxRate from "../services/recalculateReportsWithNewTaxRate.js";
+import recalculateReportsWithNewMandatoryInsuranceRate from "../services/recalculateReportsWithNewMandatoryInsuranceRate.js";
 
 var dataObjectSchema = Joi.object({ taxRate: Joi.number(), mandatoryInsuranceFeeRate: Joi.number(), mandatoryInsuranceFee: Joi.number() });
 
@@ -143,4 +143,4 @@ var changeTaxParams = async (req, res, next) => {
   }
 };
 
-module.exports = changeTaxParams;
+export default changeTaxParams;

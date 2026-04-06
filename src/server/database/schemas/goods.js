@@ -1,4 +1,4 @@
-var { Schema } = require("mongoose");
+import { Schema } from "mongoose";
 
 var skuMetrictSchema = new Schema(
   {
@@ -47,4 +47,4 @@ var goodsSchema = new Schema({
   listGoods: [{ type: skuSchema, required: true }],
 });
 
-module.exports = goodsSchema;
+export default goodsSchema;

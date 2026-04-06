@@ -18,4 +18,4 @@ var updateSingleSku = async (collection, userId, sku) => {
   return result;
 };
 
-module.exports = updateSingleSku;
+export default updateSingleSku;

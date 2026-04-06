@@ -1,11 +1,11 @@
-var { userCollection } = require("../../connections");
+import { userCollection } from "../../connections/index.js";
 
-var getUserById = require("./services/getUserByUserId");
-var getUserByLogin = require("./services/getUserByLogin");
-var getAllUsersFromDb = require("./services/getAllUsers");
-var createUserToDb = require("./services/createUserToDb");
-var deleteUserFromDb = require("./services/deleteUserFromDb");
-var deleteUsersFromDb = require("./services/deleteUsersFromDb");
+import getUserById from "./services/getUserByUserId.js";
+import getUserByLogin from "./services/getUserByLogin.js";
+import getAllUsersFromDb from "./services/getAllUsers.js";
+import createUserToDb from "./services/createUserToDb.js";
+import deleteUserFromDb from "./services/deleteUserFromDb.js";
+import deleteUsersFromDb from "./services/deleteUsersFromDb.js";
 
 var userCollectionServices = {
   createUserToDb: (user, session) => createUserToDb(user, session),
@@ -20,4 +20,4 @@ var userCollectionServices = {
   deleteUsersFromDb: (session) => deleteUsersFromDb(session),
 };
 
-module.exports = userCollectionServices;
+export default userCollectionServices;

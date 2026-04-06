@@ -1,5 +1,5 @@
-var calc = require("../../reports/services/calcServices");
-var truncateNum = require("../../reports/services/reportParsing/truncateNum");
+import calc from "../../reports/services/calcServices/index.js";
+import truncateNum from "../../reports/services/reportParsing/truncateNum.js";
 
 var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTaxRate, taxYear) => {
   var finalProfit = 0;
@@ -78,4 +78,4 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
   return { finalProfit, paidTaxAmount, updatedReports: reports, listGoodsWithUpdatedSkuMetrics: listGoods };
 };
 
-module.exports = recalculateReportsWithNewTaxRate;
+export default recalculateReportsWithNewTaxRate;

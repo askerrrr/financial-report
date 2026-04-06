@@ -1,4 +1,4 @@
-var readWeeklyPricesFile = require("./readWeeklyPricesFile");
-var generageWeeklyPricesFile = require("./generateWeeklyPricesFile");
+import readWeeklyPricesFile from "./readWeeklyPricesFile.js";
+import generageWeeklyPricesFile from "./generateWeeklyPricesFile.js";
 
-module.exports = { readWeeklyPricesFile, generageWeeklyPricesFile };
+export { readWeeklyPricesFile, generageWeeklyPricesFile };

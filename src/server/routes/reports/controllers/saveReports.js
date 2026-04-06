@@ -1,5 +1,5 @@
-var { dbClient } = require("../../../database");
-var reportsProcessing = require("../services/different/reportsProcessing");
+import { dbClient } from "../../../database/index.js";
+import reportsProcessing from "../services/different/reportsProcessing.js";
 
 var saveReports = async (req, res, next) => {
   var { dateTo, dateFrom, userId } = req.body;
@@ -21,4 +21,4 @@ var saveReports = async (req, res, next) => {
   }
 };
 
-module.exports = saveReports;
+export default saveReports;

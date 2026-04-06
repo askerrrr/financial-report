@@ -1,5 +1,5 @@
-var Joi = require("joi");
-var wbapi = require("../../reports/services/WBAPI");
+import Joi from "joi";
+import wbapi from "../../reports/services/WBAPI/index.js";
 
 var checkedWeekDaysArraySchema = Joi.array().items(Joi.number().required()).required();
 var skuObjectSchema = Joi.object({ nmID: Joi.number().required(), price: Joi.number().required(), discount: Joi.number().required() });
@@ -38,4 +38,4 @@ var newPriceApplyController = async (req, res, next) => {
   next();
 };
 
-module.exports = newPriceApplyController;
+export default newPriceApplyController;

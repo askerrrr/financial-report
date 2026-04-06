@@ -1,5 +1,5 @@
-var calc = require("../calcServices");
-var truncateNum = require("../reportParsing/truncateNum");
+import calc from "../calcServices/index.js";
+import truncateNum from "../reportParsing/truncateNum.js";
 
 var startYearPostfix = "InCurrentYear";
 var endYearPostfix = "InNextYear";
@@ -47,4 +47,4 @@ var recalculateSkuMetricsAfterReportDeletion = (startYear, endYear, listGoods, r
   return { listGoodsWithRecalculatedSkuMetrics: listGoods };
 };
 
-module.exports = recalculateSkuMetricsAfterReportDeletion;
+export default recalculateSkuMetricsAfterReportDeletion;

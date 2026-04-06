@@ -1,10 +1,10 @@
-var { reportLoadingStatesCollection } = require("../../connections");
+import { reportLoadingStatesCollection } from "../../connections/index.js";
 
-var getReportLoadingState = require("./services/getReportLoadingState");
-var prependToReportsQueue = require("./services/prependToReportsQueue");
-var getLoadingProgressStatus = require("./services/getLoadingProgressStatus");
-var deleteReportLoadingStates = require("./services/deleteReportLoadingStates");
-var setLastReportRequestTimestamp = require("./services/setLastReportRequestTimestamp");
+import getReportLoadingState from "./services/getReportLoadingState.js";
+import prependToReportsQueue from "./services/prependToReportsQueue.js";
+import getLoadingProgressStatus from "./services/getLoadingProgressStatus.js";
+import deleteReportLoadingStates from "./services/deleteReportLoadingStates.js";
+import setLastReportRequestTimestamp from "./services/setLastReportRequestTimestamp.js";
 
 var reportLoadingStatesCollectionServices = {
   getReportLoadingState: (userId, session) => getReportLoadingState(reportLoadingStatesCollection, userId, session),
@@ -14,4 +14,4 @@ var reportLoadingStatesCollectionServices = {
   setLastReportRequestTimestamp: (userId, session) => setLastReportRequestTimestamp(reportLoadingStatesCollection, userId, session),
 };
 
-module.exports = reportLoadingStatesCollectionServices;
+export default reportLoadingStatesCollectionServices;

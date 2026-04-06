@@ -1,7 +1,7 @@
-var calcFinalProfit = require("./finalProfit");
-var calcProfitMargin = require("./profitMargin");
-var calcInsuranceFee = require("./insuranceFee");
-var calcPreTaxProfit = require("./preTaxProfit");
+import calcFinalProfit from "./finalProfit.js";
+import calcProfitMargin from "./profitMargin.js";
+import calcInsuranceFee from "./insuranceFee.js";
+import calcPreTaxProfit from "./preTaxProfit.js";
 
 var calcRestSKUParams = (sku, taxParams, propPostfix = "") => {
   sku["isCostPriceSet" + propPostfix] = true;
@@ -24,7 +24,7 @@ var calcRestSKUParams = (sku, taxParams, propPostfix = "") => {
   return { updatedTaxParams: taxParams, skuWithCalculatedParams: sku };
 };
 
-module.exports = calcRestSKUParams;
+export default calcRestSKUParams;
 
 var recalculateInsuranceFee = function (sku, taxParams, propPostfix) {
   if (taxParams.mandatoryInsuranceFeeIsPaid) {

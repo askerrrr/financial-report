@@ -1,7 +1,7 @@
-var Joi = require("joi");
-var calc = require("../services/calcServices");
-var { dbClient } = require("../../../database");
-var processOfSkuCostPriceSetting = require("../services/different/processOfSkuCostPriceSetting");
+import Joi from "joi";
+import calc from "../services/calcServices/index.js";
+import { dbClient } from "../../../database/index.js";
+import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 
 var schema = Joi.object({
   userId: Joi.string().required(),
@@ -135,4 +135,4 @@ var setOtherExpensesToSku = async (req, res, next) => {
   }
 };
 
-module.exports = setOtherExpensesToSku;
+export default setOtherExpensesToSku;

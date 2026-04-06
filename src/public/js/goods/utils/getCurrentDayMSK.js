@@ -8,7 +8,7 @@ var getCurrentDayMSK = () => {
 
   var currentDayName = formatter.format(new Date());
   var currentDayIndex = weekDays.indexOf(currentDayName);
-  console.log({ currentDayName, currentDayIndex });
+
   return { currentDayName, currentDayIndex };
 };
 

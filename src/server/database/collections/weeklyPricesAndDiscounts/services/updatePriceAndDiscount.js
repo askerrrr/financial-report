@@ -25,4 +25,4 @@ var updatePriceAndDiscount = async (collection, userId, sku, checkedWeekDays) =>
   return result?.acknowledged;
 };
 
-module.exports = updatePriceAndDiscount;
+export default updatePriceAndDiscount;

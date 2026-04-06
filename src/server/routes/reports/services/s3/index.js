@@ -1,7 +1,9 @@
-var s3 = {
-  getFile: require("./get"),
-  uploadFile: require("./upload"),
-  deleteFile: require("./delete"),
-};
+import getFile from "./get.js";
+import uploadFile from "./upload.js";
+import deleteFile from "./delete.js";
 
-module.exports = s3;
+export default {
+  getFile,
+  uploadFile,
+  deleteFile,
+};

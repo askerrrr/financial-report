@@ -15,4 +15,4 @@ var splitSkuByDisabledStatus = (listGoods) => {
   return { listGoods: { enabledSku, disabledSku } };
 };
 
-module.exports = splitSkuByDisabledStatus;
+export default splitSkuByDisabledStatus;

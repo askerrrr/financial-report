@@ -1,4 +1,4 @@
-var { S3Client, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 var deleteFile = async (Key) => {
   var client = new S3Client(JSON.parse(process.env.S3_CLIENT_OPTIONS));
@@ -7,4 +7,4 @@ var deleteFile = async (Key) => {
   return res;
 };
 
-module.exports = deleteFile;
+export default deleteFile;

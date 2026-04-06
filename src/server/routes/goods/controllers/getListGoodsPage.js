@@ -1,5 +1,5 @@
-var { join } = require("node:path");
+import { join } from "node:path";
 
-var getListGoodsPage = async (req, res, next) => res.sendFile(join(__dirname, "../../../../public/html/goods/index.html"));
+var getListGoodsPage = async (req, res, next) => res.sendFile(join(import.meta.dirname, "../../../../public/html/goods/index.html"));
 
-module.exports = getListGoodsPage;
+export default getListGoodsPage;

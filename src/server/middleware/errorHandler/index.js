@@ -1,5 +1,5 @@
-var multer = require("multer");
-var { WBAPIError, FormDataError, DatabaseError, ReportNotFoundError, DatabaseConnectionError } = require("../../customError");
+import { MulterError } from "multer";
+import { WBAPIError, FormDataError, DatabaseError, ReportNotFoundError, DatabaseConnectionError } from "../../customError/index.js";
 
 var errorHandler = async (e, req, res, next) => {
   console.error({
@@ -10,7 +10,7 @@ var errorHandler = async (e, req, res, next) => {
     cause: e?.cause || null,
   });
 
-  if (e instanceof multer.MulterError) {
+  if (e instanceof MulterError) {
     return res.sendStatus(500);
   }
 
@@ -33,4 +33,4 @@ var errorHandler = async (e, req, res, next) => {
   res.status(e?.status || 500).json({ msg: "Произошла ошибка..." });
 };
 
-module.exports = errorHandler;
+export default errorHandler;
