@@ -1,5 +1,5 @@
 import { dbClient } from "../../../database/index.js";
-var reportsProcessing = require("../../reports/services/different/reportsProcessing");
+import reportsProcessing from "../../reports/services/different/reportsProcessing.js";
 
 var weeklyReportsLoader = async (req, res) => {
   var { getAllUsersFromDb } = req.app.locals.userCollectionServices;
