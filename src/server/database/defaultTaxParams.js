@@ -15,6 +15,7 @@ var defaultTaxParams = [
     excessInsuranceRate: 1,
     requiresAdditionalInsuranceFee: false,
     additionalInsuranceFee: 0,
+    taxableAmount: 0,
   },
   {
     year: 2024,
@@ -32,6 +33,7 @@ var defaultTaxParams = [
     excessInsuranceRate: 1,
     requiresAdditionalInsuranceFee: false,
     additionalInsuranceFee: 0,
+    taxableAmount: 0,
     excessIncomeForAdditionalInsuranceFee: 300000,
   },
   {
@@ -50,6 +52,7 @@ var defaultTaxParams = [
     excessInsuranceRate: 1,
     requiresAdditionalInsuranceFee: false,
     additionalInsuranceFee: 0,
+    taxableAmount: 0,
     excessIncomeForAdditionalInsuranceFee: 300000,
   },
   {
@@ -68,6 +71,7 @@ var defaultTaxParams = [
     excessInsuranceRate: 1,
     requiresAdditionalInsuranceFee: false,
     additionalInsuranceFee: 0,
+    taxableAmount: 0,
   },
   {
     year: 2027,
@@ -85,7 +89,8 @@ var defaultTaxParams = [
     excessInsuranceRate: 1,
     requiresAdditionalInsuranceFee: false,
     additionalInsuranceFee: 0,
+    taxableAmount: 0,
   },
 ];
 
-export default  defaultTaxParams;
+export default defaultTaxParams;
