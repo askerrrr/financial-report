@@ -4,6 +4,7 @@ import truncateTotals from "./truncateTotals.js";
 var processReportTotals = async (skus, propPostfix = "") => {
   var report = {};
 
+  report["totalSold" + propPostfix] = calc.sum(skus, "qty");
   report["totalFines" + propPostfix] = calc.sum(skus, "fines" + propPostfix, "truncate-on");
   report["totalProfit" + propPostfix] = calc.sum(skus, "profit" + propPostfix, "truncate-on");
   report["totalTaxAmount" + propPostfix] = calc.sum(skus, "tax" + propPostfix, "truncate-on");
