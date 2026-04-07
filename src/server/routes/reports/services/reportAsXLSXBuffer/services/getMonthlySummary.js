@@ -11,6 +11,7 @@ var getMonthlySummary = async (reports) => {
     totalAdvertisingCosts = 0,
     totalOtherExpenses = 0,
     totalProductsCosts = 0,
+    totalTaxableAmount = 0,
     totalTaxAmount = 0,
     totalProfitMargin = 0,
     totalFinalProfit = 0,
@@ -30,6 +31,7 @@ var getMonthlySummary = async (reports) => {
     totalDeductionOrPayment += report.totalDeductionOrPayment;
     totalAdvertisingCosts += report.totalAdvertisingCosts;
     totalProductsCosts += report.totalProductCosts;
+    totalTaxableAmount += report.totalTaxableAmount;
     totalTaxAmount += report.totalTaxAmount;
     totalProfitMargin += report.totalProfitMargin;
     totalFinalProfit += report.totalFinalProfit;
@@ -51,6 +53,7 @@ var getMonthlySummary = async (reports) => {
     totalDeductionOrPayment,
     totalAdvertisingCosts,
     totalProductsCosts,
+    totalTaxableAmount,
     totalTaxAmount,
     totalProfitMargin,
     totalFinalProfit,
