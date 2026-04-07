@@ -1,5 +1,7 @@
 var getZeroedReportTotals = () => {
   return {
+    dateFrom: "",
+    dateTo: "",
     reportIds: "",
     totalRetailAmount: 0,
     totalSellerPayoutAmount: 0,
