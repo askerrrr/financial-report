@@ -1,9 +1,9 @@
 import calc from "../calcServices/index.js";
 
-import getSKUNamesFromPaidStorageReport from "./getSKUNamesFromPaidStorageReport.js";
+import getSkuNamesFromPaidStorageReport from "./getSkuNamesFromPaidStorageReport.js";
 
 var parsePaidStorageReport = async (report) => {
-  var skuNames = await getSKUNamesFromPaidStorageReport(report);
+  var skuNames = await getSkuNamesFromPaidStorageReport(report);
 
   var data = [];
 

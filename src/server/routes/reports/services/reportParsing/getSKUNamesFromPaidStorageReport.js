@@ -1,4 +1,4 @@
-var getSKUNamesFromPaidStorageReport = async (paidStorageReport) => {
+var getSkuNamesFromPaidStorageReport = async (paidStorageReport) => {
   var data = [];
 
   for (var elem of paidStorageReport) {
@@ -10,4 +10,4 @@ var getSKUNamesFromPaidStorageReport = async (paidStorageReport) => {
   return data;
 };
 
-export default  getSKUNamesFromPaidStorageReport;
+export default getSkuNamesFromPaidStorageReport;
