@@ -7,7 +7,7 @@ var createTotalsSheet = async (report, sheet) => {
 
   var { skus, ...totalValues } = report;
 
-  var requiredTotals = await getRequiredTotalsField(totalValues);
+  var requiredTotals = getRequiredTotalsField(totalValues);
 
   sheet = await writeTotalsTitleToSheet(sheet, indent);
   sheet = await writeTotalValuesToSheet(sheet, indent, requiredTotals);

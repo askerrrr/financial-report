@@ -1,4 +1,4 @@
-var getRequiredTotalsField = async (report) => {
+var getRequiredTotalsField = (report) => {
   return {
     reportId: report.reportId,
     dateFrom: report.dateFrom,
