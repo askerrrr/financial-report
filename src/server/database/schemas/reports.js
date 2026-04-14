@@ -135,6 +135,7 @@ var reportSchema = new Schema(
     crossesTaxYears: { type: Boolean, default: false },
     totalSellerPayoutAmountInCurrentYear: nonRequiredNumberOptions,
     totalSoldInCurrentYear: nonRequiredNumberOptions,
+    totalSoldInNextYear: nonRequiredNumberOptions,
     totalFinesInCurrentYear: nonRequiredNumberOptions,
     totalProductCostsInCurrentYear: nonRequiredNumberOptions,
     totalReturnAmountInCurrentYear: nonRequiredNumberOptions,

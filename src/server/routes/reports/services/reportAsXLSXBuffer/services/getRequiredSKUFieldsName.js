@@ -10,13 +10,15 @@ var requiredSKUsFieldsName = [
   "acceptance",
   "otherExpenses",
   "profit",
+  "taxableAmount",
+  "tax",
   "insuranceFee",
   "additionalInsuranceFee",
   "profitMargin",
   "finalProfit",
 ];
 
-var getRequiredSKUFieldsName = async (skus) =>
+var getRequiredSKUFieldsName = (skus) =>
   skus.map((sku) => {
     return {
       skuName: sku.skuName,
@@ -30,6 +32,8 @@ var getRequiredSKUFieldsName = async (skus) =>
       acceptance: sku.acceptance,
       otherExpenses: sku.otherExpenses,
       profit: sku.profit,
+      taxableAmount: sku.taxableAmount,
+      tax: sku.tax,
       insuranceFee: sku.insuranceFee,
       additionalInsuranceFee: sku.additionalInsuranceFee,
       profitMargin: sku.profitMargin,

@@ -34,6 +34,25 @@ var getMonthlySummaryAsXLSXBuffer = async (reports) => {
 
   sheet = await writeTotalValuesToSheet(sheet, indent, monthlySummary);
 
+  var crossesTaxYearsReport = reports.filter((report) => report.crossesTaxYears);
+
+  if (crossesTaxYearsReport.length) {
+    var currentYearPostfix = "InCurrentYear";
+    var nextYearPostfix = "InNextYear";
+
+    var startYear = crossesTaxYearsReport[0].dateFrom.split("-")[0];
+    var currentYearSheet = workbook.addWorksheet("Сводка за " + startYear);
+    var currentYearMonthlySummary = await getMonthlySummary(crossesTaxYearsReport, currentYearPostfix);
+    currentYearSheet = await writeTotalsTitleToSheet(currentYearSheet, indent);
+    currentYearSheet = await writeTotalValuesToSheet(currentYearSheet, indent, currentYearMonthlySummary);
+
+    var endYear = crossesTaxYearsReport[0].dateTo.split("-")[0];
+    var nextYearSheet = workbook.addWorksheet("Сводка за " + endYear);
+    var nextYearMonthlySummary = await getMonthlySummary(crossesTaxYearsReport, nextYearPostfix);
+    nextYearSheet = await writeTotalsTitleToSheet(nextYearSheet, indent);
+    nextYearSheet = await writeTotalValuesToSheet(nextYearSheet, indent, nextYearMonthlySummary);
+  }
+
   var buffer = await workbook.xlsx.writeBuffer();
 
   return buffer;

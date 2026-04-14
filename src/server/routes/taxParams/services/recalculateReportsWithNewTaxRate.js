@@ -14,7 +14,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
       postfix = startYear == taxYear ? currentYearPostfix : nextYearPostfix;
     }
 
-    for (sku of report.skus) {
+    for (var sku of report.skus) {
       var skuFromListGoods = listGoods.find((i) => i.id === sku.id && i.skuName === sku.skuName);
 
       if (report.crossesTaxYears) {

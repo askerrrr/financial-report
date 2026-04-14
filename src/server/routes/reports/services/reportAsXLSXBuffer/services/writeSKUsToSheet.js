@@ -1,6 +1,6 @@
 import { requiredSKUsFieldsName } from "./getRequiredSKUFieldsName.js";
 
-var columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"];
+var columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q"];
 
 var alignmentStyles = {
   vertical: "middle",
