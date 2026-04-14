@@ -75,7 +75,12 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
     }
   }
 
-  return { finalProfit, paidTaxAmount, updatedReports: reports, listGoodsWithUpdatedSkuMetrics: listGoods };
+  return {
+    finalProfit: truncateNum(finalProfit),
+    paidTaxAmount: truncateNum(paidTaxAmount),
+    updatedReports: reports,
+    listGoodsWithUpdatedSkuMetrics: listGoods,
+  };
 };
 
 export default recalculateReportsWithNewTaxRate;
