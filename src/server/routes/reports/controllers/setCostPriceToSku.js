@@ -53,21 +53,21 @@ var setCostPriceToSku = async (req, res, next) => {
         skus[skuIndex] = result.updatedSku;
 
         var { startYearTaxParams, endYearTaxParams } = result.taxParams;
-        await changeTaxParamsToDb(userId, startYear, session, startYearTaxParams);
-        await changeTaxParamsToDb(userId, endYear, session, endYearTaxParams);
+        // await changeTaxParamsToDb(userId, startYear, session, startYearTaxParams);
+        // await changeTaxParamsToDb(userId, endYear, session, endYearTaxParams);
       } else {
         var taxParams = await getTaxParamsFromDb(userId, year, session);
         var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams);
 
         skus[skuIndex] = result.updatedSku;
 
-        await changeTaxParamsToDb(userId, year, session, result.taxParams);
+        // await changeTaxParamsToDb(userId, year, session, result.taxParams);
       }
 
       var updatedReport = await calc.total.restParams(totalParams, skus, report.crossesTaxYears);
 
-      await saveUpdatedReport(userId, reportId, updatedReport, session);
-      await updateSkuInListGoods(userId, skuId, { lastCostPrice: costPrice, metrics: result.updatedSkuMetrics }, session);
+      // await saveUpdatedReport(userId, reportId, updatedReport, session);
+      // await updateSkuInListGoods(userId, skuId, { lastCostPrice: costPrice, metrics: result.updatedSkuMetrics }, session);
 
       var { profitMargin, finalProfit } = skus[skuIndex];
       var { totalFinalProfit, totalProfitMargin, totalInsuranceFee } = updatedReport;
