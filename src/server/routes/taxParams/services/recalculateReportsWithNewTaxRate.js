@@ -38,7 +38,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
 
           var recalculatedNetProfitToSkuMetrics = startYearSkuMetrics.netProfit - prevSkuFinalProfit + sku["finalProfit" + postfix];
           startYearSkuMetrics.netProfit = truncateNum(recalculatedNetProfitToSkuMetrics);
-          skuMetrics.profitMargin = calc.profitMargin(skuMetrics.netProfit, skuMetrics.retailAmount);
+          startYearSkuMetrics.profitMargin = calc.profitMargin(startYearSkuMetrics.netProfit, startYearSkuMetrics.retailAmount);
         }
       } else {
         var prevSkuTax = sku.tax;
