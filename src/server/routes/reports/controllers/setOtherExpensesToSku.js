@@ -95,7 +95,8 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
         var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === year);
         skuMetrics.otherExpenses = skuMetrics.otherExpenses - prevSkuOtherExpenses + otherExpenses;
-        await updateSkuInListGoods(userId, skuId, { metrics: skuMetrics });
+
+        await updateSkuInListGoods(userId, skuId, { metrics: skuFromListGoods.metrics });
 
         totalParams.totalOtherExpenses = totalParams.totalOtherExpenses - prevSkuOtherExpenses + otherExpenses;
         updatedReport = { ...totalParams, skus };
