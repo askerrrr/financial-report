@@ -1,7 +1,7 @@
 import calc from "../../reports/services/calcServices/index.js";
 import truncateNum from "../../reports/services/reportParsing/truncateNum.js";
 
-var recalculateReportsWithNewMandatoryInsuranceRate = (reports, listGoods, mandatoryInsuranceFee, mandatoryInsuranceRate, taxYear) => {
+var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoods, mandatoryInsuranceFee, mandatoryInsuranceRate) => {
   var finalProfit = 0;
   var paidInsuranceFee = 0;
   var mandatoryInsuranceFeeIsPaid = false;
@@ -16,7 +16,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (reports, listGoods, manda
       postfix = startYear == taxYear ? startYearPostfix : endYearPostfix;
     }
 
-    for (sku of report.skus) {
+    for (var sku of report.skus) {
       var skuFromListGoods = listGoods.find((i) => i.id === sku.id && i.skuName === sku.skuName);
 
       if (report.crossesTaxYears) {
@@ -39,7 +39,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (reports, listGoods, manda
             mandatoryInsuranceFeeIsPaid = true;
           }
 
-          var skuMetrics = skuFromListGoods.find((i) => i.year === taxYear);
+          var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === taxYear);
 
           sku["finalProfit" + postfix] = calc.finalProfit(sku, postfix);
 
@@ -100,11 +100,10 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (reports, listGoods, manda
   }
 
   return {
-    updatedReports: reports,
     finalProfit,
-    mandatoryInsuranceFeeIsPaid,
     paidInsuranceFee,
-    mandatoryInsuranceRate,
+    updatedReports: reports,
+    mandatoryInsuranceFeeIsPaid,
     listGoodsWithUpdatedSkuMetrics: listGoods,
   };
 };
