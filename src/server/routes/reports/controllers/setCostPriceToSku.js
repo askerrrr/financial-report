@@ -41,6 +41,7 @@ var setCostPriceToSku = async (req, res, next) => {
       }
 
       skus[skuIndex].costPrice = costPrice;
+      skus[skuIndex].isCostPriceSet = true;
 
       if (report.crossesTaxYears) {
         var startYear = +report.dateFrom.split("-")[0];
