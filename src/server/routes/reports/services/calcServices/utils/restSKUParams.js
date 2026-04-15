@@ -2,6 +2,7 @@ import calcFinalProfit from "./finalProfit.js";
 import calcProfitMargin from "./profitMargin.js";
 import calcInsuranceFee from "./insuranceFee.js";
 import calcPreTaxProfit from "./preTaxProfit.js";
+import truncateNum from "../../reportParsing/truncateNum.js";
 
 var calcRestSKUParams = (sku, taxParams, propPostfix = "") => {
   sku["isCostPriceSet" + propPostfix] = true;
@@ -64,6 +65,8 @@ var recalculateInsuranceFee = function (sku, taxParams, propPostfix) {
     taxParams.additionalInsuranceFeeIsPaid = true;
     taxParams.requiresAdditionalInsuranceFee = false;
   }
+
+  taxParams.paidInsuranceFee = truncateNum(taxParams.paidInsuranceFee);
 
   return { sku, taxParams };
 };
