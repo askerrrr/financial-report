@@ -5,7 +5,8 @@ var calcPreTaxProfit = (sku, propPostfix = "") => {
     return 0;
   }
 
-  var preTaxProfit = sku["profit" + propPostfix] - sku["otherExpenses" + propPostfix] - sku["qty" + propPostfix] * sku.costPrice;
+  var productCosts = sku["qty" + propPostfix] * sku.costPrice;
+  var preTaxProfit = sku["profit" + propPostfix] - sku["otherExpenses" + propPostfix] - productCosts;
   return truncateNum(preTaxProfit);
 };
 

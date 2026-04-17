@@ -1,6 +1,7 @@
 import Joi from "joi";
 import calc from "../services/calcServices/index.js";
 import { dbClient } from "../../../database/index.js";
+import truncateNum from "../services/reportParsing/truncateNum.js";
 import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 
 var schema = Joi.object({
@@ -54,6 +55,10 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
           skus[skuIndex].otherExpenses = otherExpenses;
 
+          var otherExpensesHalf = truncateNum(otherExpenses / 2);
+          skus[skuIndex].otherExpensesInCurrentYear = otherExpensesHalf;
+          skus[skuIndex].otherExpensesInNextYear = otherExpensesHalf;
+
           var startYear = +report.dateFrom.split("-")[0];
           var endYear = +report.dateTo.split("-")[0];
           var startYearTaxParams = await getTaxParamsFromDb(userId, startYear, session);
@@ -90,7 +95,8 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
         var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === year);
         skuMetrics.otherExpenses = skuMetrics.otherExpenses - prevSkuOtherExpenses + otherExpenses;
-        await updateSkuInListGoods(userId, skuId, { metrics: skuMetrics });
+
+        await updateSkuInListGoods(userId, skuId, { metrics: skuFromListGoods.metrics });
 
         totalParams.totalOtherExpenses = totalParams.totalOtherExpenses - prevSkuOtherExpenses + otherExpenses;
         updatedReport = { ...totalParams, skus };

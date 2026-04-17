@@ -55,6 +55,7 @@ var setCostPriceToSkus = async (req, res, next) => {
         }
 
         skus[skuIndex].costPrice = lastCostPrice;
+        skus[skuIndex].isCostPriceSet = true;
         var skuFromListGoods = listGoods.find((sku) => sku.id === id && sku.skuName === skuName);
 
         if (report.crossesTaxYears) {

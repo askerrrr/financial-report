@@ -77,7 +77,9 @@ var changeTaxParams = async (req, res, next) => {
             return report;
           }
         } else {
-          return report.recordTo.year === year;
+          if (report.recordTo.year === year) {
+            return report;
+          }
         }
       });
 
@@ -109,17 +111,16 @@ var changeTaxParams = async (req, res, next) => {
 
           if (requiredReports.length) {
             var { mandatoryInsuranceFee } = oldTaxParams;
-            var { updatedReports, ...updatedTaxParams } = recalculateReportsWithNewMandatoryInsuranceRate(
-              year,
-              requiredReports,
-              listGoods,
-              mandatoryInsuranceFee,
-              newMandatoryInsuranceFeeRate,
-              listGoodsWithUpdatedSkuMetrics,
-            );
+            var { updatedReports, listGoodsWithUpdatedSkuMetrics, finalProfit, paidInsuranceFee, mandatoryInsuranceFeeIsPaid } =
+              recalculateReportsWithNewMandatoryInsuranceRate(year, requiredReports, listGoods, mandatoryInsuranceFee, newMandatoryInsuranceFeeRate);
 
             await saveUpdatedReports(userId, updatedReports, session);
-            await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
+
+            await changeTaxParamsToDb(userId, year, session, {
+              paidInsuranceFee,
+              mandatoryInsuranceFeeIsPaid,
+              mandatoryInsuranceFeeRate: newMandatoryInsuranceFeeRate,
+            });
           } else {
             await changeTaxParamsToDb(userId, year, session, { mandatoryInsuranceFeeRate: newMandatoryInsuranceFeeRate });
           }
