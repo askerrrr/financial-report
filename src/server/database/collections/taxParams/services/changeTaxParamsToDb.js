@@ -2,7 +2,6 @@ var changeTaxParamsToDb = async (collection, userId, session, ...updatedTaxParam
   var count = 0;
   var query = {};
   var arrayFilters = [];
-  console.log({ collection, userId, session, updatedTaxParams });
 
   for (var taxParams of updatedTaxParams) {
     var arrayFiltersKey = `elem${count}.year`;

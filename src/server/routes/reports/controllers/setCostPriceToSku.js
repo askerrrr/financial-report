@@ -61,7 +61,7 @@ var setCostPriceToSku = async (req, res, next) => {
 
         skus[skuIndex] = result.updatedSku;
 
-        await changeTaxParamsToDb(userId, year, session, result.taxParams);
+        await changeTaxParamsToDb(userId, session, result.taxParams);
       }
 
       var updatedReport = await calc.total.restParams(totalParams, skus, report.crossesTaxYears);

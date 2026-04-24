@@ -42,7 +42,7 @@ var deleteReport = async (req, res, next) => {
       } else {
         var taxParams = await getTaxParamsFromDb(userId, year, session);
         var { updatedTaxParams } = recalculateTaxParams(taxParams, report);
-        await changeTaxParamsToDb(userId, year, session, updatedTaxParams);
+        await changeTaxParamsToDb(userId, session, updatedTaxParams);
       }
 
       var { listGoodsWithRecalculatedSkuMetrics } = recalculateSkuMetricsAfterReportDeletion(startYear, endYear, listGoods, report);
