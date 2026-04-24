@@ -11,6 +11,8 @@ var changeTaxParamsToDb = async (collection, userId, session, newTaxParams) => {
     for (var key of Object.keys(taxParams)) {
       query[`years.$[elem${count}].${key}`] = taxParams[key];
     }
+
+    count++;
   }
 
   var result = await collection.updateOne({ userId }, { $set: query }, { arrayFilters });
