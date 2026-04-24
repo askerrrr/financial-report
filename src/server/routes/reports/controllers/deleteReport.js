@@ -38,8 +38,7 @@ var deleteReport = async (req, res, next) => {
 
         startYearTaxParams = recalculateTaxParams(startYearTaxParams, report, currentYearPropPostfix).updatedTaxParams;
         endYearTaxParams = recalculateTaxParams(endYearTaxParams, report, nextYearPropPostfix).updatedTaxParams;
-        await changeTaxParamsToDb(userId, startYear, session, startYearTaxParams);
-        await changeTaxParamsToDb(userId, endYear, session, endYearTaxParams);
+        await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
       } else {
         var taxParams = await getTaxParamsFromDb(userId, year, session);
         var { updatedTaxParams } = recalculateTaxParams(taxParams, report);

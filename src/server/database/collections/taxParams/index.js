@@ -12,7 +12,7 @@ var taxParamsCollectionServices = {
 
   getTaxParamsFromDb: (userId, year, session) => getTaxParamsFromDb(taxParamsCollection, userId, year, session),
 
-  changeTaxParamsToDb: (userId, year, session, newTaxParam) => changeTaxParamsToDb(taxParamsCollection, userId, year, session, newTaxParam),
+  changeTaxParamsToDb: (userId, session, newTaxParam) => changeTaxParamsToDb(taxParamsCollection, userId, session, newTaxParam),
 
   saveUpdatedTaxParams: (userId, year, taxParams) => saveUpdatedTaxParams(taxParamsCollection, userId, year, taxParams),
 };

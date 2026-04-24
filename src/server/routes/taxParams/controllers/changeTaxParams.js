@@ -54,7 +54,7 @@ var changeTaxParams = async (req, res, next) => {
 
   if (!reportsNeedRecalculation) {
     try {
-      await changeTaxParamsToDb(userId, year, null, data);
+      await changeTaxParamsToDb(userId, null, { year, [taxParamKeyName]: data[taxParamKeyName] });
       res.sendStatus(200);
     } catch (e) {
       res.sendStatus(304);
@@ -100,9 +100,9 @@ var changeTaxParams = async (req, res, next) => {
 
             await saveUpdatedReports(userId, updatedReports, session);
             await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
-            await changeTaxParamsToDb(userId, year, session, { finalProfit, paidTaxAmount, taxRate: newTaxRate });
+            await changeTaxParamsToDb(userId, session, { year, finalProfit, paidTaxAmount, taxRate: newTaxRate });
           } else {
-            await changeTaxParamsToDb(userId, year, session, { taxRate: newTaxRate });
+            await changeTaxParamsToDb(userId, session, { year, taxRate: newTaxRate });
           }
 
           break;
@@ -116,13 +116,14 @@ var changeTaxParams = async (req, res, next) => {
 
             await saveUpdatedReports(userId, updatedReports, session);
 
-            await changeTaxParamsToDb(userId, year, session, {
+            await changeTaxParamsToDb(userId, session, {
+              year,
               paidInsuranceFee,
               mandatoryInsuranceFeeIsPaid,
               mandatoryInsuranceFeeRate: newMandatoryInsuranceFeeRate,
             });
           } else {
-            await changeTaxParamsToDb(userId, year, session, { mandatoryInsuranceFeeRate: newMandatoryInsuranceFeeRate });
+            await changeTaxParamsToDb(userId, session, { year, mandatoryInsuranceFeeRate: newMandatoryInsuranceFeeRate });
           }
 
           break;
