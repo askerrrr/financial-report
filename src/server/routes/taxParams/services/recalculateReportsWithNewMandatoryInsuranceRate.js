@@ -18,6 +18,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
 
     for (var sku of report.skus) {
       var skuFromListGoods = listGoods.find((i) => i.id === sku.id && i.skuName === sku.skuName);
+      var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === taxYear);
 
       if (report.crossesTaxYears) {
         var prevSkuInsuranceFee = sku["insuranceFee" + postfix];
@@ -38,8 +39,6 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
             newSkuInsuranceFee -= difference;
             mandatoryInsuranceFeeIsPaid = true;
           }
-
-          var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === taxYear);
 
           sku["finalProfit" + postfix] = calc.finalProfit(sku, postfix);
 
