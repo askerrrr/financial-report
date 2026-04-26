@@ -9,7 +9,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
   var endYearPostfix = "InNextYear";
 
   for (var report of reports) {
-    var postfix;
+    var postfix = "";
 
     if (report.crossesTaxYears) {
       var startYear = +report.dateFrom.split("-")[0];
@@ -97,6 +97,8 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
       report.totalInsuranceFee = calc.sum(report.skus, "insuranceFee", "truncate-on");
       report.totalFinalProfit = calc.sum(report.skus, "finalProfit", "truncate-on");
     }
+
+    postfix = ""
   }
 
   return {
