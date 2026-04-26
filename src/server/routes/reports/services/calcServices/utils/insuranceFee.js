@@ -1,7 +1,7 @@
 import truncateNum from "../../reportParsing/truncateNum.js";
 
 var calcInsuranceFee = (preTaxProfit, insuranceFeePercentage) => {
-  if (insuranceFeePercentage == 0 || preTaxProfit <= 0) {
+  if (insuranceFeePercentage <= 0 || preTaxProfit <= 0) {
     return 0;
   }
 
