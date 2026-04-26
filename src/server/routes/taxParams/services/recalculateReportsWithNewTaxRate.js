@@ -7,7 +7,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
   var nextYearPostfix = "InNextYear";
 
   for (var report of reports) {
-    var postfix;
+    var postfix = "";
 
     if (report.crossesTaxYears) {
       var startYear = +report.dateFrom.split("-")[0];
@@ -73,6 +73,8 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
       report.totalTaxAmount = calc.sum(report.skus, "tax", "truncate-on");
       report.totalFinalProfit = calc.sum(report.skus, "finalProfit", "truncate-on");
     }
+
+    postfix = ""
   }
 
   return {
