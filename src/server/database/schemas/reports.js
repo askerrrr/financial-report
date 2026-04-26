@@ -5,7 +5,7 @@ var numberOptions = { type: Number, default: 0 };
 var stringOptions = { type: String, required: true };
 var nonRequiredNumberOptions = { type: Number, required: false };
 
-var SKUSchema = new Schema(
+var skuSchema = new Schema(
   {
     skuName: stringOptions,
     qty: numberOptions,
@@ -51,9 +51,6 @@ var SKUSchema = new Schema(
     tax: numberOptions,
     taxInCurrentYear: nonRequiredNumberOptions,
     taxInNextYear: nonRequiredNumberOptions,
-    previousInsuranceFee: numberOptions,
-    previousInsuranceFeeInCurrentYear: nonRequiredNumberOptions,
-    previousInsuranceFeeInNextYear: nonRequiredNumberOptions,
     insuranceFee: numberOptions,
     insuranceFeeInCurrentYear: nonRequiredNumberOptions,
     insuranceFeeInNextYear: nonRequiredNumberOptions,
@@ -173,7 +170,7 @@ var reportSchema = new Schema(
     totalFinalProfitInNextYear: nonRequiredNumberOptions,
     totalProfitMarginInNextYear: nonRequiredNumberOptions,
     isFinancesAccounted: { type: Boolean, default: false },
-    skus: [{ type: SKUSchema, required: true }],
+    skus: [{ type: skuSchema, required: true }],
   },
   { _id: false },
 );
@@ -184,4 +181,4 @@ var reportsSchema = new Schema({
   schemaVersion: { type: Number },
 });
 
-export { SKUSchema, reportSchema, reportsSchema };
+export default reportsSchema;
