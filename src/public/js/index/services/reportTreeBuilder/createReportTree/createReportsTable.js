@@ -20,7 +20,6 @@ var createReportsTable = async (year, month, reportIds, reports) => {
     var totalFinalProfitTd = createTdElement(totalFinalProfit, null, null, "totalFinalProfit");
 
     if (totalFinalProfit < 0) {
-      console.log({ totalFinalProfit });
       totalFinalProfitTd.style.color = "red";
     } else {
       totalFinalProfitTd.style.color = "#04ff00";
