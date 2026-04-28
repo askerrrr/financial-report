@@ -18,7 +18,13 @@ var writeSkuDataToCells = (ws, sku, skuDataIndent) => {
     var indentToInsuranceFee = skuDataIndent + 11;
     var indentToAdditionalInsuranceFee = skuDataIndent + 12;
     var indentToNetProfit = skuDataIndent + 13;
-    var indentToProfitMargin = skuDataIndent + 14;
+    var indentToAvrgNetProfit = skuDataIndent + 14;
+    var indentToProfitMargin = skuDataIndent + 15;
+
+    var avrgNetProfit = +(metric.netProfit / metric.qty).toFixed(2);
+    if (isNaN(avrgNetProfit)) {
+      avrgNetProfit = 0;
+    }
 
     ws.getCell(columns[i] + indentToYear).value = metric.year;
     ws.getCell(columns[i] + indentToQty).value = metric.qty;
@@ -34,6 +40,7 @@ var writeSkuDataToCells = (ws, sku, skuDataIndent) => {
     ws.getCell(columns[i] + indentToInsuranceFee).value = metric.insuranceFee;
     ws.getCell(columns[i] + indentToAdditionalInsuranceFee).value = metric.additionalInsuranceFee;
     ws.getCell(columns[i] + indentToNetProfit).value = metric.netProfit;
+    ws.getCell(columns[i] + indentToAvrgNetProfit).value = avrgNetProfit;
     ws.getCell(columns[i] + indentToProfitMargin).value = metric.profitMargin;
   }
 
