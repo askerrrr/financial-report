@@ -25,7 +25,7 @@ var loadListGoods = async (req, res, next) => {
   var success = await saveListGoodsToDb(userId, listGoodsFromWBAPI);
 
   if (success) {
-    return res.json({ listGoods });
+    return res.json({ listGoods: listGoodsFromWBAPI });
   }
 
   return res.sendStatus(304);
