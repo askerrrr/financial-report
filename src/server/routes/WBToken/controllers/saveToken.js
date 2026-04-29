@@ -20,8 +20,8 @@ var saveToken = async (req, res, next) => {
 
   try {
     await session.withTransaction(async () => {
-      var currentToken = await getWBTokenByUserId(userId).token;
-
+      var currentToken = (await getWBTokenByUserId(userId)).token;
+      console.log({ currentToken, token });
       if (currentToken === token) {
         return res.sendStatus(409);
       }
@@ -30,9 +30,8 @@ var saveToken = async (req, res, next) => {
 
       var { listGoods } = await listGoodsLoader(userId, token);
       await saveListGoodsToDb(userId, listGoods, session);
+      res.sendStatus(200);
     });
-
-    res.sendStatus(200);
   } catch (e) {
     console.log(e);
     res.sendStatus(500);
