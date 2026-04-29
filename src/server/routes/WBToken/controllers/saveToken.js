@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { dbClient } from "../../../database/index.js";
+import dbUtils from "../../../database/collections/index.js";
 import listGoodsLoader from "../../goods/services/listGoodsLoader.js";
 
 var schema = Joi.object({ token: Joi.string().required() });
@@ -13,8 +14,8 @@ var saveToken = async (req, res, next) => {
 
   var { token } = req.body;
   var userId = req.app.locals.userId;
-  var { saveListGoodsToDb } = req.app.locals.goodsCollectionServices;
-  var { saveWBTokenToDb, getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
+  var { saveListGoodsToDb } = dbUtils.goodsCollectionServices;
+  var { getWBTokenByUserId, saveWBTokenToDb } = dbUtils.tokenCollectionServices;
 
   var session = await dbClient.startSession();
 
