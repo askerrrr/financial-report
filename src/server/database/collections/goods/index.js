@@ -1,16 +1,16 @@
 import { goodsCollection } from "../../connections/index.js";
+import saveNewSkusToDb from "./services/saveNewSkusToDb.js";
 import updateSingleSku from "./services/updateSingleSku.js";
 import deleteListGoods from "./services/deleteListGoods.js";
 import updateSkusFields from "./services/updateSkusFields.js";
 import saveListGoodsToDb from "./services/saveListGoodsToDb.js";
 import getListGoodsFromDb from "./services/getListGoodsFromDb.js";
+import updateSkuInListGoods from "./services/updateSkuInListGoods.js";
 import getSkuFromListGoods from "./services/getSkuFromListGoods.js";
 import getSkusLastCostPrice from "./services/getSkusLastCostPrice.js";
-import addNewSkusToListGoods from "./services/addNewSkusToListGoods.js";
 import saveUpdatedSkuMetrics from "./services/saveUpdatedSkuMetrics.js";
-import getAllUserListGoodsIds from "./services/getAllUserListGoodsIds.js";
 import updateSkuDisableStatus from "./services/updateSkuDisableStatus.js";
-import updateSkuInListGoods from "./services/updateSkuInListGoods.js";
+import getAllUserListGoodsIds from "./services/getAllUserListGoodsIds.js";
 import setPriceUpdateTimestampAndUpdateStatus from "./services/setPriceUpdateTimestampAndUpdateStatus.js";
 
 var goodsCollectionServices = {
@@ -24,7 +24,7 @@ var goodsCollectionServices = {
 
   saveListGoodsToDb: (userId, listGoods, session) => saveListGoodsToDb(goodsCollection, userId, listGoods, session),
 
-  addNewSkusToListGoods: (userId, newSkus) => addNewSkusToListGoods(goodsCollection, userId, newSkus),
+  saveNewSkusToDb: (userId, newSkus) => saveNewSkusToDb(goodsCollection, userId, newSkus),
 
   updateSingleSku: (userId, sku) => updateSingleSku(goodsCollection, userId, sku),
 
