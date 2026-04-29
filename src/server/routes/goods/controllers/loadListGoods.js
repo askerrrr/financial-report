@@ -20,12 +20,12 @@ var loadListGoods = async (req, res, next) => {
     return res.status(400).json({ msg: "В первую очередь нужно загрузить токен личного кабинета WB" });
   }
 
-  var { listGoods } = await listGoodsLoader(userId, token);
+  var { listGoodsFromWBAPI } = await listGoodsLoader(userId, token);
 
-  var success = await saveListGoodsToDb(userId, listGoods);
+  var success = await saveListGoodsToDb(userId, listGoodsFromWBAPI);
 
   if (success) {
-    return res.json({ listGoods });
+    return res.json({ listGoods: listGoodsFromWBAPI });
   }
 
   return res.sendStatus(304);

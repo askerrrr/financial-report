@@ -1,6 +1,8 @@
 import Joi from "joi";
 import { dbClient } from "../../../database/index.js";
+import dbUtils from "../../../database/collections/index.js";
 import listGoodsLoader from "../../goods/services/listGoodsLoader.js";
+import extractNewSkusFromLIstGoods from "../../goods/services/extractNewSkusFromLIstGoods.js";
 
 var schema = Joi.object({ token: Joi.string().required() });
 
@@ -13,14 +15,14 @@ var saveToken = async (req, res, next) => {
 
   var { token } = req.body;
   var userId = req.app.locals.userId;
-  var { saveListGoodsToDb } = req.app.locals.goodsCollectionServices;
-  var { saveWBTokenToDb, getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
+  var { getWBTokenByUserId, saveWBTokenToDb } = dbUtils.tokenCollectionServices;
+  var { saveListGoodsToDb, getListGoodsFromDb, saveNewSkusToDb } = dbUtils.goodsCollectionServices;
 
   var session = await dbClient.startSession();
 
   try {
     await session.withTransaction(async () => {
-      var currentToken = await getWBTokenByUserId(userId).token;
+      var currentToken = (await getWBTokenByUserId(userId)).token;
 
       if (currentToken === token) {
         return res.sendStatus(409);
@@ -28,11 +30,18 @@ var saveToken = async (req, res, next) => {
 
       await saveWBTokenToDb(userId, token, session);
 
-      var { listGoods } = await listGoodsLoader(userId, token);
-      await saveListGoodsToDb(userId, listGoods, session);
-    });
+      var { listGoods } = await getListGoodsFromDb(userId, session);
+      var { listGoodsFromWBAPI } = await listGoodsLoader(userId, token);
 
-    res.sendStatus(200);
+      if (!listGoods.length) {
+        await saveListGoodsToDb(userId, listGoodsFromWBAPI, session);
+      } else {
+        var { newSkus } = extractNewSkusFromLIstGoods(listGoodsFromWBAPI, listGoods);
+        await saveNewSkusToDb(userId, newSkus, session);
+      }
+
+      res.sendStatus(200);
+    });
   } catch (e) {
     console.log(e);
     res.sendStatus(500);

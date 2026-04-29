@@ -5,7 +5,7 @@ var listGoodsLoader = async (userId, token) => {
   var { rawListGoogs } = await wbapi.getListGoods(userId, token);
   var { listGoods } = await extractRequiredListGoodsData(rawListGoogs);
 
-  return { listGoods };
+  return { listGoodsFromWBAPI: listGoods };
 };
 
 export default listGoodsLoader;

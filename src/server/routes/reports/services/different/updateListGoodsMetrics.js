@@ -4,6 +4,7 @@ var aggregateSkuMetrics = (skuMetrics, sku, postfix = "") => {
   skuMetrics.qty += sku["qty" + postfix];
   skuMetrics.tax += sku["tax" + postfix];
   skuMetrics.fines += sku["fines" + postfix];
+  skuMetrics.taxableAmount += sku["taxableAmount" + postfix];
   skuMetrics.retailAmount += sku["retailAmount" + postfix];
   skuMetrics.returnAmount += sku["returnAmount" + postfix];
   skuMetrics.storageCost += sku["storageCost" + postfix];
