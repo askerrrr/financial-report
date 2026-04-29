@@ -28,8 +28,8 @@ var saveToken = async (req, res, next) => {
 
       await saveWBTokenToDb(userId, token, session);
 
-      var { listGoods } = await listGoodsLoader(userId, token);
-      await saveListGoodsToDb(userId, listGoods, session);
+      var { listGoodsFromWBAPI } = await listGoodsLoader(userId, token);
+      await saveListGoodsToDb(userId, listGoodsFromWBAPI, session);
       res.sendStatus(200);
     });
   } catch (e) {
