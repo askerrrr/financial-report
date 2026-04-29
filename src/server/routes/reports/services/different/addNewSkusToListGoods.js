@@ -8,6 +8,7 @@ var defaultSkuMetricsField = {
   returnAmount: 0,
   storageCost: 0,
   deliveryCost: 0,
+  taxableAmount: 0,
   acceptance: 0,
   insuranceFee: 0,
   otherExpenses: 0,
