@@ -14,7 +14,8 @@ var writeCellNamesToFirstColumn = function (ws, sku, indentToNextSku) {
   var indentToInsuranceFee = indentToNextSku + 11;
   var indentToAdditionalInsuranceFee = indentToNextSku + 12;
   var indentToNetProfit = indentToNextSku + 13;
-  var indentToProfitMargin = indentToNextSku + 14;
+  var indentToAvrgNetProfit = indentToNextSku + 14;
+  var indentToProfitMargin = indentToNextSku + 15;
 
   var skuNameCellAddress = firstColumnName + indentToNextSku;
 
@@ -32,6 +33,7 @@ var writeCellNamesToFirstColumn = function (ws, sku, indentToNextSku) {
   ws.getCell(firstColumnName + indentToInsuranceFee).value = "Обязательные страховые взновы";
   ws.getCell(firstColumnName + indentToAdditionalInsuranceFee).value = "Дополнительные страховые взновы";
   ws.getCell(firstColumnName + indentToNetProfit).value = "Чистая прибыль";
+  ws.getCell(firstColumnName + indentToAvrgNetProfit).value = "Среднеяя чистая прибыль";
   ws.getCell(firstColumnName + indentToProfitMargin).value = "Маржинальность";
 
   return ws;
