@@ -37,7 +37,7 @@ var saveToken = async (req, res, next) => {
         await saveListGoodsToDb(userId, listGoodsFromWBAPI, session);
       } else {
         var { newSkus } = extractNewSkusFromLIstGoods(listGoodsFromWBAPI, listGoods);
-        await saveNewSkusToDb(userId, newSkus)
+        await saveNewSkusToDb(userId, newSkus, session);
       }
 
       res.sendStatus(200);
