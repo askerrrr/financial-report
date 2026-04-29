@@ -4,7 +4,7 @@ import extractRequiredListGoodsData from "../../goods/services/extractRequiredLi
 
 var updateDataIntoListGoods = async (req, res, next) => {
   var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
-  var { getAllUserListGoodsIds, addNewSkusToListGoods, updateSkusFields } = req.app.locals.goodsCollectionServices;
+  var { getAllUserListGoodsIds, saveNewSkusToDb, updateSkusFields } = req.app.locals.goodsCollectionServices;
 
   var data = await getAllUserListGoodsIds();
 
@@ -18,7 +18,7 @@ var updateDataIntoListGoods = async (req, res, next) => {
       var { newSkus, updatedSkus } = splitListGoodsByExistence(listGoodsIds, listGoods);
 
       if (newSkus.length) {
-        await addNewSkusToListGoods(userId, newSkus);
+        await saveNewSkusToDb(userId, newSkus);
       }
 
       await updateSkusFields(userId, updatedSkus);
