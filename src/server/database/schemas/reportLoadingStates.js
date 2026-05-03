@@ -2,7 +2,6 @@ import { Schema } from "mongoose";
 
 var reportLoadingStatesSchema = new Schema({
   userId: { type: String, required: true },
-  requiredReportPeriods: { type: Array, required: false },
   reportsQueue: { type: Array, required: false },
   loadingInProgress: { type: Boolean, default: false },
   abandonedReports: { type: Array, required: false },
