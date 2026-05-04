@@ -64,13 +64,13 @@ export default deleteReport;
 
 var recalculateTaxParams = function (taxParams, report, propPostfix = "") {
   if (report["totalFinalProfit" + propPostfix]) {
-    taxParams.finalProfit = (taxParams.finalProfit - report["totalFinalProfit" + propPostfix]).toFixed(2);
-    taxParams.paidInsuranceFee = (taxParams.paidInsuranceFee - report["totalInsuranceFee" + propPostfix]).toFixed(2);
+    taxParams.finalProfit = +(taxParams.finalProfit - report["totalFinalProfit" + propPostfix]).toFixed(2);
+    taxParams.paidInsuranceFee = +(taxParams.paidInsuranceFee - report["totalInsuranceFee" + propPostfix]).toFixed(2);
   }
 
-  taxParams.paidTaxAmount = (taxParams.paidTaxAmount - report["totalTaxAmount" + propPostfix]).toFixed(2);
-  taxParams.retailAmount = (taxParams.retailAmount - report["totalRetailAmount" + propPostfix]).toFixed(2);
-  taxParams.taxableAmount = (taxParams.taxableAmount - report["taxableAmount" + propPostfix]).toFixed(2);
-  taxParams.additionalInsuranceFee = (taxParams.additionalInsuranceFee - report["totalAdditionalInsuranceFee" + propPostfix]).toFixed(2);
+  taxParams.paidTaxAmount = +(taxParams.paidTaxAmount - report["totalTaxAmount" + propPostfix]).toFixed(2);
+  taxParams.retailAmount = +(taxParams.retailAmount - report["totalRetailAmount" + propPostfix]).toFixed(2);
+  taxParams.taxableAmount = +(taxParams.taxableAmount - report["totalTaxableAmount" + propPostfix]).toFixed(2);
+  taxParams.additionalInsuranceFee = +(taxParams.additionalInsuranceFee - report["totalAdditionalInsuranceFee" + propPostfix]).toFixed(2);
   return { updatedTaxParams: taxParams };
 };
