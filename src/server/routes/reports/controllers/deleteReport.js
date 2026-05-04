@@ -70,6 +70,7 @@ var recalculateTaxParams = function (taxParams, report, propPostfix = "") {
 
   taxParams.paidTaxAmount = (taxParams.paidTaxAmount - report["totalTaxAmount" + propPostfix]).toFixed(2);
   taxParams.retailAmount = (taxParams.retailAmount - report["totalRetailAmount" + propPostfix]).toFixed(2);
+  taxParams.taxableAmount = (taxParams.taxableAmount - report["taxableAmount" + propPostfix]).toFixed(2);
   taxParams.additionalInsuranceFee = (taxParams.additionalInsuranceFee - report["totalAdditionalInsuranceFee" + propPostfix]).toFixed(2);
   return { updatedTaxParams: taxParams };
 };
