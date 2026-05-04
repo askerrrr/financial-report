@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { dbClient } from "../../../database/index.js";
+import dbUtils from '../../../database/collections/index.js'
 import getTaxParamKeyName from "../services/getTaxParamKeyName.js";
 import defaultTaxParams from "../../../database/defaultTaxParams.js";
 import recalculateReportsWithNewTaxRate from "../services/recalculateReportsWithNewTaxRate.js";
@@ -46,9 +47,9 @@ var changeTaxParams = async (req, res, next) => {
 
   var userId = req.app.locals.userId;
   var { year, oldTaxParams, reportsNeedRecalculation, data } = req.body;
-  var { changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
-  var { getListGoodsFromDb, saveListGoodsToDb } = req.app.locals.goodsCollectionServices;
-  var { getReportsByUserId, saveUpdatedReports } = req.app.locals.reportCollectionServices;
+  var { changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
+  var { getListGoodsFromDb, saveListGoodsToDb } = dbUtils.goodsCollectionServices;
+  var { getReportsByUserId, saveUpdatedReports } = dbUtils.reportCollectionServices;
 
   var { taxParamKeyName } = getTaxParamKeyName(data);
 

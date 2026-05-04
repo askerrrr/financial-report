@@ -1,4 +1,5 @@
 import Joi from "joi";
+import dbUtils from "../../../database/collections/index.js";
 
 var schema = Joi.object({
   userId: Joi.string().required(),
@@ -14,7 +15,7 @@ var changeSkuDisableStatus = async (req, res, next) => {
     return res.sendStatus(400);
   }
 
-  var { updateSkuDisableStatusToDb } = req.app.locals.goodsCollectionServices;
+  var { updateSkuDisableStatusToDb } = dbUtils.goodsCollectionServices;
   var { userId, skuName, disableStatus } = req.body;
   var success = await updateSkuDisableStatusToDb(userId, skuName, disableStatus);
 

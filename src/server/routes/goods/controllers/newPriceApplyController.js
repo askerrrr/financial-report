@@ -1,5 +1,6 @@
 import Joi from "joi";
 import wbapi from "../../reports/services/WBAPI/index.js";
+import dbUtils from "../../../database/collections/index.js";
 
 var checkedWeekDaysArraySchema = Joi.array().items(Joi.number().required()).required();
 var skuObjectSchema = Joi.object({ nmID: Joi.number().required(), price: Joi.number().required(), discount: Joi.number().required() });
@@ -19,8 +20,8 @@ var newPriceApplyController = async (req, res, next) => {
     return res.sendStatus(400);
   }
 
-  var { updateSingleSku } = req.app.locals.goodsCollectionServices;
-  var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
+  var { updateSingleSku } = dbUtils.goodsCollectionServices;
+  var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
   var { userId, sku, setNewPriceNow, expectedPriceExists } = req.body;
 
   if (setNewPriceNow) {

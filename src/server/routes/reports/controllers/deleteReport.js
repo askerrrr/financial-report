@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { dbClient } from "../../../database/index.js";
+import dbUtils from "../../../database/collections/index.js";
 import recalculateSkuMetricsAfterReportDeletion from "../services/different/recalculateSkuMetricsAfterReportDeletion.js";
 
 var schema = Joi.object({ reportId: Joi.number().required() });
@@ -13,10 +14,10 @@ var deleteReport = async (req, res, next) => {
 
   var { reportId } = req.body;
   var { userId } = req.app.locals;
-  var { deleteReportFromDb } = req.app.locals.reportCollectionServices;
-  var { deleteReportFromReportTree } = req.app.locals.reportsTreeCollectionServices;
-  var { getListGoodsFromDb, saveListGoodsToDb } = req.app.locals.goodsCollectionServices;
-  var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
+  var { deleteReportFromDb } = dbUtils.reportCollectionServices;
+  var { deleteReportFromReportTree } = dbUtils.reportsTreeCollectionServices;
+  var { getListGoodsFromDb, saveListGoodsToDb } = dbUtils.goodsCollectionServices;
+  var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
 
   var session = await dbClient.startSession();
   try {

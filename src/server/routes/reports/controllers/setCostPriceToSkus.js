@@ -1,6 +1,7 @@
 import Joi from "joi";
 import calc from "../services/calcServices/index.js";
 import { dbClient } from "../../../database/index.js";
+import dbUtils from '../../../database/collections/index.js'
 import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 
 var costPricesItemSchema = Joi.object({ id: Joi.number().required(), skuName: Joi.string().required(), lastCostPrice: Joi.number().required() });
@@ -19,9 +20,9 @@ var setCostPriceToSkus = async (req, res, next) => {
   }
 
   var { userId, reportId, taxYear, costPrices } = req.body;
-  var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
-  var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
-  var { getListGoodsFromDb, saveUpdatedSkuMetrics } = req.app.locals.goodsCollectionServices;
+  var { saveUpdatedReport, getReportById } = dbUtils.reportCollectionServices;
+  var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
+  var { getListGoodsFromDb, saveUpdatedSkuMetrics } = dbUtils.goodsCollectionServices;
 
   if (!costPrices.length) {
     return res.sendStatus(304);

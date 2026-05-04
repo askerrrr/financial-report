@@ -1,5 +1,6 @@
 import Joi from "joi";
 var jose = import("jose");
+import dbUtils from "../../../database/collections/index.js";
 import checkCredentials from "../services/checkCredentials.js";
 
 var alg = "RS256";
@@ -13,7 +14,7 @@ var checkUserCredentials = async (req, res, next) => {
     return res.sendStatus(400);
   }
 
-  var { getUserByLogin } = req.app.locals.userCollectionServices;
+  var { getUserByLogin } = dbUtils.userCollectionServices;
 
   var existUser = await getUserByLogin(req.body.login);
 

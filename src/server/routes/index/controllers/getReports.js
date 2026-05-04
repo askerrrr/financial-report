@@ -1,4 +1,5 @@
 import Joi from "joi";
+import dbUtils from '../../../database/collections/index.js'
 
 var schema = Joi.object({ userId: Joi.string().required(), reportIds: Joi.array().items(Joi.number().required()).required() });
 
@@ -19,7 +20,7 @@ var getReports = async (req, res, next) => {
     return res.sendStatus(400);
   }
 
-  var { getReportsByUserId } = req.app.locals.reportCollectionServices;
+  var { getReportsByUserId } = dbUtils.reportCollectionServices;
 
   var { reports } = await getReportsByUserId(userId, null, projectonFields, reportIds);
 

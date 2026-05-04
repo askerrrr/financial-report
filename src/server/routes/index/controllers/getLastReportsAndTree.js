@@ -1,3 +1,4 @@
+import dbUtils from "../../../database/collections/index.js";
 import getReportTreeDto from "../services/getReportTreeDto.js";
 
 var getLastNonEmptyReportIds = (lastYear) => lastYear?.months.find((item) => item?.reportIds.length)?.reportIds.map(({ reportId }) => reportId);
@@ -13,8 +14,8 @@ var projectonFields = [
 var getLastReportsAndTree = async (req, res, next) => {
   var userId = req.app.locals.userId;
 
-  var { getReportsByUserId } = req.app.locals.reportCollectionServices;
-  var { getReportTree } = req.app.locals.reportsTreeCollectionServices;
+  var { getReportsByUserId } = dbUtils.reportCollectionServices;
+  var { getReportTree } = dbUtils.reportsTreeCollectionServices;
 
   var { reportTree } = await getReportTree(userId);
 

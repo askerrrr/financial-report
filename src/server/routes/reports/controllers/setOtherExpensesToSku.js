@@ -1,6 +1,7 @@
 import Joi from "joi";
 import calc from "../services/calcServices/index.js";
 import { dbClient } from "../../../database/index.js";
+import dbUtils from '../../../database/collections/index.js'
 import truncateNum from "../services/reportParsing/truncateNum.js";
 import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 
@@ -23,9 +24,9 @@ var setOtherExpensesToSku = async (req, res, next) => {
   }
 
   var { userId, reportId, skuIndex, otherExpenses, skuId, year } = req.body;
-  var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
-  var { updateSkuInListGoods, getSkuFromListGoods } = req.app.locals.goodsCollectionServices;
-  var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
+  var { saveUpdatedReport, getReportById } = dbUtils.reportCollectionServices;
+  var { updateSkuInListGoods, getSkuFromListGoods } = dbUtils.goodsCollectionServices;
+  var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
 
   var updatedReport;
   var previousFinalSkuData = {};

@@ -1,5 +1,7 @@
+import dbUtils from "../../../database/collections/index.js";
+
 var deleteAllReportingPeriods = async (req, res, next) => {
-  var { deleteReportTreeByUserId } = req.app.locals.reportsTreeCollectionServices;
+  var { deleteReportTreeByUserId } = dbUtils.reportsTreeCollectionServices;
 
   var { userId } = req.params;
 

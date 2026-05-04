@@ -10,7 +10,6 @@ import verifyAuthentication from "./middleware/verifyAuthentication.js";
 import serverEmitter from "./customEvent/index.js";
 
 import { runDB } from "./database/index.js";
-import dbCollections from "./database/collections/index.js";
 
 import authRouter from "./routes/auth/index.js";
 import rootRouter from "./routes/index/index.js";
@@ -72,7 +71,6 @@ var runServer = async () => {
   process.env.NODE_ENV = "production";
   var app = createServer();
 
-  app.locals = dbCollections;
   app.disable("x-powered-by");
   app.use(express.urlencoded());
   app.use(express.json());

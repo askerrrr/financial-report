@@ -1,4 +1,5 @@
 import Joi from "joi";
+import dbUtils from '../../../database/collections/index.js'
 import shouldWaitBeforeNextRequest from "../services/different/shouldWaitBeforeNextRequest.js";
 import sendReportPeriodsToReportLoader from "../services/different/sendReportPeriodsToReportLoader.js";
 
@@ -18,7 +19,7 @@ var reportLoadDelegate = async (req, res, next) => {
   }
 
   var { uploadAllReports } = req.body;
-  var { getReportLoadingState } = req.app.locals.reportLoadingStatesCollectionServices;
+  var { getReportLoadingState } = dbUtils.reportLoadingStatesCollectionServices;
 
   if (uploadAllReports) {
     try {

@@ -1,9 +1,10 @@
 import wbapi from "../../reports/services/WBAPI/index.js";
+import dbUtils from "../../../database/collections/index.js";
 import getCurrentDayMSK from "../services/getCurrentDayMSK.js";
 
 var uploadTodayPricesAndDiscounts = async (req, res, next) => {
-  var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
-  var { getAllUserWeeklyPricesAndDiscounts, setUploadId } = req.app.locals.weeklyPricesAndDiscountsCollectionServices;
+  var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
+  var { getAllUserWeeklyPricesAndDiscounts, setUploadId } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
 
   var { currentDayIndex } = getCurrentDayMSK();
   var data = await getAllUserWeeklyPricesAndDiscounts();
