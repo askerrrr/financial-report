@@ -7,12 +7,8 @@ var saveReports = async (req, res, next) => {
   try {
     var session = await dbClient.startSession();
     await session.withTransaction(async () => {
-      try {
-        var reportData = await reportsProcessing(userId, dateFrom, dateTo, session);
-        return res.json(reportData);
-      } catch (e) {
-        throw e;
-      }
+      var reportData = await reportsProcessing(userId, dateFrom, dateTo, session);
+      return res.json(reportData);
     });
   } catch (e) {
     throw e;
