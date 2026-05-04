@@ -15,6 +15,7 @@ var recalculateMetrics = (skuMetrics, sku, postfix = "") => {
   skuMetrics.storageCost -= sku["storageCost" + postfix] ?? 0;
   skuMetrics.deliveryCost -= sku["deliveryCost" + postfix] ?? 0;
   skuMetrics.acceptance -= sku["acceptance" + postfix] ?? 0;
+  skuMetrics.taxableAmount -= sku["taxableAmount" + postfix] ?? 0;
   skuMetrics.sellerPayoutAmount -= sku["sellerPayoutAmount" + postfix] ?? 0;
   skuMetrics.deductionOrPayment -= sku["deductionOrPayment" + postfix] ?? 0;
   skuMetrics.additionalInsuranceFee -= sku["additionalInsuranceFee" + postfix] ?? 0;
