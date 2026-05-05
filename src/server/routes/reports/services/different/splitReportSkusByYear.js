@@ -3,8 +3,8 @@ var splitReportSkusByYear = (report) => {
   var endYearSkus = [];
 
   for (var sku of report) {
-    var startYear = sku.date_from.split("-")[0];
-    var saleYear = sku.sale_dt.split("-")[0];
+    var startYear = sku.dateFrom.split("-")[0];
+    var saleYear = sku.saleDt.split("-")[0];
 
     if (startYear === saleYear) {
       startYearSkus.push(sku);
