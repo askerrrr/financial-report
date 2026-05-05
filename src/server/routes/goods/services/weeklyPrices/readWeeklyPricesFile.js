@@ -3,9 +3,9 @@ import checkPriceAndDiscount from "./utils/checkPriceAndDiscount.js";
 
 var MAX_NUMBER_COLUMNS_FOR_READING = 8;
 
-var readWeeklyPricesFile = async (buffer, listGoods) => {
+var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
   var wb = new Exceljs.Workbook();
-  await wb.xlsx.load(buffer);
+  await wb.xlsx.load(xlsxFileBuffer);
 
   var ws = wb.getWorksheet("Лист1");
 
