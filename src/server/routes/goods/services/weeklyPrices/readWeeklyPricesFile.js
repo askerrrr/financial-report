@@ -1,6 +1,8 @@
 import Exceljs from "exceljs";
 import checkPriceAndDiscount from "./utils/checkPriceAndDiscount.js";
 
+var MAX_NUMBER_COLUMNS_FOR_READING = 8;
+
 var readWeeklyPricesFile = async (buffer, listGoods) => {
   var wb = new Exceljs.Workbook();
   await wb.xlsx.load(buffer);
@@ -44,7 +46,7 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
   var weeklyPricesAndDiscounts = [];
   var columns = ["B", "C", "D", "E", "F", "G", "H"];
 
-  while (columnNum < 9) {
+  while (columnNum <= MAX_NUMBER_COLUMNS_FOR_READING) {
     var data = [];
 
     for (var i = 0; i < skuNamesAndIds.length; i++) {
