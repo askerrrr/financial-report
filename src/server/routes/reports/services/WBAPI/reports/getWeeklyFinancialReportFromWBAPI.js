@@ -15,7 +15,7 @@ var requriedFields = [
   "paidStorage",
   "docTypeName",
   "retailAmount",
-  "deliveryService ",
+  "deliveryService",
   "paidAcceptance",
   "additionalPayment",
 ];
