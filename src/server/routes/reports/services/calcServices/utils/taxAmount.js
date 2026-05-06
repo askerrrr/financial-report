@@ -1,9 +1,9 @@
-var taxAmount = (retailAmount, taxRate) => {
+var taxAmount = (taxableAmount, taxRate) => {
   if (taxRate === 0) {
     return 0;
   }
 
-  var tax = (retailAmount * taxRate) / 100;
+  var tax = (taxableAmount * taxRate) / 100;
 
   return tax;
 };
