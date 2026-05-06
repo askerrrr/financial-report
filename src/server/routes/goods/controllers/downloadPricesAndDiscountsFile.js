@@ -2,7 +2,7 @@ import { dbClient } from "../../../database/index.js";
 import dbUtils from "../../../database/collections/index.js";
 import { readWeeklyPricesFile } from "../services/weeklyPrices/index.js";
 
-var uploadPricesAndDiscountsFile = async (req, res, next) => {
+var downloadPricesAndDiscountsFile = async (req, res, next) => {
   var { userId } = req.params;
   var { getListGoodsFromDb } = dbUtils.goodsCollectionServices;
   var { setWeeklyPricesAndDiscountsToDb } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
@@ -31,4 +31,4 @@ var uploadPricesAndDiscountsFile = async (req, res, next) => {
   }
 };
 
-export default uploadPricesAndDiscountsFile;
+export default downloadPricesAndDiscountsFile;
