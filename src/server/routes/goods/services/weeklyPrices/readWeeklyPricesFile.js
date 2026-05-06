@@ -70,10 +70,12 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
       }
 
       newPricesAndDiscounts.push({
-        price,
-        discount,
         nmID: skuNamesAndIds[i].nmID,
-        skuName: skuNamesAndIds[i].skuName,
+        data: {
+          price,
+          discount,
+          nmID: skuNamesAndIds[i].nmID,
+        },
       });
     }
 
@@ -85,7 +87,7 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
       columnCount = 0;
     }
   }
-
+  
   return { weeklyPricesAndDiscounts };
 };
 
