@@ -25,7 +25,7 @@ router.get("/prices-discounts/file/:userId", getWeeklyPricesFile);
 
 router.post("/", loadListGoods);
 router.post("/sku-disable-status", changeSkuDisableStatus);
-router.post("/prices-discounts/download/:userId", upload.single("file"), uploadPricesAndDiscountsFile);
-router.post("/prices-discounts/upload", setNewPricesAndDiscountsToSku, changeWeeklyPricesOrDiscounts);
+router.post("/prices-discounts/upload/", upload.single("file"), uploadPricesAndDiscountsFile);
+router.patch("/prices-discounts/", setNewPricesAndDiscountsToSku, changeWeeklyPricesOrDiscounts);
 
 export default router;

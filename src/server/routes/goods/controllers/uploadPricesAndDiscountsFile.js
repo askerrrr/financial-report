@@ -3,7 +3,8 @@ import dbUtils from "../../../database/collections/index.js";
 import { readWeeklyPricesFile } from "../services/weeklyPrices/index.js";
 
 var uploadPricesAndDiscountsFile = async (req, res, next) => {
-  var { userId } = req.params;
+  var userId = req.body.userId;
+
   var { getListGoodsFromDb } = dbUtils.goodsCollectionServices;
   var { setWeeklyPricesAndDiscountsToDb } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
 
@@ -16,7 +17,6 @@ var uploadPricesAndDiscountsFile = async (req, res, next) => {
       if (!listGoods.length) {
         return res.sendStatus(400);
       }
-
       var fileBuffer = req.file.buffer;
 
       var { weeklyPricesAndDiscounts } = await readWeeklyPricesFile(fileBuffer, listGoods);
