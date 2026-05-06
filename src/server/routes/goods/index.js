@@ -7,7 +7,7 @@ import getListGoodsPage from "./controllers/getListGoodsPage.js";
 import getSkusMetricsFile from "./controllers/getSkusMetricsFile.js";
 import getWeeklyPricesFile from "./controllers/getWeeklyPricesFile.js";
 import changeSkuDisableStatus from "./controllers/changeSkuDisableStatus.js";
-import newPriceApplyController from "./controllers/newPriceApplyController.js";
+import uploadToWBAPINewPricesAndDiscounts from "./controllers/uploadToWBAPINewPricesAndDiscounts.js";
 import getListGoodsAndWeeklyPrices from "./controllers/getListGoodsAndWeeklyPrices.js";
 import downloadPricesAndDiscountsFile from "./controllers/downloadPricesAndDiscountsFile.js";
 import changeWeeklyPricesOrDiscounts from "./controllers/changeWeeklyPricesOrDiscounts.js";
@@ -23,7 +23,7 @@ router.get("/api/:userId", getListGoodsAndWeeklyPrices);
 router.get("/weekly-prices/:userId", getWeeklyPricesFile);
 router.get("/download-skus-metrics", getSkusMetricsFile);
 
-router.post("/set-price-or-discount", newPriceApplyController, changeWeeklyPricesOrDiscounts);
+router.post("/set-price-or-discount", uploadToWBAPINewPricesAndDiscounts, changeWeeklyPricesOrDiscounts);
 router.post("/", loadListGoods);
 router.post("/change-sku-disable-status", changeSkuDisableStatus);
 router.post("/upload-prices-discount-file/:userId", upload.single("file"), downloadPricesAndDiscountsFile);

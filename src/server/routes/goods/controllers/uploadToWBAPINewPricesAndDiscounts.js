@@ -13,7 +13,7 @@ var schema = Joi.object({
   checkedWeekDays: checkedWeekDaysArraySchema,
 });
 
-var newPriceApplyController = async (req, res, next) => {
+var uploadToWBAPINewPricesAndDiscounts = async (req, res, next) => {
   var { error } = schema.validate(req.body);
 
   if (error) {
@@ -39,4 +39,4 @@ var newPriceApplyController = async (req, res, next) => {
   next();
 };
 
-export default newPriceApplyController;
+export default uploadToWBAPINewPricesAndDiscounts;
