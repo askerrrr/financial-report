@@ -10,7 +10,7 @@ import createSkuRowVisibilityButtonHandler from "./toggleSkuRowVisibility/index.
 
 var createSkusTable = async (skus, tbodyID, currentDayData) => {
   var tbody = document.getElementById(tbodyID);
-  console.log({ currentDayData });
+
   for (var sku of skus) {
     let { id, skuName, price, discount, discountedPrice, clubDiscountedPrice } = sku;
 
