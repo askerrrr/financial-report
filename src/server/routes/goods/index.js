@@ -9,7 +9,7 @@ import getWeeklyPricesFile from "./controllers/getWeeklyPricesFile.js";
 import changeSkuDisableStatus from "./controllers/changeSkuDisableStatus.js";
 import setNewPricesAndDiscountsToSku from "./controllers/setNewPricesAndDiscountsToSku.js";
 import getListGoodsAndWeeklyPrices from "./controllers/getListGoodsAndWeeklyPrices.js";
-import downloadPricesAndDiscountsFile from "./controllers/downloadPricesAndDiscountsFile.js";
+import uploadPricesAndDiscountsFile from "./controllers/uploadPricesAndDiscountsFile.js";
 import changeWeeklyPricesOrDiscounts from "./controllers/changeWeeklyPricesOrDiscounts.js";
 
 var storage = multer.memoryStorage();
@@ -25,7 +25,7 @@ router.get("/prices-discounts/file/:userId", getWeeklyPricesFile);
 
 router.post("/", loadListGoods);
 router.post("/sku-disable-status", changeSkuDisableStatus);
-router.post("/prices-discounts/download/:userId", upload.single("file"), downloadPricesAndDiscountsFile);
+router.post("/prices-discounts/download/:userId", upload.single("file"), uploadPricesAndDiscountsFile);
 router.post("/prices-discounts/upload", setNewPricesAndDiscountsToSku, changeWeeklyPricesOrDiscounts);
 
 export default router;
