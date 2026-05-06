@@ -1,19 +1,14 @@
 import calcDiscountedPrice from "./calcDiscountedPrice.js";
 
 var actualItemEndings = ["-price", "-discount", "-discountedPrice", "-clubDiscountedPrice"];
-var expectedItemEndings = [
-  "-price-expected",
-  "-discount-expected",
-  "-discountedPrice-expected",
-  "-clubDiscountedPrice-expected",
-];
+var expectedItemEndings = ["-price-expected", "-discount-expected", "-discountedPrice-expected", "-clubDiscountedPrice-expected"];
 
 var weekDaySelectorHandler = async (skus, weeklyPricesAndDiscounts, currentDayIndex) => {
   var weekDaySelector = document.getElementById("week-days-select");
 
   weekDaySelector.addEventListener("change", (e) => {
     var selectedWeekDayId = +e.target.value;
-    var pricesAndDiscounts = weeklyPricesAndDiscounts[selectedWeekDayId];
+    var pricesAndDiscounts = weeklyPricesAndDiscounts[selectedWeekDayId].map(({ data }) => data);
 
     for (var { skuName, id } of skus) {
       var selectedDay = pricesAndDiscounts.find((item) => item.nmID === id);
@@ -27,14 +22,10 @@ var weekDaySelectorHandler = async (skus, weeklyPricesAndDiscounts, currentDayIn
 
         var expectedDiscountedPrice = calcDiscountedPrice(selectedDay);
 
-        var expectedDiscountedPriceTdElem = document.getElementById(
-          `${skuName}-discountedPrice-expected`
-        );
+        var expectedDiscountedPriceTdElem = document.getElementById(`${skuName}-discountedPrice-expected`);
         expectedDiscountedPriceTdElem.textContent = expectedDiscountedPrice;
 
-        var expectedXlubDiscountedPriceTdElem = document.getElementById(
-          `${skuName}-clubDiscountedPrice-expected`
-        );
+        var expectedXlubDiscountedPriceTdElem = document.getElementById(`${skuName}-clubDiscountedPrice-expected`);
         expectedXlubDiscountedPriceTdElem.textContent = expectedDiscountedPrice;
 
         // if (selectedWeekDayId !== currentDayIndex) {
