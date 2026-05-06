@@ -10,18 +10,16 @@ var uploadToWBAPITodayPricesAndDiscounts = async (req, res, next) => {
   var data = await getAllUserWeeklyPricesAndDiscounts();
 
   for (var { userId, weeklyPricesAndDiscounts } of data) {
-    if (!weeklyPricesAndDiscounts.length) {
-      continue;
-    }
+    if (weeklyPricesAndDiscounts.length) {
+      var currentDayPricesAndDiscounts = weeklyPricesAndDiscounts[currentDayIndex];
 
-    var currentDayData = weeklyPricesAndDiscounts[currentDayIndex];
+      if (currentDayPricesAndDiscounts) {
+        var { token } = await getWBTokenByUserId(userId);
+        var { id, alreadyExists } = await wbapi.setPricesAndDiscounts(userId, token, currentDayPricesAndDiscounts);
 
-    if (currentDayData) {
-      var { token } = await getWBTokenByUserId(userId);
-      var { id, alreadyExists } = await wbapi.setPricesAndDiscounts(userId, token, currentDayData);
-
-      if (!alreadyExists) {
-        await setUploadId(userId, id);
+        if (!alreadyExists) {
+          await setUploadId(userId, id);
+        }
       }
     }
   }
