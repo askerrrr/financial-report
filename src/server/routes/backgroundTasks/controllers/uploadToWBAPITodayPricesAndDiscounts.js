@@ -11,7 +11,7 @@ var uploadToWBAPITodayPricesAndDiscounts = async (req, res, next) => {
 
   for (var { userId, weeklyPricesAndDiscounts } of data) {
     if (weeklyPricesAndDiscounts.length) {
-      var currentDayPricesAndDiscounts = weeklyPricesAndDiscounts[currentDayIndex];
+      var currentDayPricesAndDiscounts = weeklyPricesAndDiscounts[currentDayIndex].map(({ data }) => data);
 
       if (currentDayPricesAndDiscounts) {
         var { token } = await getWBTokenByUserId(userId);
