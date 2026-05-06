@@ -1,6 +1,6 @@
 var sendPriceAndDiscount = async (sku, checkedWeekDays, setNewPriceNow, expectedPriceExists = false) => {
   var userId = document.cookie.split("=")[1];
-  var url = "/goods/set-price-or-discount";
+  var url = "/goods/prices-discounts/upload";
 
   var res = await fetch(url, {
     method: "POST",

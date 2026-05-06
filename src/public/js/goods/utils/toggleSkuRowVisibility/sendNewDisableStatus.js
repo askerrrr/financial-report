@@ -1,5 +1,5 @@
 var sendNewDisableStatus = async (skuName, nmID, disableStatus) => {
-  var url = "/goods/change-sku-disable-status";
+  var url = "/goods/sku-disable-status";
   var userId = document.cookie.split("=")[1];
 
   disableStatus = disableStatus === false;

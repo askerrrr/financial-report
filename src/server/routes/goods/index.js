@@ -19,13 +19,13 @@ var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/", getListGoodsPage);
 router.get("/listgoodsonly/:userId", getListGoods);
+router.get("/metrics/download", getSkusMetricsFile);
 router.get("/api/:userId", getListGoodsAndWeeklyPrices);
-router.get("/weekly-prices/:userId", getWeeklyPricesFile);
-router.get("/download-skus-metrics", getSkusMetricsFile);
+router.get("/prices-discounts/file/:userId", getWeeklyPricesFile);
 
-router.post("/set-price-or-discount", uploadToWBAPINewPricesAndDiscounts, changeWeeklyPricesOrDiscounts);
 router.post("/", loadListGoods);
-router.post("/change-sku-disable-status", changeSkuDisableStatus);
-router.post("/upload-prices-discount-file/:userId", upload.single("file"), downloadPricesAndDiscountsFile);
+router.post("/sku-disable-status", changeSkuDisableStatus);
+router.post("/prices-discounts/download/:userId", upload.single("file"), downloadPricesAndDiscountsFile);
+router.post("/prices-discounts/upload", uploadToWBAPINewPricesAndDiscounts, changeWeeklyPricesOrDiscounts);
 
 export default router;

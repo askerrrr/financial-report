@@ -1,6 +1,6 @@
 var sendUploadFile = async (file) => {
   var userId = document.cookie.split("=")[1];
-  var url = "/goods/upload-prices-discount-file/" + userId;
+  var url = "/goods/prices-discounts/download/" + userId;
 
   var res = await fetch(url, {
     method: "POST",
