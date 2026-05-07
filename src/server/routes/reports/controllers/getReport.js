@@ -24,9 +24,7 @@ var getReport = async (req, res, next) => {
 
   var { skusLastCostPrice } = await filterCostsForReportSkus(report.skus, skusLastCostPrice);
 
-  var downloadReportLink = "/report/download-report-as-xlsx/" + userId + "/" + reportId;
-
-  return res.json({ report, skuImages, skusLastCostPrice, downloadReportLink });
+  return res.json({ report, skuImages, skusLastCostPrice });
 };
 
 export default getReport;

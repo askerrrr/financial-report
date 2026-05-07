@@ -1,5 +1,7 @@
 var button = document.getElementById("financial-accounting-status-button");
 
+var url = "/report/financial-accounting-status/";
+
 var yes = "Да";
 var no = "Нет";
 
@@ -40,7 +42,6 @@ export default financialAccountingStatusButtonHander;
 
 async function sendNewFinancialAccountingStatus(reportId, newStatus) {
   var userId = document.cookie.split("=")[1];
-  var url = "/report/change-financial-accounting-status";
   var res = await fetch(url, {
     method: "PATCH",
     body: JSON.stringify({ userId, reportId, newStatus }),

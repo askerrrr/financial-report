@@ -1,23 +1,23 @@
 var button = document.getElementById("delete-report-button");
 
-var sendDeletionRequest = async (reportId) => {
-  var res = await fetch("/report/delete/", {
+var sendDeletionRequest = async (userId, reportId) => {
+  var res = await fetch("/report", {
     method: "DELETE",
-    body: JSON.stringify({ reportId }),
+    body: JSON.stringify({ userId, reportId }),
     headers: { "Content-Type": "application/json" },
   });
 
   return res.ok;
 };
 
-var deleteReportHandler = (reportId) =>
+var deleteReportHandler = (userId, reportId) =>
   button.addEventListener("click", async (e) => {
     e.preventDefault();
 
     var confirmed = confirm("Удалить отчет?");
 
     if (confirmed) {
-      var success = await sendDeletionRequest(reportId);
+      var success = await sendDeletionRequest(userId, reportId);
 
       if (success) {
         alert("Отчет успешно удален");

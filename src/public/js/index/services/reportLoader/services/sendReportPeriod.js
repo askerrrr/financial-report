@@ -1,7 +1,7 @@
 var sendReportPeriod = async (dateFrom, dateTo, isPeriodWithinSameWeek = false, uploadAllReports = false) => {
   var userId = document.cookie.split("=")[1];
 
-  var res = await fetch("/report/save-new-report", {
+  var res = await fetch("/report/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userId, dateFrom, dateTo, isPeriodWithinSameWeek, uploadAllReports }),

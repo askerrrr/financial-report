@@ -3,7 +3,7 @@ import { dbClient } from "../../../database/index.js";
 import dbUtils from "../../../database/collections/index.js";
 import recalculateSkuMetricsAfterReportDeletion from "../services/different/recalculateSkuMetricsAfterReportDeletion.js";
 
-var schema = Joi.object({ reportId: Joi.number().required() });
+var schema = Joi.object({ userId: Joi.string().required(), reportId: Joi.number().required() });
 
 var deleteReport = async (req, res, next) => {
   var { error } = schema.validate(req.body);
@@ -12,8 +12,8 @@ var deleteReport = async (req, res, next) => {
     return res.sendStatus(400);
   }
 
-  var { reportId } = req.body;
-  var { userId } = req.app.locals;
+  var { userId, reportId } = req.body;
+
   var { deleteReportFromDb } = dbUtils.reportCollectionServices;
   var { deleteReportFromReportTree } = dbUtils.reportsTreeCollectionServices;
   var { getListGoodsFromDb, saveListGoodsToDb } = dbUtils.goodsCollectionServices;

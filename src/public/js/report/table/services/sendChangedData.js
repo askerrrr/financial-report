@@ -8,9 +8,9 @@ var sendChangedData = async (data, isGuestAccess = false, changedData) => {
   if (isGuestAccess) {
     url = "/decode-report-without-registration/report/set-cost-price";
   } else if (changedData === "setcostprice") {
-    url = "/report/set-cost-price-to-sku";
+    url = "/report/skus/cost-price";
   } else if (changedData === "setotherexpenses") {
-    url = "/report/set-other-expenses-to-sku";
+    url = "/report/skus/other-expenses";
   }
 
   var res = await fetch(url, {

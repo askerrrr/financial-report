@@ -5,13 +5,13 @@ import { getReportAsXLSXBuffer } from "../services/reportAsXLSXBuffer/index.js";
 var schema = Joi.object({ userId: Joi.string().required(), reportId: Joi.number().required() });
 
 var downloadReportAsXLSX = async (req, res, next) => {
-  var { error } = schema.validate(req.params);
+  var { error } = schema.validate(req.body);
 
   if (error) {
     return res.sendStatus(400);
   }
 
-  var { userId, reportId } = req.params;
+  var { userId, reportId } = req.body;
   var { getReportById } = dbUtils.reportCollectionServices;
 
   var { report } = await getReportById(userId, reportId);

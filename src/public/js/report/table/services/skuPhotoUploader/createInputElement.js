@@ -15,6 +15,7 @@ var createInputElement = async (skuName) => {
 
     var uploadFormData = new FormData();
 
+    uploadFormData.append("skuName", skuName);
     uploadFormData.append("sku-photo", input.files[0]);
 
     var success = await sendSkuPhoto(skuName, uploadFormData);

@@ -1,5 +1,5 @@
 var sendCostPrices = async (userId, reportId, taxYear, costPrices) => {
-  var url = "/report/set-cost-price-to-skus";
+  var url = "/report/skus/cost-prices";
 
   var res = await fetch(url, {
     method: "PATCH",

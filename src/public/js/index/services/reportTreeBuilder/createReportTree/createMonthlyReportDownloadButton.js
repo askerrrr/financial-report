@@ -12,7 +12,7 @@ var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
 
     var userId = document.cookie.split("=")[1];
 
-    var url = "/report/download-reports-as-zip/";
+    var url = "/report/as-zip/";
 
     var res = await fetch(url, {
       method: "POST",
