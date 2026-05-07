@@ -1,8 +1,10 @@
 import openReportPeriodModal from "./services/reportLoader/index.js";
 
+var userId = document.cookie.split("=")[1];
+var url = "/wbtoken/" + userId;
+
 var checkWBTokenExists = async () => {
-  var userId = document.cookie.split("=")[1];
-  var res = await fetch("/token/exist/" + userId);
+  var res = await fetch(url);
   if (res.status === 404) {
     return;
   }
