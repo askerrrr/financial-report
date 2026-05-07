@@ -86,7 +86,7 @@ var runServer = async () => {
   app.use(verifyAuthentication, verifyAuthorization);
   app.use("/", checkRoles(["user"]), rootRouter);
   app.use("/token", checkRoles(["user"]), tokenRouter);
-  app.use("/tax_params", checkRoles(["user"]), taxParamsRouter);
+  app.use("/tax-params", checkRoles(["user"]), taxParamsRouter);
   app.use("/report", checkRoles(["user"]), reportsRouter);
   app.use("/goods", checkRoles(["user"]), goodsRouter);
   app.use("/delete", userDeleteRouter);

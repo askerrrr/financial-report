@@ -12,6 +12,6 @@ router.get("/api", getTaxParams);
 
 router.get("/years", getReportYears);
 
-router.post("/change", changeTaxParams);
+router.post("/", changeTaxParams);
 
 export default router;
