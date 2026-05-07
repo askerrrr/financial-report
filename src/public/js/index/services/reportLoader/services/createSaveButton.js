@@ -43,7 +43,7 @@ var createSaveButton = async (modal, dateFromInput, dateToInput, uploadAllReport
         var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
 
         if (confirmed) {
-          window.location.href = "/reports/" + reportData.reportId;
+          window.location.href = "/report/" + reportData.reportId;
         }
 
         return;

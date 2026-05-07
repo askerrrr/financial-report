@@ -5,7 +5,7 @@ import createReportsTable from "./services/reportTreeBuilder/createReportTree/cr
 import createMonthlyReportDownloadButton from "./services/reportTreeBuilder/createReportTree/createMonthlyReportDownloadButton.js";
 
 var sendMonthForDeletion = async (userId, monthsForDeletion) => {
-  var res = await fetch("/reports/delete-empty-month/", {
+  var res = await fetch("/report/delete-empty-month/", {
     method: "DELETE",
     body: JSON.stringify(monthsForDeletion),
   });

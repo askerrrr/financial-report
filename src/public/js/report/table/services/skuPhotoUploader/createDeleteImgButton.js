@@ -10,7 +10,7 @@ var createDeleteImgButton = async (skuName) => {
 
     var userId = document.cookie.split("=")[1];
 
-    var res = await fetch("/reports/delete-image/", {
+    var res = await fetch("/report/delete-image/", {
       method: "DELETE",
       body: JSON.stringify({ userId, skuName }),
       headers: { "Content-Type": "application/json" },

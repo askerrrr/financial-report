@@ -5,7 +5,7 @@ var createLinkToTheReport = async (reportId) => {
   button.append("Открыть отчет");
 
   form.append(button);
-  form.action = "/reports/" + reportId;
+  form.action = "/report/" + reportId;
 
   return form;
 };

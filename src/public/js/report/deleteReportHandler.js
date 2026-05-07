@@ -1,7 +1,7 @@
 var button = document.getElementById("delete-report-button");
 
 var sendDeletionRequest = async (reportId) => {
-  var res = await fetch("/reports/delete/", {
+  var res = await fetch("/report/delete/", {
     method: "DELETE",
     body: JSON.stringify({ reportId }),
     headers: { "Content-Type": "application/json" },

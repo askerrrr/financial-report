@@ -1,5 +1,5 @@
 import Joi from "joi";
-import dbUtils from '../../../database/collections/index.js'
+import dbUtils from "../../../database/collections/index.js";
 import collectImagesAsBase64 from "../services/different/collectImagesAsBase64.js";
 import filterCostsForReportSkus from "../services/different/filterCostsForReportSkus.js";
 
@@ -24,7 +24,7 @@ var getReport = async (req, res, next) => {
 
   var { skusLastCostPrice } = await filterCostsForReportSkus(report.skus, skusLastCostPrice);
 
-  var downloadReportLink = "/reports/download-report-as-xlsx/" + userId + "/" + reportId;
+  var downloadReportLink = "/report/download-report-as-xlsx/" + userId + "/" + reportId;
 
   return res.json({ report, skuImages, skusLastCostPrice, downloadReportLink });
 };

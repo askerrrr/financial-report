@@ -13,7 +13,7 @@ var pathParts = window.location.pathname.split("/");
 
 var reportId = pathParts.at(-1);
 
-var url = "/reports/" + userId + "/" + reportId;
+var url = "/report/" + userId + "/" + reportId;
 
 var getReportData = async () => {
   var res = await fetch(url);
