@@ -2,7 +2,7 @@ var userId = document.cookie.split("=")[1];
 
 var downloadWeeklyPricesFileButtonHandler = async () => {
   document.getElementById("download-weekly-prices-file").addEventListener("click", async (e) => {
-    var url = "/goods/weekly-prices/" + userId;
+    var url = "/goods/prices-discounts/file/" + userId;
 
     var res = await fetch(url);
     var blob = await res.blob();
