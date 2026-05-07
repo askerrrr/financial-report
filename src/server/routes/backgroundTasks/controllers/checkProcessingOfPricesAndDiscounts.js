@@ -1,9 +1,10 @@
 import wbapi from "../../reports/services/WBAPI/index.js";
+import dbUtils from "../../../database/collections/index.js";
 
 var checkProcessingOfPricesAndDiscounts = async (req, res, next) => {
-  var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
-  var { setPriceUpdateTimestampAndUpdateStatus } = req.app.locals.goodsCollectionServices;
-  var { getAllUserWeeklyPricesAndDiscounts } = req.app.locals.weeklyPricesAndDiscountsCollectionServices;
+  var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
+  var { setPriceUpdateTimestampAndUpdateStatus } = dbUtils.goodsCollectionServices;
+  var { getAllUserWeeklyPricesAndDiscounts } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
 
   var data = await getAllUserWeeklyPricesAndDiscounts();
 

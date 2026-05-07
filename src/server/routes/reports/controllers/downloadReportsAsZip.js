@@ -1,5 +1,6 @@
 import Joi from "joi";
 import JSZip from "jszip";
+import dbUtils from '../../../database/collections/index.js'
 import { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer } from "../services/reportAsXLSXBuffer/index.js";
 
 var schema = Joi.object({ userId: Joi.string().required(), reportIds: Joi.array().items(Joi.number()).required() });
@@ -12,7 +13,7 @@ var downloadReportsAsZip = async (req, res, next) => {
   }
 
   var { userId, reportIds } = req.body;
-  var { getReportById } = req.app.locals.reportCollectionServices;
+  var { getReportById } = dbUtils.reportCollectionServices;
 
   var reports = [];
 

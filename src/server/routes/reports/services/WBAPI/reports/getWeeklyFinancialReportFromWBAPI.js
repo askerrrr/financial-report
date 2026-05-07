@@ -1,11 +1,32 @@
 import { WBAPIError } from "../../../../../customError/index.js";
 
+var requriedFields = [
+  "nmId",
+  "forPay",
+  "dateTo",
+  "saleDt",
+  "quantity",
+  "reportId",
+  "penalty",
+  "dateFrom",
+  "vendorCode",
+  "deduction",
+  "reportType",
+  "paidStorage",
+  "docTypeName",
+  "retailAmount",
+  "deliveryService",
+  "paidAcceptance",
+  "additionalPayment",
+];
+
 var getWeeklyFinancialReportFromWBAPI = async (dateFrom, dateTo, token, userId) => {
-  var url = `https://statistics-api.wildberries.ru/api/v5/supplier/reportDetailByPeriod?dateFrom=${dateFrom}&dateTo=${dateTo}`;
+  var url = "https://finance-api.wildberries.ru/api/finance/v1/sales-reports/detailed";
 
   var res = await fetch(url, {
-    method: "GET",
-    headers: { Authorization: "Bearer " + token },
+    method: "POST",
+    body: JSON.stringify({ dateFrom, dateTo, fields: requriedFields }),
+    headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
   });
 
   if (res.status === 200) {

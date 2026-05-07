@@ -1,8 +1,9 @@
+import dbUtils from '../../../database/collections/index.js'
 import checkReportExistsInTree from "../services/different/checkReportExistsInTree.js";
 
 var checkReportExists = async (req, res, next) => {
   var { dateFrom, userId } = req.body;
-  var { getReportTree } = req.app.locals.reportsTreeCollectionServices;
+  var { getReportTree } = dbUtils.reportsTreeCollectionServices;
 
   var { reportTree } = await getReportTree(userId);
   var { reportIsExist } = checkReportExistsInTree(dateFrom, reportTree);

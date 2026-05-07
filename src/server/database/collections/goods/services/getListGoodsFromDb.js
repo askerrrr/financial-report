@@ -1,4 +1,4 @@
-import { WBAPIError } from "../../../../customError/index.js";
+import { DatabaseError } from "../../../../customError/index.js";
 
 var getListGoodsFromDb = async (collection, userId, session) => {
   var sessionOption = session ? { session } : {};
@@ -7,7 +7,7 @@ var getListGoodsFromDb = async (collection, userId, session) => {
 
     return { listGoods: data.listGoods.toObject() };
   } catch (e) {
-    throw new WBAPIError(userId, 500, e);
+    throw new DatabaseError(userId, 500, e);
   }
 };
 

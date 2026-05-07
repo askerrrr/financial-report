@@ -3,6 +3,7 @@ import { randomBytes } from "node:crypto";
 import checkLogin from "../services/checkLogin.js";
 import checkPasswd from "../services/checkPasswd.js";
 import { dbClient } from "../../../database/index.js";
+import dbUtils from '../../../database/collections/index.js'
 
 var alg = "RS256";
 var oneDayMs = 24 * 3600 * 1000;
@@ -14,7 +15,7 @@ var createUser = async (req, res, next) => {
   await checkPasswd(candidate.passwd);
 
   var session = await dbClient.startSession();
-  var { createUserToDb, getUserByLogin } = req.app.locals.userCollectionServices;
+  var { createUserToDb, getUserByLogin } = dbUtils.userCollectionServices;
 
   try {
     await session.withTransaction(async () => {

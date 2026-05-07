@@ -22,7 +22,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var { token } = await getWBTokenByUserId(userId, session);
   var { reportTree } = await getReportTree(userId, session);
   var reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
-  var reportId = reports.weeklyFinancialReport[0].realizationreport_id;
+  var { reportId } = reports.weeklyFinancialReport[0];
 
   var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
   var sortedYears = sortYearsTree(years);

@@ -1,9 +1,11 @@
 import Exceljs from "exceljs";
 import checkPriceAndDiscount from "./utils/checkPriceAndDiscount.js";
 
-var readWeeklyPricesFile = async (buffer, listGoods) => {
+var MAX_NUMBER_COLUMNS_FOR_READING = 8;
+
+var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
   var wb = new Exceljs.Workbook();
-  await wb.xlsx.load(buffer);
+  await wb.xlsx.load(xlsxFileBuffer);
 
   var ws = wb.getWorksheet("Лист1");
 
@@ -44,8 +46,8 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
   var weeklyPricesAndDiscounts = [];
   var columns = ["B", "C", "D", "E", "F", "G", "H"];
 
-  while (columnNum < 9) {
-    var data = [];
+  while (columnNum <= MAX_NUMBER_COLUMNS_FOR_READING) {
+    var newPricesAndDiscounts = [];
 
     for (var i = 0; i < skuNamesAndIds.length; i++) {
       priceCellAddress = columns[columnCount] + priceIndent;
@@ -67,23 +69,25 @@ var readWeeklyPricesFile = async (buffer, listGoods) => {
         continue;
       }
 
-      data.push({
-        price,
-        discount,
+      newPricesAndDiscounts.push({
         nmID: skuNamesAndIds[i].nmID,
-        skuName: skuNamesAndIds[i].skuName,
+        data: {
+          price,
+          discount,
+          nmID: skuNamesAndIds[i].nmID,
+        },
       });
     }
 
     columnNum++;
     columnCount++;
-    weeklyPricesAndDiscounts.push(data);
+    weeklyPricesAndDiscounts.push(newPricesAndDiscounts);
 
     if (columnCount === columns.length) {
       columnCount = 0;
     }
   }
-
+  
   return { weeklyPricesAndDiscounts };
 };
 

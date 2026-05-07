@@ -1,10 +1,11 @@
 import wbapi from "../../reports/services/WBAPI/index.js";
+import dbUtils from "../../../database/collections/index.js";
 import splitListGoodsByExistence from "../services/splitListGoodsByExistence.js";
 import extractRequiredListGoodsData from "../../goods/services/extractRequiredListGoodsData.js";
 
 var updateDataIntoListGoods = async (req, res, next) => {
-  var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
-  var { getAllUserListGoodsIds, saveNewSkusToDb, updateSkusFields } = req.app.locals.goodsCollectionServices;
+  var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
+  var { getAllUserListGoodsIds, saveNewSkusToDb, updateSkusFields } = dbUtils.goodsCollectionServices;
 
   var data = await getAllUserListGoodsIds();
 

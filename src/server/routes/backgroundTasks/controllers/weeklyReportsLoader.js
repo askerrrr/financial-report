@@ -1,8 +1,9 @@
 import { dbClient } from "../../../database/index.js";
+import dbUtils from "../../../database/collections/index.js";
 import reportsProcessing from "../../reports/services/different/reportsProcessing.js";
 
 var weeklyReportsLoader = async (req, res) => {
-  var { getAllUsersFromDb } = req.app.locals.userCollectionServices;
+  var { getAllUsersFromDb } = dbUtils.userCollectionServices;
 
   var { users } = await getAllUsersFromDb();
 

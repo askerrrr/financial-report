@@ -1,5 +1,7 @@
+import dbUtils from "../../../database/collections/index.js";
+
 var changeReportPeriod = async (req, res, next) => {
-  var { updateReportPeriod } = req.app.locals.reportCollectionServices;
+  var { updateReportPeriod } = dbUtils.reportCollectionServices;
 
   var { userId, reportId, value } = req.body;
 

@@ -1,6 +1,7 @@
 import Joi from "joi";
 import calc from "../services/calcServices/index.js";
 import { dbClient } from "../../../database/index.js";
+import dbUtils from '../../../database/collections/index.js'
 import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 
 var schema = Joi.object({
@@ -22,9 +23,9 @@ var setCostPriceToSku = async (req, res, next) => {
   }
 
   var { userId, reportId, skuIndex, costPrice, skuId, year } = req.body;
-  var { saveUpdatedReport, getReportById } = req.app.locals.reportCollectionServices;
-  var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
-  var { updateSkuInListGoods, getSkuFromListGoods } = req.app.locals.goodsCollectionServices;
+  var { saveUpdatedReport, getReportById } = dbUtils.reportCollectionServices;
+  var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
+  var { updateSkuInListGoods, getSkuFromListGoods } = dbUtils.goodsCollectionServices;
 
   var session = await dbClient.startSession();
 

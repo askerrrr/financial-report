@@ -19,8 +19,7 @@ var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
       }
 
       var setNewPriceNow = true;
-      var expectedPriceExists = true;
-      var expectedPriceExists = document.getElementById(item.skuName + "-price-expected") ?? false;
+      var expectedPriceExists = document.getElementById(item.skuName + "-price-expected") ? true : false;
 
       if (expectedPriceExists) {
         var confirmed = confirm("Установить новую цену прямо сейчас?");

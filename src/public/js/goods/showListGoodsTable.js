@@ -76,7 +76,7 @@ var handleNonEmptyWeeklyPricesAndDiscounts = async function ({ enabledSku, disab
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
 
-  var currentDayData = weeklyPricesAndDiscounts[currentDayIndex];
+  var currentDayData = weeklyPricesAndDiscounts[currentDayIndex].map(({ data }) => data);
 
   await createSkusTable(enabledSku, "enabled-skus-tbody", currentDayData);
   await weekDaySelectorHandler(enabledSku, weeklyPricesAndDiscounts, currentDayIndex);

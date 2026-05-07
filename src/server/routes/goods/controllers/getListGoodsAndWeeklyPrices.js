@@ -1,9 +1,10 @@
+import dbUtils from "../../../database/collections/index.js";
 import splitSkuByDisabledStatus from "../services/splitSkuByDisabledStatus.js";
 
 var getListGoodsAndWeeklyPrices = async (req, res, next) => {
   var { userId } = req.params;
-  var { getListGoodsFromDb } = req.app.locals.goodsCollectionServices;
-  var { getWeeklyPricesAndDiscountsFromDb } = req.app.locals.weeklyPricesAndDiscountsCollectionServices;
+  var { getListGoodsFromDb } = dbUtils.goodsCollectionServices;
+  var { getWeeklyPricesAndDiscountsFromDb } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
 
   var { listGoods } = await getListGoodsFromDb(userId);
   var { listGoods } = splitSkuByDisabledStatus(listGoods);

@@ -1,4 +1,5 @@
 import Joi from "joi";
+import dbUtils from '../../../database/collections/index.js'
 import { getReportAsXLSXBuffer } from "../services/reportAsXLSXBuffer/index.js";
 
 var schema = Joi.object({ userId: Joi.string().required(), reportId: Joi.number().required() });
@@ -11,7 +12,7 @@ var downloadReportAsXLSX = async (req, res, next) => {
   }
 
   var { userId, reportId } = req.params;
-  var { getReportById } = req.app.locals.reportCollectionServices;
+  var { getReportById } = dbUtils.reportCollectionServices;
 
   var { report } = await getReportById(userId, reportId);
 

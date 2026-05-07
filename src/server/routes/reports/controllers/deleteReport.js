@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { dbClient } from "../../../database/index.js";
+import dbUtils from "../../../database/collections/index.js";
 import recalculateSkuMetricsAfterReportDeletion from "../services/different/recalculateSkuMetricsAfterReportDeletion.js";
 
 var schema = Joi.object({ reportId: Joi.number().required() });
@@ -13,10 +14,10 @@ var deleteReport = async (req, res, next) => {
 
   var { reportId } = req.body;
   var { userId } = req.app.locals;
-  var { deleteReportFromDb } = req.app.locals.reportCollectionServices;
-  var { deleteReportFromReportTree } = req.app.locals.reportsTreeCollectionServices;
-  var { getListGoodsFromDb, saveListGoodsToDb } = req.app.locals.goodsCollectionServices;
-  var { getTaxParamsFromDb, changeTaxParamsToDb } = req.app.locals.taxParamsCollectionServices;
+  var { deleteReportFromDb } = dbUtils.reportCollectionServices;
+  var { deleteReportFromReportTree } = dbUtils.reportsTreeCollectionServices;
+  var { getListGoodsFromDb, saveListGoodsToDb } = dbUtils.goodsCollectionServices;
+  var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
 
   var session = await dbClient.startSession();
   try {
@@ -64,12 +65,13 @@ export default deleteReport;
 
 var recalculateTaxParams = function (taxParams, report, propPostfix = "") {
   if (report["totalFinalProfit" + propPostfix]) {
-    taxParams.finalProfit = (taxParams.finalProfit - report["totalFinalProfit" + propPostfix]).toFixed(2);
-    taxParams.paidInsuranceFee = (taxParams.paidInsuranceFee - report["totalInsuranceFee" + propPostfix]).toFixed(2);
+    taxParams.finalProfit = +(taxParams.finalProfit - report["totalFinalProfit" + propPostfix]).toFixed(2);
+    taxParams.paidInsuranceFee = +(taxParams.paidInsuranceFee - report["totalInsuranceFee" + propPostfix]).toFixed(2);
   }
 
-  taxParams.paidTaxAmount = (taxParams.paidTaxAmount - report["totalTaxAmount" + propPostfix]).toFixed(2);
-  taxParams.retailAmount = (taxParams.retailAmount - report["totalRetailAmount" + propPostfix]).toFixed(2);
-  taxParams.additionalInsuranceFee = (taxParams.additionalInsuranceFee - report["totalAdditionalInsuranceFee" + propPostfix]).toFixed(2);
+  taxParams.paidTaxAmount = +(taxParams.paidTaxAmount - report["totalTaxAmount" + propPostfix]).toFixed(2);
+  taxParams.retailAmount = +(taxParams.retailAmount - report["totalRetailAmount" + propPostfix]).toFixed(2);
+  taxParams.taxableAmount = +(taxParams.taxableAmount - report["totalTaxableAmount" + propPostfix]).toFixed(2);
+  taxParams.additionalInsuranceFee = +(taxParams.additionalInsuranceFee - report["totalAdditionalInsuranceFee" + propPostfix]).toFixed(2);
   return { updatedTaxParams: taxParams };
 };
