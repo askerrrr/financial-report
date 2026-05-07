@@ -28,8 +28,8 @@ var setNewPricesAndDiscountsToSku = async (req, res, next) => {
     var { token } = await getWBTokenByUserId(userId);
     var data = [{ ...sku }];
 
-    // await updateSingleSku(userId, sku);
-    // await wbapi.setPricesAndDiscounts(userId, token, data);
+    await updateSingleSku(userId, sku);
+    await wbapi.setPricesAndDiscounts(userId, token, data);
   }
 
   if (!expectedPriceExists) {
