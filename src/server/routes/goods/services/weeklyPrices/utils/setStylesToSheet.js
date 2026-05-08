@@ -1,11 +1,10 @@
-var setStylesToSheet = (ws) => {
-  var columnNum = 1;
-  var maxColumnCount = 8;
+var firstColumnName = "A";
+var columns = ["B", "C", "D", "E", "F", "G", "H"];
 
-  while (columnNum <= maxColumnCount) {
-    ws.getColumn(columnNum).width = 17;
-    columnNum++;
-  }
+var setStylesToSheet = (ws) => {
+  ws.getColumn(firstColumnName).width = 25;
+
+  columns.map((column) => (ws.getColumn(column).width = 17));
 
   return ws;
 };
