@@ -14,9 +14,10 @@ var skuSchema = new Schema(
     nmID: { type: Number, required: true },
     needToUpdate: { type: Boolean, default: true },
     lastUpdatedTimestamp: { type: Number, default: 0 },
+    data: { type: priceAndDiscountSchema, required: false },
     priceOrDiscountUpdateInterval: { type: String, default: "5m" },
     priceOrDiscountUpdateIntervalInMs: { type: Number, default: 300000 },
-    data: { type: priceAndDiscountSchema, required: false },
+    updateOption: { type: String, default: "interval", enum: ["interval", "oncePerDay"] },
   },
   { _id: false },
 );
