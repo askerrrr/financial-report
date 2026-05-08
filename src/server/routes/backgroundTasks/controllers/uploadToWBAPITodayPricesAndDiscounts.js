@@ -4,22 +4,20 @@ import getCurrentDayMSK from "../services/getCurrentDayMSK.js";
 
 var uploadToWBAPITodayPricesAndDiscounts = async (req, res, next) => {
   var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
-  var { getAllUserWeeklyPricesAndDiscounts, setUploadId } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
+  var { getTodayPricesAndDiscountsByDayIndex, setUploadId } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
 
   var { currentDayIndex } = getCurrentDayMSK();
-  var data = await getAllUserWeeklyPricesAndDiscounts();
+  var data = await getTodayPricesAndDiscountsByDayIndex(currentDayIndex);
 
-  for (var { userId, weeklyPricesAndDiscounts } of data) {
-    if (weeklyPricesAndDiscounts.length) {
-      var currentDayPricesAndDiscounts = weeklyPricesAndDiscounts[currentDayIndex].map(({ data }) => data);
+  for (var { userId, currentDayPricesAndDiscounts } of data) {
+    if (currentDayPricesAndDiscounts) {
+      currentDayPricesAndDiscounts = currentDayPricesAndDiscounts.map(({ data }) => data);
 
-      if (currentDayPricesAndDiscounts) {
-        var { token } = await getWBTokenByUserId(userId);
-        var { id, alreadyExists } = await wbapi.setPricesAndDiscounts(userId, token, currentDayPricesAndDiscounts);
+      var { token } = await getWBTokenByUserId(userId);
+      var { id, alreadyExists } = await wbapi.setPricesAndDiscounts(userId, token, currentDayPricesAndDiscounts);
 
-        if (!alreadyExists) {
-          await setUploadId(userId, id);
-        }
+      if (!alreadyExists) {
+        await setUploadId(userId, id);
       }
     }
   }
