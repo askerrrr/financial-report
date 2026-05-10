@@ -10,7 +10,7 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
   var ws = wb.getWorksheet("Лист1");
 
   var skuNamesAndIds = [];
-  var skuNameIndent = 4;
+  var skuNameIndent = 5;
   var firstColumnName = "A";
   var skusQty = listGoods.length;
   var skuNameCellAddress = firstColumnName + skuNameIndent;
@@ -19,15 +19,15 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
     var cell = ws.getCell(skuNameCellAddress);
 
     if (cell?.value) {
-      var existSku = listGoods.find((sku) => sku.skuName === cell.value);
+      var existSku = listGoods.find((sku) => sku.skuName === cell.value.toLowerCase());
 
       if (existSku && !existSku?.disabled) {
-        skuNamesAndIds.push({ skuName: cell.value, nmID: existSku.id });
+        skuNamesAndIds.push({ skuName: cell.value.toLowerCase(), nmID: existSku.id });
       }
     }
 
     skusQty--;
-    skuNameIndent += 5;
+    skuNameIndent += 7;
     skuNameCellAddress = firstColumnName + skuNameIndent;
   }
 
@@ -38,10 +38,10 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
   var columnCount = 0;
   var columnNum = 2;
   var price;
-  var priceIndent = 5;
+  var priceIndent = 6;
   var priceCellAddress;
   var discount;
-  var discountIndent = 6;
+  var discountIndent = 7;
   var discountCellAddress;
   var weeklyPricesAndDiscounts = [];
   var columns = ["B", "C", "D", "E", "F", "G", "H"];
@@ -54,13 +54,12 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
       discountCellAddress = columns[columnCount] + discountIndent;
       price = ws.getCell(priceCellAddress)?.value;
       discount = ws.getCell(discountCellAddress)?.value;
-
-      priceIndent += 5;
-      discountIndent += 5;
+      priceIndent += 7;
+      discountIndent += 7;
 
       if (i == skuNamesAndIds.length - 1) {
-        priceIndent = 5;
-        discountIndent = 6;
+        priceIndent = 6;
+        discountIndent = 7;
       }
 
       var priceOrDiscountIsValid = checkPriceAndDiscount(price, discount);
@@ -87,7 +86,7 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
       columnCount = 0;
     }
   }
-  
+
   return { weeklyPricesAndDiscounts };
 };
 
