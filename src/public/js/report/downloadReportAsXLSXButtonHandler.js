@@ -1,12 +1,13 @@
 var button = document.getElementById("download-report-as-xlsx-button");
+var url = '/report/as-xlsx/'
+
 
 var downloadReportAsXLSXButtonHandler = (report, url) =>
   (button.onclick = async (e) => {
     e.preventDefault();
 
-    var { dateFrom, dateTo } = report;
-
-    var res = await fetch(url);
+    var { userId, reportId, dateFrom, dateTo } = report;
+    var res = await fetch(url, { method: "POST", body: JSON.stringify({ userId, reportId }), headers: { "Content-Type": "application/json" } });
 
     if (res.status !== 200) {
       return alert("Не удалось скачать отчет...");

@@ -85,9 +85,9 @@ var runServer = async () => {
   app.use(cookieParser());
   app.use(verifyAuthentication, verifyAuthorization);
   app.use("/", checkRoles(["user"]), rootRouter);
-  app.use("/token", checkRoles(["user"]), tokenRouter);
-  app.use("/tax_params", checkRoles(["user"]), taxParamsRouter);
-  app.use("/reports", checkRoles(["user"]), reportsRouter);
+  app.use("/wbtoken", checkRoles(["user"]), tokenRouter);
+  app.use("/tax-params", checkRoles(["user"]), taxParamsRouter);
+  app.use("/report", checkRoles(["user"]), reportsRouter);
   app.use("/goods", checkRoles(["user"]), goodsRouter);
   app.use("/delete", userDeleteRouter);
 

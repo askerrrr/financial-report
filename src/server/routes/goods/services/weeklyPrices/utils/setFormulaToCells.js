@@ -4,9 +4,9 @@ var setFormulaToCells = (ws, skusQty) => {
   columns.map((column) => {
     var count = skusQty;
 
-    var indentToPrice = 5;
-    var indentToDiscount = 6;
-    var indentToResult = 7;
+    var indentToPrice = 6;
+    var indentToDiscount = 7;
+    var indentToResult = 8;
 
     while (count > 0) {
       var priceCellAddress = column + indentToPrice;
@@ -18,14 +18,14 @@ var setFormulaToCells = (ws, skusQty) => {
       ws.getCell(resultCellAddress).value = { formula };
 
       count--;
-      indentToPrice += 5;
-      indentToDiscount += 5;
-      indentToResult += 5;
+      indentToPrice += 7;
+      indentToDiscount += 7;
+      indentToResult += 7;
     }
 
-    indentToPrice = 5;
-    indentToDiscount = 6;
-    indentToResult = 7;
+    indentToPrice = 6;
+    indentToDiscount = 7;
+    indentToResult = 8;
   });
 
   return ws;

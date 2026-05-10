@@ -1,5 +1,5 @@
 var sendNewTaxParam = async (year, reportsNeedRecalculation = false, oldTaxParams, newTaxParam) => {
-  var url = "/tax_params/change";
+  var url = "/tax-params/";
 
   var res = await fetch(url, {
     method: "POST",

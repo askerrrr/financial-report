@@ -1,5 +1,5 @@
 var sendWBAuthToken = async (token) => {
-  var res = await fetch("/token", {
+  var res = await fetch("/wbtoken", {
     method: "POST",
     body: JSON.stringify({ token }),
     headers: { "Content-Type": "application/json" },

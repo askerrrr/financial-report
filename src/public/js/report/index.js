@@ -13,7 +13,7 @@ var pathParts = window.location.pathname.split("/");
 
 var reportId = pathParts.at(-1);
 
-var url = "/reports/" + userId + "/" + reportId;
+var url = "/report/" + userId + "/" + reportId;
 
 var getReportData = async () => {
   var res = await fetch(url);
@@ -29,16 +29,16 @@ var getReportData = async () => {
 };
 
 var main = async () => {
-  var { report, skuImages, skusLastCostPrice, downloadReportLink } = await getReportData();
+  var { report, skuImages, skusLastCostPrice } = await getReportData();
   var { reportId, recordTo } = report;
 
   reportInfo(report);
   await createSKUsTable(report);
   await injectBase64IntoImgTags(skuImages);
   await createTotalsTable(report);
-
-  deleteReportHandler(report.reportId);
-  downloadReportAsXLSXButtonHandler(report, downloadReportLink);
+  console.log({ userId, reportId });
+  deleteReportHandler(userId, reportId);
+  downloadReportAsXLSXButtonHandler(report);
 
   financialAccountingStatusButtonHander(reportId);
   setSkusLastCostPricesButtonHandler(reportId, recordTo.year, skusLastCostPrice);

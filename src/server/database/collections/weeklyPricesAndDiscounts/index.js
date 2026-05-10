@@ -6,10 +6,12 @@ import getWeeklyPricesAndDiscounts from "./services/getWeeklyPricesAndDiscounts.
 import setWeeklyPricesAndDiscounts from "./services/setWeeklyPricesAndDiscounts.js";
 import deleteWeeklyPricesAndDiscounts from "./services/deleteWeeklyPricesAndDiscounts.js";
 import getAllUserWeeklyPricesAndDiscounts from "./services/getAllUserWeeklyPricesAndDiscounts.js";
+import getTodayPricesAndDiscountsByDayIndex from "./services/getTodayPricesAndDiscountsByDayIndex.js";
 
 var weeklyPricesAndDiscountsCollectionServices = {
-  getWeeklyPricesAndDiscountsFromDb: (userId) => getWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId),
   getAllUserWeeklyPricesAndDiscounts: () => getAllUserWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection),
+  getWeeklyPricesAndDiscountsFromDb: (userId) => getWeeklyPricesAndDiscounts(weeklyPricesAndDiscountsCollection, userId),
+  getTodayPricesAndDiscountsByDayIndex: (dayIndex) => getTodayPricesAndDiscountsByDayIndex(weeklyPricesAndDiscountsCollection, dayIndex),
 
   updatePriceAndDiscount: (userId, sku, checkedWeekDays) => updatePriceAndDiscount(weeklyPricesAndDiscountsCollection, userId, sku, checkedWeekDays),
 

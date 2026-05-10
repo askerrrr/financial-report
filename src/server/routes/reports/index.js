@@ -26,31 +26,24 @@ var upload = multer({ storage, fileFilter });
 var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/:id", getReportPage);
-
 router.get("/:userId/:reportId", getReport);
+router.post("/", reportLoadDelegate, checkReportExists, checkReportsLoadingProgress, saveReports);
+router.delete("/", deleteReport);
 
-router.get("/download-report-as-xlsx/:userId/:reportId", downloadReportAsXLSX);
+router.post("/as-zip/", downloadReportsAsZip);
+router.post("/as-xlsx/", downloadReportAsXLSX);
 
-router.post("/download-reports-as-zip/", downloadReportsAsZip);
+router.patch("/skus/cost-price", setCostPriceToSku);
+router.patch("/skus/cost-prices", setCostPriceToSkus);
+router.patch("/skus/other-expenses", setOtherExpensesToSku);
 
-router.post("/save-new-report", reportLoadDelegate, checkReportExists, checkReportsLoadingProgress, saveReports);
-
-router.patch("/set-cost-price-to-sku", setCostPriceToSku);
-
-router.patch("/change-financial-accounting-status", changeFinancialAccountingStatus);
-
-router.patch("/set-other-expenses-to-sku", setOtherExpensesToSku);
-
-router.patch("/set-cost-price-to-skus", setCostPriceToSkus);
-
-router.put("/sku-photo-upload/:skuName", upload.single("sku-photo"), skuPhotoUpload);
-
-router.delete("/delete/", deleteReport);
+router.patch("/financial-accounting-status/", changeFinancialAccountingStatus);
 
 router.delete("/delete_all_reports/:userId", deleteAllReports);
 
 router.delete("/delete_all_reporting_periods/:userId", deleteReportsTree);
 
-router.delete("/delete-image/", deleteImage);
+router.post("/image/", upload.single("sku-photo"), skuPhotoUpload);
+router.delete("/image/", deleteImage);
 
 export default router;

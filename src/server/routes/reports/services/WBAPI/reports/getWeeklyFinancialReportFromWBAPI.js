@@ -13,6 +13,7 @@ var requriedFields = [
   "deduction",
   "reportType",
   "paidStorage",
+  "retailPrice",
   "docTypeName",
   "retailAmount",
   "deliveryService",
