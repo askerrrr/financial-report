@@ -38,10 +38,10 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
   var columnCount = 0;
   var columnNum = 2;
   var price;
-  var priceIndent = 5;
+  var priceIndent = 6;
   var priceCellAddress;
   var discount;
-  var discountIndent = 6;
+  var discountIndent = 7;
   var discountCellAddress;
   var weeklyPricesAndDiscounts = [];
   var columns = ["B", "C", "D", "E", "F", "G", "H"];
@@ -54,13 +54,13 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
       discountCellAddress = columns[columnCount] + discountIndent;
       price = ws.getCell(priceCellAddress)?.value;
       discount = ws.getCell(discountCellAddress)?.value;
-
-      priceIndent += 5;
-      discountIndent += 5;
+      console.log({ price, discount });
+      priceIndent += 7;
+      discountIndent += 7;
 
       if (i == skuNamesAndIds.length - 1) {
-        priceIndent = 5;
-        discountIndent = 6;
+        priceIndent = 6;
+        discountIndent = 7;
       }
 
       var priceOrDiscountIsValid = checkPriceAndDiscount(price, discount);
