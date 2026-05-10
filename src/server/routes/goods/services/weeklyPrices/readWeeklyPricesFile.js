@@ -10,7 +10,7 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
   var ws = wb.getWorksheet("Лист1");
 
   var skuNamesAndIds = [];
-  var skuNameIndent = 4;
+  var skuNameIndent = 5;
   var firstColumnName = "A";
   var skusQty = listGoods.length;
   var skuNameCellAddress = firstColumnName + skuNameIndent;
@@ -19,15 +19,15 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
     var cell = ws.getCell(skuNameCellAddress);
 
     if (cell?.value) {
-      var existSku = listGoods.find((sku) => sku.skuName === cell.value);
+      var existSku = listGoods.find((sku) => sku.skuName === cell.value.toLowerCase());
 
       if (existSku && !existSku?.disabled) {
-        skuNamesAndIds.push({ skuName: cell.value, nmID: existSku.id });
+        skuNamesAndIds.push({ skuName: cell.value.toLowerCase(), nmID: existSku.id });
       }
     }
 
     skusQty--;
-    skuNameIndent += 5;
+    skuNameIndent += 7;
     skuNameCellAddress = firstColumnName + skuNameIndent;
   }
 
@@ -87,7 +87,7 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
       columnCount = 0;
     }
   }
-  
+
   return { weeklyPricesAndDiscounts };
 };
 
