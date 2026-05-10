@@ -54,7 +54,6 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
       discountCellAddress = columns[columnCount] + discountIndent;
       price = ws.getCell(priceCellAddress)?.value;
       discount = ws.getCell(discountCellAddress)?.value;
-      console.log({ price, discount });
       priceIndent += 7;
       discountIndent += 7;
 
