@@ -6,15 +6,21 @@ var mergeListGoodsWithWeeklyPricesAndDiscounts = (listGoods, weeklyPricesAndDisc
     var weeklyPrices = [];
     var weeklyDiscounts = [];
 
-    for (var day of weeklyPricesAndDiscounts) {
-      var skuPriceAndDinsount = day.find((item) => item.nmID === id)?.data;
-
-      if (!skuPriceAndDinsount) {
-        weeklyPrices.push(price);
-        weeklyDiscounts.push(discount);
-      } else {
-        weeklyPrices.push(skuPriceAndDinsount.price);
-        weeklyDiscounts.push(skuPriceAndDinsount.discount);
+    if (!weeklyPricesAndDiscounts.length) {
+      weeklyPrices.length = 7;
+      weeklyPrices.fill(price);
+      weeklyDiscounts.length = 7;
+      weeklyDiscounts.fill(discount);
+    } else {
+      for (var day of weeklyPricesAndDiscounts) {
+        var skuPriceAndDiscountOfDay = day.find((item) => item.nmID === id)?.data;
+        if (!skuPriceAndDiscountOfDay) {
+          weeklyPrices.push(price);
+          weeklyDiscounts.push(discount);
+        } else {
+          weeklyPrices.push(skuPriceAndDiscountOfDay.price);
+          weeklyDiscounts.push(skuPriceAndDiscountOfDay.discount);
+        }
       }
     }
 
