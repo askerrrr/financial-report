@@ -33,15 +33,16 @@ var main = async () => {
   var { reportId, recordTo } = report;
 
   reportInfo(report);
-  await createSKUsTable(report);
-  await injectBase64IntoImgTags(skuImages);
-  await createTotalsTable(report);
-  console.log({ userId, reportId });
+  createSKUsTable(report);
+  createTotalsTable(report);
+  injectBase64IntoImgTags(skuImages);
+
   deleteReportHandler(userId, reportId);
   downloadReportAsXLSXButtonHandler(report);
 
   financialAccountingStatusButtonHander(reportId);
   setSkusLastCostPricesButtonHandler(reportId, recordTo.year, skusLastCostPrice);
+
 };
 
 main();

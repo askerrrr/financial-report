@@ -11,7 +11,7 @@ var openSkusLastCostPriceModal = (skusLastCostPrice) => {
   costPriceTdElement.id = `costprice-${skuData.skuIndex}`;
 
   var event = "click";
-  var cb = async () => skusLastCostPriceModal(skusLastCostPrice);
+  var cb = () => skusLastCostPriceModal(skusLastCostPrice);
   var buttonTextContent = "Изменить";
   var openCostPriceModalButton = createButton("editable-field-button", buttonTextContent, { event, cb });
 

@@ -1,4 +1,4 @@
-var injectBase64IntoImgTags = async (imageCollection) => {
+var injectBase64IntoImgTags = (imageCollection) => {
   for (var { skuName, base64 } of imageCollection) {
     if (base64) {
       var deleteImgButton = document.getElementById("delete-img-button-" + skuName);

@@ -3,7 +3,7 @@ import createTdElement from "./services/createTdElement.js";
 var tbody = document.getElementById("totals-tbody");
 var tr = document.createElement("tr");
 
-var createTotalsTable = async (report) => {
+var createTotalsTable = (report) => {
   var totalRetailAmountTd = createTdElement(report.totalRetailAmount);
   var totalSellerPayoutAmountTd = createTdElement(report.totalSellerPayoutAmount);
   var totalProductCostsTd = createTdElement(report.totalProductCosts);

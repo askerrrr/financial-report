@@ -1,7 +1,7 @@
 import sendSkuPhoto from "./sendSkuPhoto.js";
 import insertImageToImgTag from "./insertImageToImgTag.js";
 
-var createInputElement = async (skuName) => {
+var createInputElement =  (skuName) => {
   var input = document.createElement("input");
   input.id = "input-" + skuName;
   input.name = "sku-photo";

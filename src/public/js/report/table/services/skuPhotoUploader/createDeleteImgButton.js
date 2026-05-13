@@ -1,4 +1,4 @@
-var createDeleteImgButton = async (skuName) => {
+var createDeleteImgButton = (skuName) => {
   var button = document.createElement("button");
 
   button.id = "delete-img-button-" + skuName;

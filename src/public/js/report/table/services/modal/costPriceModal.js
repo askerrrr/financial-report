@@ -6,7 +6,7 @@ import sendChangedData from "../sendChangedData.js";
 import updateSKUsTableFields from "../updateSKUsTableFields.js";
 import updateTotalsTableFields from "../updateTotalsTableFields.js";
 
-var costPriceModal = async (skuData, tdElement, isGuestAccess) => {
+var costPriceModal = (skuData, tdElement, isGuestAccess) => {
   var modal = createDiv("modal-overlay");
   var modalContent = createDiv("modal-content");
 
