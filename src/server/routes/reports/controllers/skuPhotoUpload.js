@@ -4,7 +4,7 @@ import s3 from "../services/s3/index.js";
 var schema = Joi.object({ skuName: Joi.string().required() });
 
 var skuPhotoUpload = async (req, res, next) => {
-  var { error } = schema.validate(req.body.skuName);
+  var { error } = schema.validate(req.body);
 
   if (error) {
     return res.sendStatus(400);
