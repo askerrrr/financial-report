@@ -43,7 +43,7 @@ var deleteReport = async (req, res, next) => {
       } else {
         var taxParamsOfYear = taxParams.find((params) => params.year === year);
 
-        var { updatedTaxParams } = recalculateTaxParams(taxParams, report);
+        var { updatedTaxParams } = recalculateTaxParams(taxParamsOfYear, report);
         await changeTaxParamsToDb(userId, session, updatedTaxParams);
       }
 
