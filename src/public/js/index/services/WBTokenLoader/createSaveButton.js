@@ -1,7 +1,7 @@
 import sendWBAuthToken from "./sendToken.js";
 import checkToken from "../../../decodeReportWithoutRegistration/checkToken.js";
 
-var createSaveButton = async (input, modal) => {
+var createSaveButton = (input, modal) => {
   var saveButton = document.createElement("button");
   saveButton.className = "modal-button modal-button-save";
   saveButton.textContent = "Сохранить";

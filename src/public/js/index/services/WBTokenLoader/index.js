@@ -5,13 +5,13 @@ import createInputField from "../utils/createInputField.js";
 import createCancelButton from "../utils/createCancelButton.js";
 import createButtonsContainer from "../utils/createButtonsContainer.js";
 
-var openWBTokenLoader = async () => {
+var openWBTokenLoader = () => {
   var input = createInputField("token");
   input.type = "password";
 
   var modal = createModal("modal-overlay");
 
-  var saveButton = await createSaveButton(input, modal);
+  var saveButton = createSaveButton(input, modal);
 
   var cancelButton = createCancelButton(modal);
 
