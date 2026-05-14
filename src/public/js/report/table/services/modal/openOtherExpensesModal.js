@@ -1,7 +1,7 @@
 import createButton from "./utils/createButton.js";
 import otherExpensesModal from "./otherExpensesModal.js";
 
-var openOtherExpensesModal = async (skuData, isGuestAccess) => {
+var openOtherExpensesModal = (skuData, isGuestAccess) => {
   var container = document.createElement("div");
   container.className = "editable-field";
 
@@ -11,7 +11,7 @@ var openOtherExpensesModal = async (skuData, isGuestAccess) => {
   otherExpensesTdElement.id = `other-expenses-${skuData.skuIndex}`;
 
   var event = "click";
-  var cb = async () => await otherExpensesModal(skuData, otherExpensesTdElement, isGuestAccess);
+  var cb = () => otherExpensesModal(skuData, otherExpensesTdElement, isGuestAccess);
   var buttonTextContent = "Изменить";
   var openOtherExpensesModalButton = createButton("editable-field-button", buttonTextContent, { event, cb });
 

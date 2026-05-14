@@ -1,4 +1,4 @@
-var createLabelElement = async (skuName) => {
+var createLabelElement = (skuName) => {
   var label = document.createElement("label");
   label.htmlFor = "input-" + skuName;
   label.className = "sku-photo-uploader";

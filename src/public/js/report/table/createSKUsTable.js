@@ -6,7 +6,7 @@ import openOtherExpensesModal from "./services/modal/openOtherExpensesModal.js";
 var skuIndex = 0;
 var table = document.getElementById("skus-table");
 
-var createSKUsTable = async (report) => {
+var createSKUsTable = (report) => {
   var tbody = document.getElementById("skus-tbody");
 
   var { reportId, recordTo, skus, userId } = report;
@@ -25,11 +25,11 @@ var createSKUsTable = async (report) => {
       otherExpenses: sku.otherExpenses,
     };
 
-    var SKUPhotoUploader = await createSKUPhotoUploader(reportId, sku.skuName, null);
-    var costPriceInputField = await openCostPriceModal(data);
-    var otherExpensesInputField = await openOtherExpensesModal(data);
+    var costPriceInputField = openCostPriceModal(data);
+    var otherExpensesInputField = openOtherExpensesModal(data);
+    var skuPhotoUploader = createSKUPhotoUploader(reportId, sku.skuName);
 
-    var SKUPhotoUploaderTd = createTdElement(SKUPhotoUploader, "photo-cell", skuIndex, "photo-cell");
+    var skuPhotoUploaderTd = createTdElement(skuPhotoUploader, "photo-cell", skuIndex, "photo-cell");
     var skuName = createTdElement(sku.skuName);
     var qty = createTdElement(sku.qty);
     var returnAmount = createTdElement(sku.returnAmount);
@@ -53,7 +53,7 @@ var createSKUsTable = async (report) => {
     }
 
     tr.append(
-      SKUPhotoUploaderTd,
+      skuPhotoUploaderTd,
       skuName,
       qty,
       returnAmount,

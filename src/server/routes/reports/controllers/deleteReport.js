@@ -23,6 +23,7 @@ var deleteReport = async (req, res, next) => {
   try {
     await session.withTransaction(async () => {
       var { listGoods } = await getListGoodsFromDb(userId, session);
+      var taxParams = await getTaxParamsFromDb(userId, null, session);
 
       var report = await deleteReportFromDb(userId, reportId, session);
       var { year, month } = report.recordTo;
@@ -33,7 +34,6 @@ var deleteReport = async (req, res, next) => {
         var currentYearPropPostfix = "InCurrentYear";
         var nextYearPropPostfix = "InNextYear";
 
-        var taxParams = await getTaxParamsFromDb(userId, null, session);
         var startYearTaxParams = taxParams.find((params) => params.year === startYear);
         var endYearTaxParams = taxParams.find((params) => params.year === endYear);
 
@@ -41,8 +41,9 @@ var deleteReport = async (req, res, next) => {
         endYearTaxParams = recalculateTaxParams(endYearTaxParams, report, nextYearPropPostfix).updatedTaxParams;
         await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
       } else {
-        var taxParams = await getTaxParamsFromDb(userId, year, session);
-        var { updatedTaxParams } = recalculateTaxParams(taxParams, report);
+        var taxParamsOfYear = taxParams.find((params) => params.year === year);
+
+        var { updatedTaxParams } = recalculateTaxParams(taxParamsOfYear, report);
         await changeTaxParamsToDb(userId, session, updatedTaxParams);
       }
 

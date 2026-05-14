@@ -8,9 +8,7 @@ var getFile = async (Key) => {
     var base64 = Body.transformToString("base64");
     return base64;
   } catch (e) {
-    if (e.message == "NuSuchKey") {
-      return null;
-    }
+    return null;
   }
 };
 

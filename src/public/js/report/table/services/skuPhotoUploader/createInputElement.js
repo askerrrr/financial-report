@@ -1,7 +1,7 @@
 import sendSkuPhoto from "./sendSkuPhoto.js";
 import insertImageToImgTag from "./insertImageToImgTag.js";
 
-var createInputElement = async (skuName) => {
+var createInputElement =  (skuName) => {
   var input = document.createElement("input");
   input.id = "input-" + skuName;
   input.name = "sku-photo";
@@ -18,7 +18,7 @@ var createInputElement = async (skuName) => {
     uploadFormData.append("skuName", skuName);
     uploadFormData.append("sku-photo", input.files[0]);
 
-    var success = await sendSkuPhoto(skuName, uploadFormData);
+    var success = await sendSkuPhoto(uploadFormData);
 
     if (!success) {
       alert("Не удалось загрузить изображение");
