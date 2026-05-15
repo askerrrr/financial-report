@@ -5,6 +5,7 @@ import createButton from "./utils/createButton.js";
 import sendChangedData from "../sendChangedData.js";
 import updateSKUsTableFields from "../updateSKUsTableFields.js";
 import updateTotalsTableFields from "../updateTotalsTableFields.js";
+import updateReportFromLocalStorage from "../updateReportFromLocalStorage.js";
 
 var costPriceModal = (skuData, tdElement, isGuestAccess) => {
   var modal = createDiv("modal-overlay");
@@ -25,11 +26,11 @@ var costPriceModal = (skuData, tdElement, isGuestAccess) => {
 
     document.body.removeChild(modal);
 
-    var { total, sku } = await sendChangedData(skuData, isGuestAccess, "setcostprice");
+    var data = await sendChangedData(skuData, isGuestAccess, "setcostprice");
 
-    await updateSKUsTableFields(sku);
-
-    await updateTotalsTableFields(total);
+    await updateSKUsTableFields(data.sku);
+    updateReportFromLocalStorage(data)
+    await updateTotalsTableFields(data.totals);
   };
   var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb });
 

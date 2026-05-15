@@ -28,42 +28,36 @@ var taxParamsStub = {
 };
 
 var setCostPrice = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
+  // var { error } = schema.validate(req.body);
 
-  if (error) {
-    return res.sendStatus(400);
-  }
+  // if (error) {
+  //   return res.sendStatus(400);
+  // }
 
-  var { id, reportId, skuIndex, costPrice } = req.body;
+  var { userId, reportId, costPrice, sku, skuIndex, skus, totals, taxRate } = req.body;
 
-  var { report, taxRate } = req.app.locals.reports.find((item) => item.id == id && item.report.reportId === reportId);
+  sku.costPrice = costPrice;
 
-  var { skus, ...totalParams } = report;
-  skus[skuIndex].costPrice = costPrice;
-  var updatedSku = skus[skuIndex];
-
-  var { skuWithCalculatedParams } = calc.sku.restParams(updatedSku, { taxRate, ...taxParamsStub });
-
+  var { skuWithCalculatedParams } = calc.sku.restParams(sku, { taxRate, ...taxParamsStub });
   skus[skuIndex] = skuWithCalculatedParams;
-
-  var updatedReport = calc.total.restParams(totalParams, skus);
-
-  var { totalFinalProfit, totalProfitMargin } = updatedReport;
-  var { profitMargin, finalProfit } = skuWithCalculatedParams;
-
-  var reportIndex = req.app.locals?.reports.findIndex((item) => item.id === id && item.report.reportId === reportId);
-
-  req.app.locals.reports[reportIndex] = { id, report: updatedReport, taxRate };
+  var { skus, ...totals } = calc.total.restParams(totals, skus);
+  console.log(totals);
+  var { profitMargin, finalProfit, isCostPriceSet, insuranceFee, preTaxProfit, isInsuranceFeeIncluded } = skuWithCalculatedParams;
 
   return res.json({
     sku: {
+      userId,
       skuIndex,
-      data: {
-        profitMargin,
-        finalProfit,
-      },
+      data: { profitMargin, finalProfit, isCostPriceSet, insuranceFee, preTaxProfit, isInsuranceFeeIncluded },
     },
-    total: { totalFinalProfit, totalProfitMargin },
+    totals: {
+      totalFinalProfit: totals.totalFinalProfit,
+      totalProfitMargin: totals.totalProfitMargin,
+      totalProductCosts: totals.totalProductCosts,
+      totalInsuranceFee: totals.totalInsuranceFee,
+      totalPreTaxProfit: totals.totalPreTaxProfit,
+      totalOtherExpenses: totals.totalPreTaxProfit,
+    },
   });
 };
 

@@ -13,19 +13,19 @@ var main = async () => {
 
     getReportBtn.onclick = async () => {
       try {
-        var token = document.getElementById("token").value;
-        var dateFrom = document.getElementById("dateFrom").value;
-        var dateTo = document.getElementById("dateTo").value;
-        var taxRate = +document.getElementById("tax-rate").value || 0;
+        // var token = document.getElementById("token").value;
+        // var dateFrom = document.getElementById("dateFrom").value;
+        // var dateTo = document.getElementById("dateTo").value;
+        // var taxRate = +document.getElementById("tax-rate").value || 0;
 
-        var { token } = await checkToken(token);
-        var { validDateFrom } = await checkDateFrom(dateFrom);
-        var { validDateTo } = await checkDateTo(dateTo, validDateFrom);
-        var { taxRate } = await checkTaxRate(taxRate);
+        // var { token } = await checkToken(token);
+        // var { validDateFrom } = await checkDateFrom(dateFrom);
+        // var { validDateTo } = await checkDateTo(dateTo, validDateFrom);
+        // var { taxRate } = await checkTaxRate(taxRate);
 
         document.getElementById("dialog").close();
 
-        await showLoader();
+        // await showLoader();
 
         var data = await sendReportData("validDateFrom, validDateTo, token, taxRate");
 

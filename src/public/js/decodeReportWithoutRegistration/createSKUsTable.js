@@ -17,7 +17,18 @@ var createSKUsTable = (report) => {
     var qty = createTdElement(sku.qty);
     var returnAmount = createTdElement(sku.returnAmount);
 
-    var data = { userId, skuIndex, reportId, costPrice: sku.costPrice };
+    var data = {
+      userId,
+      reportId,
+      skuIndex,
+      skuId: sku.id,
+      skuName: sku.skuName,
+      taxRate: report.taxRate,
+      costPrice: sku.costPrice,
+      sku: getRequiredSkuProperties(sku),
+      totals: getRequiredReportTotalsProperties(report),
+      skus: skus.map((sku) => getRequiredSkuProperties(sku)),
+    };
 
     var costPriceInputField = openCostPriceModal(data, isGuestAccess);
     var costPrice = createTdElement(costPriceInputField);
@@ -52,8 +63,51 @@ var createSKUsTable = (report) => {
   }
 
   table.append(tbody);
-
+  skuIndex = 0;
   return table;
 };
 
 export default createSKUsTable;
+
+var getRequiredSkuProperties = function ({
+  tax,
+  qty,
+  profit,
+  finalProfit,
+  profitMargin,
+  retailAmount,
+  insuranceFee,
+  preTaxProfit,
+  otherExpenses,
+  isCostPriceSet,
+  isInsuranceFeeIncluded,
+  additionalInsuranceFee,
+}) {
+  return {
+    tax,
+    qty,
+    profit,
+    finalProfit,
+    profitMargin,
+    retailAmount,
+    insuranceFee,
+    preTaxProfit,
+    otherExpenses,
+    isCostPriceSet,
+    isInsuranceFeeIncluded,
+    additionalInsuranceFee,
+    costPrice: 0,
+  };
+};
+
+var getRequiredReportTotalsProperties = function ({
+  totalRetailAmount,
+  totalFinalProfit,
+  totalProfitMargin,
+  totalProductCosts,
+  totalInsuranceFee,
+  totalPreTaxProfit,
+  totalOtherExpenses,
+}) {
+  return { totalRetailAmount, totalFinalProfit, totalProfitMargin, totalProductCosts, totalInsuranceFee, totalPreTaxProfit, totalOtherExpenses };
+};

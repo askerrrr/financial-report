@@ -31,25 +31,25 @@ var taxParamsStub = {
 };
 
 var getReportFromWBAPI = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
+  // var { error } = schema.validate(req.body);
 
-  if (error) {
-    return res.sendStatus(400);
-  }
+  // if (error) {
+  //   return res.sendStatus(400);
+  // }
 
-  var { dateFrom, dateTo, token, taxRate } = req.body;
+  // var { dateFrom, dateTo, token, taxRate } = req.body;
 
-  var reports = await wbapi.getReports("decode-without-auth", dateFrom, dateTo, token);
+  var reports = reportsStub; //await wbapi.getReports("decode-without-auth", dateFrom, dateTo, token);
 
-  var { report } = await parseReports(reports, { taxRate, ...taxParamsStub });
+  var { report } = await parseReports(reports, { taxRate: 6, ...taxParamsStub });
 
   var userId = randomBytes(15).toString("hex");
   var { reportId } = reports.weeklyFinancialReport[0];
 
   report.userId = userId;
-  report.dateTo = dateTo;
-  report.taxRate = taxRate;
-  report.dateFrom = dateFrom;
+  report.dateTo = 'dateTo';
+  report.taxRate = 'taxRate';
+  report.dateFrom = 'dateFrom';
   report.reportId = reportId;
   report.totalFinalProfit = 0;
   report.totalProductCosts = 0;
