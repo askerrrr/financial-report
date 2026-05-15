@@ -2,6 +2,7 @@ import checkToken from "./checkToken.js";
 import showReport from "./showReport.js";
 import checkTaxRate from "./checkTaxRate.js";
 import sendReportData from "./sendReportData.js";
+import writeReportToLocalStorage from "./writeReportToLocalStorage.js";
 import checkDateTo from "../index/services/reportLoader/services/checkDateTo.js";
 import checkDateFrom from "../index/services/reportLoader/services/checkDateFrom.js";
 import { showLoader, deleteLoader } from "../index/services/reportLoader/services/loader.js";
@@ -26,12 +27,13 @@ var main = async () => {
 
         await showLoader();
 
-        var data = await sendReportData(validDateFrom, validDateTo, token, taxRate);
+        var data = await sendReportData("validDateFrom, validDateTo, token, taxRate");
 
         if (!data) {
           throw new Error("Возникла ошибка при получении отчета...\nПопробуйте еще раз");
         }
 
+        writeReportToLocalStorage(data.report);
         await deleteLoader().then(() => showReport(data));
       } catch (e) {
         alert(e.message);

@@ -2,6 +2,7 @@ import Joi from "joi";
 import { randomBytes } from "node:crypto";
 import wbapi from "../../reports/services/WBAPI/index.js";
 import parseReports from "../../reports/services/reportParsing/index.js";
+import reportsStub from "../../reports/services/WBAPI/reports/reports.js";
 
 var schema = Joi.object({
   dateFrom: Joi.string().required(),
@@ -48,7 +49,7 @@ var getReportFromWBAPI = async (req, res, next) => {
   var { report } = await parseReports(reports, { taxRate, ...taxParamsStub });
 
   var userId = randomBytes(15).toString("hex");
-  var { reportId } = report.weeklyFinancialReport[0];
+  var { reportId } = reports.weeklyFinancialReport[0];
 
   report.userId = userId;
   report.dateTo = dateTo;
