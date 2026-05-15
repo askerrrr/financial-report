@@ -2,12 +2,12 @@ import createSKUsTable from "./createSKUsTable.js";
 import createTotalsTable from "./createTotalsTable.js";
 import downloadReportAsXLSXButtonHandler from "../report/downloadReportAsXLSXButtonHandler.js";
 
-var showReport = async (data) => {
+var showReport = (data) => {
   var { id, report, downloadReportLink } = data;
 
-  await createSKUsTable(id, report);
-  await createTotalsTable(report);
-  await downloadReportAsXLSXButtonHandler(report, downloadReportLink);
+  createSKUsTable(id, report);
+  createTotalsTable(report);
+  downloadReportAsXLSXButtonHandler(report, downloadReportLink);
 
   document.getElementById("skus-table").style.display = "block";
   document.getElementById("totals-table").style.display = "block";

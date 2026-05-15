@@ -32,8 +32,7 @@ var main = async () => {
           throw new Error("Возникла ошибка при получении отчета...\nПопробуйте еще раз");
         }
 
-        await deleteLoader();
-        await showReport(report);
+        await deleteLoader().then(() => showReport(report));
       } catch (e) {
         alert(e.message);
         await deleteLoader();

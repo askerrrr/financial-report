@@ -1,4 +1,4 @@
-var decodeReportWithoutRegistrationButtonHandler = async () => {
+var decodeReportWithoutRegistrationButtonHandler = () => {
   var skusTbody = document.getElementById("skus-tbody");
   var totalTbody = document.getElementById("totals-tbody");
   var skusTable = document.getElementById("skus-table");
@@ -6,7 +6,7 @@ var decodeReportWithoutRegistrationButtonHandler = async () => {
   var downloadReportAsXLSXButton = document.getElementById("download-report-as-xlsx-button");
   var decodeReportWithoutRegistrationButton = document.getElementById("decode-report-without-registration-button");
 
-  decodeReportWithoutRegistrationButton.onclick = async () => {
+  decodeReportWithoutRegistrationButton.onclick = () => {
     if (skusTbody.childNodes.length) {
       var confirmed = confirm("Получение нового отчета привёдет к потере текущего.\nПродолжить?");
 

@@ -5,7 +5,7 @@ var skuIndex = 0;
 var isGuestAccess = true;
 var table = document.getElementById("skus-table");
 
-var createSKUsTable = async (id, report) => {
+var createSKUsTable = (id, report) => {
   var tbody = document.getElementById("skus-tbody");
 
   var { reportId, skus } = report;
@@ -19,7 +19,7 @@ var createSKUsTable = async (id, report) => {
 
     var data = { id, skuIndex, reportId, costPrice: sku.costPrice };
 
-    var costPriceInputField = await openCostPriceModal(data, isGuestAccess);
+    var costPriceInputField = openCostPriceModal(data, isGuestAccess);
     var costPrice = createTdElement(costPriceInputField);
     var retailPrice = createTdElement(sku.averageRetailPrice);
     var deliveryCost = createTdElement(sku.deliveryCost);

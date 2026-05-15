@@ -4,7 +4,7 @@ var table = document.getElementById("totals-table");
 var tbody = document.getElementById("totals-tbody");
 var tr = document.createElement("tr");
 
-var createTotalsTable = async (report) => {
+var createTotalsTable = (report) => {
   var totalRetailAmountTd = createTdElement(report.totalRetailAmount);
   var totalSoldTd = createTdElement(report.totalSold);
   var totalReturnAmountTd = createTdElement(report.totalReturnAmount);
@@ -38,7 +38,7 @@ var createTotalsTable = async (report) => {
     totalAdvertisingCosts,
     totalTaxAmountTd,
     totalProfitMarginTd,
-    totalFinalProfitTd
+    totalFinalProfitTd,
   );
 
   tbody.append(tr);
