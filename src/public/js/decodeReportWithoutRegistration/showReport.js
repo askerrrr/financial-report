@@ -2,10 +2,8 @@ import createSKUsTable from "./createSKUsTable.js";
 import createTotalsTable from "./createTotalsTable.js";
 import downloadReportAsXLSXButtonHandler from "../report/downloadReportAsXLSXButtonHandler.js";
 
-var showReport = (data) => {
-  var { id, report, downloadReportLink } = data;
-
-  createSKUsTable(id, report);
+var showReport = ({ userId, report, downloadReportLink }) => {
+  createSKUsTable(report);
   createTotalsTable(report);
   downloadReportAsXLSXButtonHandler(report, downloadReportLink);
 

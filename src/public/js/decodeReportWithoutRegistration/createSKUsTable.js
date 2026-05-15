@@ -5,10 +5,10 @@ var skuIndex = 0;
 var isGuestAccess = true;
 var table = document.getElementById("skus-table");
 
-var createSKUsTable = (id, report) => {
+var createSKUsTable = (report) => {
   var tbody = document.getElementById("skus-tbody");
 
-  var { reportId, skus } = report;
+  var { userId, reportId, skus } = report;
 
   for (var sku of skus) {
     var tr = document.createElement("tr");
@@ -17,7 +17,7 @@ var createSKUsTable = (id, report) => {
     var qty = createTdElement(sku.qty);
     var returnAmount = createTdElement(sku.returnAmount);
 
-    var data = { id, skuIndex, reportId, costPrice: sku.costPrice };
+    var data = { userId, skuIndex, reportId, costPrice: sku.costPrice };
 
     var costPriceInputField = openCostPriceModal(data, isGuestAccess);
     var costPrice = createTdElement(costPriceInputField);
