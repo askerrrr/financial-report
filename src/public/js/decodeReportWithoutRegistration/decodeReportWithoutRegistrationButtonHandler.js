@@ -17,6 +17,8 @@ var decodeReportWithoutRegistrationButtonHandler = () => {
         skusTable.style.display = "none";
         totalsTable.style.display = "none";
         downloadReportAsXLSXButton.style.display = "none";
+
+        localStorage.clear();
       }
 
       return;
