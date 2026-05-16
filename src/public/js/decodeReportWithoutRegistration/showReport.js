@@ -2,7 +2,10 @@ import createSKUsTable from "./createSKUsTable.js";
 import createTotalsTable from "./createTotalsTable.js";
 import downloadReportAsXLSXButtonHandler from "../report/downloadReportAsXLSXButtonHandler.js";
 
-var showReport = ({ userId, report, downloadReportLink }, isGuestAccess) => {
+var isGuestAccess = true;
+var downloadReportLink = "/decode-report-without-registration/xlsx/";
+
+var showReport = (report) => {
   createSKUsTable(report);
   createTotalsTable(report);
   downloadReportAsXLSXButtonHandler(report, downloadReportLink, isGuestAccess);

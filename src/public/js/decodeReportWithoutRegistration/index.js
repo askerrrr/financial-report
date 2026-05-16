@@ -7,7 +7,6 @@ import checkDateTo from "../index/services/reportLoader/services/checkDateTo.js"
 import checkDateFrom from "../index/services/reportLoader/services/checkDateFrom.js";
 import { showLoader, deleteLoader } from "../index/services/reportLoader/services/loader.js";
 
-var isGuestAccess = true;
 var errorMsg = "Что-то пошло не так...";
 
 var main = async () => {
@@ -30,14 +29,14 @@ var main = async () => {
 
         await showLoader();
 
-        var data = await sendReportData(validDateFrom, validDateTo, token, taxRate);
+        var report = await sendReportData(validDateFrom, validDateTo, token, taxRate);
 
-        if (!data) {
+        if (!report) {
           throw new Error("Возникла ошибка при получении отчета...\nПопробуйте еще раз");
         }
 
-        writeReportToLocalStorage(data.report);
-        await deleteLoader().then(() => showReport(data, isGuestAccess));
+        writeReportToLocalStorage(report);
+        await deleteLoader().then(() => showReport(report));
       } catch (e) {
         alert(errorMsg);
         await deleteLoader();

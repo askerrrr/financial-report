@@ -80,7 +80,7 @@ var setCostPrice = async (req, res, next) => {
     sku: {
       userId,
       skuIndex,
-      data: { profitMargin, finalProfit, isCostPriceSet, insuranceFee, preTaxProfit, isInsuranceFeeIncluded },
+      data: { profitMargin, finalProfit, isCostPriceSet, insuranceFee, preTaxProfit, isInsuranceFeeIncluded, costPrice },
     },
     totals: {
       totalFinalProfit: totals.totalFinalProfit,

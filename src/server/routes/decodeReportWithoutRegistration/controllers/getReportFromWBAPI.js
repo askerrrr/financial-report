@@ -60,9 +60,7 @@ var getReportFromWBAPI = async (req, res, next) => {
     ((sku.costPrice = 0), (sku.otherExpenses = 0), (sku.finalProfit = 0), (sku.profitMargin = 0));
   });
 
-  var downloadReportLink = "/decode-report-without-registration/xlsx/" + userId + "/" + report.reportId;
-
-  return res.json({ userId, report, downloadReportLink });
+  return res.json({ report });
 };
 
 export default getReportFromWBAPI;
