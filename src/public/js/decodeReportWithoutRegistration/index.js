@@ -7,6 +7,7 @@ import checkDateTo from "../index/services/reportLoader/services/checkDateTo.js"
 import checkDateFrom from "../index/services/reportLoader/services/checkDateFrom.js";
 import { showLoader, deleteLoader } from "../index/services/reportLoader/services/loader.js";
 
+var isGuestAccess = true;
 var errorMsg = "Что-то пошло не так...";
 
 var main = async () => {
@@ -36,7 +37,7 @@ var main = async () => {
         }
 
         writeReportToLocalStorage(data.report);
-        await deleteLoader().then(() => showReport(data));
+        await deleteLoader().then(() => showReport(data, isGuestAccess));
       } catch (e) {
         alert(errorMsg);
         await deleteLoader();
