@@ -11,6 +11,7 @@ var getRequiredSkuProperties = ({
   isCostPriceSet,
   isInsuranceFeeIncluded,
   additionalInsuranceFee,
+  additionalInsuranceFeeIsPaid,
 }) => {
   return {
     tax,
@@ -47,11 +48,8 @@ var getReportDataFromLocalStorage = ({ userId, skuIndex }) => {
 
   var data = {};
 
-  data.skus = report.skus.map((sku) => getRequiredSkuProperties(sku));
-
-  data.sku = report.skus[skuIndex];
-
   data.totals = getRequiredReportTotalsProperties(report);
+  data.skus = report.skus.map((sku) => getRequiredSkuProperties(sku));
 
   return data;
 };

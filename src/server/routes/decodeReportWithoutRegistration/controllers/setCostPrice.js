@@ -2,10 +2,39 @@ import Joi from "joi";
 import calc from "../../reports/services/calcServices/index.js";
 
 var schema = Joi.object({
-  id: Joi.string().required(),
+  userId: Joi.string().required(),
+  skuId: Joi.number().required(),
   reportId: Joi.number().required(),
   skuIndex: Joi.number().required(),
   costPrice: Joi.number().required(),
+  skuName: Joi.string().required(),
+  taxRate: Joi.number().required(),
+  totals: Joi.object({
+    totalRetailAmount: Joi.number().required(),
+    totalFinalProfit: Joi.number().required(),
+    totalProfitMargin: Joi.number().required(),
+    totalProductCosts: Joi.number().required(),
+    totalInsuranceFee: Joi.number().required(),
+    totalPreTaxProfit: Joi.number().required(),
+    totalOtherExpenses: Joi.number().required(),
+  }).required(),
+  skus: Joi.array().items(
+    Joi.object({
+      tax: Joi.number().required(),
+      qty: Joi.number().required(),
+      isCostPriceSet: Joi.boolean(),
+      profit: Joi.number().required(),
+      costPrice: Joi.number().required(),
+      finalProfit: Joi.number().required(),
+      profitMargin: Joi.number().required(),
+      retailAmount: Joi.number().required(),
+      insuranceFee: Joi.number().required(),
+      preTaxProfit: Joi.number().required(),
+      otherExpenses: Joi.number().required(),
+      isInsuranceFeeIncluded: Joi.boolean(),
+      additionalInsuranceFee: Joi.number().required(),
+    }),
+  ),
 });
 
 var taxParamsStub = {
@@ -28,17 +57,18 @@ var taxParamsStub = {
 };
 
 var setCostPrice = async (req, res, next) => {
-  // var { error } = schema.validate(req.body);
+  var { error } = schema.validate(req.body);
 
-  // if (error) {
-  //   return res.sendStatus(400);
-  // }
+  if (error) {
+    return res.sendStatus(400);
+  }
 
-  var { userId, reportId, costPrice, sku, skuIndex, skus, totals, taxRate } = req.body;
+  var { userId, reportId, costPrice, skuIndex, skus, totals, taxRate } = req.body;
 
-  sku.costPrice = costPrice;
+  var skuToUpdate = skus[skuIndex];
+  skuToUpdate.costPrice = costPrice;
 
-  var { skuWithCalculatedParams } = calc.sku.restParams(sku, { taxRate, ...taxParamsStub });
+  var { skuWithCalculatedParams } = calc.sku.restParams(skuToUpdate, { taxRate, ...taxParamsStub });
 
   skus[skuIndex] = skuWithCalculatedParams;
 
