@@ -11,7 +11,7 @@ router.get("/", getDecodeReportWithoutRegistrationPage);
 
 router.get("/report/:id", getReportPage);
 
-router.post("/xlsx/:id/:reportId", downloadReportAsXLSX);
+router.post("/xlsx/", downloadReportAsXLSX);
 
 router.post("/", getReportFromWBAPI);
 
