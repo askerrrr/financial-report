@@ -81,7 +81,7 @@ var setCostPriceToSku = async (req, res, next) => {
             finalProfit,
           },
         },
-        total: { totalFinalProfit, totalProfitMargin, totalInsuranceFee },
+        totals: { totalFinalProfit, totalProfitMargin, totalInsuranceFee },
       });
     });
   } catch (err) {

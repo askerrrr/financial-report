@@ -1,11 +1,8 @@
-var updateTotalsTableFields = async (totals) => {
-  console.log({ totals });
+var updateTotalsTableFields = (totals) => {
   for (var fieldName of Object.keys(totals)) {
     var elem = document.getElementById(fieldName);
 
     if (elem) {
-      console.log({ elem });
-      console.log({ fieldName, totalValue: totals[fieldName] });
       elem.textContent = totals[fieldName];
 
       if (totals[fieldName] < 0) {

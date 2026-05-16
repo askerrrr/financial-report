@@ -1,4 +1,4 @@
-var updateSKUsTableFields = async (sku) => {
+var updateSKUsTableFields = (sku) => {
   var { skuIndex, data } = sku;
 
   for (var fieldName of Object.keys(data)) {
@@ -6,7 +6,6 @@ var updateSKUsTableFields = async (sku) => {
     var skuField = document.getElementById(elemId);
 
     if (skuField) {
-      console.log({ skuField });
       skuField.textContent = data[fieldName];
 
       if (data[fieldName] < 0) {

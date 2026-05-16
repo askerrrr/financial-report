@@ -98,7 +98,7 @@ var setCostPriceToSkus = async (req, res, next) => {
 
       res.json({
         skusDataToClient,
-        total: { totalFinalProfit: totalParams.totalFinalProfit, totalProfitMargin: totalParams.totalProfitMargin },
+        totals: { totalFinalProfit: totalParams.totalFinalProfit, totalProfitMargin: totalParams.totalProfitMargin },
       });
     });
   } catch (e) {

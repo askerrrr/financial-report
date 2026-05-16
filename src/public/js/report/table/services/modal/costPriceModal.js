@@ -6,37 +6,49 @@ import sendChangedData from "../sendChangedData.js";
 import updateSKUsTableFields from "../updateSKUsTableFields.js";
 import updateTotalsTableFields from "../updateTotalsTableFields.js";
 import updateReportFromLocalStorage from "../updateReportFromLocalStorage.js";
+import getReportDataFromLocalStorage from "./getReportDataFromLocalStorage.js";
 
-var costPriceModal = (skuData, tdElement, isGuestAccess) => {
+var event = "click";
+
+var costPriceModal = (skuData, costPriceTdElement, isGuestAccess) => {
   var modal = createDiv("modal-overlay");
   var modalContent = createDiv("modal-content");
 
   var titleContent = `Изменить себестоимость для "${skuData.skuName}"`;
   var title = createTitle("modal-title", titleContent);
 
-  var costPriceInput = createInput("modal-input", tdElement);
+  var costPriceInput = createInput("modal-input", costPriceTdElement);
 
   var buttonsContainer = createDiv("modal-buttons");
 
   var saveButtonTextContent = "Сохранить";
-  var event = "click";
-  var cb = async () => {
-    tdElement.textContent = costPriceInput.value;
+
+  var saveCb = async () => {
+    document.body.removeChild(modal);
+
+    costPriceTdElement.textContent = costPriceInput.value;
     skuData.costPrice = +costPriceInput.value;
 
-    document.body.removeChild(modal);
+    if (isGuestAccess) {
+      var reportData = getReportDataFromLocalStorage(skuData);
+      skuData = Object.assign(skuData, reportData);
+    }
 
     var data = await sendChangedData(skuData, isGuestAccess, "setcostprice");
 
-    await updateSKUsTableFields(data.sku);
-    updateReportFromLocalStorage(data)
-    await updateTotalsTableFields(data.totals);
-  };
-  var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb });
+    updateSKUsTableFields(data.sku);
+    updateTotalsTableFields(data.totals);
 
-  cb = () => document.body.removeChild(modal);
+    if (isGuestAccess) {
+      updateReportFromLocalStorage(data);
+    }
+  };
+
+  var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb: saveCb });
+
   var cancelButtonTextContent = "Отмена";
-  var cancelButton = createButton("modal-button modal-button-cancel", cancelButtonTextContent, { event, cb });
+  var cancelCb = () => document.body.removeChild(modal);
+  var cancelButton = createButton("modal-button modal-button-cancel", cancelButtonTextContent, { event, cb: cancelCb });
 
   buttonsContainer.append(cancelButton, saveButton);
   modalContent.append(title, costPriceInput, buttonsContainer);

@@ -25,9 +25,6 @@ var createSKUsTable = (report) => {
       skuName: sku.skuName,
       taxRate: report.taxRate,
       costPrice: sku.costPrice,
-      sku: getRequiredSkuProperties(sku),
-      totals: getRequiredReportTotalsProperties(report),
-      skus: skus.map((sku) => getRequiredSkuProperties(sku)),
     };
 
     var costPriceInputField = openCostPriceModal(data, isGuestAccess);
@@ -68,46 +65,3 @@ var createSKUsTable = (report) => {
 };
 
 export default createSKUsTable;
-
-var getRequiredSkuProperties = function ({
-  tax,
-  qty,
-  profit,
-  finalProfit,
-  profitMargin,
-  retailAmount,
-  insuranceFee,
-  preTaxProfit,
-  otherExpenses,
-  isCostPriceSet,
-  isInsuranceFeeIncluded,
-  additionalInsuranceFee,
-}) {
-  return {
-    tax,
-    qty,
-    profit,
-    finalProfit,
-    profitMargin,
-    retailAmount,
-    insuranceFee,
-    preTaxProfit,
-    otherExpenses,
-    isCostPriceSet,
-    isInsuranceFeeIncluded,
-    additionalInsuranceFee,
-    costPrice: 0,
-  };
-};
-
-var getRequiredReportTotalsProperties = function ({
-  totalRetailAmount,
-  totalFinalProfit,
-  totalProfitMargin,
-  totalProductCosts,
-  totalInsuranceFee,
-  totalPreTaxProfit,
-  totalOtherExpenses,
-}) {
-  return { totalRetailAmount, totalFinalProfit, totalProfitMargin, totalProductCosts, totalInsuranceFee, totalPreTaxProfit, totalOtherExpenses };
-};
