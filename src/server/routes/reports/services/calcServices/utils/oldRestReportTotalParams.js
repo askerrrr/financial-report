@@ -6,7 +6,7 @@ var calcRestReportTotalParams = (totals, skus, isCrossYearReport) => {
   totals.totalPreTaxProfit = sum(skus, "preTaxProfit", "truncate-on");
   totals.totalFinalProfit = sum(skus, "finalProfit", "truncate-on");
   totals.totalProductCosts = calcProductCosts(skus);
-  totals.totalInsuranceFee = sum(skus, "insuranceFee", 'truncate-on');
+  totals.totalInsuranceFee = sum(skus, "insuranceFee", "truncate-on");
   totals.totalOtherExpenses = sum(skus, "otherExpenses", "truncate-on");
 
   if (isCrossYearReport) {

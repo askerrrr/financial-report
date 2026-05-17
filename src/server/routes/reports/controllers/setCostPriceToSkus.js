@@ -1,7 +1,7 @@
 import Joi from "joi";
 import calc from "../services/calcServices/index.js";
 import { dbClient } from "../../../database/index.js";
-import dbUtils from '../../../database/collections/index.js'
+import dbUtils from "../../../database/collections/index.js";
 import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 
 var costPricesItemSchema = Joi.object({ id: Joi.number().required(), skuName: Joi.string().required(), lastCostPrice: Joi.number().required() });
@@ -92,7 +92,7 @@ var setCostPriceToSkus = async (req, res, next) => {
         await changeTaxParamsToDb(userId, session, taxParams);
       }
 
-      var updatedReport = await calc.total.restParams(totalParams, skus, report.crossesTaxYears);
+      var updatedReport = await calc.total.oldTotalRestParams(totalParams, skus, report.crossesTaxYears);
 
       await saveUpdatedReport(userId, reportId, updatedReport, session);
 

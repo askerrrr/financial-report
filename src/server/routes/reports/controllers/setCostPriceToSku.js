@@ -1,7 +1,7 @@
 import Joi from "joi";
 import calc from "../services/calcServices/index.js";
 import { dbClient } from "../../../database/index.js";
-import dbUtils from '../../../database/collections/index.js'
+import dbUtils from "../../../database/collections/index.js";
 import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 
 var schema = Joi.object({
@@ -44,7 +44,22 @@ var setCostPriceToSku = async (req, res, next) => {
       skus[skuIndex].costPrice = costPrice;
       skus[skuIndex].isCostPriceSet = true;
 
+      var prevSkuData = {};
+      prevSkuData.costPrice = costPrice;
+
       if (report.crossesTaxYears) {
+        prevSkuData.qtyInCurrentYear = skus[skuIndex].qtyInCurrentYear;
+        prevSkuData.finalProfitInCurrentYear = skus[skuIndex].finalProfitInCurrentYear;
+        prevSkuData.preTaxProfitInCurrentYear = skus[skuIndex].preTaxProfitInCurrentYear;
+        prevSkuData.insuranceFeeInCurrentYear = skus[skuIndex].insuranceFeeInCurrentYear;
+        prevSkuData.otherExpensesInCurrentYear = skus[skuIndex].otherExpensesInCurrentYear;
+
+        prevSkuData.qtyInNextYear = skus[skuIndex].qtyInNextYear;
+        prevSkuData.finalProfitInNextYear = skus[skuIndex].finalProfitInNextYear;
+        prevSkuData.preTaxProfitInNextYear = skus[skuIndex].preTaxProfitInNextYear;
+        prevSkuData.otherExpensesInNextYear = skus[skuIndex].otherExpensesNextYear;
+        prevSkuData.insuranceFeeInNextYear = skus[skuIndex].insuranceFeeInNextYear;
+
         var startYear = +report.dateFrom.split("-")[0];
         var endYear = +report.dateTo.split("-")[0];
         var startYearTaxParams = await getTaxParamsFromDb(userId, startYear, session);
@@ -57,6 +72,12 @@ var setCostPriceToSku = async (req, res, next) => {
         var { startYearTaxParams, endYearTaxParams } = result.taxParams;
         await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
       } else {
+        prevSkuData.qty = skus[skuIndex].qty;
+        prevSkuData.finalProfit = skus[skuIndex].finalProfit;
+        prevSkuData.preTaxProfit = skus[skuIndex].preTaxProfit;
+        prevSkuData.insuranceFee = skus[skuIndex].insuranceFee;
+        prevSkuData.otherExpenses = skus[skuIndex].otherExpenses;
+
         var taxParams = await getTaxParamsFromDb(userId, year, session);
         var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams);
 
@@ -65,13 +86,13 @@ var setCostPriceToSku = async (req, res, next) => {
         await changeTaxParamsToDb(userId, session, result.taxParams);
       }
 
-      var updatedReport = await calc.total.restParams(totalParams, skus, report.crossesTaxYears);
+      var { updatedTotals } = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.crossesTaxYears);
 
-      await saveUpdatedReport(userId, reportId, updatedReport, session);
+      await saveUpdatedReport(userId, reportId, { skus, ...updatedTotals }, session);
       await updateSkuInListGoods(userId, skuId, { lastCostPrice: costPrice, metrics: result.updatedSkuMetrics }, session);
 
       var { profitMargin, finalProfit } = skus[skuIndex];
-      var { totalFinalProfit, totalProfitMargin, totalInsuranceFee } = updatedReport;
+      var { totalFinalProfit, totalProfitMargin, totalInsuranceFee } = updatedTotals;
 
       res.json({
         sku: {

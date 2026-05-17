@@ -66,13 +66,21 @@ var setCostPrice = async (req, res, next) => {
   var { userId, reportId, costPrice, skuIndex, skus, totals, taxRate } = req.body;
 
   var skuToUpdate = skus[skuIndex];
+  var prevSkuData = {};
+  prevSkuData.costPrice = costPrice;
+  prevSkuData.qty = skuToUpdate.qty;
+  prevSkuData.finalProfit = skuToUpdate.finalProfit;
+  prevSkuData.preTaxProfit = skuToUpdate.preTaxProfit;
+  prevSkuData.insuranceFee = skuToUpdate.insuranceFee;
+  prevSkuData.otherExpenses = skuToUpdate.otherExpenses;
+
   skuToUpdate.costPrice = costPrice;
 
   var { skuWithCalculatedParams } = calc.sku.restParams(skuToUpdate, { taxRate, ...taxParamsStub });
 
   skus[skuIndex] = skuWithCalculatedParams;
 
-  var { skus, ...totals } = calc.total.restParams(totals, skus);
+  var { updatedTotals } = calc.total.restParams(totals, prevSkuData, skuWithCalculatedParams);
 
   var { profitMargin, finalProfit, isCostPriceSet, insuranceFee, preTaxProfit, isInsuranceFeeIncluded } = skuWithCalculatedParams;
 
@@ -83,12 +91,12 @@ var setCostPrice = async (req, res, next) => {
       data: { profitMargin, finalProfit, isCostPriceSet, insuranceFee, preTaxProfit, isInsuranceFeeIncluded, costPrice },
     },
     totals: {
-      totalFinalProfit: totals.totalFinalProfit,
-      totalProfitMargin: totals.totalProfitMargin,
-      totalProductCosts: totals.totalProductCosts,
-      totalInsuranceFee: totals.totalInsuranceFee,
-      totalPreTaxProfit: totals.totalPreTaxProfit,
-      totalOtherExpenses: totals.totalPreTaxProfit,
+      totalFinalProfit: updatedTotals.totalFinalProfit,
+      totalProfitMargin: updatedTotals.totalProfitMargin,
+      totalProductCosts: updatedTotals.totalProductCosts,
+      totalInsuranceFee: updatedTotals.totalInsuranceFee,
+      totalPreTaxProfit: updatedTotals.totalPreTaxProfit,
+      totalOtherExpenses: updatedTotals.totalPreTaxProfit,
     },
   });
 };

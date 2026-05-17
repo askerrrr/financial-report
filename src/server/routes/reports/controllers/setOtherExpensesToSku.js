@@ -1,7 +1,7 @@
 import Joi from "joi";
 import calc from "../services/calcServices/index.js";
 import { dbClient } from "../../../database/index.js";
-import dbUtils from '../../../database/collections/index.js'
+import dbUtils from "../../../database/collections/index.js";
 import truncateNum from "../services/reportParsing/truncateNum.js";
 import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 
@@ -29,7 +29,7 @@ var setOtherExpensesToSku = async (req, res, next) => {
   var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
 
   var updatedReport;
-  var previousFinalSkuData = {};
+  var prevSkuData = {};
 
   var session = await dbClient.startSession();
 
@@ -45,14 +45,21 @@ var setOtherExpensesToSku = async (req, res, next) => {
         return res.sendStatus(409);
       }
 
+      prevSkuData.costPrice = costPrice;
+
       if (skus[skuIndex].isCostPriceSet) {
         if (report.crossesTaxYears) {
-          previousFinalSkuData.finalProfitInCurrentYear = skus[skuIndex].finalProfitInCurrentYear;
-          previousFinalSkuData.finalProfitInNextYear = skus[skuIndex].finalProfitInNextYear;
-          previousFinalSkuData.insuranceFeeInCurrentYear = skus[skuIndex].insuranceFeeInCurrentYear;
-          previousFinalSkuData.insuranceFeeInNextYear = skus[skuIndex].insuranceFeeInNextYear;
-          previousFinalSkuData.otherExpensesInCurrentYear = skus[skuIndex].otherExpensesInCurrentYear;
-          previousFinalSkuData.otherExpensesInNextYear = skus[skuIndex].otherExpensesInNextYear;
+          prevSkuData.qtyInCurrentYear = skus[skuIndex].qtyInCurrentYear;
+          prevSkuData.finalProfitInCurrentYear = skus[skuIndex].finalProfitInCurrentYear;
+          prevSkuData.preTaxProfitInCurrentYear = skus[skuIndex].preTaxProfitInCurrentYear;
+          prevSkuData.insuranceFeeInCurrentYear = skus[skuIndex].insuranceFeeInCurrentYear;
+          prevSkuData.otherExpensesInCurrentYear = skus[skuIndex].otherExpensesInCurrentYear;
+
+          prevSkuData.qtyInNextYear = skus[skuIndex].qtyInNextYear;
+          prevSkuData.finalProfitInNextYear = skus[skuIndex].finalProfitInNextYear;
+          prevSkuData.preTaxProfitInNextYear = skus[skuIndex].preTaxProfitInNextYear;
+          prevSkuData.otherExpensesInNextYear = skus[skuIndex].otherExpensesNextYear;
+          prevSkuData.insuranceFeeInNextYear = skus[skuIndex].insuranceFeeInNextYear;
 
           skus[skuIndex].otherExpenses = otherExpenses;
 
@@ -66,7 +73,7 @@ var setOtherExpensesToSku = async (req, res, next) => {
           var endYearTaxParams = await getTaxParamsFromDb(userId, endYear, session);
           var taxParams = { startYearTaxParams, endYearTaxParams };
 
-          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, report.crossesTaxYears, previousFinalSkuData);
+          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, report.crossesTaxYears, prevSkuData);
           skus[skuIndex] = result.updatedSku;
 
           var { startYearTaxParams, endYearTaxParams } = result.taxParams;
@@ -74,13 +81,15 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
           await updateSkuInListGoods(userId, skuId, { metrics: result.updatedSkuMetrics });
         } else {
-          previousFinalSkuData.finalProfit = skus[skuIndex].finalProfit;
-          previousFinalSkuData.insuranceFee = skus[skuIndex].insuranceFee;
-          previousFinalSkuData.otherExpenses = skus[skuIndex].otherExpenses;
+          prevSkuData.qty = skus[skuIndex].qty;
+          prevSkuData.finalProfit = skus[skuIndex].finalProfit;
+          prevSkuData.preTaxProfit = skus[skuIndex].preTaxProfit;
+          prevSkuData.insuranceFee = skus[skuIndex].insuranceFee;
+          prevSkuData.otherExpenses = skus[skuIndex].otherExpenses;
 
           skus[skuIndex].otherExpenses = otherExpenses;
           var taxParams = await getTaxParamsFromDb(userId, year, session);
-          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, null, previousFinalSkuData);
+          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, null, prevSkuData);
 
           skus[skuIndex] = result.updatedSku;
 
@@ -88,7 +97,8 @@ var setOtherExpensesToSku = async (req, res, next) => {
           await updateSkuInListGoods(userId, skuId, { metrics: result.updatedSkuMetrics });
         }
 
-        updatedReport = await calc.total.restParams(totalParams, skus, report.crossesTaxYears);
+        var { updatedTotals } = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.crossesTaxYears);
+        updatedReport = { ...updatedTotals, skus };
       } else {
         var prevSkuOtherExpenses = skus[skuIndex].otherExpenses;
         skus[skuIndex].otherExpenses = otherExpenses;
