@@ -3,6 +3,7 @@ import calc from "../services/calcServices/index.js";
 import { dbClient } from "../../../database/index.js";
 import dbUtils from "../../../database/collections/index.js";
 import truncateNum from "../services/reportParsing/truncateNum.js";
+import getPrevSkuData from "../services/different/getPrevSkuData.js";
 import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 
 var schema = Joi.object({
