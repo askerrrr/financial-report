@@ -3,7 +3,7 @@ import calcProfitMargin from "./profitMargin.js";
 import calcProductCosts from "./totalProductCosts.js";
 import truncateNum from "../../reportParsing/truncateNum.js";
 
-var calcRestReportTotalParams = (totals, oldSkuData, newSkuData, isCrossYearReport) => {
+var calcRestReportTotalParams = (totals, oldSkuData, newSkuData) => {
   var recalculatedTotalPreTaxProfit = totals.totalPreTaxProfit - oldSkuData.preTaxProfit + newSkuData.preTaxProfit;
   totals.totalPreTaxProfit = truncateNum(recalculatedTotalPreTaxProfit);
 
@@ -19,7 +19,7 @@ var calcRestReportTotalParams = (totals, oldSkuData, newSkuData, isCrossYearRepo
   var recalculatedTotalOtherExpenses = totals.totalOtherExpenses - oldSkuData.otherExpenses + newSkuData.otherExpenses;
   totals.totalOtherExpenses = truncateNum(recalculatedTotalOtherExpenses);
 
-  if (isCrossYearReport) {
+  if (totals.isCrossYearReport) {
     var recalculatedTotalPreTaxProfitInCurrentYear =
       totals.totalPreTaxProfitInCurrentYear - oldSkuData.preTaxProfitInCurrentYear + newSkuData.preTaxProfitInCurrentYear;
     totals.totalPreTaxProfitInCurrentYear = truncateNum(recalculatedTotalPreTaxProfitInCurrentYear);
