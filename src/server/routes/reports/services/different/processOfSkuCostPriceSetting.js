@@ -50,6 +50,8 @@ var processOfSkuCostPriceSetting = async (sku, skuFromListGoods, taxParams, isCr
 
     var updatedSku = skuWithCalculatedParamsOfEndYear;
 
+    updatedSku.preTaxProfit = skuWithCalculatedParamsOfStartYear.preTaxProfitInCurrentYear + skuWithCalculatedParamsOfEndYear.preTaxProfitInNextYear;
+
     updatedSku.finalProfit = skuWithCalculatedParamsOfStartYear.finalProfitInCurrentYear + skuWithCalculatedParamsOfEndYear.finalProfitInNextYear;
 
     updatedSku.insuranceFee = skuWithCalculatedParamsOfStartYear.insuranceFeeInCurrentYear + skuWithCalculatedParamsOfEndYear.insuranceFeeInNextYear;

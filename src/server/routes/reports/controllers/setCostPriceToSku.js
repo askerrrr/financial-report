@@ -56,7 +56,7 @@ var setCostPriceToSku = async (req, res, next) => {
 
         var taxParams = { startYearTaxParams, endYearTaxParams };
 
-        var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, report.crossesTaxYears);
+        var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, report.crossesTaxYears, prevSkuData);
         skus[skuIndex] = result.updatedSku;
 
         var { startYearTaxParams, endYearTaxParams } = result.taxParams;
@@ -64,7 +64,7 @@ var setCostPriceToSku = async (req, res, next) => {
         await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
       } else {
         var taxParams = allTaxParams.find((param) => param.year === year);
-        var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams);
+        var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, null, prevSkuData);
 
         skus[skuIndex] = result.updatedSku;
         await changeTaxParamsToDb(userId, session, result.taxParams);
