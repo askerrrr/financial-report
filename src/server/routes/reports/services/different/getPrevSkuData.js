@@ -1,0 +1,29 @@
+var getPrevSkuData = (sku, isCrossYearReport) => {
+  var prevSkuData = {};
+
+  prevSkuData.costPrice = sku.costPrice;
+
+  prevSkuData.qty = sku.qty;
+  prevSkuData.finalProfit = sku.finalProfit;
+  prevSkuData.preTaxProfit = sku.preTaxProfit;
+  prevSkuData.insuranceFee = sku.insuranceFee;
+  prevSkuData.otherExpenses = sku.otherExpenses;
+
+  if (isCrossYearReport) {
+    prevSkuData.qtyInCurrentYear = sku.qtyInCurrentYear;
+    prevSkuData.finalProfitInCurrentYear = sku.finalProfitInCurrentYear;
+    prevSkuData.preTaxProfitInCurrentYear = sku.preTaxProfitInCurrentYear;
+    prevSkuData.insuranceFeeInCurrentYear = sku.insuranceFeeInCurrentYear;
+    prevSkuData.otherExpensesInCurrentYear = sku.otherExpensesInCurrentYear;
+
+    prevSkuData.qtyInNextYear = sku.qtyInNextYear;
+    prevSkuData.finalProfitInNextYear = sku.finalProfitInNextYear;
+    prevSkuData.preTaxProfitInNextYear = sku.preTaxProfitInNextYear;
+    prevSkuData.otherExpensesInNextYear = sku.otherExpensesInNextYear;
+    prevSkuData.insuranceFeeInNextYear = sku.insuranceFeeInNextYear;
+  }
+
+  return prevSkuData;
+};
+
+export default getPrevSkuData;
