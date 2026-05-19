@@ -26,7 +26,6 @@ var costPriceModal = (skuData, costPriceTdElement, isGuestAccess) => {
   var saveCb = async () => {
     document.body.removeChild(modal);
 
-    costPriceTdElement.textContent = costPriceInput.value;
     skuData.costPrice = +costPriceInput.value;
 
     if (isGuestAccess) {
@@ -35,6 +34,12 @@ var costPriceModal = (skuData, costPriceTdElement, isGuestAccess) => {
     }
 
     var data = await sendChangedData(skuData, isGuestAccess, "setcostprice");
+
+    if (!data) {
+      return;
+    }
+
+    costPriceTdElement.textContent = costPriceInput.value;
 
     updateSKUsTableFields(data.sku);
     updateTotalsTableFields(data.totals);
