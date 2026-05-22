@@ -20,16 +20,21 @@ var otherExpensesModal = (skuData, tdElement, isGuestAccess) => {
   var saveButtonTextContent = "Сохранить";
   var event = "click";
   var cb = async () => {
-    tdElement.textContent = otherExpensesInput.value;
     skuData.otherExpenses = +otherExpensesInput.value;
 
     document.body.removeChild(modal);
 
-    var { total, sku } = await sendChangedData(skuData, isGuestAccess, "setotherexpenses");
+    var data = await sendChangedData(skuData, isGuestAccess, "setotherexpenses");
 
-    await updateSKUsTableFields(sku);
+    if (!data) {
+      return;
+    }
 
-    await updateTotalsTableFields(total);
+    tdElement.textContent = otherExpensesInput.value;
+    console.log(data);
+    updateSKUsTableFields(data.sku);
+
+    updateTotalsTableFields(data.totals);
   };
   var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb });
 

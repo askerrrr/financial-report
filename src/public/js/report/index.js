@@ -37,12 +37,11 @@ var main = async () => {
   createTotalsTable(report);
   injectBase64IntoImgTags(skuImages);
 
-  deleteReportHandler(userId, reportId);
   downloadReportAsXLSXButtonHandler(report);
+  deleteReportHandler(userId, reportId, skusLastCostPrice);
 
   financialAccountingStatusButtonHander(reportId);
   setSkusLastCostPricesButtonHandler(reportId, recordTo.year, skusLastCostPrice);
-
 };
 
 main();

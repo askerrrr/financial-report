@@ -2,7 +2,11 @@ import Joi from "joi";
 import calc from "../services/calcServices/index.js";
 import { dbClient } from "../../../database/index.js";
 import dbUtils from "../../../database/collections/index.js";
+import getPrevSkuData from "../services/different/getPrevSkuData.js";
+import getPrevTotalsData from "../services/different/getPrevTotalsData.js";
+import recalculateTaxParams from "../services/different/recalculateTaxParams.js";
 import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
+import excludeEqualParams from "../services/different/excludeEqualParams.js";
 
 var costPricesItemSchema = Joi.object({ id: Joi.number().required(), skuName: Joi.string().required(), lastCostPrice: Joi.number().required() });
 var schema = Joi.object({
@@ -12,6 +16,9 @@ var schema = Joi.object({
   costPrices: Joi.array().items(costPricesItemSchema).required(),
 });
 
+var currentYearPostfix = "InCurrentYear";
+var endYearPostfix = "InNextYear";
+
 var setCostPriceToSkus = async (req, res, next) => {
   var { error } = schema.validate(req.body);
 
@@ -19,66 +26,100 @@ var setCostPriceToSkus = async (req, res, next) => {
     return res.sendStatus(400);
   }
 
+  if (!req.body.costPrices.length) {
+    return res.sendStatus(304);
+  }
+
   var { userId, reportId, taxYear, costPrices } = req.body;
+
   var { saveUpdatedReport, getReportById } = dbUtils.reportCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
   var { getListGoodsFromDb, saveUpdatedSkuMetrics } = dbUtils.goodsCollectionServices;
 
-  if (!costPrices.length) {
-    return res.sendStatus(304);
-  }
-
+  var prevSkuData;
+  var prevReportTotals;
   var skusDataToClient = [];
+  var skuMetricsToUpdate = [];
+  var skuNames = costPrices.map(({ skuName }) => skuName);
+
   var session = await dbClient.startSession();
 
   try {
     await session.withTransaction(async () => {
       var taxParams = {};
       var { report } = await getReportById(userId, reportId);
-      var { listGoods } = await getListGoodsFromDb(userId, session);
+      var { listGoods } = await getListGoodsFromDb(userId, skuNames, session);
       var { skus, ...totalParams } = report;
 
-      if (report.crossesTaxYears) {
-        var startYear = +report.dateFrom.split("-")[0];
-        var endYear = +report.dateTo.split("-")[0];
-        var allTaxParams = await getTaxParamsFromDb(userId, null, session);
-        taxParams.startYearTaxParams = allTaxParams.find((param) => param.year == startYear);
-        taxParams.endYearTaxParams = allTaxParams.find((param) => param.year == endYear);
-      } else {
-        taxParams = await getTaxParamsFromDb(userId, taxYear, session);
-      }
+      var allTaxParams = await getTaxParamsFromDb(userId, null, session);
+      var startYear = +report.dateFrom.split("-")[0];
+      var endYear = +report.dateTo.split("-")[0];
+      var startYearTaxParams = allTaxParams.find((param) => param.year === startYear);
+      var endYearTaxParams = allTaxParams.find((param) => param.year === endYear);
+      var crossYearTaxParams = { startYearTaxParams, endYearTaxParams };
+      var taxParamsOfYear = allTaxParams.find((param) => param.year === taxYear);
 
       for (var { id, skuName, lastCostPrice } of costPrices) {
         var skuIndex = skus.findIndex((sku) => sku.id === id && sku.skuName === skuName);
 
-        if (skus[skuIndex].costPrice === lastCostPrice) {
-          continue;
+        if (skus[skuIndex].costPrice !== lastCostPrice) {
+          prevSkuData = getPrevSkuData(skus[skuIndex]);
+          prevReportTotals = getPrevTotalsData(totalParams);
+          var skuFromListGoods = listGoods.find((sku) => sku.id === id && sku.skuName === skuName);
+          console.log({ prevSkuData });
+
+          skus[skuIndex].costPrice = lastCostPrice;
+
+          if (report.crossesTaxYears) {
+            var result = await processOfSkuCostPriceSetting(
+              skus[skuIndex],
+              skuFromListGoods,
+              crossYearTaxParams,
+              report.crossesTaxYears,
+              prevSkuData,
+            );
+            skus[skuIndex] = result.updatedSku;
+
+            totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.crossesTaxYears).updatedTotals;
+
+            crossYearTaxParams = result.taxParams;
+            crossYearTaxParams.startYearTaxParams = recalculateTaxParams(
+              crossYearTaxParams.startYearTaxParams,
+              prevReportTotals,
+              totalParams,
+              currentYearPostfix,
+            ).recalculatedTaxParams;
+
+            crossYearTaxParams.endYearTaxParams = recalculateTaxParams(
+              crossYearTaxParams.endYearTaxParams,
+              prevReportTotals,
+              totalParams,
+              endYearPostfix,
+            ).recalculatedTaxParams;
+
+            skuMetricsToUpdate.push(result.updatedSkuMetrics);
+
+            // await saveUpdatedSkuMetrics(userId, id, result.updatedSkuMetrics, session);
+
+            var { startYearTaxParams, endYearTaxParams } = taxParams;
+          } else {
+            var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParamsOfYear, report.crossesTaxYears);
+            skus[skuIndex] = result.updatedSku;
+
+            totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex]).updatedTotals;
+            taxParamsOfYear = recalculateTaxParams(result.taxParams, prevReportTotals, totalParams).recalculatedTaxParams;
+
+            skuMetricsToUpdate.push(result.updatedSkuMetrics);
+            // await saveUpdatedSkuMetrics(userId, id, result.updatedSkuMetrics, session);
+          }
+
+          var changedSkuData = excludeEqualParams(prevSkuData, skus[skuIndex]);
+
+          skusDataToClient.push({
+            skuIndex,
+            data: { lastCostPrice, ...changedSkuData },
+          });
         }
-
-        skus[skuIndex].costPrice = lastCostPrice;
-        skus[skuIndex].isCostPriceSet = true;
-        var skuFromListGoods = listGoods.find((sku) => sku.id === id && sku.skuName === skuName);
-
-        if (report.crossesTaxYears) {
-          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, report.crossesTaxYears);
-
-          skus[skuIndex] = result.updatedSku;
-          taxParams = result.taxParams;
-
-          await saveUpdatedSkuMetrics(userId, id, result.updatedSkuMetrics, session);
-        } else {
-          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, report.crossesTaxYears);
-          skus[skuIndex] = result.updatedSku;
-          taxParams = result.taxParams;
-          await saveUpdatedSkuMetrics(userId, id, result.updatedSkuMetrics, session);
-        }
-
-        var { profitMargin, finalProfit } = skus[skuIndex];
-
-        skusDataToClient.push({
-          skuIndex,
-          data: { profitMargin, finalProfit, costprice: lastCostPrice },
-        });
       }
 
       if (!skusDataToClient.length) {
@@ -86,19 +127,19 @@ var setCostPriceToSkus = async (req, res, next) => {
       }
 
       if (report.crossesTaxYears) {
-        var { startYearTaxParams, endYearTaxParams } = taxParams;
-        await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
+        var { startYearTaxParams, endYearTaxParams } = crossYearTaxParams;
+        // await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
       } else {
-        await changeTaxParamsToDb(userId, session, taxParams);
+        // await changeTaxParamsToDb(userId, session, taxParamsOfYear);
       }
 
-      var updatedReport = await calc.total.oldTotalRestParams(totalParams, skus, report.crossesTaxYears);
+      // await saveUpdatedReport(userId, reportId, { skus, ...totalParams }, session);
 
-      await saveUpdatedReport(userId, reportId, updatedReport, session);
+      var changedTotalsData = excludeEqualParams(prevReportTotals, totalParams);
 
       res.json({
         skusDataToClient,
-        totals: { totalFinalProfit: totalParams.totalFinalProfit, totalProfitMargin: totalParams.totalProfitMargin },
+        totals: { ...changedTotalsData },
       });
     });
   } catch (e) {
