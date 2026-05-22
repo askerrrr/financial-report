@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { dbClient } from "../../../database/index.js";
-import dbUtils from '../../../database/collections/index.js'
+import dbUtils from "../../../database/collections/index.js";
 import getTaxParamKeyName from "../services/getTaxParamKeyName.js";
 import defaultTaxParams from "../../../database/defaultTaxParams.js";
 import recalculateReportsWithNewTaxRate from "../services/recalculateReportsWithNewTaxRate.js";
@@ -27,6 +27,7 @@ var oldTaxParamsObjectSchema = Joi.object({
   mandatoryInsuranceFeeIsPaid: Joi.boolean(),
   additionalInsuranceFeeIsPaid: Joi.boolean(),
   excessInsuranceRate: Joi.number(),
+  otherExpenses: Joi.number().required(),
   schemaVersion: Joi.number(),
   taxableAmount: Joi.number().required(),
 });
