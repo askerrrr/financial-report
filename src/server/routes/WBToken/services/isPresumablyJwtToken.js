@@ -1,3 +1,5 @@
+var numberOfTokenParts = 3;
+
 var isPresumablyJwtToken = (token) => {
   if (typeof token !== "string") {
     return;
