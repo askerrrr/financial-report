@@ -2,7 +2,7 @@ import calc from "../../reports/services/calcServices/index.js";
 
 var recalculateReportsTaxRate = async (newTaxRate, year, reports) => {
   for (var report of reports) {
-    if (report.recordTo.year == year) {
+    if (report.recordedTo.year == year) {
       report.taxRate = newTaxRate;
 
       report.skus.map(async (sku) => {

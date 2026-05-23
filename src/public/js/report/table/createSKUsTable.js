@@ -9,7 +9,7 @@ var table = document.getElementById("skus-table");
 var createSKUsTable = (report) => {
   var tbody = document.getElementById("skus-tbody");
 
-  var { reportId, recordTo, skus, userId } = report;
+  var { reportId, recordedTo, skus, userId } = report;
 
   for (var sku of skus) {
     var tr = document.createElement("tr");
@@ -19,7 +19,7 @@ var createSKUsTable = (report) => {
       reportId,
       skuIndex,
       skuId: sku.id,
-      year: recordTo.year,
+      year: recordedTo.year,
       skuName: sku.skuName,
       costPrice: sku.costPrice,
       otherExpenses: sku.otherExpenses,

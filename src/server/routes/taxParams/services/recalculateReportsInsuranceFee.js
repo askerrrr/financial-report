@@ -6,7 +6,7 @@ var recalculateReportsInsuranceFee = async (year, reports, newPercent, taxParams
   var recalculatedPaidInsuranceFee = 0;
 
   for (var i = reports.length - 1; i >= 0; i--) {
-    if (reports[i].recordTo.year == year) {
+    if (reports[i].recordedTo.year == year) {
       await Promise.all(
         reports[i].skus.map(async (sku) => {
           if (sku.isCostPriceSet) {

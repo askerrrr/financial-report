@@ -5,7 +5,7 @@ import addNewSkusToListGoods from "./addNewSkusToListGoods.js";
 import dbutils from "../../../../database/collections/index.js";
 import insertReportToReportTree from "../reportTreeBuilder/index.js";
 import updateListGoodsMetrics from "../different/updateListGoodsMetrics.js";
-import { recordToSchemaVersion, reportSchemaVersion } from "../../../../database/migration/schemaVersioning/reportsCollection.js";
+import { recordedToSchemaVersion, reportSchemaVersion } from "../../../../database/migration/schemaVersioning/reportsCollection.js";
 
 var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var { saveReportToDb } = dbutils.reportCollectionServices;
@@ -48,7 +48,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   report.reportId = reportId;
   report.crossesTaxYears = isCrossYearReport;
   report.schemaVersion = reportSchemaVersion;
-  report.recordTo = { year, month, schemaVersion: recordToSchemaVersion };
+  report.recordedTo = { year, month, schemaVersion: recordedToSchemaVersion };
 
   var { listGoods } = await getListGoodsFromDb(userId, session);
   var { listGoodsWithNewSkus } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearReport, startYear, endYear);

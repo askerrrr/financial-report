@@ -41,7 +41,7 @@ var changeTaxParams = async (req, res, next) => {
             return report;
           }
         } else {
-          if (report.recordTo.year === year) {
+          if (report.recordedTo.year === year) {
             return report;
           }
         }

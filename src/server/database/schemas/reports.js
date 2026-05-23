@@ -91,7 +91,7 @@ var skuSchema = new Schema(
   { _id: false },
 );
 
-var recordToSchema = new Schema({ year: { type: Number, required: true }, month: stringOptions, schemaVersion: { type: Number } }, { _id: false });
+var recordedToSchema = new Schema({ year: { type: Number, required: true }, month: stringOptions, schemaVersion: { type: Number } }, { _id: false });
 
 var reportSchema = new Schema(
   {
@@ -126,7 +126,7 @@ var reportSchema = new Schema(
     totalProfitMargin: numberOptions,
     taxRate: { type: Number, default: 6 },
     nextYearTaxRate: nonRequiredNumberOptions,
-    recordTo: { type: recordToSchema, requred: true },
+    recordedTo: { type: recordedToSchema, requred: true },
     schemaVersion: { type: Number },
     buybackReportIsExist: { type: Boolean, default: false },
     crossesTaxYears: { type: Boolean, default: false },

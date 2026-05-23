@@ -31,7 +31,7 @@ var deleteReport = async (req, res, next) => {
       var taxParams = await getTaxParamsFromDb(userId, null, session);
 
       var reportBeforeDeletion = await deleteReportFromDb(userId, reportId, session); // a(); //
-      var { year, month } = reportBeforeDeletion.recordTo;
+      var { year, month } = reportBeforeDeletion.recordedTo;
       var startYear = +reportBeforeDeletion.dateFrom.split("-")[0];
       var endYear = +reportBeforeDeletion.dateTo.split("-")[0];
 
