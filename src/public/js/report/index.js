@@ -30,7 +30,7 @@ var getReportData = async () => {
 
 var main = async () => {
   var { report, skuImages, skusLastCostPrice } = await getReportData();
-  var { reportId, recordedTo } = report;
+  var { reportId, recordedTo, skus } = report;
 
   reportInfo(report);
   createSKUsTable(report);
@@ -38,7 +38,7 @@ var main = async () => {
   injectBase64IntoImgTags(skuImages);
 
   downloadReportAsXLSXButtonHandler(report);
-  deleteReportHandler(userId, reportId, skusLastCostPrice);
+  deleteReportHandler(userId, reportId, skus);
 
   financialAccountingStatusButtonHander(reportId);
   setSkusLastCostPricesButtonHandler(reportId, recordedTo.year, skusLastCostPrice);

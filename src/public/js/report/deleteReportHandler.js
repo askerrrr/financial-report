@@ -10,14 +10,14 @@ var sendDeletionRequest = async (userId, reportId, skuNames) => {
   return res.ok;
 };
 
-var deleteReportHandler = (userId, reportId, skusLastCostPrice) =>
+var deleteReportHandler = (userId, reportId, skus) =>
   button.addEventListener("click", async (e) => {
     e.preventDefault();
 
     var confirmed = confirm("Удалить отчет?");
 
     if (confirmed) {
-      var skuNames = skusLastCostPrice.map(({ skuName }) => skuName);
+      var skuNames = skus.map(({ skuName }) => skuName);
       var success = await sendDeletionRequest(userId, reportId, skuNames);
 
       if (success) {
