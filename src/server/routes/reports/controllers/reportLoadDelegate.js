@@ -1,23 +1,8 @@
-import Joi from "joi";
-import dbUtils from '../../../database/collections/index.js'
+import dbUtils from "../../../database/collections/index.js";
 import shouldWaitBeforeNextRequest from "../services/different/shouldWaitBeforeNextRequest.js";
 import sendReportPeriodsToReportLoader from "../services/different/sendReportPeriodsToReportLoader.js";
 
-var schema = Joi.object({
-  userId: Joi.string().required(),
-  dateFrom: Joi.string().allow("").required(),
-  dateTo: Joi.string().allow("").required(),
-  uploadAllReports: Joi.boolean().required(),
-  isPeriodWithinSameWeek: Joi.boolean().required(),
-});
-
 var reportLoadDelegate = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
   var { uploadAllReports } = req.body;
   var { getReportLoadingState } = dbUtils.reportLoadingStatesCollectionServices;
 
