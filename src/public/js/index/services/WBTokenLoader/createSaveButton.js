@@ -1,5 +1,4 @@
 import sendWBAuthToken from "./sendToken.js";
-import checkToken from "../../../decodeReportWithoutRegistration/checkToken.js";
 
 var createSaveButton = (input, modal) => {
   var saveButton = document.createElement("button");
@@ -12,11 +11,11 @@ var createSaveButton = (input, modal) => {
     }
 
     var token = input.value;
-    var { token } = await checkToken(token);
     var success = await sendWBAuthToken(token);
 
     if (!success) {
       input.value = "";
+      alert("Некорректный токен");
       return;
     }
 

@@ -1,7 +1,7 @@
-import checkToken from "./checkToken.js";
 import showReport from "./showReport.js";
 import checkTaxRate from "./checkTaxRate.js";
 import sendReportData from "./sendReportData.js";
+import sendTokenForValidation from "./sendTokenForValidation.js";
 import writeReportToLocalStorage from "./writeReportToLocalStorage.js";
 import checkDateTo from "../index/services/reportLoader/services/checkDateTo.js";
 import checkDateFrom from "../index/services/reportLoader/services/checkDateFrom.js";
@@ -20,7 +20,13 @@ var main = async () => {
         var dateTo = document.getElementById("dateTo").value;
         var taxRate = +document.getElementById("tax-rate").value || 0;
 
-        var { token } = await checkToken(token);
+        var tokenIsValid = await sendTokenForValidation(token);
+
+        if (!tokenIsValid) {
+          alert("Некорректный токен");
+          return;
+        }
+
         var { validDateFrom } = await checkDateFrom(dateFrom);
         var { validDateTo } = await checkDateTo(dateTo, validDateFrom);
         var { taxRate } = await checkTaxRate(taxRate);
