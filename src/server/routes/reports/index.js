@@ -1,6 +1,8 @@
 import multer from "multer";
 import { Router } from "express";
+import schemas from "./JoiSchemas/index.js";
 import fileFilter from "./services/fileFilter/index.js";
+import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
 
 import getReport from "./controllers/getReport.js";
 import deleteImage from "./controllers/deleteImage.js";
@@ -27,7 +29,7 @@ var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/:id", getReportPage);
 router.get("/:userId/:reportId", getReport);
-router.post("/", reportLoadDelegate, checkReportExists, checkReportsLoadingProgress, saveReports);
+router.post("/", joiSchemaValidator(schemas.saveReports), reportLoadDelegate, checkReportExists, checkReportsLoadingProgress, saveReports);
 router.delete("/", deleteReport);
 
 router.post("/as-zip/", downloadReportsAsZip);
