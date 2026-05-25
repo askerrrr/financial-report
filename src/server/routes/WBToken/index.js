@@ -1,4 +1,5 @@
 import { Router } from "express";
+import schema from "./joiSchemas/index.js";
 import saveToken from "./controllers/saveToken.js";
 import removeToken from "./controllers/removeToken.js";
 import tokenValidator from "./controllers/tokenValidator.js";
@@ -9,6 +10,6 @@ var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/:userId", checkTokenExists);
 router.post("/", tokenValidator, saveToken);
-router.delete("/", removeToken);
+router.delete("/", joiSchemaValidator(schema.removeToken), removeToken);
 
 export default router;
