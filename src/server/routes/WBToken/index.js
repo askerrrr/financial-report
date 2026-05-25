@@ -3,6 +3,7 @@ import saveToken from "./controllers/saveToken.js";
 import removeToken from "./controllers/removeToken.js";
 import tokenValidator from "./controllers/tokenValidator.js";
 import checkTokenExists from "./controllers/checkTokenExists.js";
+import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
 
 var router = Router({ caseSensitive: true, strict: true });
 
