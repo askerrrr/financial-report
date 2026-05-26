@@ -1,5 +1,5 @@
 var userId = document.cookie.split("=")[1];
-var url = "/wbtoken/" + userId;
+var url = "/wbtoken/check-exist/" + userId;
 
 var checkWBTokenExists = async () => {
   try {

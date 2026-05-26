@@ -10,8 +10,8 @@ import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
 var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/", getWbTokenPage);
-router.get("/:userId", checkTokenExists);
 router.post("/", tokenValidator, saveToken);
+router.get("/check-exist/:userId", checkTokenExists);
 router.delete("/", joiSchemaValidator(schema.removeToken), removeToken);
 
 export default router;
