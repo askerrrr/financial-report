@@ -22,7 +22,7 @@ var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/", getListGoodsPage);
 router.get("/listgoodsonly/:userId", getListGoods);
-router.get("/metrics/download", getSkusMetricsFile);
+router.get("/metrics/download/:userId", getSkusMetricsFile);
 router.get("/api/:userId", getListGoodsAndWeeklyPrices);
 router.get("/prices-discounts/file/:userId", getWeeklyPricesFile);
 

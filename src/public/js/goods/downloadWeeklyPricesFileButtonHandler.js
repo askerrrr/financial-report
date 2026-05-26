@@ -1,7 +1,7 @@
-var userId = document.cookie.split("=")[1];
+var downloadWeeklyPricesFileButton = document.getElementById("download-weekly-prices-file");
 
-var downloadWeeklyPricesFileButtonHandler = async () => {
-  document.getElementById("download-weekly-prices-file").addEventListener("click", async (e) => {
+var downloadWeeklyPricesFileButtonHandler = (userId) => {
+  downloadWeeklyPricesFileButton.addEventListener("click", async (e) => {
     var url = "/goods/prices-discounts/file/" + userId;
 
     var res = await fetch(url);

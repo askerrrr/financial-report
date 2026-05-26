@@ -1,5 +1,3 @@
-var userId = document.cookie.split("=")[1];
-
 var sendUploadFile = async (file) => {
   var url = "/goods/prices-discounts/upload/";
 
@@ -19,16 +17,17 @@ var sendUploadFile = async (file) => {
   return { weeklyPricesAndDiscounts };
 };
 
-var fileUploadHandler = async () => {
-  var button = document.getElementById("upload-weekly-prices-and-discounts-file");
-  var input = document.getElementById("input-field");
+var input = document.getElementById("input-field");
+var button = document.getElementById("upload-weekly-prices-and-discounts-file");
 
-  button.onclick = async (e) => {
+var fileUploadHandler = (userId) => {
+  button.onclick = (e) => {
     e.preventDefault();
     input.click();
 
     input.onchange = async () => {
       var uploadFormData = new FormData();
+
       if (input.files.length > 1) {
         alert("Одновременно можно загрузить не больше 1 файла");
         return;
@@ -36,6 +35,7 @@ var fileUploadHandler = async () => {
 
       uploadFormData.append("userId", userId);
       uploadFormData.append("file", input.files[0]);
+
       await sendUploadFile(uploadFormData);
     };
   };
