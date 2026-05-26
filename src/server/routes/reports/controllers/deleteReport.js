@@ -1,22 +1,12 @@
-import Joi from "joi";
 import { dbClient } from "../../../database/index.js";
 import dbUtils from "../../../database/collections/index.js";
 import recalculateTaxParamsAfterReportDeletion from "../services/different/recalculateTaxParamsAfterReportDeletion.js";
 import recalculateSkuMetricsAfterReportDeletion from "../services/different/recalculateSkuMetricsAfterReportDeletion.js";
 
-var skuNamesSchema = Joi.array().items(Joi.string().required());
-var schema = Joi.object({ userId: Joi.string().required(), reportId: Joi.number().required(), skuNames: skuNamesSchema });
-
 var currentYearPropPostfix = "InCurrentYear";
 var nextYearPropPostfix = "InNextYear";
 
 var deleteReport = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
   var { userId, reportId, skuNames } = req.body;
 
   var { deleteReportFromDb } = dbUtils.reportCollectionServices;
@@ -30,7 +20,7 @@ var deleteReport = async (req, res, next) => {
       var { listGoods } = await getListGoodsFromDb(userId, skuNames, session);
       var taxParams = await getTaxParamsFromDb(userId, null, session);
 
-      var reportBeforeDeletion = await deleteReportFromDb(userId, reportId, session); // a(); //
+      var reportBeforeDeletion = await deleteReportFromDb(userId, reportId, session);
       var { year, month } = reportBeforeDeletion.recordedTo;
       var startYear = +reportBeforeDeletion.dateFrom.split("-")[0];
       var endYear = +reportBeforeDeletion.dateTo.split("-")[0];

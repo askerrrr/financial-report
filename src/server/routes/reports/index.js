@@ -30,7 +30,7 @@ var router = Router({ caseSensitive: true, strict: true });
 router.get("/:id", getReportPage);
 router.get("/:userId/:reportId", getReport);
 router.post("/", joiSchemaValidator(schemas.saveReports), reportLoadDelegate, checkReportExists, checkReportsLoadingProgress, saveReports);
-router.delete("/", deleteReport);
+router.delete("/", joiSchemaValidator(schemas.deleteReport), deleteReport);
 
 router.post("/as-zip/", downloadReportsAsZip);
 router.post("/as-xlsx/", downloadReportAsXLSX);
