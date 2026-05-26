@@ -1,16 +1,7 @@
-import Joi from "joi";
 import listGoodsLoader from "../services/listGoodsLoader.js";
 import dbUtils from "../../../database/collections/index.js";
 
-var schema = Joi.object({ userId: Joi.string().required() });
-
 var loadListGoods = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
   var { userId } = req.body;
   var { saveListGoodsToDb } = dbUtils.goodsCollectionServices;
   var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;

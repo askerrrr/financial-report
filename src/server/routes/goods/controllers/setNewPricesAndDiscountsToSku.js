@@ -1,17 +1,5 @@
-import Joi from "joi";
 import wbapi from "../../reports/services/WBAPI/index.js";
 import dbUtils from "../../../database/collections/index.js";
-
-var checkedWeekDaysArraySchema = Joi.array().items(Joi.number().required()).required();
-var skuObjectSchema = Joi.object({ nmID: Joi.number().required(), price: Joi.number().required(), discount: Joi.number().required() });
-
-var schema = Joi.object({
-  sku: skuObjectSchema,
-  userId: Joi.string().required(),
-  setNewPriceNow: Joi.boolean().required(),
-  expectedPriceExists: Joi.boolean().required(),
-  checkedWeekDays: checkedWeekDaysArraySchema,
-});
 
 var setNewPricesAndDiscountsToSku = async (req, res, next) => {
   var { error } = schema.validate(req.body);
