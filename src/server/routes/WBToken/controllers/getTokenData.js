@@ -1,5 +1,5 @@
 import parseJwt from "../services/parseJwt.js";
-import getWBTokenByUserId from "../../../database/collections/tokens/services/getWBTokenByUserId.js";
+import tokenCollectionServices from "../../../database/collections/tokens/index.js";
 
 var millisecondsInOneSec = 1000;
 var millisecondsInDay = 86_400_000;
@@ -12,7 +12,7 @@ var getTokenData = async (req, res, next) => {
     return res.sendStatus(400);
   }
 
-  var { token } = await getWBTokenByUserId(userId);
+  var { token } = await tokenCollectionServices.getWBTokenByUserId(userId);
 
   if (!token.length) {
     return res.json({ tokenIsExist: false });
