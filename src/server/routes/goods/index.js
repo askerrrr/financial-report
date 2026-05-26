@@ -12,6 +12,9 @@ import getListGoodsAndWeeklyPrices from "./controllers/getListGoodsAndWeeklyPric
 import uploadPricesAndDiscountsFile from "./controllers/uploadPricesAndDiscountsFile.js";
 import changeWeeklyPricesOrDiscounts from "./controllers/changeWeeklyPricesOrDiscounts.js";
 
+import schemas from "./JoiSchemas/index.js";
+import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
+
 var storage = multer.memoryStorage();
 var upload = multer({ storage, fileFilter });
 
@@ -23,9 +26,21 @@ router.get("/metrics/download", getSkusMetricsFile);
 router.get("/api/:userId", getListGoodsAndWeeklyPrices);
 router.get("/prices-discounts/file/:userId", getWeeklyPricesFile);
 
-router.post("/", loadListGoods);
-router.post("/sku-disable-status", changeSkuDisableStatus);
-router.post("/prices-discounts/upload/", upload.single("file"), uploadPricesAndDiscountsFile);
-router.patch("/prices-discounts/", setNewPricesAndDiscountsToSku, changeWeeklyPricesOrDiscounts);
+router.post("/", joiSchemaValidator(schemas.loadListGoods), loadListGoods);
+router.post("/sku-disable-status", joiSchemaValidator(schemas.changeSkuDisableStatus), changeSkuDisableStatus);
+
+router.post(
+  "/prices-discounts/upload/",
+  joiSchemaValidator(schemas.uploadPricesAndDiscountsFile),
+  upload.single("file"),
+  uploadPricesAndDiscountsFile,
+);
+
+router.patch(
+  "/prices-discounts/",
+  joiSchemaValidator(schemas.setNewPricesAndDiscountsToSku),
+  setNewPricesAndDiscountsToSku,
+  changeWeeklyPricesOrDiscounts,
+);
 
 export default router;
