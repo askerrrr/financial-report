@@ -32,7 +32,7 @@ router.get("/:userId/:reportId", getReport);
 router.post("/", joiSchemaValidator(schemas.saveReports), reportLoadDelegate, checkReportExists, checkReportsLoadingProgress, saveReports);
 router.delete("/", joiSchemaValidator(schemas.deleteReport), deleteReport);
 
-router.post("/as-zip/", joiSchemaValidator(schemas.downloadReportAsXLSX), downloadReportsAsZip);
+router.post("/as-zip/", joiSchemaValidator(schemas.downloadReportsAsZip), downloadReportsAsZip);
 router.post("/as-xlsx/", downloadReportAsXLSX);
 
 router.patch("/skus/cost-price", setCostPriceToSku);
