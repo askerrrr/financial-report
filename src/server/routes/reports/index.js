@@ -33,19 +33,19 @@ router.post("/", joiSchemaValidator(schemas.saveReports), reportLoadDelegate, ch
 router.delete("/", joiSchemaValidator(schemas.deleteReport), deleteReport);
 
 router.post("/as-zip/", joiSchemaValidator(schemas.downloadReportsAsZip), downloadReportsAsZip);
-router.post("/as-xlsx/", downloadReportAsXLSX);
+router.post("/as-xlsx/", joiSchemaValidator(schemas.downloadReportAsXLSX), downloadReportAsXLSX);
 
-router.patch("/skus/cost-price", setCostPriceToSku);
-router.patch("/skus/cost-prices", setCostPriceToSkus);
-router.patch("/skus/other-expenses", setOtherExpensesToSku);
+router.patch("/skus/cost-price", joiSchemaValidator(schemas.setCostPriceToSku), setCostPriceToSku);
+router.patch("/skus/cost-prices", joiSchemaValidator(schemas.setCostPriceToSkus), setCostPriceToSkus);
+router.patch("/skus/other-expenses", joiSchemaValidator(schemas.setOtherExpensesToSku), setOtherExpensesToSku);
 
-router.patch("/financial-accounting-status/", changeFinancialAccountingStatus);
+router.patch("/financial-accounting-status/", joiSchemaValidator(schemas.changeFinancialAccountingStatus), changeFinancialAccountingStatus);
 
 router.delete("/delete_all_reports/:userId", deleteAllReports);
 
 router.delete("/delete_all_reporting_periods/:userId", deleteReportsTree);
 
-router.post("/image/", upload.single("sku-photo"), skuPhotoUpload);
-router.delete("/image/", deleteImage);
+router.post("/image/", joiSchemaValidator(schemas.skuPhotoUpload), upload.single("sku-photo"), skuPhotoUpload);
+router.delete("/image/", joiSchemaValidator(schemas.deleteImage), deleteImage);
 
 export default router;

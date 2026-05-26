@@ -1,4 +1,3 @@
-import Joi from "joi";
 import calc from "../services/calcServices/index.js";
 import { dbClient } from "../../../database/index.js";
 import dbUtils from "../../../database/collections/index.js";
@@ -8,24 +7,10 @@ import recalculateTaxParams from "../services/different/recalculateTaxParams.js"
 import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 import excludeEqualParams from "../services/different/excludeEqualParams.js";
 
-var costPricesItemSchema = Joi.object({ id: Joi.number().required(), skuName: Joi.string().required(), lastCostPrice: Joi.number().required() });
-var schema = Joi.object({
-  userId: Joi.string().required(),
-  reportId: Joi.number().required(),
-  taxYear: Joi.number().required(),
-  costPrices: Joi.array().items(costPricesItemSchema).required(),
-});
-
 var currentYearPostfix = "InCurrentYear";
 var endYearPostfix = "InNextYear";
 
 var setCostPriceToSkus = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
   if (!req.body.costPrices.length) {
     return res.sendStatus(304);
   }
