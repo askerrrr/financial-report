@@ -19,7 +19,7 @@ schema.skuPhotoUpload = skuPhotoUploadSchema;
 schema.setCostPriceToSku = setCostPriceToSkuSchema;
 schema.setCostPriceToSkus = setCostPriceToSkusSchema;
 schema.downloadReportsAsZip = downloadReportsAsZipSchema;
-schema.downloadReportAsXLSXS = downloadReportAsXLSXSchema;
+schema.downloadReportAsXLSX = downloadReportAsXLSXSchema;
 schema.setOtherExpensesToSku = setOtherExpensesToSkuSchema;
 schema.changeFinancialAccountingStatus = changeFinancialAccountingStatusSchema;
 
