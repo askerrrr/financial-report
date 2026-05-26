@@ -9,7 +9,7 @@ var tokenValidator = async (req, res, next) => {
   }
 
   if (!isPresumablyJwtToken(token)) {
-    return res.sendStatus(400);
+    return res.sendStatus(401);
   }
 
   var currentTimestamp = new Date(Date.now() + 3 * 60 * 60).getTime();
@@ -37,7 +37,7 @@ var tokenValidator = async (req, res, next) => {
   var tokenIsExpired = parsedToken?.exp * 1000 <= currentTimestamp;
 
   if (tokenAuthFailed || tokenIsExpired) {
-    return res.sendStatus(400);
+    return res.sendStatus(401);
   }
 
   next();

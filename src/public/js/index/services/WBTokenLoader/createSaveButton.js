@@ -1,4 +1,4 @@
-import sendWBAuthToken from "./sendToken.js";
+import isPresumablyJwtToken from "./isPresumablyJwtToken.js";
 
 var createSaveButton = (input, modal) => {
   var saveButton = document.createElement("button");
@@ -11,16 +11,46 @@ var createSaveButton = (input, modal) => {
     }
 
     var token = input.value;
-    var success = await sendWBAuthToken(token);
 
-    if (!success) {
-      input.value = "";
-      alert("Некорректный токен");
+    try {
+      if (!isPresumablyJwtToken(token)) {
+        alert("Токен не валиден");
+        input.value = "";
+        return;
+      }
+
+      var res = await fetch("/wbtoken", {
+        method: "POST",
+        body: JSON.stringify({ token }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (res.status === 200) {
+        modal.remove();
+        setTimeout(() => alert("Токен успешно сохранен"));
+        return;
+      } else if (res.status === 409) {
+        alert("Токен совпадает с предыдущим");
+        input.value = "";
+        return;
+      } else if (res.status === 400) {
+        alert("Неправильный запрос");
+        input.value = "";
+        return;
+      } else if (res.status === 401) {
+        alert("Токен не валиден");
+        input.value = "";
+        return;
+      } else {
+        alert("Произошла ошибка при попытке сохранить токен ...");
+        input.value = "";
+        return;
+      }
+    } catch {
+      alert("Что-то пошло не так ...");
+      modal.remove();
       return;
     }
-
-    modal.remove();
-    setTimeout(() => alert("Токен успешно сохранен"));
   };
 
   return saveButton;
