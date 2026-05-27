@@ -1,4 +1,5 @@
 import parseJwt from "../services/parseJwt.js";
+import isTestToken from "../services/isTestToken.js";
 import isPresumablyJwtToken from "../services/isPresumablyJwtToken.js";
 
 var tokenValidator = async (req, res, next) => {
@@ -10,6 +11,12 @@ var tokenValidator = async (req, res, next) => {
 
   if (!isPresumablyJwtToken(token)) {
     return res.sendStatus(401);
+  }
+
+  var parsedToken = parseJwt(token);
+
+  if (isTestToken(parsedToken)) {
+    return res.sendStatus(400);
   }
 
   var currentTimestamp = new Date(Date.now() + 3 * 60 * 60).getTime();
@@ -33,7 +40,6 @@ var tokenValidator = async (req, res, next) => {
     }
   }
 
-  var parsedToken = parseJwt(token);
   var tokenIsExpired = parsedToken?.exp * 1000 <= currentTimestamp;
 
   if (tokenAuthFailed || tokenIsExpired) {
