@@ -40,6 +40,9 @@ var tokenValidator = async (req, res, next) => {
     return res.sendStatus(401);
   }
 
+  req.body.parsedToken = parsedToken;
+
   next();
 };
+
 export default tokenValidator;

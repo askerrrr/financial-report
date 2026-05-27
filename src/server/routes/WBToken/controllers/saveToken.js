@@ -1,22 +1,14 @@
 import Joi from "joi";
-import parseJwt from "../services/parseJwt.js";
 import { dbClient } from "../../../database/index.js";
 import getTokenDetails from "../services/getTokenDetails.js";
 import dbUtils from "../../../database/collections/index.js";
 import listGoodsLoader from "../../goods/services/listGoodsLoader.js";
 import extractNewSkusFromLIstGoods from "../../goods/services/extractNewSkusFromLIstGoods.js";
 
-var schema = Joi.object({ token: Joi.string().required() });
-
 var saveToken = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
-  var { token } = req.body;
+  var { token, parsedToken } = req.body;
   var userId = req.app.locals.userId;
+
   var { getWBTokenByUserId, saveWBTokenToDb } = dbUtils.tokenCollectionServices;
   var { saveListGoodsToDb, getListGoodsFromDb, saveNewSkusToDb } = dbUtils.goodsCollectionServices;
 
@@ -42,7 +34,6 @@ var saveToken = async (req, res, next) => {
         await saveNewSkusToDb(userId, newSkus, session);
       }
 
-      var parsedToken = parseJwt(token);
       var tokenData = getTokenDetails(parsedToken);
 
       res.json(tokenData);
