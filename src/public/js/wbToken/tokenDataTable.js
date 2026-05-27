@@ -4,7 +4,7 @@ var tokenLastusedTdElement = document.getElementById("last-used");
 var tokenValidUntilTdElement = document.getElementById("valid-until");
 var tokenIsExpiredTdElement = document.getElementById("token-is-expired");
 
-var insertDataToTable = (data) => {
+var insertDataToTokenDataTable = (data) => {
   tokenIdTdElement.textContent = data.id;
   tokenDaysLeftTdElement.textContent = data.daysLeft;
   tokenLastusedTdElement.textContent = "-";
@@ -12,4 +12,12 @@ var insertDataToTable = (data) => {
   tokenIsExpiredTdElement.textContent = data.isExpired;
 };
 
-export default insertDataToTable;
+var resetTokenDataTable = () => {
+  tokenIdTdElement.textContent = "";
+  tokenDaysLeftTdElement.textContent = "";
+  tokenLastusedTdElement.textContent = "";
+  tokenValidUntilTdElement.textContent = "";
+  tokenIsExpiredTdElement.textContent = "";
+};
+
+export { insertDataToTokenDataTable, resetTokenDataTable };

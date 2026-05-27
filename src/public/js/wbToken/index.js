@@ -1,5 +1,5 @@
 import getTokenData from "./getTokenData.js";
-import insertDataToTable from "./insertDataToTable.js";
+import { insertDataToTokenDataTable } from "./tokenDataTable.js";
 import { enableTokenDataTable } from "./toggleVisibilityOfTokenDataTable.js";
 import { enableRemoveTokenButton } from "./toggleVisibilityOfRemoveTokenButton.js";
 
@@ -11,7 +11,7 @@ var main = async () => {
   if (tokenData.tokenIsExist) {
     enableTokenDataTable();
     enableRemoveTokenButton();
-    insertDataToTable(tokenData);
+    insertDataToTokenDataTable(tokenData);
   }
 };
 
