@@ -1,11 +1,9 @@
-import parseJwt from "./parseJwt.js";
-
 var millisecondsInOneSec = 1000;
 var millisecondsInDay = 86_400_000;
 var monthList = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
 
 var getTokenDetails = (token) => {
-  var { exp, id } = parseJwt(token);
+  var { exp, id } = token;
 
   var expInMilliseconds = exp * millisecondsInOneSec;
   var currentTimestamp = new Date(Date.now()).getTime();

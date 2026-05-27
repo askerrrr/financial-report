@@ -1,3 +1,4 @@
+import parseJwt from "../services/parseJwt.js";
 import getTokenDetails from "../services/getTokenDetails.js";
 import tokenCollectionServices from "../../../database/collections/tokens/index.js";
 
@@ -14,7 +15,8 @@ var getTokenData = async (req, res, next) => {
     return res.json({ tokenIsExist: false });
   }
 
-  var tokenDetails = getTokenDetails(token);
+  var parsedToken = parseJwt(token);
+  var tokenDetails = getTokenDetails(parsedToken);
 
   return res.json(tokenDetails);
 };

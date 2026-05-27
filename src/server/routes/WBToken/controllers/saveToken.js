@@ -1,4 +1,5 @@
 import Joi from "joi";
+import parseJwt from "../services/parseJwt.js";
 import { dbClient } from "../../../database/index.js";
 import getTokenDetails from "../services/getTokenDetails.js";
 import dbUtils from "../../../database/collections/index.js";
@@ -41,7 +42,8 @@ var saveToken = async (req, res, next) => {
         await saveNewSkusToDb(userId, newSkus, session);
       }
 
-      var tokenData = getTokenDetails(token);
+      var parsedToken = parseJwt(token);
+      var tokenData = getTokenDetails(parsedToken);
 
       res.json(tokenData);
     });
