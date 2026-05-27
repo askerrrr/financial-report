@@ -5,13 +5,13 @@ import createInputField from "../index/services/utils/createInputField.js";
 import createCancelButton from "../index/services/utils/createCancelButton.js";
 import createButtonsContainer from "../index/services/utils/createButtonsContainer.js";
 
-var openTokenLoaderModal = () => {
+var openTokenLoaderModal = (userId) => {
   var input = createInputField("token");
   input.type = "text";
 
   var modal = createModal("modal-overlay");
 
-  var saveButton = createSaveButton(input, modal);
+  var saveButton = createSaveButton(userId, input, modal);
 
   var cancelButton = createCancelButton(modal);
 

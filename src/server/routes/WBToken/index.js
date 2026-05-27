@@ -12,7 +12,7 @@ var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/", getWbTokenPage);
 router.get("/:userId", getTokenData);
-router.post("/", tokenValidator, saveToken);
+router.post("/", joiSchemaValidator(schema.saveToken), tokenValidator, saveToken);
 router.get("/check-exist/:userId", checkTokenExists);
 router.delete("/", joiSchemaValidator(schema.removeToken), removeToken);
 

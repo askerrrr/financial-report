@@ -3,7 +3,7 @@ import { insertDataToTokenDataTable } from "./tokenDataTable.js";
 import { enableTokenDataTable } from "./toggleVisibilityOfTokenDataTable.js";
 import { enableRemoveTokenButton } from "./toggleVisibilityOfRemoveTokenButton.js";
 
-var createSaveButton = (input, modal) => {
+var createSaveButton = (userId, input, modal) => {
   var saveButton = document.createElement("button");
   saveButton.className = "modal-button modal-button-save";
   saveButton.textContent = "Сохранить";
@@ -24,7 +24,7 @@ var createSaveButton = (input, modal) => {
 
       var res = await fetch("/wbtoken", {
         method: "POST",
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ userId, token }),
         headers: { "Content-Type": "application/json" },
       });
 
