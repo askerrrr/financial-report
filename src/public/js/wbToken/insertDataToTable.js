@@ -4,7 +4,7 @@ var tokenLastusedTdElement = document.getElementById("last-used");
 var tokenValidUntilTdElement = document.getElementById("valid-until");
 var tokenIsExpiredTdElement = document.getElementById("token-is-expired");
 
-var inserstDataToTable = (data) => {
+var insertDataToTable = (data) => {
   tokenIdTdElement.textContent = data.id;
   tokenDaysLeftTdElement.textContent = data.daysLeft;
   tokenLastusedTdElement.textContent = "-";
