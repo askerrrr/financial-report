@@ -1,9 +1,5 @@
-import parseJwt from "../services/parseJwt.js";
+import getTokenDetails from "../services/getTokenDetails.js";
 import tokenCollectionServices from "../../../database/collections/tokens/index.js";
-
-var millisecondsInOneSec = 1000;
-var millisecondsInDay = 86_400_000;
-var monthList = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
 
 var getTokenData = async (req, res, next) => {
   var userId = req.params.userId;
@@ -18,40 +14,9 @@ var getTokenData = async (req, res, next) => {
     return res.json({ tokenIsExist: false });
   }
 
-  var { exp, id } = parseJwt(token);
+  var tokenDetails = getTokenDetails(token);
 
-  var expInMilliseconds = exp * millisecondsInOneSec;
-  var currentTimestamp = new Date(Date.now()).getTime();
-  var isExpired = currentTimestamp > expInMilliseconds;
-
-  var daysLeft;
-
-  if (isExpired) {
-    daysLeft = "-";
-  } else {
-    var difference = expInMilliseconds - currentTimestamp;
-    var daysLeft = difference / millisecondsInDay;
-    daysLeft = daysLeft.toString().split(".")[0]; //truncate days 
-  }
-
-  var currentDate = new Date(currentTimestamp).toISOString();
-  var currentDateWithoutHour = currentDate.split("T")[0];
-
-  var dateFromExp = new Date(expInMilliseconds).toISOString();
-  var dateFromExpWithoutHour = dateFromExp.split("T")[0];
-
-  var [year, monthNum, day] = dateFromExpWithoutHour.split("-");
-  var monthIndex = monthNum - 1;
-
-  var validUntil = `${day} ${monthList[monthIndex]} ${year}`;
-
-  var expiredToday = false;
-
-  if (dateFromExpWithoutHour === currentDateWithoutHour) {
-    expiredToday = true;
-  }
-
-  return res.json({ id, daysLeft, validUntil, isExpired, expiredToday, tokenIsExist: true });
+  return res.json(tokenDetails);
 };
 
 export default getTokenData;
