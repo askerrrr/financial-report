@@ -1,5 +1,6 @@
 import getTokenData from "./getTokenData.js";
 import { insertDataToTokenDataTable } from "./tokenDataTable.js";
+import removeTokenButtonHandler from "./removeTokenButtonHandler.js";
 import { enableTokenDataTable } from "./toggleVisibilityOfTokenDataTable.js";
 import { enableRemoveTokenButton } from "./toggleVisibilityOfRemoveTokenButton.js";
 
@@ -16,3 +17,4 @@ var main = async () => {
 };
 
 main();
+removeTokenButtonHandler(userId);
