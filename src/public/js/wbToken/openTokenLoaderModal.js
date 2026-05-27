@@ -1,11 +1,11 @@
 import createSaveButton from "./createSaveButton.js";
-import createTitle from "../../index/services/utils/createTitle.js";
-import createModal from "../../index/services/utils/createModal.js";
-import createInputField from "../../index/services/utils/createInputField.js";
-import createCancelButton from "../../index/services/utils/createCancelButton.js";
-import createButtonsContainer from "../../index/services/utils/createButtonsContainer.js";
+import createTitle from "../index/services/utils/createTitle.js";
+import createModal from "../index/services/utils/createModal.js";
+import createInputField from "../index/services/utils/createInputField.js";
+import createCancelButton from "../index/services/utils/createCancelButton.js";
+import createButtonsContainer from "../index/services/utils/createButtonsContainer.js";
 
-var openWBTokenLoader = () => {
+var openTokenLoaderModal = () => {
   var input = createInputField("token");
   input.type = "text";
 
@@ -31,4 +31,4 @@ var openWBTokenLoader = () => {
   input.focus();
 };
 
-export default openWBTokenLoader;
+export default openTokenLoaderModal;

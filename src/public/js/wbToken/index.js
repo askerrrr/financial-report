@@ -14,9 +14,11 @@ var main = async () => {
     enableTokenDataTable();
     enableRemoveTokenButton();
     insertDataToTokenDataTable(tokenData);
+
+    removeTokenButtonHandler(userId);
   }
+
+  loadTokenButtonHander();
 };
 
 main();
-loadTokenButtonHander();
-removeTokenButtonHandler(userId);

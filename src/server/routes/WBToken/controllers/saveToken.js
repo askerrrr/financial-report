@@ -1,5 +1,6 @@
 import Joi from "joi";
 import { dbClient } from "../../../database/index.js";
+import getTokenDetails from "../services/getTokenDetails.js";
 import dbUtils from "../../../database/collections/index.js";
 import listGoodsLoader from "../../goods/services/listGoodsLoader.js";
 import extractNewSkusFromLIstGoods from "../../goods/services/extractNewSkusFromLIstGoods.js";
@@ -40,7 +41,9 @@ var saveToken = async (req, res, next) => {
         await saveNewSkusToDb(userId, newSkus, session);
       }
 
-      res.sendStatus(200);
+      var tokenData = getTokenDetails(token);
+
+      res.json(tokenData);
     });
   } catch (e) {
     console.log(e);

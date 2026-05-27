@@ -1,4 +1,7 @@
 import isPresumablyJwtToken from "./isPresumablyJwtToken.js";
+import { insertDataToTokenDataTable } from "./tokenDataTable.js";
+import { enableTokenDataTable } from "./toggleVisibilityOfTokenDataTable.js";
+import { enableRemoveTokenButton } from "./toggleVisibilityOfRemoveTokenButton.js";
 
 var createSaveButton = (input, modal) => {
   var saveButton = document.createElement("button");
@@ -27,7 +30,13 @@ var createSaveButton = (input, modal) => {
 
       if (res.status === 200) {
         modal.remove();
+        enableRemoveTokenButton();
         setTimeout(() => alert("Токен успешно сохранен"));
+
+        var data = await res.json();
+        enableTokenDataTable();
+        insertDataToTokenDataTable(data);
+
         return;
       } else if (res.status === 409) {
         alert("Токен совпадает с предыдущим");

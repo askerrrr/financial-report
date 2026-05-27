@@ -1,4 +1,4 @@
-import openTokenLoaderModal from "./tokenLoaderModal/index.js";
+import openTokenLoaderModal from "./openTokenLoaderModal.js";
 
 var loadTokenButton = document.getElementById("token-button");
 
