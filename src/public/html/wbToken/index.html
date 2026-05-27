@@ -6,6 +6,36 @@
     <title>Токен</title>
   </head>
   <body>
+    <div class="token-data">
+      <table hidden>
+        <tbody>
+          <tr>
+            <td>id</td>
+            <td id="token-id">-</td>
+          </tr>
+          <tr>
+            <td>просрочен</td>
+            <td id="token-id">-</td>
+          </tr>
+          <tr>
+            <td>Осталось дней</td>
+            <td id="days-left">-</td>
+          </tr>
+          <tr>
+            <td>Использовался</td>
+            <td id="last-used">-</td>
+          </tr>
+          <tr>
+            <td>Действителен до</td>
+            <td id="valid-until">-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="buttons-container">
+      <button id="token-button">Загрузить токен</button>
+      <button hidden id="remove-token-button">Удалить токен</button>
+    </div>
     <script src="/js/wbToken/index.js" type="module"></script>
   </body>
 </html>
