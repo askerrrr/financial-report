@@ -2,9 +2,11 @@ import { dbClient } from "../../../database/index.js";
 import wbapi from "../../reports/services/WBAPI/index.js";
 import dbUtils from "../../../database/collections/index.js";
 
+var updateLastUsedTimestampNow = true;
+
 var setNewPricesAndDiscountsToSku = async (req, res, next) => {
   var { updateSingleSku } = dbUtils.goodsCollectionServices;
-  var { getWBTokenByUserId, updateLastUsedTimestamp } = dbUtils.tokenCollectionServices;
+  var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
   var { userId, sku, setNewPriceNow, expectedPriceExists } = req.body;
 
   var session = await dbClient.startSession();
@@ -12,11 +14,10 @@ var setNewPricesAndDiscountsToSku = async (req, res, next) => {
   try {
     await session.withTransaction(async () => {});
     if (setNewPriceNow) {
-      var { token } = await getWBTokenByUserId(userId, session);
+      var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
       var data = [{ ...sku }];
 
       await updateSingleSku(userId, sku, session);
-      await updateLastUsedTimestamp(userId, session);
       await wbapi.setPricesAndDiscounts(userId, token, data);
     }
   } catch (e) {
