@@ -9,7 +9,7 @@ var getTokenData = async (req, res, next) => {
     return res.sendStatus(400);
   }
 
-  var { token } = await tokenCollectionServices.getWBTokenByUserId(userId);
+  var { token, lastUsed } = await tokenCollectionServices.getWBTokenByUserId(userId);
 
   if (!token.length) {
     return res.json({ tokenIsExist: false });
@@ -17,6 +17,8 @@ var getTokenData = async (req, res, next) => {
 
   var parsedToken = parseJwt(token);
   var tokenDetails = getTokenDetails(parsedToken);
+
+  tokenDetails.lastUsed = lastUsed;
 
   return res.json(tokenDetails);
 };
