@@ -5,6 +5,8 @@ import dbUtils from "../../../database/collections/index.js";
 import listGoodsLoader from "../../goods/services/listGoodsLoader.js";
 import extractNewSkusFromLIstGoods from "../../goods/services/extractNewSkusFromLIstGoods.js";
 
+var updateLastUsedTimestampNow = true;
+
 var saveToken = async (req, res, next) => {
   var { token, parsedToken } = req.body;
   var userId = req.app.locals.userId;
@@ -16,7 +18,7 @@ var saveToken = async (req, res, next) => {
 
   try {
     await session.withTransaction(async () => {
-      var currentToken = (await getWBTokenByUserId(userId)).token;
+      var currentToken = (await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow)).token;
 
       if (currentToken === token) {
         return res.sendStatus(409);

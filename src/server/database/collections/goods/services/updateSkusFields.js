@@ -31,9 +31,10 @@ var createQuery = (skus) => {
   return { query, arrayFilters };
 };
 
-var updateSkusFields = async (collection, userId, updatedSkus) => {
+var updateSkusFields = async (collection, userId, updatedSkus, session) => {
+  var sessionOpt = session ? { session: session } : {};
   var { query, arrayFilters } = createQuery(updatedSkus);
-  var result = await collection.updateOne({ userId }, { $set: query }, { arrayFilters });
+  var result = await collection.updateOne({ userId }, { $set: query }, { arrayFilters, ...sessionOpt });
 
   return result;
 };

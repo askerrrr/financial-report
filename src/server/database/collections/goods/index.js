@@ -29,7 +29,7 @@ var goodsCollectionServices = {
 
   updateSingleSku: (userId, sku, session) => updateSingleSku(goodsCollection, userId, sku, session),
 
-  updateSkusFields: (userId, updatedSkus) => updateSkusFields(goodsCollection, userId, updatedSkus),
+  updateSkusFields: (userId, updatedSkus, session) => updateSkusFields(goodsCollection, userId, updatedSkus, session),
 
   updateSkuInListGoods: (userId, skuId, skuName, data, session) => updateSkuInListGoods(goodsCollection, userId, skuId, skuName, data, session),
 
@@ -37,7 +37,7 @@ var goodsCollectionServices = {
 
   updateSkuDisableStatusToDb: (userId, skuName, disabled) => updateSkuDisableStatus(goodsCollection, userId, skuName, disabled),
 
-  setPriceUpdateTimestampAndUpdateStatus: (userId, priceData) => setPriceUpdateTimestampAndUpdateStatus(goodsCollection, userId, priceData),
+  setPriceUpdateTimestampAndUpdateStatus: (userId, priceData, session) => setPriceUpdateTimestampAndUpdateStatus(goodsCollection, userId, priceData, session),
 
   saveUpdatedSkuMetrics: (userId, skuId, metrics, session) => saveUpdatedSkuMetrics(goodsCollection, userId, skuId, metrics, session),
 

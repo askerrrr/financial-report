@@ -9,14 +9,15 @@ import insertReportToReportTree from "../reportTreeBuilder/index.js";
 import updateListGoodsMetrics from "../different/updateListGoodsMetrics.js";
 import { recordedToSchemaVersion, reportSchemaVersion } from "../../../../database/migration/schemaVersioning/reportsCollection.js";
 
+var updateLastUsedTimestampNow = true;
 var invalidTokenErrorMsg = "Invalid Token";
 
 var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
-  var { getWBTokenByUserId, updateLastUsedTimestamp } = dbutils.tokenCollectionServices;
+  var { getWBTokenByUserId } = dbutils.tokenCollectionServices;
 
   var currentTimestamp = new Date(Date.now() + 3 * 60 * 60).getTime();
 
-  var { token } = await getWBTokenByUserId(userId, session);
+  var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
 
   var parsedToken = parseJwt(token);
 
@@ -72,7 +73,6 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   await updateReportTree(userId, sortedYears, session);
   await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
   await setLastReportRequestTimestamp(userId, session);
-  await updateLastUsedTimestamp(userId, session);
 
   return { reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount };
 };
