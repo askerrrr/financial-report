@@ -6,7 +6,7 @@ import getWBTokenByUserId from "./services/getWBTokenByUserId.js";
 import updateLastUsedTimestamp from "./services/updateLastUsedTimestamp.js";
 
 var tokenCollectionServices = {
-  getWBTokenByUserId: (userId, session) => getWBTokenByUserId(tokenCollection, userId, session),
+  getWBTokenByUserId: (userId, session, updateLastUsedNow) => getWBTokenByUserId(tokenCollection, userId, session, updateLastUsedNow),
 
   saveWBTokenToDb: (userId, token, session) => saveWBTokenToDb(tokenCollection, userId, token, session),
 
