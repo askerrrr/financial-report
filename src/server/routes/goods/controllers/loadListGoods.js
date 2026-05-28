@@ -5,7 +5,7 @@ import dbUtils from "../../../database/collections/index.js";
 var loadListGoods = async (req, res, next) => {
   var { userId } = req.body;
   var { saveListGoodsToDb } = dbUtils.goodsCollectionServices;
-  var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
+  var { getWBTokenByUserId, updateLastUsedTimestamp } = dbUtils.tokenCollectionServices;
 
   var { token } = await getWBTokenByUserId(userId);
 
@@ -19,6 +19,7 @@ var loadListGoods = async (req, res, next) => {
     await session.withTransaction(async () => {
       var { listGoodsFromWBAPI } = await listGoodsLoader(userId, token);
 
+      await updateLastUsedTimestamp(userId, session);
       await saveListGoodsToDb(userId, listGoodsFromWBAPI, session);
 
       return res.json({ listGoods: listGoodsFromWBAPI });
