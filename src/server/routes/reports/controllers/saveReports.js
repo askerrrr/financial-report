@@ -1,6 +1,8 @@
 import { dbClient } from "../../../database/index.js";
 import reportsProcessing from "../services/different/reportsProcessing.js";
 
+var sessionOptions = {};
+
 var saveReports = async (req, res, next) => {
   var { dateTo, dateFrom, userId } = req.body;
 
