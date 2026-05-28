@@ -10,6 +10,7 @@ var openTokenLoaderModal = (userId) => {
   input.type = "text";
 
   var modal = createModal("modal-overlay");
+  modal.id = "token-modal";
 
   var saveButton = createSaveButton(userId, input, modal);
 
