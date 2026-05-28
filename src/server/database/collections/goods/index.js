@@ -27,7 +27,7 @@ var goodsCollectionServices = {
 
   saveNewSkusToDb: (userId, newSkus, session) => saveNewSkusToDb(goodsCollection, userId, newSkus, session),
 
-  updateSingleSku: (userId, sku) => updateSingleSku(goodsCollection, userId, sku),
+  updateSingleSku: (userId, sku, session) => updateSingleSku(goodsCollection, userId, sku, session),
 
   updateSkusFields: (userId, updatedSkus) => updateSkusFields(goodsCollection, userId, updatedSkus),
 
