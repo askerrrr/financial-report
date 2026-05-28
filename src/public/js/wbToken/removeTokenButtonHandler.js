@@ -22,17 +22,12 @@ var removeTokenButtonHandler = (userId) =>
           disableRemoveTokenButton();
 
           alert("Токен успешно удален");
-          return;
         } else {
           alert("Не удалось удалить токен");
-          return;
         }
       } catch (e) {
         alert("Произошла ошибка при попытке удалить токен...");
-        return;
       }
-
-      return;
     }
   });
 
