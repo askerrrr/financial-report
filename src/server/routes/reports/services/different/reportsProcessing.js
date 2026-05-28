@@ -12,7 +12,7 @@ import { recordedToSchemaVersion, reportSchemaVersion } from "../../../../databa
 var invalidTokenErrorMsg = "Invalid Token";
 
 var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
-  var { getWBTokenByUserId } = dbutils.tokenCollectionServices;
+  var { getWBTokenByUserId, updateLastUsedTimestamp } = dbutils.tokenCollectionServices;
 
   var currentTimestamp = new Date(Date.now() + 3 * 60 * 60).getTime();
 
@@ -72,6 +72,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   await updateReportTree(userId, sortedYears, session);
   await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
   await setLastReportRequestTimestamp(userId, session);
+  await updateLastUsedTimestamp(userId, session);
 
   return { reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount };
 };
