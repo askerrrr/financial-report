@@ -19,7 +19,7 @@ var loadListGoods = async (req, res, next) => {
     await session.withTransaction(async () => {
       var { listGoodsFromWBAPI } = await listGoodsLoader(userId, token);
 
-      await saveListGoodsToDb(userId, listGoodsFromWBAPI);
+      await saveListGoodsToDb(userId, listGoodsFromWBAPI, session);
 
       return res.json({ listGoods: listGoodsFromWBAPI });
     });
