@@ -1,4 +1,4 @@
-var tokenDataTable = document.getElementById("token-data-table");
+var tokenDataTable = document.getElementById("table-container");
 
 var enableTokenDataTable = () => (tokenDataTable.hidden = false);
 var disableTokenDataTable = () => (tokenDataTable.hidden = true);
