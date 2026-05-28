@@ -1,3 +1,4 @@
+import { dbClient } from "../../../database/index.js";
 import listGoodsLoader from "../services/listGoodsLoader.js";
 import dbUtils from "../../../database/collections/index.js";
 
@@ -12,15 +13,23 @@ var loadListGoods = async (req, res, next) => {
     return res.status(400).json({ msg: "В первую очередь нужно загрузить токен личного кабинета WB" });
   }
 
-  var { listGoodsFromWBAPI } = await listGoodsLoader(userId, token);
+  var session = await dbClient.startSession();
 
-  var success = await saveListGoodsToDb(userId, listGoodsFromWBAPI);
+  try {
+    await session.withTransaction(async () => {
+      var { listGoodsFromWBAPI } = await listGoodsLoader(userId, token);
 
-  if (success) {
-    return res.json({ listGoods: listGoodsFromWBAPI });
+      await saveListGoodsToDb(userId, listGoodsFromWBAPI);
+
+      return res.json({ listGoods: listGoodsFromWBAPI });
+    });
+  } catch (e) {
+    return res.sendStatus(304);
+  } finally {
+    if (session) {
+      await session.endSession();
+    }
   }
-
-  return res.sendStatus(304);
 };
 
 export default loadListGoods;
