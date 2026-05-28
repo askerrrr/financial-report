@@ -52,7 +52,7 @@ body {
 }
 
 /* Основные блоки */
-#requred-token-categories {
+#required-token-categories {
   width: 100%;
   max-width: 500px;
   margin-bottom: 20px;
@@ -231,7 +231,7 @@ body {
 /* Защита от перекрытия другими элементами */
 .buttons-container,
 .token-data,
-#requred-token-categories {
+#required-token-categories {
   position: relative;
   z-index: 1;
 }
@@ -243,7 +243,7 @@ body {
   }
   .token-data,
   .buttons-container,
-  #requred-token-categories {
+  #required-token-categories {
     max-width: 100%;
   }
 
@@ -251,4 +251,34 @@ body {
     margin: 15px;
     max-width: calc(100% - 30px);
   }
+}
+
+/* ==================== БЛОК НЕОБХОДИМЫХ КАТЕГОРИЙ ==================== */
+#required-token-categories fieldset {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  box-shadow: var(--shadow);
+  margin: 0;
+}
+
+#required-token-categories legend {
+  font-weight: 600;
+  font-size: 16px;
+  padding: 0 14px;
+  color: #212529;
+  background: white;
+}
+
+#required-token-categories div {
+  padding: 7px 4px;
+  color: #495057;
+  font-size: 15px;
+}
+
+#required-token-categories div::before {
+  content: "✔";
+  color: var(--success);
+  margin-right: 10px;
 }
