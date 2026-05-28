@@ -60,7 +60,7 @@ body {
 
 .token-data {
   width: 100%;
-  max-width: 500px;
+  max-width: 510px;
   background: white;
   padding: 20px;
   border-radius: var(--radius);
