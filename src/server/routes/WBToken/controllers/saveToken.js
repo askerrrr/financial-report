@@ -37,7 +37,7 @@ var saveToken = async (req, res, next) => {
       }
 
       var tokenData = getTokenDetails(parsedToken);
-
+      tokenData.lastUsed = new Date(Date.now() + 3 * 60 * 60 * 1000);
       res.json(tokenData);
     });
   } catch (e) {
