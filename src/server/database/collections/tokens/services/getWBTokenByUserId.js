@@ -5,7 +5,7 @@ var getWBTokenByUserId = async (collection, userId, session) => {
     var sessionOpt = session ? { session: session } : {};
     var data = await collection.findOne({ userId }, null, { ...sessionOpt });
 
-    return { token: data.token };
+    return { token: data.token, lastUsed: data.lastUsed };
   } catch (e) {
     throw new DatabaseError(userId, e);
   }
