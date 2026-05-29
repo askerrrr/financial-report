@@ -12,20 +12,22 @@ var uploadToWBAPITodayPricesAndDiscounts = async (req, res, next) => {
   var { currentDayIndex } = getCurrentDayMSK();
   var data = await getTodayPricesAndDiscountsByDayIndex(currentDayIndex);
 
-  var session = await dbClient.startSession();
-
   for (var { userId, currentDayPricesAndDiscounts } of data) {
+    var session = await dbClient.startSession();
+
     try {
-      if (currentDayPricesAndDiscounts) {
-        currentDayPricesAndDiscounts = currentDayPricesAndDiscounts.map(({ data }) => data);
+      await session.withTransaction(async () => {
+        if (currentDayPricesAndDiscounts) {
+          currentDayPricesAndDiscounts = currentDayPricesAndDiscounts.map(({ data }) => data);
 
-        var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
-        var { id, alreadyExists } = await wbapi.setPricesAndDiscounts(userId, token, currentDayPricesAndDiscounts);
+          var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
+          var { id, alreadyExists } = await wbapi.setPricesAndDiscounts(userId, token, currentDayPricesAndDiscounts);
 
-        if (!alreadyExists) {
-          await setUploadId(userId, id, session);
+          if (!alreadyExists) {
+            await setUploadId(userId, id, session);
+          }
         }
-      }
+      });
     } catch (e) {
     } finally {
       if (session) {
