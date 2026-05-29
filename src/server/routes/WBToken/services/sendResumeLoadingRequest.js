@@ -16,11 +16,9 @@ var sendResumeLoadingRequest = async (userId) => {
 
   while (attempt < MAX_ATTEMPTS) {
     try {
-      console.log({ attempt });
       var res = await doRequest(userId);
       if (res.status === EXPECTED_STATUS_CODE) {
         success = true;
-        attempt = MAX_ATTEMPTS;
 
         break;
       } else {
