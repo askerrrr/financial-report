@@ -11,17 +11,21 @@ var checkProcessingOfPricesAndDiscounts = async (req, res, next) => {
 
   var data = await getAllUserWeeklyPricesAndDiscounts();
 
-  var session = await dbClient.startSession();
-
   for (var { userId, uploadId } of data) {
-    try {
-      if (uploadId) {
-      }
+    var session = await dbClient.startSession();
 
-      var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
-      var { historyGoods } = await wbapi.getPriceUploadDetails(userId, uploadId, token);
-      await setPriceUpdateTimestampAndUpdateStatus(userId, historyGoods, session);
+    try {
+      await session.withTransaction(async () => {
+        if (uploadId) {
+          var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
+
+          var { historyGoods } = await wbapi.getPriceUploadDetails(userId, uploadId, token);
+
+          await setPriceUpdateTimestampAndUpdateStatus(userId, historyGoods, session);
+        }
+      });
     } catch (e) {
+      throw e;
     } finally {
       if (session) {
         await session.endSession();
