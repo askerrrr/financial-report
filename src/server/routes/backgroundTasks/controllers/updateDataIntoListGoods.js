@@ -12,24 +12,26 @@ var updateDataIntoListGoods = async (req, res, next) => {
 
   var data = await getAllUserListGoodsIds();
 
-  var session = await dbClient.startSession();
-
   for (var { userId, listGoodsIds } of data) {
+    var session = await dbClient.startSession();
+
     try {
-      if (listGoodsIds.length) {
-        var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
+      await session.withTransaction(async () => {
+        if (listGoodsIds.length) {
+          var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
 
-        var { rawListGoods } = await wbapi.getPricesAndDiscountsByListGoods(userId, token, listGoodsIds);
+          var { rawListGoods } = await wbapi.getPricesAndDiscountsByListGoods(userId, token, listGoodsIds);
 
-        var { listGoods } = await extractRequiredListGoodsData(rawListGoods);
-        var { newSkus, updatedSkus } = splitListGoodsByExistence(listGoodsIds, listGoods);
+          var { listGoods } = await extractRequiredListGoodsData(rawListGoods);
+          var { newSkus, updatedSkus } = splitListGoodsByExistence(listGoodsIds, listGoods);
 
-        if (newSkus.length) {
-          await saveNewSkusToDb(userId, newSkus, session);
+          if (newSkus.length) {
+            await saveNewSkusToDb(userId, newSkus, session);
+          }
+
+          await updateSkusFields(userId, updatedSkus, session);
         }
-
-        await updateSkusFields(userId, updatedSkus, session);
-      }
+      });
     } catch (e) {
     } finally {
       if (session) {
