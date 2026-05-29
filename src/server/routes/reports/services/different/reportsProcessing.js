@@ -19,9 +19,9 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
 
   var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
 
-  var parsedToken = parseJwt(token);
+  var tokenPayload = parseJwt(token);
 
-  if (!parsedToken?.exp || parsedToken.exp * 1000 <= currentTimestamp) {
+  if (!tokenPayload?.exp || tokenPayload.exp * 1000 <= currentTimestamp) {
     throw new WBAPIError(userId, 401, invalidTokenErrorMsg);
   }
 

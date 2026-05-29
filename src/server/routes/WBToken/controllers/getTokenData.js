@@ -15,8 +15,8 @@ var getTokenData = async (req, res, next) => {
     return res.json({ tokenIsExist: false });
   }
 
-  var parsedToken = parseJwt(token);
-  var tokenDetails = getTokenDetails(parsedToken);
+  var tokenPayload = parseJwt(token);
+  var tokenDetails = getTokenDetails(tokenPayload);
 
   tokenDetails.lastUsed = lastUsed;
 

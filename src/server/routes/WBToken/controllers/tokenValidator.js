@@ -13,9 +13,9 @@ var tokenValidator = async (req, res, next) => {
     return res.sendStatus(401);
   }
 
-  var parsedToken = parseJwt(token);
+  var tokenPayload = parseJwt(token);
 
-  if (isTestToken(parsedToken)) {
+  if (isTestToken(tokenPayload)) {
     return res.sendStatus(400);
   }
 
@@ -40,13 +40,13 @@ var tokenValidator = async (req, res, next) => {
     }
   }
 
-  var tokenIsExpired = parsedToken?.exp * 1000 <= currentTimestamp;
+  var tokenIsExpired = tokenPayload?.exp * 1000 <= currentTimestamp;
 
   if (tokenAuthFailed || tokenIsExpired) {
     return res.sendStatus(401);
   }
 
-  req.body.parsedToken = parsedToken;
+  req.body.tokenPayload = tokenPayload;
 
   next();
 };
