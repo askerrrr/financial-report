@@ -1,19 +1,11 @@
-import Joi from "joi";
 var jose = import("jose");
 import dbUtils from "../../../database/collections/index.js";
 import checkCredentials from "../services/checkCredentials.js";
 
 var alg = "RS256";
 var oneDayMs = 24 * 3600 * 1000;
-var schema = Joi.object({ login: Joi.string().required(), passwd: Joi.string().required() });
 
 var checkUserCredentials = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
   var { getUserByLogin } = dbUtils.userCollectionServices;
 
   var existUser = await getUserByLogin(req.body.login);
