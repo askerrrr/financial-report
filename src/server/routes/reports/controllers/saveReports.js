@@ -1,7 +1,8 @@
 import { dbClient } from "../../../database/index.js";
 import reportsProcessing from "../services/different/reportsProcessing.js";
 
-var sessionOptions = { maxTimeMs: 150_000 };
+var fiveMinInMs = 300_000;
+var sessionOptions = { maxTimeMs: fiveMinInMs };
 
 var saveReports = async (req, res, next) => {
   var { dateTo, dateFrom, userId } = req.body;
