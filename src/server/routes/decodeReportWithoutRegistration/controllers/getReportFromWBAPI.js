@@ -2,6 +2,7 @@ import Joi from "joi";
 import { randomBytes } from "node:crypto";
 import wbapi from "../../reports/services/WBAPI/index.js";
 import parseReports from "../../reports/services/reportParsing/index.js";
+import reportsStub from "../../reports/services/WBAPI/reports/reports.js";
 
 var schema = Joi.object({
   dateFrom: Joi.string().required(),
@@ -38,35 +39,28 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   var { dateFrom, dateTo, token, taxRate } = req.body;
 
-  var existReportData = req.app.locals?.reports?.find((item) => item.report.dateFrom === dateFrom);
-
-  if (existReportData) {
-    return res.json(existReportData);
-  }
-
   var reports = await wbapi.getReports("decode-without-auth", dateFrom, dateTo, token);
 
   var { report } = await parseReports(reports, { taxRate, ...taxParamsStub });
 
+  var userId = randomBytes(15).toString("hex");
+  var { reportId } = reports.weeklyFinancialReport[0];
+
+  report.userId = userId;
   report.dateTo = dateTo;
+  report.taxRate = taxRate;
   report.dateFrom = dateFrom;
+  report.reportId = reportId;
   report.totalFinalProfit = 0;
   report.totalProductCosts = 0;
   report.totalProfitMargin = 0;
   report.totalOtherExpenses = 0;
-  report.reportId = reports.weeklyFinancialReport[0].realizationreport_id;
 
   report.skus.map((sku) => {
     ((sku.costPrice = 0), (sku.otherExpenses = 0), (sku.finalProfit = 0), (sku.profitMargin = 0));
   });
 
-  var id = randomBytes(15).toString("hex");
-
-  req.app.locals.reports = [{ id, taxRate, report }];
-
-  var downloadReportLink = "/decode-report-without-registration/xlsx/" + id + "/" + report.reportId;
-
-  return res.json({ id, report, downloadReportLink });
+  return res.json({ report });
 };
 
 export default getReportFromWBAPI;

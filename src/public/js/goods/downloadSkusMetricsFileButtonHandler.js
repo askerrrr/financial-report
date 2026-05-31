@@ -1,8 +1,8 @@
-var button = document.getElementById("download-skus-metrics");
+var downloadSkusMetricsFileButton = document.getElementById("download-skus-metrics");
 
-var downloadSkusMetricsFileButtonHandler = () =>
-  (button.onclick = async () => {
-    var url = "/goods/metrics/download";
+var downloadSkusMetricsFileButtonHandler = (userId) =>
+  (downloadSkusMetricsFileButton.onclick = async () => {
+    var url = "/goods/metrics/download/" + userId;
     var res = await fetch(url);
     var blob = await res.blob();
     var downloadUrl = window.URL.createObjectURL(blob);

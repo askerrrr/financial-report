@@ -1,5 +1,7 @@
 import { WBAPIError } from "../../../../../customError/index.js";
 
+var MAX_ATTEMPTS = 3;
+
 var getCreationStatus = async (url, token, userId) => {
   var res = await fetch(url, {
     method: "GET",
@@ -36,40 +38,32 @@ var getCreationStatus = async (url, token, userId) => {
 var waitForReportCreation = async () => new Promise((res) => setTimeout(res, 5000));
 
 var checkPaidStorageReportCreationStatus = async (taskId, token, userId) => {
+  var statusIsDone = true;
   var url = `https://seller-analytics-api.wildberries.ru/api/v1/paid_storage/tasks/${taskId}/status`;
 
   await waitForReportCreation();
 
   var { status } = await getCreationStatus(url, token, userId);
 
-  if (status == "done") {
-    return true;
+  if (status !== "done") {
+    var attempts = 0;
+    statusIsDone = false;
+
+    while (attempts < MAX_ATTEMPTS) {
+      await waitForReportCreation();
+
+      var { status } = await getCreationStatus(url, token, userId);
+
+      if (status === "done") {
+        statusIsDone = true;
+        break;
+      }
+
+      attempts++;
+    }
   }
 
-  return await new Promise((resolve, reject) => {
-    var attempts = 0;
-
-    try {
-      var timerId = setInterval(async () => {
-        var { status } = await getCreationStatus(url, token, userId);
-
-        if (status === "done") {
-          clearInterval(timerId);
-          resolve(true);
-        }
-
-        if (attempts > 1) {
-          clearInterval(timerId);
-          resolve(false);
-        }
-
-        ++attempts;
-      }, 5000);
-    } catch {
-      clearInterval(timerId);
-      resolve(false);
-    }
-  });
+  return { statusIsDone };
 };
 
 export default checkPaidStorageReportCreationStatus;

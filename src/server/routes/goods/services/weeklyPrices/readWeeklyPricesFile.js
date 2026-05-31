@@ -69,6 +69,7 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
       }
 
       newPricesAndDiscounts.push({
+        dayIndex: i,
         nmID: skuNamesAndIds[i].nmID,
         data: {
           price,

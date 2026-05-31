@@ -1,9 +1,7 @@
 import { getReportAsXLSXBuffer } from "../../reports/services/reportAsXLSXBuffer/index.js";
 
 var downloadReportAsXLSX = async (req, res, next) => {
-  var { id, reportId } = req.params;
-
-  var { report } = req.app.locals?.reports.find((item) => item.id === id && item.report.reportId == reportId);
+  var { report } = req.body;
 
   if (!report) {
     return res.status(500).json({ msg: "Не удалось скачать отчет..." });

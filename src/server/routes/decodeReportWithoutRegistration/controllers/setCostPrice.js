@@ -2,10 +2,39 @@ import Joi from "joi";
 import calc from "../../reports/services/calcServices/index.js";
 
 var schema = Joi.object({
-  id: Joi.string().required(),
+  userId: Joi.string().required(),
+  skuId: Joi.number().required(),
   reportId: Joi.number().required(),
   skuIndex: Joi.number().required(),
   costPrice: Joi.number().required(),
+  skuName: Joi.string().required(),
+  taxRate: Joi.number().required(),
+  totals: Joi.object({
+    totalRetailAmount: Joi.number().required(),
+    totalFinalProfit: Joi.number().required(),
+    totalProfitMargin: Joi.number().required(),
+    totalProductCosts: Joi.number().required(),
+    totalInsuranceFee: Joi.number().required(),
+    totalPreTaxProfit: Joi.number().required(),
+    totalOtherExpenses: Joi.number().required(),
+  }).required(),
+  skus: Joi.array().items(
+    Joi.object({
+      tax: Joi.number().required(),
+      qty: Joi.number().required(),
+      isCostPriceSet: Joi.boolean(),
+      profit: Joi.number().required(),
+      costPrice: Joi.number().required(),
+      finalProfit: Joi.number().required(),
+      profitMargin: Joi.number().required(),
+      retailAmount: Joi.number().required(),
+      insuranceFee: Joi.number().required(),
+      preTaxProfit: Joi.number().required(),
+      otherExpenses: Joi.number().required(),
+      isInsuranceFeeIncluded: Joi.boolean(),
+      additionalInsuranceFee: Joi.number().required(),
+    }),
+  ),
 });
 
 var taxParamsStub = {
@@ -34,36 +63,41 @@ var setCostPrice = async (req, res, next) => {
     return res.sendStatus(400);
   }
 
-  var { id, reportId, skuIndex, costPrice } = req.body;
+  var { userId, reportId, costPrice, skuIndex, skus, totals, taxRate } = req.body;
 
-  var { report, taxRate } = req.app.locals.reports.find((item) => item.id == id && item.report.reportId === reportId);
+  var skuToUpdate = skus[skuIndex];
+  var prevSkuData = {};
+  prevSkuData.costPrice = costPrice;
+  prevSkuData.qty = skuToUpdate.qty;
+  prevSkuData.finalProfit = skuToUpdate.finalProfit;
+  prevSkuData.preTaxProfit = skuToUpdate.preTaxProfit;
+  prevSkuData.insuranceFee = skuToUpdate.insuranceFee;
+  prevSkuData.otherExpenses = skuToUpdate.otherExpenses;
 
-  var { skus, ...totalParams } = report;
-  skus[skuIndex].costPrice = costPrice;
-  var updatedSku = skus[skuIndex];
+  skuToUpdate.costPrice = costPrice;
 
-  var { skuWithCalculatedParams } = calc.sku.restParams(updatedSku, { taxRate, ...taxParamsStub });
+  var { skuWithCalculatedParams } = calc.sku.restParams(skuToUpdate, { taxRate, ...taxParamsStub });
 
   skus[skuIndex] = skuWithCalculatedParams;
 
-  var updatedReport = calc.total.restParams(totalParams, skus);
+  var { updatedTotals } = calc.total.restParams(totals, prevSkuData, skuWithCalculatedParams);
 
-  var { totalFinalProfit, totalProfitMargin } = updatedReport;
-  var { profitMargin, finalProfit } = skuWithCalculatedParams;
-
-  var reportIndex = req.app.locals?.reports.findIndex((item) => item.id === id && item.report.reportId === reportId);
-
-  req.app.locals.reports[reportIndex] = { id, report: updatedReport, taxRate };
+  var { profitMargin, finalProfit, isCostPriceSet, insuranceFee, preTaxProfit, isInsuranceFeeIncluded } = skuWithCalculatedParams;
 
   return res.json({
     sku: {
+      userId,
       skuIndex,
-      data: {
-        profitMargin,
-        finalProfit,
-      },
+      data: { profitMargin, finalProfit, isCostPriceSet, insuranceFee, preTaxProfit, isInsuranceFeeIncluded, costPrice },
     },
-    total: { totalFinalProfit, totalProfitMargin },
+    totals: {
+      totalFinalProfit: updatedTotals.totalFinalProfit,
+      totalProfitMargin: updatedTotals.totalProfitMargin,
+      totalProductCosts: updatedTotals.totalProductCosts,
+      totalInsuranceFee: updatedTotals.totalInsuranceFee,
+      totalPreTaxProfit: updatedTotals.totalPreTaxProfit,
+      totalOtherExpenses: updatedTotals.totalPreTaxProfit,
+    },
   });
 };
 

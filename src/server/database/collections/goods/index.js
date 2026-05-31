@@ -11,6 +11,7 @@ import getSkusLastCostPrice from "./services/getSkusLastCostPrice.js";
 import saveUpdatedSkuMetrics from "./services/saveUpdatedSkuMetrics.js";
 import updateSkuDisableStatus from "./services/updateSkuDisableStatus.js";
 import getAllUserListGoodsIds from "./services/getAllUserListGoodsIds.js";
+import updateSkusMetricsInListGoods from "./services/updateSkusMetricsInListGoods.js";
 import setPriceUpdateTimestampAndUpdateStatus from "./services/setPriceUpdateTimestampAndUpdateStatus.js";
 
 var goodsCollectionServices = {
@@ -18,7 +19,7 @@ var goodsCollectionServices = {
 
   getSkusLastCostPrice: (userId) => getSkusLastCostPrice(goodsCollection, userId),
 
-  getListGoodsFromDb: (userId, session) => getListGoodsFromDb(goodsCollection, userId, session),
+  getListGoodsFromDb: (userId, skuNames, session) => getListGoodsFromDb(goodsCollection, userId, skuNames, session),
 
   getSkuFromListGoods: (userId, skuId, skuName, session) => getSkuFromListGoods(goodsCollection, userId, skuId, skuName, session),
 
@@ -26,15 +27,17 @@ var goodsCollectionServices = {
 
   saveNewSkusToDb: (userId, newSkus, session) => saveNewSkusToDb(goodsCollection, userId, newSkus, session),
 
-  updateSingleSku: (userId, sku) => updateSingleSku(goodsCollection, userId, sku),
+  updateSingleSku: (userId, sku, session) => updateSingleSku(goodsCollection, userId, sku, session),
 
-  updateSkusFields: (userId, updatedSkus) => updateSkusFields(goodsCollection, userId, updatedSkus),
+  updateSkusFields: (userId, updatedSkus, session) => updateSkusFields(goodsCollection, userId, updatedSkus, session),
 
-  updateSkuInListGoods: (userId, skuId, costPrice, session) => updateSkuInListGoods(goodsCollection, userId, skuId, costPrice, session),
+  updateSkuInListGoods: (userId, skuId, skuName, data, session) => updateSkuInListGoods(goodsCollection, userId, skuId, skuName, data, session),
+
+  updateSkusMetricsInListGoods: (userId, updatedSkus, session) => updateSkusMetricsInListGoods(goodsCollection, userId, updatedSkus, session),
 
   updateSkuDisableStatusToDb: (userId, skuName, disabled) => updateSkuDisableStatus(goodsCollection, userId, skuName, disabled),
 
-  setPriceUpdateTimestampAndUpdateStatus: (userId, priceData) => setPriceUpdateTimestampAndUpdateStatus(goodsCollection, userId, priceData),
+  setPriceUpdateTimestampAndUpdateStatus: (userId, priceData, session) => setPriceUpdateTimestampAndUpdateStatus(goodsCollection, userId, priceData, session),
 
   saveUpdatedSkuMetrics: (userId, skuId, metrics, session) => saveUpdatedSkuMetrics(goodsCollection, userId, skuId, metrics, session),
 

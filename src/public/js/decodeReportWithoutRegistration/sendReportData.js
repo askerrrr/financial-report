@@ -8,10 +8,10 @@ var sendReportData = async (dateFrom, dateTo, token, taxRate) => {
   var data = await res.json();
 
   if (!res.ok) {
-    throw new Error(res.text);
+    throw new Error("Can`t create report...");
   }
 
-  return data;
+  return data.report;
 };
 
 export default sendReportData;

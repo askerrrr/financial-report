@@ -3,7 +3,9 @@ import showListGoodsTable from "./showListGoodsTable.js";
 import downloadSkusMetricsFileButtonHandler from "./downloadSkusMetricsFileButtonHandler.js";
 import downloadWeeklyPricesFileButtonHandler from "./downloadWeeklyPricesFileButtonHandler.js";
 
+var userId = document.cookie.split("=")[1];
+
 showListGoodsTable();
-fileUploadHandler();
-downloadSkusMetricsFileButtonHandler();
-downloadWeeklyPricesFileButtonHandler();
+fileUploadHandler(userId);
+downloadSkusMetricsFileButtonHandler(userId);
+downloadWeeklyPricesFileButtonHandler(userId);

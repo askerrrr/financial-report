@@ -5,23 +5,23 @@ var startYearPostfix = "InCurrentYear";
 var endYearPostfix = "InNextYear";
 
 var recalculateMetrics = (skuMetrics, sku, postfix = "") => {
-  skuMetrics.qty -= sku["qty" + postfix] ?? 0;
-  skuMetrics.tax -= sku["tax" + postfix] ?? 0;
-  skuMetrics.fines -= sku["fines" + postfix] ?? 0;
-  skuMetrics.netProfit -= sku["finalProfit" + postfix] ?? 0;
-  skuMetrics.retailAmount -= sku["retailAmount" + postfix] ?? 0;
-  skuMetrics.insuranceFee -= sku["insuranceFee" + postfix] ?? 0;
-  skuMetrics.returnAmount -= sku["returnAmount" + postfix] ?? 0;
-  skuMetrics.storageCost -= sku["storageCost" + postfix] ?? 0;
-  skuMetrics.deliveryCost -= sku["deliveryCost" + postfix] ?? 0;
-  skuMetrics.acceptance -= sku["acceptance" + postfix] ?? 0;
-  skuMetrics.taxableAmount -= sku["taxableAmount" + postfix] ?? 0;
-  skuMetrics.sellerPayoutAmount -= sku["sellerPayoutAmount" + postfix] ?? 0;
-  skuMetrics.deductionOrPayment -= sku["deductionOrPayment" + postfix] ?? 0;
-  skuMetrics.additionalInsuranceFee -= sku["additionalInsuranceFee" + postfix] ?? 0;
+  skuMetrics.qty -= sku["qty" + postfix];
+  skuMetrics.tax -= sku["tax" + postfix];
+  skuMetrics.fines -= sku["fines" + postfix];
+  skuMetrics.netProfit -= sku["finalProfit" + postfix];
+  skuMetrics.retailAmount -= sku["retailAmount" + postfix];
+  skuMetrics.insuranceFee -= sku["insuranceFee" + postfix];
+  skuMetrics.returnAmount -= sku["returnAmount" + postfix];
+  skuMetrics.storageCost -= sku["storageCost" + postfix];
+  skuMetrics.deliveryCost -= sku["deliveryCost" + postfix];
+  skuMetrics.acceptance -= sku["acceptance" + postfix];
+  skuMetrics.taxableAmount -= sku["taxableAmount" + postfix];
+  skuMetrics.sellerPayoutAmount -= sku["sellerPayoutAmount" + postfix];
+  skuMetrics.deductionOrPayment -= sku["deductionOrPayment" + postfix];
+  skuMetrics.additionalInsuranceFee -= sku["additionalInsuranceFee" + postfix];
 
-  for (var key in skuMetrics) {
-    skuMetrics[key] = truncateNum(skuMetrics[key]);
+  for (var metric in skuMetrics) {
+    skuMetrics[metric] = truncateNum(skuMetrics[metric]);
   }
 
   skuMetrics.profitMargin = calc.profitMargin(skuMetrics.netProfit, skuMetrics.retailAmount);

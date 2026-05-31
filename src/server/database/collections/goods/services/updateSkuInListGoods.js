@@ -1,4 +1,4 @@
-var createQuery = (skuId, data) => {
+var createQuery = (skuName, data) => {
   var query = {};
   var arrayFilters = [];
 
@@ -6,14 +6,14 @@ var createQuery = (skuId, data) => {
     query[`listGoods.$[sku].${key}`] = data[key];
   }
 
-  var arrayFilterObj = { [`sku.id`]: skuId };
+  var arrayFilterObj = { [`sku.skuName`]: skuName };
   arrayFilters.push(arrayFilterObj);
 
   return { query, arrayFilters };
 };
 
-var updateSkuInListGoods = async (collection, userId, skuId, data, session) => {
-  var { query, arrayFilters } = createQuery(skuId, data);
+var updateSkuInListGoods = async (collection, userId, skuId, skuName, data, session) => {
+  var { query, arrayFilters } = createQuery(skuName, data);
   var result = await collection.updateOne({ userId }, { $set: query }, { arrayFilters, session: session });
   return result;
 };

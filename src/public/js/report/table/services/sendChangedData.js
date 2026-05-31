@@ -20,7 +20,8 @@ var sendChangedData = async (data, isGuestAccess = false, changedData) => {
   });
 
   if (!res.ok) {
-    return alert("Не удалось изменить данные");
+    alert("Не удалось изменить данные");
+    return;
   }
 
   var data = await res.json();

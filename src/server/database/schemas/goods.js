@@ -9,6 +9,7 @@ var skuMetrictSchema = new Schema(
     netProfit: { type: Number, required: true, default: 0 },
     profitMargin: { type: Number, required: true, default: 0 },
     retailAmount: { type: Number, required: true, default: 0 },
+    taxableAmount: { type: Number, required: true, default: 0 },
     returnAmount: { type: Number, required: true, default: 0 },
     storageCost: { type: Number, required: true, default: 0 },
     deliveryCost: { type: Number, required: true, default: 0 },

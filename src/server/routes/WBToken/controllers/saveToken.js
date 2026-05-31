@@ -1,20 +1,16 @@
 import Joi from "joi";
 import { dbClient } from "../../../database/index.js";
+import getTokenDetails from "../services/getTokenDetails.js";
 import dbUtils from "../../../database/collections/index.js";
 import listGoodsLoader from "../../goods/services/listGoodsLoader.js";
 import extractNewSkusFromLIstGoods from "../../goods/services/extractNewSkusFromLIstGoods.js";
 
-var schema = Joi.object({ token: Joi.string().required() });
+var updateLastUsedTimestampNow = true;
 
 var saveToken = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
-  var { token } = req.body;
+  var { token, tokenPayload } = req.body;
   var userId = req.app.locals.userId;
+
   var { getWBTokenByUserId, saveWBTokenToDb } = dbUtils.tokenCollectionServices;
   var { saveListGoodsToDb, getListGoodsFromDb, saveNewSkusToDb } = dbUtils.goodsCollectionServices;
 
@@ -22,7 +18,7 @@ var saveToken = async (req, res, next) => {
 
   try {
     await session.withTransaction(async () => {
-      var currentToken = (await getWBTokenByUserId(userId)).token;
+      var currentToken = (await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow)).token;
 
       if (currentToken === token) {
         return res.sendStatus(409);
@@ -40,7 +36,9 @@ var saveToken = async (req, res, next) => {
         await saveNewSkusToDb(userId, newSkus, session);
       }
 
-      res.sendStatus(200);
+      var tokenData = getTokenDetails(tokenPayload);
+      tokenData.lastUsed = new Date(Date.now() + 3 * 60 * 60 * 1000);
+      res.json(tokenData);
     });
   } catch (e) {
     console.log(e);

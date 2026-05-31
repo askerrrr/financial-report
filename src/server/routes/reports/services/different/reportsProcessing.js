@@ -1,15 +1,31 @@
 import wbapi from "../WBAPI/index.js";
 import sortYearsTree from "./sortYearTree.js";
 import parseReports from "../reportParsing/index.js";
+import parseJwt from "../../../WBToken/services/parseJwt.js";
+import { WBAPIError } from "../../../../customError/index.js";
 import addNewSkusToListGoods from "./addNewSkusToListGoods.js";
 import dbutils from "../../../../database/collections/index.js";
 import insertReportToReportTree from "../reportTreeBuilder/index.js";
 import updateListGoodsMetrics from "../different/updateListGoodsMetrics.js";
-import { recordToSchemaVersion, reportSchemaVersion } from "../../../../database/migration/schemaVersioning/reportsCollection.js";
+import { recordedToSchemaVersion, reportSchemaVersion } from "../../../../database/migration/schemaVersioning/reportsCollection.js";
+
+var updateLastUsedTimestampNow = true;
+var invalidTokenErrorMsg = "Invalid Token";
 
 var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
-  var { saveReportToDb } = dbutils.reportCollectionServices;
   var { getWBTokenByUserId } = dbutils.tokenCollectionServices;
+
+  var currentTimestamp = new Date(Date.now() + 3 * 60 * 60).getTime();
+
+  var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
+
+  var tokenPayload = parseJwt(token);
+
+  if (!tokenPayload?.exp || tokenPayload.exp * 1000 <= currentTimestamp) {
+    throw new WBAPIError(userId, 401, invalidTokenErrorMsg);
+  }
+
+  var { saveReportToDb } = dbutils.reportCollectionServices;
   var { getListGoodsFromDb, saveListGoodsToDb } = dbutils.goodsCollectionServices;
   var { getReportTree, updateReportTree } = dbutils.reportsTreeCollectionServices;
   var { setLastReportRequestTimestamp } = dbutils.reportLoadingStatesCollectionServices;
@@ -19,7 +35,6 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var endYear = +dateTo.split("-")[0];
   var isCrossYearReport = startYear !== endYear;
 
-  var { token } = await getWBTokenByUserId(userId, session);
   var { reportTree } = await getReportTree(userId, session);
   var reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
   var { reportId } = reports.weeklyFinancialReport[0];
@@ -48,7 +63,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   report.reportId = reportId;
   report.crossesTaxYears = isCrossYearReport;
   report.schemaVersion = reportSchemaVersion;
-  report.recordTo = { year, month, schemaVersion: recordToSchemaVersion };
+  report.recordedTo = { year, month, schemaVersion: recordedToSchemaVersion };
 
   var { listGoods } = await getListGoodsFromDb(userId, session);
   var { listGoodsWithNewSkus } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearReport, startYear, endYear);

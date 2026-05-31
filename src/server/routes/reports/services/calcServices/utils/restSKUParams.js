@@ -2,10 +2,10 @@ import calcFinalProfit from "./finalProfit.js";
 import calcProfitMargin from "./profitMargin.js";
 import calcInsuranceFee from "./insuranceFee.js";
 import calcPreTaxProfit from "./preTaxProfit.js";
-import truncateTotals from "../../reportParsing/truncateTotals.js";
+import truncateNum from "../../reportParsing/truncateNum.js";
 
 var calcRestSKUParams = (sku, taxParams, propPostfix = "") => {
-  sku["isCostPriceSet" + propPostfix] = true;
+  sku.isCostPriceSet = true;
 
   sku["preTaxProfit" + propPostfix] = calcPreTaxProfit(sku, propPostfix);
 
@@ -21,9 +21,7 @@ var calcRestSKUParams = (sku, taxParams, propPostfix = "") => {
 
   sku["profitMargin" + propPostfix] = calcProfitMargin(sku["finalProfit" + propPostfix], sku["retailAmount" + propPostfix]);
 
-  taxParams.finalProfit = taxParams.finalProfit - previousSkuFinalProfit + sku["finalProfit" + propPostfix];
-
-  return { updatedTaxParams: truncateTotals(taxParams), skuWithCalculatedParams: sku };
+  return { updatedTaxParams: taxParams, skuWithCalculatedParams: sku };
 };
 
 export default calcRestSKUParams;

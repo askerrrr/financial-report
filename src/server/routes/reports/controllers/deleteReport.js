@@ -1,56 +1,54 @@
-import Joi from "joi";
 import { dbClient } from "../../../database/index.js";
 import dbUtils from "../../../database/collections/index.js";
+import recalculateTaxParamsAfterReportDeletion from "../services/different/recalculateTaxParamsAfterReportDeletion.js";
 import recalculateSkuMetricsAfterReportDeletion from "../services/different/recalculateSkuMetricsAfterReportDeletion.js";
 
-var schema = Joi.object({ userId: Joi.string().required(), reportId: Joi.number().required() });
+var currentYearPropPostfix = "InCurrentYear";
+var nextYearPropPostfix = "InNextYear";
 
 var deleteReport = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
-  var { userId, reportId } = req.body;
+  var { userId, reportId, skuNames } = req.body;
 
   var { deleteReportFromDb } = dbUtils.reportCollectionServices;
   var { deleteReportFromReportTree } = dbUtils.reportsTreeCollectionServices;
-  var { getListGoodsFromDb, saveListGoodsToDb } = dbUtils.goodsCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
+  var { getListGoodsFromDb, updateSkusMetricsInListGoods } = dbUtils.goodsCollectionServices;
 
   var session = await dbClient.startSession();
   try {
     await session.withTransaction(async () => {
-      var { listGoods } = await getListGoodsFromDb(userId, session);
+      var { listGoods } = await getListGoodsFromDb(userId, skuNames, session);
       var taxParams = await getTaxParamsFromDb(userId, null, session);
 
-      var report = await deleteReportFromDb(userId, reportId, session);
-      var { year, month } = report.recordTo;
-      var startYear = +report.dateFrom.split("-")[0];
-      var endYear = +report.dateTo.split("-")[0];
+      var reportBeforeDeletion = await deleteReportFromDb(userId, reportId, session);
+      var { year, month } = reportBeforeDeletion.recordedTo;
+      var startYear = +reportBeforeDeletion.dateFrom.split("-")[0];
+      var endYear = +reportBeforeDeletion.dateTo.split("-")[0];
 
-      if (report.crossesTaxYears) {
-        var currentYearPropPostfix = "InCurrentYear";
-        var nextYearPropPostfix = "InNextYear";
-
+      if (reportBeforeDeletion.crossesTaxYears) {
         var startYearTaxParams = taxParams.find((params) => params.year === startYear);
         var endYearTaxParams = taxParams.find((params) => params.year === endYear);
 
-        startYearTaxParams = recalculateTaxParams(startYearTaxParams, report, currentYearPropPostfix).updatedTaxParams;
-        endYearTaxParams = recalculateTaxParams(endYearTaxParams, report, nextYearPropPostfix).updatedTaxParams;
+        startYearTaxParams = recalculateTaxParamsAfterReportDeletion(
+          startYearTaxParams,
+          reportBeforeDeletion,
+          currentYearPropPostfix,
+        ).updatedTaxParams;
+
+        endYearTaxParams = recalculateTaxParamsAfterReportDeletion(endYearTaxParams, reportBeforeDeletion, nextYearPropPostfix).updatedTaxParams;
+
         await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
       } else {
         var taxParamsOfYear = taxParams.find((params) => params.year === year);
 
-        var { updatedTaxParams } = recalculateTaxParams(taxParamsOfYear, report);
+        var { updatedTaxParams } = recalculateTaxParamsAfterReportDeletion(taxParamsOfYear, reportBeforeDeletion);
         await changeTaxParamsToDb(userId, session, updatedTaxParams);
       }
 
-      var { listGoodsWithRecalculatedSkuMetrics } = recalculateSkuMetricsAfterReportDeletion(startYear, endYear, listGoods, report);
+      var { listGoodsWithRecalculatedSkuMetrics } = recalculateSkuMetricsAfterReportDeletion(startYear, endYear, listGoods, reportBeforeDeletion);
 
-      await saveListGoodsToDb(userId, listGoodsWithRecalculatedSkuMetrics, session);
       await deleteReportFromReportTree(userId, year, month, reportId, session);
+      await updateSkusMetricsInListGoods(userId, listGoodsWithRecalculatedSkuMetrics, session);
     });
 
     return res.sendStatus(200);
@@ -63,16 +61,3 @@ var deleteReport = async (req, res, next) => {
 };
 
 export default deleteReport;
-
-var recalculateTaxParams = function (taxParams, report, propPostfix = "") {
-  if (report["totalFinalProfit" + propPostfix]) {
-    taxParams.finalProfit = +(taxParams.finalProfit - report["totalFinalProfit" + propPostfix]).toFixed(2);
-    taxParams.paidInsuranceFee = +(taxParams.paidInsuranceFee - report["totalInsuranceFee" + propPostfix]).toFixed(2);
-  }
-
-  taxParams.paidTaxAmount = +(taxParams.paidTaxAmount - report["totalTaxAmount" + propPostfix]).toFixed(2);
-  taxParams.retailAmount = +(taxParams.retailAmount - report["totalRetailAmount" + propPostfix]).toFixed(2);
-  taxParams.taxableAmount = +(taxParams.taxableAmount - report["totalTaxableAmount" + propPostfix]).toFixed(2);
-  taxParams.additionalInsuranceFee = +(taxParams.additionalInsuranceFee - report["totalAdditionalInsuranceFee" + propPostfix]).toFixed(2);
-  return { updatedTaxParams: taxParams };
-};

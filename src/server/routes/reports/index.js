@@ -1,6 +1,8 @@
 import multer from "multer";
 import { Router } from "express";
+import schemas from "./JoiSchemas/index.js";
 import fileFilter from "./services/fileFilter/index.js";
+import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
 
 import getReport from "./controllers/getReport.js";
 import deleteImage from "./controllers/deleteImage.js";
@@ -27,23 +29,23 @@ var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/:id", getReportPage);
 router.get("/:userId/:reportId", getReport);
-router.post("/", reportLoadDelegate, checkReportExists, checkReportsLoadingProgress, saveReports);
-router.delete("/", deleteReport);
+router.post("/", joiSchemaValidator(schemas.saveReports), reportLoadDelegate, checkReportExists, checkReportsLoadingProgress, saveReports);
+router.delete("/", joiSchemaValidator(schemas.deleteReport), deleteReport);
 
-router.post("/as-zip/", downloadReportsAsZip);
-router.post("/as-xlsx/", downloadReportAsXLSX);
+router.post("/as-zip/", joiSchemaValidator(schemas.downloadReportsAsZip), downloadReportsAsZip);
+router.post("/as-xlsx/", joiSchemaValidator(schemas.downloadReportAsXLSX), downloadReportAsXLSX);
 
-router.patch("/skus/cost-price", setCostPriceToSku);
-router.patch("/skus/cost-prices", setCostPriceToSkus);
-router.patch("/skus/other-expenses", setOtherExpensesToSku);
+router.patch("/skus/cost-price", joiSchemaValidator(schemas.setCostPriceToSku), setCostPriceToSku);
+router.patch("/skus/cost-prices", joiSchemaValidator(schemas.setCostPriceToSkus), setCostPriceToSkus);
+router.patch("/skus/other-expenses", joiSchemaValidator(schemas.setOtherExpensesToSku), setOtherExpensesToSku);
 
-router.patch("/financial-accounting-status/", changeFinancialAccountingStatus);
+router.patch("/financial-accounting-status/", joiSchemaValidator(schemas.changeFinancialAccountingStatus), changeFinancialAccountingStatus);
 
 router.delete("/delete_all_reports/:userId", deleteAllReports);
 
 router.delete("/delete_all_reporting_periods/:userId", deleteReportsTree);
 
-router.post("/image/", upload.single("sku-photo"), skuPhotoUpload);
-router.delete("/image/", deleteImage);
+router.post("/image/", joiSchemaValidator(schemas.skuPhotoUpload), upload.single("sku-photo"), skuPhotoUpload);
+router.delete("/image/", joiSchemaValidator(schemas.deleteImage), deleteImage);
 
 export default router;

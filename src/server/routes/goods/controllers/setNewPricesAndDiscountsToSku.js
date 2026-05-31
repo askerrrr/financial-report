@@ -1,35 +1,31 @@
-import Joi from "joi";
+import { dbClient } from "../../../database/index.js";
 import wbapi from "../../reports/services/WBAPI/index.js";
 import dbUtils from "../../../database/collections/index.js";
 
-var checkedWeekDaysArraySchema = Joi.array().items(Joi.number().required()).required();
-var skuObjectSchema = Joi.object({ nmID: Joi.number().required(), price: Joi.number().required(), discount: Joi.number().required() });
-
-var schema = Joi.object({
-  sku: skuObjectSchema,
-  userId: Joi.string().required(),
-  setNewPriceNow: Joi.boolean().required(),
-  expectedPriceExists: Joi.boolean().required(),
-  checkedWeekDays: checkedWeekDaysArraySchema,
-});
+var updateLastUsedTimestampNow = true;
 
 var setNewPricesAndDiscountsToSku = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
   var { updateSingleSku } = dbUtils.goodsCollectionServices;
   var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
   var { userId, sku, setNewPriceNow, expectedPriceExists } = req.body;
 
-  if (setNewPriceNow) {
-    var { token } = await getWBTokenByUserId(userId);
-    var data = [{ ...sku }];
+  var session = await dbClient.startSession();
 
-    await updateSingleSku(userId, sku);
-    await wbapi.setPricesAndDiscounts(userId, token, data);
+  try {
+    await session.withTransaction(async () => {});
+    if (setNewPriceNow) {
+      var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
+      var data = [{ ...sku }];
+
+      await updateSingleSku(userId, sku, session);
+      await wbapi.setPricesAndDiscounts(userId, token, data);
+    }
+  } catch (e) {
+    return res.sendStatus(304);
+  } finally {
+    if (session) {
+      await session.endSession();
+    }
   }
 
   if (!expectedPriceExists) {

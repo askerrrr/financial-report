@@ -1,17 +1,18 @@
-import createTitle from "../utils/createTitle.js";
-import createModal from "../utils/createModal.js";
 import createSaveButton from "./createSaveButton.js";
-import createInputField from "../utils/createInputField.js";
-import createCancelButton from "../utils/createCancelButton.js";
-import createButtonsContainer from "../utils/createButtonsContainer.js";
+import createTitle from "../index/services/utils/createTitle.js";
+import createModal from "../index/services/utils/createModal.js";
+import createInputField from "../index/services/utils/createInputField.js";
+import createCancelButton from "../index/services/utils/createCancelButton.js";
+import createButtonsContainer from "../index/services/utils/createButtonsContainer.js";
 
-var openWBTokenLoader = async () => {
+var openTokenLoaderModal = (userId) => {
   var input = createInputField("token");
-  input.type = "password";
+  input.type = "text";
 
   var modal = createModal("modal-overlay");
+  modal.id = "token-modal";
 
-  var saveButton = await createSaveButton(input, modal);
+  var saveButton = createSaveButton(userId, input, modal);
 
   var cancelButton = createCancelButton(modal);
 
@@ -31,4 +32,4 @@ var openWBTokenLoader = async () => {
   input.focus();
 };
 
-export default openWBTokenLoader;
+export default openTokenLoaderModal;

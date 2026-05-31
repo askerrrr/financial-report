@@ -1,7 +1,10 @@
+import { dbClient } from "../../../database/index.js";
 import wbapi from "../../reports/services/WBAPI/index.js";
 import dbUtils from "../../../database/collections/index.js";
 import splitListGoodsByExistence from "../services/splitListGoodsByExistence.js";
 import extractRequiredListGoodsData from "../../goods/services/extractRequiredListGoodsData.js";
+
+var updateLastUsedTimestampNow = true;
 
 var updateDataIntoListGoods = async (req, res, next) => {
   var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
@@ -10,19 +13,30 @@ var updateDataIntoListGoods = async (req, res, next) => {
   var data = await getAllUserListGoodsIds();
 
   for (var { userId, listGoodsIds } of data) {
-    if (listGoodsIds.length) {
-      var { token } = await getWBTokenByUserId(userId);
+    var session = await dbClient.startSession();
 
-      var { rawListGoods } = await wbapi.getPricesAndDiscountsByListGoods(userId, token, listGoodsIds);
+    try {
+      await session.withTransaction(async () => {
+        if (listGoodsIds.length) {
+          var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
 
-      var { listGoods } = await extractRequiredListGoodsData(rawListGoods);
-      var { newSkus, updatedSkus } = splitListGoodsByExistence(listGoodsIds, listGoods);
+          var { rawListGoods } = await wbapi.getPricesAndDiscountsByListGoods(userId, token, listGoodsIds);
 
-      if (newSkus.length) {
-        await saveNewSkusToDb(userId, newSkus);
+          var { listGoods } = await extractRequiredListGoodsData(rawListGoods);
+          var { newSkus, updatedSkus } = splitListGoodsByExistence(listGoodsIds, listGoods);
+
+          if (newSkus.length) {
+            await saveNewSkusToDb(userId, newSkus, session);
+          }
+
+          await updateSkusFields(userId, updatedSkus, session);
+        }
+      });
+    } catch (e) {
+    } finally {
+      if (session) {
+        await session.endSession();
       }
-
-      await updateSkusFields(userId, updatedSkus);
     }
   }
 

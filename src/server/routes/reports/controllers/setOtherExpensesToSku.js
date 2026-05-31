@@ -1,35 +1,23 @@
-import Joi from "joi";
 import calc from "../services/calcServices/index.js";
 import { dbClient } from "../../../database/index.js";
-import dbUtils from '../../../database/collections/index.js'
+import dbUtils from "../../../database/collections/index.js";
 import truncateNum from "../services/reportParsing/truncateNum.js";
+import getPrevSkuData from "../services/different/getPrevSkuData.js";
+import getPrevTotalsData from "../services/different/getPrevTotalsData.js";
+import excludeEqualParams from "../services/different/excludeEqualParams.js";
+import recalculateTaxParams from "../services/different/recalculateTaxParams.js";
 import processOfSkuCostPriceSetting from "../services/different/processOfSkuCostPriceSetting.js";
 
-var schema = Joi.object({
-  userId: Joi.string().required(),
-  reportId: Joi.number().required(),
-  skuIndex: Joi.number().required(),
-  skuId: Joi.number().required(),
-  year: Joi.number().required(),
-  skuName: Joi.string().required(),
-  costPrice: Joi.number().required(),
-  otherExpenses: Joi.number().required(),
-});
+var currentYearPostfix = "InCurrentYear";
+var endYearPostfix = "InNextYear";
 
 var setOtherExpensesToSku = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
-  var { userId, reportId, skuIndex, otherExpenses, skuId, year } = req.body;
+  var { userId, reportId, skuIndex, skuName, otherExpenses, skuId, year } = req.body;
   var { saveUpdatedReport, getReportById } = dbUtils.reportCollectionServices;
   var { updateSkuInListGoods, getSkuFromListGoods } = dbUtils.goodsCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
 
   var updatedReport;
-  var previousFinalSkuData = {};
 
   var session = await dbClient.startSession();
 
@@ -37,99 +25,125 @@ var setOtherExpensesToSku = async (req, res, next) => {
     await session.withTransaction(async () => {
       var { report } = await getReportById(userId, reportId, session);
       var { skus, ...totalParams } = report;
-      var { skuName } = skus[skuIndex];
-
-      var { skuFromListGoods } = await getSkuFromListGoods(userId, skuId, skuName, session);
 
       if (skus[skuIndex].otherExpenses === otherExpenses) {
         return res.sendStatus(409);
       }
 
+      var allTaxParams = await getTaxParamsFromDb(userId, null, session);
+      var startYear = +report.dateFrom.split("-")[0];
+      var endYear = +report.dateTo.split("-")[0];
+      var taxParamsOfYear = allTaxParams.find((param) => param.year === year);
+      var startYearTaxParams = allTaxParams.find((param) => param.year === startYear);
+      var endYearTaxParams = allTaxParams.find((param) => param.year === endYear);
+      var crossYearTaxParams = { startYearTaxParams, endYearTaxParams };
+
+      var { skuFromListGoods } = await getSkuFromListGoods(userId, skuId, skuName, session);
+
+      var prevSkuData = getPrevSkuData(skus[skuIndex]);
+      var prevReportTotals = getPrevTotalsData(totalParams);
+
+      var halfOfOtherExpenses = truncateNum(otherExpenses / 2);
+
+      skus[skuIndex].otherExpenses = otherExpenses;
+      skus[skuIndex].otherExpensesInCurrentYear = halfOfOtherExpenses;
+      skus[skuIndex].otherExpensesInNextYear = halfOfOtherExpenses;
+
       if (skus[skuIndex].isCostPriceSet) {
         if (report.crossesTaxYears) {
-          previousFinalSkuData.finalProfitInCurrentYear = skus[skuIndex].finalProfitInCurrentYear;
-          previousFinalSkuData.finalProfitInNextYear = skus[skuIndex].finalProfitInNextYear;
-          previousFinalSkuData.insuranceFeeInCurrentYear = skus[skuIndex].insuranceFeeInCurrentYear;
-          previousFinalSkuData.insuranceFeeInNextYear = skus[skuIndex].insuranceFeeInNextYear;
-          previousFinalSkuData.otherExpensesInCurrentYear = skus[skuIndex].otherExpensesInCurrentYear;
-          previousFinalSkuData.otherExpensesInNextYear = skus[skuIndex].otherExpensesInNextYear;
+          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, crossYearTaxParams, report.crossesTaxYears, prevSkuData);
 
-          skus[skuIndex].otherExpenses = otherExpenses;
-
-          var otherExpensesHalf = truncateNum(otherExpenses / 2);
-          skus[skuIndex].otherExpensesInCurrentYear = otherExpensesHalf;
-          skus[skuIndex].otherExpensesInNextYear = otherExpensesHalf;
-
-          var startYear = +report.dateFrom.split("-")[0];
-          var endYear = +report.dateTo.split("-")[0];
-          var startYearTaxParams = await getTaxParamsFromDb(userId, startYear, session);
-          var endYearTaxParams = await getTaxParamsFromDb(userId, endYear, session);
-          var taxParams = { startYearTaxParams, endYearTaxParams };
-
-          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, report.crossesTaxYears, previousFinalSkuData);
           skus[skuIndex] = result.updatedSku;
+
+          totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.crossesTaxYears).updatedTotals;
 
           var { startYearTaxParams, endYearTaxParams } = result.taxParams;
+
+          startYearTaxParams = recalculateTaxParams(startYearTaxParams, prevReportTotals, totalParams, currentYearPostfix).recalculatedTaxParams;
+          endYearTaxParams = recalculateTaxParams(endYearTaxParams, prevReportTotals, totalParams, endYearPostfix).recalculatedTaxParams;
+
+          updatedReport = { ...totalParams, skus };
+
           await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
-
-          await updateSkuInListGoods(userId, skuId, { metrics: result.updatedSkuMetrics });
+          await updateSkuInListGoods(userId, skuId, skuName, { metrics: result.updatedSkuMetrics });
         } else {
-          previousFinalSkuData.finalProfit = skus[skuIndex].finalProfit;
-          previousFinalSkuData.insuranceFee = skus[skuIndex].insuranceFee;
-          previousFinalSkuData.otherExpenses = skus[skuIndex].otherExpenses;
-
-          skus[skuIndex].otherExpenses = otherExpenses;
-          var taxParams = await getTaxParamsFromDb(userId, year, session);
-          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, null, previousFinalSkuData);
+          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParamsOfYear, null, prevSkuData);
 
           skus[skuIndex] = result.updatedSku;
 
+          totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex]).updatedTotals;
+          taxParamsOfYear = recalculateTaxParams(taxParamsOfYear, prevReportTotals, totalParams).recalculatedTaxParams;
+
+          updatedReport = { ...totalParams, skus };
+
           await changeTaxParamsToDb(userId, session, result.taxParams);
-          await updateSkuInListGoods(userId, skuId, { metrics: result.updatedSkuMetrics });
+          await updateSkuInListGoods(userId, skuId, skuName, { metrics: result.updatedSkuMetrics });
         }
-
-        updatedReport = await calc.total.restParams(totalParams, skus, report.crossesTaxYears);
       } else {
-        var prevSkuOtherExpenses = skus[skuIndex].otherExpenses;
-        skus[skuIndex].otherExpenses = otherExpenses;
+        if (report.crossesTaxYears) {
+          totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.crossesTaxYears).updatedTotals;
 
-        var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === year);
-        skuMetrics.otherExpenses = skuMetrics.otherExpenses - prevSkuOtherExpenses + otherExpenses;
+          crossYearTaxParams.startYearTaxParams = recalculateTaxParams(
+            crossYearTaxParams.startYearTaxParams,
+            prevReportTotals,
+            totalParams,
+            currentYearPostfix,
+          ).recalculatedTaxParams;
 
-        await updateSkuInListGoods(userId, skuId, { metrics: skuFromListGoods.metrics });
+          crossYearTaxParams.endYearTaxParams = recalculateTaxParams(
+            crossYearTaxParams.endYearTaxParams,
+            prevReportTotals,
+            totalParams,
+            endYearPostfix,
+          ).recalculatedTaxParams;
 
-        totalParams.totalOtherExpenses = totalParams.totalOtherExpenses - prevSkuOtherExpenses + otherExpenses;
-        updatedReport = { ...totalParams, skus };
+          var startYearSkuMetrics = skuFromListGoods.metrics.find((i) => i.year === startYear);
+          var endYearSkuMetrics = skuFromListGoods.metrics.find((i) => i.year === endYear);
+
+          var recalculatedStartYearMetricsOtherExpenses =
+            startYearSkuMetrics.otherExpenses - prevSkuData.otherExpensesInCurrentYear + halfOfOtherExpenses;
+          startYearSkuMetrics.otherExpenses = truncateNum(recalculatedStartYearMetricsOtherExpenses);
+
+          var recalculatedEndYearMetricsOtherExpenses = endYearSkuMetrics.otherExpenses - prevSkuData.otherExpensesInNextYear + halfOfOtherExpenses;
+          endYearSkuMetrics.otherExpenses = truncateNum(recalculatedEndYearMetricsOtherExpenses);
+
+          updatedReport = { ...totalParams, skus };
+
+          await changeTaxParamsToDb(userId, session, crossYearTaxParams.startYearTaxParams, crossYearTaxParams.endYearTaxParams);
+          await updateSkuInListGoods(userId, skuId, skuName, { metrics: skuFromListGoods.metrics });
+        } else {
+          totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex]).updatedTotals;
+          taxParamsOfYear = recalculateTaxParams(taxParamsOfYear, prevReportTotals, totalParams).recalculatedTaxParams;
+
+          var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === year);
+
+          var recalculatedSkuMetricsOtherExpenses = skuMetrics.otherExpenses - prevSkuData.otherExpenses + otherExpenses;
+          skuMetrics.otherExpenses = truncateNum(recalculatedSkuMetricsOtherExpenses);
+
+          updatedReport = { ...totalParams, skus };
+
+          await changeTaxParamsToDb(userId, session, taxParams);
+          await updateSkuInListGoods(userId, skuId, skuName, { metrics: skuFromListGoods.metrics });
+        }
       }
 
       await saveUpdatedReport(userId, reportId, updatedReport, session);
 
-      if (skus[skuIndex].isCostPriceSet) {
-        var { profitMargin, finalProfit } = skus[skuIndex];
-        var { totalFinalProfit, totalProfitMargin, totalInsuranceFee, totalOtherExpenses } = updatedReport;
+      var { profitMargin, finalProfit } = updatedReport.skus[skuIndex];
+      var { totalFinalProfit, totalProfitMargin, totalInsuranceFee, totalOtherExpenses } = updatedReport;
 
-        return res.status(200).json({
-          sku: {
-            skuIndex,
-            data: {
-              profitMargin,
-              finalProfit,
-            },
-          },
-          total: { totalFinalProfit, totalProfitMargin, totalInsuranceFee, totalOtherExpenses },
-        });
-      } else {
-        return res.status(200).json({
-          sku: {
-            skuIndex,
-            data: {
-              profitMargin: 0,
-              finalProfit: 0,
-            },
-          },
-          total: { totalFinalProfit: 0, totalProfitMargin: 0, totalInsuranceFee: 0, totalOtherExpenses: updatedReport.totalOtherExpenses },
-        });
-      }
+      var { skus, ...totals } = updatedReport;
+
+      var changedTotalsData = excludeEqualParams(prevReportTotals, totals);
+      var changedSkuData = excludeEqualParams(prevSkuData, skus[skuIndex]);
+
+      return res.status(200).json({
+        totals: changedTotalsData,
+        sku: {
+          skuIndex,
+          data: { ...changedSkuData },
+        },
+      });
     });
   } catch (e) {
     console.log(e);

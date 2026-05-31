@@ -21,12 +21,6 @@ var getPaidStorageReportByTaskIdFromWBAPI = async (taskId, token, userId) => {
   }
 
   var errMsg;
-  
-  if (res.status === 429) {
-  } else if (res.status === 401) {
-    errMsg =
-      "Не удалось авторизоваться для получения отчета о платном хранении с помощью сохраненного токена. Получить токен с нужными правами можно получить в личном кабинете продавца";
-  }
 
   switch (res.status) {
     case 400:

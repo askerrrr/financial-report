@@ -1,10 +1,13 @@
-import checkToken from "./checkToken.js";
 import showReport from "./showReport.js";
 import checkTaxRate from "./checkTaxRate.js";
 import sendReportData from "./sendReportData.js";
+import sendTokenForValidation from "./sendTokenForValidation.js";
+import writeReportToLocalStorage from "./writeReportToLocalStorage.js";
 import checkDateTo from "../index/services/reportLoader/services/checkDateTo.js";
 import checkDateFrom from "../index/services/reportLoader/services/checkDateFrom.js";
 import { showLoader, deleteLoader } from "../index/services/reportLoader/services/loader.js";
+
+var errorMsg = "Что-то пошло не так...";
 
 var main = async () => {
   try {
@@ -17,7 +20,13 @@ var main = async () => {
         var dateTo = document.getElementById("dateTo").value;
         var taxRate = +document.getElementById("tax-rate").value || 0;
 
-        var { token } = await checkToken(token);
+        var tokenIsValid = await sendTokenForValidation(token);
+
+        if (!tokenIsValid) {
+          alert("Некорректный токен");
+          return;
+        }
+
         var { validDateFrom } = await checkDateFrom(dateFrom);
         var { validDateTo } = await checkDateTo(dateTo, validDateFrom);
         var { taxRate } = await checkTaxRate(taxRate);
@@ -32,15 +41,15 @@ var main = async () => {
           throw new Error("Возникла ошибка при получении отчета...\nПопробуйте еще раз");
         }
 
-        await deleteLoader();
-        await showReport(report);
+        writeReportToLocalStorage(report);
+        await deleteLoader().then(() => showReport(report));
       } catch (e) {
-        alert(e.message);
+        alert(errorMsg);
         await deleteLoader();
       }
     };
   } catch (e) {
-    alert(e.message);
+    alert(errorMsg);
     await deleteLoader();
   }
 };

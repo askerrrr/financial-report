@@ -1,5 +1,7 @@
-var updateSingleSku = async (collection, userId, sku) => {
+var updateSingleSku = async (collection, userId, sku, session) => {
   var { nmID, price, discount } = sku;
+
+  var sessionOption = session ? { session } : {};
 
   var lastUpdatedDate = new Date(Date.now() + 3 * 60 * 60 * 1000);
   var discountedPrice = price - (price * discount) / 100;
@@ -14,7 +16,7 @@ var updateSingleSku = async (collection, userId, sku) => {
 
   var arrayFilters = [{ "sku.id": nmID }];
 
-  var result = await collection.updateOne({ userId }, { $set: query }, { arrayFilters });
+  var result = await collection.updateOne({ userId }, { $set: query }, { arrayFilters, ...sessionOption });
   return result;
 };
 

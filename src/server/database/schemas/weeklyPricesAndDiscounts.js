@@ -12,6 +12,7 @@ var priceAndDiscountSchema = new Schema(
 var skuSchema = new Schema(
   {
     nmID: { type: Number, required: true },
+    dayIndex: { type: Number, required: false },
     needToUpdate: { type: Boolean, default: true },
     lastUpdatedTimestamp: { type: Number, default: 0 },
     data: { type: priceAndDiscountSchema, required: false },
