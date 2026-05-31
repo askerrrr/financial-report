@@ -54,9 +54,7 @@ var getWeeklyFinancialReportFromWBAPI = async (dateFrom, dateTo, token, userId) 
       var remainingReportPart = [];
 
       while (needRetryRequest) {
-        if (needRetryRequest) {
-          await nextRequestDelay();
-        }
+        await nextRequestDelay();
 
         var res = await doRequest(token, dateFrom, dateTo, period, defaultRowNumber, MAX_NUMBERS_OF_ROWS);
 
