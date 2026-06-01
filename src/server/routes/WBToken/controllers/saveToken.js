@@ -8,8 +8,7 @@ import extractNewSkusFromLIstGoods from "../../goods/services/extractNewSkusFrom
 var updateLastUsedTimestampNow = true;
 
 var saveToken = async (req, res, next) => {
-  var { token, tokenPayload } = req.body;
-  var userId = req.app.locals.userId;
+  var { userId, token, tokenPayload } = req.body;
 
   var { getWBTokenByUserId, saveWBTokenToDb } = dbUtils.tokenCollectionServices;
   var { saveListGoodsToDb, getListGoodsFromDb, saveNewSkusToDb } = dbUtils.goodsCollectionServices;
@@ -48,6 +47,8 @@ var saveToken = async (req, res, next) => {
       await session.endSession();
     }
   }
+
+  next();
 };
 
 export default saveToken;
