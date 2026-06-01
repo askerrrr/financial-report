@@ -7,12 +7,13 @@ import tokenValidator from "./controllers/tokenValidator.js";
 import getWbTokenPage from "./controllers/getWbTokenPage.js";
 import checkTokenExists from "./controllers/checkTokenExists.js";
 import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
+import checkForStoppedReportLoading from "./controllers/checkForStoppedReportLoading.js";
 
 var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/", getWbTokenPage);
 router.get("/:userId", getTokenData);
-router.post("/", joiSchemaValidator(schema.saveToken), tokenValidator, saveToken);
+router.post("/", joiSchemaValidator(schema.saveToken), tokenValidator, saveToken, checkForStoppedReportLoading);
 router.get("/check-exist/:userId", checkTokenExists);
 router.delete("/", joiSchemaValidator(schema.removeToken), removeToken);
 
