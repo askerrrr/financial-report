@@ -1,11 +1,11 @@
 import checkWBTokenExists from "./checkWBTokenExists.js";
 import openReportPeriodModal from "./services/reportLoader/index.js";
 
-var reportLoaderHandler = () =>
+var reportLoaderHandler = (userId) =>
   (document.getElementById("period-button").onclick = async (e) => {
     e.preventDefault();
 
-    var result = await checkWBTokenExists();
+    var result = await checkWBTokenExists(userId);
 
     if (!result.tokenIsExist) {
       if (result.error) {

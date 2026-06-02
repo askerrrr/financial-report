@@ -10,7 +10,7 @@ var main = async () => {
 
   buildReportTree(userId, lastReports, reportTree);
 
-  reportLoaderHandler();
+  reportLoaderHandler(userId);
 };
 
 main();
