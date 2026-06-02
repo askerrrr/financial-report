@@ -22,6 +22,6 @@ var panel = `<div id="report-loading-state-panel">
 
 var reportLoadingStatePanelContainer = document.getElementById("report-loading-state-panel");
 
-var showReportLoadingStatePanel = () => (reportLoadingStatePanelContainer.innerHTML = panel);
+var showReportLoadingStatePanel = async () => (reportLoadingStatePanelContainer.innerHTML = panel);
 
 export default showReportLoadingStatePanel;
