@@ -1,4 +1,3 @@
-import getReportsData from "./services/getReportsData.js";
 import showNoReportsMessage from "./services/showNoReportsMessage.js";
 import createReportsTree from "./services/reportTreeBuilder/createReportTree/index.js";
 import createReportsTable from "./services/reportTreeBuilder/createReportTree/createReportsTable.js";
@@ -64,9 +63,7 @@ var deleteEmptyMonth = async (userId) => {
   //await sendMonthForDeletion(userId, monthsForDeletion);
 };
 
-var buildReportTree = async () => {
-  var { lastReports, reportTree } = await getReportsData();
-
+var buildReportTree = async (lastReports, reportTree) => {
   if (!reportTree.length) {
     return showNoReportsMessage();
   }
