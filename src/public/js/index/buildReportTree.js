@@ -63,12 +63,11 @@ var deleteEmptyMonth = async (userId) => {
   //await sendMonthForDeletion(userId, monthsForDeletion);
 };
 
-var buildReportTree = async (lastReports, reportTree) => {
+var buildReportTree = async (userId, lastReports, reportTree) => {
   if (!reportTree.length) {
     return showNoReportsMessage();
   }
 
-  var userId = document.cookie.split("=")[1];
   var lastMonthData = reportTree[0].months.shift();
 
   await createReportsTree(reportTree).then(() => insertLastReportsToTree(reportTree, lastReports, lastMonthData));
