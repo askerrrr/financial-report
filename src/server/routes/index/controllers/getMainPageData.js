@@ -18,7 +18,7 @@ var getMainPageData = async (req, res, next) => {
   var { getReportTree } = dbUtils.reportsTreeCollectionServices;
   var { getReportLoadingState } = dbUtils.reportLoadingStatesCollectionServices;
 
-  var { reportsQueue, abandonedReports } = await getReportLoadingState(userId);
+  var { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed } = await getReportLoadingState(userId);
 
   var { reportTree } = await getReportTree(userId);
 
@@ -36,7 +36,11 @@ var getMainPageData = async (req, res, next) => {
   }
 
   var { reports } = await getReportsByUserId(userId, null, projectonFields, lastReportIds);
-  return res.json({ lastReports: reports, reportTree: reportTreeDto, reportLoadingState: { reportsQueue, abandonedReports } });
+  return res.json({
+    lastReports: reports,
+    reportTree: reportTreeDto,
+    reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed },
+  });
 };
 
 export default getMainPageData;
