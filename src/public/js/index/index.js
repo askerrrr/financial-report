@@ -13,7 +13,7 @@ var main = async () => {
 
   reportLoaderHandler(userId);
 
-  reportLoadingStatePanelBuilder(reportLoadingState);
+  reportLoadingStatePanelBuilder(userId, reportLoadingState);
 };
 
 main();
