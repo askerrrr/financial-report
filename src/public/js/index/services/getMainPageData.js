@@ -1,6 +1,4 @@
-var getReportsData = async () => {
-  var userId = document.cookie.split("=")[1];
-
+var getMainPageData = async (userId) => {
   var res = await fetch("/api/" + userId);
 
   if (!res.ok) {
@@ -12,4 +10,4 @@ var getReportsData = async () => {
   return reportData;
 };
 
-export default getReportsData;
+export default getMainPageData;

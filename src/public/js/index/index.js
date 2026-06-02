@@ -1,10 +1,12 @@
 import buildReportTree from "./buildReportTree.js";
 import fileUploadHandler from "./fileUploadHandler.js";
-import getReportsData from "./services/getReportsData.js";
+import getMainPageData from "./services/getMainPageData.js";
 import reportLoaderHandler from "./reportLoaderHandler.js";
 
+var userId = document.cookie.split("=")[1];
+
 var main = async () => {
-  var { lastReports, reportTree, reportLoadingState } = await getReportsData();
+  var { lastReports, reportTree, reportLoadingState } = await getMainPageData(userId);
 
   buildReportTree(lastReports, reportTree);
 
