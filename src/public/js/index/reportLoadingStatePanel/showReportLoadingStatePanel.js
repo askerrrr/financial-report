@@ -4,14 +4,31 @@ var panel = `<div id="report-loading-state-panel">
         <div id="report-loading-state-progress-details">
           <details id="report-loading-state-details">
             <summary>детали</summary>
-             <details id="loaded-reports">
+             <details id="reports-queue">
               <summary>загруженные</summary>
+              <table>
+                    <thead>
+                        <tr>
+                        <th>a</th>
+                        <th>b</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reports-queue-tbody">
+                    </tbody>
+              </table>
             </details>
-            <details id="reports-queue">
-              <summary>в очереди</summary>
-            </details>
-            <details id="loaded-reports">
+            <details id="abandoned-reports">
               <summary>не удалось загрузить</summary>
+              <table>
+                    <thead>
+                        <tr>
+                        <th>a</th>
+                        <th>b</th>
+                        </tr>
+                    </thead>
+                    <tbody id="abandoned-reports-tbody">
+                    </tbody>
+              </table>              
             </details>
           </details>
         </div>
