@@ -1,0 +1,18 @@
+#report-loading-state-panel {
+  min-width: 200px;
+  max-width: 500px;
+  font-size: x-large;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #343a40;
+  border: 1px solid #495057;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0 0 10px 0;
+}
+
+#report-loading-state-panel {
+  max-width: 500px;
+  width: fit-content;
+  margin: 0 0 20px 0;
+}
