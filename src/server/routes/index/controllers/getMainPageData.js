@@ -16,6 +16,7 @@ var getMainPageData = async (req, res, next) => {
 
   var { getReportsByUserId } = dbUtils.reportCollectionServices;
   var { getReportTree } = dbUtils.reportsTreeCollectionServices;
+  var { getReportLoadingState } = dbUtils.reportLoadingStatesCollectionServices;
 
   var { reportTree } = await getReportTree(userId);
 
