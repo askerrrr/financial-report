@@ -15,7 +15,7 @@ var createReportsTable = async (year, month, reportIds, reports) => {
 
     var { totalFinalProfit, totalProductCosts, totalTaxAmount, isFinancesAccounted } = report;
 
-    var fullPeriodTd = await getReportPeriod(dateFrom, dateTo);
+    var fullPeriodTd = getReportPeriod(dateFrom, dateTo);
 
     var totalFinalProfitTd = createTdElement(totalFinalProfit, null, null, "totalFinalProfit");
 

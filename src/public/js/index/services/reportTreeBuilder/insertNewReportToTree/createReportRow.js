@@ -5,7 +5,7 @@ import createTdElement from "../../../../report/table/services/createTdElement.j
 var createReportRow = async (reportData) => {
   var { dateFrom, dateTo, reportId, totalTaxAmount } = reportData;
 
-  var reportPeriod = await getReportPeriod(dateFrom, dateTo);
+  var reportPeriod = getReportPeriod(dateFrom, dateTo);
 
   var reportLink = await getReportLink(reportId);
 

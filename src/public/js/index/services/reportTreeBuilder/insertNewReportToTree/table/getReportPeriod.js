@@ -1,4 +1,4 @@
-var getReportPeriod = async (dateFrom, dateTo) => {
+var getReportPeriod = (dateFrom, dateTo) => {
   var td = document.createElement("td");
 
   var dateFromDiv = document.createElement("div");
