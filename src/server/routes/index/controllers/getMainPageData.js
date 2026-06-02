@@ -11,7 +11,7 @@ var projectonFields = [
   "reports.isFinancesAccounted",
 ];
 
-var getLastReportsAndTree = async (req, res, next) => {
+var getMainPageData = async (req, res, next) => {
   var userId = req.app.locals.userId;
 
   var { getReportsByUserId } = dbUtils.reportCollectionServices;
@@ -36,4 +36,4 @@ var getLastReportsAndTree = async (req, res, next) => {
   return res.json({ lastReports: reports, reportTree: reportTreeDto });
 };
 
-export default getLastReportsAndTree;
+export default getMainPageData;
