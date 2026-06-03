@@ -10,8 +10,8 @@ var panel = `
               <table>
                     <thead>
                         <tr>
-                        <th>a</th>
-                        <th>b</th>
+                        <th>период отчета</th>
+                        <th>попыток загрузить</th>
                         </tr>
                     </thead>
                     <tbody id="reports-queue-tbody">
@@ -23,8 +23,8 @@ var panel = `
               <table>
                     <thead>
                         <tr>
-                        <th>a</th>
-                        <th>b</th>
+                        <th>период отчета</th>
+                        <th>попыток загрузить</th>
                         </tr>
                     </thead>
                     <tbody id="abandoned-reports-tbody">
