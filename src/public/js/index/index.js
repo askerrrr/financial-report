@@ -7,13 +7,13 @@ import reportLoadingStatePanelBuilder from "./reportLoadingStatePanel/index.js";
 var userId = document.cookie.split("=")[1];
 
 var main = async () => {
-  var { lastReports, reportTree, reportLoadingState } = await getMainPageData(userId);
+  var { lastReports, reportTree, reportLoadingState, reportLoadingStateUrl } = await getMainPageData(userId);
 
   buildReportTree(userId, lastReports, reportTree);
 
   reportLoaderHandler(userId);
 
-  reportLoadingStatePanelBuilder(userId, reportLoadingState);
+  reportLoadingStatePanelBuilder(userId, reportLoadingStateUrl, reportLoadingState);
 };
 
 main();
