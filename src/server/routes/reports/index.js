@@ -19,6 +19,7 @@ import setCostPriceToSkus from "./controllers/setCostPriceToSkus.js";
 import downloadReportAsXLSX from "./controllers/downloadReportAsXLSX.js";
 import downloadReportsAsZip from "./controllers/downloadReportsAsZip.js";
 import setOtherExpensesToSku from "./controllers/setOtherExpensesToSku.js";
+import getReportLoadingState from "./controllers/getReportLoadingState.js";
 import checkReportsLoadingProgress from "./controllers/checkReportsLoadingProgress.js";
 import changeFinancialAccountingStatus from "./controllers/changeFinancialAccountingStatus.js";
 
@@ -34,6 +35,8 @@ router.delete("/", joiSchemaValidator(schemas.deleteReport), deleteReport);
 
 router.post("/as-zip/", joiSchemaValidator(schemas.downloadReportsAsZip), downloadReportsAsZip);
 router.post("/as-xlsx/", joiSchemaValidator(schemas.downloadReportAsXLSX), downloadReportAsXLSX);
+
+router.get("/loading-state/:userId/", getReportLoadingState);
 
 router.patch("/skus/cost-price", joiSchemaValidator(schemas.setCostPriceToSku), setCostPriceToSku);
 router.patch("/skus/cost-prices", joiSchemaValidator(schemas.setCostPriceToSkus), setCostPriceToSkus);
