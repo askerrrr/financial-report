@@ -4,8 +4,9 @@ import getReportPeriod from "../services/reportTreeBuilder/insertNewReportToTree
 var insertDataToTable = (data, tbodyId) => {
   var tbody = document.getElementById(tbodyId);
 
-  for (var { dateFrom, dateTo, failedCount } of data) {
+  for (var { dateFrom, dateTo, failedCount, index } of data) {
     var tableRow = document.createElement("tr");
+    tableRow.id = index;
 
     var period = getReportPeriod(dateFrom, dateTo);
     var periodTdElement = createTdElement(period);
