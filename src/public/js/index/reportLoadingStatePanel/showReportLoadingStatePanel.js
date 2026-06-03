@@ -1,4 +1,4 @@
-var panel = `<div id="report-loading-state-panel">
+var panel = `
       <h5>Загружено:</h5>
       <h5>Статус загрузки:</h5>
         <div id="report-loading-state-progress-info"></div>
@@ -35,8 +35,7 @@ var panel = `<div id="report-loading-state-panel">
         </div>
         <div id="loader-container">
           <span class="report-loading-state-loader"></span>
-        </div>
-      </div>`;
+        </div>`;
 
 var reportLoadingStatePanelContainer = document.getElementById("report-loading-state-panel");
 
