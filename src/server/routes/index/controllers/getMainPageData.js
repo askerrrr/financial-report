@@ -30,9 +30,15 @@ var getMainPageData = async (req, res, next) => {
 
   var lastYear = reportTreeDto[0];
   var lastReportIds = getLastNonEmptyReportIds(lastYear);
+  var reportLoadingStateUrl = "/report/loading-state/" + userId + "/";
 
   if (!lastReportIds || !lastReportIds.length) {
-    return res.json({ lastReports: [], reportTree: [] });
+    return res.json({
+      lastReports: [],
+      reportTree: [],
+      reportLoadingStateUrl,
+      reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed },
+    });
   }
 
   var { reports } = await getReportsByUserId(userId, null, projectonFields, lastReportIds);
@@ -40,7 +46,7 @@ var getMainPageData = async (req, res, next) => {
   return res.json({
     lastReports: reports,
     reportTree: reportTreeDto,
-    reportLoadingStateUrl: "/report/loading-state/" + userId + "/",
+    reportLoadingStateUrl,
     reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed },
   });
 };
