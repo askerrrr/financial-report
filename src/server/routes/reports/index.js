@@ -36,7 +36,7 @@ router.delete("/", joiSchemaValidator(schemas.deleteReport), deleteReport);
 router.post("/as-zip/", joiSchemaValidator(schemas.downloadReportsAsZip), downloadReportsAsZip);
 router.post("/as-xlsx/", joiSchemaValidator(schemas.downloadReportAsXLSX), downloadReportAsXLSX);
 
-router.get("/loading-state/:userId/", getReportLoadingState);
+router.get("/loading-state/:userId/", joiSchemaValidator(schemas.getReportLoadingState), getReportLoadingState);
 
 router.patch("/skus/cost-price", joiSchemaValidator(schemas.setCostPriceToSku), setCostPriceToSku);
 router.patch("/skus/cost-prices", joiSchemaValidator(schemas.setCostPriceToSkus), setCostPriceToSkus);
