@@ -6,7 +6,7 @@ var getMainPageData = async (userId) => {
   }
 
   var reportData = await res.json();
-
+  console.log({reportData})
   return reportData;
 };
 

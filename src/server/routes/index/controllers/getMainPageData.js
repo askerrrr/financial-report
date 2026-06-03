@@ -13,6 +13,7 @@ var projectonFields = [
 
 var getMainPageData = async (req, res, next) => {
   var userId = req.app.locals.userId;
+  var reportLoadingStateUrl = "/report/loading-state/" + userId + "/";
 
   var { getReportsByUserId } = dbUtils.reportCollectionServices;
   var { getReportTree } = dbUtils.reportsTreeCollectionServices;
@@ -23,14 +24,18 @@ var getMainPageData = async (req, res, next) => {
   var { reportTree } = await getReportTree(userId);
 
   if (!reportTree.length) {
-    return res.json({ lastReports: [], reportTree: [] });
+    return res.json({
+      lastReports: [],
+      reportTree: [],
+      reportLoadingStateUrl,
+      reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed },
+    });
   }
 
   var reportTreeDto = await getReportTreeDto(reportTree);
 
   var lastYear = reportTreeDto[0];
   var lastReportIds = getLastNonEmptyReportIds(lastYear);
-  var reportLoadingStateUrl = "/report/loading-state/" + userId + "/";
 
   if (!lastReportIds || !lastReportIds.length) {
     return res.json({
