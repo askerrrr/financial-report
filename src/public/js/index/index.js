@@ -8,7 +8,7 @@ var userId = document.cookie.split("=")[1];
 
 var main = async () => {
   var { lastReports, reportTree, reportLoadingState, reportLoadingStateUrl } = await getMainPageData(userId);
-  console.log({ reportLoadingState, reportLoadingStateUrl });
+
   buildReportTree(userId, lastReports, reportTree);
 
   reportLoaderHandler(userId);
