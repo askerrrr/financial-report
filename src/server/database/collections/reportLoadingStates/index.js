@@ -1,5 +1,6 @@
 import { reportLoadingStatesCollection } from "../../connections/index.js";
 
+import pushToReportsQueue from "./services/pushToReportsQueue.js";
 import getReportLoadingState from "./services/getReportLoadingState.js";
 import prependToReportsQueue from "./services/prependToReportsQueue.js";
 import getLoadingProgressStatus from "./services/getLoadingProgressStatus.js";
@@ -13,6 +14,8 @@ var reportLoadingStatesCollectionServices = {
   deleteReportLoadingStates: (userId, session) => deleteReportLoadingStates(reportLoadingStatesCollection, userId, session),
   prependToReportsQueue: (userId, dateFrom, dateTo) => prependToReportsQueue(reportLoadingStatesCollection, userId, dateFrom, dateTo),
   setLastReportRequestTimestamp: (userId, session) => setLastReportRequestTimestamp(reportLoadingStatesCollection, userId, session),
+
+  pushToReportsQueue: (userId, periods, session) => pushToReportsQueue(reportLoadingStatesCollection, userId, periods, session),
 
   updateReportLoadingStoppedStatus: (userId, newStatus, session) =>
     updateReportLoadingStoppedStatus(reportLoadingStatesCollection, userId, newStatus, session),
