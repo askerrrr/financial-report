@@ -40,7 +40,7 @@ var getMainPageData = async (req, res, next) => {
   return res.json({
     lastReports: reports,
     reportTree: reportTreeDto,
-    reportLoadingStateUrl: "/report/loading-state/" + userId,
+    reportLoadingStateUrl: "/report/loading-state/" + userId + "/",
     reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed },
   });
 };

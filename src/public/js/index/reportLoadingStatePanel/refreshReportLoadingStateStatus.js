@@ -1,9 +1,7 @@
 var NEXT_REQUEST_DELAY_MS = 90_000;
 var nextRequestDelay = async () => new Promise((res) => setTimeout(res, NEXT_REQUEST_DELAY_MS));
 
-var refreshReportLoadingStateStatus = async (userId, url) => {
-  var loadingInProgress = true;
-
+var refreshReportLoadingStateStatus = async (url) => {
   while (true) {
     await nextRequestDelay();
 
@@ -16,3 +14,5 @@ var refreshReportLoadingStateStatus = async (userId, url) => {
     }
   }
 };
+
+export default refreshReportLoadingStateStatus;
