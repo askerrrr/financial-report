@@ -36,9 +36,11 @@ var getMainPageData = async (req, res, next) => {
   }
 
   var { reports } = await getReportsByUserId(userId, null, projectonFields, lastReportIds);
+
   return res.json({
     lastReports: reports,
     reportTree: reportTreeDto,
+    reportLoadingStateUrl: "/report/loading-state/" + userId,
     reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed },
   });
 };
