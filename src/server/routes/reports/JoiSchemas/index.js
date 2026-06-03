@@ -8,6 +8,7 @@ import setCostPriceToSkusSchema from "./setCostPriceToSkus.js";
 import downloadReportAsXLSXSchema from "./downloadReportAsXLSX.js";
 import downloadReportsAsZipSchema from "./downloadReportsAsZip.js";
 import setOtherExpensesToSkuSchema from "./setOtherExpensesToSku.js";
+import resumeAbandonedReportsLoadingSchema from "./resumeAbandonedReportsLoading.js";
 import changeFinancialAccountingStatusSchema from "./changeFinancialAccountingStatus.js";
 
 var schema = {};
@@ -21,6 +22,7 @@ schema.setCostPriceToSkus = setCostPriceToSkusSchema;
 schema.downloadReportsAsZip = downloadReportsAsZipSchema;
 schema.downloadReportAsXLSX = downloadReportAsXLSXSchema;
 schema.setOtherExpensesToSku = setOtherExpensesToSkuSchema;
+schema.resumeAbandonedReportsLoading = resumeAbandonedReportsLoadingSchema;
 schema.changeFinancialAccountingStatus = changeFinancialAccountingStatusSchema;
 
 export default schema;
