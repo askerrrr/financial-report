@@ -5,9 +5,9 @@ var refreshReportLoadingStateStatus = async (userId, url) => {
   var loadingInProgress = true;
 
   while (true) {
-    await nextRequestDelay()
+    await nextRequestDelay();
 
-    var res = await fetch(url, { body: JSON.stringify({ userId }), headers: { "Content-Type": "application/json" } });
+    var res = await fetch(url);
 
     var data = await res.json();
 
