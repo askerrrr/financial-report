@@ -5,9 +5,9 @@ var getMainPageData = async (userId) => {
     return alert("Не удалось загрузить отчеты");
   }
 
-  var reportData = await res.json();
-  console.log({reportData})
-  return reportData;
+  var data = await res.json();
+
+  return data;
 };
 
 export default getMainPageData;
