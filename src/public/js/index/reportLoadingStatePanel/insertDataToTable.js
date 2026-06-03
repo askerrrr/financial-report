@@ -7,6 +7,8 @@ var insertDataToTable = (data, tbodyId) => {
   for (var { dateFrom, dateTo, failedCount, index } of data) {
     var tableRow = document.createElement("tr");
     tableRow.id = index;
+    tableRow.setAttribute("dateFrom", dateFrom);
+    tableRow.setAttribute("dateTo", dateTo);
 
     var period = getReportPeriod(dateFrom, dateTo);
     var periodTdElement = createTdElement(period);
