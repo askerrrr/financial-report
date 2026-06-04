@@ -1,6 +1,11 @@
-var pushToReportsQueue = async (collection, userId, periods, session) => {
+var pushToReportsQueue = async (collection, userId, periods, session, needToResetAbandonedReports = false) => {
   var sessionOpt = session ? { session } : {};
-  await collection.updateOne({ userId }, { $push: { reportsQueue: { $each: [...periods] } } }, { session: session });
+
+  if (needToResetAbandonedReports) {
+    await collection.updateOne({ userId }, { $push: { reportsQueue: { $each: [...periods] }, abandonedReports: [] } }, { session: session });
+  } else {
+    await collection.updateOne({ userId }, { $push: { reportsQueue: { $each: [...periods] } } }, { session: session });
+  }
 };
 
 export default pushToReportsQueue;
