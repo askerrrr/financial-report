@@ -1,11 +1,11 @@
 var url = "/report/loading-state/abandoned/";
 
-var sendAbandonedReports = async (userId, abandonedReportPeriods, needToResumeLoading) => {
+var sendAbandonedReports = async (userId, abandonedReports, needToResumeLoading) => {
   try {
     var res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId, abandonedReportPeriods, needToResumeLoading }),
+      body: JSON.stringify({ userId, abandonedReports, needToResumeLoading }),
     });
 
     return res.status === 200;
