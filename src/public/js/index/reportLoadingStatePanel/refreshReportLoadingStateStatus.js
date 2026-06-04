@@ -6,7 +6,7 @@ var nextRequestDelay = async () => new Promise((res) => setTimeout(res, NEXT_REQ
 var reportsQueueTbodyId = "reports-queue-tbody";
 var abandonedReportsTbodyId = "abandoned-reports-tbody";
 
-var refreshReportLoadingStateStatus = async (url) => {
+var refreshReportLoadingStateStatus = async (userId, url) => {
   var reportsQueueTbody = document.getElementById(reportsQueueTbodyId);
   var abandonedReportsTbody = document.getElementById(abandonedReportsTbodyId);
 

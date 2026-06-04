@@ -5,7 +5,7 @@ import { enableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentR
 
 var reportLoadingStatePanelBuilder = async (userId, url, { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed }) => {
   if (loadingInProgress || isReportLoadingDelayed) {
-    enableParentReportLoadingStatePanel()
+    enableParentReportLoadingStatePanel();
     await showReportLoadingStatePanel();
 
     var reportsQueueTbodyId = "reports-queue-tbody";
@@ -14,7 +14,7 @@ var reportLoadingStatePanelBuilder = async (userId, url, { reportsQueue, abandon
     insertDataToTable(reportsQueue, reportsQueueTbodyId);
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
 
-    await refreshReportLoadingStateStatus(url);
+    await refreshReportLoadingStateStatus(userId, url);
   }
 };
 
