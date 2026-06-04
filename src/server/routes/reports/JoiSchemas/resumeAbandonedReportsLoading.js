@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-var abandonedReportPeriodsSchema = Joi.array()
+var abandonedReporsSchema = Joi.array()
   .items({
     index: Joi.number().required(),
     dateTo: Joi.string().required(),
@@ -12,7 +12,7 @@ var abandonedReportPeriodsSchema = Joi.array()
 var schema = Joi.object({
   userId: Joi.string().required(),
   needToResumeLoading: Joi.boolean().required(),
-  abandonedReportPeriods: abandonedReportPeriodsSchema,
+  abandonedRepors: abandonedReporsSchema,
 });
 
 export default schema;
