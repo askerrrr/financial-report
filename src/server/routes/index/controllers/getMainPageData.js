@@ -12,7 +12,12 @@ var projectonFields = [
 ];
 
 var getMainPageData = async (req, res, next) => {
-  var userId = req.app.locals.userId;
+  var userId = req.params?.userId;
+
+  if (!userId) {
+    return res.sendStatus(400);
+  }
+
   var reportLoadingStateUrl = "/report/loading-state/" + userId + "/";
 
   var { getReportsByUserId } = dbUtils.reportCollectionServices;
