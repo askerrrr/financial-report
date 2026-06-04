@@ -5,7 +5,11 @@ var url = process.env.REPORT_LOADER_URL_TO_RESUME_ABANDONED_LOADING;
 var nextRequestDelay = async () => new Promise((res) => setTimeout(res, NEXT_REQUEST_INTERVAL_MS));
 
 var doRequest = async (userId) =>
-  await fetch(url, { method: "POST", body: JSON.stringify({ userId }), headers: { "Content-Type": "application/json" } });
+  await fetch(url, {
+    method: "POST",
+    body: JSON.stringify({ userId }),
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + process.env.SECRET_KEY },
+  });
 
 var sendResumeAbandonedReportsLoadingRequest = async (userId) => {
   var attempt = 0;
