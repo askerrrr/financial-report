@@ -1,10 +1,13 @@
 import insertDataToTable from "./insertDataToTable.js";
+import sendAbandonedReports from "./sendAbandonedReports.js";
+import { disableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentReportLoadingStatePanel.js";
 
 var NEXT_REQUEST_DELAY_MS = 90_000;
 var nextRequestDelay = async () => new Promise((res) => setTimeout(res, NEXT_REQUEST_DELAY_MS));
 
 var reportsQueueTbodyId = "reports-queue-tbody";
 var abandonedReportsTbodyId = "abandoned-reports-tbody";
+var retryAbandonedReportsLoadingMsg = "Повторить загрузку отчётов, которые не удалось загрузить";
 
 var refreshReportLoadingStateStatus = async (userId, url) => {
   var reportsQueueTbody = document.getElementById(reportsQueueTbodyId);
@@ -17,15 +20,60 @@ var refreshReportLoadingStateStatus = async (userId, url) => {
 
     var { reportsQueue, abandonedReports, loadingInProgress } = await res.json();
 
-    reportsQueueTbody.innerHTML = "";
-    abandonedReportsTbody.innerHTML = "";
+    console.log({ loadingInProgress });
+
+    resetReportsQueueTables();
+    resetAbandonedReportsTables();
 
     insertDataToTable(reportsQueue, reportsQueueTbodyId);
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
 
     if (!loadingInProgress) {
-      break;
+      if (hasAbandonedReports()) {
+        var needToResumeLoading = confirm(retryAbandonedReportsLoadingMsg);
+
+        console.log({ abandonedReports });
+
+        var success = await sendAbandonedReports(userId, abandonedReports, needToResumeLoading);
+        console.log({ success, needToResumeLoading });
+        if (success) {
+          if (!needToResumeLoading) {
+            resetReportsQueueTables();
+            resetAbandonedReportsTables();
+            disableParentReportLoadingStatePanel();
+            break;
+          } else {
+            resetAbandonedReportsTables();
+            insertDataToTable(abandonedReports, reportsQueueTbodyId);
+          }
+        } else {
+          var errMsg;
+
+          if (needToResumeLoading) {
+            errMsg = "Произошла ошибка при попытке загрузить отчёты. Попробуйте еще раз.";
+          } else {
+            errMsg = "Произошла ошибка при попытке избавиться от незагруженных отчётов. Попробуйте еще раз.";
+          }
+
+          alert(errMsg);
+        }
+      } else {
+        disableParentReportLoadingStatePanel();
+        break;
+      }
     }
+  }
+
+  function hasAbandonedReports() {
+    return abandonedReportsTbody.hasChildNodes();
+  }
+
+  function resetAbandonedReportsTables() {
+    abandonedReportsTbody.innerHTML = "";
+  }
+
+  function resetReportsQueueTables() {
+    reportsQueueTbody.innerHTML = "";
   }
 };
 
