@@ -4,7 +4,7 @@ var pushToReportsQueue = async (collection, userId, periods, session, needToRese
   if (needToResetAbandonedReports) {
     await collection.updateOne(
       { userId },
-      { $push: { reportsQueue: { $each: [...periods] }, $set: { abandonedReports: [] } } },
+      { $push: { reportsQueue: { $each: [...periods] } }, $set: { abandonedReports: [] } },
       { session: session },
     );
   } else {
