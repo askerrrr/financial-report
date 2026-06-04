@@ -2,6 +2,7 @@ import { reportLoadingStatesCollection } from "../../connections/index.js";
 
 import pushToReportsQueue from "./services/pushToReportsQueue.js";
 import getReportLoadingState from "./services/getReportLoadingState.js";
+import resetAbandonedReports from "./services/resetAbandonedReports.js";
 import prependToReportsQueue from "./services/prependToReportsQueue.js";
 import getLoadingProgressStatus from "./services/getLoadingProgressStatus.js";
 import deleteReportLoadingStates from "./services/deleteReportLoadingStates.js";
@@ -19,6 +20,8 @@ var reportLoadingStatesCollectionServices = {
 
   updateReportLoadingStoppedStatus: (userId, newStatus, session) =>
     updateReportLoadingStoppedStatus(reportLoadingStatesCollection, userId, newStatus, session),
+
+  resetAbandonedReports: (userId) => resetAbandonedReports(reportLoadingStatesCollection, userId),
 };
 
 export default reportLoadingStatesCollectionServices;
