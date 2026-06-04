@@ -16,7 +16,7 @@ var reportLoadingStatesCollectionServices = {
   prependToReportsQueue: (userId, dateFrom, dateTo) => prependToReportsQueue(reportLoadingStatesCollection, userId, dateFrom, dateTo),
   setLastReportRequestTimestamp: (userId, session) => setLastReportRequestTimestamp(reportLoadingStatesCollection, userId, session),
 
-  pushToReportsQueue: (userId, periods, session) => pushToReportsQueue(reportLoadingStatesCollection, userId, periods, session),
+  pushToReportsQueue: (userId, periods, session, needToResetAbandonedReports) => pushToReportsQueue(reportLoadingStatesCollection, userId, periods, session, needToResetAbandonedReports),
 
   updateReportLoadingStoppedStatus: (userId, newStatus, session) =>
     updateReportLoadingStoppedStatus(reportLoadingStatesCollection, userId, newStatus, session),
