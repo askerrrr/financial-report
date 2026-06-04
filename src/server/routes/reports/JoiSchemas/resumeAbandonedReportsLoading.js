@@ -7,6 +7,10 @@ var abandonedReportPeriodsSchema = Joi.array().items({
   failedCount: Joi.number().required(),
 });
 
-var schema = Joi.object({ userId: Joi.string().required(), abandonedReportPeriods: abandonedReportPeriodsSchema });
+var schema = Joi.object({
+  userId: Joi.string().required(),
+  needToResumeLoading: Joi.boolean().required(),
+  abandonedReportPeriods: abandonedReportPeriodsSchema,
+});
 
 export default schema;
