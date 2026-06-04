@@ -2,13 +2,19 @@ import reportLoadingStateCollectionServices from "../../../database/collections/
 import sendResumeAbandonedReportsLoadingRequest from "../services/different/sendResumeAbandonedReportsLoadingRequest.js";
 
 var resumeAbandonedReportsLoading = async (req, res) => {
-  var { userId, abandonedReportPeriods } = req.body;
+  var { userId, abandonedReportPeriods, needToResumeLoading } = req.body;
 
-  await reportLoadingStateCollectionServices.pushToReportsQueue(userId, abandonedReportPeriods);
+  var success;
 
-  var success = await sendResumeAbandonedReportsLoadingRequest(req.body);
+  if (needToResumeLoading) {
+    await reportLoadingStateCollectionServices.pushToReportsQueue(userId, abandonedReportPeriods);
 
-  return res.sendStatus(200);
+    success = await sendResumeAbandonedReportsLoadingRequest(req.body);
+  } else {
+    success = (await reportLoadingStateCollectionServices.resetAbandonedReports(userId)).modifiedCount;
+  }
+
+  return success ? res.sendStatus(200) : res.sendStatus(304);
 };
 
 export default resumeAbandonedReportsLoading;
