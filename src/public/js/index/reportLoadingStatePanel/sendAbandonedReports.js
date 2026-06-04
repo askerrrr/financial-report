@@ -1,4 +1,4 @@
-var url = "/reports/loading-state/abandoned/";
+var url = "/report/loading-state/abandoned/";
 
 var sendAbandonedReports = async (userId, abandonedReportPeriods, needToResumeLoading) => {
   try {
