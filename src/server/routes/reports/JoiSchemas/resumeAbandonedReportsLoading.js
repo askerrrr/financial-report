@@ -12,7 +12,7 @@ var abandonedReporsSchema = Joi.array()
 var schema = Joi.object({
   userId: Joi.string().required(),
   needToResumeLoading: Joi.boolean().required(),
-  abandonedRepors: abandonedReporsSchema,
+  abandonedReports: abandonedReporsSchema,
 });
 
 export default schema;
