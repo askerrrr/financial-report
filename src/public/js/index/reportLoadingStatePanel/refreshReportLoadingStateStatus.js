@@ -2,6 +2,7 @@ import insertDataToTable from "./insertDataToTable.js";
 import isReportNotInTree from "./isReportNotInTree..js";
 import sendAbandonedReports from "./sendAbandonedReports.js";
 import getReportLoadingState from "./getReportLoadingState.js";
+import insertNewReportToTree from "../services/reportTreeBuilder/insertNewReportToTree/index.js";
 import { disableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentReportLoadingStatePanel.js";
 
 var NEXT_REQUEST_DELAY_MS = 30_000;
@@ -18,7 +19,7 @@ var refreshReportLoadingStateStatus = async (userId) => {
   while (true) {
     await nextRequestDelay();
 
-    var { reportsQueue, abandonedReports, loadingInProgress } = await getReportLoadingState(userId);
+    var { reportsQueue, abandonedReports, loadingInProgress, lastLoadedReport } = await getReportLoadingState(userId);
 
     console.log({ loadingInProgress });
 
@@ -27,6 +28,10 @@ var refreshReportLoadingStateStatus = async (userId) => {
 
     insertDataToTable(reportsQueue, reportsQueueTbodyId);
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
+
+    if (isReportNotInTree(lastLoadedReport.dateFrom)) {
+      insertNewReportToTree(lastLoadedReport);
+    }
 
     if (!loadingInProgress) {
       if (hasAbandonedReports()) {
