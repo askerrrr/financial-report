@@ -38,7 +38,7 @@ var insertNewReportToTree = async (reportData) => {
     monthsContainer.append(monthReportsContainer);
 
     var reportRow = await createReportRow(reportData);
-    var reportsTable = await createReportsTable(reportData, reportRow, month);
+    var reportsTable = await createReportsTable(year, reportRow, month);
     monthReportsContainer.append(summaryToMonthReportsContainer, reportsTable);
 
     monthReportsContainer.open = true;
