@@ -2,12 +2,12 @@ import getReportLink from "./table/getReportLink.js";
 import getReportPeriod from "./table/getReportPeriod.js";
 import createTdElement from "../../../../report/table/services/createTdElement.js";
 
-var createReportRow = async (reportData) => {
+var createReportRow = (reportData) => {
   var { dateFrom, dateTo, reportId, totalTaxAmount } = reportData;
 
   var reportPeriod = getReportPeriod(dateFrom, dateTo);
 
-  var reportLink = await getReportLink(reportId);
+  var reportLink = getReportLink(reportId);
 
   var totalProductCostsTd = createTdElement(0, null, null, "totalProductCosts");
 

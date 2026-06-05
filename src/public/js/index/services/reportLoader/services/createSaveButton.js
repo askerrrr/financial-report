@@ -43,8 +43,7 @@ var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheck
           return;
         }
 
-        await deleteLoader();
-        await insertNewReportToTree(reportData);
+        await deleteLoader().then(() => insertNewReportToTree(reportData));
 
         var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
 

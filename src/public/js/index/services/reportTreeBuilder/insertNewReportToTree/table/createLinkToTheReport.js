@@ -1,4 +1,4 @@
-var createLinkToTheReport = async (reportId) => {
+var createLinkToTheReport = (reportId) => {
   var button = document.createElement("button");
   var form = document.createElement("form");
 

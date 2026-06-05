@@ -1,17 +1,17 @@
 import createThElement from "../../../../../report/table/services/createThElement.js";
 
-var createReportsTableHead = async () => {
-  var reportPeriod = await createThElement("Период отчета");
+var createReportsTableHead = () => {
+  var reportPeriod = createThElement("Период отчета");
 
-  var totalFinalProfit = await createThElement("Чистая прибыль");
+  var totalFinalProfit = createThElement("Чистая прибыль");
 
-  var totalProductCosts = await createThElement("Затраты на товар");
+  var totalProductCosts = createThElement("Затраты на товар");
 
-  var totalTaxAmount = await createThElement("Налоги");
+  var totalTaxAmount = createThElement("Налоги");
 
-  var financesAccounted = await createThElement("Финансы учтены");
+  var financesAccounted = createThElement("Финансы учтены");
 
-  var reportLink = await createThElement("");
+  var reportLink = createThElement("");
 
   var tr = document.createElement("tr");
 

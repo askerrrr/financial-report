@@ -3,7 +3,7 @@ import createReportsTable from "./createReportsTable.js";
 import createReportRow from "./createReportRow.js";
 import removeNoReportsMessage from "./removeNoReportsMessage.js";
 
-var insertNewReportToTree = async (reportData) => {
+var insertNewReportToTree = (reportData) => {
   removeNoReportsMessage();
 
   var { year, month } = reportData;
@@ -13,7 +13,7 @@ var insertNewReportToTree = async (reportData) => {
   var yearDetails = document.getElementById(yearDetailsId);
 
   if (!yearDetails) {
-    var yearDetails = await createYearDetails(reportData, month);
+    var yearDetails = createYearDetails(reportData, month);
 
     var yearsContainer = document.getElementById("years_container");
     yearsContainer.prepend(yearDetails);
@@ -37,14 +37,14 @@ var insertNewReportToTree = async (reportData) => {
     var monthsContainer = document.getElementById(monthsContainerId);
     monthsContainer.append(monthReportsContainer);
 
-    var reportRow = await createReportRow(reportData);
-    var reportsTable = await createReportsTable(year, reportRow, month);
+    var reportRow = createReportRow(reportData);
+    var reportsTable = createReportsTable(year, reportRow, month);
     monthReportsContainer.append(summaryToMonthReportsContainer, reportsTable);
 
     monthReportsContainer.open = true;
   } else {
     monthReportsContainer.addEventListener("click", async () => {
-      var reportRow = await createReportRow(reportData);
+      var reportRow = createReportRow(reportData);
 
       await delayForCreatingTableBody();
 

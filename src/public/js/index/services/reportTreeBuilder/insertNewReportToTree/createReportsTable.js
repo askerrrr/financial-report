@@ -1,6 +1,6 @@
 import createReportsTableHead from "./table/createReportsTableHead.js";
 
-var createReportsTable = async (year, reportRow, month) => {
+var createReportsTable = (year, reportRow, month) => {
   var tbodyId = `tbody_year_${year}_month_${month}`;
   var tbody = document.getElementById(tbodyId);
 
@@ -10,7 +10,7 @@ var createReportsTable = async (year, reportRow, month) => {
     tbody.id = tbodyId;
     tbody.append(reportRow);
 
-    var tableHead = await createReportsTableHead();
+    var tableHead = createReportsTableHead();
 
     var table = document.createElement("table");
     table.append(tableHead, tbody);

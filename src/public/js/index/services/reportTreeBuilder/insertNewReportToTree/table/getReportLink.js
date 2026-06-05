@@ -1,9 +1,9 @@
 import createLinkToTheReport from "./createLinkToTheReport.js";
 
-var getReportLink = async (reportId) => {
+var getReportLink = (reportId) => {
   var td = document.createElement("td");
 
-  var linkToTheReport = await createLinkToTheReport(reportId);
+  var linkToTheReport = createLinkToTheReport(reportId);
 
   td.append(linkToTheReport);
 
