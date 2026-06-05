@@ -3,7 +3,7 @@ import showReportLoadingStatePanel from "./showReportLoadingStatePanel.js";
 import refreshReportLoadingStateStatus from "./refreshReportLoadingStateStatus.js";
 import { enableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentReportLoadingStatePanel.js";
 
-var reportLoadingStatePanelBuilder = async (userId, url, { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed }) => {
+var reportLoadingStatePanelBuilder = async (userId, { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed }) => {
   if (loadingInProgress || isReportLoadingDelayed) {
     enableParentReportLoadingStatePanel();
     await showReportLoadingStatePanel();
@@ -14,7 +14,7 @@ var reportLoadingStatePanelBuilder = async (userId, url, { reportsQueue, abandon
     insertDataToTable(reportsQueue, reportsQueueTbodyId);
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
 
-    await refreshReportLoadingStateStatus(userId, url);
+    await refreshReportLoadingStateStatus(userId);
   }
 };
 

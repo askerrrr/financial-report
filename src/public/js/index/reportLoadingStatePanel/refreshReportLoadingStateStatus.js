@@ -1,5 +1,6 @@
 import insertDataToTable from "./insertDataToTable.js";
 import sendAbandonedReports from "./sendAbandonedReports.js";
+import getReportLoadingState from "./getReportLoadingState.js";
 import { disableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentReportLoadingStatePanel.js";
 
 var NEXT_REQUEST_DELAY_MS = 90_000;
@@ -9,14 +10,14 @@ var reportsQueueTbodyId = "reports-queue-tbody";
 var abandonedReportsTbodyId = "abandoned-reports-tbody";
 var retryAbandonedReportsLoadingMsg = "Повторить загрузку отчётов, которые не удалось загрузить";
 
-var refreshReportLoadingStateStatus = async (userId, url) => {
+var refreshReportLoadingStateStatus = async (userId) => {
   var reportsQueueTbody = document.getElementById(reportsQueueTbodyId);
   var abandonedReportsTbody = document.getElementById(abandonedReportsTbodyId);
 
   while (true) {
     await nextRequestDelay();
 
-    var res = await fetch(url);
+    var res = await getReportLoadingState(userId);
 
     var { reportsQueue, abandonedReports, loadingInProgress } = await res.json();
 
