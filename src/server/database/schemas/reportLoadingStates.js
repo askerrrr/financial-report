@@ -3,11 +3,12 @@ import { Schema } from "mongoose";
 var lastLoadedReportSchema = new Schema(
   {
     periodIndex: { type: Number },
+    year: { type: Number, required: true },
+    month: { type: String, required: true },
+    dateTo: { type: String, required: true },
+    dateFrom: { type: String, required: true },
     reportId: { type: Number, required: true },
     totalTaxAmount: { type: Number, default: 0, required: true },
-    totalFinalProfit: { type: Number, default: 0, required: true },
-    totalProductCosts: { type: Number, default: 0, required: true },
-    isFinancesAccounted: { type: Boolean, default: false, required: true },
   },
   { _id: false },
 );
