@@ -20,7 +20,7 @@ var createReportsTable = async (reportData, reportRow, month) => {
     return table;
   }
 
-  tbody.append(tr);
+  tbody.append(reportRow);
 
   return tbody;
 };

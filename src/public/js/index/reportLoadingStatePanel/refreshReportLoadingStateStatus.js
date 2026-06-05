@@ -29,7 +29,7 @@ var refreshReportLoadingStateStatus = async (userId) => {
     insertDataToTable(reportsQueue, reportsQueueTbodyId);
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
 
-    if (isReportNotInTree(lastLoadedReport.dateFrom)) {
+    if (isReportNotInTree(lastLoadedReport.reportId)) {
       insertNewReportToTree(lastLoadedReport);
     }
 
