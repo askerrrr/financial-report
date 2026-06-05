@@ -3,7 +3,7 @@ import sendAbandonedReports from "./sendAbandonedReports.js";
 import getReportLoadingState from "./getReportLoadingState.js";
 import { disableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentReportLoadingStatePanel.js";
 
-var NEXT_REQUEST_DELAY_MS = 90_000;
+var NEXT_REQUEST_DELAY_MS = 30_000;
 var nextRequestDelay = async () => new Promise((res) => setTimeout(res, NEXT_REQUEST_DELAY_MS));
 
 var reportsQueueTbodyId = "reports-queue-tbody";
