@@ -15,8 +15,9 @@ var reportLoaderHandler = (userId) =>
       }
 
       return;
+    } else {
+      openReportPeriodModal();
     }
-    await openReportPeriodModal();
   });
 
 export default reportLoaderHandler;

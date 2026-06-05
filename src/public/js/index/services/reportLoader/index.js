@@ -7,7 +7,7 @@ import createCancelButton from "../utils/createCancelButton.js";
 import createButtonsContainer from "../utils/createButtonsContainer.js";
 import createUploadAllReportsCheckbox from "./services/createUploadAllReportsCheckbox.js";
 
-var openReportPeriodModal = async () => {
+var openReportPeriodModal = () => {
   var modal = createModal("modal-overlay");
 
   var dateFromInput = createInputField("dateFromInput", "начало в формате гггг.мм.дд - 2025.04.21");
@@ -17,7 +17,7 @@ var openReportPeriodModal = async () => {
   var uploadAllReportsCheckbox = createUploadAllReportsCheckbox();
   var label = createLabel("загрузить все отчеты", uploadAllReportsCheckbox);
 
-  var saveButton = await createSaveButton(modal, dateFromInput, dateToInput, uploadAllReportsCheckbox);
+  var saveButton = createSaveButton(modal, dateFromInput, dateToInput, uploadAllReportsCheckbox);
 
   var cancelButton = createCancelButton(modal);
 

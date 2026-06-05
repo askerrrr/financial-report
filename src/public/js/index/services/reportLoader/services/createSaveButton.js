@@ -4,7 +4,7 @@ import sendReportPeriod from "./sendReportPeriod.js";
 import { showLoader, deleteLoader } from "./loader.js";
 import insertNewReportToTree from "../../reportTreeBuilder/insertNewReportToTree/index.js";
 
-var createSaveButton = async (modal, dateFromInput, dateToInput, uploadAllReportsCheckbox) => {
+var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheckbox) => {
   var button = document.createElement("button");
   button.className = "modal-button modal-button-save";
   button.textContent = "Отправить";
