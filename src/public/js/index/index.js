@@ -4,6 +4,7 @@ import getMainPageData from "./services/getMainPageData.js";
 import reportLoaderHandler from "./reportLoaderHandler.js";
 import reportLoadingStatePanelBuilder from "./reportLoadingStatePanel/index.js";
 
+var isMainPageLoad = true;
 var userId = document.cookie.split("=")[1];
 
 var main = async () => {
@@ -13,7 +14,7 @@ var main = async () => {
 
   reportLoaderHandler(userId);
 
-  reportLoadingStatePanelBuilder(userId, reportLoadingState);
+  reportLoadingStatePanelBuilder(userId, reportLoadingState, isMainPageLoad);
 };
 
 main();
