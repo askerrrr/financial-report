@@ -5,19 +5,23 @@ import getReportLoadingState from "./getReportLoadingState.js";
 import insertNewReportToTree from "../services/reportTreeBuilder/insertNewReportToTree/index.js";
 import { disableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentReportLoadingStatePanel.js";
 
+var FIRST_REQUEST_DELAY_MS = 5_000;
 var NEXT_REQUEST_DELAY_MS = 30_000;
-var nextRequestDelay = async () => new Promise((res) => setTimeout(res, NEXT_REQUEST_DELAY_MS));
+var nextRequestDelay = async (isFirstRequest) =>
+  new Promise((res) => (isFirstRequest ? setTimeout(res, FIRST_REQUEST_DELAY_MS) : setTimeout(res, NEXT_REQUEST_DELAY_MS)));
 
 var reportsQueueTbodyId = "reports-queue-tbody";
 var abandonedReportsTbodyId = "abandoned-reports-tbody";
 var retryAbandonedReportsLoadingMsg = "Повторить загрузку отчётов, которые не удалось загрузить";
 
 var refreshReportLoadingStateStatus = async (userId) => {
+  var isFirstRequest = true;
   var reportsQueueTbody = document.getElementById(reportsQueueTbodyId);
   var abandonedReportsTbody = document.getElementById(abandonedReportsTbodyId);
 
   while (true) {
-    await nextRequestDelay();
+    await nextRequestDelay(isFirstRequest);
+    isFirstRequest = false;
 
     var { reportsQueue, abandonedReports, loadingInProgress, lastLoadedReport } = await getReportLoadingState(userId);
 
