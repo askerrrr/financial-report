@@ -2,6 +2,7 @@ import checkDateTo from "./checkDateTo.js";
 import checkDateFrom from "./checkDateFrom.js";
 import sendReportPeriod from "./sendReportPeriod.js";
 import { showLoader, deleteLoader } from "./loader.js";
+import reportLoadingStatePanelBuilder from "../../../reportLoadingStatePanel/index.js";
 import insertNewReportToTree from "../../reportTreeBuilder/insertNewReportToTree/index.js";
 
 var isMainPageLoad = false;
@@ -29,6 +30,7 @@ var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheck
 
         if (!isPeriodWithinSameWeek) {
           await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek);
+          setTimeout(() => reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad), 3000);
           return;
         }
 
