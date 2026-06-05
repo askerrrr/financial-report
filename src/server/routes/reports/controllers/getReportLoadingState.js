@@ -5,9 +5,7 @@ var getReportLoadingState = async (req, res, next) => {
   var { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed } =
     await reportLoadingStatesCollectionServices.getReportLoadingState(userId);
 
-  var reportLoadingStateUrl = "/report/loading-state/" + userId + "/";
-
-  return res.json({ reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed, reportLoadingStateUrl });
+  return res.json({ reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed });
 };
 
 export default getReportLoadingState;
