@@ -10,6 +10,7 @@ var createReportsTable = async (year, month, reportIds, reports) => {
 
   for (var { reportId, dateFrom, dateTo } of reportIds) {
     var tr = document.createElement("tr");
+    tr.id = dateFrom;
 
     var report = reports.find((report) => report.reportId == reportId);
 
