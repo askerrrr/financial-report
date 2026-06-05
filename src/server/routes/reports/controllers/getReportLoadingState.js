@@ -2,10 +2,10 @@ import reportLoadingStatesCollectionServices from "../../../database/collections
 
 var getReportLoadingState = async (req, res, next) => {
   var { userId } = req.params;
-  var { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed } =
+  var { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed, lastLoadedReport } =
     await reportLoadingStatesCollectionServices.getReportLoadingState(userId);
 
-  return res.json({ reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed });
+  return res.json({ reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed, lastLoadedReport });
 };
 
 export default getReportLoadingState;
