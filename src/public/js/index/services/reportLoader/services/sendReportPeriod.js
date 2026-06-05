@@ -1,6 +1,4 @@
-var sendReportPeriod = async (dateFrom, dateTo, isPeriodWithinSameWeek = false, uploadAllReports = false) => {
-  var userId = document.cookie.split("=")[1];
-
+var sendReportPeriod = async (userId, dateFrom, dateTo, isPeriodWithinSameWeek = false, uploadAllReports = false) => {
   var res = await fetch("/report/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

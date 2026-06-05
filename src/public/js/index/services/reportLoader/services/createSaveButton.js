@@ -4,6 +4,8 @@ import sendReportPeriod from "./sendReportPeriod.js";
 import { showLoader, deleteLoader } from "./loader.js";
 import insertNewReportToTree from "../../reportTreeBuilder/insertNewReportToTree/index.js";
 
+var userId = document.cookie.split("=")[1];
+
 var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheckbox) => {
   var button = document.createElement("button");
   button.className = "modal-button modal-button-save";
@@ -24,11 +26,11 @@ var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheck
         var { validDateTo, isPeriodWithinSameWeek } = await checkDateTo(dateTo, validDateFrom);
 
         if (!isPeriodWithinSameWeek) {
-          await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
+          await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek);
           return;
         }
 
-        var reportData = await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek);
+        var reportData = await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek);
 
         await showLoader();
 
@@ -51,7 +53,7 @@ var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheck
         var validDateFrom = "";
         var validDateTo = "";
         var isPeriodWithinSameWeek;
-        await sendReportPeriod(validDateFrom, validDateTo, isPeriodWithinSameWeek, uploadAllReports);
+        await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek, uploadAllReports);
         return;
       }
     } catch (e) {
