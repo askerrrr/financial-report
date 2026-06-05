@@ -5,6 +5,7 @@ import { showLoader, deleteLoader } from "./loader.js";
 import insertNewReportToTree from "../../reportTreeBuilder/insertNewReportToTree/index.js";
 
 var isMainPageLoad = false;
+var reportLoadState = null;
 var userId = document.cookie.split("=")[1];
 
 var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheckbox) => {
