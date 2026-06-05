@@ -17,9 +17,7 @@ var refreshReportLoadingStateStatus = async (userId) => {
   while (true) {
     await nextRequestDelay();
 
-    var res = await getReportLoadingState(userId);
-
-    var { reportsQueue, abandonedReports, loadingInProgress } = await res.json();
+    var { reportsQueue, abandonedReports, loadingInProgress } = await getReportLoadingState(userId);
 
     console.log({ loadingInProgress });
 
