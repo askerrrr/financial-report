@@ -1,4 +1,4 @@
-var createThElement = async (data) => {
+var createThElement = (data) => {
   var th = document.createElement("th");
 
   th.append(data);
