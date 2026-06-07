@@ -24,7 +24,7 @@ var getMainPageData = async (req, res, next) => {
   var { getReportTree } = dbUtils.reportsTreeCollectionServices;
   var { getReportLoadingState } = dbUtils.reportLoadingStatesCollectionServices;
 
-  var { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed } = await getReportLoadingState(userId);
+  var { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed, isReportLoadingisStopped } = await getReportLoadingState(userId);
 
   var { reportTree } = await getReportTree(userId);
 
@@ -33,7 +33,7 @@ var getMainPageData = async (req, res, next) => {
       lastReports: [],
       reportTree: [],
       reportLoadingStateUrl,
-      reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed },
+      reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed, isReportLoadingisStopped },
     });
   }
 
@@ -47,7 +47,7 @@ var getMainPageData = async (req, res, next) => {
       lastReports: [],
       reportTree: [],
       reportLoadingStateUrl,
-      reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed },
+      reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed, isReportLoadingisStopped },
     });
   }
 
@@ -57,7 +57,7 @@ var getMainPageData = async (req, res, next) => {
     lastReports: reports,
     reportTree: reportTreeDto,
     reportLoadingStateUrl,
-    reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed },
+    reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed, isReportLoadingisStopped },
   });
 };
 

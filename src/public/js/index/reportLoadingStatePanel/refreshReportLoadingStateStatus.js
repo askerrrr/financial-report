@@ -23,13 +23,18 @@ var refreshReportLoadingStateStatus = async (userId) => {
     await nextRequestDelay(isFirstRequest);
     isFirstRequest = false;
 
-    var { reportsQueue, abandonedReports, loadingInProgress, lastLoadedReport } = await getReportLoadingState(userId);
+    var { reportsQueue, abandonedReports, loadingInProgress, lastLoadedReport, isReportLoadingisStopped } = await getReportLoadingState(userId);
 
     await resetReportsQueueTable();
     await resetAbandonedReportsTable();
 
     insertDataToTable(reportsQueue, reportsQueueTbodyId);
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
+
+    if (isReportLoadingisStopped) {
+      //change loading status
+      break
+    }
 
     console.log({ report: lastLoadedReport.dateFrom})
     console.log({ checkReportInTree: (checkReportInTree(lastLoadedReport.reportId)) })
