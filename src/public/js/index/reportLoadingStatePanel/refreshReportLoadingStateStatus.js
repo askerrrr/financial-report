@@ -27,8 +27,8 @@ var refreshReportLoadingStateStatus = async (userId) => {
 
     console.log({ loadingInProgress });
 
-    resetReportsQueueTables();
-    resetAbandonedReportsTables();
+    resetReportsQueueTable();
+    resetAbandonedReportsTable();
 
     insertDataToTable(reportsQueue, reportsQueueTbodyId);
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
@@ -47,12 +47,12 @@ var refreshReportLoadingStateStatus = async (userId) => {
         console.log({ success, needToResumeLoading });
         if (success) {
           if (!needToResumeLoading) {
-            resetReportsQueueTables();
-            resetAbandonedReportsTables();
+            resetReportsQueueTable();
+            resetAbandonedReportsTable();
             disableParentReportLoadingStatePanel();
             break;
           } else {
-            resetAbandonedReportsTables();
+            resetAbandonedReportsTable();
             insertDataToTable(abandonedReports, reportsQueueTbodyId);
           }
         } else {
@@ -77,11 +77,11 @@ var refreshReportLoadingStateStatus = async (userId) => {
     return abandonedReportsTbody.hasChildNodes();
   }
 
-  function resetAbandonedReportsTables() {
+  function resetAbandonedReportsTable() {
     abandonedReportsTbody.innerHTML = "";
   }
 
-  function resetReportsQueueTables() {
+  function resetReportsQueueTable() {
     reportsQueueTbody.innerHTML = "";
   }
 };
