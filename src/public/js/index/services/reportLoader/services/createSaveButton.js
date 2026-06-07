@@ -57,6 +57,7 @@ var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheck
         var validDateTo = "";
         var isPeriodWithinSameWeek;
         await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek, uploadAllReports);
+        setTimeout(() => reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad), 3000);
         return;
       }
     } catch (e) {
