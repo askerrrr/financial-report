@@ -1,6 +1,6 @@
-var isReportNotInTree = (tableRowId) => {
+var checkReportInTree = (tableRowId) => {
   var tableRowIsNotExist = document.getElementById(tableRowId) === null;
   return tableRowIsNotExist;
 };
 
-export default isReportNotInTree;
+export default checkReportInTree;

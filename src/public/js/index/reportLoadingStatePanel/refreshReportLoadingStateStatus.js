@@ -1,5 +1,5 @@
 import insertDataToTable from "./insertDataToTable.js";
-import isReportNotInTree from "./isReportNotInTree..js";
+import checkReportInTree from "./checkReportInTree.js";
 import sendAbandonedReports from "./sendAbandonedReports.js";
 import getReportLoadingState from "./getReportLoadingState.js";
 import insertNewReportToTree from "../services/reportTreeBuilder/insertNewReportToTree/index.js";
@@ -25,15 +25,19 @@ var refreshReportLoadingStateStatus = async (userId) => {
 
     var { reportsQueue, abandonedReports, loadingInProgress, lastLoadedReport } = await getReportLoadingState(userId);
 
-    console.log({ loadingInProgress });
-
-    resetReportsQueueTable();
-    resetAbandonedReportsTable();
+    await resetReportsQueueTable();
+    await resetAbandonedReportsTable();
 
     insertDataToTable(reportsQueue, reportsQueueTbodyId);
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
 
-    if (isReportNotInTree(lastLoadedReport.reportId)) {
+    console.log({ report: lastLoadedReport.dateFrom})
+    console.log({ checkReportInTree: (checkReportInTree(lastLoadedReport.reportId)) })
+
+
+    var reportIsNotInTree = checkReportInTree(lastLoadedReport.reportId);
+
+    if (reportIsNotInTree) {
       insertNewReportToTree(lastLoadedReport);
     }
 
@@ -47,12 +51,12 @@ var refreshReportLoadingStateStatus = async (userId) => {
         console.log({ success, needToResumeLoading });
         if (success) {
           if (!needToResumeLoading) {
-            resetReportsQueueTable();
-            resetAbandonedReportsTable();
+            await resetReportsQueueTable();
+            await resetAbandonedReportsTable();
             disableParentReportLoadingStatePanel();
             break;
           } else {
-            resetAbandonedReportsTable();
+            await resetAbandonedReportsTable();
             insertDataToTable(abandonedReports, reportsQueueTbodyId);
           }
         } else {
@@ -73,15 +77,17 @@ var refreshReportLoadingStateStatus = async (userId) => {
     }
   }
 
+  return true;
+
   function hasAbandonedReports() {
     return abandonedReportsTbody.hasChildNodes();
   }
 
-  function resetAbandonedReportsTable() {
+  async function resetAbandonedReportsTable() {
     abandonedReportsTbody.innerHTML = "";
   }
 
-  function resetReportsQueueTable() {
+  async function resetReportsQueueTable() {
     reportsQueueTbody.innerHTML = "";
   }
 };
