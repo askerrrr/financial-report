@@ -14,11 +14,11 @@ var sendMonthForDeletion = async (userId, monthsForDeletion) => {
   }
 };
 
-var insertLastReportsToTree = async (tree, lastReports, lastMonthData) => {
+var insertLastReportsToTree = (tree, lastReports, lastMonthData) => {
   var { year } = tree[0];
   var { month, reportIds } = lastMonthData;
 
-  var table = await createReportsTable(year, month, reportIds, lastReports);
+  var table = createReportsTable(year, month, reportIds, lastReports);
 
   var summary = document.createElement("summary");
   summary.append(month);
@@ -28,7 +28,7 @@ var insertLastReportsToTree = async (tree, lastReports, lastMonthData) => {
   monthReportsContainer.id = monthReportsContainerId;
 
   var lastReportIds = lastReports.map(({ reportId }) => reportId);
-  var downloadBtn = await createMonthlyReportDownloadButton(lastReportIds, year, month);
+  var downloadBtn = createMonthlyReportDownloadButton(lastReportIds, year, month);
 
   monthReportsContainer.append(summary, table, downloadBtn);
   monthReportsContainer.open = true;
@@ -42,7 +42,7 @@ var insertLastReportsToTree = async (tree, lastReports, lastMonthData) => {
   lastYearDetails.open = true;
 };
 
-var deleteEmptyMonth = async (userId) => {
+var deleteEmptyMonth = (userId) => {
   var tableBodies = document.querySelectorAll("tbody");
 
   var year,
@@ -70,9 +70,10 @@ var buildReportTree = async (userId, lastReports, reportTree) => {
 
   var lastMonthData = reportTree[0].months.shift();
 
-  await createReportsTree(reportTree).then(() => insertLastReportsToTree(reportTree, lastReports, lastMonthData));
+  createReportsTree(reportTree)
+  insertLastReportsToTree(reportTree, lastReports, lastMonthData);
 
-  await deleteEmptyMonth(userId);
+  deleteEmptyMonth(userId);
 };
 
 export default buildReportTree;

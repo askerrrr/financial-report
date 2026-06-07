@@ -1,4 +1,4 @@
-var createMonthlyReportDownloadButton = async (reportIds, year, month) => {
+var createMonthlyReportDownloadButton = (reportIds, year, month) => {
   reportIds = extractNumericReportIds(reportIds);
 
   var button = document.createElement("button");

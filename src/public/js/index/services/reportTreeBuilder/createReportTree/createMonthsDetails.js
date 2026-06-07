@@ -48,7 +48,7 @@ var createDetailsToReportsContainer = (year, month, reportIds) => {
   return monthReportsContainer;
 };
 
-var createMonthsDetails = async (months, year) => {
+var createMonthsDetails = (months, year) => {
   var monthsContainer = document.createElement("div");
   monthsContainer.class = "details";
   monthsContainer.id = `months_container_${year}`;

@@ -3,7 +3,7 @@ import getReportPeriod from "../insertNewReportToTree/table/getReportPeriod.js";
 import createTdElement from "../../../../report/table/services/createTdElement.js";
 import createReportsTableHead from "../insertNewReportToTree/table/createReportsTableHead.js";
 
-var createReportsTable = async (year, month, reportIds, reports) => {
+var createReportsTable = (year, month, reportIds, reports) => {
   var tbody = document.createElement("tbody");
 
   tbody.id = `tbody_year_${year}_month_${month}`;
@@ -28,7 +28,7 @@ var createReportsTable = async (year, month, reportIds, reports) => {
 
     var totalProductCostsTd = createTdElement(totalProductCosts);
     var totalTaxAmountTd = createTdElement(totalTaxAmount);
-    var reportLink = await getReportLink(reportId);
+    var reportLink =  getReportLink(reportId);
 
     var financesAccountedTd = createTdElement();
 
@@ -44,7 +44,7 @@ var createReportsTable = async (year, month, reportIds, reports) => {
     tbody.append(tr);
   }
 
-  var tableHead = await createReportsTableHead();
+  var tableHead = createReportsTableHead();
 
   var table = document.createElement("table");
 
