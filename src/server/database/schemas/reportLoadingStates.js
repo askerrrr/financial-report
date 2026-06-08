@@ -15,6 +15,7 @@ var lastLoadedReportSchema = new Schema(
 
 var reportLoadingStatesSchema = new Schema({
   userId: { type: String, required: true },
+  queueLength: { type: Number, default: 0 },
   reportsQueue: { type: Array, required: false },
   loadingInProgress: { type: Boolean, default: false },
   abandonedReports: { type: Array, required: false },
