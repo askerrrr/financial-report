@@ -1,6 +1,8 @@
 import createReportsTableHead from "./table/createReportsTableHead.js";
 
-var createReportsTable = (year, reportRow, month) => {
+var createReportsTable = (reportData, reportRow) => {
+  var { year, month } = reportData;
+
   var tbodyId = `tbody_year_${year}_month_${month}`;
   var tbody = document.getElementById(tbodyId);
 

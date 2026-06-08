@@ -1,6 +1,6 @@
+import createReportRow from "./createReportRow.js";
 import createYearDetails from "./createYearDetails.js";
 import createReportsTable from "./createReportsTable.js";
-import createReportRow from "./createReportRow.js";
 import removeNoReportsMessage from "./removeNoReportsMessage.js";
 
 var insertNewReportToTree = (reportData) => {
@@ -38,7 +38,7 @@ var insertNewReportToTree = (reportData) => {
     monthsContainer.append(monthReportsContainer);
 
     var reportRow = createReportRow(reportData);
-    var reportsTable = createReportsTable(year, reportRow, month);
+    var reportsTable = createReportsTable(reportData, reportRow);
     monthReportsContainer.append(summaryToMonthReportsContainer, reportsTable);
 
     monthReportsContainer.open = true;
