@@ -6,7 +6,7 @@ import removeNoReportsMessage from "./removeNoReportsMessage.js";
 var insertNewReportToTree = (reportData) => {
   removeNoReportsMessage();
 
-  var { year, month } = reportData;
+  var { year, month, reportId } = reportData;
 
   var yearDetailsId = year;
 
@@ -50,7 +50,11 @@ var insertNewReportToTree = (reportData) => {
 
       var reportTbody = document.getElementById(reportTbodyId);
 
-      reportTbody.append(reportRow);
+      var reportRowInNot = document.getElementById(reportId) === null;
+
+      if (reportRowInNot) {
+        reportTbody.append(reportRow);
+      }
     });
 
     monthReportsContainer.click();
