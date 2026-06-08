@@ -13,7 +13,7 @@ var insertNewReportToTree = (reportData) => {
   var yearDetails = document.getElementById(yearDetailsId);
 
   if (!yearDetails) {
-    var yearDetails = createYearDetails(reportData, month);
+    var yearDetails = createYearDetails(reportData);
 
     var yearsContainer = document.getElementById("years_container");
     yearsContainer.prepend(yearDetails);

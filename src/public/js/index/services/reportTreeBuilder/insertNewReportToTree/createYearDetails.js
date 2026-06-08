@@ -1,34 +1,12 @@
-import createReportRow from "./createReportRow.js";
-import createReportsTable from "./createReportsTable.js";
+import createMonthDetails from "./createMonthDetails.js";
 
-var createMonthDetails = (reportData, monthName) => {
-  var { year } = reportData;
-
-  var summaryToMonthReportsContainer = document.createElement("summary");
-  summaryToMonthReportsContainer.append(monthName);
-
-  var reportRow = createReportRow(reportData);
-  var reportsTable = createReportsTable(year, reportRow, monthName);
-
-  var monthReportsContainerId = `reports_container_${year}_${monthName}`;
-  var monthReportsContainer = document.getElementById(monthReportsContainerId);
-
-  if (!monthReportsContainer) {
-    monthReportsContainer = document.createElement("details");
-    monthReportsContainer.id = `reports_container_${year}_${monthName}`;
-  }
-
-  monthReportsContainer.append(summaryToMonthReportsContainer, reportsTable);
-  return monthReportsContainer;
-};
-
-var createYearDetails = (reportData, monthName) => {
+var createYearDetails = (reportData) => {
   var { year } = reportData;
 
   var summary = document.createElement("summary");
   summary.append(year);
 
-  var monthDetails = createMonthDetails(reportData, monthName);
+  var monthDetails = createMonthDetails(reportData);
 
   var monthsContainerId = `months_container_${year}`;
   var monthsContainer = document.getElementById(monthsContainerId);
