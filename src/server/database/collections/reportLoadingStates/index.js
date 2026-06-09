@@ -10,7 +10,7 @@ import setLastReportRequestTimestamp from "./services/setLastReportRequestTimest
 import updateReportLoadingStoppedStatus from "./services/updateReportLoadingStoppedStatus.js";
 
 var reportLoadingStatesCollectionServices = {
-  getReportLoadingState: (userId, session) => getReportLoadingState(reportLoadingStatesCollection, userId, session),
+  getReportLoadingState: (userId, session, selectedFields) => getReportLoadingState(reportLoadingStatesCollection, userId, session, selectedFields),
   getLoadingProgressStatus: (userId) => getLoadingProgressStatus(reportLoadingStatesCollection, userId),
   deleteReportLoadingStates: (userId, session) => deleteReportLoadingStates(reportLoadingStatesCollection, userId, session),
   prependToReportsQueue: (userId, dateFrom, dateTo) => prependToReportsQueue(reportLoadingStatesCollection, userId, dateFrom, dateTo),

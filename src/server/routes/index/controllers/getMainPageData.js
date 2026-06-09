@@ -11,6 +11,17 @@ var projectonFields = [
   "reports.isFinancesAccounted",
 ];
 
+var session = null;
+
+var selectedFieldsToLoadingState = [
+  "queueLength",
+  "reportsQueue",
+  "abandonedReports",
+  "loadingInProgress",
+  "isReportLoadingDelayed",
+  "isReportLoadingisStopped",
+];
+
 var getMainPageData = async (req, res, next) => {
   var userId = req.params?.userId;
 
@@ -24,16 +35,16 @@ var getMainPageData = async (req, res, next) => {
   var { getReportTree } = dbUtils.reportsTreeCollectionServices;
   var { getReportLoadingState } = dbUtils.reportLoadingStatesCollectionServices;
 
-  var { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed, isReportLoadingisStopped } = await getReportLoadingState(userId);
+  var reportLoadingState = await getReportLoadingState(userId, session, selectedFieldsToLoadingState);
 
   var { reportTree } = await getReportTree(userId);
 
   if (!reportTree.length) {
     return res.json({
+      reportLoadingState,
+      reportLoadingStateUrl,
       lastReports: [],
       reportTree: [],
-      reportLoadingStateUrl,
-      reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed, isReportLoadingisStopped },
     });
   }
 
@@ -44,20 +55,20 @@ var getMainPageData = async (req, res, next) => {
 
   if (!lastReportIds || !lastReportIds.length) {
     return res.json({
+      reportLoadingState,
+      reportLoadingStateUrl,
       lastReports: [],
       reportTree: [],
-      reportLoadingStateUrl,
-      reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed, isReportLoadingisStopped },
     });
   }
 
   var { reports } = await getReportsByUserId(userId, null, projectonFields, lastReportIds);
 
   return res.json({
+    reportLoadingState,
+    reportLoadingStateUrl,
     lastReports: reports,
     reportTree: reportTreeDto,
-    reportLoadingStateUrl,
-    reportLoadingState: { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed, isReportLoadingisStopped },
   });
 };
 
