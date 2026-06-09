@@ -16,6 +16,7 @@ var session = null;
 var selectedFieldsToLoadingState = [
   "queueLength",
   "reportsQueue",
+  "queueCapacity",
   "abandonedReports",
   "loadingInProgress",
   "isReportLoadingDelayed",
