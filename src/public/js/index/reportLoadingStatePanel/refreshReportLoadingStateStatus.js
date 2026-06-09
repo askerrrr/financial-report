@@ -33,17 +33,18 @@ var refreshReportLoadingStateStatus = async (userId) => {
 
     if (isReportLoadingisStopped) {
       //change loading status
-      break
+      break;
     }
 
-    console.log({ report: lastLoadedReport.dateFrom})
-    console.log({ checkReportInTree: (checkReportInTree(lastLoadedReport.reportId)) })
+    if (lastLoadedReport.reportId) {
+      console.log({ report: lastLoadedReport.dateFrom });
+      console.log({ checkReportInTree: checkReportInTree(lastLoadedReport.reportId) });
 
+      var reportIsNotInTree = checkReportInTree(lastLoadedReport.reportId);
 
-    var reportIsNotInTree = checkReportInTree(lastLoadedReport.reportId);
-
-    if (reportIsNotInTree) {
-      insertNewReportToTree(lastLoadedReport);
+      if (reportIsNotInTree) {
+        insertNewReportToTree(lastLoadedReport);
+      }
     }
 
     if (!loadingInProgress) {
