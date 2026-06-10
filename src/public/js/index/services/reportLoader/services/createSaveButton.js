@@ -30,11 +30,9 @@ var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheck
 
         if (!isPeriodWithinSameWeek) {
           await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek);
-          console.log({ isPeriodWithinSameWeek });
-          setTimeout(() => {
-            console.log("DELAY;");
-            reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad);
-          }, 3000);
+
+          setTimeout(() => reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad), 3000);
+
           return;
         }
 
