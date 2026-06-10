@@ -14,7 +14,7 @@
     "@aws-sdk/client-s3": "^3.876.0",
     "argon2": "^0.43.0",
     "cookie-parser": "^1.4.7",
-    "exceljs": "^4.4.0",
+    "exceljs": "^3.4.0",
     "express": "^5.1.0",
     "joi": "^18.0.2",
     "jose": "^6.2.1",
