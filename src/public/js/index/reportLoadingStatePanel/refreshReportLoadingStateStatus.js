@@ -2,6 +2,7 @@ import insertDataToTable from "./insertDataToTable.js";
 import checkReportInTree from "./checkReportInTree.js";
 import sendAbandonedReports from "./sendAbandonedReports.js";
 import getReportLoadingState from "./getReportLoadingState.js";
+import updateLoadingProgressText from "./updateLoadingProgressText.js";
 import insertNewReportToTree from "../services/reportTreeBuilder/insertNewReportToTree/index.js";
 import { disableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentReportLoadingStatePanel.js";
 
@@ -23,11 +24,13 @@ var refreshReportLoadingStateStatus = async (userId) => {
     await nextRequestDelay(isFirstRequest);
     isFirstRequest = false;
 
-    var { reportsQueue, abandonedReports, loadingInProgress, lastLoadedReport, isReportLoadingisStopped } = await getReportLoadingState(userId);
+    var reportLoadingState = await getReportLoadingState(userId);
+    var { reportsQueue, abandonedReports, loadingInProgress, lastLoadedReport, isReportLoadingisStopped } = reportLoadingState;
 
     await resetReportsQueueTable();
     await resetAbandonedReportsTable();
 
+    updateLoadingProgressText(reportLoadingState);
     insertDataToTable(reportsQueue, reportsQueueTbodyId);
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
 

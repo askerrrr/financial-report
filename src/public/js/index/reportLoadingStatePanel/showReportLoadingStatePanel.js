@@ -1,7 +1,6 @@
 var panel = `
-      <h5>Загружено:</h5>
-      <h5>Статус загрузки:</h5>
-        <div id="report-loading-state-progress-info"></div>
+        <div id="loading-state-progress-info"></div>
+        <div id="loading-state-progress-status"></div>
         <div id="report-loading-state-progress-details">
           <details id="report-loading-state-details">
             <summary>детали</summary>

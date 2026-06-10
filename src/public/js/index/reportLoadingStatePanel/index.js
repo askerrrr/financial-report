@@ -1,5 +1,6 @@
 import insertDataToTable from "./insertDataToTable.js";
 import getReportLoadingState from "./getReportLoadingState.js";
+import updateLoadingProgressText from "./updateLoadingProgressText.js";
 import showReportLoadingStatePanel from "./showReportLoadingStatePanel.js";
 import refreshReportLoadingStateStatus from "./refreshReportLoadingStateStatus.js";
 import { enableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentReportLoadingStatePanel.js";
@@ -7,43 +8,35 @@ import { enableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentR
 var builderWasCalled = false;
 
 var reportLoadingStatePanelBuilder = async (userId, reportLoadingState, isMainPageLoad) => {
-  console.log('on top',{ builderWasCalled })
+  if (!builderWasCalled) {
+    builderWasCalled = true;
 
-  if(!builderWasCalled) {
-      builderWasCalled = true;
-      console.log('on top in if',{ builderWasCalled })
-
-      if (!isMainPageLoad) {
-         reportLoadingState = await getReportLoadingState(userId);
-      }
-
-  var { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed } = reportLoadingState;
-
-  if (loadingInProgress || isReportLoadingDelayed) {
-    enableParentReportLoadingStatePanel();
-    await showReportLoadingStatePanel();
-
-    var reportsQueueTbodyId = "reports-queue-tbody";
-    var abandonedReportsTbodyId = "abandoned-reports-tbody";
-
-    insertDataToTable(reportsQueue, reportsQueueTbodyId);
-    insertDataToTable(abandonedReports, abandonedReportsTbodyId);
-    console.log('before',{ builderWasCalled })
-    var loadingCompleted =  await refreshReportLoadingStateStatus(userId);
-
-    if (loadingCompleted) {
-      builderWasCalled = false;
+    if (!isMainPageLoad) {
+      reportLoadingState = await getReportLoadingState(userId);
     }
 
-    console.log('after',{ builderWasCalled })
+    var { reportsQueue, abandonedReports, loadingInProgress, isReportLoadingDelayed } = reportLoadingState;
 
-    } 
+    if (loadingInProgress || isReportLoadingDelayed) {
+      enableParentReportLoadingStatePanel();
+      await showReportLoadingStatePanel();
+      updateLoadingProgressText(reportLoadingState);
 
-    builderWasCalled = false;  
-    console.log('on end in if',{ builderWasCalled })
+      var reportsQueueTbodyId = "reports-queue-tbody";
+      var abandonedReportsTbodyId = "abandoned-reports-tbody";
+
+      insertDataToTable(reportsQueue, reportsQueueTbodyId);
+      insertDataToTable(abandonedReports, abandonedReportsTbodyId);
+
+      var loadingCompleted = await refreshReportLoadingStateStatus(userId);
+
+      if (loadingCompleted) {
+        builderWasCalled = false;
+      }
+    }
+
+    builderWasCalled = false;
   }
-
-  console.log('on end',{ builderWasCalled })
 };
 
 export default reportLoadingStatePanelBuilder;
