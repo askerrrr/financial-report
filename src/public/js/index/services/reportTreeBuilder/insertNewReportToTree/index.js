@@ -21,6 +21,8 @@ var insertNewReportToTree = (reportData) => {
     return;
   }
 
+  yearDetails.open = true;
+
   var reportTbodyId = `tbody_year_${year}_month_${month}`;
   var monthReportsContainerId = `reports_container_${year}_${month}`;
 

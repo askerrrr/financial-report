@@ -24,6 +24,21 @@ var selectedFieldsToLoadingState = [
   "isReportLoadingIsStopped",
 ];
 
+var reportLoadingStateStub = {
+    userId: '2fea8c5b97449a59d49b',
+    reportsQueue: [],
+    loadingInProgress: true,
+    abandonedReports: [],
+    lastReportRequestTimestamp: 1781205423422,
+    isReportLoadingDelayed: false,
+    isReportLoadingisStopped: false,
+    queueLength: 2,
+    queueCapacity: 2,
+    isReportLoadingIsStopped: false,
+    loadingStopReason: ''
+  }
+
+
 var getMainPageData = async (req, res, next) => {
   var userId = req.params?.userId;
 
@@ -37,7 +52,7 @@ var getMainPageData = async (req, res, next) => {
   var { getReportTree } = dbUtils.reportsTreeCollectionServices;
   var { getReportLoadingState } = dbUtils.reportLoadingStatesCollectionServices;
 
-  var reportLoadingState = await getReportLoadingState(userId, session, selectedFieldsToLoadingState);
+  var reportLoadingState = reportLoadingStateStub//await getReportLoadingState(userId, session, selectedFieldsToLoadingState);
 
   var { reportTree } = await getReportTree(userId);
 
