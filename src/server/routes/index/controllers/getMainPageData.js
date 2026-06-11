@@ -20,7 +20,7 @@ var selectedFieldsToLoadingState = [
   "abandonedReports",
   "loadingInProgress",
   "isReportLoadingDelayed",
-  "isReportLoadingisStopped",
+  "isReportLoadingIsStopped",
 ];
 
 var getMainPageData = async (req, res, next) => {

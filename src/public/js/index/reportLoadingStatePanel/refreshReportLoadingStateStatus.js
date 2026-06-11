@@ -25,7 +25,7 @@ var refreshReportLoadingStateStatus = async (userId) => {
     isFirstRequest = false;
 
     var reportLoadingState = await getReportLoadingState(userId);
-    var { reportsQueue, abandonedReports, loadingInProgress, lastLoadedReport, isReportLoadingisStopped } = reportLoadingState;
+    var { reportsQueue, abandonedReports, loadingInProgress, lastLoadedReport, isReportLoadingIsStopped } = reportLoadingState;
 
     await resetReportsQueueTable();
     await resetAbandonedReportsTable();
@@ -34,7 +34,7 @@ var refreshReportLoadingStateStatus = async (userId) => {
     insertDataToTable(reportsQueue, reportsQueueTbodyId);
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
 
-    if (isReportLoadingisStopped) {
+    if (isReportLoadingIsStopped) {
       //change loading status
       break;
     }

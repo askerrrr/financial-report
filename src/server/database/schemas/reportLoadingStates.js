@@ -24,7 +24,7 @@ var reportLoadingStatesSchema = new Schema({
   freshReportPeriodIndex: { type: Number, required: false },
   lastLoadedReport: { type: lastLoadedReportSchema, required: false },
   isReportLoadingDelayed: { type: Boolean, requred: true, default: false },
-  isReportLoadingisStopped: { type: Boolean, requred: true, default: false },
+  isReportLoadingIsStopped: { type: Boolean, requred: true, default: false },
 });
 
 export default reportLoadingStatesSchema;
