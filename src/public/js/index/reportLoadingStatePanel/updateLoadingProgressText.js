@@ -7,19 +7,21 @@ var delay = async () => new Promise((res) => setTimeout(res, 3000));
 var updateLoadingProgressText = async (loadingState) => {
   var progressInfoText;
 
+  var loadingStopReasonElement = document.getElementById("loading-stop-reason");
   var loadingStateProgressInfoElement = document.getElementById("loading-state-progress-info");
   var loadingStateProgressStatusElement = document.getElementById("loading-state-progress-status");
 
-  var { queueCapacity, queueLength, loadingInProgress, abandonedReports, isReportLoadingIsStopped } = loadingState;
+  var { queueCapacity, queueLength, loadingInProgress, abandonedReports, isReportLoadingIsStopped, loadingStopReason } = loadingState;
 
   var numberOfSavedReports = queueCapacity - queueLength - abandonedReports.length;
 
   var progressStatusText = getLoadingProgressText(loadingInProgress);
 
   if (isReportLoadingIsStopped) {
-    loadingStateProgressStatusElement.textContent = "Статус загрузки: " + stoppedLoadingText;
+    loadingStateProgressStatusElement.textContent = "Загрузка: " + stoppedLoadingText + "\n";
+    loadingStopReasonElement.textContent = "Причина: " + getReasonText(loadingStopReason);
   } else {
-    loadingStateProgressStatusElement.textContent = "Статус загрузки: " + progressStatusText;
+    loadingStateProgressStatusElement.textContent = "Загрузка: " + progressStatusText;
   }
 
   if (queueLength === 0) {
@@ -50,3 +52,18 @@ var updateLoadingProgressText = async (loadingState) => {
 };
 
 export default updateLoadingProgressText;
+
+var getReasonText = function (reason) {
+  var reasonText = "";
+
+  switch (reason) {
+    case "isTokenMissing":
+      reasonText = "отсутствие токена";
+      break;
+    case "tokenIsExpired":
+      reasonText = "токен просрочен";
+      break;
+  }
+
+  return reasonText;
+};

@@ -1,6 +1,7 @@
 var panel = `
         <div id="loading-state-progress-info"></div>
         <div id="loading-state-progress-status"></div>
+        <div id="loading-stop-reason"></div>
         <div id="report-loading-state-progress-details">
           <details id="report-loading-state-details">
             <summary>детали</summary>
