@@ -20,7 +20,7 @@ var reportLoadingStatePanelBuilder = async (userId, reportLoadingState, isMainPa
     if (loadingInProgress || isReportLoadingDelayed) {
       enableParentReportLoadingStatePanel();
       await showReportLoadingStatePanel();
-      updateLoadingProgressText(reportLoadingState);
+      await updateLoadingProgressText(reportLoadingState);
 
       var reportsQueueTbodyId = "reports-queue-tbody";
       var abandonedReportsTbodyId = "abandoned-reports-tbody";

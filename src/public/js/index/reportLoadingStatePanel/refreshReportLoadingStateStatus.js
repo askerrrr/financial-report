@@ -29,8 +29,8 @@ var refreshReportLoadingStateStatus = async (userId) => {
 
     await resetReportsQueueTable();
     await resetAbandonedReportsTable();
+    await updateLoadingProgressText(reportLoadingState);
 
-    updateLoadingProgressText(reportLoadingState);
     insertDataToTable(reportsQueue, reportsQueueTbodyId);
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
 
