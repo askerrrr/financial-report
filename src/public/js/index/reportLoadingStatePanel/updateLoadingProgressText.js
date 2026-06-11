@@ -1,13 +1,11 @@
 var queueCapacityBeforeZeroed = 0;
 var stoppedLoadingText = "остановлена";
 var getLoadingProgressText = (loadingInProgress) => (loadingInProgress ? "активна" : "закончена");
-
 var delay = async () => new Promise((res) => setTimeout(res, 3000));
 
 var updateLoadingProgressText = async (loadingState) => {
   var progressInfoText;
 
-  var loadingStopReasonElement = document.getElementById("loading-stop-reason");
   var loadingStateProgressInfoElement = document.getElementById("loading-state-progress-info");
   var loadingStateProgressStatusElement = document.getElementById("loading-state-progress-status");
 
@@ -18,8 +16,17 @@ var updateLoadingProgressText = async (loadingState) => {
   var progressStatusText = getLoadingProgressText(loadingInProgress);
 
   if (isReportLoadingIsStopped) {
-    loadingStateProgressStatusElement.textContent = "Загрузка: " + stoppedLoadingText + "\n";
+    var loadingStopReasonElement = document.getElementById("loading-stop-reason");
+
+    if (!loadingStopReasonElement) {
+      loadingStopReasonElement = document.createElement("div");
+      loadingStopReasonElement.id = "loading-stop-reason";
+    }
+
     loadingStopReasonElement.textContent = "Причина: " + getReasonText(loadingStopReason);
+
+    loadingStateProgressStatusElement.textContent = "Загрузка: " + stoppedLoadingText + "\n";
+    loadingStateProgressStatusElement.insertAdjacentElement("afterend", loadingStopReasonElement);
   } else {
     loadingStateProgressStatusElement.textContent = "Загрузка: " + progressStatusText;
   }
