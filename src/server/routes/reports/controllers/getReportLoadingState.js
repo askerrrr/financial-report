@@ -8,6 +8,7 @@ var selectedFieldsToLoadingState = [
   "queueCapacity",
   "abandonedReports",
   "loadingInProgress",
+  "loadingStopReason",
   "isReportLoadingDelayed",
   "isReportLoadingIsStopped",
 ];
