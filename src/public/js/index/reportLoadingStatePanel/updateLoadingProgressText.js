@@ -10,12 +10,17 @@ var updateLoadingProgressText = async (loadingState) => {
   var loadingStateProgressInfoElement = document.getElementById("loading-state-progress-info");
   var loadingStateProgressStatusElement = document.getElementById("loading-state-progress-status");
 
-  var { queueCapacity, queueLength, loadingInProgress, abandonedReports } = loadingState;
+  var { queueCapacity, queueLength, loadingInProgress, abandonedReports, isReportLoadingIsStopped } = loadingState;
 
   var numberOfSavedReports = queueCapacity - queueLength - abandonedReports.length;
 
   var progressStatusText = getLoadingProgressText(loadingInProgress);
-  loadingStateProgressStatusElement.textContent = "Статус загрузки: " + progressStatusText;
+
+  if (isReportLoadingIsStopped) {
+    loadingStateProgressStatusElement.textContent = "Статус загрузки: " + stoppedLoadingText;
+  } else {
+    loadingStateProgressStatusElement.textContent = "Статус загрузки: " + progressStatusText;
+  }
 
   if (queueLength === 0) {
     numberOfSavedReports = queueCapacity - queueLength - abandonedReports.length;

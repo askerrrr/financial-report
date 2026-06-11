@@ -35,7 +35,6 @@ var refreshReportLoadingStateStatus = async (userId) => {
     insertDataToTable(abandonedReports, abandonedReportsTbodyId);
 
     if (isReportLoadingIsStopped) {
-      //change loading status
       break;
     }
 
