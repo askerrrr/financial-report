@@ -7,8 +7,7 @@ import getPaidStorageReportByTaskIdFromWBAPI from "./getPaidStorageReportByTaskI
 
 var getReports = async (userId, dateFrom, dateTo, token) => {
   var { taskId } = await createPaidStorageReportTask(dateFrom, dateTo, token, userId);
-
-  var statusIsDone = await checkPaidStorageReportCreationStatus(taskId, token, userId);
+  var { statusIsDone } = await checkPaidStorageReportCreationStatus(taskId, token, userId);
 
   if (!statusIsDone) {
     throw new WBAPIError(userId, 304, "can not create paid storage report task");
