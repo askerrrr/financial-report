@@ -2,7 +2,7 @@ import isFutureDate from "./isFutureDate.js";
 import standardizeDate from "./standardizeDate.js";
 import { isMonday } from "../../utils/dateUtils/services/getMondaysOrSundaysOfMonth.js";
 
-var checkDateFrom = async (dateFrom) => {
+var checkDateFrom = (dateFrom) => {
   var dateIncludesDot = dateFrom.split("").includes(".");
 
   if (!dateIncludesDot) {
@@ -18,17 +18,17 @@ var checkDateFrom = async (dateFrom) => {
     throw new Error("Неккоректный период");
   }
 
-  var standardizedDateFrom = await standardizeDate(dateFrom);
+  var standardizedDateFrom = standardizeDate(dateFrom);
 
   if (!standardizedDateFrom) {
     throw new Error("Начало периода введено некорректно");
   }
 
-  if (await isFutureDate(standardizedDateFrom)) {
+  if (isFutureDate(standardizedDateFrom)) {
     throw new Error("Период введен некорректно");
   }
 
-  if (!(await isMonday(standardizedDateFrom))) {
+  if (!isMonday(standardizedDateFrom)) {
     throw new Error("Начало периода не является понедельником");
   }
 

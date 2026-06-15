@@ -1,4 +1,4 @@
-var isFutureDate = async (reportDate) => {
+var isFutureDate = (reportDate) => {
   var fullToday = new Date().toISOString();
   var shortToday = fullToday.split("T")[0];
 

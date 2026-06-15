@@ -2,7 +2,7 @@ import getNextPeriod from "./services/getNextPeriod.js";
 import hasPeriodOverlap from "./services/hasPeriodOverlap.js";
 import { getMondaysOrSundaysOfMonth } from "./services/getMondaysOrSundaysOfMonth.js";
 
-var getDateToByDateFrom = async (dateFrom) => {
+var getDateToByDateFrom = (dateFrom) => {
   var [year, month, day] = dateFrom.split("-").map(Number);
 
   var dateTo;

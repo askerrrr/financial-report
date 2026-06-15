@@ -13,10 +13,8 @@ var reportLoaderModalWindowHandler = (userId) =>
       } else {
         alert("В первую очередь нужно загрузить токен личного кабинета WB");
       }
-
-      return;
     } else {
-      openReportPeriodModalWindow();
+      openReportPeriodModalWindow(userId);
     }
   });
 

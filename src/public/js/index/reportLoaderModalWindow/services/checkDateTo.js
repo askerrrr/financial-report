@@ -2,11 +2,11 @@ import isFutureDate from "./isFutureDate.js";
 import standardizeDate from "./standardizeDate.js";
 import getDateToByDateFrom from "../../utils/dateUtils/index.js";
 
-var checkDateTo = async (dateTo, dateFrom) => {
-  var expectedDateTo = await getDateToByDateFrom(dateFrom);
+var checkDateTo = (dateTo, dateFrom) => {
+  var expectedDateTo = getDateToByDateFrom(dateFrom);
 
   if (!dateTo) {
-    if (await isFutureDate(expectedDateTo)) {
+    if (isFutureDate(expectedDateTo)) {
       throw new Error("Отчет еще не готов...");
     }
 
@@ -28,9 +28,9 @@ var checkDateTo = async (dateTo, dateFrom) => {
     throw new Error("Неккоректный период");
   }
 
-  dateTo = await standardizeDate(dateTo);
+  dateTo = standardizeDate(dateTo);
 
-  if (await isFutureDate(dateTo)) {
+  if (isFutureDate(dateTo)) {
     throw new Error("Отчет еще не готов...");
   }
 

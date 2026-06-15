@@ -1,6 +1,6 @@
 var startDayFromMS = new Date("2024-01-29").getTime();
 
-var standardizeDate = async (date) => {
+var standardizeDate = (date) => {
   var [year, month, day] = date.split(".");
 
   var validDay = day.padStart(2, 0);

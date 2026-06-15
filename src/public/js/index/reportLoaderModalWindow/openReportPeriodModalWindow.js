@@ -7,7 +7,7 @@ import createCancelButton from "../utils/modalWindowUtils/createCancelButton.js"
 import createButtonsContainer from "../utils/modalWindowUtils/createButtonsContainer.js";
 import createUploadAllReportsCheckbox from "./services/createUploadAllReportsCheckbox.js";
 
-var openReportPeriodModalWindow = () => {
+var openReportPeriodModalWindow = (userId) => {
   var modal = createModal("modal-overlay");
 
   var dateFromInput = createInputField("dateFromInput", "начало в формате гггг.мм.дд - 2025.04.21");
@@ -17,7 +17,7 @@ var openReportPeriodModalWindow = () => {
   var uploadAllReportsCheckbox = createUploadAllReportsCheckbox();
   var label = createLabel("загрузить все отчеты", uploadAllReportsCheckbox);
 
-  var saveButton = createSaveButton(modal, dateFromInput, dateToInput, uploadAllReportsCheckbox);
+  var saveButton = createSaveButton(userId, modal, dateFromInput, dateToInput, uploadAllReportsCheckbox);
 
   var cancelButton = createCancelButton(modal);
 

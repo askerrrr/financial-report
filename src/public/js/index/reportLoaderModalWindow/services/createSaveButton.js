@@ -7,65 +7,56 @@ import reportLoadingStatePanelBuilder from "../../reportLoadingStatePanel/index.
 
 var isMainPageLoad = false;
 var reportLoadState = null;
-var userId = document.cookie.split("=")[1];
 
-var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheckbox) => {
+var createSaveButton = (userId, modal, dateFromInput, dateToInput, uploadAllReportsCheckbox) => {
   var button = document.createElement("button");
   button.className = "modal-button modal-button-save";
   button.textContent = "Отправить";
 
   button.onclick = async () => {
+    document.body.removeChild(modal);
+
+    var needToLoadAllReports = uploadAllReportsCheckbox.checked;
+
     try {
-      document.body.removeChild(modal);
+      if (needToLoadAllReports) {
+        var dateFrom = "";
+        var dateTo = "";
+        var isPeriodWithinSameWeek = false;
+        await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek, needToLoadAllReports);
 
-      var needToLoadAllReports = uploadAllReportsCheckbox.checked;
-
-      if (!needToLoadAllReports) {
+        setTimeout(() => reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad), 3000);
+      } else {
         var dateFrom = dateFromInput.value;
-        var { validDateFrom } = await checkDateFrom(dateFrom);
-
         var dateTo = dateToInput?.value;
 
-        var { validDateTo, isPeriodWithinSameWeek } = await checkDateTo(dateTo, validDateFrom);
+        var { validDateFrom } = checkDateFrom(dateFrom);
+        var { validDateTo, isPeriodWithinSameWeek } = checkDateTo(dateTo, validDateFrom);
 
-        if (!isPeriodWithinSameWeek) {
+        if (isPeriodWithinSameWeek) {
+          var reportData = await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek);
+
+          await showLoader();
+
+          if (!reportData) {
+            await deleteLoader();
+          }
+
+          await deleteLoader().then(() => insertNewReportToTree(reportData));
+
+          var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
+
+          if (confirmed) {
+            window.location.href = "/report/" + reportData.reportId;
+          }
+        } else {
           await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek);
 
           setTimeout(() => reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad), 3000);
-
-          return;
         }
-
-        var reportData = await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek);
-
-        await showLoader();
-
-        if (!reportData) {
-          await deleteLoader();
-          return;
-        }
-
-        await deleteLoader().then(() => insertNewReportToTree(reportData));
-
-        var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
-
-        if (confirmed) {
-          window.location.href = "/report/" + reportData.reportId;
-        }
-
-        return;
-      } else {
-        var validDateFrom = "";
-        var validDateTo = "";
-        var isPeriodWithinSameWeek;
-        await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek, needToLoadAllReports);
-        setTimeout(() => reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad), 3000);
-        return;
       }
     } catch (e) {
-      console.log(e);
-      alert(e.message);
-      await deleteLoader();
+      alert("Произошла ошибка...");
     }
   };
 

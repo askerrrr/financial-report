@@ -28,7 +28,7 @@ var getMondaysOrSundaysOfMonth = (date, weekDayName) => {
   return { mondays: weekDays };
 };
 
-var isMonday = async (dateFrom) => {
+var isMonday = (dateFrom) => {
   var { mondays } = getMondaysOrSundaysOfMonth(dateFrom, "monday");
 
   return mondays.includes(new Date(dateFrom).toISOString());
