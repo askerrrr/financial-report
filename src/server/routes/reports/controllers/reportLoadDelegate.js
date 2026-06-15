@@ -3,10 +3,10 @@ import shouldWaitBeforeNextRequest from "../services/different/shouldWaitBeforeN
 import sendReportPeriodsToReportLoader from "../services/different/sendReportPeriodsToReportLoader.js";
 
 var reportLoadDelegate = async (req, res, next) => {
-  var { uploadAllReports } = req.body;
+  var { needToLoadAllReports } = req.body;
   var { getReportLoadingState } = dbUtils.reportLoadingStatesCollectionServices;
 
-  if (uploadAllReports) {
+  if (needToLoadAllReports) {
     try {
       var { status } = await sendReportPeriodsToReportLoader(req.body);
       return res.status(status).json({ msg: "Загрузка отчётов началась. Они будут отображаться по мере их добавления" });

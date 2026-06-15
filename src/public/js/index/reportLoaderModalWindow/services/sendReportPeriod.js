@@ -1,8 +1,8 @@
-var sendReportPeriod = async (userId, dateFrom, dateTo, isPeriodWithinSameWeek = false, uploadAllReports = false) => {
+var sendReportPeriod = async (userId, dateFrom, dateTo, isPeriodWithinSameWeek = false, needToLoadAllReports = false) => {
   var res = await fetch("/report/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ userId, dateFrom, dateTo, isPeriodWithinSameWeek, uploadAllReports }),
+    body: JSON.stringify({ userId, dateFrom, dateTo, isPeriodWithinSameWeek, needToLoadAllReports }),
   });
 
   if (res.status !== 200) {

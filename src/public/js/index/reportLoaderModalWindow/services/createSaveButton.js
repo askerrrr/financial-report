@@ -18,9 +18,9 @@ var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheck
     try {
       document.body.removeChild(modal);
 
-      var uploadAllReports = uploadAllReportsCheckbox.checked;
+      var needToLoadAllReports = uploadAllReportsCheckbox.checked;
 
-      if (!uploadAllReports) {
+      if (!needToLoadAllReports) {
         var dateFrom = dateFromInput.value;
         var { validDateFrom } = await checkDateFrom(dateFrom);
 
@@ -58,7 +58,7 @@ var createSaveButton = (modal, dateFromInput, dateToInput, uploadAllReportsCheck
         var validDateFrom = "";
         var validDateTo = "";
         var isPeriodWithinSameWeek;
-        await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek, uploadAllReports);
+        await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek, needToLoadAllReports);
         setTimeout(() => reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad), 3000);
         return;
       }
