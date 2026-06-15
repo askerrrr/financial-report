@@ -1,4 +1,4 @@
-import createThElement from "../../../../../report/table/services/createThElement.js";
+import createThElement from "../../../../report/table/services/createThElement.js";
 
 var createReportsTableHead = () => {
   var reportPeriod = createThElement("Период отчета");

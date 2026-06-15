@@ -1,13 +1,13 @@
-import createModal from "../utils/createModal.js";
-import createTitle from "../utils/createTitle.js";
 import createLabel from "./services/createLabel.js";
-import createInputField from "../utils/createInputField.js";
 import createSaveButton from "./services/createSaveButton.js";
-import createCancelButton from "../utils/createCancelButton.js";
-import createButtonsContainer from "../utils/createButtonsContainer.js";
+import createModal from "../utils/modalWindowUtils/createModal.js";
+import createTitle from "../utils/modalWindowUtils/createTitle.js";
+import createInputField from "../utils/modalWindowUtils/createInputField.js";
+import createCancelButton from "../utils/modalWindowUtils/createCancelButton.js";
+import createButtonsContainer from "../utils/modalWindowUtils/createButtonsContainer.js";
 import createUploadAllReportsCheckbox from "./services/createUploadAllReportsCheckbox.js";
 
-var openReportPeriodModal = () => {
+var openReportPeriodModalWindow = () => {
   var modal = createModal("modal-overlay");
 
   var dateFromInput = createInputField("dateFromInput", "начало в формате гггг.мм.дд - 2025.04.21");
@@ -35,4 +35,4 @@ var openReportPeriodModal = () => {
   dateFromInput.focus();
 };
 
-export default openReportPeriodModal;
+export default openReportPeriodModalWindow;

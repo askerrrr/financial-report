@@ -1,5 +1,5 @@
 import createTdElement from "../../report/table/services/createTdElement.js";
-import getReportPeriod from "../services/reportTreeBuilder/insertNewReportToTree/table/getReportPeriod.js";
+import getReportPeriod from "../reportTreeBuilder/insertNewReportToTree/table/getReportPeriod.js";
 
 var insertDataToTable = (data, tbodyId) => {
   var tbody = document.getElementById(tbodyId);

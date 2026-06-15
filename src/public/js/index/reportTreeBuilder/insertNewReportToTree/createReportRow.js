@@ -1,6 +1,6 @@
 import getReportLink from "./table/getReportLink.js";
 import getReportPeriod from "./table/getReportPeriod.js";
-import createTdElement from "../../../../report/table/services/createTdElement.js";
+import createTdElement from "../../../report/table/services/createTdElement.js";
 
 var createReportRow = (reportData) => {
   var { dateFrom, dateTo, reportId, totalTaxAmount } = reportData;

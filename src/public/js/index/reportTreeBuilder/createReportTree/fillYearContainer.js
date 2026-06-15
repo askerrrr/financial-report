@@ -1,6 +1,6 @@
 import createMonthsDetails from "./createMonthsDetails.js";
 
-var createReportsTree = (years) => {
+var fillYearContainer = (years) => {
   var yearsContainer = document.getElementById("years_container");
 
   for (var { year, months } of years) {
@@ -18,4 +18,4 @@ var createReportsTree = (years) => {
   }
 };
 
-export default createReportsTree;
+export default fillYearContainer;

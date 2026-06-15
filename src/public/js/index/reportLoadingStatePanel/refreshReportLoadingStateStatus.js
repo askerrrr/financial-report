@@ -2,8 +2,8 @@ import insertDataToTable from "./insertDataToTable.js";
 import checkReportInTree from "./checkReportInTree.js";
 import sendAbandonedReports from "./sendAbandonedReports.js";
 import getReportLoadingState from "./getReportLoadingState.js";
+import { insertNewReportToTree } from "../reportTreeBuilder/index.js";
 import updateLoadingProgressText from "./updateLoadingProgressText.js";
-import insertNewReportToTree from "../services/reportTreeBuilder/insertNewReportToTree/index.js";
 import { disableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentReportLoadingStatePanel.js";
 
 var FIRST_REQUEST_DELAY_MS = 5_000;

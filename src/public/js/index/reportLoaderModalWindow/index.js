@@ -1,7 +1,7 @@
-import checkWBTokenExists from "./checkWBTokenExists.js";
-import openReportPeriodModal from "./services/reportLoader/index.js";
+import checkWBTokenExists from "../utils/checkWBTokenExists.js";
+import openReportPeriodModalWindow from "./openReportPeriodModalWindow.js";
 
-var reportLoaderHandler = (userId) =>
+var reportLoaderModalWindowHandler = (userId) =>
   (document.getElementById("period-button").onclick = async (e) => {
     e.preventDefault();
 
@@ -16,8 +16,8 @@ var reportLoaderHandler = (userId) =>
 
       return;
     } else {
-      openReportPeriodModal();
+      openReportPeriodModalWindow();
     }
   });
 
-export default reportLoaderHandler;
+export default reportLoaderModalWindowHandler;

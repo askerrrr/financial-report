@@ -1,7 +1,7 @@
-import buildReportTree from "./buildReportTree.js";
 import fileUploadHandler from "./fileUploadHandler.js";
-import getMainPageData from "./services/getMainPageData.js";
-import reportLoaderHandler from "./reportLoaderHandler.js";
+import getMainPageData from "./utils/getMainPageData.js";
+import { createReportTree } from "./reportTreeBuilder/index.js";
+import reportLoaderModalWindowHandler from "./reportLoaderModalWindow/index.js";
 import reportLoadingStatePanelBuilder from "./reportLoadingStatePanel/index.js";
 
 var isMainPageLoad = true;
@@ -10,9 +10,9 @@ var userId = document.cookie.split("=")[1];
 var main = async () => {
   var { lastReports, reportTree, reportLoadingState } = await getMainPageData(userId);
 
-  buildReportTree(userId, lastReports, reportTree);
+  createReportTree(userId, lastReports, reportTree);
 
-  reportLoaderHandler(userId);
+  reportLoaderModalWindowHandler(userId);
 
   reportLoadingStatePanelBuilder(userId, reportLoadingState, isMainPageLoad);
 };

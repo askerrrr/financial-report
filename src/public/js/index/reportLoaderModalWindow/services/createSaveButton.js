@@ -2,8 +2,8 @@ import checkDateTo from "./checkDateTo.js";
 import checkDateFrom from "./checkDateFrom.js";
 import sendReportPeriod from "./sendReportPeriod.js";
 import { showLoader, deleteLoader } from "./loader.js";
-import reportLoadingStatePanelBuilder from "../../../reportLoadingStatePanel/index.js";
-import insertNewReportToTree from "../../reportTreeBuilder/insertNewReportToTree/index.js";
+import { insertNewReportToTree } from "../../reportTreeBuilder/index.js";
+import reportLoadingStatePanelBuilder from "../../reportLoadingStatePanel/index.js";
 
 var isMainPageLoad = false;
 var reportLoadState = null;

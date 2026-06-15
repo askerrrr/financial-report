@@ -1,6 +1,6 @@
 import getReportLink from "../insertNewReportToTree/table/getReportLink.js";
 import getReportPeriod from "../insertNewReportToTree/table/getReportPeriod.js";
-import createTdElement from "../../../../report/table/services/createTdElement.js";
+import createTdElement from "../../../report/table/services/createTdElement.js";
 import createReportsTableHead from "../insertNewReportToTree/table/createReportsTableHead.js";
 
 var createReportsTable = (year, month, reportIds, reports) => {
@@ -28,7 +28,7 @@ var createReportsTable = (year, month, reportIds, reports) => {
 
     var totalProductCostsTd = createTdElement(totalProductCosts);
     var totalTaxAmountTd = createTdElement(totalTaxAmount);
-    var reportLink =  getReportLink(reportId);
+    var reportLink = getReportLink(reportId);
 
     var financesAccountedTd = createTdElement();
 

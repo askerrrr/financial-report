@@ -3,9 +3,9 @@ import checkTaxRate from "./checkTaxRate.js";
 import sendReportData from "./sendReportData.js";
 import sendTokenForValidation from "./sendTokenForValidation.js";
 import writeReportToLocalStorage from "./writeReportToLocalStorage.js";
-import checkDateTo from "../index/services/reportLoader/services/checkDateTo.js";
-import checkDateFrom from "../index/services/reportLoader/services/checkDateFrom.js";
-import { showLoader, deleteLoader } from "../index/services/reportLoader/services/loader.js";
+import checkDateTo from "../index/reportLoaderModalWindow/services/checkDateTo.js";
+import checkDateFrom from "../index/reportLoaderModalWindow/services/checkDateFrom.js";
+import { showLoader, deleteLoader } from "../index/reportLoaderModalWindow/services/loader.js";
 
 var errorMsg = "Что-то пошло не так...";
 
