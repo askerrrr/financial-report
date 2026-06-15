@@ -1,3 +1,5 @@
+var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
+
 var getCurrentTime = () => new Date(Date.now() + 3 * 60 * 60 * 1000);
 
 var createQuery = (skus) => {

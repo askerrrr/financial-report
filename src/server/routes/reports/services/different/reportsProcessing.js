@@ -11,11 +11,12 @@ import { recordedToSchemaVersion, reportSchemaVersion } from "../../../../databa
 
 var updateLastUsedTimestampNow = true;
 var invalidTokenErrorMsg = "Invalid Token";
+var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
 
 var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var { getWBTokenByUserId } = dbutils.tokenCollectionServices;
 
-  var currentTimestamp = new Date(Date.now() + 3 * 60 * 60).getTime();
+  var currentTimestamp = Date.now() + mskTimeOffsetInMs;
 
   var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
 
