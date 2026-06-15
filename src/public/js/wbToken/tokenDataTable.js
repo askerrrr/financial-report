@@ -18,8 +18,6 @@ var parseLastUsedData = (lastUsedDate) => {
   var currentYear = date.getFullYear();
   var currentMonth = date.getMonth() + 1;
 
-  console.log({ currentMonth, currentYear, currentDay });
-
   var splitedDate = lastUsedDate.split("T");
   var [year, month, day] = splitedDate[0].split("-");
   var hourAndMinAndSec = splitedDate[1].split(".")[0];

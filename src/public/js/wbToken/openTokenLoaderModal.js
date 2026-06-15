@@ -1,9 +1,9 @@
 import createSaveButton from "./createSaveButton.js";
-import createTitle from "../index/services/utils/createTitle.js";
-import createModal from "../index/services/utils/createModal.js";
-import createInputField from "../index/services/utils/createInputField.js";
-import createCancelButton from "../index/services/utils/createCancelButton.js";
-import createButtonsContainer from "../index/services/utils/createButtonsContainer.js";
+import createTitle from "../index/utils/modalWindowUtils/createTitle.js";
+import createModal from "../index/utils/modalWindowUtils/createModal.js";
+import createInputField from "../index/utils/modalWindowUtils/createInputField.js";
+import createCancelButton from "../index/utils/modalWindowUtils/createCancelButton.js";
+import createButtonsContainer from "../index/utils/modalWindowUtils/createButtonsContainer.js";
 
 var openTokenLoaderModal = (userId) => {
   var input = createInputField("token");

@@ -6,7 +6,7 @@ var checkForStoppedReportLoading = async (req, res, next) => {
 
   var userReportLoadingState = await reportLoadingStatesCollectionServices.getReportLoadingState(userId);
 
-  if (userReportLoadingState.isReportLoadingisStopped) {
+  if (userReportLoadingState.isReportLoadingIsStopped) {
     await sendResumeLoadingRequest(userId);
   }
 };
