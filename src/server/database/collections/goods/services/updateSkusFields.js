@@ -1,6 +1,6 @@
 var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
 
-var getCurrentTime = () => new Date(Date.now() + 3 * 60 * 60 * 1000);
+var getCurrentTimestamp = () => Date.now() + mskTimeOffsetInMs;
 
 var createQuery = (skus) => {
   var query = {};
@@ -22,7 +22,7 @@ var createQuery = (skus) => {
     query[clubDiscountedPriceKey] = sku.clubDiscountedPrice;
 
     var lastFetchDateKey = `listGoods.$[elem${count}].lastFetch`;
-    query[lastFetchDateKey] = getCurrentTime();
+    query[lastFetchDateKey] = getCurrentTimestamp();
     var optionKey = `elem${count}.id`;
 
     arrayFilters.push({ [optionKey]: sku.id });
