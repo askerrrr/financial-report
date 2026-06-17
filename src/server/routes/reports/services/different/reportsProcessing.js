@@ -6,6 +6,7 @@ import { WBAPIError } from "../../../../customError/index.js";
 import addNewSkusToListGoods from "./addNewSkusToListGoods.js";
 import dbutils from "../../../../database/collections/index.js";
 import insertReportToReportTree from "../reportTreeBuilder/index.js";
+import listGoodsLoader from "../../../goods/services/listGoodsLoader.js";
 import updateListGoodsMetrics from "../different/updateListGoodsMetrics.js";
 import { recordedToSchemaVersion, reportSchemaVersion } from "../../../../database/migration/schemaVersioning/reportsCollection.js";
 
@@ -67,6 +68,11 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   report.recordedTo = { year, month, schemaVersion: recordedToSchemaVersion };
 
   var { listGoods } = await getListGoodsFromDb(userId, session);
+
+  if (!listGoods.length) {
+    var listGoods = (await listGoodsLoader(userId, token)).listGoodsFromWBAPI;
+  }
+
   var { listGoodsWithNewSkus } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearReport, startYear, endYear);
   var { listGoodsWithUpdatedSkuMetrics } = await updateListGoodsMetrics(report, listGoodsWithNewSkus);
 
