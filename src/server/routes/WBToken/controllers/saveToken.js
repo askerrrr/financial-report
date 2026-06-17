@@ -5,6 +5,7 @@ import dbUtils from "../../../database/collections/index.js";
 import listGoodsLoader from "../../goods/services/listGoodsLoader.js";
 import extractNewSkusFromLIstGoods from "../../goods/services/extractNewSkusFromLIstGoods.js";
 
+var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
 var updateLastUsedTimestampNow = true;
 
 var saveToken = async (req, res, next) => {
@@ -36,7 +37,7 @@ var saveToken = async (req, res, next) => {
       }
 
       var tokenData = getTokenDetails(tokenPayload);
-      tokenData.lastUsed = new Date(Date.now() + 3 * 60 * 60 * 1000);
+      tokenData.lastUsed = Date.now() + mskTimeOffsetInMs;
       res.json(tokenData);
     });
   } catch (e) {

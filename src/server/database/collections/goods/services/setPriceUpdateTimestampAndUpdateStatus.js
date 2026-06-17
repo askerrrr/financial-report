@@ -1,4 +1,6 @@
-var getLastModifiedDate = () => new Date(Date.now() + 3 * 60 * 60 * 1000);
+var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
+
+var getLastModifiedDate = () => Date.now() + mskTimeOffsetInMs;
 
 var createQuery = (priceData) => {
   var query = {};

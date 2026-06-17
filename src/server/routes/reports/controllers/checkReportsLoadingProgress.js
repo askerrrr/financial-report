@@ -1,10 +1,13 @@
-import dbUtils from '../../../database/collections/index.js'
+import dbUtils from "../../../database/collections/index.js";
+
+var session = null;
+var selectedFields = ["loadingInProgress"];
 
 var checkReportsLoadingProgress = async (req, res, next) => {
   var { userId, dateFrom, dateTo } = req.body;
-  var { getLoadingProgressStatus, prependToReportsQueue } = dbUtils.reportLoadingStatesCollectionServices;
+  var { getReportLoadingState, prependToReportsQueue } = dbUtils.reportLoadingStatesCollectionServices;
 
-  var { loadingInProgress } = await getLoadingProgressStatus(userId);
+  var { loadingInProgress } = await getReportLoadingState(userId, session, selectedFields);
 
   if (loadingInProgress) {
     await prependToReportsQueue(userId, dateFrom, dateTo);

@@ -2,6 +2,8 @@ import parseJwt from "../services/parseJwt.js";
 import isTestToken from "../services/isTestToken.js";
 import isPresumablyJwtToken from "../services/isPresumablyJwtToken.js";
 
+var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
+
 var tokenValidator = async (req, res, next) => {
   var token = req.body.token;
 
@@ -19,7 +21,7 @@ var tokenValidator = async (req, res, next) => {
     return res.sendStatus(400);
   }
 
-  var currentTimestamp = new Date(Date.now() + 3 * 60 * 60).getTime();
+  var currentTimestamp = Date.now() + mskTimeOffsetInMs;
   var options = { method: "GET", headers: { "Content-Type": "application/json", Authorization: "Bearer " + token } };
 
   var responses = await Promise.all([

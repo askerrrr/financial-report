@@ -19,7 +19,7 @@ var createYearDetails = (reportData) => {
   monthsContainer.append(monthDetails);
   monthDetails.open = true;
 
-  var yearDetails = document.createElement("yearDetails");
+  var yearDetails = document.createElement("details");
   yearDetails.id = year;
   yearDetails.open = true;
   yearDetails.append(summary, monthsContainer);

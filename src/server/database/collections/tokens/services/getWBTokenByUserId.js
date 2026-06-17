@@ -1,5 +1,7 @@
 import { DatabaseError } from "../../../../customError/index.js";
 
+var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
+
 var getWBTokenByUserId = async (collection, userId, session, updateLastUsedNow = false) => {
   try {
     var sessionOpt = session ? { session: session } : {};
@@ -9,7 +11,7 @@ var getWBTokenByUserId = async (collection, userId, session, updateLastUsedNow =
     if (updateLastUsedNow) {
       data = await collection.findOneAndUpdate(
         { userId },
-        { $set: { lastUsed: new Date(Date.now() + 3 * 60 * 60 * 1000) } },
+        { $set: { lastUsed: Date.now() + mskTimeOffsetInMs } },
         { returnDocument: "before", ...sessionOpt },
       );
     } else {
