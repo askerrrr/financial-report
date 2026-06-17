@@ -41,10 +41,10 @@ var skusLastCostPriceModal = (reportId, taxYear, skusLastCostPrice) => {
 
     var { skusDataToClient, total } = await sendCostPrices(userId, reportId, taxYear, skusLastCostPrice);
 
-    await updateTotalsTableFields(total);
+    updateTotalsTableFields(total);
 
     for (var sku of skusDataToClient) {
-      await updateSKUsTableFields(sku);
+      updateSKUsTableFields(sku);
     }
 
     document.body.removeChild(modal);

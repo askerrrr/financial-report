@@ -1,9 +1,15 @@
 import skusLastCostPriceModal from "./table/services/modal/skusLastCostPriceModal.js";
 
-var setSkusLastCostPricesButtonHandler = (reportId, taxYear, skusLastCostPrice) => {
-  var button = document.getElementById("set-cost-prices-from-previous-report-period");
+var button = document.getElementById("set-cost-prices-from-previous-report-period");
 
-  button.onclick = async () => skusLastCostPriceModal(reportId, taxYear, skusLastCostPrice);
+var setSkusLastCostPricesButtonHandler = (reportId, taxYear, skusLastCostPrice) => {
+  button.onclick = () => {
+    if (skusLastCostPrice.length) {
+      skusLastCostPriceModal(reportId, taxYear, skusLastCostPrice);
+    } else {
+      alert("Для текущих товаров нет последних себестоимостей.");
+    }
+  };
 };
 
 export default setSkusLastCostPricesButtonHandler;
