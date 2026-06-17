@@ -13,12 +13,22 @@ var lastLoadedReportSchema = new Schema(
   { _id: false },
 );
 
+var queueItemSchema = new Schema(
+  {
+    index: { type: Number, required: true },
+    dateTo: { type: String, required: true },
+    dateFrom: { type: String, required: true },
+    failedCount: { type: Number, required: true, default: 0, min: 0, max: 3 },
+  },
+  { _id: false },
+);
+
 var reportLoadingStatesSchema = new Schema({
   userId: { type: String, required: true },
   queueLength: { type: Number, default: 0 },
   queueCapacity: { type: Number, default: 0 },
-  reportsQueue: { type: Array, required: false },
-  abandonedReports: { type: Array, required: false },
+  reportsQueue: { type: [queueItemSchema], required: false },
+  abandonedReports: { type: [queueItemSchema], required: false },
   loadingInProgress: { type: Boolean, default: false },
   lastReportRequestTimestamp: { type: Number, default: 0 },
   freshReportPeriodIndex: { type: Number, required: false },
