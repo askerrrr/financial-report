@@ -1,7 +1,7 @@
-var createInput = (className, tdElement) => {
+var createInput = (className, costPriceDisplayElement) => {
   var input = document.createElement("input");
   input.type = "text";
-  input.value = tdElement.textContent;
+  input.value = costPriceDisplayElement.textContent;
   input.className = className;
 
   return input;
