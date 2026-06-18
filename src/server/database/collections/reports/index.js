@@ -7,7 +7,6 @@ import checkReportExistsToDb from "./services/checkReportExistsToDb.js";
 import saveUpdatedReports from "./services/saveUpdatedReports.js";
 import deleteReportFromDb from "./services/deleteReportFromDb.js";
 import getReportsByUserId from "./services/getReportsByUserId.js";
-import deleteAllReportsByUserId from "./services/deleteAllReportsByUserId.js";
 import getAllDataFromReportCollection from "./services/getAllDataFromReportCollection.js";
 import updateReportFinancialAccountingStatus from "./services/updateReportFinancialAccountingStatus.js";
 
@@ -27,7 +26,6 @@ var reportCollectionServices = {
   checkReportExistsToDb: (userId, dateFrom, dateTo) => checkReportExistsToDb(reportCollection, userId, dateFrom, dateTo),
 
   deleteReportFromDb: (userId, reportId, session) => deleteReportFromDb(reportCollection, userId, reportId, session),
-  deleteAllReportsByUserId: (userId) => deleteAllReportsByUserId(reportCollection, userId),
 };
 
 export default reportCollectionServices;
