@@ -10,7 +10,6 @@ import saveReports from "./controllers/saveReports.js";
 import deleteReport from "./controllers/deleteReport.js";
 import getReportPage from "./controllers/getReportPage.js";
 import skuPhotoUpload from "./controllers/skuPhotoUpload.js";
-import deleteAllReports from "./controllers/deleteAllReports.js";
 import setCostPriceToSku from "./controllers/setCostPriceToSku.js";
 import deleteReportsTree from "./controllers/deleteReportsTree.js";
 import checkReportExists from "./controllers/checkReportExists.js";
@@ -45,8 +44,6 @@ router.patch("/skus/cost-prices", joiSchemaValidator(schemas.setCostPriceToSkus)
 router.patch("/skus/other-expenses", joiSchemaValidator(schemas.setOtherExpensesToSku), setOtherExpensesToSku);
 
 router.patch("/financial-accounting-status/", joiSchemaValidator(schemas.changeFinancialAccountingStatus), changeFinancialAccountingStatus);
-
-router.delete("/delete_all_reports/:userId", deleteAllReports);
 
 router.delete("/delete_all_reporting_periods/:userId", deleteReportsTree);
 
