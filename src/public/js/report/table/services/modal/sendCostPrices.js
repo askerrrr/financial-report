@@ -12,9 +12,9 @@ var sendCostPrices = async (userId, reportId, taxYear, costPrices) => {
     return;
   }
 
-  var { skusDataToClient, total } = await res.json();
+  var { skusDataToClient, totals } = await res.json();
 
-  return { skusDataToClient, total };
+  return { skusDataToClient, totals };
 };
 
 export default sendCostPrices;
