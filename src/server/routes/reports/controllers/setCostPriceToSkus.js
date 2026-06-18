@@ -19,7 +19,7 @@ var setCostPriceToSkus = async (req, res, next) => {
 
   var { saveUpdatedReport, getReportById } = dbUtils.reportCollectionServices;
   var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
-  var { getListGoodsFromDb, saveUpdatedSkuMetrics } = dbUtils.goodsCollectionServices;
+  var { getListGoodsFromDb, updateSkusMetricsInListGoods } = dbUtils.goodsCollectionServices;
 
   var prevSkuData;
   var prevReportTotals;
@@ -81,9 +81,7 @@ var setCostPriceToSkus = async (req, res, next) => {
               endYearPostfix,
             ).recalculatedTaxParams;
 
-            skuMetricsToUpdate.push(result.updatedSkuMetrics);
-
-            // await saveUpdatedSkuMetrics(userId, id, result.updatedSkuMetrics, session);
+            skuMetricsToUpdate.push({ id, skuName, metrics: result.updatedSkuMetrics });
 
             var { startYearTaxParams, endYearTaxParams } = taxParams;
           } else {
@@ -93,8 +91,7 @@ var setCostPriceToSkus = async (req, res, next) => {
             totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex]).updatedTotals;
             taxParamsOfYear = recalculateTaxParams(result.taxParams, prevReportTotals, totalParams).recalculatedTaxParams;
 
-            skuMetricsToUpdate.push(result.updatedSkuMetrics);
-            // await saveUpdatedSkuMetrics(userId, id, result.updatedSkuMetrics, session);
+            skuMetricsToUpdate.push({ id, skuName, metrics: result.updatedSkuMetrics });
           }
 
           var changedSkuData = excludeEqualParams(prevSkuData, skus[skuIndex]);
@@ -112,12 +109,13 @@ var setCostPriceToSkus = async (req, res, next) => {
 
       if (report.crossesTaxYears) {
         var { startYearTaxParams, endYearTaxParams } = crossYearTaxParams;
-        // await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
+        await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
       } else {
-        // await changeTaxParamsToDb(userId, session, taxParamsOfYear);
+        await changeTaxParamsToDb(userId, session, taxParamsOfYear);
       }
 
-      // await saveUpdatedReport(userId, reportId, { skus, ...totalParams }, session);
+      await updateSkusMetricsInListGoods(userId, skuMetricsToUpdate, session);
+      await saveUpdatedReport(userId, reportId, { skus, ...totalParams }, session);
 
       var changedTotalsData = excludeEqualParams(prevReportTotals, totalParams);
 
