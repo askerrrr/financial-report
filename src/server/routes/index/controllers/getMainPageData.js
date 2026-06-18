@@ -33,13 +33,8 @@ var getMainPageData = async (req, res, next) => {
 
   var reportLoadingStateUrl = "/report/loading-state/" + userId + "/";
 
-  var { getReportsByUserId } = dbUtils.reportCollectionServices;
-  var { getReportTree } = dbUtils.reportsTreeCollectionServices;
-  var { getReportLoadingState } = dbUtils.reportLoadingStatesCollectionServices;
-
-  var reportLoadingState = await getReportLoadingState(userId, session, selectedFieldsToLoadingState);
-
-  var { reportTree } = await getReportTree(userId);
+  var { reportTree } = await dbUtils.reportsTreeCollectionServices.getReportTree(userId, session);
+  var reportLoadingState = await dbUtils.reportLoadingStatesCollectionServices.getReportLoadingState(userId, session, selectedFieldsToLoadingState);
 
   if (!reportTree.length) {
     return res.json({
@@ -64,7 +59,7 @@ var getMainPageData = async (req, res, next) => {
     });
   }
 
-  var { reports } = await getReportsByUserId(userId, null, projectonFields, lastReportIds);
+  var { reports } = await dbUtils.reportCollectionServices.getReportsByUserId(userId, session, projectonFields, lastReportIds);
 
   return res.json({
     reportLoadingState,
