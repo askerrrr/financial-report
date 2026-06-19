@@ -7,6 +7,7 @@ import updateSKUsTableFields from "../updateSKUsTableFields.js";
 import updateTotalsTableFields from "../updateTotalsTableFields.js";
 import updateReportFromLocalStorage from "../updateReportFromLocalStorage.js";
 import getReportDataFromLocalStorage from "./getReportDataFromLocalStorage.js";
+import financialAccountingStatusButtonHander from "../../../financialAccountingStatusButtonHander.js";
 
 var event = "click";
 
@@ -46,6 +47,8 @@ var costPriceModal = (skuData, costPriceDisplayElement, isGuestAccess) => {
 
     if (isGuestAccess) {
       updateReportFromLocalStorage(data);
+    } else {
+      financialAccountingStatusButtonHander(skuData.userId, skuData.reportId);
     }
   };
 
