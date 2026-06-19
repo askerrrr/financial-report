@@ -28,7 +28,7 @@ var financialAccountingStatusButtonHander = (userId, reportId) => {
     var confirmed = confirm(message);
 
     if (confirmed) {
-      var success = await sendNewFinancialAccountingStatus(reportId, newStatusIsTrue);
+      var success = await sendNewFinancialAccountingStatus(userId, reportId, newStatusIsTrue);
 
       if (!success) {
         alert("Не удалось изменить статус...");
