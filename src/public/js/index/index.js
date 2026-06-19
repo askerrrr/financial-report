@@ -8,7 +8,7 @@ var isMainPageLoad = true;
 var userId = document.cookie.split("=")[1];
 
 var main = async () => {
-  var { lastReports, reportTree, reportLoadingState } = await getMainPageData(userId);
+  var { lastReports, reportTree, reportLoadingState, reportsWithAccountedFinances } = await getMainPageData(userId);
 
   createReportTree(userId, lastReports, reportTree);
 
