@@ -1,5 +1,6 @@
 import dbUtils from "../../../database/collections/index.js";
 import getReportTreeDto from "../services/getReportTreeDto.js";
+import sortReportsByAccountingDate from "../services/sortReportsByAccountingDate.js";
 
 var getLastNonEmptyReportIds = (lastYear) => lastYear?.months.find((item) => item?.reportIds.length)?.reportIds.map(({ reportId }) => reportId);
 
@@ -40,8 +41,9 @@ var getMainPageData = async (req, res, next) => {
     return res.json({
       reportLoadingState,
       reportLoadingStateUrl,
-      lastReports: [],
       reportTree: [],
+      lastReports: [],
+      reportsWithAccountedFinances: [],
     });
   }
 
@@ -54,8 +56,9 @@ var getMainPageData = async (req, res, next) => {
     return res.json({
       reportLoadingState,
       reportLoadingStateUrl,
-      lastReports: [],
       reportTree: [],
+      lastReports: [],
+      reportsWithAccountedFinances: [],
     });
   }
 
@@ -71,6 +74,7 @@ var getMainPageData = async (req, res, next) => {
     reportLoadingStateUrl,
     lastReports: reports,
     reportTree: reportTreeDto,
+    reportsWithAccountedFinances: sortReportsByAccountingDate(reportsWithAccountedFinances),
   });
 };
 
