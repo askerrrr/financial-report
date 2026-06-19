@@ -28,11 +28,12 @@ var getReportsByUserId = async (collection, userId, session, selectedFields, rep
               in: projectFields,
             },
           },
+          reportsWithAccountedFinances: 1,
         },
       },
     ]);
-
-    return { reports: data[0].reports };
+    
+    return { reports: data[0].reports, reportsWithAccountedFinances: data[0].reportsWithAccountedFinances };
   }
 
   if (selectedFields) {

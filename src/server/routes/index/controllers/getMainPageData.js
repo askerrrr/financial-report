@@ -59,7 +59,12 @@ var getMainPageData = async (req, res, next) => {
     });
   }
 
-  var { reports } = await dbUtils.reportCollectionServices.getReportsByUserId(userId, session, projectonFields, lastReportIds);
+  var { reports, reportsWithAccountedFinances } = await dbUtils.reportCollectionServices.getReportsByUserId(
+    userId,
+    session,
+    projectonFields,
+    lastReportIds,
+  );
 
   return res.json({
     reportLoadingState,
