@@ -29,12 +29,7 @@ router.get("/prices-discounts/file/:userId", getWeeklyPricesFile);
 router.post("/", joiSchemaValidator(schemas.loadListGoods), loadListGoods);
 router.post("/sku-disable-status", joiSchemaValidator(schemas.changeSkuDisableStatus), changeSkuDisableStatus);
 
-router.post(
-  "/prices-discounts/upload/",
-  joiSchemaValidator(schemas.uploadPricesAndDiscountsFile),
-  upload.single("file"),
-  uploadPricesAndDiscountsFile,
-);
+router.post("/prices-discounts/upload/", upload.single("file"), uploadPricesAndDiscountsFile);
 
 router.patch(
   "/prices-discounts/",

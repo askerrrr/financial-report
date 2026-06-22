@@ -12,6 +12,7 @@ var writeSKU = (sku, ws, indentToSkuName) => {
   ws.addRow(["скидка", ...weeklyDiscounts]).alignment = alignmentStyles;
   ws.addRow(["цена со скидкой"]).alignment = alignmentStyles;
   ws.addRow(["интервал обновления"]).alignment = alignmentStyles;
+  ws.addRow(["менять цену, если товар в акции", ...new Array(7).fill("нет")]).alignment = alignmentStyles;
   return ws;
 };
 

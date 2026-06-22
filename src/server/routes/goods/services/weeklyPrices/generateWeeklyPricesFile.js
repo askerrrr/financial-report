@@ -27,8 +27,9 @@ var generateWeeklyPricesFile = async (listGoods) => {
     ws.addRow([]);
     ws.addRow([]);
 
-    indentToSkuName += 7;
+    indentToSkuName += 8;
   }
+
   ws = setStylesToSheet(ws);
   ws = setFormulaToCells(ws, skusQty);
   ws = writeInstructionsForThePriceUpdateInterval(wsToInstructions);

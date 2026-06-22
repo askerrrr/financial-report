@@ -5,6 +5,10 @@ import { readWeeklyPricesFile } from "../services/weeklyPrices/index.js";
 var uploadPricesAndDiscountsFile = async (req, res, next) => {
   var userId = req.body.userId;
 
+  if (!userId) {
+    return res.sendStatus(400);
+  }
+
   var { getListGoodsFromDb } = dbUtils.goodsCollectionServices;
   var { setWeeklyPricesAndDiscountsToDb } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
 
@@ -20,7 +24,7 @@ var uploadPricesAndDiscountsFile = async (req, res, next) => {
       var fileBuffer = req.file.buffer;
 
       var { weeklyPricesAndDiscounts } = await readWeeklyPricesFile(fileBuffer, listGoods);
-      await setWeeklyPricesAndDiscountsToDb(userId, weeklyPricesAndDiscounts, session);
+      //await setWeeklyPricesAndDiscountsToDb(userId, weeklyPricesAndDiscounts, session);
 
       return res.json({ weeklyPricesAndDiscounts });
     });
