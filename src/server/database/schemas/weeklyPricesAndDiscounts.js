@@ -17,6 +17,7 @@ var skuSchema = new Schema(
     lastUpdatedTimestamp: { type: Number, default: 0 },
     data: { type: priceAndDiscountSchema, required: false },
     updateInterval: { type: String, default: "5m" },
+    changePriceIfInPromo: { type: Boolean, default: false },
     updateIntervalInMs: { type: Number, default: 300000 },
     updateOption: { type: String, default: "interval", enum: ["interval", "oncePerDay"] },
   },
