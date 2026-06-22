@@ -1,9 +1,29 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   background-color: #212529;
   color: #f8f9fa;
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 100px;
+  padding: 15px;
+  padding-top: 85px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 10px 0;
+  border-radius: 5px;
 }
 
 .details {
@@ -17,12 +37,20 @@ details {
   max-width: 900px;
   font-size: x-large;
   width: 100%;
-  box-sizing: border-box;
   background-color: #343a40;
   border: 1px solid #495057;
   border-radius: 5px;
   padding: 10px;
   margin: 0 0 10px 0;
+  transition: background-color 0.2s ease;
+}
+
+details[open] {
+  background-color: #3a4047;
+}
+
+#years_container {
+  margin-top: 0;
 }
 
 summary {
@@ -31,6 +59,10 @@ summary {
   font-weight: bold;
   outline: none;
   display: block;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
 }
 
 details[open] summary {
@@ -40,8 +72,8 @@ details[open] summary {
 
 table {
   width: 100%;
+  min-width: 600px;
   max-width: 100%;
-  box-sizing: border-box;
   margin: 10px 0;
   border-collapse: collapse;
   font-size: 16px;
@@ -52,7 +84,6 @@ table {
 th,
 td {
   padding: 15px;
-  text-align: left;
   border: 1px solid #495057;
   text-align: center;
   vertical-align: middle;
@@ -61,11 +92,6 @@ td {
 th {
   background-color: #495057;
   font-weight: bold;
-}
-
-th:first-child,
-td:first-child {
-  text-align: center;
 }
 
 tbody tr:nth-child(even) {
@@ -85,15 +111,22 @@ button {
   border-radius: 5px;
   font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
 }
 
 button:hover {
   background-color: #495057;
 }
 
+button:active {
+  transform: scale(0.97);
+}
+
 .totalFinalProfit {
-  color: #04ff00;
+  color: #7ddf6c;
 }
 
 .input-file {
@@ -117,17 +150,25 @@ button:hover {
   background-color: #495057;
   color: #f8f9fa;
   border-radius: 5px;
-  transition: background-color 0.3s;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
 }
 
 .input-file:hover span {
   background-color: #5a6268;
 }
 
+.input-file span:active {
+  transform: scale(0.97);
+}
+
 .download-monthly-reports-button {
-  display: inline-block;
-  padding: 10px 20px;
-  margin: 10px 0 15px 0;
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 15px 0;
   background-color: #495057;
   color: #f8f9fa;
   border: 2px solid #343a40;
@@ -137,13 +178,15 @@ button:hover {
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: calc(100% - 20px);
-  box-sizing: border-box;
 }
 
 .download-monthly-reports-button:hover {
   background-color: #5a6268;
   border-color: #495057;
+}
+
+.download-monthly-reports-button:active {
+  transform: scale(0.98);
 }
 
 .download-monthly-reports-button::before {
@@ -159,45 +202,54 @@ button:hover {
   top: -1px;
 }
 
-@media (max-width: 768px) {
-  .download-monthly-reports-button {
-    padding: 8px 15px;
-    font-size: 14px;
-  }
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(34, 39, 46, 0.97);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(73, 80, 87, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 30px;
+  z-index: 1000;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
 .top-actions {
-  position: fixed;
-  top: 3rem;
-  right: 4.5rem;
-  z-index: 1000;
   display: flex;
-  gap: 1rem;
+  gap: 10px;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .top-actions button {
-  background-color: #343a40;
+  background-color: rgba(52, 58, 64, 0.8);
   color: #f8f9fa;
-  border: 1px solid #495057;
+  border: 1px solid rgba(73, 80, 87, 0.5);
   border-radius: 6px;
-  padding: 0.65rem 1.2rem;
-  font-size: 0.95rem;
+  padding: 8px 16px;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
 }
 
 .top-actions button:hover {
   background-color: #495057;
   border-color: #6c757d;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .top-actions button:active {
-  transform: translateY(0);
+  transform: scale(0.97);
 }
 
 .top-actions button.primary {
@@ -208,4 +260,85 @@ button:hover {
 
 .top-actions button.primary:hover {
   background-color: #0b5ed7;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+    padding-top: 75px;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .top-bar {
+    height: 60px;
+    padding: 0 15px;
+  }
+
+  .top-actions {
+    gap: 6px;
+  }
+
+  .top-actions button {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .download-monthly-reports-button {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+    padding-top: 60px;
+  }
+
+  .top-bar {
+    height: 50px;
+    padding: 0 10px;
+  }
+
+  .top-actions {
+    gap: 4px;
+  }
+
+  .top-actions button {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    border-radius: 4px;
+  }
+
+  .download-monthly-reports-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 1200px) {
+  body {
+    padding: 100px;
+    padding-top: 100px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .top-bar {
+    padding: 0 50px;
+  }
+
+  .top-actions {
+    gap: 14px;
+  }
+
+  .top-actions button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
 }
