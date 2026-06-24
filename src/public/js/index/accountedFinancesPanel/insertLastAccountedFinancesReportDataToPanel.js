@@ -9,7 +9,8 @@ var insertLastAccountedFinancesReportDataToPanel = (lastAccountedFinances) => {
   reportPeriodElem.textContent += reportPeriod;
 
   var financesAccountedAtElem = document.getElementById("finances-accounted-at");
-  financesAccountedAtElem.textContent += new Date(financesAccountedAt).toLocaleString();
+
+  financesAccountedAtElem.textContent += new Date(financesAccountedAt - 3 * 60 * 60 * 1000).toLocaleString();
 
   var linkToReportElem = document.getElementById("link-to-report");
   linkToReportElem.href = "/report/" + reportId;
