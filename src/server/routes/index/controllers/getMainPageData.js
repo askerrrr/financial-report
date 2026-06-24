@@ -69,7 +69,6 @@ var getMainPageData = async (req, res, next) => {
     lastReportIds,
   );
 
-  console.log(sortReportsByAccountingDate(reportsWithAccountedFinances));
   return res.json({
     reportLoadingState,
     reportLoadingStateUrl,
