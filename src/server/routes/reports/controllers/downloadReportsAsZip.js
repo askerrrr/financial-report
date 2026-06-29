@@ -40,16 +40,16 @@ var downloadReportsAsZip = async (req, res, next) => {
   var folder = zip.folder(folderName);
 
   for (var report of reports) {
-    var buffer = await getReportAsXLSXBuffer(report);
+    var { buffer } = await getReportAsXLSXBuffer(report);
 
     var fileNameForSeparateReport = `Детали отчета от ${report.dateFrom} по ${report.dateTo}.xlsx`;
 
     folder.file(fileNameForSeparateReport, buffer);
   }
 
-  var monthlySummaryBuffer = await getMonthlySummaryAsXLSXBuffer(reports);
+  var { buffer } = await getMonthlySummaryAsXLSXBuffer(reports);
 
-  folder.file(mainFileName, monthlySummaryBuffer);
+  folder.file(mainFileName, buffer);
 
   var zipBuffer = await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" });
 
