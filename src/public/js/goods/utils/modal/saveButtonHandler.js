@@ -29,7 +29,8 @@ var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
         }
       }
 
-      var sku = { nmID: item.id, price: newPrice, discount: newDiscount };
+      var changePriceIfInPromo = document.getElementById("checkbox-" + item.skuName);
+      var sku = { changePriceIfInPromo, data: { nmID: item.id, price: newPrice, discount: newDiscount } };
 
       modalOverlay.classList.remove("active");
       document.body.style.overflow = "auto";

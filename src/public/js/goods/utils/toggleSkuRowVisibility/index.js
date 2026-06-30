@@ -56,7 +56,7 @@ var createSkuRowVisibilityButtonHandler = (skuName, id) => {
     },
   };
 
-  var button = createButton("скрыть", "", btnId, handler);
+  var button = createButton("скрыть", "item", btnId, handler);
 
   return button;
 };

@@ -1,7 +1,10 @@
 var yes = "да";
 var no = "нет";
+var userId = document.cookie.split("=")[1];
 
-var createCheckboxForParticipationInPromo = (skuName, changePriceIfInPromo, needWrapIntoFieldset = false) => {
+var createCheckboxForParticipationInPromo = (sku, changePriceIfInPromo, needWrapIntoFieldset = false) => {
+  var { skuName } = sku;
+
   var input = document.createElement("input");
   input.type = "checkbox";
   input.id = "checkbox-" + skuName;

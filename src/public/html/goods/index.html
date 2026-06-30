@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,7 +8,7 @@
     <title>Товары</title>
   </head>
   <body>
-    <button class="btn-to-main" onclick="window.location.href='/'">На главную</button>
+    <button class="btn-to-main" onclick="window.location.href = '/'">На главную</button>
     <div class="top-controls">
       <button id="download-weekly-prices-file" hidden>Скачать цены на неделю</button>
       <button id="download-skus-metrics" hidden>Скачать статистику</button>
@@ -29,14 +29,14 @@
     <button id="upload-list-goods" type="button" hidden>Загрузить список товаров</button>
     <table id="enabled-skus-table" class="skus-table" hidden>
       <thead id="enabled-skus-thead">
-        <tr>
+        <tr id="enabled-skus-thead-row">
           <th>Артикул</th>
           <th id="price-th">Цена</th>
           <th id="discount-th">Скидка продавца</th>
           <th id="discountedPrice-th">Цена со скидкой</th>
           <th id="clubDiscounted-price-th">Цена со скидкой, включая скидку WB Клуба</th>
-          <th>||</th>
-          <th>||</th>
+          <th>Действие с ценой</th>
+          <th>Скрыть товар</th>
         </tr>
       </thead>
       <tbody id="enabled-skus-tbody"></tbody>

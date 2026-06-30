@@ -4,12 +4,14 @@ var createQuery = (sku, checkedWeekDays) => {
 
   var count = 0;
   for (var weekDayId of checkedWeekDays) {
-    var queryKey = `weeklyPricesAndDiscounts.${weekDayId}.$[elem${count}].data`;
-    query[queryKey] = sku;
+    for (var key of Object.keys(sku)) {
+      var queryKey = `weeklyPricesAndDiscounts.${weekDayId}.$[elem${count}].${key}`;
+      query[queryKey] = sku[key];
+    }
 
     var optionKey = `elem${count}.nmID`;
 
-    arrayFilters.push({ [optionKey]: sku.nmID });
+    arrayFilters.push({ [optionKey]: sku.data.nmID });
 
     count++;
   }
