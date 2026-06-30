@@ -47,7 +47,7 @@ router.patch("/financial-accounting-status/", joiSchemaValidator(schemas.changeF
 
 router.delete("/delete_all_reporting_periods/:userId", deleteReportsTree);
 
-router.post("/image/", joiSchemaValidator(schemas.skuPhotoUpload), upload.single("sku-photo"), skuPhotoUpload);
+router.post("/image/", upload.single("sku-photo"), skuPhotoUpload);
 router.delete("/image/", joiSchemaValidator(schemas.deleteImage), deleteImage);
 
 export default router;
