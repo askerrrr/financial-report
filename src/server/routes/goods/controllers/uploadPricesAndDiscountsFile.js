@@ -24,7 +24,7 @@ var uploadPricesAndDiscountsFile = async (req, res, next) => {
       var fileBuffer = req.file.buffer;
 
       var { weeklyPricesAndDiscounts } = await readWeeklyPricesFile(fileBuffer, listGoods);
-      //await setWeeklyPricesAndDiscountsToDb(userId, weeklyPricesAndDiscounts, session);
+      await setWeeklyPricesAndDiscountsToDb(userId, weeklyPricesAndDiscounts, session);
 
       return res.json({ weeklyPricesAndDiscounts });
     });
