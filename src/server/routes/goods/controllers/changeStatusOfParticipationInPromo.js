@@ -2,8 +2,12 @@ import dbUtils from "../../../database/collections/index.js";
 
 var changeStatusOfParticipationInPromo = async (req, res, next) => {
   console.log(req.body);
+  var { userId, skuId, skuDataToUpdate, checkedWeekDays } = req.body;
+  var { updatePriceAndDiscount } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
 
-  return res.sendStatus(200);
+  var success = await updatePriceAndDiscount(userId, skuId, skuDataToUpdate, checkedWeekDays);
+
+  return success ? res.sendStatus(200) : res.sendStatus(304);
 };
 
 export default changeStatusOfParticipationInPromo;

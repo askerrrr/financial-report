@@ -49,8 +49,9 @@ var createCheckboxForParticipationInPromo = (sku, changePriceIfInPromo, needWrap
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userId,
-          sku: { data: { skuName, nmId: sku.id, changePriceIfInPromo: input.checked } },
+          skuId: sku.id,
           checkedWeekDays: [selectedWeedDayIndex],
+          skuDataToUpdate: { changePriceIfInPromo: input.checked },
         }),
       });
 
