@@ -36,6 +36,7 @@ var createCheckboxForParticipationInPromo = (sku, changePriceIfInPromo, needWrap
   label.htmlFor = "checkbox-" + skuName;
   label.className = skuName;
   label.textContent = changePriceIfInPromo ? yes : no;
+  label.id = "checkbox-label-participation-in-promo-" + skuName;
 
   input.addEventListener("click", async (e) => {
     var newStatus = input.checked;
