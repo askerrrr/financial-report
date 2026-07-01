@@ -1,7 +1,7 @@
 var promoTitleStartsWith = "Тест";
 var unusedPromoName = "Распродажа в счет долга";
 
-var getPromotionList = async (userId, token, startDateTime, endDateTime, allPromo = true) => {
+var getPromotionList = async (token, startDateTime, endDateTime, allPromo = true) => {
   var url = `https://dp-calendar-api.wildberries.ru/api/v1/calendar/promotions?startDateTime=${startDateTime}&endDateTime=${endDateTime}&allPromo=${allPromo}`;
 
   var res = await fetch(url, { method: "GET", headers: { "Content-Type": "application/json", Authorization: "Bearer " + token } });
