@@ -30,6 +30,7 @@ var createCheckboxForParticipationInPromo = (sku, changePriceIfInPromo, needWrap
   var input = document.createElement("input");
   input.type = "checkbox";
   input.id = "checkbox-" + skuName;
+  input.checked = changePriceIfInPromo;
 
   var label = document.createElement("label");
   label.htmlFor = "checkbox-" + skuName;
