@@ -1,4 +1,4 @@
-var sendPriceAndDiscount = async (sku, checkedWeekDays, setNewPriceNow, expectedPriceExists = false) => {
+var sendPriceAndDiscount = async (skuId, skuDataToUpdate, checkedWeekDays, setNewPriceNow, expectedPriceExists = false) => {
   var userId = document.cookie.split("=")[1];
   var url = "/goods/prices-discounts/";
 
@@ -6,8 +6,9 @@ var sendPriceAndDiscount = async (sku, checkedWeekDays, setNewPriceNow, expected
     method: "PATCH",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
+      skuId,
       userId,
-      sku,
+      skuDataToUpdate,
       checkedWeekDays,
       setNewPriceNow,
       expectedPriceExists,

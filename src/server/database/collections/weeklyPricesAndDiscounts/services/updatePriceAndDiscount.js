@@ -1,17 +1,17 @@
-var createQuery = (sku, checkedWeekDays) => {
+var createQuery = (skuId, skuDataToUpdate, checkedWeekDays) => {
   var query = {};
   var arrayFilters = [];
 
   var count = 0;
   for (var weekDayId of checkedWeekDays) {
-    for (var key of Object.keys(sku)) {
+    for (var key of Object.keys(skuDataToUpdate)) {
       var queryKey = `weeklyPricesAndDiscounts.${weekDayId}.$[elem${count}].${key}`;
-      query[queryKey] = sku[key];
+      query[queryKey] = skuDataToUpdate[key];
     }
 
     var optionKey = `elem${count}.nmID`;
 
-    arrayFilters.push({ [optionKey]: sku.data.nmID });
+    arrayFilters.push({ [optionKey]: skuId });
 
     count++;
   }
@@ -19,8 +19,8 @@ var createQuery = (sku, checkedWeekDays) => {
   return { query, arrayFilters };
 };
 
-var updatePriceAndDiscount = async (collection, userId, sku, checkedWeekDays) => {
-  var { query, arrayFilters } = createQuery(sku, checkedWeekDays);
+var updatePriceAndDiscount = async (collection, userId, skuId, skuDataToUpdate, checkedWeekDays) => {
+  var { query, arrayFilters } = createQuery(skuId, skuDataToUpdate, checkedWeekDays);
 
   var result = await collection.updateOne({ userId }, { $set: query }, { arrayFilters });
 
