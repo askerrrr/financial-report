@@ -32,7 +32,11 @@ router.post("/sku-disable-status", joiSchemaValidator(schemas.changeSkuDisableSt
 
 router.post("/prices-discounts/upload/", upload.single("file"), uploadPricesAndDiscountsFile);
 
-router.patch('/status-of-participation-in-promo/', changeStatusOfParticipationInPromo)
+router.patch(
+  "/status-of-participation-in-promo/",
+  joiSchemaValidator(schemas.changeStatusOfParticipationInPromo),
+  changeStatusOfParticipationInPromo,
+);
 
 router.patch(
   "/prices-discounts/",
