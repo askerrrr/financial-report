@@ -1,9 +1,31 @@
+import getCurrentDayMSK from "./getCurrentDayMSK.js";
+
 var yes = "да";
 var no = "нет";
 var userId = document.cookie.split("=")[1];
+var url = "/goods/status-of-participation-in-promo/";
+var weekDaySelector = document.getElementById("week-days-select");
+
+var getSelectedWeekDayIndex = () => {
+  var selectedWeedDayIndex;
+
+  for (var weekDay of weekDaySelector) {
+    if (weekDay.selected) {
+      selectedWeedDayIndex = +weekDay.value;
+      break;
+    }
+  }
+
+  if (!selectedWeedDayIndex && typeof selectedWeedDayIndex !== "number" && !isNaN(selectedWeedDayIndex)) {
+    var { currentDayIndex } = getCurrentDayMSK();
+    selectedWeedDayIndex = currentDayIndex;
+  }
+
+  return { selectedWeedDayIndex };
+};
 
 var createCheckboxForParticipationInPromo = (sku, changePriceIfInPromo, needWrapIntoFieldset = false) => {
-  var { skuName } = sku;
+  var { id, skuName } = sku;
 
   var input = document.createElement("input");
   input.type = "checkbox";
@@ -15,9 +37,31 @@ var createCheckboxForParticipationInPromo = (sku, changePriceIfInPromo, needWrap
   label.textContent = changePriceIfInPromo ? yes : no;
 
   input.addEventListener("click", async (e) => {
-    var newtextContent = input.checked ? yes : no;
+    var newStatus = input.checked;
+    var newtextContent = newStatus ? yes : no;
     var labels = document.querySelectorAll("." + skuName);
     labels.forEach((label) => (label.textContent = newtextContent));
+
+    if (!needWrapIntoFieldset) {
+      var { selectedWeedDayIndex } = getSelectedWeekDayIndex();
+      var res = await fetch(url, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId,
+          sku: { data: { skuName, nmId: sku.id, changePriceIfInPromo: input.checked } },
+          checkedWeekDays: [selectedWeedDayIndex],
+        }),
+      });
+
+      if (res.status !== 200) {
+        console.log(res.status);
+        input.checked = !newStatus;
+        labels.forEach((label) => (label.textContent = !newStatus ? yes : no));
+        alert("Не удалось изменить статус участия в акции при изменении цены");
+        return;
+      }
+    }
   });
 
   var div = document.createElement("div");
