@@ -1,7 +1,7 @@
 var deleteReportFromDb = async (collection, userId, reportId, session) => {
   var doc = await collection.findOneAndUpdate(
     { userId },
-    { $pull: { reports: { reportId } }, $pull: { reportsWithAccountedFinances: { reportId } } },
+    { $pull: { reports: { reportId }, reportsWithAccountedFinances: { reportId } } },
     { returnDocument: "before", session: session },
   );
 
