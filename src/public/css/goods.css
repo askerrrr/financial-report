@@ -124,12 +124,28 @@ body {
   letter-spacing: 0.5px;
 }
 
+.skus-table th[colspan] {
+  text-align: center;
+}
+
+.skus-table thead tr:last-child th {
+  text-align: center;
+}
+
 .skus-table tbody tr:hover {
   background: #f5f7fa;
 }
 
 .skus-table tbody td {
   vertical-align: middle;
+}
+
+.skus-table tbody td:not(:first-child) {
+  text-align: center;
+}
+
+.skus-table tbody td:has(button.item) {
+  text-align: center;
 }
 
 .skus-table tbody button.item {
@@ -141,11 +157,28 @@ body {
   border-radius: var(--radius);
   cursor: pointer;
   transition: var(--transition);
+  white-space: nowrap;
 }
 
 .skus-table tbody button.item:hover {
   background: #e7f0ff;
   border-color: var(--primary);
+}
+
+.skus-table tbody td:last-child {
+  text-align: center;
+}
+
+.skus-table tbody td:last-child div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.skus-table tbody td:last-child label {
+  font-size: 13px;
+  cursor: pointer;
 }
 
 .modal-overlay {

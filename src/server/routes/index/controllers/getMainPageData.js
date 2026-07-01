@@ -1,5 +1,6 @@
 import dbUtils from "../../../database/collections/index.js";
 import getReportTreeDto from "../services/getReportTreeDto.js";
+import sortReportsByAccountingDate from "../services/sortReportsByAccountingDate.js";
 
 var getLastNonEmptyReportIds = (lastYear) => lastYear?.months.find((item) => item?.reportIds.length)?.reportIds.map(({ reportId }) => reportId);
 
@@ -33,20 +34,16 @@ var getMainPageData = async (req, res, next) => {
 
   var reportLoadingStateUrl = "/report/loading-state/" + userId + "/";
 
-  var { getReportsByUserId } = dbUtils.reportCollectionServices;
-  var { getReportTree } = dbUtils.reportsTreeCollectionServices;
-  var { getReportLoadingState } = dbUtils.reportLoadingStatesCollectionServices;
-
-  var reportLoadingState = await getReportLoadingState(userId, session, selectedFieldsToLoadingState);
-
-  var { reportTree } = await getReportTree(userId);
+  var { reportTree } = await dbUtils.reportsTreeCollectionServices.getReportTree(userId, session);
+  var reportLoadingState = await dbUtils.reportLoadingStatesCollectionServices.getReportLoadingState(userId, session, selectedFieldsToLoadingState);
 
   if (!reportTree.length) {
     return res.json({
       reportLoadingState,
       reportLoadingStateUrl,
-      lastReports: [],
       reportTree: [],
+      lastReports: [],
+      reportsWithAccountedFinances: [],
     });
   }
 
@@ -59,18 +56,25 @@ var getMainPageData = async (req, res, next) => {
     return res.json({
       reportLoadingState,
       reportLoadingStateUrl,
-      lastReports: [],
       reportTree: [],
+      lastReports: [],
+      reportsWithAccountedFinances: [],
     });
   }
 
-  var { reports } = await getReportsByUserId(userId, null, projectonFields, lastReportIds);
+  var { reports, reportsWithAccountedFinances } = await dbUtils.reportCollectionServices.getReportsByUserId(
+    userId,
+    session,
+    projectonFields,
+    lastReportIds,
+  );
 
   return res.json({
     reportLoadingState,
     reportLoadingStateUrl,
     lastReports: reports,
     reportTree: reportTreeDto,
+    reportsWithAccountedFinances: sortReportsByAccountingDate(reportsWithAccountedFinances),
   });
 };
 

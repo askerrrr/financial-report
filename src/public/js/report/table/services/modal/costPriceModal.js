@@ -7,17 +7,18 @@ import updateSKUsTableFields from "../updateSKUsTableFields.js";
 import updateTotalsTableFields from "../updateTotalsTableFields.js";
 import updateReportFromLocalStorage from "../updateReportFromLocalStorage.js";
 import getReportDataFromLocalStorage from "./getReportDataFromLocalStorage.js";
+import financialAccountingStatusButtonHander from "../../../financialAccountingStatusButtonHander.js";
 
 var event = "click";
 
-var costPriceModal = (skuData, costPriceTdElement, isGuestAccess) => {
+var costPriceModal = (skuData, costPriceDisplayElement, isGuestAccess) => {
   var modal = createDiv("modal-overlay");
   var modalContent = createDiv("modal-content");
 
   var titleContent = `Изменить себестоимость для "${skuData.skuName}"`;
   var title = createTitle("modal-title", titleContent);
 
-  var costPriceInput = createInput("modal-input", costPriceTdElement);
+  var costPriceInput = createInput("modal-input", costPriceDisplayElement);
 
   var buttonsContainer = createDiv("modal-buttons");
 
@@ -39,13 +40,15 @@ var costPriceModal = (skuData, costPriceTdElement, isGuestAccess) => {
       return;
     }
 
-    costPriceTdElement.textContent = costPriceInput.value;
+    costPriceDisplayElement.textContent = costPriceInput.value;
 
     updateSKUsTableFields(data.sku);
     updateTotalsTableFields(data.totals);
 
     if (isGuestAccess) {
       updateReportFromLocalStorage(data);
+    } else {
+      financialAccountingStatusButtonHander(skuData.userId, skuData.reportId);
     }
   };
 

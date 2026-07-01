@@ -20,6 +20,7 @@ import reportsRouter from "./routes/reports/index.js";
 import userDeleteRouter from "./routes/delete/index.js";
 import taxParamsRouter from "./routes/taxParams/index.js";
 import registrationRouter from "./routes/registration/index.js";
+import personalAccountRouter from "./routes/personalAccount/index.js";
 import backgroundTasksRouter from "./routes/backgroundTasks/index.js";
 import decodeReportWithoutRegistrationRouter from "./routes/decodeReportWithoutRegistration/index.js";
 
@@ -89,6 +90,7 @@ var runServer = async () => {
   app.use("/tax-params", checkRoles(["user"]), taxParamsRouter);
   app.use("/report", checkRoles(["user"]), reportsRouter);
   app.use("/goods", checkRoles(["user"]), goodsRouter);
+  app.use("/personal-account", checkRoles(["user"]), personalAccountRouter);
   app.use("/delete", userDeleteRouter);
 
   app.all(/.*/, notFoundHandler);

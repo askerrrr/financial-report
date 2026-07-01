@@ -40,8 +40,13 @@ var main = async () => {
   downloadReportAsXLSXButtonHandler(report);
   deleteReportHandler(userId, reportId, skus);
 
-  financialAccountingStatusButtonHander(reportId);
   setSkusLastCostPricesButtonHandler(reportId, recordedTo.year, skusLastCostPrice);
+
+  var isFinancesAccountingEditable = skus.find((sku) => sku.isCostPriceSet);
+
+  if (isFinancesAccountingEditable) {
+    financialAccountingStatusButtonHander(userId, reportId);
+  }
 };
 
 main();

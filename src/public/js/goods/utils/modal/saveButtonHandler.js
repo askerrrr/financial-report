@@ -29,13 +29,14 @@ var saveButtonHandler = (modalOverlay, item, priceInput, discountInput) => {
         }
       }
 
-      var sku = { nmID: item.id, price: newPrice, discount: newDiscount };
+      var changePriceIfInPromo = document.getElementById("checkbox-" + item.skuName).checked;
+      var sku = { changePriceIfInPromo, data: { nmID: item.id, price: newPrice, discount: newDiscount } };
 
       modalOverlay.classList.remove("active");
       document.body.style.overflow = "auto";
       modalOverlay.remove();
 
-      var success = await sendPriceAndDiscount(sku, checkedWeekDays, setNewPriceNow, expectedPriceExists);
+      var success = await sendPriceAndDiscount(item.id, sku, checkedWeekDays, setNewPriceNow, expectedPriceExists);
 
       if (!success) {
         return;

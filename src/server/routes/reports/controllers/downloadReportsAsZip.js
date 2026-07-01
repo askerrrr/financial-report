@@ -2,33 +2,54 @@ import JSZip from "jszip";
 import dbUtils from "../../../database/collections/index.js";
 import { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer } from "../services/reportAsXLSXBuffer/index.js";
 
+var session = null;
+var folderName = "Отчёты";
+var mainFileName = "Сводка.xlsx";
+var selectedFields = [
+  "reports.reportId",
+  "reports.skus",
+  "reports.dateFrom",
+  "reports.dateTo",
+  "reports.totalRetailAmount",
+  "reports.totalSellerPayoutAmount",
+  "reports.totalSold",
+  "reports.totalReturnAmount",
+  "reports.totalDeliveryCost",
+  "reports.totalStorageCost",
+  "reports.totalPaidAcceptance",
+  "reports.totalFines",
+  "reports.totalDeductionOrPayment",
+  "reports.totalAdvertisingCosts",
+  "reports.totalProductCosts",
+  "reports.totalOtherExpenses",
+  "reports.totalTaxableAmount",
+  "reports.totalTaxAmount",
+  "reports.totalInsuranceFee",
+  "reports.totalAdditionalInsuranceFee",
+  "reports.totalProfitMargin",
+  "reports.totalFinalProfit",
+];
+
 var downloadReportsAsZip = async (req, res, next) => {
   var { userId, reportIds } = req.body;
-  var { getReportById } = dbUtils.reportCollectionServices;
+  var { getReportsByUserId } = dbUtils.reportCollectionServices;
 
-  var reports = [];
-
-  for (var reportId of reportIds) {
-    var { report } = await getReportById(userId, reportId);
-
-    reports.push(report);
-  }
+  var { reports } = await getReportsByUserId(userId, session, selectedFields, reportIds);
 
   var zip = new JSZip();
-
-  var folder = zip.folder("Отчеты");
+  var folder = zip.folder(folderName);
 
   for (var report of reports) {
-    var buffer = await getReportAsXLSXBuffer(report);
+    var { buffer } = await getReportAsXLSXBuffer(report);
 
-    var fileName = `Детали отчета от ${report.dateFrom} по ${report.dateTo}.xlsx`;
+    var fileNameForSeparateReport = `Детали отчета от ${report.dateFrom} по ${report.dateTo}.xlsx`;
 
-    folder.file(fileName, buffer);
+    folder.file(fileNameForSeparateReport, buffer);
   }
 
-  var monthlySummaryBuffer = await getMonthlySummaryAsXLSXBuffer(reports);
+  var { buffer } = await getMonthlySummaryAsXLSXBuffer(reports);
 
-  folder.file("Сводка.xlsx", monthlySummaryBuffer);
+  folder.file(mainFileName, buffer);
 
   var zipBuffer = await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" });
 

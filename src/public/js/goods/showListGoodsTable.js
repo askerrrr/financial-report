@@ -9,6 +9,7 @@ import setWeekDaySelectorToCurrentDay from "./utils/setWeekDaySelectorToCurrentD
 import toggleSkuTableVisibillity from "./utils/visibilityToggle/toggleSkuTableVisibillity.js";
 import toggleWeekDaysSelectorVisibility from "./utils/visibilityToggle/toggleWeekDaysSelectorVisibility.js";
 import toggleUploadListGoodsButtonVisibility from "./utils/visibilityToggle/toggleUploadListGoodsButtonVisibility.js";
+import addTableHeadRowToCheckboxForParticipationInPromo from "./utils/addTableHeadRowToCheckboxForParticipationInPromo.js";
 import toggleSkusMetricsFileUploadButtonVisibility from "./utils/visibilityToggle/toggleSkusMetricsFileUploadButtonVisibility.js";
 import toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility from "./utils/visibilityToggle/toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility.js";
 import toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility from "./utils/visibilityToggle/toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility.js";
@@ -73,10 +74,11 @@ var handleNonEmptyWeeklyPricesAndDiscounts = async function ({ enabledSku, disab
   toggleSkuTableVisibillity("enabled-skus-table", "enable");
   setWeekDaySelectorToCurrentDay(currentDayName);
   toggleSkusMetricsFileUploadButtonVisibility("enable");
+  addTableHeadRowToCheckboxForParticipationInPromo()
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
 
-  var currentDayData = weeklyPricesAndDiscounts[currentDayIndex].map(({ data }) => data);
+  var currentDayData = weeklyPricesAndDiscounts[currentDayIndex];
 
   await createSkusTable(enabledSku, "enabled-skus-tbody", currentDayData);
   await weekDaySelectorHandler(enabledSku, weeklyPricesAndDiscounts, currentDayIndex);

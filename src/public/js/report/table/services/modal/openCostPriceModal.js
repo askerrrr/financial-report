@@ -5,17 +5,17 @@ var openCostPriceModal = (skuData, isGuestAccess) => {
   var container = document.createElement("div");
   container.className = "editable-field";
 
-  var costPriceTdElement = document.createElement("span");
-  costPriceTdElement.className = "editable-field-value";
-  costPriceTdElement.textContent = skuData.costPrice;
-  costPriceTdElement.id = `costprice-${skuData.skuIndex}`;
+  var costPriceDisplayElement = document.createElement("span");
+  costPriceDisplayElement.className = "editable-field-value";
+  costPriceDisplayElement.textContent = skuData.costPrice;
+  costPriceDisplayElement.id = `cost-price-${skuData.skuName}`;
 
   var event = "click";
-  var cb = () => costPriceModal(skuData, costPriceTdElement, isGuestAccess);
+  var cb = () => costPriceModal(skuData, costPriceDisplayElement, isGuestAccess);
   var buttonTextContent = "Изменить";
   var openCostPriceModalButton = createButton("editable-field-button", buttonTextContent, { event, cb });
 
-  container.append(costPriceTdElement, openCostPriceModalButton);
+  container.append(costPriceDisplayElement, openCostPriceModalButton);
   return container;
 };
 

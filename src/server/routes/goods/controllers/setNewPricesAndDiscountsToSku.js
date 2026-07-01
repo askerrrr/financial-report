@@ -7,7 +7,7 @@ var updateLastUsedTimestampNow = true;
 var setNewPricesAndDiscountsToSku = async (req, res, next) => {
   var { updateSingleSku } = dbUtils.goodsCollectionServices;
   var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
-  var { userId, sku, setNewPriceNow, expectedPriceExists } = req.body;
+  var { userId, skuDataToUpdate, setNewPriceNow, expectedPriceExists } = req.body;
 
   var session = await dbClient.startSession();
 
@@ -15,9 +15,9 @@ var setNewPricesAndDiscountsToSku = async (req, res, next) => {
     await session.withTransaction(async () => {});
     if (setNewPriceNow) {
       var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
-      var data = [{ ...sku }];
+      var data = [{ ...skuDataToUpdate }];
 
-      await updateSingleSku(userId, sku, session);
+      await updateSingleSku(userId, skuDataToUpdate, session);
       await wbapi.setPricesAndDiscounts(userId, token, data);
     }
   } catch (e) {

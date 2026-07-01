@@ -3,6 +3,7 @@ import createTdElement from "./createTdElement.js";
 import openModalButton from "./modal/openModalButton.js";
 import calcDiscountedPrice from "./weekDaySelector/calcDiscountedPrice.js";
 import createSkuRowVisibilityButtonHandler from "./toggleSkuRowVisibility/index.js";
+import createCheckboxForParticipationInPromo from "./createCheckboxForParticipationInPromo.js";
 
 /**
  * @param {'enabled-skus-tbody' | 'disabled-skus-tbody'} tbodyID
@@ -28,7 +29,9 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
     var actualClubDiscountedPriceTd = createTdElement(clubDiscountedPrice, skuName, "clubDiscountedPrice");
 
     var modalButton = await openModalButton(sku);
+    var modalButtonTdElem = createTdElement(modalButton)
     var skuRowVisibilityButtonHandler = createSkuRowVisibilityButtonHandler(skuName, id);
+    var skuRowVisibilityButtonHandlerTdElem = createTdElement(skuRowVisibilityButtonHandler)
 
     if (currentDayData) {
       var skuDataOfCurrentDay = currentDayData.find((item) => item.nmID === id);
@@ -36,14 +39,14 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
       var expectedPriceTitle = "установлено последний раз ";
       var lastUpdatedTime = getTime(sku?.lastUpdated, expectedPriceTitle);
 
-      var expectedPriceTd = createTdElement(skuDataOfCurrentDay?.price || "", skuName, "price-expected", lastUpdatedTime);
+      var expectedPriceTd = createTdElement(skuDataOfCurrentDay?.data.price || "", skuName, "price-expected", lastUpdatedTime);
 
-      var expectedDiscountTd = createTdElement(skuDataOfCurrentDay?.discount || "", skuName, "discount-expected");
+      var expectedDiscountTd = createTdElement(skuDataOfCurrentDay?.data.discount || "", skuName, "discount-expected");
 
       var expectedDiscountedPrice;
 
       if (skuDataOfCurrentDay) {
-        expectedDiscountedPrice = calcDiscountedPrice(skuDataOfCurrentDay);
+        expectedDiscountedPrice = calcDiscountedPrice(skuDataOfCurrentDay.data);
       } else {
         expectedDiscountedPrice = "";
       }
@@ -77,9 +80,15 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
         expectedDiscountedPriceTd,
         actualClubDiscountedPriceTd,
         expectedClubDiscountedPriceTd,
-        modalButton,
-        skuRowVisibilityButtonHandler,
+        modalButtonTdElem,
+        skuRowVisibilityButtonHandlerTdElem,
       );
+
+      if (skuDataOfCurrentDay) {
+        var participationInPromoCheckbox = createCheckboxForParticipationInPromo(sku, skuDataOfCurrentDay.changePriceIfInPromo);
+        var participationInPromoCheckboxTdElem = createTdElement(participationInPromoCheckbox);
+        tr.append(participationInPromoCheckboxTdElem);
+      }
 
       tbody.append(tr);
       continue;
@@ -102,8 +111,8 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
       actualDiscountTd,
       actualDiscountedPriceTd,
       actualClubDiscountedPriceTd,
-      modalButton,
-      skuRowVisibilityButtonHandler,
+      modalButtonTdElem,
+      skuRowVisibilityButtonHandlerTdElem,
     );
 
     tbody.append(tr);

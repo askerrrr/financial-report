@@ -4,6 +4,8 @@ import sendCostPrices from "./sendCostPrices.js";
 import createButton from "./utils/createButton.js";
 import updateSKUsTableFields from "../updateSKUsTableFields.js";
 import updateTotalsTableFields from "../updateTotalsTableFields.js";
+import updateCostPricesIntoSkusTable from "../updateCostPricesIntoSkusTable.js";
+import financialAccountingStatusButtonHander from "../../../financialAccountingStatusButtonHander.js";
 
 var getSkusCostPriceContainer = (skusCostPrice) => {
   var container = createDiv("last-cost-prices-modal");
@@ -39,12 +41,14 @@ var skusLastCostPriceModal = (reportId, taxYear, skusLastCostPrice) => {
   var cb = async () => {
     var userId = document.cookie.split("=")[1];
 
-    var { skusDataToClient, total } = await sendCostPrices(userId, reportId, taxYear, skusLastCostPrice);
+    var { skusDataToClient, totals } = await sendCostPrices(userId, reportId, taxYear, skusLastCostPrice);
 
-    await updateTotalsTableFields(total);
+    updateTotalsTableFields(totals);
+    updateCostPricesIntoSkusTable(skusLastCostPrice);
+    financialAccountingStatusButtonHander(userId, reportId);
 
     for (var sku of skusDataToClient) {
-      await updateSKUsTableFields(sku);
+      updateSKUsTableFields(sku);
     }
 
     document.body.removeChild(modal);

@@ -18,9 +18,9 @@ var setFormulaToCells = (ws, skusQty) => {
       ws.getCell(resultCellAddress).value = { formula };
 
       count--;
-      indentToPrice += 7;
-      indentToDiscount += 7;
-      indentToResult += 7;
+      indentToPrice += 8;
+      indentToDiscount += 8;
+      indentToResult += 8;
     }
 
     indentToPrice = 6;

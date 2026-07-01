@@ -7,7 +7,7 @@ var downloadReportAsXLSX = async (req, res, next) => {
     return res.status(500).json({ msg: "Не удалось скачать отчет..." });
   }
 
-  var buffer = await getReportAsXLSXBuffer(report);
+  var { buffer } = await getReportAsXLSXBuffer(report);
 
   res.set({
     "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

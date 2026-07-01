@@ -43,6 +43,9 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
   var discount;
   var discountIndent = 7;
   var discountCellAddress;
+  var promoParticipation;
+  var promoParticipationIndent = 10;
+  var promoParticipationCellAddress;
   var weeklyPricesAndDiscounts = [];
   var columns = ["B", "C", "D", "E", "F", "G", "H"];
 
@@ -52,14 +55,20 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
     for (var i = 0; i < skuNamesAndIds.length; i++) {
       priceCellAddress = columns[columnCount] + priceIndent;
       discountCellAddress = columns[columnCount] + discountIndent;
+      promoParticipationCellAddress = columns[columnCount] + promoParticipationIndent;
+
       price = ws.getCell(priceCellAddress)?.value;
       discount = ws.getCell(discountCellAddress)?.value;
+      promoParticipation = ws.getCell(promoParticipationCellAddress)?.value;
+
       priceIndent += 7;
       discountIndent += 7;
+      promoParticipationIndent += 9;
 
       if (i == skuNamesAndIds.length - 1) {
         priceIndent = 6;
         discountIndent = 7;
+        promoParticipationIndent = 10;
       }
 
       var priceOrDiscountIsValid = checkPriceAndDiscount(price, discount);
@@ -71,6 +80,7 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
       newPricesAndDiscounts.push({
         dayIndex: i,
         nmID: skuNamesAndIds[i].nmID,
+        changePriceIfInPromo: promoParticipation !== "нет",
         data: {
           price,
           discount,

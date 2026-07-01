@@ -7,6 +7,10 @@ import createDiscountnput from "./createDiscountnput.js";
 import cancelButtonHandler from "./cancelButtonHandler.js";
 import createWeekDaysPicker from "./createWeekDaysPicker.js";
 import createDiscountedPriceField from "./createDiscountedPriceField.js";
+import createCheckboxForParticipationInPromo from "../createCheckboxForParticipationInPromo.js";
+
+var changePriceIfInPromo = null;
+var needWrapIntoFieldset = true;
 
 var createModal = (item) => {
   var modalTitle = (document.createElement("h3").textContent = "Артикул: " + item.skuName);
@@ -28,12 +32,7 @@ var createModal = (item) => {
 
   var cancelBtn = createButton("Закрыть", null, "cancelBtn", cancelButtonHandler(modalOverlay));
 
-  var saveBtn = createButton(
-    "Сохранить",
-    "btn btn-primary",
-    "confirmBtn",
-    saveButtonHandler(modalOverlay, item, priceInput, discountInput)
-  );
+  var saveBtn = createButton("Сохранить", "btn btn-primary", "confirmBtn", saveButtonHandler(modalOverlay, item, priceInput, discountInput));
 
   var modalButtons = createDiv(null, "modal-buttons");
   modalButtons.append(cancelBtn, saveBtn);
@@ -45,8 +44,9 @@ var createModal = (item) => {
     priceLabel,
     discountLabel,
     discountedPriceField,
+    createCheckboxForParticipationInPromo(item, changePriceIfInPromo, needWrapIntoFieldset),
     weekDaysPicker,
-    modalButtons
+    modalButtons,
   );
 
   modalOverlay.append(modal);

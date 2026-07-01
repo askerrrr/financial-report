@@ -1,13 +1,12 @@
 import loadListGoodsSchema from "./loadListGoods.js";
 import changeSkuDisableStatusSchema from "./changeSkuDisableStatus.js";
-import uploadPricesAndDiscountsFileSchema from "./uploadPricesAndDiscountsFile.js";
 import setNewPricesAndDiscountsToSkuSchema from "./setNewPricesAndDiscountsToSku.js";
-
+import changeStatusOfParticipationInPromoSchema from "./changeStatusOfParticipationInPromo.js";
 var schemas = {};
 
 schemas.loadListGoods = loadListGoodsSchema;
 schemas.changeSkuDisableStatus = changeSkuDisableStatusSchema;
-schemas.uploadPricesAndDiscountsFile = uploadPricesAndDiscountsFileSchema;
 schemas.setNewPricesAndDiscountsToSku = setNewPricesAndDiscountsToSkuSchema;
+schemas.changeStatusOfParticipationInPromo = changeStatusOfParticipationInPromoSchema;
 
 export default schemas;

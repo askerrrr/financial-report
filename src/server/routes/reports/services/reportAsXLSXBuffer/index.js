@@ -18,7 +18,7 @@ var getReportAsXLSXBuffer = async (report) => {
 
   var buffer = await workbook.xlsx.writeBuffer();
 
-  return buffer;
+  return { buffer };
 };
 
 var getMonthlySummaryAsXLSXBuffer = async (reports) => {
@@ -55,7 +55,7 @@ var getMonthlySummaryAsXLSXBuffer = async (reports) => {
 
   var buffer = await workbook.xlsx.writeBuffer();
 
-  return buffer;
+  return { buffer };
 };
 
 export { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer };

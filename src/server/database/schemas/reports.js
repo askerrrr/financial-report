@@ -175,9 +175,27 @@ var reportSchema = new Schema(
   { _id: false },
 );
 
+var reportsWithAccountedFinancesSchema = new Schema(
+  {
+    userId: stringOptions,
+    dateFrom: stringOptions,
+    dateTo: stringOptions,
+    reportId: { type: Number, required: true },
+    tax: { type: Number, required: true, default: 0 },
+    financesAccountedAt: { type: Date, required: true },
+    profit: { type: Number, required: true, default: 0 },
+    margin: { type: Number, required: true, default: 0 },
+    productCosts: { type: Number, required: true, default: 0 },
+    insuranceFee: { type: Number, required: true, default: 0 },
+    additionalInsuranceFee: { type: Number, required: true, default: 0 },
+  },
+  { _id: false },
+);
+
 var reportsSchema = new Schema({
   userId: stringOptions,
   reports: { type: [reportSchema], required: false },
+  reportsWithAccountedFinances: { type: [reportsWithAccountedFinancesSchema], required: false },
   schemaVersion: { type: Number },
 });
 
