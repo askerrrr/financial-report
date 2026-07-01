@@ -8,10 +8,11 @@ import deleteReportFromDb from "./services/deleteReportFromDb.js";
 import getReportsByUserId from "./services/getReportsByUserId.js";
 import addReportToAccounted from "./services/addReportToAccounted.js";
 import checkReportExistsToDb from "./services/checkReportExistsToDb.js";
+import removeReportFromAccounted from "./services/removeReportFromAccounted.js";
 import getAllDataFromReportCollection from "./services/getAllDataFromReportCollection.js";
 
 var reportCollectionServices = {
-  addReportToAccounted: (userId, reportId, status) => addReportToAccounted(reportCollection, userId, reportId, status),
+  addReportToAccounted: (userId, reportId) => addReportToAccounted(reportCollection, userId, reportId),
 
   getAllDataFromReportCollection: () => getAllDataFromReportCollection(reportCollection),
   getReportById: (userId, reportId, session) => getReportById(reportCollection, userId, reportId, session),
@@ -24,6 +25,7 @@ var reportCollectionServices = {
 
   checkReportExistsToDb: (userId, dateFrom, dateTo) => checkReportExistsToDb(reportCollection, userId, dateFrom, dateTo),
 
+  removeReportFromAccounted: (userId, reportId) => removeReportFromAccounted(reportCollection, userId, reportId),
   deleteReportFromDb: (userId, reportId, session) => deleteReportFromDb(reportCollection, userId, reportId, session),
 };
 
