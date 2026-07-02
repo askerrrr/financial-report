@@ -6,6 +6,8 @@ var logoutButtonHandler = (userId) => {
     var confirmed = confirm(confirmMsg);
 
     if (confirmed) {
+      await fetch("/logout", { method: "POST" });
+      window.location.href = "/decode-report-without-registration/";
     }
   });
 };
