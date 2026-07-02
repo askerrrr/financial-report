@@ -1,3 +1,4 @@
+import logoutButtonHandler from "./logout/index.js";
 import fileUploadHandler from "./fileUploadHandler.js";
 import getMainPageData from "./utils/getMainPageData.js";
 import { createReportTree } from "./reportTreeBuilder/index.js";
@@ -17,6 +18,7 @@ var main = async () => {
 
   reportLoadingStatePanelBuilder(userId, reportLoadingState, isMainPageLoad);
   accountedFinancesPanelHandler(reportsWithAccountedFinances);
+  logoutButtonHandler(userId)
 };
 
 main();
