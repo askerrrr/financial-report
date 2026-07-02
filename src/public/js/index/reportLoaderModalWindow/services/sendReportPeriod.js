@@ -7,12 +7,11 @@ var sendReportPeriod = async (userId, dateFrom, dateTo, isPeriodWithinSameWeek =
 
   if (res.status !== 200) {
     var { msg } = await res.json();
-    alert(msg);
-    return;
+    return { reportData: {}, msg };
+  } else {
+    var reportData = await res.json();
+    return { reportData, msg: "" };
   }
-
-  var reportData = await res.json();
-  return reportData;
 };
 
 export default sendReportPeriod;
