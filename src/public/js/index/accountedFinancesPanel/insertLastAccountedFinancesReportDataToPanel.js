@@ -1,12 +1,12 @@
-import getReportPeriod from "./getReportPeriod.js";
+import getReportPeriodText from "./getReportPeriodText.js";
 
 var insertLastAccountedFinancesReportDataToPanel = (lastAccountedFinances) => {
   var { dateFrom, dateTo, reportId, financesAccountedAt } = lastAccountedFinances;
 
   var reportPeriodElem = document.getElementById("report-period");
 
-  var { reportPeriod } = getReportPeriod(dateFrom, dateTo);
-  reportPeriodElem.textContent += reportPeriod;
+  var { reportPeriodText } = getReportPeriodText(dateFrom, dateTo);
+  reportPeriodElem.textContent += reportPeriodText;
 
   var financesAccountedAtElem = document.getElementById("finances-accounted-at");
 
