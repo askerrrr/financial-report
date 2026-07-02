@@ -37,7 +37,8 @@ var saveToken = async (req, res, next) => {
       }
 
       var tokenData = getTokenDetails(tokenPayload);
-      tokenData.lastUsed = Date.now() + mskTimeOffsetInMs;
+      tokenData.lastUsed = new Date(Date.now() + mskTimeOffsetInMs);
+      
       res.json(tokenData);
     });
   } catch (e) {
