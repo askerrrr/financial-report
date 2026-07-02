@@ -16,6 +16,7 @@
   width: 90%;
   max-width: 370px;
   border: 1px solid #40484f;
+  min-width: 300px;
 }
 
 .modal-title {
