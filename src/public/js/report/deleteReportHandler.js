@@ -23,14 +23,10 @@ var deleteReportHandler = (userId, reportId, skus) =>
       if (success) {
         alert("Отчет успешно удален");
         window.location.href = "/";
-        return;
       } else {
         alert("Не удалось удалить отчет...");
-        return;
       }
     }
-
-    return;
   });
 
 export default deleteReportHandler;
