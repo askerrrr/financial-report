@@ -33,7 +33,7 @@ var getReportsByUserId = async (collection, userId, session, selectedFields, rep
       },
     ]);
     
-    return { reports: data[0].reports, reportsWithAccountedFinances: data[0].reportsWithAccountedFinances };
+    return { reports: data[0].reports, reportsWithAccountedFinances: data[0]?.reportsWithAccountedFinances || [] };
   }
 
   if (selectedFields) {
