@@ -7,8 +7,9 @@ import reportLoadingStatePanelBuilder from "../../reportLoadingStatePanel/index.
 
 var isMainPageLoad = false;
 var reportLoadState = null;
+var reportComingSoonMsg = "Отчет скоро будет добавлен.";
 
-var createSaveButton = (userId, modal, dateFromInput, dateToInput, uploadAllReportsCheckbox) => {
+var createSaveButton = (userId, modal, dateFromInputElem, dateToInputElem, uploadAllReportsCheckbox) => {
   var button = document.createElement("button");
   button.className = "modal-button modal-button-save";
   button.textContent = "Отправить";
@@ -27,27 +28,35 @@ var createSaveButton = (userId, modal, dateFromInput, dateToInput, uploadAllRepo
 
         setTimeout(() => reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad), 3000);
       } else {
-        var dateFrom = dateFromInput.value;
-        var dateTo = dateToInput?.value;
+        var dateFrom = dateFromInputElem.value;
+        var dateTo = dateToInputElem?.value;
 
         var { validDateFrom } = checkDateFrom(dateFrom);
         var { validDateTo, isPeriodWithinSameWeek } = checkDateTo(dateTo, validDateFrom);
 
         if (isPeriodWithinSameWeek) {
-          var reportData = await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek);
+          var { reportData, msg } = await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek);
 
-          await showLoader();
+          if (msg) {
+            alert(msg);
 
-          if (!reportData) {
-            await deleteLoader();
-          }
+            if (msg === reportComingSoonMsg) {
+              setTimeout(() => reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad), 3000);
+            }
+          } else {
+            await showLoader();
 
-          await deleteLoader().then(() => insertNewReportToTree(reportData));
+            if (!reportData) {
+              await deleteLoader();
+            }
 
-          var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
+            await deleteLoader().then(() => insertNewReportToTree(reportData));
 
-          if (confirmed) {
-            window.location.href = "/report/" + reportData.reportId;
+            var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
+
+            if (confirmed) {
+              window.location.href = "/report/" + reportData.reportId;
+            }
           }
         } else {
           await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek);
@@ -56,6 +65,7 @@ var createSaveButton = (userId, modal, dateFromInput, dateToInput, uploadAllRepo
         }
       }
     } catch (e) {
+      console.log(e);
       alert("Произошла ошибка...");
     }
   };
