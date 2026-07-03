@@ -78,19 +78,19 @@ var runServer = async () => {
   app.use(express.static(join(import.meta.dirname, "../public")));
 
   app.use("/auth", authRouter);
-  app.use("/admin", adminRouter);
   app.use("/reg", registrationRouter);
   app.use("/background-tasks", backgroundTasksRouter);
   app.use("/decode-report-without-registration/", decodeReportWithoutRegistrationRouter);
 
   app.use(cookieParser());
   app.use(verifyAuthentication, verifyAuthorization);
-  app.use("/", checkRoles(["user"]), rootRouter);
-  app.use("/wbtoken", checkRoles(["user"]), tokenRouter);
-  app.use("/tax-params", checkRoles(["user"]), taxParamsRouter);
-  app.use("/report", checkRoles(["user"]), reportsRouter);
-  app.use("/goods", checkRoles(["user"]), goodsRouter);
-  app.use("/personal-account", checkRoles(["user"]), personalAccountRouter);
+  app.use("/", checkRoles(["admin", "user"]), rootRouter);
+  app.use("/wbtoken", checkRoles(["admin", "user"]), tokenRouter);
+  app.use("/admin", checkRoles(["admin"]), adminRouter);
+  app.use("/tax-params", checkRoles(["admin", "user"]), taxParamsRouter);
+  app.use("/report", checkRoles(["admin", "user"]), reportsRouter);
+  app.use("/goods", checkRoles(["admin", "user"]), goodsRouter);
+  app.use("/personal-account", checkRoles(["admin", "user"]), personalAccountRouter);
   app.use("/delete", userDeleteRouter);
 
   app.all(/.*/, notFoundHandler);
