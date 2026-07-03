@@ -14,7 +14,8 @@ import { reportsSchemaVersion } from "../../../migration/schemaVersioning/report
 
 var mskTimeOffsetInMs = 10_800_000;
 
-var createUserToDb = async ({ userId, login, passwd }, session) => {
+var createUserToDb = async (user, session) => {
+  var { userId, role, login, passwd } = user;
   var hashedPasswd = await argon2.hash(passwd + "", "youSecretKey");
 
   await taxParamsCollection.insertOne({ userId }, session);
@@ -24,7 +25,7 @@ var createUserToDb = async ({ userId, login, passwd }, session) => {
   await weeklyPricesAndDiscountsCollection.insertOne({ userId }, session);
   await tokenCollection.insertOne({ userId, schemaVersion: tokenSchemaVersion }, session);
   await reportCollection.insertOne({ userId, schemaVersion: reportsSchemaVersion }, session);
-  await userCollection.insertOne({ login, userId, passwd: hashedPasswd, registeredAt: new Date(Date.now() + mskTimeOffsetInMs) }, session);
+  await userCollection.insertOne({ login, userId, role, passwd: hashedPasswd, registeredAt: new Date(Date.now() + mskTimeOffsetInMs) }, session);
 };
 
 export default createUserToDb;
