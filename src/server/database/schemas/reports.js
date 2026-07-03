@@ -15,6 +15,8 @@ var skuSchema = new Schema(
     qtyInCurrentYear: nonRequiredNumberOptions,
     qtyInNextYear: nonRequiredNumberOptions,
     costPrice: numberOptions,
+    costPriceInCurrentYeasr: numberOptions,
+    costPriceInNextYear: numberOptions,
     otherExpenses: numberOptions,
     otherExpensesInCurrentYear: numberOptions,
     otherExpensesInNextYear: numberOptions,
