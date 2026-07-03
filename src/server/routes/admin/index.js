@@ -1,4 +1,5 @@
 import { Router } from "express";
+import removeUser from "./controllers/removeUser.js";
 import getAdminMainPage from "./controllers/getAdminMainPage.js";
 import getAdminAuthPage from "./controllers/getAdminAuthPage.js";
 import checkAuthAdminData from "./controllers/checkAuthAdminData.js";
@@ -10,5 +11,6 @@ router.get("/", getAdminMainPage);
 router.get("/api", getAdminMainPageData);
 router.get("/auth", getAdminAuthPage);
 router.post("/", checkAuthAdminData);
+router.delete('/', removeUser)
 
 export default router;
