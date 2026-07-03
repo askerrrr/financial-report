@@ -4,7 +4,8 @@ var usersSchema = new Schema({
   userId: { type: String, required: true },
   login: { type: String, required: true },
   passwd: { type: String, required: true },
-  role: { type: String, required: true, default: "user" },
+  registeredAt: { type: Date, required: true },
+  role: { type: String, required: true, default: "user", enum: ["user", "admin"] },
   schemaVersion: { type: Number },
 });
 

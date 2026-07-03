@@ -3,7 +3,9 @@ import dbUtils from "../../../database/collections/index.js";
 import checkCredentials from "../services/checkCredentials.js";
 
 var alg = "RS256";
-var oneDayMs = 24 * 3600 * 1000;
+var oneDayMs = 86_400_000;
+var mskTimeOffsetInMs = 10_800_000;
+var exp = Date.now() + oneDayMs + mskTimeOffsetInMs;
 
 var checkUserCredentials = async (req, res, next) => {
   var { getUserByLogin } = dbUtils.userCollectionServices;
@@ -20,11 +22,12 @@ var checkUserCredentials = async (req, res, next) => {
     return res.sendStatus(401);
   }
 
-  jose = await jose;
-  var payload = { role: "user", userId: existUser.userId };
-  var privateKey = await jose.importPKCS8(process.env.pkcs8, alg);
-  var token = await new jose.SignJWT(payload).setExpirationTime("1 day").setProtectedHeader({ alg }).sign(privateKey, {});
+  var role = existUser.login === process.env.adminName ? "admin" : "user";
 
+  jose = await jose;
+  var payload = { role, userId: existUser.userId };
+  var privateKey = await jose.importPKCS8(process.env.pkcs8, alg);
+  var token = await new jose.SignJWT(payload).setExpirationTime(exp).setProtectedHeader({ alg }).sign(privateKey, {});
   var userId = existUser.userId;
 
   return res

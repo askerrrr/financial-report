@@ -3,7 +3,7 @@ import { randomBytes } from "node:crypto";
 import checkLogin from "../services/checkLogin.js";
 import checkPasswd from "../services/checkPasswd.js";
 import { dbClient } from "../../../database/index.js";
-import dbUtils from '../../../database/collections/index.js'
+import dbUtils from "../../../database/collections/index.js";
 
 var alg = "RS256";
 var oneDayMs = 24 * 3600 * 1000;
@@ -28,10 +28,12 @@ var createUser = async (req, res, next) => {
 
         var userId = randomBytes(10).toString("hex");
         candidate.userId = userId;
+        candidate.role = candidate.login === process.env.adminName ? "admin" : "user";
+
         await createUserToDb(candidate, session);
 
         jose = await jose;
-        var payload = { userId, role: "user" };
+        var payload = { userId, role: candidate.role };
         var privateKey = await jose.importPKCS8(process.env.pkcs8, alg);
         var token = await new jose.SignJWT(payload).setExpirationTime("1 day").setProtectedHeader({ alg }).sign(privateKey);
 

@@ -1,4 +1,5 @@
 import getTokenData from "./getTokenData.js";
+import renameSaveButton from "./renameSaveButton.js";
 import loadTokenButtonHander from "./loadTokenButtonHander.js";
 import { insertDataToTokenDataTable } from "./tokenDataTable.js";
 import removeTokenButtonHandler from "./removeTokenButtonHandler.js";
@@ -11,6 +12,7 @@ var main = async () => {
   var { tokenData } = await getTokenData(userId);
 
   if (tokenData.tokenIsExist) {
+    renameSaveButton();
     enableTokenDataTable();
     enableRemoveTokenButton();
     insertDataToTokenDataTable(tokenData);

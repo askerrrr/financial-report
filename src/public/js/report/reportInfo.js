@@ -1,7 +1,11 @@
+import getReportPeriodText from "../index/accountedFinancesPanel/getReportPeriodText.js";
+
 var reportInfo = (report) => {
+  var { dateFrom, dateTo } = report;
+
   var reportPeriodElement = document.getElementById("report-period");
-  var reportPediod = `${report.dateFrom} ----  ${report.dateTo}`;
-  reportPeriodElement.textContent = reportPediod;
+
+  reportPeriodElement.textContent = getReportPeriodText(dateFrom, dateTo).reportPeriodText;
 
   var reportsItemsCountElement = document.getElementById("report-items-count");
   reportsItemsCountElement.textContent = report.skus.length;

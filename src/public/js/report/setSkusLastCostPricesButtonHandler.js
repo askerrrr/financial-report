@@ -2,7 +2,25 @@ import skusLastCostPriceModal from "./table/services/modal/skusLastCostPriceModa
 
 var button = document.getElementById("set-cost-prices-from-previous-report-period");
 
-var setSkusLastCostPricesButtonHandler = (reportId, taxYear, skusLastCostPrice) => {
+var removeDuplicateCosts = (skus, skusLastCostPrice) => {
+  for (var sku of skus) {
+    var matchingCostPriceIndex = skusLastCostPrice.findIndex((item) => item.skuName === sku.skuName);
+
+    if (matchingCostPriceIndex >= 0) {
+      var currentCostPrice = sku.costPrice;
+
+      var { lastCostPrice } = skusLastCostPrice[matchingCostPriceIndex];
+
+      if (currentCostPrice === lastCostPrice) {
+        skusLastCostPrice.splice(matchingCostPriceIndex, 1);
+      }
+    }
+  }
+};
+
+var setSkusLastCostPricesButtonHandler = (skus, reportId, taxYear, skusLastCostPrice) => {
+  removeDuplicateCosts(skus, skusLastCostPrice);
+
   button.onclick = () => {
     if (skusLastCostPrice.length) {
       skusLastCostPriceModal(reportId, taxYear, skusLastCostPrice);

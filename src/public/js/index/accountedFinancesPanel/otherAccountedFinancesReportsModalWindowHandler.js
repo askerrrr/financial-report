@@ -1,4 +1,4 @@
-import getReportPeriod from "./getReportPeriod.js";
+import getReportPeriodText from "./getReportPeriodText.js";
 import createThElement from "../../report/table/services/createThElement.js";
 import createTdElement from "../../report/table/services/createTdElement.js";
 import createDiv from "../../report/table/services/modal/utils/createDiv.js";
@@ -29,8 +29,8 @@ var createTableToOtherAccountedFinancesReports = (otherAccountedFinancesReports)
   for (var { dateFrom, dateTo, reportId, financesAccountedAt } of otherAccountedFinancesReports) {
     var tbodyRow = document.createElement("tr");
 
-    var { reportPeriod } = getReportPeriod(dateFrom, dateTo);
-    var reportPeriodTdElement = createTdElement(reportPeriod);
+    var { reportPeriodText } = getReportPeriodText(dateFrom, dateTo);
+    var reportPeriodTdElement = createTdElement(reportPeriodText);
 
     var financesAccountedAtTdElem = createTdElement(new Date(financesAccountedAt - 3 * 6 * 60 * 1000).toLocaleString());
 
