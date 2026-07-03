@@ -11,7 +11,6 @@ var getMainPageData = async () => {
 
 var main = async () => {
   var { users } = await getMainPageData();
-  console.log(users);
 
   usersTable(users);
 };
