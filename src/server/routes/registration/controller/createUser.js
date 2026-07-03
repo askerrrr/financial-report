@@ -33,7 +33,7 @@ var createUser = async (req, res, next) => {
         await createUserToDb(candidate, session);
 
         jose = await jose;
-        var payload = { userId, role: "user" };
+        var payload = { userId, role: candidate.role };
         var privateKey = await jose.importPKCS8(process.env.pkcs8, alg);
         var token = await new jose.SignJWT(payload).setExpirationTime("1 day").setProtectedHeader({ alg }).sign(privateKey);
 
