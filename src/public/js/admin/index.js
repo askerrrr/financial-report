@@ -1,3 +1,5 @@
+import usersTable from "./usersTable.js";
+
 var url = "/admin/api";
 
 var getMainPageData = async () => {
@@ -10,6 +12,8 @@ var getMainPageData = async () => {
 var main = async () => {
   var { users } = await getMainPageData();
   console.log(users);
+
+  usersTable(users);
 };
 
 main();
