@@ -29,7 +29,7 @@ var setCostPriceToSku = async (req, res, next) => {
         return res.sendStatus(409);
       }
 
-      var allTaxParams = await getTaxParamsFromDb(userId, null, session);
+      var taxParams = await getTaxParamsFromDb(userId, year, session);
       var { skuFromListGoods } = await getSkuFromListGoods(userId, skuId, skuName, session);
 
       var prevSkuData = getPrevSkuData(skus[skuIndex]);
@@ -39,34 +39,27 @@ var setCostPriceToSku = async (req, res, next) => {
 
       if (report.isCrossYearPeriod) {
         var startYear = +report.dateFrom.split("-")[0];
-        var endYear = +report.dateTo.split("-")[0];
-        var startYearTaxParams = allTaxParams.find((param) => param.year === startYear);
-        var endYearTaxParams = allTaxParams.find((param) => param.year === endYear);
-        var crossYearTaxParams = { startYearTaxParams, endYearTaxParams };
+        var requiredPostfix = year === startYear ? currentYearPostfix : endYearPostfix;
 
-        var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, crossYearTaxParams, report.isCrossYearPeriod, prevSkuData);
+        var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, prevSkuData, requiredPostfix);
         skus[skuIndex] = result.updatedSku;
 
         totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.isCrossYearPeriod).updatedTotals;
 
         var { startYearTaxParams, endYearTaxParams } = result.taxParams;
 
-        startYearTaxParams = recalculateTaxParams(startYearTaxParams, prevReportTotals, totalParams, currentYearPostfix).recalculatedTaxParams;
-        endYearTaxParams = recalculateTaxParams(endYearTaxParams, prevReportTotals, totalParams, endYearPostfix).recalculatedTaxParams;
-
-        await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
+        taxParams = recalculateTaxParams(taxParams, prevReportTotals, totalParams, requiredPostfix).recalculatedTaxParams;
       } else {
-        var taxParamsOfYear = allTaxParams.find((param) => param.year === year);
-        var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParamsOfYear, null, prevSkuData);
+        var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, prevSkuData);
 
         skus[skuIndex] = result.updatedSku;
 
         totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex]).updatedTotals;
 
-        result.taxParams = recalculateTaxParams(result.taxParams, prevReportTotals, totalParams).recalculatedTaxParams;
-        await changeTaxParamsToDb(userId, session, result.taxParams);
+        taxParams = recalculateTaxParams(result.taxParams, prevReportTotals, totalParams).recalculatedTaxParams;
       }
 
+      await changeTaxParamsToDb(userId, session, taxParams);
       await saveUpdatedReport(userId, reportId, { skus, ...totalParams }, session);
       await updateSkuInListGoods(userId, skuId, skuName, { lastCostPrice: costPrice, metrics: result.updatedSkuMetrics }, session);
 
