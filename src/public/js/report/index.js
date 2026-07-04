@@ -30,11 +30,14 @@ var getReportData = async () => {
 
 var main = async () => {
   var { report, skuImages, skusLastCostPrice } = await getReportData();
-  var { reportId, recordedTo, skus } = report;
+  var { reportId, dateFrom, dateTo, recordedTo, skus, isCrossYearPeriod } = report;
+
+  var startYear = dateFrom.split("-")[0];
+  var endYear = dateTo.split("-")[0];
 
   reportInfo(report);
-  createSKUsTable(report);
-  createTotalsTable(report);
+  createTotalsTable(report, startYear);
+  createSKUsTable(report, endYear);
   injectBase64IntoImgTags(skuImages);
 
   downloadReportAsXLSXButtonHandler(report);

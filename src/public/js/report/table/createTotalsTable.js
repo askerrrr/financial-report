@@ -1,9 +1,9 @@
 import createTdElement from "./services/createTdElement.js";
 
-var tbody = document.getElementById("totals-tbody");
-var tr = document.createElement("tr");
+var createTotalsTable = (report, reportPeriodYear) => {
+  var tableRow = document.createElement("tr");
 
-var createTotalsTable = (report) => {
+  var reportPeriodYearTd = createTdElement(reportPeriodYear);
   var totalRetailAmountTd = createTdElement(report.totalRetailAmount);
   var totalSellerPayoutAmountTd = createTdElement(report.totalSellerPayoutAmount);
   var totalProductCostsTd = createTdElement(report.totalProductCosts);
@@ -30,7 +30,8 @@ var createTotalsTable = (report) => {
     totalProfitMarginTd.style.color = "red";
   }
 
-  tr.append(
+  tableRow.append(
+    reportPeriodYearTd,
     totalRetailAmountTd,
     totalSoldTd,
     totalReturnAmountTd,
@@ -50,7 +51,46 @@ var createTotalsTable = (report) => {
     totalFinalProfitTd,
   );
 
-  tbody.append(tr);
+  var tableBody = document.createElement("tbody");
+  tableBody.append(tableRow);
+  tableBody.id = "table-body-" + reportPeriodYear;
+
+  var { tableHead } = createTotalsTableHead(reportPeriodYear);
+  var table = document.createElement("table");
+  table.id = "totals-table-" + reportPeriodYear;
+
+  table.append(tableHead, tableBody);
+
+  var tablesContainer = document.getElementById("tables-container");
+  tablesContainer.append(table);
 };
 
 export default createTotalsTable;
+
+var tableHeadContent = `
+            <th>Отчётный год</th>
+            <th>WB реализовал</th>
+            <th>Продано шт.</th>
+            <th>Возвратов</th>
+            <th>Перечисления продавцу</th>
+            <th>Себестоимость товаров</th>
+            <th>Прочие расходы</th>
+            <th>Доставка</th>
+            <th>Приёмка</th>
+            <th>Штрафы</th>
+            <th>Удержания/Выплаты</th>
+            <th>Хранение</th>
+            <th>Реклама</th>
+            <th>Налоги</th>
+            <th>Страховые взносы</th>
+            <th>Доп. страховые взносы</th>
+            <th>Маржинальность %</th>
+            <th>Итого</th>
+          `;
+
+function createTotalsTableHead() {
+  var tableHead = document.createElement("thead");
+  tableHead.innerHTML = tableHeadContent;
+
+  return { tableHead };
+}
