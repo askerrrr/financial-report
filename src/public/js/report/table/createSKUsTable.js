@@ -4,12 +4,12 @@ import createSKUPhotoUploader from "./services/skuPhotoUploader/index.js";
 import openOtherExpensesModal from "./services/modal/openOtherExpensesModal.js";
 
 var createSKUsTable = (report, reportPeriodYear) => {
+  var skuIndex = 0;
   var tableBody = document.createElement("tbody");
 
   var { reportId, recordedTo, skus, userId } = report;
 
   for (var sku of skus) {
-    var skuIndex = 0;
     var tr = document.createElement("tr");
 
     var data = {
@@ -72,7 +72,7 @@ var createSKUsTable = (report, reportPeriodYear) => {
   }
 
   var table = document.createElement("table");
-  table.id = "skus-table-" + reportPeriodYear
+  table.id = "skus-table-" + reportPeriodYear;
 
   var { tableHead } = createSkusTableHead();
 
