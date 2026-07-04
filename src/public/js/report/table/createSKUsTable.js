@@ -17,7 +17,7 @@ var createSKUsTable = (report, reportPeriodYear) => {
       reportId,
       skuIndex,
       skuId: sku.id,
-      year: recordedTo.year,
+      year: +reportPeriodYear,
       skuName: sku.skuName,
       costPrice: sku.costPrice,
       otherExpenses: sku.otherExpenses,
@@ -27,7 +27,9 @@ var createSKUsTable = (report, reportPeriodYear) => {
     var otherExpensesInputField = openOtherExpensesModal(data);
     var skuPhotoUploader = createSKUPhotoUploader(reportId, sku.skuName);
 
-    var skuPhotoUploaderTd = createTdElement(skuPhotoUploader, "photo-cell", skuIndex, "photo-cell");
+    var photoElemId = "photo-cell-" + skuIndex;
+    var skuPhotoUploaderTd = createTdElement(skuPhotoUploader, photoElemId, "photo-cell");
+
     var skuName = createTdElement(sku.skuName);
     var qty = createTdElement(sku.qty);
     var returnAmount = createTdElement(sku.returnAmount);
@@ -39,8 +41,12 @@ var createSKUsTable = (report, reportPeriodYear) => {
     var storageCost = createTdElement(sku.storageCost);
     var acceptance = createTdElement(sku.acceptance);
     var profit = createTdElement(sku.profit);
-    var profitMargin = createTdElement(sku.profitMargin, "profitMargin", skuIndex);
-    var finalProfit = createTdElement(sku.finalProfit, "finalProfit", skuIndex);
+
+    var profitMarginTdId = "profitMargin-" + skuIndex + "-" + reportPeriodYear;
+    var profitMargin = createTdElement(sku.profitMargin, profitMarginTdId);
+
+    var finalProfitTdId = "finalProfit-" + skuIndex + "-" + reportPeriodYear;
+    var finalProfit = createTdElement(sku.finalProfit, finalProfitTdId);
 
     if (sku.profitMargin < 0) {
       profitMargin.style.color = "red";

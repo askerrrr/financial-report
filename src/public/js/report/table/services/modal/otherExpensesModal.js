@@ -31,10 +31,11 @@ var otherExpensesModal = (skuData, tdElement, isGuestAccess) => {
     }
 
     tdElement.textContent = otherExpensesInput.value;
-    console.log(data);
-    updateSKUsTableFields(data.sku);
 
-    updateTotalsTableFields(data.totals);
+    var { year, sku, totals } = data;
+    updateSKUsTableFields(year, sku);
+
+    updateTotalsTableFields(year, totals);
   };
   var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb });
 

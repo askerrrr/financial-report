@@ -1,6 +1,7 @@
-var updateTotalsTableFields = (totals) => {
+var updateTotalsTableFields = (year, totals) => {
   for (var fieldName of Object.keys(totals)) {
-    var elem = document.getElementById(fieldName);
+    var eleId = fieldName + "-" + year;
+    var elem = document.getElementById(eleId);
 
     if (elem) {
       elem.textContent = totals[fieldName];

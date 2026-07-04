@@ -42,8 +42,9 @@ var costPriceModal = (skuData, costPriceDisplayElement, isGuestAccess) => {
 
     costPriceDisplayElement.textContent = costPriceInput.value;
 
-    updateSKUsTableFields(data.sku);
-    updateTotalsTableFields(data.totals);
+    var { year, sku, totals } = data;
+    updateSKUsTableFields(year, sku);
+    updateTotalsTableFields(year, totals);
 
     if (isGuestAccess) {
       updateReportFromLocalStorage(data);

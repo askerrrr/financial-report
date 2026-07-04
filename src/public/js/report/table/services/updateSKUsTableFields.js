@@ -1,8 +1,9 @@
-var updateSKUsTableFields = (sku) => {
+var updateSKUsTableFields = (year, sku) => {
   var { skuIndex, data } = sku;
 
   for (var fieldName of Object.keys(data)) {
-    var elemId = [fieldName, sku.skuIndex].join("-");
+    var elemId = [fieldName, sku.skuIndex, year].join("-");
+
     var skuField = document.getElementById(elemId);
 
     if (skuField) {

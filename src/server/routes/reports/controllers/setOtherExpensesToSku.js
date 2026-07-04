@@ -51,7 +51,13 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
       if (skus[skuIndex].isCostPriceSet) {
         if (report.isCrossYearPeriod) {
-          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, crossYearTaxParams, report.isCrossYearPeriod, prevSkuData);
+          var result = await processOfSkuCostPriceSetting(
+            skus[skuIndex],
+            skuFromListGoods,
+            crossYearTaxParams,
+            report.isCrossYearPeriod,
+            prevSkuData,
+          );
 
           skus[skuIndex] = result.updatedSku;
 
@@ -90,12 +96,18 @@ var setOtherExpensesToSku = async (req, res, next) => {
             currentYearPostfix,
           ).recalculatedTaxParams;
 
-          crossYearTaxParams.endYearTaxParams = recalculateTaxParams(crossYearTaxParams.endYearTaxParams, prevReportTotals, totalParams, endYearPostfix).recalculatedTaxParams;
+          crossYearTaxParams.endYearTaxParams = recalculateTaxParams(
+            crossYearTaxParams.endYearTaxParams,
+            prevReportTotals,
+            totalParams,
+            endYearPostfix,
+          ).recalculatedTaxParams;
 
           var startYearSkuMetrics = skuFromListGoods.metrics.find((i) => i.year === startYear);
           var endYearSkuMetrics = skuFromListGoods.metrics.find((i) => i.year === endYear);
 
-          var recalculatedStartYearMetricsOtherExpenses = startYearSkuMetrics.otherExpenses - prevSkuData.otherExpensesInCurrentYear + halfOfOtherExpenses;
+          var recalculatedStartYearMetricsOtherExpenses =
+            startYearSkuMetrics.otherExpenses - prevSkuData.otherExpensesInCurrentYear + halfOfOtherExpenses;
           startYearSkuMetrics.otherExpenses = truncateNum(recalculatedStartYearMetricsOtherExpenses);
 
           var recalculatedEndYearMetricsOtherExpenses = endYearSkuMetrics.otherExpenses - prevSkuData.otherExpensesInNextYear + halfOfOtherExpenses;
@@ -132,6 +144,7 @@ var setOtherExpensesToSku = async (req, res, next) => {
       var changedSkuData = excludeEqualParams(prevSkuData, skus[skuIndex]);
 
       return res.status(200).json({
+        year,
         totals: changedTotalsData,
         sku: {
           skuIndex,

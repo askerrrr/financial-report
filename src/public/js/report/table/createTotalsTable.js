@@ -7,20 +7,31 @@ var createTotalsTable = (report, reportPeriodYear) => {
   var totalRetailAmountTd = createTdElement(report.totalRetailAmount);
   var totalSellerPayoutAmountTd = createTdElement(report.totalSellerPayoutAmount);
   var totalProductCostsTd = createTdElement(report.totalProductCosts);
-  var totalOtherExpensesTd = createTdElement(report.totalOtherExpenses, "totalOtherExpenses");
+
+  var totalOtherExpensesTdId = "totalOtherExpenses-" + reportPeriodYear;
+  var totalOtherExpensesTd = createTdElement(report.totalOtherExpenses, totalOtherExpensesTdId);
+
   var totalDeductionOrPaymentTd = createTdElement(report.totalDeductionOrPayment);
   var totalStorageCostTd = createTdElement(report.totalStorageCost);
   var totalDeliveryCostTd = createTdElement(report.totalDeliveryCost);
   var totalPaidAcceptanceTd = createTdElement(report.totalPaidAcceptance);
-  var totalProfitMarginTd = createTdElement(report.totalProfitMargin, "totalProfitMargin");
+
+  var totalProfitMarginTdId = "totalProfitMargin-" + reportPeriodYear;
+  var totalProfitMarginTd = createTdElement(report.totalProfitMargin, totalProfitMarginTdId);
+
   var totalSoldTd = createTdElement(report.totalSold);
   var totalReturnAmountTd = createTdElement(report.totalReturnAmount);
   var totalFinesTd = createTdElement(report.totalFines);
   var totalAdvertisingCostsTd = createTdElement(report.totalAdvertisingCosts);
   var totalTaxAmountTd = createTdElement(report.totalTaxAmount);
-  var totalInsuranceFeeTd = createTdElement(report.totalInsuranceFee, "totalInsuranceFee");
+
+  var totalInsuranceFeeTdId = "totalInsuranceFee-" + reportPeriodYear;
+  var totalInsuranceFeeTd = createTdElement(report.totalInsuranceFee, totalInsuranceFeeTdId);
+
   var totalAdditionalInsuranceFeeTd = createTdElement(report.totalAdditionalInsuranceFee);
-  var totalFinalProfitTd = createTdElement(report.totalFinalProfit, "totalFinalProfit");
+
+  var totalFinalProfitTdId = "totalFinalProfit-" + reportPeriodYear;
+  var totalFinalProfitTd = createTdElement(report.totalFinalProfit, totalFinalProfitTdId);
 
   if (report.totalFinalProfit < 0) {
     totalFinalProfitTd.style.color = "red";

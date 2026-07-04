@@ -37,7 +37,7 @@ var main = async () => {
 
   reportInfo(report);
   createTotalsTable(report, startYear);
-  createSKUsTable(report, endYear);
+  createSKUsTable(report, startYear);
   injectBase64IntoImgTags(skuImages);
 
   downloadReportAsXLSXButtonHandler(report);

@@ -75,6 +75,7 @@ var setCostPriceToSku = async (req, res, next) => {
       var changedTotalsData = excludeEqualParams(prevReportTotals, totalParams);
 
       return res.json({
+        year,
         totals: changedTotalsData,
         sku: {
           skuIndex,

@@ -2,6 +2,8 @@ import getReportLink from "./table/getReportLink.js";
 import getReportPeriod from "./table/getReportPeriod.js";
 import createTdElement from "../../../report/table/services/createTdElement.js";
 
+var elemIdStub = null;
+
 var createReportRow = (reportData) => {
   var { dateFrom, dateTo, reportId, totalTaxAmount } = reportData;
 
@@ -9,11 +11,14 @@ var createReportRow = (reportData) => {
 
   var reportLink = getReportLink(reportId);
 
-  var totalProductCostsTd = createTdElement(0, null, null, "totalProductCosts");
+  var totalProductCostsTdClassName = "totalProductCosts";
+  var totalProductCostsTd = createTdElement(0, elemIdStub, totalProductCostsTdClassName);
 
-  var totalTaxAmountTd = createTdElement(totalTaxAmount, null, null, "totalTaxAmount");
+  var totalTaxAmountTdClassName = "totalTaxAmount";
+  var totalTaxAmountTd = createTdElement(totalTaxAmount, elemIdStub, totalTaxAmountTdClassName);
 
-  var totalFinalProfitTd = createTdElement(0, null, null, "totalFinalProfit");
+  var totalFinalProfitTdClassName = "totalFinalProfit";
+  var totalFinalProfitTd = createTdElement(0, elemIdStub, totalFinalProfitTdClassName);
 
   var financesAccountedTd = createTdElement();
 
