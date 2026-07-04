@@ -116,7 +116,7 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
           updatedReport = { ...totalParams, skus };
 
-          await changeTaxParamsToDb(userId, session, taxParams);
+          await changeTaxParamsToDb(userId, session, taxParamsOfYear);
           await updateSkuInListGoods(userId, skuId, skuName, { metrics: skuFromListGoods.metrics });
         }
       }
