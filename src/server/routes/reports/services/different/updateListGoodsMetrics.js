@@ -25,7 +25,7 @@ var updateListGoodsMetrics = async (report, listGoods) => {
   var startYearPropPostfix = "InCurrentYear";
   var endYearPropPostfix = "InNextYear";
 
-  if (report.crossesTaxYears) {
+  if (report.isCrossYearPeriod) {
     var startYear = +report.dateFrom.split("-")[0];
     var endYear = +report.dateTo.split("-")[0];
   }
@@ -33,7 +33,7 @@ var updateListGoodsMetrics = async (report, listGoods) => {
   var { year } = report.recordedTo;
 
   for (var sku of report.skus) {
-    if (report.crossesTaxYears) {
+    if (report.isCrossYearPeriod) {
       var skuMetrics = listGoods.find((i) => i.id === sku.id && i.skuName === sku.skuName).metrics;
       var startYearMetrics = skuMetrics.find((i) => i.year === startYear);
       var endYearMetrics = skuMetrics.find((i) => i.year === endYear);

@@ -2,14 +2,14 @@ import sum from "./sum.js";
 import calcProfitMargin from "./profitMargin.js";
 import calcProductCosts from "./totalProductCosts.js";
 
-var calcRestReportTotalParams = (totals, skus, isCrossYearReport) => {
+var calcRestReportTotalParams = (totals, skus, isCrossYearPeriod) => {
   totals.totalPreTaxProfit = sum(skus, "preTaxProfit", "truncate-on");
   totals.totalFinalProfit = sum(skus, "finalProfit", "truncate-on");
   totals.totalProductCosts = calcProductCosts(skus);
   totals.totalInsuranceFee = sum(skus, "insuranceFee", "truncate-on");
   totals.totalOtherExpenses = sum(skus, "otherExpenses", "truncate-on");
 
-  if (isCrossYearReport) {
+  if (isCrossYearPeriod) {
     totals.totalOtherExpensesInCurrentYear = sum(skus, "totalOtherExpensesInCurrentYear", "truncate-on");
     totals.totalOtherExpensesInNextYear = sum(skus, "totalOtherExpensesInNextYear", "truncate-on");
 

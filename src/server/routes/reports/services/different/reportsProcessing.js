@@ -35,7 +35,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
 
   var startYear = +dateFrom.split("-")[0];
   var endYear = +dateTo.split("-")[0];
-  var isCrossYearReport = startYear !== endYear;
+  var isCrossYearPeriod = startYear !== endYear;
 
   var { reportTree } = await getReportTree(userId, session);
   var reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
@@ -44,12 +44,12 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
   var sortedYears = sortYearsTree(years);
 
-  if (isCrossYearReport) {
+  if (isCrossYearPeriod) {
     var startYearTaxParams = await addNewTaxYearToDb(userId, startYear, session);
     var endYearTaxParams = await addNewTaxYearToDb(userId, endYear, session);
     var taxParams = { startYearTaxParams, endYearTaxParams };
 
-    var { report, skuNamesAndIds, recalculatedTaxParams } = await parseReports(reports, taxParams, isCrossYearReport);
+    var { report, skuNamesAndIds, recalculatedTaxParams } = await parseReports(reports, taxParams, isCrossYearPeriod);
 
     await changeTaxParamsToDb(userId, session, recalculatedTaxParams.startYearTaxParams, recalculatedTaxParams.endYearTaxParams);
   } else {
@@ -63,7 +63,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   report.userId = userId;
   report.dateFrom = dateFrom;
   report.reportId = reportId;
-  report.crossesTaxYears = isCrossYearReport;
+  report.isCrossYearPeriod = isCrossYearPeriod;
   report.schemaVersion = reportSchemaVersion;
   report.recordedTo = { year, month, schemaVersion: recordedToSchemaVersion };
 
@@ -73,7 +73,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
     var listGoods = (await listGoodsLoader(userId, token)).listGoodsFromWBAPI;
   }
 
-  var { listGoodsWithNewSkus } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearReport, startYear, endYear);
+  var { listGoodsWithNewSkus } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearPeriod, startYear, endYear);
   var { listGoodsWithUpdatedSkuMetrics } = await updateListGoodsMetrics(report, listGoodsWithNewSkus);
 
   await saveReportToDb(userId, report, session);

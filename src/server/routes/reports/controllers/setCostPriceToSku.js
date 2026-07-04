@@ -37,17 +37,17 @@ var setCostPriceToSku = async (req, res, next) => {
 
       skus[skuIndex].costPrice = costPrice;
 
-      if (report.crossesTaxYears) {
+      if (report.isCrossYearPeriod) {
         var startYear = +report.dateFrom.split("-")[0];
         var endYear = +report.dateTo.split("-")[0];
         var startYearTaxParams = allTaxParams.find((param) => param.year === startYear);
         var endYearTaxParams = allTaxParams.find((param) => param.year === endYear);
         var crossYearTaxParams = { startYearTaxParams, endYearTaxParams };
 
-        var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, crossYearTaxParams, report.crossesTaxYears, prevSkuData);
+        var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, crossYearTaxParams, report.isCrossYearPeriod, prevSkuData);
         skus[skuIndex] = result.updatedSku;
 
-        totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.crossesTaxYears).updatedTotals;
+        totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.isCrossYearPeriod).updatedTotals;
 
         var { startYearTaxParams, endYearTaxParams } = result.taxParams;
 

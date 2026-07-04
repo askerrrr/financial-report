@@ -5,8 +5,8 @@ import recalculateFinalSkuMetrics from "./recalculateFinalSkuMetrics.js";
 var currentYearPostfix = "InCurrentYear";
 var nextYearPostfix = "InNextYear";
 
-var processOfSkuCostPriceSetting = async (sku, skuFromListGoods, taxParams, isCrossYearReport, prevSkuData) => {
-  if (isCrossYearReport) {
+var processOfSkuCostPriceSetting = async (sku, skuFromListGoods, taxParams, isCrossYearPeriod, prevSkuData) => {
+  if (isCrossYearPeriod) {
     var { startYearTaxParams, endYearTaxParams } = taxParams;
 
     var updatingOfStartYear = calc.sku.restParams(sku, startYearTaxParams, currentYearPostfix);
@@ -29,16 +29,13 @@ var processOfSkuCostPriceSetting = async (sku, skuFromListGoods, taxParams, isCr
 
     var updatedSku = skuWithCalculatedParamsOfEndYear;
 
-    var recalculatedPreTaxProfit =
-      skuWithCalculatedParamsOfStartYear.preTaxProfitInCurrentYear + skuWithCalculatedParamsOfEndYear.preTaxProfitInNextYear;
+    var recalculatedPreTaxProfit = skuWithCalculatedParamsOfStartYear.preTaxProfitInCurrentYear + skuWithCalculatedParamsOfEndYear.preTaxProfitInNextYear;
     updatedSku.preTaxProfit = truncateNum(recalculatedPreTaxProfit);
 
-    var recalculatedFinalProfit =
-      skuWithCalculatedParamsOfStartYear.finalProfitInCurrentYear + skuWithCalculatedParamsOfEndYear.finalProfitInNextYear;
+    var recalculatedFinalProfit = skuWithCalculatedParamsOfStartYear.finalProfitInCurrentYear + skuWithCalculatedParamsOfEndYear.finalProfitInNextYear;
     updatedSku.finalProfit = truncateNum(recalculatedFinalProfit);
 
-    var recalculatedInsuranceFee =
-      skuWithCalculatedParamsOfStartYear.insuranceFeeInCurrentYear + skuWithCalculatedParamsOfEndYear.insuranceFeeInNextYear;
+    var recalculatedInsuranceFee = skuWithCalculatedParamsOfStartYear.insuranceFeeInCurrentYear + skuWithCalculatedParamsOfEndYear.insuranceFeeInNextYear;
     updatedSku.insuranceFee = truncateNum(recalculatedInsuranceFee);
 
     updatedSku.profitMargin = calc.profitMargin(updatedSku.finalProfit, updatedSku.retailAmount);

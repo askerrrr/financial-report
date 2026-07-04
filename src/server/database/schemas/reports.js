@@ -131,7 +131,7 @@ var reportSchema = new Schema(
     recordedTo: { type: recordedToSchema, requred: true },
     schemaVersion: { type: Number },
     buybackReportIsExist: { type: Boolean, default: false },
-    crossesTaxYears: { type: Boolean, default: false },
+    isCrossYearPeriod: { type: Boolean, default: false },
     totalSellerPayoutAmountInCurrentYear: nonRequiredNumberOptions,
     totalSoldInCurrentYear: nonRequiredNumberOptions,
     totalSoldInNextYear: nonRequiredNumberOptions,

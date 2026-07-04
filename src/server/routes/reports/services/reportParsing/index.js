@@ -2,8 +2,8 @@ import processReportTotals from "./processReportTotals.js";
 import processCrossReportSkus from "./processCrossReportSkus.js";
 import processNonCrossReportSkus from "./processNonCrossReportSkus.js";
 
-var parseReports = async (reports, taxParams, isCrossYearReport) => {
-  if (isCrossYearReport) {
+var parseReports = async (reports, taxParams, isCrossYearPeriod) => {
+  if (isCrossYearPeriod) {
     var { skus, skuNamesAndIds, recalculatedTaxParams, ...firstTotals } = await processCrossReportSkus(reports, taxParams);
 
     var currentYearPropPostfix = "InCurrentYear";

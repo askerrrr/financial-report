@@ -50,12 +50,12 @@ var setOtherExpensesToSku = async (req, res, next) => {
       skus[skuIndex].otherExpensesInNextYear = halfOfOtherExpenses;
 
       if (skus[skuIndex].isCostPriceSet) {
-        if (report.crossesTaxYears) {
-          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, crossYearTaxParams, report.crossesTaxYears, prevSkuData);
+        if (report.isCrossYearPeriod) {
+          var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, crossYearTaxParams, report.isCrossYearPeriod, prevSkuData);
 
           skus[skuIndex] = result.updatedSku;
 
-          totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.crossesTaxYears).updatedTotals;
+          totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.isCrossYearPeriod).updatedTotals;
 
           var { startYearTaxParams, endYearTaxParams } = result.taxParams;
 
@@ -80,8 +80,8 @@ var setOtherExpensesToSku = async (req, res, next) => {
           await updateSkuInListGoods(userId, skuId, skuName, { metrics: result.updatedSkuMetrics });
         }
       } else {
-        if (report.crossesTaxYears) {
-          totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.crossesTaxYears).updatedTotals;
+        if (report.isCrossYearPeriod) {
+          totalParams = calc.total.restParams(totalParams, prevSkuData, skus[skuIndex], report.isCrossYearPeriod).updatedTotals;
 
           crossYearTaxParams.startYearTaxParams = recalculateTaxParams(
             crossYearTaxParams.startYearTaxParams,
@@ -90,18 +90,12 @@ var setOtherExpensesToSku = async (req, res, next) => {
             currentYearPostfix,
           ).recalculatedTaxParams;
 
-          crossYearTaxParams.endYearTaxParams = recalculateTaxParams(
-            crossYearTaxParams.endYearTaxParams,
-            prevReportTotals,
-            totalParams,
-            endYearPostfix,
-          ).recalculatedTaxParams;
+          crossYearTaxParams.endYearTaxParams = recalculateTaxParams(crossYearTaxParams.endYearTaxParams, prevReportTotals, totalParams, endYearPostfix).recalculatedTaxParams;
 
           var startYearSkuMetrics = skuFromListGoods.metrics.find((i) => i.year === startYear);
           var endYearSkuMetrics = skuFromListGoods.metrics.find((i) => i.year === endYear);
 
-          var recalculatedStartYearMetricsOtherExpenses =
-            startYearSkuMetrics.otherExpenses - prevSkuData.otherExpensesInCurrentYear + halfOfOtherExpenses;
+          var recalculatedStartYearMetricsOtherExpenses = startYearSkuMetrics.otherExpenses - prevSkuData.otherExpensesInCurrentYear + halfOfOtherExpenses;
           startYearSkuMetrics.otherExpenses = truncateNum(recalculatedStartYearMetricsOtherExpenses);
 
           var recalculatedEndYearMetricsOtherExpenses = endYearSkuMetrics.otherExpenses - prevSkuData.otherExpensesInNextYear + halfOfOtherExpenses;

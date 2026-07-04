@@ -6,7 +6,7 @@ var getPrevTotalsData = (totals) => {
   prevData.totalInsuranceFee = totals.totalInsuranceFee;
   prevData.totalOtherExpenses = totals.totalOtherExpenses;
 
-  if (totals.crossesTaxYears) {
+  if (totals.isCrossYearPeriod) {
     prevData.totalFinalProfitInCurrentYear = totals.totalFinalProfitInCurrentYear;
     prevData.totalProfitMarginInCurrentYear = totals.totalProfitMarginInCurrentYear;
     prevData.totalInsuranceFeeInCurrentYear = totals.totalInsuranceFeeInCurrentYear;
