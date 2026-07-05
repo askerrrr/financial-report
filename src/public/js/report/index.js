@@ -5,6 +5,7 @@ import deleteReportHandler from "./deleteReportHandler.js";
 import splitReportByYear from "./table/services/splitReportByYear.js";
 import injectBase64IntoImgTags from "./table/services/injectBase64IntoImgTags.js";
 import downloadReportAsXLSXButtonHandler from "./downloadReportAsXLSXButtonHandler.js";
+import getReportPeriodText from "../index/accountedFinancesPanel/getReportPeriodText.js";
 import setSkusLastCostPricesButtonHandler from "./setSkusLastCostPricesButtonHandler.js";
 import financialAccountingStatusButtonHander from "./financialAccountingStatusButtonHander.js";
 
@@ -39,18 +40,24 @@ var main = async () => {
     var startYear = dateFrom.split("-")[0];
     var endYear = dateTo.split("-")[0];
 
+    var fullPeriod = startYear + "-" + endYear;
+    var fullReportPeriodText = getReportPeriodText(dateFrom, dateTo).reportPeriodText;
+    createTotalsTable(report, fullPeriod, isCrossYearPeriod, fullReportPeriodText);
+
     var { startYearReportData, endYearReportData } = splitReportByYear(report);
 
-    createTotalsTable(startYearReportData, startYear);
+    var startReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateFrom).reportPeriodText;
+    createTotalsTable(startYearReportData, startYear, isCrossYearPeriod, startReportPeriodText);
     createSKUsTable(startYearReportData, currentYearPostfix, startYear);
 
-    createTotalsTable(endYearReportData, endYear);
+    var endReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateTo).reportPeriodText;
+    createTotalsTable(endYearReportData, endYear, isCrossYearPeriod, endReportPeriodText);
     createSKUsTable(endYearReportData, nextYearPostfix, endYear);
   } else {
     var postfixStub = "";
     var { year } = recordedTo;
 
-    createTotalsTable(report, year);
+    createTotalsTable(report, year, isCrossYearPeriod);
     createSKUsTable(report, postfixStub, year);
 
     setSkusLastCostPricesButtonHandler(skus, reportId, year, skusLastCostPrice);

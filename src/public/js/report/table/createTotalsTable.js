@@ -1,6 +1,6 @@
 import createTdElement from "./services/createTdElement.js";
 
-var createTotalsTable = (report, reportPeriodYear) => {
+var createTotalsTable = (report, reportPeriodYear, isCrossYearPeriod, reportSummaryLabelText) => {
   var tableRow = document.createElement("tr");
 
   var reportPeriodYearTd = createTdElement(reportPeriodYear);
@@ -73,7 +73,13 @@ var createTotalsTable = (report, reportPeriodYear) => {
   table.append(tableHead, tableBody);
 
   var tablesContainer = document.getElementById("tables-container");
-  tablesContainer.append(table);
+
+  if (isCrossYearPeriod) {
+    var { reportSummaryLabel } = createReportSummaryLabel(reportSummaryLabelText);
+    tablesContainer.append(reportSummaryLabel, table);
+  } else {
+    tablesContainer.append(table);
+  }
 };
 
 export default createTotalsTable;
@@ -104,4 +110,16 @@ function createTotalsTableHead() {
   tableHead.innerHTML = tableHeadContent;
 
   return { tableHead };
+}
+
+function createReportSummaryLabel(reportSummaryLabelText) {
+  var reportSummaryLabel = document.createElement("span");
+  reportSummaryLabel.className = "report-summary-label";
+  reportSummaryLabel.textContent = "Сводка " + reportSummaryLabelText;
+
+  var reportSummaryLabelWrapper = document.createElement("div");
+  reportSummaryLabelWrapper.className = "report-summary-label-wrapper";
+  reportSummaryLabelWrapper.append(reportSummaryLabel);
+
+  return { reportSummaryLabel: reportSummaryLabelWrapper };
 }
