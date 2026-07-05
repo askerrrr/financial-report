@@ -105,6 +105,7 @@ var setOtherExpensesToSku = async (req, res, next) => {
     });
   } catch (e) {
     console.log(e);
+    await session.abortTransaction();
     return res.sendStatus(304);
   } finally {
     if (session) {
