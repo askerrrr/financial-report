@@ -11,7 +11,7 @@ import financialAccountingStatusButtonHander from "../../../financialAccountingS
 
 var event = "click";
 
-var costPriceModal = (skuData, costPriceDisplayElement, isGuestAccess) => {
+var costPriceModal = (skuData, costPriceDisplayElement, isGuestAccess, postfix) => {
   var modal = createDiv("modal-overlay");
   var modalContent = createDiv("modal-content");
 
@@ -27,7 +27,7 @@ var costPriceModal = (skuData, costPriceDisplayElement, isGuestAccess) => {
   var saveCb = async () => {
     document.body.removeChild(modal);
 
-    skuData.costPrice = +costPriceInput.value;
+    skuData["costPrice" + postfix] = +costPriceInput.value;
 
     if (isGuestAccess) {
       var reportData = getReportDataFromLocalStorage(skuData);

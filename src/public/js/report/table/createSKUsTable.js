@@ -3,7 +3,9 @@ import openCostPriceModal from "./services/modal/openCostPriceModal.js";
 import createSKUPhotoUploader from "./services/skuPhotoUploader/index.js";
 import openOtherExpensesModal from "./services/modal/openOtherExpensesModal.js";
 
-var createSKUsTable = (report, reportPeriodYear) => {
+var isGuestAccess = false;
+
+var createSKUsTable = (report, postfix, reportPeriodYear) => {
   var skuIndex = 0;
   var tableBody = document.createElement("tbody");
 
@@ -17,14 +19,14 @@ var createSKUsTable = (report, reportPeriodYear) => {
       reportId,
       skuIndex,
       skuId: sku.id,
-      year: +reportPeriodYear,
       skuName: sku.skuName,
-      costPrice: sku.costPrice,
-      otherExpenses: sku.otherExpenses,
+      year: +reportPeriodYear,
+      ["costPrice" + postfix]: sku.costPrice,
+      ["otherExpenses" + postfix]: sku.otherExpenses,
     };
 
-    var costPriceInputField = openCostPriceModal(data);
-    var otherExpensesInputField = openOtherExpensesModal(data);
+    var costPriceInputField = openCostPriceModal(data, isGuestAccess, postfix);
+    var otherExpensesInputField = openOtherExpensesModal(data, isGuestAccess, postfix);
     var skuPhotoUploader = createSKUPhotoUploader(reportId, sku.skuName);
 
     var photoElemId = "photo-cell-" + skuIndex;

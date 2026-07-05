@@ -5,7 +5,7 @@ import calcPreTaxProfit from "./preTaxProfit.js";
 import truncateNum from "../../reportParsing/truncateNum.js";
 
 var calcRestSKUParams = (sku, taxParams, propPostfix = "") => {
-  sku.isCostPriceSet = true;
+  sku["isCostPriceSet" + propPostfix] = true;
 
   sku["preTaxProfit" + propPostfix] = calcPreTaxProfit(sku, propPostfix);
 

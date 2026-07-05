@@ -3,42 +3,37 @@ import calcProfitMargin from "./profitMargin.js";
 import calcProductCosts from "./totalProductCosts.js";
 import truncateNum from "../../reportParsing/truncateNum.js";
 
-var calcRestReportTotalParams = (totals, prevSkuData, newSkuData, isCrossYearPeriod) => {
+var calcRestReportTotalParams = (totals, prevSkuData, newSkuData, isCrossYearPeriod, postfix = "") => {
   if (isCrossYearPeriod) {
-    var recalculatedTotalPreTaxProfitInCurrentYear = totals.totalPreTaxProfitInCurrentYear - prevSkuData.preTaxProfitInCurrentYear + newSkuData.preTaxProfitInCurrentYear;
-    totals.totalPreTaxProfitInCurrentYear = truncateNum(recalculatedTotalPreTaxProfitInCurrentYear);
+    //preTaxProfit
+    var recalculatedPreTaxProfit =
+      totals["totalPreTaxProfit" + postfix] - prevSkuData["preTaxProfit" + postfix] + newSkuData["preTaxProfit" + postfix];
+    totals["totalPreTaxProfit" + postfix] = truncateNum(recalculatedPreTaxProfit);
 
-    var recalculatedTotalFinalProfitInCurrentYear = totals.totalFinalProfitInCurrentYear - prevSkuData.finalProfitInCurrentYear + newSkuData.finalProfitInCurrentYear;
-    totals.totalFinalProfitInCurrentYear = truncateNum(recalculatedTotalFinalProfitInCurrentYear);
+    //finalProfit
+    var recalculatedFinalProfit = totals["totalFinalProfit" + postfix] - prevSkuData["finalProfit" + postfix] + newSkuData["finalProfit" + postfix];
+    totals["totalFinalProfit" + postfix] = truncateNum(recalculatedFinalProfit);
 
-    var recalculatedTotalProductCostsInCurrentYear =
-      totals.totalProductCostsInCurrentYear - prevSkuData.costPrice * prevSkuData.qtyInCurrentYear + newSkuData.costPrice * newSkuData.qtyInCurrentYear;
-    totals.totalProductCostsInCurrentYear = truncateNum(recalculatedTotalProductCostsInCurrentYear);
+    //productCosts
+    var recalculatedProductCosts =
+      totals["totalProductCosts" + postfix] -
+      prevSkuData["qty" + postfix] * prevSkuData["costPrice" + postfix] +
+      newSkuData["qty" + postfix] * newSkuData["costPrice" + postfix];
+    totals["totalProductCosts" + postfix] = truncateNum(recalculatedProductCosts);
 
-    var recalculatedTotalInsuranceFeeInCurrentYear = totals.totalInsuranceFeeInCurrentYear - prevSkuData.insuranceFeeInCurrentYear + newSkuData.insuranceFeeInCurrentYear;
-    totals.totalInsuranceFeeInCurrentYear = truncateNum(recalculatedTotalInsuranceFeeInCurrentYear);
+    //insuranceFee
+    var recalculatedInsuranceFee =
+      totals["totalInsuranceFee" + postfix] - prevSkuData["insuranceFee" + postfix] + newSkuData["insuranceFee" + postfix];
+    totals["totalInsuranceFee" + postfix] = truncateNum(recalculatedInsuranceFee);
 
-    var recalculatedTotalOtherExpensesInCurrentYear = totals.totalOtherExpensesInCurrentYear - prevSkuData.otherExpensesInCurrentYear + newSkuData.otherExpensesInCurrentYear;
-    totals.totalOtherExpensesInCurrentYear = truncateNum(recalculatedTotalOtherExpensesInCurrentYear);
+    //otherExpenses
+    var recalculatedOtherExpenses = totals["totalOtherExpenses" + postfix] - prevSkuData["otherExpenses" + postfix] + newSkuData["otherExpenses"];
+    totals["totalOtherExpenses" + postfix] = truncateNum(recalculatedOtherExpenses);
 
-    totals.totalProfitMarginInCurrentYear = calcProfitMargin(recalculatedTotalFinalProfitInCurrentYear, totals.totalRetailAmountInCurrentYear);
-    var recalculatedTotalPreTaxProfitInNextYear = totals.totalPreTaxProfitInNextYear - prevSkuData.preTaxProfitInNextYear + newSkuData.preTaxProfitInNextYear;
-    totals.totalPreTaxProfitInNextYear = truncateNum(recalculatedTotalPreTaxProfitInNextYear);
+    //margin
+    totals["totalProfitMargin" + postfix] = calcProfitMargin(totals["totalFinalProfit" + postfix], totals["totalRetailAmount" + postfix]);
 
-    var recalculatedTotalFinalProfitInNextYear = totals.totalFinalProfitInNextYear - prevSkuData.finalProfitInNextYear + newSkuData.finalProfitInNextYear;
-    totals.totalFinalProfitInNextYear = truncateNum(recalculatedTotalFinalProfitInNextYear);
-
-    var recalculatedTotalProductCostsInNextYear =
-      totals.totalProductCostsInNextYear - prevSkuData.costPrice * prevSkuData.qtyInNextYear + newSkuData.costPrice * newSkuData.qtyInNextYear;
-    totals.totalProductCostsInNextYear = truncateNum(recalculatedTotalProductCostsInNextYear);
-
-    var recalculatedTotalInsuranceFeeInNextYear = totals.totalInsuranceFeeInNextYear - prevSkuData.insuranceFeeInNextYear + newSkuData.insuranceFeeInNextYear;
-    totals.totalInsuranceFeeInNextYear = truncateNum(recalculatedTotalInsuranceFeeInNextYear);
-
-    var recalculatedTotalOtherExpensesInNextYear = totals.totalOtherExpensesInNextYear - prevSkuData.otherExpensesInNextYear + newSkuData.otherExpensesInNextYear;
-    totals.totalOtherExpensesInNextYear = truncateNum(recalculatedTotalOtherExpensesInNextYear);
-
-    totals.totalProfitMarginInNextYear = calcProfitMargin(recalculatedTotalFinalProfitInNextYear, totals.totalRetailAmountInNextYear);
+    //
 
     var recalculatedTotalPreTaxProfit = totals.totalPreTaxProfitInCurrentYear + totals.totalPreTaxProfitInNextYear;
     totals.totalPreTaxProfit = truncateNum(recalculatedTotalPreTaxProfit);

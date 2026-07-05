@@ -23,7 +23,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
       if (report.isCrossYearPeriod) {
         var prevSkuInsuranceFee = sku["insuranceFee" + postfix];
 
-        if (sku.isCostPriceSet) {
+        if (sku["isCostPriceSet" + postfix]) {
           var prevSkuFinalProfit = sku["finalProfit" + postfix];
           var newSkuInsuranceFee = 0;
 
@@ -57,7 +57,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
         var prevSkuInsuranceFee = sku.insuranceFee;
         var newSkuInsuranceFee = 0;
 
-        if (sku.isCostPriceSet) {
+        if (sku["isCostPriceSet" + postfix]) {
           var prevSkuFinalProfit = sku.finalProfit;
 
           if (!mandatoryInsuranceFeeIsPaid) {
