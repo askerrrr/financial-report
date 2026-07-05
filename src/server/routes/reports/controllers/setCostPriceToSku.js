@@ -30,6 +30,7 @@ var setCostPriceToSku = async (req, res, next) => {
 
       var postfix = "";
       var startYear = +report.dateFrom.split("-")[0];
+      var endYear = report.dateTo.split("-")[0];
 
       if (report.isCrossYearPeriod) {
         postfix = year === startYear ? currentYearPostfix : endYearPostfix;
@@ -68,24 +69,29 @@ var setCostPriceToSku = async (req, res, next) => {
       await saveUpdatedReport(userId, reportId, { skus, ...totalParams }, session);
       await updateSkuInListGoods(userId, skuId, skuName, { lastCostPrice, metrics }, session);
 
-      var profitMargin = skus[skuIndex]["profitMargin" + postfix];
-      var finalProfit = skus[skuIndex]["finalProfit" + postfix];
+      var skuDataToClient = {};
+      var totalsDataToClient = {};
 
-      var totalFinalProfit = totalParams["totalFinalProfit" + postfix];
-      var totalProfitMargin = totalParams["totalProfitMargin" + postfix];
+      totalsDataToClient.totalFinalProfit = totalParams.totalFinalProfit;
+      totalsDataToClient.totalProfitMargin = totalParams.totalProfitMargin;
+
+      if (report.isCrossYearPeriod) {
+        totalsDataToClient["totalFinalProfit" + postfix] = totalParams["totalFinalProfit" + postfix];
+        totalsDataToClient["totalProfitMargin" + postfix] = totalParams["totalProfitMargin" + postfix];
+
+        skuDataToClient["finalProfit" + postfix] = skus[skuIndex]["finalProfit" + postfix];
+        skuDataToClient["profitMargin" + postfix] = skus[skuIndex]["profitMargin" + postfix];
+      } else {
+        skuDataToClient.finalProfit = skus[skuIndex].finalProfit;
+        skuDataToClient.profitMargin = skus[skuIndex].profitMargin;
+      }
 
       var sku = skus[skuIndex];
 
       return res.json({
         year,
-        totals: { totalProfitMargin, totalFinalProfit },
-        sku: {
-          skuIndex,
-          data: {
-            finalProfit,
-            profitMargin,
-          },
-        },
+        sku: { year, skuIndex, data: skuDataToClient },
+        totals: { isCrossYearPeriod: report.isCrossYearPeriod, data: totalsDataToClient },
       });
     });
   } catch (err) {

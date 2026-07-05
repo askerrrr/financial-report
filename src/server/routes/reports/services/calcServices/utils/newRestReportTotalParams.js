@@ -27,7 +27,8 @@ var calcRestReportTotalParams = (totals, prevSkuData, newSkuData, isCrossYearPer
     totals["totalInsuranceFee" + postfix] = truncateNum(recalculatedInsuranceFee);
 
     //otherExpenses
-    var recalculatedOtherExpenses = totals["totalOtherExpenses" + postfix] - prevSkuData["otherExpenses" + postfix] + newSkuData["otherExpenses"];
+    var recalculatedOtherExpenses =
+      totals["totalOtherExpenses" + postfix] - prevSkuData["otherExpenses" + postfix] + newSkuData["otherExpenses" + postfix];
     totals["totalOtherExpenses" + postfix] = truncateNum(recalculatedOtherExpenses);
 
     //margin

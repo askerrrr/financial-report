@@ -1,6 +1,6 @@
 import createTdElement from "./services/createTdElement.js";
 
-var createTotalsTable = (report, reportPeriodYear, isCrossYearPeriod, reportSummaryLabelText) => {
+var createTotalsTable = (report, reportPeriodYear, isCrossYearPeriod, reportSummaryLabelText, postfix) => {
   var tableRow = document.createElement("tr");
 
   var reportPeriodYearTd = createTdElement(reportPeriodYear);
@@ -8,7 +8,7 @@ var createTotalsTable = (report, reportPeriodYear, isCrossYearPeriod, reportSumm
   var totalSellerPayoutAmountTd = createTdElement(report.totalSellerPayoutAmount);
   var totalProductCostsTd = createTdElement(report.totalProductCosts);
 
-  var totalOtherExpensesTdId = "totalOtherExpenses-" + reportPeriodYear;
+  var totalOtherExpensesTdId = "totalOtherExpenses" + postfix + "-" + reportPeriodYear;
   var totalOtherExpensesTd = createTdElement(report.totalOtherExpenses, totalOtherExpensesTdId);
 
   var totalDeductionOrPaymentTd = createTdElement(report.totalDeductionOrPayment);
@@ -16,7 +16,7 @@ var createTotalsTable = (report, reportPeriodYear, isCrossYearPeriod, reportSumm
   var totalDeliveryCostTd = createTdElement(report.totalDeliveryCost);
   var totalPaidAcceptanceTd = createTdElement(report.totalPaidAcceptance);
 
-  var totalProfitMarginTdId = "totalProfitMargin-" + reportPeriodYear;
+  var totalProfitMarginTdId = "totalProfitMargin" + postfix + "-" + reportPeriodYear;
   var totalProfitMarginTd = createTdElement(report.totalProfitMargin, totalProfitMarginTdId);
 
   var totalSoldTd = createTdElement(report.totalSold);
@@ -25,12 +25,12 @@ var createTotalsTable = (report, reportPeriodYear, isCrossYearPeriod, reportSumm
   var totalAdvertisingCostsTd = createTdElement(report.totalAdvertisingCosts);
   var totalTaxAmountTd = createTdElement(report.totalTaxAmount);
 
-  var totalInsuranceFeeTdId = "totalInsuranceFee-" + reportPeriodYear;
+  var totalInsuranceFeeTdId = "totalInsuranceFee" + postfix + "-" + reportPeriodYear;
   var totalInsuranceFeeTd = createTdElement(report.totalInsuranceFee, totalInsuranceFeeTdId);
 
   var totalAdditionalInsuranceFeeTd = createTdElement(report.totalAdditionalInsuranceFee);
 
-  var totalFinalProfitTdId = "totalFinalProfit-" + reportPeriodYear;
+  var totalFinalProfitTdId = "totalFinalProfit" + postfix + "-" + reportPeriodYear;
   var totalFinalProfitTd = createTdElement(report.totalFinalProfit, totalFinalProfitTdId);
 
   if (report.totalFinalProfit < 0) {

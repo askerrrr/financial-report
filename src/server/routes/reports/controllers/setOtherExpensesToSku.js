@@ -76,19 +76,31 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
       var { skus, ...totals } = updatedReport;
 
-      var profitMargin = skus[skuIndex]["profitMargin" + postfix];
-      var finalProfit = skus[skuIndex]["finalProfit" + postfix];
+      var skuDataToClient = {};
+      var totalsDataToClient = {};
 
-      var totalFinalProfit = totalParams["totalFinalProfit" + postfix];
-      var totalProfitMargin = totalParams["totalProfitMargin" + postfix];
+      totalsDataToClient.totalFinalProfit = totalParams.totalFinalProfit;
+      totalsDataToClient.totalProfitMargin = totalParams.totalProfitMargin;
+      totalsDataToClient.totalOtherExpenses = totalParams.totalOtherExpenses;
+
+      if (report.isCrossYearPeriod) {
+        totalsDataToClient["totalFinalProfit" + postfix] = totalParams["totalFinalProfit" + postfix];
+        totalsDataToClient["totalProfitMargin" + postfix] = totalParams["totalProfitMargin" + postfix];
+        totalsDataToClient["totalOtherExpenses" + postfix] = totalParams["totalOtherExpenses" + postfix];
+
+        skuDataToClient["finalProfit" + postfix] = skus[skuIndex]["finalProfit" + postfix];
+        skuDataToClient["profitMargin" + postfix] = skus[skuIndex]["profitMargin" + postfix];
+        skuDataToClient["otherExpenses" + postfix] = skus[skuIndex]["otherExpenses" + postfix];
+      } else {
+        skuDataToClient.finalProfit = skus[skuIndex].finalProfit;
+        skuDataToClient.profitMargin = skus[skuIndex].profitMargin;
+        skuDataToClient.otherExpenses = skus[skuIndex].otherExpenses;
+      }
 
       return res.status(200).json({
         year,
-        totals: { totalProfitMargin, totalFinalProfit },
-        sku: {
-          skuIndex,
-          data: { profitMargin, finalProfit },
-        },
+        sku: { year, skuIndex, data: skuDataToClient },
+        totals: { isCrossYearPeriod: report.isCrossYearPeriod, data: totalsDataToClient },
       });
     });
   } catch (e) {

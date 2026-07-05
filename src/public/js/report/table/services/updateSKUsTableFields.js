@@ -1,5 +1,5 @@
-var updateSKUsTableFields = (year, sku) => {
-  var { skuIndex, data } = sku;
+var updateSKUsTableFields = (sku) => {
+  var { skuIndex, data, year } = sku;
 
   for (var fieldName of Object.keys(data)) {
     var elemId = [fieldName, sku.skuIndex, year].join("-");

@@ -1,15 +1,34 @@
 var updateTotalsTableFields = (year, totals) => {
-  for (var fieldName of Object.keys(totals)) {
-    var eleId = fieldName + "-" + year;
-    var elem = document.getElementById(eleId);
+  for (var fieldName of Object.keys(totals.data)) {
+    var elemId = fieldName + "-";
+
+    var elem = document.getElementById(elemId);
 
     if (elem) {
-      elem.textContent = totals[fieldName];
+      elem.textContent = totals.data[fieldName];
 
-      if (totals[fieldName] < 0) {
+      if (totals.data[fieldName] < 0) {
         elem.style.color = "red";
       } else {
         elem.style.color = "#04ff00";
+      }
+    }
+  }
+
+  if (totals?.isCrossYearPeriod) {
+    for (var fieldName of Object.keys(totals.data)) {
+      var elemId = fieldName + "-" + year;
+
+      var elem = document.getElementById(elemId);
+
+      if (elem) {
+        elem.textContent = totals.data[fieldName];
+
+        if (totals.data[fieldName] < 0) {
+          elem.style.color = "red";
+        } else {
+          elem.style.color = "#04ff00";
+        }
       }
     }
   }

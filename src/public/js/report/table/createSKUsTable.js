@@ -44,10 +44,10 @@ var createSKUsTable = (report, postfix, reportPeriodYear) => {
     var acceptance = createTdElement(sku.acceptance);
     var profit = createTdElement(sku.profit);
 
-    var profitMarginTdId = "profitMargin-" + skuIndex + "-" + reportPeriodYear;
+    var profitMarginTdId = "profitMargin" + postfix + "-" + skuIndex + "-" + reportPeriodYear;
     var profitMargin = createTdElement(sku.profitMargin, profitMarginTdId);
 
-    var finalProfitTdId = "finalProfit-" + skuIndex + "-" + reportPeriodYear;
+    var finalProfitTdId = "finalProfit" + postfix + "-" + skuIndex + "-" + reportPeriodYear;
     var finalProfit = createTdElement(sku.finalProfit, finalProfitTdId);
 
     if (sku.profitMargin < 0) {

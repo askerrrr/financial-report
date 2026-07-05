@@ -33,7 +33,7 @@ var otherExpensesModal = (skuData, tdElement, isGuestAccess, postfix) => {
     tdElement.textContent = otherExpensesInput.value;
 
     var { year, sku, totals } = data;
-    updateSKUsTableFields(year, sku);
+    updateSKUsTableFields(sku);
 
     updateTotalsTableFields(year, totals);
   };

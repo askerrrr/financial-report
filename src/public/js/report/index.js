@@ -9,6 +9,9 @@ import getReportPeriodText from "../index/accountedFinancesPanel/getReportPeriod
 import setSkusLastCostPricesButtonHandler from "./setSkusLastCostPricesButtonHandler.js";
 import financialAccountingStatusButtonHander from "./financialAccountingStatusButtonHander.js";
 
+var postfixStub = "";
+var yearValueStub = "";
+var reportSummaryLabelTextStub = "";
 var currentYearPostfix = "InCurrentYear";
 var nextYearPostfix = "InNextYear";
 var userId = document.cookie.split("=")[1];
@@ -42,22 +45,21 @@ var main = async () => {
 
     var fullPeriod = startYear + "-" + endYear;
     var fullReportPeriodText = getReportPeriodText(dateFrom, dateTo).reportPeriodText;
-    createTotalsTable(report, fullPeriod, isCrossYearPeriod, fullReportPeriodText);
+    createTotalsTable(report, yearValueStub, isCrossYearPeriod, fullReportPeriodText, postfixStub);
 
     var { startYearReportData, endYearReportData } = splitReportByYear(report);
 
     var startReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateFrom).reportPeriodText;
-    createTotalsTable(startYearReportData, startYear, isCrossYearPeriod, startReportPeriodText);
+    createTotalsTable(startYearReportData, startYear, isCrossYearPeriod, startReportPeriodText, currentYearPostfix);
     createSKUsTable(startYearReportData, currentYearPostfix, startYear);
 
     var endReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateTo).reportPeriodText;
-    createTotalsTable(endYearReportData, endYear, isCrossYearPeriod, endReportPeriodText);
+    createTotalsTable(endYearReportData, endYear, isCrossYearPeriod, endReportPeriodText, nextYearPostfix);
     createSKUsTable(endYearReportData, nextYearPostfix, endYear);
   } else {
-    var postfixStub = "";
     var { year } = recordedTo;
 
-    createTotalsTable(report, year, isCrossYearPeriod);
+    createTotalsTable(report, yearValueStub, isCrossYearPeriod, reportSummaryLabelTextStub, postfixStub);
     createSKUsTable(report, postfixStub, year);
 
     setSkusLastCostPricesButtonHandler(skus, reportId, year, skusLastCostPrice);
