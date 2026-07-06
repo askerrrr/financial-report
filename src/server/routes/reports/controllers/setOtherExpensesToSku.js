@@ -11,11 +11,12 @@ import processOfSkuCostPriceSetting from "../services/different/processOfSkuCost
 var currentYearPostfix = "InCurrentYear";
 var endYearPostfix = "InNextYear";
 
+var { saveUpdatedReport, getReportById } = dbUtils.reportCollectionServices;
+var { updateSkuInListGoods, getSkuFromListGoods } = dbUtils.goodsCollectionServices;
+var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
+
 var setOtherExpensesToSku = async (req, res, next) => {
   var { userId, reportId, skuIndex, skuName, skuId, year } = req.body;
-  var { saveUpdatedReport, getReportById } = dbUtils.reportCollectionServices;
-  var { updateSkuInListGoods, getSkuFromListGoods } = dbUtils.goodsCollectionServices;
-  var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
 
   var updatedReport;
 
@@ -31,6 +32,7 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
       var postfix = "";
       var startYear = +report.dateFrom.split("-")[0];
+      var endYear = report.dateTo.split("-")[0];
 
       if (report.isCrossYearPeriod) {
         postfix = year === startYear ? currentYearPostfix : endYearPostfix;
@@ -76,31 +78,19 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
       var { skus, ...totals } = updatedReport;
 
-      var skuDataToClient = {};
-      var totalsDataToClient = {};
-
-      totalsDataToClient.totalFinalProfit = totalParams.totalFinalProfit;
-      totalsDataToClient.totalProfitMargin = totalParams.totalProfitMargin;
-      totalsDataToClient.totalOtherExpenses = totalParams.totalOtherExpenses;
+      var years = [];
+      var skuDataToClient = excludeEqualParams(prevSkuData, skus[skuIndex]);
+      var totalsDataToClient = excludeEqualParams(prevReportTotals, totalParams);
 
       if (report.isCrossYearPeriod) {
-        totalsDataToClient["totalFinalProfit" + postfix] = totalParams["totalFinalProfit" + postfix];
-        totalsDataToClient["totalProfitMargin" + postfix] = totalParams["totalProfitMargin" + postfix];
-        totalsDataToClient["totalOtherExpenses" + postfix] = totalParams["totalOtherExpenses" + postfix];
-
-        skuDataToClient["finalProfit" + postfix] = skus[skuIndex]["finalProfit" + postfix];
-        skuDataToClient["profitMargin" + postfix] = skus[skuIndex]["profitMargin" + postfix];
-        skuDataToClient["otherExpenses" + postfix] = skus[skuIndex]["otherExpenses" + postfix];
-      } else {
-        skuDataToClient.finalProfit = skus[skuIndex].finalProfit;
-        skuDataToClient.profitMargin = skus[skuIndex].profitMargin;
-        skuDataToClient.otherExpenses = skus[skuIndex].otherExpenses;
+        var requiredYear = year === startYear ? startYear : endYear;
+        years = [requiredYear];
       }
 
-      return res.status(200).json({
-        year,
+      res.status(200).json({
+        years,
+        totals: { data: totalsDataToClient },
         sku: { year, skuIndex, data: skuDataToClient },
-        totals: { isCrossYearPeriod: report.isCrossYearPeriod, data: totalsDataToClient },
       });
     });
   } catch (e) {

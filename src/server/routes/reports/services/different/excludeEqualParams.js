@@ -14,11 +14,8 @@ var excludeEqualParams = (prevData, currentData) => {
     var prevDataKey = prevDataKeys.find((key) => key === currentDataKey);
 
     if (prevDataKey) {
-      if (prevData[prevDataKey] !== currentData[currentDataKey]) {
-        var reversedCurrentDataKey = currentDataKey.split("").reverse().join("");
-
-        if (!reversedCurrentDataKey.startsWith(reversedCurrentYearPostfix) && !reversedCurrentDataKey.startsWith(reversedNextYearPostfix))
-          nonEqualParams[currentDataKey] = currentData[currentDataKey];
+      if (prevData[prevDataKey] !== currentData[currentDataKey] && !currentDataKey.startsWith("costPrice")) {
+        nonEqualParams[currentDataKey] = currentData[currentDataKey];
       }
     }
   }

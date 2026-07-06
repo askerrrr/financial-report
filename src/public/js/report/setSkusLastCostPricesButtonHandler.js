@@ -21,6 +21,8 @@ var removeDuplicateCosts = (skus, skusLastCostPrice) => {
 var setSkusLastCostPricesButtonHandler = (skus, reportId, taxYear, skusLastCostPrice) => {
   removeDuplicateCosts(skus, skusLastCostPrice);
 
+  skusLastCostPrice.forEach((sku) => (sku.year = taxYear));
+
   button.onclick = () => {
     if (skusLastCostPrice.length) {
       skusLastCostPriceModal(reportId, taxYear, skusLastCostPrice);
