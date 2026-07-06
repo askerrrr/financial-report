@@ -1,17 +1,17 @@
 import costPriceModal from "./costPriceModal.js";
 import createButton from "./utils/createButton.js";
 
-var openCostPriceModal = (skuData, isGuestAccess) => {
+var openCostPriceModal = (skuData, isGuestAccess, postfix) => {
   var container = document.createElement("div");
   container.className = "editable-field";
 
   var costPriceDisplayElement = document.createElement("span");
   costPriceDisplayElement.className = "editable-field-value";
-  costPriceDisplayElement.textContent = skuData.costPrice;
-  costPriceDisplayElement.id = `cost-price-${skuData.skuName}`;
+  costPriceDisplayElement.textContent = skuData["costPrice" + postfix];
+  costPriceDisplayElement.id = `cost-price-${skuData.skuName}-${skuData.year}`;
 
   var event = "click";
-  var cb = () => costPriceModal(skuData, costPriceDisplayElement, isGuestAccess);
+  var cb = () => costPriceModal(skuData, costPriceDisplayElement, isGuestAccess, postfix);
   var buttonTextContent = "Изменить";
   var openCostPriceModalButton = createButton("editable-field-button", buttonTextContent, { event, cb });
 

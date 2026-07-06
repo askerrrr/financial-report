@@ -1,13 +1,12 @@
-var createTdElement = (data, fieldName, index, className = "") => {
+var createTdElement = (data, id, className) => {
   var td = document.createElement("td");
-  td.className = className;
 
-  if (fieldName && index !== null && index !== undefined) {
-    td.id = [fieldName, index].join("-");
+  if (id) {
+    td.id = id;
   }
 
-  if (fieldName && typeof index !== "number") {
-    td.id = fieldName;
+  if (className) {
+    td.className = className;
   }
 
   td.append(data ?? "");

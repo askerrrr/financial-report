@@ -41,15 +41,13 @@ var skusLastCostPriceModal = (reportId, taxYear, skusLastCostPrice) => {
   var cb = async () => {
     var userId = document.cookie.split("=")[1];
 
-    var { skusDataToClient, totals } = await sendCostPrices(userId, reportId, taxYear, skusLastCostPrice);
+    var { skusDataToClient, totals, years } = await sendCostPrices(userId, reportId, taxYear, skusLastCostPrice);
 
-    updateTotalsTableFields(totals);
-    updateCostPricesIntoSkusTable(skusLastCostPrice);
+    updateTotalsTableFields(totals, years);
+    updateCostPricesIntoSkusTable(skusLastCostPrice, years);
     financialAccountingStatusButtonHander(userId, reportId);
 
-    for (var sku of skusDataToClient) {
-      updateSKUsTableFields(sku);
-    }
+    skusDataToClient.map((sku) => updateSKUsTableFields(sku, years));
 
     document.body.removeChild(modal);
   };

@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-var costPricesItemSchema = Joi.object({ id: Joi.number().required(), skuName: Joi.string().required(), lastCostPrice: Joi.number().required() });
+var costPricesItemSchema = Joi.object({ id: Joi.number().required(), year: Joi.number(), skuName: Joi.string().required(), lastCostPrice: Joi.number().required() });
 
 var schema = Joi.object({
   userId: Joi.string().required(),

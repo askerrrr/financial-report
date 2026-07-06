@@ -33,7 +33,7 @@ var recalculateSkuMetricsAfterReportDeletion = (startYear, endYear, listGoods, r
   for (var sku of report.skus) {
     var skuFromListGoods = listGoods.find((i) => i.id === sku.id && i.skuName === sku.skuName);
 
-    if (report.crossesTaxYears) {
+    if (report.isCrossYearPeriod) {
       var startYearMetrics = skuFromListGoods.metrics.find((i) => i.year === startYear);
       var endYearMetrics = skuFromListGoods.metrics.find((i) => i.year === endYear);
 

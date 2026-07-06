@@ -6,7 +6,7 @@ var calcPreTaxProfit = (sku, propPostfix = "") => {
   if (sku["profit" + propPostfix] === 0 || sku["qty" + propPostfix] === 0) {
     productCosts = 0;
   } else {
-    productCosts = sku["qty" + propPostfix] * sku.costPrice;
+    productCosts = sku["qty" + propPostfix] * sku["costPrice" + propPostfix];
   }
 
   var preTaxProfit = sku["profit" + propPostfix] - sku["otherExpenses" + propPostfix] - productCosts;

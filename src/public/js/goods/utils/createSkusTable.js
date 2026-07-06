@@ -29,9 +29,9 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
     var actualClubDiscountedPriceTd = createTdElement(clubDiscountedPrice, skuName, "clubDiscountedPrice");
 
     var modalButton = await openModalButton(sku);
-    var modalButtonTdElem = createTdElement(modalButton)
+    var modalButtonTdElem = createTdElement(modalButton);
     var skuRowVisibilityButtonHandler = createSkuRowVisibilityButtonHandler(skuName, id);
-    var skuRowVisibilityButtonHandlerTdElem = createTdElement(skuRowVisibilityButtonHandler)
+    var skuRowVisibilityButtonHandlerTdElem = createTdElement(skuRowVisibilityButtonHandler);
 
     if (currentDayData) {
       var skuDataOfCurrentDay = currentDayData.find((item) => item.nmID === id);

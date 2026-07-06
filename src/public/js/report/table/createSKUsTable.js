@@ -3,11 +3,11 @@ import openCostPriceModal from "./services/modal/openCostPriceModal.js";
 import createSKUPhotoUploader from "./services/skuPhotoUploader/index.js";
 import openOtherExpensesModal from "./services/modal/openOtherExpensesModal.js";
 
-var skuIndex = 0;
-var table = document.getElementById("skus-table");
+var isGuestAccess = false;
 
-var createSKUsTable = (report) => {
-  var tbody = document.getElementById("skus-tbody");
+var createSKUsTable = (report, postfix, reportPeriodYear) => {
+  var skuIndex = 0;
+  var tableBody = document.createElement("tbody");
 
   var { reportId, recordedTo, skus, userId } = report;
 
@@ -19,17 +19,19 @@ var createSKUsTable = (report) => {
       reportId,
       skuIndex,
       skuId: sku.id,
-      year: recordedTo.year,
       skuName: sku.skuName,
-      costPrice: sku.costPrice,
-      otherExpenses: sku.otherExpenses,
+      year: +reportPeriodYear,
+      ["costPrice" + postfix]: sku.costPrice,
+      ["otherExpenses" + postfix]: sku.otherExpenses,
     };
 
-    var costPriceInputField = openCostPriceModal(data);
-    var otherExpensesInputField = openOtherExpensesModal(data);
+    var costPriceInputField = openCostPriceModal(data, isGuestAccess, postfix);
+    var otherExpensesInputField = openOtherExpensesModal(data, isGuestAccess, postfix);
     var skuPhotoUploader = createSKUPhotoUploader(reportId, sku.skuName);
 
-    var skuPhotoUploaderTd = createTdElement(skuPhotoUploader, "photo-cell", skuIndex, "photo-cell");
+    var photoElemId = "photo-cell-" + skuIndex;
+    var skuPhotoUploaderTd = createTdElement(skuPhotoUploader, photoElemId, "photo-cell");
+
     var skuName = createTdElement(sku.skuName);
     var qty = createTdElement(sku.qty);
     var returnAmount = createTdElement(sku.returnAmount);
@@ -41,8 +43,12 @@ var createSKUsTable = (report) => {
     var storageCost = createTdElement(sku.storageCost);
     var acceptance = createTdElement(sku.acceptance);
     var profit = createTdElement(sku.profit);
-    var profitMargin = createTdElement(sku.profitMargin, "profitMargin", skuIndex);
-    var finalProfit = createTdElement(sku.finalProfit, "finalProfit", skuIndex);
+
+    var profitMarginTdId = "profitMargin" + postfix + "-" + skuIndex + "-" + reportPeriodYear;
+    var profitMargin = createTdElement(sku.profitMargin, profitMarginTdId);
+
+    var finalProfitTdId = "finalProfit" + postfix + "-" + skuIndex + "-" + reportPeriodYear;
+    var finalProfit = createTdElement(sku.finalProfit, finalProfitTdId);
 
     if (sku.profitMargin < 0) {
       profitMargin.style.color = "red";
@@ -69,13 +75,43 @@ var createSKUsTable = (report) => {
       finalProfit,
     );
 
-    tbody.append(tr);
+    tableBody.append(tr);
     skuIndex++;
   }
 
-  table.append(tbody);
+  var table = document.createElement("table");
+  table.id = "skus-table-" + reportPeriodYear;
 
-  return table;
+  var { tableHead } = createSkusTableHead();
+
+  table.append(tableHead, tableBody);
+
+  var tablesContainer = document.getElementById("tables-container");
+  tablesContainer.append(table);
 };
 
 export default createSKUsTable;
+
+var tableHeadContent = `
+        <tr>
+          <th>Фото</th>
+          <th>Артикул</th>
+          <th>Количество</th>
+          <th>Возвраты</th>
+          <th>Доставка</th>
+          <th>Удержания/Выплаты</th>
+          <th>Штрафы</th>
+          <th>Хранение</th>
+          <th>Приёмка</th>
+          <th>Выплата с вычетом всех услуг WB</th>
+          <th>Себестоимость</th>
+          <th>Прочие расходы</th>
+          <th>Маржинальность %</th>
+          <th>Итого</th>
+        </tr>`;
+
+function createSkusTableHead() {
+  var tableHead = document.createElement("thead");
+  tableHead.innerHTML = tableHeadContent;
+  return { tableHead };
+}

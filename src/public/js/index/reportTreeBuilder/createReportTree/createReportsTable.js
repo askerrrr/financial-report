@@ -18,7 +18,9 @@ var createReportsTable = (year, month, reportIds, reports) => {
 
     var fullPeriodTd = getReportPeriod(dateFrom, dateTo);
 
-    var totalFinalProfitTd = createTdElement(totalFinalProfit, null, null, "totalFinalProfit");
+    var totalFinalProfitTdId = null;
+    var totalFinalProfitTdClassName = "totalFinalProfit";
+    var totalFinalProfitTd = createTdElement(totalFinalProfit, totalFinalProfitTdId, totalFinalProfitTdClassName);
 
     if (totalFinalProfit < 0) {
       totalFinalProfitTd.style.color = "red";

@@ -9,6 +9,7 @@ var schema = Joi.object({
   costPrice: Joi.number().required(),
   skuName: Joi.string().required(),
   taxRate: Joi.number().required(),
+  year: Joi.number().required(),
   totals: Joi.object({
     totalRetailAmount: Joi.number().required(),
     totalFinalProfit: Joi.number().required(),
@@ -63,7 +64,7 @@ var setCostPrice = async (req, res, next) => {
     return res.sendStatus(400);
   }
 
-  var { userId, reportId, costPrice, skuIndex, skus, totals, taxRate } = req.body;
+  var { userId, reportId, costPrice, skuIndex, skus, totals, taxRate, year } = req.body;
 
   var skuToUpdate = skus[skuIndex];
   var prevSkuData = {};
@@ -85,6 +86,7 @@ var setCostPrice = async (req, res, next) => {
   var { profitMargin, finalProfit, isCostPriceSet, insuranceFee, preTaxProfit, isInsuranceFeeIncluded } = skuWithCalculatedParams;
 
   return res.json({
+    year,
     sku: {
       userId,
       skuIndex,

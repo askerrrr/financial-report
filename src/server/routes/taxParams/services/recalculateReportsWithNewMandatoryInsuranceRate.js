@@ -11,7 +11,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
   for (var report of reports) {
     var postfix = "";
 
-    if (report.crossesTaxYears) {
+    if (report.isCrossYearPeriod) {
       var startYear = +report.dateFrom.split("-")[0];
       postfix = startYear == taxYear ? startYearPostfix : endYearPostfix;
     }
@@ -20,10 +20,10 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
       var skuFromListGoods = listGoods.find((i) => i.id === sku.id && i.skuName === sku.skuName);
       var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === taxYear);
 
-      if (report.crossesTaxYears) {
+      if (report.isCrossYearPeriod) {
         var prevSkuInsuranceFee = sku["insuranceFee" + postfix];
 
-        if (sku.isCostPriceSet) {
+        if (sku["isCostPriceSet" + postfix]) {
           var prevSkuFinalProfit = sku["finalProfit" + postfix];
           var newSkuInsuranceFee = 0;
 
@@ -57,7 +57,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
         var prevSkuInsuranceFee = sku.insuranceFee;
         var newSkuInsuranceFee = 0;
 
-        if (sku.isCostPriceSet) {
+        if (sku["isCostPriceSet" + postfix]) {
           var prevSkuFinalProfit = sku.finalProfit;
 
           if (!mandatoryInsuranceFeeIsPaid) {
@@ -97,7 +97,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
       report.totalFinalProfit = calc.sum(report.skus, "finalProfit", "truncate-on");
     }
 
-    postfix = ""
+    postfix = "";
   }
 
   return {

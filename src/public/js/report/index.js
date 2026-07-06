@@ -2,11 +2,18 @@ import reportInfo from "./reportInfo.js";
 import createSKUsTable from "./table/createSKUsTable.js";
 import createTotalsTable from "./table/createTotalsTable.js";
 import deleteReportHandler from "./deleteReportHandler.js";
+import splitReportByYear from "./table/services/splitReportByYear.js";
 import injectBase64IntoImgTags from "./table/services/injectBase64IntoImgTags.js";
 import downloadReportAsXLSXButtonHandler from "./downloadReportAsXLSXButtonHandler.js";
+import getReportPeriodText from "../index/accountedFinancesPanel/getReportPeriodText.js";
 import setSkusLastCostPricesButtonHandler from "./setSkusLastCostPricesButtonHandler.js";
 import financialAccountingStatusButtonHander from "./financialAccountingStatusButtonHander.js";
 
+var postfixStub = "";
+var yearValueStub = "";
+var reportSummaryLabelTextStub = "";
+var currentYearPostfix = "InCurrentYear";
+var nextYearPostfix = "InNextYear";
 var userId = document.cookie.split("=")[1];
 
 var pathParts = window.location.pathname.split("/");
@@ -30,17 +37,39 @@ var getReportData = async () => {
 
 var main = async () => {
   var { report, skuImages, skusLastCostPrice } = await getReportData();
-  var { reportId, recordedTo, skus } = report;
+  var { reportId, dateFrom, dateTo, recordedTo, skus, isCrossYearPeriod } = report;
+  var { year } = recordedTo;
+
+  if (isCrossYearPeriod) {
+    var startYear = dateFrom.split("-")[0];
+    var endYear = dateTo.split("-")[0];
+
+    var fullPeriod = startYear + "-" + endYear;
+    var fullReportPeriodText = getReportPeriodText(dateFrom, dateTo).reportPeriodText;
+    createTotalsTable(report, yearValueStub, isCrossYearPeriod, fullReportPeriodText, postfixStub);
+
+    var { startYearReportData, endYearReportData } = splitReportByYear(report);
+
+    var startReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateFrom).reportPeriodText;
+    createTotalsTable(startYearReportData, startYear, isCrossYearPeriod, startReportPeriodText, currentYearPostfix);
+    createSKUsTable(startYearReportData, currentYearPostfix, startYear);
+
+    var endReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateTo).reportPeriodText;
+    createTotalsTable(endYearReportData, endYear, isCrossYearPeriod, endReportPeriodText, nextYearPostfix);
+    createSKUsTable(endYearReportData, nextYearPostfix, endYear);
+  } else {
+    createTotalsTable(report, yearValueStub, isCrossYearPeriod, reportSummaryLabelTextStub, postfixStub);
+    createSKUsTable(report, postfixStub, year);
+  }
+
+  setSkusLastCostPricesButtonHandler(skus, reportId, year, skusLastCostPrice);
 
   reportInfo(report);
-  createSKUsTable(report);
-  createTotalsTable(report);
+
   injectBase64IntoImgTags(skuImages);
 
   downloadReportAsXLSXButtonHandler(report);
   deleteReportHandler(userId, reportId, skus);
-
-  setSkusLastCostPricesButtonHandler(skus, reportId, recordedTo.year, skusLastCostPrice);
 
   var isFinancesAccountingEditable = skus.find((sku) => sku.isCostPriceSet);
 

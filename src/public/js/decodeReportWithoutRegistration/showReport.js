@@ -6,7 +6,9 @@ var isGuestAccess = true;
 var downloadReportLink = "/decode-report-without-registration/xlsx/";
 
 var showReport = (report) => {
-  createSKUsTable(report);
+  var startYear = +report.dateFrom.split("-")[0];
+
+  createSKUsTable(report, startYear);
   createTotalsTable(report);
   downloadReportAsXLSXButtonHandler(report, downloadReportLink, isGuestAccess);
 

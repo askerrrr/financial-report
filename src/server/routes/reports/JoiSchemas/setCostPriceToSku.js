@@ -7,8 +7,12 @@ var schema = Joi.object({
   skuId: Joi.number().required(),
   year: Joi.number().required(),
   skuName: Joi.string().required(),
-  costPrice: Joi.number().required(),
-  otherExpenses: Joi.number().required(),
+  costPrice: Joi.number(),
+  costPriceInCurrentYear: Joi.number(),
+  costPriceInNextYear: Joi.number(),
+  otherExpenses: Joi.number(),
+  otherExpensesInCurrentYear: Joi.number(),
+  otherExpensesInNextYear: Joi.number(),
 });
 
 export default schema;

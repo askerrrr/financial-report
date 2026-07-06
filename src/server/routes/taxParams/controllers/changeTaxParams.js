@@ -34,7 +34,7 @@ var changeTaxParams = async (req, res, next) => {
       var { listGoods } = await getListGoodsFromDb(userId, session);
       var { reports } = await getReportsByUserId(userId, session);
       var requiredReports = reports.filter((report) => {
-        if (report.crossesTaxYears) {
+        if (report.isCrossYearPeriod) {
           var startYear = +report.dateFrom.split("-")[0];
           var endYear = +report.dateTo.split("-")[0];
           if (startYear === year || endYear === year) {
@@ -75,8 +75,13 @@ var changeTaxParams = async (req, res, next) => {
 
           if (requiredReports.length) {
             var { mandatoryInsuranceFee } = oldTaxParams;
-            var { updatedReports, listGoodsWithUpdatedSkuMetrics, finalProfit, paidInsuranceFee, mandatoryInsuranceFeeIsPaid } =
-              recalculateReportsWithNewMandatoryInsuranceRate(year, requiredReports, listGoods, mandatoryInsuranceFee, newMandatoryInsuranceFeeRate);
+            var { updatedReports, listGoodsWithUpdatedSkuMetrics, finalProfit, paidInsuranceFee, mandatoryInsuranceFeeIsPaid } = recalculateReportsWithNewMandatoryInsuranceRate(
+              year,
+              requiredReports,
+              listGoods,
+              mandatoryInsuranceFee,
+              newMandatoryInsuranceFeeRate,
+            );
 
             await saveUpdatedReports(userId, updatedReports, session);
 

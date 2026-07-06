@@ -9,7 +9,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
   for (var report of reports) {
     var postfix = "";
 
-    if (report.crossesTaxYears) {
+    if (report.isCrossYearPeriod) {
       var startYear = +report.dateFrom.split("-")[0];
       postfix = startYear == taxYear ? currentYearPostfix : nextYearPostfix;
     }
@@ -18,7 +18,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
       var skuFromListGoods = listGoods.find((i) => i.id === sku.id && i.skuName === sku.skuName);
       var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === taxYear);
 
-      if (report.crossesTaxYears) {
+      if (report.isCrossYearPeriod) {
         var prevSkuTax = sku["tax" + postfix];
         sku["tax" + postfix] = calc.taxAmount(sku["taxableAmount" + postfix], newTaxRate);
         sku.tax = sku.taxInCurrentYear + sku.taxInNextYear;
@@ -43,7 +43,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
         var prevSkuTax = sku.tax;
         sku.tax = calc.taxAmount(sku.taxableAmount, newTaxRate);
         paidTaxAmount += sku.tax;
-        
+
         var recalculatedTaxToSkuMetrics = skuMetrics.tax - prevSkuTax + sku.tax;
         skuMetrics.tax = truncateNum(recalculatedTaxToSkuMetrics);
 
@@ -72,7 +72,7 @@ var recalculateReportsWithNewTaxRate = (reports, listGoods, paidTaxAmount, newTa
       report.totalFinalProfit = calc.sum(report.skus, "finalProfit", "truncate-on");
     }
 
-    postfix = ""
+    postfix = "";
   }
 
   return {

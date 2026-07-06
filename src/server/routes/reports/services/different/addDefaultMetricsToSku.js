@@ -17,9 +17,9 @@ var defaultSkuMetricsField = {
   additionalInsuranceFee: 0,
 };
 
-var addDefaultMetricsToSku = (listGoods, isCrossYearReport, startYear, endYear) => {
+var addDefaultMetricsToSku = (listGoods, isCrossYearPeriod, startYear, endYear) => {
   for (var sku of listGoods) {
-    if (isCrossYearReport) {
+    if (isCrossYearPeriod) {
       if (!sku.metrics.find((i) => i.year === startYear)) {
         sku.metrics.push({ ...defaultSkuMetricsField, year: startYear });
       }

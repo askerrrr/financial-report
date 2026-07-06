@@ -25,15 +25,11 @@ var deleteReport = async (req, res, next) => {
       var startYear = +reportBeforeDeletion.dateFrom.split("-")[0];
       var endYear = +reportBeforeDeletion.dateTo.split("-")[0];
 
-      if (reportBeforeDeletion.crossesTaxYears) {
+      if (reportBeforeDeletion.isCrossYearPeriod) {
         var startYearTaxParams = taxParams.find((params) => params.year === startYear);
         var endYearTaxParams = taxParams.find((params) => params.year === endYear);
 
-        startYearTaxParams = recalculateTaxParamsAfterReportDeletion(
-          startYearTaxParams,
-          reportBeforeDeletion,
-          currentYearPropPostfix,
-        ).updatedTaxParams;
+        startYearTaxParams = recalculateTaxParamsAfterReportDeletion(startYearTaxParams, reportBeforeDeletion, currentYearPropPostfix).updatedTaxParams;
 
         endYearTaxParams = recalculateTaxParamsAfterReportDeletion(endYearTaxParams, reportBeforeDeletion, nextYearPropPostfix).updatedTaxParams;
 

@@ -1,11 +1,11 @@
 import createTdElement from "../report/table/services/createTdElement.js";
 import openCostPriceModal from "../report/table/services/modal/openCostPriceModal.js";
 
-var skuIndex = 0;
 var isGuestAccess = true;
 var table = document.getElementById("skus-table");
 
-var createSKUsTable = (report) => {
+var createSKUsTable = (report, reportPeriodYear) => {
+  var skuIndex = 0;
   var tbody = document.getElementById("skus-tbody");
 
   var { userId, reportId, skus } = report;
@@ -23,6 +23,7 @@ var createSKUsTable = (report) => {
       skuIndex,
       skuId: sku.id,
       skuName: sku.skuName,
+      year: reportPeriodYear,
       taxRate: report.taxRate,
       costPrice: sku.costPrice,
     };
@@ -36,8 +37,12 @@ var createSKUsTable = (report) => {
     var acceptance = createTdElement(sku.acceptance);
     var profit = createTdElement(sku.profit);
     var averageProfit = createTdElement(sku.averageProfit);
-    var profitMargin = createTdElement(sku.profitMargin, "profitMargin", skuIndex);
-    var finalProfit = createTdElement(sku.finalProfit, "finalProfit", skuIndex);
+
+    var profitMarginTdId = "profitMargin-" + skuIndex + "-" + reportPeriodYear;
+    var profitMargin = createTdElement(sku.profitMargin, profitMarginTdId);
+
+    var finalProfitTdId = "finalProfit-" + skuIndex + "-" + reportPeriodYear;
+    var finalProfit = createTdElement(sku.finalProfit, finalProfitTdId);
 
     tr.append(
       skuName,

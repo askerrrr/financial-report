@@ -21,14 +21,18 @@ var createTaxTable = async (taxParams) => {
       mandatoryInsuranceFeeRate,
     } = taxYear;
 
-    var yearTd = createTdElement(year, "year-" + year);
-    var taxRateTd = createTdElement(taxRate, "taxRate-" + year);
+    var reportPeriodYearTdId = "year-" + year;
+    var reportPeriodYearTdId = createTdElement(year, reportPeriodYearTdId);
+
+    var taxRateTdId = "taxRate-" + year;
+    var taxRateTd = createTdElement(taxRate, taxRateTdId);
 
     var insuranceFeeInfoElemId = "mandatoryInsuranceFee-" + year;
     var insuranceFeeInfoContent = `${paidInsuranceFee} / ${mandatoryInsuranceFee}`;
     var insuranceFeeInfoTdElem = createTdElement(insuranceFeeInfoContent, insuranceFeeInfoElemId);
 
-    var mandatoryInsuranceFeeRateTd = createTdElement(mandatoryInsuranceFeeRate, "mandatoryInsuranceFeeRate-" + year);
+    var mandatoryInsuranceFeeRateTdId = "mandatoryInsuranceFeeRate-" + year;
+    var mandatoryInsuranceFeeRateTd = createTdElement(mandatoryInsuranceFeeRate, mandatoryInsuranceFeeRateTdId);
 
     var retailAmountTd = createTdElement(retailAmount);
     var taxableAmountTd = createTdElement(taxableAmount);
@@ -44,7 +48,7 @@ var createTaxTable = async (taxParams) => {
     var finalProfitTd = createTdElement(finalProfit);
 
     tr.append(
-      yearTd,
+      reportPeriodYearTdId,
       taxRateTd,
       insuranceFeeInfoTdElem,
       mandatoryInsuranceFeeRateTd,

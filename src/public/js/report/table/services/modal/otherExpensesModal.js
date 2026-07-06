@@ -6,7 +6,7 @@ import sendChangedData from "../sendChangedData.js";
 import updateSKUsTableFields from "../updateSKUsTableFields.js";
 import updateTotalsTableFields from "../updateTotalsTableFields.js";
 
-var otherExpensesModal = (skuData, tdElement, isGuestAccess) => {
+var otherExpensesModal = (skuData, tdElement, isGuestAccess, postfix) => {
   var modal = createDiv("modal-overlay");
   var modalContent = createDiv("modal-content");
 
@@ -20,7 +20,7 @@ var otherExpensesModal = (skuData, tdElement, isGuestAccess) => {
   var saveButtonTextContent = "Сохранить";
   var event = "click";
   var cb = async () => {
-    skuData.otherExpenses = +otherExpensesInput.value;
+    skuData["otherExpenses" + postfix] = +otherExpensesInput.value;
 
     document.body.removeChild(modal);
 
@@ -31,10 +31,11 @@ var otherExpensesModal = (skuData, tdElement, isGuestAccess) => {
     }
 
     tdElement.textContent = otherExpensesInput.value;
-    console.log(data);
-    updateSKUsTableFields(data.sku);
 
-    updateTotalsTableFields(data.totals);
+    var { years, sku, totals } = data;
+    updateSKUsTableFields(sku, years);
+
+    updateTotalsTableFields(totals, years);
   };
   var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb });
 
