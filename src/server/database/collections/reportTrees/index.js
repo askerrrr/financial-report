@@ -6,7 +6,7 @@ import deleteReportTreeByUserId from "./services/deleteReportTreeByUserId.js";
 import deleteReportFromReportTree from "./services/deleteReportFromReportTree.js";
 
 var reportsTreeCollectionServices = {
-  updateReportTree: (userId, years) => updateReportTree(reportsTreeCollection, userId, years),
+  updateReportTree: (userId, years, session) => updateReportTree(reportsTreeCollection, userId, years, session),
 
   getReportTree: (userId, session) => getReportTree(reportsTreeCollection, userId, session),
 
