@@ -5,7 +5,7 @@ import sendTokenForValidation from "./sendTokenForValidation.js";
 import writeReportToLocalStorage from "./writeReportToLocalStorage.js";
 import checkDateTo from "../index/reportLoaderModalWindow/services/checkDateTo.js";
 import checkDateFrom from "../index/reportLoaderModalWindow/services/checkDateFrom.js";
-import { showLoader, deleteLoader } from "../index/reportLoaderModalWindow/services/loader.js";
+import { showSpinner, hideSpinner } from "../index/reportLoaderModalWindow/services/loaderSpinner.js";
 
 var errorMsg = "Что-то пошло не так...";
 
@@ -33,24 +33,26 @@ var main = async () => {
 
         document.getElementById("dialog").close();
 
-        await showLoader();
+        showSpinner();
 
         var report = await sendReportData(validDateFrom, validDateTo, token, taxRate);
+        hideSpinner();
 
         if (!report) {
           throw new Error("Возникла ошибка при получении отчета...\nПопробуйте еще раз");
         }
 
         writeReportToLocalStorage(report);
-        await deleteLoader().then(() => showReport(report));
+        
+        showReport(report);
       } catch (e) {
         alert(errorMsg);
-        await deleteLoader();
+        await hideSpinner();
       }
     };
   } catch (e) {
     alert(errorMsg);
-    await deleteLoader();
+    await hideSpinner();
   }
 };
 

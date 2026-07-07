@@ -1,7 +1,7 @@
 import checkDateTo from "./checkDateTo.js";
 import checkDateFrom from "./checkDateFrom.js";
 import sendReportPeriod from "./sendReportPeriod.js";
-import { showLoader, deleteLoader } from "./loader.js";
+import { showSpinner, hideSpinner } from "./loaderSpinner.js";
 import { insertNewReportToTree } from "../../reportTreeBuilder/index.js";
 import reportLoadingStatePanelBuilder from "../../reportLoadingStatePanel/index.js";
 
@@ -35,7 +35,11 @@ var createSaveButton = (userId, modal, dateFromInputElem, dateToInputElem, uploa
         var { validDateTo, isPeriodWithinSameWeek } = checkDateTo(dateTo, validDateFrom);
 
         if (isPeriodWithinSameWeek) {
+          showSpinner();
+
           var { reportData, msg } = await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek);
+
+          await hideSpinner();
 
           if (msg) {
             alert(msg);
@@ -44,13 +48,12 @@ var createSaveButton = (userId, modal, dateFromInputElem, dateToInputElem, uploa
               setTimeout(() => reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad), 3000);
             }
           } else {
-            await showLoader();
-
             if (!reportData) {
-              await deleteLoader();
+              return;
             }
 
-            await deleteLoader().then(() => insertNewReportToTree(reportData));
+            insertNewReportToTree(reportData);
+            console.log("loader removed");
 
             var confirmed = confirm("Отчет успешно сохранен.\nПерейти к отчету?");
 
@@ -65,6 +68,7 @@ var createSaveButton = (userId, modal, dateFromInputElem, dateToInputElem, uploa
         }
       }
     } catch (e) {
+      await hideSpinner();
       console.log(e);
       alert("Произошла ошибка...");
     }
