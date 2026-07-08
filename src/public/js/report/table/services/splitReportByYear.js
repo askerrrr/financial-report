@@ -4,11 +4,6 @@ var endYearPostfix = "InNextYear";
 var reversedStartYearPostfix = startYearPostfix.split("").reverse().join("");
 var reversedEndYearPostfix = endYearPostfix.split("").reverse().join("");
 
-var startYearReportData = {};
-var startYearSkusData = [];
-var endYearReportData = {};
-var endYearSkusData = [];
-
 var setCommonFieldsToSku = (targetObj, sku) => {
   targetObj.id = sku.id;
   targetObj.skuName = sku.skuName;
@@ -26,7 +21,12 @@ var removeKeyPostfix = (key, postfixLength) => {
   return { keyWithoutPostfix: key.slice(0, key.length - postfixLength) };
 };
 
-var splitReportByYear = (report) => {
+var splitReportByYear = (report, isGuestAccess) => {
+  var startYearReportData = {};
+  var startYearSkusData = [];
+  var endYearReportData = {};
+  var endYearSkusData = [];
+
   startYearReportData.year = +report.dateFrom.split("-")[0];
   endYearReportData.year = +report.dateTo.split("-")[0];
 
@@ -73,6 +73,11 @@ var splitReportByYear = (report) => {
 
   startYearReportData.skus = startYearSkusData;
   endYearReportData.skus = endYearSkusData;
+
+  if (isGuestAccess) {
+    startYearReportData.taxRate = report.taxRate;
+    endYearReportData.taxRate = report.taxRate;
+  }
 
   return { startYearReportData, endYearReportData };
 };

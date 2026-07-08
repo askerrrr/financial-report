@@ -1,5 +1,5 @@
 var updateReportFromLocalStorage = ({ userId, sku, totals }) => {
-  var reportAsJSON = localStorage.getItem(sku.userId);
+  var reportAsJSON = localStorage.getItem(userId);
   var report = JSON.parse(reportAsJSON);
 
   var skuFromLocalStorage = report.skus[sku.skuIndex];
@@ -7,8 +7,8 @@ var updateReportFromLocalStorage = ({ userId, sku, totals }) => {
     skuFromLocalStorage[fieldName] = sku.data[fieldName];
   }
 
-  for (var fieldName of Object.keys(totals)) {
-    report[fieldName] = totals[fieldName];
+  for (var fieldName of Object.keys(totals.data)) {
+    report[fieldName] = totals.data[fieldName];
   }
 
   localStorage.setItem(sku.userId, JSON.stringify(report));

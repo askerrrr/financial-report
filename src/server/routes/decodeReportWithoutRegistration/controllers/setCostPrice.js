@@ -1,105 +1,73 @@
 import Joi from "joi";
 import calc from "../../reports/services/calcServices/index.js";
+import getPrevSkuData from "../../reports/services/different/getPrevSkuData.js";
+import getPrevTotalsData from "../../reports/services/different/getPrevTotalsData.js";
+import processOfSkuCostPriceSetting from "../../reports/services/different/processOfSkuCostPriceSetting.js";
+import excludeEqualParams from "../../reports/services/different/excludeEqualParams.js";
 
-var schema = Joi.object({
-  userId: Joi.string().required(),
-  skuId: Joi.number().required(),
-  reportId: Joi.number().required(),
-  skuIndex: Joi.number().required(),
-  costPrice: Joi.number().required(),
-  skuName: Joi.string().required(),
-  taxRate: Joi.number().required(),
-  year: Joi.number().required(),
-  totals: Joi.object({
-    totalRetailAmount: Joi.number().required(),
-    totalFinalProfit: Joi.number().required(),
-    totalProfitMargin: Joi.number().required(),
-    totalProductCosts: Joi.number().required(),
-    totalInsuranceFee: Joi.number().required(),
-    totalPreTaxProfit: Joi.number().required(),
-    totalOtherExpenses: Joi.number().required(),
-  }).required(),
-  skus: Joi.array().items(
-    Joi.object({
-      tax: Joi.number().required(),
-      qty: Joi.number().required(),
-      isCostPriceSet: Joi.boolean(),
-      profit: Joi.number().required(),
-      costPrice: Joi.number().required(),
-      finalProfit: Joi.number().required(),
-      profitMargin: Joi.number().required(),
-      retailAmount: Joi.number().required(),
-      insuranceFee: Joi.number().required(),
-      preTaxProfit: Joi.number().required(),
-      otherExpenses: Joi.number().required(),
-      isInsuranceFeeIncluded: Joi.boolean(),
-      additionalInsuranceFee: Joi.number().required(),
-    }),
-  ),
-});
+var skuFromListGoodsStub = [];
+var currentYearPostfix = "InCurrentYear";
+var endYearPostfix = "InNextYear";
 
 var taxParamsStub = {
-  paidTaxAmount: 0,
-  mandatoryInsuranceFee: 0,
-  insuranceFeePercentage: 10,
-  paidInsuranceFee: 0,
-  retailAmount: 0,
   finalProfit: 0,
-  isInsuranceFeePaid: false,
-  additionalInsuranceFee: 0,
-  requiresAdditionalInsuranceFee: false,
-  excessIncomeForAdditionalInsuranceFee: 300000,
+  retailAmount: 0,
+  paidTaxAmount: 0,
+  paidInsuranceFee: 0,
+  excessInsuranceRate: 1,
   maxInsuranceFee: 300000,
+  mandatoryInsuranceFee: 0,
+  additionalInsuranceFee: 0,
+  isInsuranceFeePaid: false,
+  insuranceFeePercentage: 10,
   mandatoryInsuranceFeeRate: 10,
   hasExcessIncomeForInsurance: false,
   mandatoryInsuranceFeeIsPaid: false,
   additionalInsuranceFeeIsPaid: false,
-  excessInsuranceRate: 1,
+  requiresAdditionalInsuranceFee: false,
+  excessIncomeForAdditionalInsuranceFee: 300000,
 };
 
 var setCostPrice = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
+  var { dateFrom, dateTo, userId, reportId, skuIndex, sku, totals, taxRate, year } = req.body;
 
-  if (error) {
-    return res.sendStatus(400);
+  var { isCrossYearPeriod } = totals;
+
+  var years = [];
+  var postfix = "";
+  var startYear = +dateFrom.split("-")[0];
+  var endYear = +dateTo.split("-")[0];
+
+  if (isCrossYearPeriod) {
+    years = [startYear, endYear];
+    postfix = year === startYear ? currentYearPostfix : endYearPostfix;
   }
 
-  var { userId, reportId, costPrice, skuIndex, skus, totals, taxRate, year } = req.body;
+  if (sku["costPrice" + postfix] === req.body["costPrice" + postfix]) {
+    return res.sendStatus(409);
+  }
 
-  var skuToUpdate = skus[skuIndex];
-  var prevSkuData = {};
-  prevSkuData.costPrice = costPrice;
-  prevSkuData.qty = skuToUpdate.qty;
-  prevSkuData.finalProfit = skuToUpdate.finalProfit;
-  prevSkuData.preTaxProfit = skuToUpdate.preTaxProfit;
-  prevSkuData.insuranceFee = skuToUpdate.insuranceFee;
-  prevSkuData.otherExpenses = skuToUpdate.otherExpenses;
+  var prevSkuData = getPrevSkuData(sku);
+  var prevReportTotals = getPrevTotalsData(totals);
 
-  skuToUpdate.costPrice = costPrice;
+  var { updatedSku } = await processOfSkuCostPriceSetting(sku, skuFromListGoodsStub, { taxRate, ...taxParamsStub }, prevSkuData, postfix);
 
-  var { skuWithCalculatedParams } = calc.sku.restParams(skuToUpdate, { taxRate, ...taxParamsStub });
+  var { updatedTotals } = calc.total.restParams(totals, prevSkuData, sku, isCrossYearPeriod, postfix);
 
-  skus[skuIndex] = skuWithCalculatedParams;
+  var skuDataToClient = excludeEqualParams(prevSkuData, updatedSku);
+  var totalsDataToClient = excludeEqualParams(prevReportTotals, updatedTotals);
 
-  var { updatedTotals } = calc.total.restParams(totals, prevSkuData, skuWithCalculatedParams);
-
-  var { profitMargin, finalProfit, isCostPriceSet, insuranceFee, preTaxProfit, isInsuranceFeeIncluded } = skuWithCalculatedParams;
+  skuDataToClient["costPrice" + postfix] = req.body["costPrice" + postfix];
 
   return res.json({
-    year,
+    userId,
+    years,
     sku: {
-      userId,
+      year,
       skuIndex,
-      data: { profitMargin, finalProfit, isCostPriceSet, insuranceFee, preTaxProfit, isInsuranceFeeIncluded, costPrice },
+      data: skuDataToClient,
     },
-    totals: {
-      totalFinalProfit: updatedTotals.totalFinalProfit,
-      totalProfitMargin: updatedTotals.totalProfitMargin,
-      totalProductCosts: updatedTotals.totalProductCosts,
-      totalInsuranceFee: updatedTotals.totalInsuranceFee,
-      totalPreTaxProfit: updatedTotals.totalPreTaxProfit,
-      totalOtherExpenses: updatedTotals.totalPreTaxProfit,
-    },
+    totals: { data: totalsDataToClient },
   });
 };
 

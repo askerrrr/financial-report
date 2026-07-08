@@ -8,19 +8,21 @@ import checkDateFrom from "../index/reportLoaderModalWindow/services/checkDateFr
 import { showSpinner, hideSpinner } from "../index/reportLoaderModalWindow/services/loaderSpinner.js";
 
 var errorMsg = "Что-то пошло не так...";
+var getReportBtn = document.getElementById("get-report");
+var tablesContainer = document.getElementById("tables-container");
 
 var main = async () => {
   try {
-    var getReportBtn = document.getElementById("get-report");
-
     getReportBtn.onclick = async () => {
+      localStorage.clear();
+
       try {
         var token = document.getElementById("token").value;
         var dateFrom = document.getElementById("dateFrom").value;
         var dateTo = document.getElementById("dateTo").value;
         var taxRate = +document.getElementById("tax-rate").value || 0;
 
-        var tokenIsValid = await sendTokenForValidation(token);
+        var tokenIsValid = true; // await sendTokenForValidation(token);
 
         if (!tokenIsValid) {
           alert("Некорректный токен");
@@ -36,6 +38,7 @@ var main = async () => {
         showSpinner();
 
         var report = await sendReportData(validDateFrom, validDateTo, token, taxRate);
+
         hideSpinner();
 
         if (!report) {
@@ -43,16 +46,21 @@ var main = async () => {
         }
 
         writeReportToLocalStorage(report);
-        
+
         showReport(report);
       } catch (e) {
+        tablesContainer.innerHTML = "";
+
+        var reportSummaryLabels = document.querySelectorAll(".report-summary-label-wrapper");
+        reportSummaryLabels.forEach((label) => label.remove());
+
         alert(errorMsg);
-        await hideSpinner();
+        hideSpinner();
       }
     };
   } catch (e) {
     alert(errorMsg);
-    await hideSpinner();
+    hideSpinner();
   }
 };
 

@@ -12,6 +12,34 @@ var getRequiredSkuProperties = ({
   isInsuranceFeeIncluded,
   additionalInsuranceFee,
   additionalInsuranceFeeIsPaid,
+  taxInCurrentYear,
+  qtyInCurrentYear,
+  profitInCurrentYear,
+  costPriceInCurrentYear,
+  finalProfitInCurrentYear,
+  profitMarginInCurrentYear,
+  retailAmountInCurrentYear,
+  insuranceFeeInCurrentYear,
+  preTaxProfitInCurrentYear,
+  otherExpensesInCurrentYear,
+  isCostPriceSetInCurrentYear,
+  isInsuranceFeeIncludedInCurrentYear,
+  additionalInsuranceFeeInCurrentYear,
+  additionalInsuranceFeeIsPaidInCurrentYear,
+  taxInNextYear,
+  qtyInNextYear,
+  profitInNextYear,
+  costPriceInNextYear,
+  finalProfitInNextYear,
+  profitMarginInNextYear,
+  retailAmountInNextYear,
+  insuranceFeeInNextYear,
+  preTaxProfitInNextYear,
+  otherExpensesInNextYear,
+  isCostPriceSetInNextYear,
+  isInsuranceFeeIncludedInNextYear,
+  additionalInsuranceFeeInNextYear,
+  additionalInsuranceFeeIsPaidInNextYear,
 }) => {
   return {
     tax,
@@ -26,11 +54,40 @@ var getRequiredSkuProperties = ({
     isCostPriceSet,
     isInsuranceFeeIncluded,
     additionalInsuranceFee,
-    costPrice: 0,
+    additionalInsuranceFeeIsPaid,
+    taxInCurrentYear,
+    qtyInCurrentYear,
+    profitInCurrentYear,
+    costPriceInCurrentYear,
+    finalProfitInCurrentYear,
+    profitMarginInCurrentYear,
+    retailAmountInCurrentYear,
+    insuranceFeeInCurrentYear,
+    preTaxProfitInCurrentYear,
+    otherExpensesInCurrentYear,
+    isCostPriceSetInCurrentYear,
+    isInsuranceFeeIncludedInCurrentYear,
+    additionalInsuranceFeeInCurrentYear,
+    additionalInsuranceFeeIsPaidInCurrentYear,
+    taxInNextYear,
+    qtyInNextYear,
+    profitInNextYear,
+    costPriceInNextYear,
+    finalProfitInNextYear,
+    profitMarginInNextYear,
+    retailAmountInNextYear,
+    insuranceFeeInNextYear,
+    preTaxProfitInNextYear,
+    otherExpensesInNextYear,
+    isCostPriceSetInNextYear,
+    isInsuranceFeeIncludedInNextYear,
+    additionalInsuranceFeeInNextYear,
+    additionalInsuranceFeeIsPaidInNextYear,
   };
 };
 
 var getRequiredReportTotalsProperties = ({
+  isCrossYearPeriod,
   totalRetailAmount,
   totalFinalProfit,
   totalProfitMargin,
@@ -38,8 +95,45 @@ var getRequiredReportTotalsProperties = ({
   totalInsuranceFee,
   totalPreTaxProfit,
   totalOtherExpenses,
+  totalRetailAmountInCurrentYear,
+  totalFinalProfitInCurrentYear,
+  totalProfitMarginInCurrentYear,
+  totalProductCostsInCurrentYear,
+  totalInsuranceFeeInCurrentYear,
+  totalPreTaxProfitInCurrentYear,
+  totalOtherExpensesInCurrentYear,
+  totalRetailAmountInNextYear,
+  totalFinalProfitInNextYear,
+  totalProfitMarginInNextYear,
+  totalProductCostsInNextYear,
+  totalInsuranceFeeInNextYear,
+  totalPreTaxProfitInNextYear,
+  totalOtherExpensesInNextYear,
 }) => {
-  return { totalRetailAmount, totalFinalProfit, totalProfitMargin, totalProductCosts, totalInsuranceFee, totalPreTaxProfit, totalOtherExpenses };
+  return {
+    isCrossYearPeriod,
+    totalRetailAmount,
+    totalFinalProfit,
+    totalProfitMargin,
+    totalProductCosts,
+    totalInsuranceFee,
+    totalPreTaxProfit,
+    totalOtherExpenses,
+    totalRetailAmountInCurrentYear,
+    totalFinalProfitInCurrentYear,
+    totalProfitMarginInCurrentYear,
+    totalProductCostsInCurrentYear,
+    totalInsuranceFeeInCurrentYear,
+    totalPreTaxProfitInCurrentYear,
+    totalOtherExpensesInCurrentYear,
+    totalRetailAmountInNextYear,
+    totalFinalProfitInNextYear,
+    totalProfitMarginInNextYear,
+    totalProductCostsInNextYear,
+    totalInsuranceFeeInNextYear,
+    totalPreTaxProfitInNextYear,
+    totalOtherExpensesInNextYear,
+  };
 };
 
 var getReportDataFromLocalStorage = ({ userId, skuIndex }) => {
@@ -48,9 +142,8 @@ var getReportDataFromLocalStorage = ({ userId, skuIndex }) => {
 
   var data = {};
 
+  data.sku = getRequiredSkuProperties(report.skus[skuIndex]);
   data.totals = getRequiredReportTotalsProperties(report);
-  data.skus = report.skus.map((sku) => getRequiredSkuProperties(sku));
-
   return data;
 };
 

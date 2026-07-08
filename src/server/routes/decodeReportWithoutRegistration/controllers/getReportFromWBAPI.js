@@ -69,10 +69,6 @@ var getReportFromWBAPI = async (req, res, next) => {
   report.totalOtherExpenses = 0;
   report.isCrossYearPeriod = isCrossYearPeriod;
 
-  report.skus.map((sku) => {
-    ((sku.costPrice = 0), (sku.otherExpenses = 0), (sku.finalProfit = 0), (sku.profitMargin = 0));
-  });
-
   return res.json({ report });
 };
 

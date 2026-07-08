@@ -1,22 +1,51 @@
 import createSKUsTable from "./createSKUsTable.js";
 import createTotalsTable from "./createTotalsTable.js";
+import splitReportByYear from "../report/table/services/splitReportByYear.js";
+import getReportPeriodText from "../index/accountedFinancesPanel/getReportPeriodText.js";
 import downloadReportAsXLSXButtonHandler from "../report/downloadReportAsXLSXButtonHandler.js";
 
+var postfixStub = "";
+var yearValueStub = "";
 var isGuestAccess = true;
+var reportSummaryLabelTextStub = "";
+var startYearPostfix = "InCurrentYear";
+var endYearPostfix = "InNextYear";
 var downloadReportLink = "/decode-report-without-registration/xlsx/";
 
 var showReport = (report) => {
+  var { dateFrom, dateTo, isCrossYearPeriod } = report;
+
   var startYear = +report.dateFrom.split("-")[0];
 
-  createSKUsTable(report, startYear);
-  createTotalsTable(report);
+  if (isCrossYearPeriod) {
+    var endYear = +report.dateTo.split("-")[0];
+
+    var fullPeriod = startYear + "-" + endYear;
+    var fullReportPeriodText = getReportPeriodText(dateFrom, dateTo).reportPeriodText;
+
+    createTotalsTable(report, yearValueStub, isCrossYearPeriod, fullReportPeriodText, postfixStub);
+
+    var { startYearReportData, endYearReportData } = splitReportByYear(report, isGuestAccess);
+
+    var startReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateFrom).reportPeriodText;
+    createTotalsTable(startYearReportData, startYear, isCrossYearPeriod, startReportPeriodText, startYearPostfix);
+    createSKUsTable(startYearReportData, startYearPostfix, startYear);
+
+    var endReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateTo).reportPeriodText;
+    createTotalsTable(endYearReportData, endYear, isCrossYearPeriod, endReportPeriodText, endYearPostfix);
+    createSKUsTable(endYearReportData, endYearPostfix, endYear);
+  } else {
+    createTotalsTable(report, yearValueStub, isCrossYearPeriod, reportSummaryLabelTextStub, postfixStub);
+    createSKUsTable(report, postfixStub, startYear);
+  }
+
   downloadReportAsXLSXButtonHandler(report, downloadReportLink, isGuestAccess);
 
-  document.getElementById("skus-table").style.display = "block";
-  document.getElementById("totals-table").style.display = "block";
-  document.getElementById("download-report-as-xlsx-button").style.display = "block";
-
-  window.scrollTo({ top: 900, behavior: "smooth" });
+  if (isCrossYearPeriod) {
+    window.scrollTo({ top: 500, behavior: "smooth" });
+  } else {
+    window.scrollTo({ top: 900, behavior: "smooth" });
+  }
 };
 
 export default showReport;

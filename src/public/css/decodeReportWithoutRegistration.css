@@ -172,7 +172,6 @@ table {
   background: #2d3439;
   border-radius: 16px;
   overflow: hidden;
-  display: none;
   box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
 }
 
@@ -206,4 +205,25 @@ tbody tr:hover {
 td:last-child,
 th:last-child {
   border-right: none;
+}
+
+.report-summary-label-wrapper {
+  text-align: center;
+  margin-top: 150px;
+  margin-bottom: -110px;
+}
+
+.report-summary-label {
+  display: inline-block;
+  font-size: 30px;
+  font-weight: 600;
+  color: #71b7ff;
+  padding: 8px 20px;
+  background: rgba(13, 110, 253, 0.15);
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+#tables-container {
+  margin-top: 500px;
 }
