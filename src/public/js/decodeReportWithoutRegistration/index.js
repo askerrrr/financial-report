@@ -22,7 +22,7 @@ var main = async () => {
         var dateTo = document.getElementById("dateTo").value;
         var taxRate = +document.getElementById("tax-rate").value || 0;
 
-        var tokenIsValid = true; // await sendTokenForValidation(token);
+        var tokenIsValid = await sendTokenForValidation(token);
 
         if (!tokenIsValid) {
           alert("Некорректный токен");
