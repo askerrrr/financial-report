@@ -46,14 +46,14 @@ var getReportFromWBAPI = async (req, res, next) => {
   var { reportId } = reports.weeklyFinancialReport[0];
 
   if (isCrossYearPeriod) {
-    var startYearTaxParamsStub = Object.assign({}, { taxRate, ...taxParamsStub });
-    var endYearTaxParamsStub = Object.assign({}, { taxRate, ...taxParamsStub });
+    var startYearTaxParamsStub = Object.assign({}, { taxRate, year: startYear, ...taxParamsStub });
+    var endYearTaxParamsStub = Object.assign({}, { taxRate, year: endYear, ...taxParamsStub });
 
     var taxParams = { startYearTaxParams: startYearTaxParamsStub, endYearTaxParams: endYearTaxParamsStub };
 
     var { report } = await parseReports(reports, taxParams, isCrossYearPeriod);
   } else {
-    var { report } = await parseReports(reports, { taxRate, ...taxParamsStub });
+    var { report } = await parseReports(reports, { taxRate, year: startYear, ...taxParamsStub });
   }
 
   var userId = randomBytes(15).toString("hex");
