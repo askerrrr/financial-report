@@ -11,7 +11,7 @@ var updateReportFromLocalStorage = ({ userId, sku, totals }) => {
     report[fieldName] = totals.data[fieldName];
   }
 
-  localStorage.setItem(sku.userId, JSON.stringify(report));
+  localStorage.setItem(userId, JSON.stringify(report));
 };
 
 export default updateReportFromLocalStorage;
