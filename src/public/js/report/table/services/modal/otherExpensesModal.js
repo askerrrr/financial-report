@@ -5,24 +5,31 @@ import createButton from "./utils/createButton.js";
 import sendChangedData from "../sendChangedData.js";
 import updateSKUsTableFields from "../updateSKUsTableFields.js";
 import updateTotalsTableFields from "../updateTotalsTableFields.js";
+import getReportDataFromLocalStorage from "./getReportDataFromLocalStorage.js";
+import updateReportFromLocalStorage from "../updateReportFromLocalStorage.js";
 
-var otherExpensesModal = (skuData, tdElement, isGuestAccess, postfix) => {
+var otherExpensesModal = (skuData, otherExpensesDisplayElement, isGuestAccess, postfix) => {
   var modal = createDiv("modal-overlay");
   var modalContent = createDiv("modal-content");
 
   var titleContent = `Изменить прочие расходы для "${skuData.skuName}"`;
   var title = createTitle("modal-title", titleContent);
 
-  var otherExpensesInput = createInput("modal-input", tdElement);
+  var otherExpensesInput = createInput("modal-input", otherExpensesDisplayElement);
 
   var buttonsContainer = createDiv("modal-buttons");
 
   var saveButtonTextContent = "Сохранить";
   var event = "click";
   var cb = async () => {
+    document.body.removeChild(modal);
+
     skuData["otherExpenses" + postfix] = +otherExpensesInput.value;
 
-    document.body.removeChild(modal);
+    if (isGuestAccess) {
+      var reportData = getReportDataFromLocalStorage(skuData);
+      skuData = Object.assign(skuData, reportData);
+    }
 
     var data = await sendChangedData(skuData, isGuestAccess, "setotherexpenses");
 
@@ -30,13 +37,17 @@ var otherExpensesModal = (skuData, tdElement, isGuestAccess, postfix) => {
       return;
     }
 
-    tdElement.textContent = otherExpensesInput.value;
+    otherExpensesDisplayElement.otherExpensesnt = otherExpensesInput.value;
 
     var { years, sku, totals } = data;
     updateSKUsTableFields(sku, years);
-
     updateTotalsTableFields(totals, years);
+
+    if (isGuestAccess) {
+      updateReportFromLocalStorage(data);
+    }
   };
+
   var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb });
 
   cb = () => document.body.removeChild(modal);
