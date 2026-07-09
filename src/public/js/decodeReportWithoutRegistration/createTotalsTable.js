@@ -13,8 +13,8 @@ var createTotalsTable = (report, reportPeriodYear, isCrossYearPeriod, reportSumm
   var totalDeliveryCostTd = createTdElement(report.totalDeliveryCost);
   var totalPaidAcceptanceTd = createTdElement(report.totalPaidAcceptance);
 
-  // var totalOtherExpensesTdId = "totalOtherExpenses" + postfix + "-" + reportPeriodYear;
-  // var totalOtherExpensesTd = createTdElement(report.totalOtherExpenses, totalOtherExpensesTdId);
+  var totalOtherExpensesTdId = "totalOtherExpenses" + postfix + "-" + reportPeriodYear;
+  var totalOtherExpensesTd = createTdElement(report.totalOtherExpenses, totalOtherExpensesTdId);
 
   var totalProfitMarginTdId = "totalProfitMargin" + postfix + "-" + reportPeriodYear;
   var totalProfitMarginTd = createTdElement(report.totalProfitMargin, totalProfitMarginTdId);
@@ -36,7 +36,7 @@ var createTotalsTable = (report, reportPeriodYear, isCrossYearPeriod, reportSumm
     totalReturnAmountTd,
     totalSellerPayoutAmountTd,
     totalProductCostsTd,
-    // totalOtherExpensesTd,
+    totalOtherExpensesTd,
     totalDeliveryCostTd,
     totalPaidAcceptanceTd,
     totalFinesTd,
@@ -75,6 +75,7 @@ var tableHeadContent = `
         <th>Возвратов</th>
         <th>К перечислению продавцу</th>
         <th>Себестоимость проданного товара</th>
+        <th>Прочие расходы</th>
         <th>Доставка</th>
         <th>Приёмка</th>
         <th>Штрафы</th>

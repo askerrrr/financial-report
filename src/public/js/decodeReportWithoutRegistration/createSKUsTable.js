@@ -27,14 +27,14 @@ var createSKUsTable = (report, postfix, reportPeriodYear) => {
       dateFrom: report.dateFrom,
       dateTo: report.dateTo,
       ["costPrice" + postfix]: sku.costPrice,
-      // ["otherExpenses" + postfix]: sku.otherExpenses,
+      ["otherExpenses" + postfix]: sku.otherExpenses,
     };
 
     var costPriceInputField = openCostPriceModal(data, isGuestAccess, postfix);
-    // var otherExpensesInputField = openOtherExpensesModal(data, isGuestAccess, postfix);
+    var otherExpensesInputField = openOtherExpensesModal(data, isGuestAccess, postfix);
 
     var costPrice = createTdElement(costPriceInputField);
-    //var otherExpenses = createTdElement(otherExpensesInputField);
+    var otherExpenses = createTdElement(otherExpensesInputField);
     var retailPrice = createTdElement(sku.averageRetailPrice);
     var deliveryCost = createTdElement(sku.deliveryCost);
     var fines = createTdElement(sku.fines);
@@ -61,7 +61,7 @@ var createSKUsTable = (report, postfix, reportPeriodYear) => {
       profit,
       averageProfit,
       costPrice,
-      //otherExpenses,
+      otherExpenses,
       profitMargin,
       finalProfit,
     );
@@ -95,7 +95,8 @@ var tableHeadContent = `
           <th>Хранение</th>
           <th>Приемка</th>
           <th>Выплата с вычетом всех услуг WB</th>
-          <th>Средняя прибыль с вычетом всех услуг WB на 1 ед.</th>
+          <th>Себестоимость</th>
+          <th>Прочие расходы</th>
           <th>Чистая прибыль в %</th>
           <th>Итого в р.</th>
   </tr>`;
