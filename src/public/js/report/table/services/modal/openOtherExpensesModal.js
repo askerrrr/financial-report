@@ -8,7 +8,7 @@ var openOtherExpensesModal = (skuData, isGuestAccess, postfix) => {
   var otherExpensesTdElement = document.createElement("span");
   otherExpensesTdElement.className = "editable-field-value";
   otherExpensesTdElement.textContent = skuData["otherExpenses" + postfix];
-  otherExpensesTdElement.id = `other-expenses-${skuData.skuName}-${skuData.year}`;
+  otherExpensesTdElement.id = `otherExpenses${postfix}-${skuData.skuIndex}-${skuData.year}`;
 
   var event = "click";
   var cb = () => otherExpensesModal(skuData, otherExpensesTdElement, isGuestAccess, postfix);
