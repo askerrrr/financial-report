@@ -47,6 +47,8 @@ var setCostPrice = async (req, res, next) => {
     return res.sendStatus(409);
   }
 
+  sku["costPrice" + postfix] = req.body["costPrice" + postfix];
+
   var prevSkuData = getPrevSkuData(sku);
   var prevReportTotals = getPrevTotalsData(totals);
 
