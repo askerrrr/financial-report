@@ -12,6 +12,8 @@ var reportSummaryLabelTextStub = "";
 var startYearPostfix = "InCurrentYear";
 var endYearPostfix = "InNextYear";
 var downloadReportLink = "/decode-report-without-registration/xlsx/";
+var newTextContentToDecodeReportWithoutRegistrationButton = "Получить новый отчёт";
+var decodeReportWithoutRegistrationButton = document.getElementById("decode-report-without-registration-button");
 
 var showReport = async (report) => {
   var { dateFrom, dateTo, isCrossYearPeriod } = report;
@@ -48,6 +50,8 @@ var showReport = async (report) => {
   } else {
     window.scrollTo({ top: 900, behavior: "smooth" });
   }
+
+  decodeReportWithoutRegistrationButton.textContent = newTextContentToDecodeReportWithoutRegistrationButton;
 };
 
 export default showReport;

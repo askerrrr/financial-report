@@ -4,6 +4,8 @@ var tablesContainer = document.getElementById("tables-container");
 var downloadReportAsXLSXButton = document.getElementById("download-report-as-xlsx-button");
 var decodeReportWithoutRegistrationButton = document.getElementById("decode-report-without-registration-button");
 
+var newTextContentToDecodeReportWithoutRegistrationButton = "Расшифровка отчета без регистрации";
+
 var decodeReportWithoutRegistrationButtonHandler = () => {
   decodeReportWithoutRegistrationButton.onclick = () => {
     var reportSummaryLabels = document.querySelectorAll(".report-summary-label-wrapper");
@@ -15,6 +17,7 @@ var decodeReportWithoutRegistrationButtonHandler = () => {
         localStorage.clear();
         tablesContainer.innerHTML = "";
         reportSummaryLabels.forEach((label) => label.remove());
+        decodeReportWithoutRegistrationButton.textContent = newTextContentToDecodeReportWithoutRegistrationButton;
 
         disableDownloadReportAsXLSXButton();
 
