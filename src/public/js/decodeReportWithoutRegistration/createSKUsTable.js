@@ -35,13 +35,12 @@ var createSKUsTable = (report, postfix, reportPeriodYear) => {
 
     var costPrice = createTdElement(costPriceInputField);
     var otherExpenses = createTdElement(otherExpensesInputField);
-    var retailPrice = createTdElement(sku.averageRetailPrice);
     var deliveryCost = createTdElement(sku.deliveryCost);
+    var deductionOrPayment = createTdElement(sku.deductionOrPayment);
     var fines = createTdElement(sku.fines);
     var storageCost = createTdElement(sku.storageCost);
     var acceptance = createTdElement(sku.acceptance);
     var profit = createTdElement(sku.profit);
-    var averageProfit = createTdElement(sku.averageProfit);
 
     var profitMarginTdId = "profitMargin" + postfix + "-" + skuIndex + "-" + reportPeriodYear;
     var profitMargin = createTdElement(sku.profitMargin, profitMarginTdId);
@@ -53,13 +52,12 @@ var createSKUsTable = (report, postfix, reportPeriodYear) => {
       skuName,
       qty,
       returnAmount,
-      retailPrice,
       deliveryCost,
+      deductionOrPayment,
       fines,
       storageCost,
       acceptance,
       profit,
-      averageProfit,
       costPrice,
       otherExpenses,
       profitMargin,
@@ -86,19 +84,18 @@ export default createSKUsTable;
 var tableHeadContent = `
    <tr>
           <th>Артикул</th>
-          <th>Кол-во</th>
+          <th>Количество</th>
           <th>Возвраты</th>
-          <th>Себестоимость в р.</th>
-          <th>Средняя розничная цена</th>
           <th>Доставка</th>
           <th>Удержания/Выплаты</th>
+          <th>Штрафы</th>
           <th>Хранение</th>
-          <th>Приемка</th>
+          <th>Приёмка</th>
           <th>Выплата с вычетом всех услуг WB</th>
           <th>Себестоимость</th>
           <th>Прочие расходы</th>
-          <th>Чистая прибыль в %</th>
-          <th>Итого в р.</th>
+          <th>Маржинальность %</th>
+          <th>Итого</th>
   </tr>`;
 
 function createSkusTableHead() {
