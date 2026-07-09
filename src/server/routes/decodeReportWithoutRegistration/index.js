@@ -18,7 +18,7 @@ router.post("/xlsx/", downloadReportAsXLSX);
 
 router.post("/", getReportFromWBAPI);
 
-router.patch("/report/set-cost-price", joiSchemaValidator(schemas.setCostPrice), setCostPrice);
+router.patch("/report/cost-price", joiSchemaValidator(schemas.setCostPrice), setCostPrice);
 
 router.post("/token/", tokenValidator);
 
