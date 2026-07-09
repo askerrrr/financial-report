@@ -1,6 +1,7 @@
 import createSKUsTable from "./createSKUsTable.js";
 import createTotalsTable from "./createTotalsTable.js";
 import splitReportByYear from "../report/table/services/splitReportByYear.js";
+import { enableDownloadReportAsXLSXButton } from "./downloadReportAsXLSXButton.js";
 import getReportPeriodText from "../index/accountedFinancesPanel/getReportPeriodText.js";
 import downloadReportAsXLSXButtonHandler from "../report/downloadReportAsXLSXButtonHandler.js";
 
@@ -12,7 +13,7 @@ var startYearPostfix = "InCurrentYear";
 var endYearPostfix = "InNextYear";
 var downloadReportLink = "/decode-report-without-registration/xlsx/";
 
-var showReport = (report) => {
+var showReport = async (report) => {
   var { dateFrom, dateTo, isCrossYearPeriod } = report;
 
   var startYear = +report.dateFrom.split("-")[0];
@@ -39,6 +40,7 @@ var showReport = (report) => {
     createSKUsTable(report, postfixStub, startYear);
   }
 
+  enableDownloadReportAsXLSXButton();
   downloadReportAsXLSXButtonHandler(report, downloadReportLink, isGuestAccess);
 
   if (isCrossYearPeriod) {

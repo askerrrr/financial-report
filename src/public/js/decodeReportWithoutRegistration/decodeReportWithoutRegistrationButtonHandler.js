@@ -1,3 +1,5 @@
+import { disableDownloadReportAsXLSXButton } from "./downloadReportAsXLSXButton.js";
+
 var tablesContainer = document.getElementById("tables-container");
 var downloadReportAsXLSXButton = document.getElementById("download-report-as-xlsx-button");
 var decodeReportWithoutRegistrationButton = document.getElementById("decode-report-without-registration-button");
@@ -13,6 +15,8 @@ var decodeReportWithoutRegistrationButtonHandler = () => {
         localStorage.clear();
         tablesContainer.innerHTML = "";
         reportSummaryLabels.forEach((label) => label.remove());
+
+        disableDownloadReportAsXLSXButton();
 
         document.querySelectorAll('table[id^="skus-table-"], table[id^="totals-table-"]').forEach((table) => table.remove());
 
