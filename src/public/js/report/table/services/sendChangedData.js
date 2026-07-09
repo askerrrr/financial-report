@@ -3,17 +3,21 @@
  */
 
 var sendChangedData = async (data, isGuestAccess = false, changedData) => {
-  var url;
+  var targetUrl;
 
   if (isGuestAccess) {
-    url = "/decode-report-without-registration/report/set-cost-price";
-  } else if (changedData === "setcostprice") {
-    url = "/report/skus/cost-price";
-  } else if (changedData === "setotherexpenses") {
-    url = "/report/skus/other-expenses";
+    var setCostPriceUrl = "/decode-report-without-registration/report/cost-price";
+    var setOtherExpensesUrl = "/decode-report-without-registration/report/other-expenses";
+
+    var targetUrl = changedData === "setcostprice" ? setCostPriceUrl : setOtherExpensesUrl;
+  } else {
+    var setCostPriceUrl = "/report/skus/cost-price";
+    var setOtherExpensesUrl = "/report/skus/other-expenses";
+
+    var targetUrl = changedData === "setcostprice" ? setCostPriceUrl : setOtherExpensesUrl;
   }
 
-  var res = await fetch(url, {
+  var res = await fetch(targetUrl, {
     method: "PATCH",
     body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" },
