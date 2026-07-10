@@ -5,15 +5,17 @@ import sendTokenForValidation from "./sendTokenForValidation.js";
 import writeReportToLocalStorage from "./writeReportToLocalStorage.js";
 import checkDateTo from "../index/reportLoaderModalWindow/services/checkDateTo.js";
 import checkDateFrom from "../index/reportLoaderModalWindow/services/checkDateFrom.js";
-import { showLoader, deleteLoader } from "../index/reportLoaderModalWindow/services/loader.js";
+import { showSpinner, hideSpinner } from "../index/reportLoaderModalWindow/services/loaderSpinner.js";
 
 var errorMsg = "Что-то пошло не так...";
+var getReportBtn = document.getElementById("get-report");
+var tablesContainer = document.getElementById("tables-container");
 
 var main = async () => {
   try {
-    var getReportBtn = document.getElementById("get-report");
-
     getReportBtn.onclick = async () => {
+      localStorage.clear();
+
       try {
         var token = document.getElementById("token").value;
         var dateFrom = document.getElementById("dateFrom").value;
@@ -33,24 +35,32 @@ var main = async () => {
 
         document.getElementById("dialog").close();
 
-        await showLoader();
+        showSpinner();
 
         var report = await sendReportData(validDateFrom, validDateTo, token, taxRate);
+
+        hideSpinner();
 
         if (!report) {
           throw new Error("Возникла ошибка при получении отчета...\nПопробуйте еще раз");
         }
 
         writeReportToLocalStorage(report);
-        await deleteLoader().then(() => showReport(report));
+
+        showReport(report);
       } catch (e) {
+        tablesContainer.innerHTML = "";
+
+        var reportSummaryLabels = document.querySelectorAll(".report-summary-label-wrapper");
+        reportSummaryLabels.forEach((label) => label.remove());
+
         alert(errorMsg);
-        await deleteLoader();
+        hideSpinner();
       }
     };
   } catch (e) {
     alert(errorMsg);
-    await deleteLoader();
+    hideSpinner();
   }
 };
 

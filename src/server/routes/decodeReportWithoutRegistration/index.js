@@ -1,9 +1,12 @@
 import { Router } from "express";
+import schemas from "./JoiSchemas/index.js";
 import setCostPrice from "./controllers/setCostPrice.js";
 import getReportPage from "./controllers/getReportPage.js";
 import tokenValidator from "./controllers/tokenValidator.js";
 import getReportFromWBAPI from "./controllers/getReportFromWBAPI.js";
+import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
 import downloadReportAsXLSX from "./controllers/downloadReportAsXLSX.js";
+import setOtherExpenses from "./controllers/setOtherExpenses.js";
 import getDecodeReportWithoutRegistrationPage from "./controllers/getDecodeReportWithoutRegistrationPage.js";
 
 var router = Router({ caseSensitive: true, strict: true });
@@ -16,7 +19,9 @@ router.post("/xlsx/", downloadReportAsXLSX);
 
 router.post("/", getReportFromWBAPI);
 
-router.patch("/report/set-cost-price", setCostPrice);
+router.patch("/report/cost-price", joiSchemaValidator(schemas.setCostPrice), setCostPrice);
+
+router.patch("/report/other-expenses", joiSchemaValidator(schemas.setCostPrice), setOtherExpenses);
 
 router.post("/token/", tokenValidator);
 

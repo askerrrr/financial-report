@@ -38,7 +38,7 @@ var refreshReportLoadingStateStatus = async (userId) => {
       break;
     }
 
-    if (lastLoadedReport.reportId) {
+    if (lastLoadedReport?.reportId) {
       console.log({ report: lastLoadedReport.dateFrom });
       console.log({ checkReportInTree: checkReportInTree(lastLoadedReport.reportId) });
 

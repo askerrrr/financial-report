@@ -1,18 +1,17 @@
 import createTdElement from "../report/table/services/createTdElement.js";
 import openCostPriceModal from "../report/table/services/modal/openCostPriceModal.js";
+import openOtherExpensesModal from "../report/table/services/modal/openOtherExpensesModal.js";
 
 var isGuestAccess = true;
-var table = document.getElementById("skus-table");
 
-var createSKUsTable = (report, reportPeriodYear) => {
+var createSKUsTable = (report, postfix, reportPeriodYear) => {
   var skuIndex = 0;
-  var tbody = document.getElementById("skus-tbody");
+  var tableBody = document.createElement("tbody");
 
   var { userId, reportId, skus } = report;
 
   for (var sku of skus) {
-    var tr = document.createElement("tr");
-
+    var tableRow = document.createElement("tr");
     var skuName = createTdElement(sku.skuName);
     var qty = createTdElement(sku.qty);
     var returnAmount = createTdElement(sku.returnAmount);
@@ -25,48 +24,82 @@ var createSKUsTable = (report, reportPeriodYear) => {
       skuName: sku.skuName,
       year: reportPeriodYear,
       taxRate: report.taxRate,
-      costPrice: sku.costPrice,
+      dateFrom: report.dateFrom,
+      dateTo: report.dateTo,
+      ["costPrice" + postfix]: sku.costPrice,
+      ["otherExpenses" + postfix]: sku.otherExpenses,
     };
 
-    var costPriceInputField = openCostPriceModal(data, isGuestAccess);
+    var costPriceInputField = openCostPriceModal(data, isGuestAccess, postfix);
+    var otherExpensesInputField = openOtherExpensesModal(data, isGuestAccess, postfix);
+
     var costPrice = createTdElement(costPriceInputField);
-    var retailPrice = createTdElement(sku.averageRetailPrice);
+    var otherExpenses = createTdElement(otherExpensesInputField);
     var deliveryCost = createTdElement(sku.deliveryCost);
+    var deductionOrPayment = createTdElement(sku.deductionOrPayment);
     var fines = createTdElement(sku.fines);
     var storageCost = createTdElement(sku.storageCost);
     var acceptance = createTdElement(sku.acceptance);
     var profit = createTdElement(sku.profit);
-    var averageProfit = createTdElement(sku.averageProfit);
 
-    var profitMarginTdId = "profitMargin-" + skuIndex + "-" + reportPeriodYear;
+    var profitMarginTdId = "profitMargin" + postfix + "-" + skuIndex + "-" + reportPeriodYear;
     var profitMargin = createTdElement(sku.profitMargin, profitMarginTdId);
 
-    var finalProfitTdId = "finalProfit-" + skuIndex + "-" + reportPeriodYear;
+    var finalProfitTdId = "finalProfit" + postfix + "-" + skuIndex + "-" + reportPeriodYear;
     var finalProfit = createTdElement(sku.finalProfit, finalProfitTdId);
 
-    tr.append(
+    tableRow.append(
       skuName,
       qty,
       returnAmount,
-      costPrice,
-      retailPrice,
       deliveryCost,
+      deductionOrPayment,
       fines,
       storageCost,
       acceptance,
       profit,
-      averageProfit,
+      costPrice,
+      otherExpenses,
       profitMargin,
       finalProfit,
     );
 
+    tableBody.append(tableRow);
     skuIndex++;
-    tbody.append(tr);
   }
 
-  table.append(tbody);
-  skuIndex = 0;
-  return table;
+  var table = document.createElement("table");
+  table.id = "skus-table-" + reportPeriodYear;
+
+  var { tableHead } = createSkusTableHead();
+
+  table.append(tableHead, tableBody);
+
+  var tablesContainer = document.getElementById("tables-container");
+  tablesContainer.append(table);
 };
 
 export default createSKUsTable;
+
+var tableHeadContent = `
+   <tr>
+          <th>Артикул</th>
+          <th>Количество</th>
+          <th>Возвраты</th>
+          <th>Доставка</th>
+          <th>Удержания/Выплаты</th>
+          <th>Штрафы</th>
+          <th>Хранение</th>
+          <th>Приёмка</th>
+          <th>Выплата с вычетом всех услуг WB</th>
+          <th>Себестоимость</th>
+          <th>Прочие расходы</th>
+          <th>Маржинальность %</th>
+          <th>Итого</th>
+  </tr>`;
+
+function createSkusTableHead() {
+  var tableHead = document.createElement("thead");
+  tableHead.innerHTML = tableHeadContent;
+  return { tableHead };
+}

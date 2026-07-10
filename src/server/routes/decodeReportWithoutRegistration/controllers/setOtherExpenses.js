@@ -2,8 +2,8 @@ import Joi from "joi";
 import calc from "../../reports/services/calcServices/index.js";
 import getPrevSkuData from "../../reports/services/different/getPrevSkuData.js";
 import getPrevTotalsData from "../../reports/services/different/getPrevTotalsData.js";
-import processOfSkuCostPriceSetting from "../../reports/services/different/processOfSkuCostPriceSetting.js";
 import excludeEqualParams from "../../reports/services/different/excludeEqualParams.js";
+import processOfSkuCostPriceSetting from "../../reports/services/different/processOfSkuCostPriceSetting.js";
 
 var skuFromListGoodsStub = [];
 var currentYearPostfix = "InCurrentYear";
@@ -27,8 +27,7 @@ var taxParamsStub = {
   requiresAdditionalInsuranceFee: false,
   excessIncomeForAdditionalInsuranceFee: 300000,
 };
-
-var setCostPrice = async (req, res, next) => {
+var setOtherExpensesToSku = async (req, res, next) => {
   var { dateFrom, dateTo, userId, reportId, skuIndex, sku, totals, taxRate, year } = req.body;
 
   var { isCrossYearPeriod } = totals;
@@ -43,14 +42,14 @@ var setCostPrice = async (req, res, next) => {
     postfix = year === startYear ? currentYearPostfix : endYearPostfix;
   }
 
-  if (sku["costPrice" + postfix] === req.body["costPrice" + postfix]) {
+  if (sku["otherExpenses" + postfix] === req.body["otherExpenses" + postfix]) {
     return res.sendStatus(409);
   }
 
   var prevSkuData = getPrevSkuData(sku);
   var prevReportTotals = getPrevTotalsData(totals);
 
-  sku["costPrice" + postfix] = req.body["costPrice" + postfix];
+  sku["otherExpenses" + postfix] = req.body["otherExpenses" + postfix];
 
   var { updatedSku } = await processOfSkuCostPriceSetting(sku, skuFromListGoodsStub, { taxRate, ...taxParamsStub }, prevSkuData, postfix);
 
@@ -58,8 +57,6 @@ var setCostPrice = async (req, res, next) => {
 
   var skuDataToClient = excludeEqualParams(prevSkuData, updatedSku);
   var totalsDataToClient = excludeEqualParams(prevReportTotals, updatedTotals);
-
-  skuDataToClient["costPrice" + postfix] = req.body["costPrice" + postfix];
 
   return res.json({
     userId,
@@ -73,4 +70,4 @@ var setCostPrice = async (req, res, next) => {
   });
 };
 
-export default setCostPrice;
+export default setOtherExpensesToSku;

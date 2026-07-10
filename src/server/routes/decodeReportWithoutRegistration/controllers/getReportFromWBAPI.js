@@ -11,22 +11,22 @@ var schema = Joi.object({
 });
 
 var taxParamsStub = {
-  paidTaxAmount: 0,
-  mandatoryInsuranceFee: 0,
-  insuranceFeePercentage: 10,
-  paidInsuranceFee: 0,
-  retailAmount: 0,
   finalProfit: 0,
+  retailAmount: 0,
+  paidTaxAmount: 0,
+  paidInsuranceFee: 0,
+  excessInsuranceRate: 1,
+  maxInsuranceFee: 300000,
+  mandatoryInsuranceFee: 0,
   isInsuranceFeePaid: false,
   additionalInsuranceFee: 0,
-  requiresAdditionalInsuranceFee: false,
-  excessIncomeForAdditionalInsuranceFee: 300000,
-  maxInsuranceFee: 300000,
+  insuranceFeePercentage: 10,
   mandatoryInsuranceFeeRate: 10,
   hasExcessIncomeForInsurance: false,
   mandatoryInsuranceFeeIsPaid: false,
   additionalInsuranceFeeIsPaid: false,
-  excessInsuranceRate: 1,
+  requiresAdditionalInsuranceFee: false,
+  excessIncomeForAdditionalInsuranceFee: 300000,
 };
 
 var getReportFromWBAPI = async (req, res, next) => {
@@ -38,12 +38,25 @@ var getReportFromWBAPI = async (req, res, next) => {
 
   var { dateFrom, dateTo, token, taxRate } = req.body;
 
-  var reports = await wbapi.getReports("decode-without-auth", dateFrom, dateTo, token);
+  var startYear = +dateFrom.split("-")[0];
+  var endYear = +dateTo.split("-")[0];
+  var isCrossYearPeriod = startYear !== endYear;
 
-  var { report } = await parseReports(reports, { taxRate, ...taxParamsStub });
+  var reports = await wbapi.getReports("decode-without-auth", dateFrom, dateTo, token);
+  var { reportId } = reports.weeklyFinancialReport[0];
+
+  if (isCrossYearPeriod) {
+    var startYearTaxParamsStub = Object.assign({}, { taxRate, year: startYear, ...taxParamsStub });
+    var endYearTaxParamsStub = Object.assign({}, { taxRate, year: endYear, ...taxParamsStub });
+
+    var taxParams = { startYearTaxParams: startYearTaxParamsStub, endYearTaxParams: endYearTaxParamsStub };
+
+    var { report } = await parseReports(reports, taxParams, isCrossYearPeriod);
+  } else {
+    var { report } = await parseReports(reports, { taxRate, year: startYear, ...taxParamsStub });
+  }
 
   var userId = randomBytes(15).toString("hex");
-  var { reportId } = reports.weeklyFinancialReport[0];
 
   report.userId = userId;
   report.dateTo = dateTo;
@@ -54,10 +67,7 @@ var getReportFromWBAPI = async (req, res, next) => {
   report.totalProductCosts = 0;
   report.totalProfitMargin = 0;
   report.totalOtherExpenses = 0;
-
-  report.skus.map((sku) => {
-    ((sku.costPrice = 0), (sku.otherExpenses = 0), (sku.finalProfit = 0), (sku.profitMargin = 0));
-  });
+  report.isCrossYearPeriod = isCrossYearPeriod;
 
   return res.json({ report });
 };

@@ -8,7 +8,7 @@ var openCostPriceModal = (skuData, isGuestAccess, postfix) => {
   var costPriceDisplayElement = document.createElement("span");
   costPriceDisplayElement.className = "editable-field-value";
   costPriceDisplayElement.textContent = skuData["costPrice" + postfix];
-  costPriceDisplayElement.id = `cost-price-${skuData.skuName}-${skuData.year}`;
+  costPriceDisplayElement.id = `costPrice${postfix}-${skuData.skuIndex}-${skuData.year}`;
 
   var event = "click";
   var cb = () => costPriceModal(skuData, costPriceDisplayElement, isGuestAccess, postfix);
