@@ -9,39 +9,39 @@ body {
   color: #f8f9fa;
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 15px;
-  padding-top: 85px;
+  padding: 12px;
+  padding-top: 68px;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 10px;
+  padding: 8px;
 }
 
 .table-wrapper {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  margin: 10px 0;
-  border-radius: 5px;
+  margin: 8px 0;
+  border-radius: 4px;
 }
 
 .details {
-  max-width: 1000px;
+  max-width: 800px;
   width: fit-content;
-  margin: 0 0 20px 0;
+  margin: 0 0 16px 0;
 }
 
 details {
-  min-width: 300px;
-  max-width: 900px;
+  min-width: 240px;
+  max-width: 720px;
   font-size: x-large;
   width: 100%;
   background-color: #343a40;
   border: 1px solid #495057;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 0 0 10px 0;
+  border-radius: 4px;
+  padding: 8px;
+  margin: 0 0 8px 0;
   transition: background-color 0.2s ease;
 }
 
@@ -54,7 +54,7 @@ details[open] {
 }
 
 summary {
-  padding: 10px;
+  padding: 8px;
   cursor: pointer;
   font-weight: bold;
   outline: none;
@@ -66,24 +66,24 @@ summary {
 }
 
 details[open] summary {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   border-bottom: 1px solid #495057;
 }
 
 table {
   width: 100%;
-  min-width: 600px;
+  min-width: 480px;
   max-width: 100%;
-  margin: 10px 0;
+  margin: 8px 0;
   border-collapse: collapse;
-  font-size: 16px;
+  font-size: 12.8px;
   background-color: #343a40;
   color: #f8f9fa;
 }
 
 th,
 td {
-  padding: 15px;
+  padding: 12px;
   border: 1px solid #495057;
   text-align: center;
   vertical-align: middle;
@@ -106,10 +106,10 @@ button {
   background-color: transparent;
   color: #ffffff;
   border: 2px solid #212529;
-  padding: 5px 10px;
+  padding: 4px 8px;
   font-family: Arial, sans-serif;
-  border-radius: 5px;
-  font-size: 14px;
+  border-radius: 4px;
+  font-size: 11.2px;
   cursor: pointer;
   transition:
     background-color 0.2s ease,
@@ -146,10 +146,10 @@ button:active {
 
 .input-file span {
   display: inline-block;
-  padding: 8px 15px;
+  padding: 6.4px 12px;
   background-color: #495057;
   color: #f8f9fa;
-  border-radius: 5px;
+  border-radius: 4px;
   transition:
     background-color 0.2s ease,
     transform 0.1s ease,
@@ -167,13 +167,13 @@ button:active {
 .download-monthly-reports-button {
   display: block;
   width: 100%;
-  padding: 12px 20px;
-  margin: 15px 0;
+  padding: 9.6px 16px;
+  margin: 12px 0;
   background-color: #495057;
   color: #f8f9fa;
   border: 2px solid #343a40;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 4px;
+  font-size: 12.8px;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
@@ -192,14 +192,14 @@ button:active {
 .download-monthly-reports-button::before {
   content: "";
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
+  width: 12.8px;
+  height: 12.8px;
+  margin-right: 6.4px;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23f8f9fa"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>');
   background-repeat: no-repeat;
   vertical-align: middle;
   position: relative;
-  top: -1px;
+  top: -0.8px;
 }
 
 .top-bar {
@@ -207,42 +207,42 @@ button:active {
   top: 0;
   left: 0;
   right: 0;
-  height: 70px;
+  height: 56px;
   background: rgba(34, 39, 46, 0.97);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(73, 80, 87, 0.6);
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 0 30px;
+  padding: 0 24px;
   z-index: 1000;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6.4px 24px rgba(0, 0, 0, 0.5);
 }
 
 .top-actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 55px;
+  padding-right: 44px;
 }
 
 .top-bar button {
-  height: 40px;
-  min-width: 90px;
-  padding: 0 16px;
-  font-size: 0.9rem;
+  height: 32px;
+  min-width: 72px;
+  padding: 0 12.8px;
+  font-size: 0.72rem;
   font-weight: 500;
-  border-radius: 6px;
+  border-radius: 4.8px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1.6px 6.4px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6.4px;
   white-space: nowrap;
 }
 
@@ -255,8 +255,8 @@ button:active {
 .top-bar button:not(.primary):not(.logout-button):hover {
   background-color: #495057;
   border-color: #6c757d;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1.6px);
+  box-shadow: 0 3.2px 11.2px rgba(0, 0, 0, 0.35);
 }
 
 .top-bar button:not(.primary):not(.logout-button):active {
@@ -271,8 +271,8 @@ button:active {
 
 .top-bar button.primary:hover {
   background-color: #0b5ed7;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(13, 110, 253, 0.4);
+  transform: translateY(-1.6px);
+  box-shadow: 0 3.2px 11.2px rgba(13, 110, 253, 0.4);
 }
 
 .top-bar button.primary:active {
@@ -288,8 +288,8 @@ button:active {
 .top-bar .logout-button:hover {
   background-color: #dc3545;
   border-color: #bd2130;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(220, 53, 69, 0.4);
+  transform: translateY(-1.6px);
+  box-shadow: 0 3.2px 11.2px rgba(220, 53, 69, 0.4);
 }
 
 .top-bar .logout-button:active {
@@ -297,109 +297,109 @@ button:active {
 }
 
 .top-bar .logout-button svg {
-  width: 18px;
-  height: 18px;
+  width: 14.4px;
+  height: 14.4px;
   fill: currentColor;
   flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
   .top-bar button {
-    height: 34px;
-    min-width: 70px;
-    padding: 0 12px;
-    font-size: 0.8rem;
+    height: 27.2px;
+    min-width: 56px;
+    padding: 0 9.6px;
+    font-size: 0.64rem;
   }
 
   .top-bar .logout-button svg {
-    width: 16px;
-    height: 16px;
+    width: 12.8px;
+    height: 12.8px;
   }
 }
 
 @media (max-width: 480px) {
   .top-bar button {
-    height: 30px;
-    min-width: 56px;
-    padding: 0 8px;
-    font-size: 0.7rem;
-    border-radius: 4px;
+    height: 24px;
+    min-width: 44.8px;
+    padding: 0 6.4px;
+    font-size: 0.56rem;
+    border-radius: 3.2px;
   }
 
   .top-bar .logout-button svg {
-    width: 14px;
-    height: 14px;
+    width: 11.2px;
+    height: 11.2px;
   }
 }
 
 #last-accounted-finances-report {
   background-color: #343a40;
   border: 1px solid #495057;
-  border-radius: 5px;
+  border-radius: 4px;
   padding: 0;
-  margin: 0 0 20px 0;
-  max-width: 1000px;
+  margin: 0 0 16px 0;
+  max-width: 800px;
   width: fit-content;
-  min-width: 300px;
+  min-width: 240px;
   overflow: hidden;
 }
 
 #last-accounted-finances-report-header {
   background-color: #495057;
-  padding: 12px 20px;
-  font-size: 1.1rem;
+  padding: 9.6px 16px;
+  font-size: 0.88rem;
   font-weight: bold;
   color: #f8f9fa;
   border-bottom: 1px solid #495057;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 #last-accounted-finances-report-header::before {
-  content: "📊 ";
+  content: "ðŸ“Š ";
 }
 
 #last-accounted-finances-report-body {
-  padding: 20px 25px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 9.6px;
 }
 
 #report-period {
   color: #f8f9fa;
-  font-size: 16px;
-  padding: 4px 0;
+  font-size: 12.8px;
+  padding: 3.2px 0;
   text-align: center;
   width: 100%;
 }
 
 #report-period::before {
-  content: "📅 ";
+  content: "ðŸ“… ";
 }
 
 #finances-accounted-at {
   color: #7ddf6c;
-  font-size: 16px;
-  padding: 4px 0;
+  font-size: 12.8px;
+  padding: 3.2px 0;
   text-align: center;
   width: 100%;
 }
 
 #finances-accounted-at::before {
-  content: "✅ ";
+  content: "âœ… ";
 }
 
 .last-accounted-finances-report-link-wrapper {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 8px;
-  padding: 4px 0;
+  margin-top: 6.4px;
+  padding: 3.2px 0;
   width: 100%;
 }
 
@@ -407,48 +407,48 @@ button:active {
   color: #6ea8fe;
   text-decoration: none;
   font-weight: 500;
-  padding: 8px 20px;
-  border-radius: 5px;
+  padding: 6.4px 16px;
+  border-radius: 4px;
   transition: all 0.2s ease;
   background-color: rgba(13, 110, 253, 0.15);
   border: 1px solid rgba(13, 110, 253, 0.3);
   display: inline-block;
   text-align: center;
-  min-width: 140px;
+  min-width: 112px;
 }
 
 .link-to-report:hover {
   background-color: rgba(13, 110, 253, 0.3);
   color: #9ec5fe;
-  transform: translateY(-1px);
+  transform: translateY(-0.8px);
 }
 
 .link-to-report::before {
-  content: "🔗 ";
+  content: "ðŸ”— ";
 }
 
 #other-accounted-finances-reports {
   background-color: rgba(52, 58, 64, 0.8);
   color: #f8f9fa;
   border: 1px solid rgba(73, 80, 87, 0.5);
-  border-radius: 6px;
-  padding: 8px 20px;
-  font-size: 0.9rem;
+  border-radius: 4.8px;
+  padding: 6.4px 16px;
+  font-size: 0.72rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1.6px 6.4px rgba(0, 0, 0, 0.2);
   font-family: Arial, sans-serif;
   display: inline-block;
   text-align: center;
-  min-width: 140px;
+  min-width: 112px;
 }
 
 #other-accounted-finances-reports:hover {
   background-color: #495057;
   border-color: #6c757d;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transform: translateY(-1.6px);
+  box-shadow: 0 3.2px 11.2px rgba(0, 0, 0, 0.35);
 }
 
 #other-accounted-finances-reports:active {
@@ -456,7 +456,7 @@ button:active {
 }
 
 #other-accounted-finances-reports::before {
-  content: "📋 ";
+  content: "ðŸ“‹ ";
 }
 
 .modal-overlay {
@@ -467,17 +467,17 @@ button:active {
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  padding: 20px;
+  padding: 16px;
 }
 
 .modal-content {
   background: #2b3238;
   color: #e9ecef;
-  padding: 30px;
-  border-radius: 12px;
+  padding: 24px;
+  border-radius: 9.6px;
   width: 90vw;
-  max-width: 1400px;
-  min-width: 800px;
+  max-width: 1120px;
+  min-width: 640px;
   max-height: 90vh;
   border: 1px solid #40484f;
   overflow-y: auto;
@@ -487,9 +487,9 @@ button:active {
 }
 
 .modal-title {
-  margin: 0 0 20px;
+  margin: 0 0 16px;
   text-align: center;
-  font-size: 18px;
+  font-size: 14.4px;
   color: #71b7ff;
   font-weight: 600;
   flex-shrink: 0;
@@ -498,18 +498,18 @@ button:active {
 .modal-buttons {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  margin-top: 24px;
+  gap: 9.6px;
+  margin-top: 19.2px;
   flex-shrink: 0;
 }
 
 .modal-button {
-  padding: 10px 22px;
+  padding: 8px 17.6px;
   border: none;
-  border-radius: 6px;
+  border-radius: 4.8px;
   font-weight: 600;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 11.2px;
 }
 
 .modal-button-cancel {
@@ -527,7 +527,7 @@ button:active {
   max-width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
-  font-size: 14px;
+  font-size: 11.2px;
   background-color: #2b3238;
   color: #e9ecef;
   margin: 0;
@@ -538,19 +538,19 @@ button:active {
   background-color: #40484f;
   color: #f8f9fa;
   font-weight: bold;
-  padding: 14px 16px;
+  padding: 11.2px 12.8px;
   text-align: center;
   border: 1px solid #4a535a;
-  font-size: 14px;
+  font-size: 11.2px;
   word-wrap: break-word;
 }
 
 #other-accounted-finances-reports-table tbody td {
-  padding: 14px 16px;
+  padding: 11.2px 12.8px;
   text-align: center;
   border: 1px solid #4a535a;
   vertical-align: middle;
-  font-size: 14px;
+  font-size: 11.2px;
   word-wrap: break-word;
 }
 
@@ -566,24 +566,24 @@ button:active {
   color: #6ea8fe;
   text-decoration: none;
   font-weight: 500;
-  padding: 6px 14px;
-  border-radius: 5px;
+  padding: 4.8px 11.2px;
+  border-radius: 4px;
   transition: all 0.2s ease;
   background-color: rgba(13, 110, 253, 0.15);
   border: 1px solid rgba(13, 110, 253, 0.3);
   display: inline-block;
-  font-size: 13px;
+  font-size: 10.4px;
   white-space: nowrap;
 }
 
 #other-accounted-finances-reports-table .link-to-report:hover {
   background-color: rgba(13, 110, 253, 0.3);
   color: #9ec5fe;
-  transform: translateY(-1px);
+  transform: translateY(-0.8px);
 }
 
 #other-accounted-finances-reports-table .link-to-report::before {
-  content: "🔗 ";
+  content: "ðŸ”— ";
 }
 
 #other-accounted-finances-reports-table .last-accounted-finances-report-link-wrapper {
@@ -595,47 +595,47 @@ button:active {
 @media (max-width: 992px) {
   .modal-content {
     min-width: 90%;
-    padding: 25px;
+    padding: 20px;
   }
 
   #other-accounted-finances-reports-table thead th {
-    font-size: 13px;
-    padding: 10px 12px;
+    font-size: 10.4px;
+    padding: 8px 9.6px;
   }
 
   #other-accounted-finances-reports-table tbody td {
-    font-size: 13px;
-    padding: 10px 12px;
+    font-size: 10.4px;
+    padding: 8px 9.6px;
   }
 }
 
 @media (max-width: 768px) {
   body {
-    padding: 20px;
-    padding-top: 75px;
+    padding: 16px;
+    padding-top: 60px;
   }
 
   .container {
-    padding: 10px;
+    padding: 8px;
   }
 
   .top-bar {
-    height: 60px;
-    padding: 0 15px;
+    height: 48px;
+    padding: 0 12px;
   }
 
   .top-actions {
-    gap: 6px;
+    gap: 4.8px;
   }
 
   .top-actions button {
-    padding: 6px 12px;
-    font-size: 0.8rem;
+    padding: 4.8px 9.6px;
+    font-size: 0.64rem;
   }
 
   .download-monthly-reports-button {
-    padding: 8px 15px;
-    font-size: 14px;
+    padding: 6.4px 12px;
+    font-size: 11.2px;
   }
 
   #last-accounted-finances-report {
@@ -644,204 +644,204 @@ button:active {
   }
 
   #last-accounted-finances-report-header {
-    padding: 10px 15px;
-    font-size: 1rem;
+    padding: 8px 12px;
+    font-size: 0.8rem;
   }
 
   #last-accounted-finances-report-body {
-    padding: 15px 18px;
-    gap: 10px;
+    padding: 12px 14.4px;
+    gap: 8px;
   }
 
   #report-period,
   #finances-accounted-at {
-    font-size: 14px;
+    font-size: 11.2px;
   }
 
   .last-accounted-finances-report-link-wrapper {
-    gap: 12px;
+    gap: 9.6px;
   }
 
   .link-to-report {
-    padding: 6px 16px;
-    font-size: 14px;
-    min-width: 120px;
+    padding: 4.8px 12.8px;
+    font-size: 11.2px;
+    min-width: 96px;
   }
 
   #other-accounted-finances-reports {
-    padding: 6px 16px;
-    font-size: 0.8rem;
-    min-width: 120px;
+    padding: 4.8px 12.8px;
+    font-size: 0.64rem;
+    min-width: 96px;
   }
 
   .modal-content {
     min-width: 100%;
-    padding: 20px;
+    padding: 16px;
     width: 98vw;
   }
 
   .modal-title {
-    font-size: 16px;
-    margin: 0 0 16px;
+    font-size: 12.8px;
+    margin: 0 0 12.8px;
   }
 
   .modal-buttons {
-    margin-top: 18px;
-    gap: 10px;
+    margin-top: 14.4px;
+    gap: 8px;
   }
 
   .modal-button {
-    padding: 8px 16px;
-    font-size: 13px;
+    padding: 6.4px 12.8px;
+    font-size: 10.4px;
   }
 
   #other-accounted-finances-reports-table {
-    font-size: 13px;
+    font-size: 10.4px;
   }
 
   #other-accounted-finances-reports-table thead th {
-    padding: 8px 10px;
-    font-size: 12px;
+    padding: 6.4px 8px;
+    font-size: 9.6px;
   }
 
   #other-accounted-finances-reports-table tbody td {
-    padding: 8px 10px;
-    font-size: 12px;
+    padding: 6.4px 8px;
+    font-size: 9.6px;
   }
 
   #other-accounted-finances-reports-table .link-to-report {
-    padding: 4px 10px;
-    font-size: 12px;
+    padding: 3.2px 8px;
+    font-size: 9.6px;
   }
 }
 
 @media (max-width: 480px) {
   body {
-    padding: 10px;
-    padding-top: 60px;
+    padding: 8px;
+    padding-top: 48px;
   }
 
   .top-bar {
-    height: 50px;
-    padding: 0 10px;
+    height: 40px;
+    padding: 0 8px;
   }
 
   .top-actions {
-    gap: 4px;
+    gap: 3.2px;
   }
 
   .top-actions button {
-    padding: 4px 8px;
-    font-size: 0.7rem;
-    border-radius: 4px;
+    padding: 3.2px 6.4px;
+    font-size: 0.56rem;
+    border-radius: 3.2px;
   }
 
   .download-monthly-reports-button {
-    font-size: 14px;
-    padding: 10px;
+    font-size: 11.2px;
+    padding: 8px;
   }
 
   #last-accounted-finances-report-header {
-    padding: 8px 12px;
-    font-size: 0.9rem;
+    padding: 6.4px 9.6px;
+    font-size: 0.72rem;
   }
 
   #last-accounted-finances-report-body {
-    padding: 12px 14px;
-    gap: 8px;
+    padding: 9.6px 11.2px;
+    gap: 6.4px;
   }
 
   #report-period,
   #finances-accounted-at {
-    font-size: 13px;
+    font-size: 10.4px;
   }
 
   .last-accounted-finances-report-link-wrapper {
     flex-direction: column;
-    gap: 8px;
+    gap: 6.4px;
     align-items: center;
   }
 
   .link-to-report {
-    padding: 6px 14px;
-    font-size: 13px;
+    padding: 4.8px 11.2px;
+    font-size: 10.4px;
     min-width: 100%;
     width: 100%;
   }
 
   #other-accounted-finances-reports {
-    padding: 6px 14px;
-    font-size: 0.75rem;
+    padding: 4.8px 11.2px;
+    font-size: 0.6rem;
     min-width: 100%;
     width: 100%;
   }
 
   .modal-overlay {
-    padding: 10px;
+    padding: 8px;
   }
 
   .modal-content {
-    padding: 14px;
+    padding: 11.2px;
     width: 100vw;
     min-width: 100%;
     max-height: 95vh;
   }
 
   .modal-title {
-    font-size: 14px;
-    margin: 0 0 14px;
+    font-size: 11.2px;
+    margin: 0 0 11.2px;
   }
 
   .modal-buttons {
-    margin-top: 16px;
-    gap: 8px;
+    margin-top: 12.8px;
+    gap: 6.4px;
   }
 
   .modal-button {
-    padding: 7px 14px;
-    font-size: 12px;
+    padding: 5.6px 11.2px;
+    font-size: 9.6px;
   }
 
   #other-accounted-finances-reports-table {
-    font-size: 11px;
+    font-size: 8.8px;
   }
 
   #other-accounted-finances-reports-table thead th {
-    padding: 6px 6px;
-    font-size: 10px;
+    padding: 4.8px 4.8px;
+    font-size: 8px;
   }
 
   #other-accounted-finances-reports-table tbody td {
-    padding: 6px 6px;
-    font-size: 11px;
+    padding: 4.8px 4.8px;
+    font-size: 8.8px;
   }
 
   #other-accounted-finances-reports-table .link-to-report {
-    padding: 3px 8px;
-    font-size: 10px;
+    padding: 2.4px 6.4px;
+    font-size: 8px;
   }
 }
 
 @media (min-width: 1200px) {
   body {
-    padding: 100px;
-    padding-top: 100px;
+    padding: 80px;
+    padding-top: 80px;
   }
 
   .container {
-    padding: 20px;
+    padding: 16px;
   }
 
   .top-bar {
-    padding: 0 50px;
+    padding: 0 40px;
   }
 
   .top-actions {
-    gap: 14px;
+    gap: 11.2px;
   }
 
   .top-actions button {
-    padding: 10px 20px;
-    font-size: 1rem;
+    padding: 8px 16px;
+    font-size: 0.8rem;
   }
 }
