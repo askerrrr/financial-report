@@ -39,7 +39,7 @@ router.post("/as-xlsx/", joiSchemaValidator(schemas.downloadReportAsXLSX), downl
 
 router.get("/loading-state/:userId/", getReportLoadingState);
 router.post("/loading-state/abandoned/", joiSchemaValidator(schemas.resumeAbandonedReportsLoading), resumeAbandonedReportsLoading);
-router.post("/weekly-financial-report-file", saveReportFromFile);
+router.post("/weekly-financial-report-file", upload.array("file", 10), saveReportFromFile);
 
 router.patch("/skus/cost-price", joiSchemaValidator(schemas.setCostPriceToSku), setCostPriceToSku);
 router.patch("/skus/cost-prices", joiSchemaValidator(schemas.setCostPriceToSkus), setCostPriceToSkus);
