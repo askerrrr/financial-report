@@ -10,6 +10,7 @@ import listGoodsLoader from "../../../goods/services/listGoodsLoader.js";
 import updateListGoodsMetrics from "../different/updateListGoodsMetrics.js";
 import { recordedToSchemaVersion, reportSchemaVersion } from "../../../../database/migration/schemaVersioning/reportsCollection.js";
 
+var { getWBTokenByUserId } = dbutils.tokenCollectionServices;
 var { saveReportToDb } = dbutils.reportCollectionServices;
 var { getListGoodsFromDb, saveListGoodsToDb } = dbutils.goodsCollectionServices;
 var { getReportTree, updateReportTree } = dbutils.reportsTreeCollectionServices;
@@ -21,8 +22,6 @@ var invalidTokenErrorMsg = "Invalid Token";
 var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
 
 var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
-  var { getWBTokenByUserId } = dbutils.tokenCollectionServices;
-
   var currentTimestamp = Date.now() + mskTimeOffsetInMs;
 
   var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
