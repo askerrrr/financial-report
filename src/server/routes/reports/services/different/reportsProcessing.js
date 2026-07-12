@@ -21,24 +21,27 @@ var updateLastUsedTimestampNow = true;
 var invalidTokenErrorMsg = "Invalid Token";
 var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
 
-var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
-  var currentTimestamp = Date.now() + mskTimeOffsetInMs;
+var reportsProcessing = async (userId, dateFrom, dateTo, session, reports = [], isReportFromFile = false) => {
+  if (!isReportFromFile) {
+    var currentTimestamp = Date.now() + mskTimeOffsetInMs;
 
-  var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
+    var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
 
-  var tokenPayload = parseJwt(token);
+    var tokenPayload = parseJwt(token);
 
-  if (!tokenPayload?.exp || tokenPayload.exp * 1000 <= currentTimestamp) {
-    throw new WBAPIError(userId, 401, invalidTokenErrorMsg);
+    if (!tokenPayload?.exp || tokenPayload.exp * 1000 <= currentTimestamp) {
+      throw new WBAPIError(userId, 401, invalidTokenErrorMsg);
+    }
+
+    reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
   }
 
   var startYear = +dateFrom.split("-")[0];
   var endYear = +dateTo.split("-")[0];
   var isCrossYearPeriod = startYear !== endYear;
+  var { reportId } = reports.weeklyFinancialReport[0];
 
   var { reportTree } = await getReportTree(userId, session);
-  var reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
-  var { reportId } = reports.weeklyFinancialReport[0];
 
   var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
   var sortedYears = sortYearsTree(years);
