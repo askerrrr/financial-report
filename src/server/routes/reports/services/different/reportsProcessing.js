@@ -10,6 +10,12 @@ import listGoodsLoader from "../../../goods/services/listGoodsLoader.js";
 import updateListGoodsMetrics from "../different/updateListGoodsMetrics.js";
 import { recordedToSchemaVersion, reportSchemaVersion } from "../../../../database/migration/schemaVersioning/reportsCollection.js";
 
+var { saveReportToDb } = dbutils.reportCollectionServices;
+var { getListGoodsFromDb, saveListGoodsToDb } = dbutils.goodsCollectionServices;
+var { getReportTree, updateReportTree } = dbutils.reportsTreeCollectionServices;
+var { setLastReportRequestTimestamp } = dbutils.reportLoadingStatesCollectionServices;
+var { addNewTaxYearToDb, changeTaxParamsToDb } = dbutils.taxParamsCollectionServices;
+
 var updateLastUsedTimestampNow = true;
 var invalidTokenErrorMsg = "Invalid Token";
 var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
@@ -26,12 +32,6 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session) => {
   if (!tokenPayload?.exp || tokenPayload.exp * 1000 <= currentTimestamp) {
     throw new WBAPIError(userId, 401, invalidTokenErrorMsg);
   }
-
-  var { saveReportToDb } = dbutils.reportCollectionServices;
-  var { getListGoodsFromDb, saveListGoodsToDb } = dbutils.goodsCollectionServices;
-  var { getReportTree, updateReportTree } = dbutils.reportsTreeCollectionServices;
-  var { setLastReportRequestTimestamp } = dbutils.reportLoadingStatesCollectionServices;
-  var { addNewTaxYearToDb, changeTaxParamsToDb } = dbutils.taxParamsCollectionServices;
 
   var startYear = +dateFrom.split("-")[0];
   var endYear = +dateTo.split("-")[0];
