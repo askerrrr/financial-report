@@ -2,7 +2,7 @@ import processReportTotals from "./processReportTotals.js";
 import processCrossReportSkus from "./processCrossReportSkus.js";
 import processNonCrossReportSkus from "./processNonCrossReportSkus.js";
 
-var parseReports = async (reports, taxParams, isCrossYearPeriod) => {
+var parseReports = async (reports, taxParams, isCrossYearPeriod, isReportFromFile = false) => {
   if (isCrossYearPeriod) {
     var { skus, skuNamesAndIds, recalculatedTaxParams, ...firstTotals } = await processCrossReportSkus(reports, taxParams);
 
