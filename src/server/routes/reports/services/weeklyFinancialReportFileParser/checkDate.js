@@ -1,22 +1,26 @@
 var dayStub = 15;
+var daysInWeek = 7;
 var mondayIndex = 1;
 var sundayIndex = 0;
 var reportRange = 6;
 var firstMonthNum = 1;
 var lastMonthNum = 12;
+var firstMonthIndex = 0;
+var pseudoSundayIndex = 7;
 
 var checkAndFixMonday = (dateFrom) => {
   var [year, month, day] = dateFrom.split("-");
 
   var date = new Date(year, month - 1, day);
   var dayIndex = date.getDay();
-  var daysPerMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
   var isMonday = dayIndex === mondayIndex;
 
   if (isMonday) {
     return { dateFrom };
   }
+
+  var daysPerMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
   var isReportStartInPreviousMonth = +day - reportRange < 1;
 
@@ -56,4 +60,48 @@ var checkAndFixMonday = (dateFrom) => {
   return { dateFrom };
 };
 
-export default checkAndFixMonday;
+var checkAndFixSunday = (dateTo) => {
+  var [year, month, day] = dateTo.split("-");
+  var date = new Date(year, month - 1, day);
+  var dayIndex = date.getDay();
+
+  var isSunday = dayIndex === sundayIndex;
+
+  if (isSunday) {
+    return { dateTo };
+  }
+
+  var daysPerMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+
+  var daysSum = +day + reportRange;
+  var restDays = daysPerMonth - +day;
+  var isReportEndInNextMonth = daysSum > daysPerMonth;
+
+  var daysToSunday = pseudoSundayIndex - dayIndex;
+  var daysToSundayInCurrentMonth = -(restDays - daysToSunday);
+
+  if (isReportEndInNextMonth) {
+    var isLastMonth = lastMonthNum === +month;
+
+    if (isLastMonth) {
+      var nextYear = +year + 1;
+      var firstMonthDate = new Date(nextYear, firstMonthIndex, dayStub);
+      var daysPerFirstMonth = new Date(firstMonthDate.getFullYear(), firstMonthDate.getMonth() + 1, 0).getDate();
+
+      dateTo = `${nextYear}-${String(firstMonthNum).padStart(2, "0")}-${String(daysToSundayInCurrentMonth).padStart(2, "0")}`;
+    } else {
+      var nextMonthNum = +month + 1;
+      var nextMonthDate = new Date(year, nextMonthNum - 1, dayStub);
+      var daysPerNextMonth = new Date(nextMonthDate.getFullYear(), nextMonthDate.getMonth() + 1, 0).getDate();
+
+      dateTo = `${year}-${String(nextMonthNum).padStart(2, "0")}-${String(daysToSundayInCurrentMonth).padStart(2, "0")}`;
+    }
+  } else {
+    var sundayDay = +day + daysToSunday;
+    dateTo = `${year}-${month}-${String(sundayDay).padStart(2, "0")}`;
+  }
+
+  return { dateTo };
+};
+
+export default { checkAndFixMonday, checkAndFixSunday };
