@@ -13,14 +13,13 @@ var checkAndFixMonday = (dateFrom) => {
 
   var date = new Date(year, month - 1, day);
   var dayIndex = date.getDay();
+  var daysPerMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
   var isMonday = dayIndex === mondayIndex;
 
   if (isMonday) {
     return { dateFrom };
   }
-
-  var daysPerMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 
   var isReportStartInPreviousMonth = +day - reportRange < 1;
 
@@ -38,8 +37,16 @@ var checkAndFixMonday = (dateFrom) => {
       var prevMonthNum = +month - 1;
       var prevMonthDate = new Date(year, prevMonthNum - 1, day);
       var daysPerPrevMonth = new Date(prevMonthDate.getFullYear(), prevMonthDate.getMonth() + 1, 0).getDate();
-      var mondayDay = daysPerPrevMonth + +day - reportRange;
 
+      var isSunday = dayIndex === sundayIndex;
+
+      if (isSunday) {
+        var restIndexesInCurrentMonth = +day - pseudoSundayIndex + 1;
+      } else {
+        var restIndexesInCurrentMonth = +day - dayIndex + 1;
+      }
+
+      var mondayDay = daysPerPrevMonth + restIndexesInCurrentMonth;
       dateFrom = `${year}-${String(prevMonthNum).padStart(2, "0")}-${String(mondayDay).padStart(2, "0")}`;
     }
   } else {
@@ -104,4 +111,4 @@ var checkAndFixSunday = (dateTo) => {
   return { dateTo };
 };
 
-export default { checkAndFixMonday, checkAndFixSunday };
+export { checkAndFixMonday, checkAndFixSunday };
