@@ -1,9 +1,9 @@
 import { dbClient } from "../../../database/index.js";
 import dbUtils from "../../../database/collections/index.js";
 import reportsProcessing from "../services/different/reportsProcessing.js";
-import extractWorkSheetFromFile from "../services/weeklyFinancialReportFileParser/extractWorkSheetFromFile.js";
-import extractWeeklyFinancialReportDataFromFile from "../services/weeklyFinancialReportFileParser/extractWeeklyFinancialReportDataFromFile.js";
-import extractWeeklyFinancialReportFilesFromZip from "../services/weeklyFinancialReportFileParser/extractWeeklyFinancialReportFilesFromZip.js";
+import extractWorkSheetFromFile from "../services/reportsFileParser/extractWorkSheetFromFile.js";
+import extractWeeklyFinancialReportDataFromFile from "../services/reportsFileParser/extractWeeklyFinancialReportDataFromFile.js";
+import extractWeeklyFinancialReportFilesFromZip from "../services/reportsFileParser/extractWeeklyFinancialReportFilesFromZip.js";
 
 var { getReportTree } = dbUtils.reportsTreeCollectionServices;
 
