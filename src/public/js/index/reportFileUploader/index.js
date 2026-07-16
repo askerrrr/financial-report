@@ -1,4 +1,5 @@
 import { insertNewReportToTree } from "../reportTreeBuilder/index.js";
+import createNewReportsModalWindow from "./createNewReportsModalWindow.js";
 
 var url = "/report/files";
 var maxReportFilesCount = 15;
@@ -31,9 +32,14 @@ var reportFileUploadFormHandler = (userId) => {
     if (res.status === 200) {
       var { reportsData } = await res.json();
 
-      alert("Отчётов добавлено: " + reportsData.length);
-      for (var report of reportsData) {
-        insertNewReportToTree(report);
+      if (reportsData.length) {
+        createNewReportsModalWindow(reportsData);
+
+        for (var report of reportsData) {
+          insertNewReportToTree(report);
+        }
+      } else {
+        alert("Отчёты не были добавлены");
       }
     } else {
       return alert("Произошла ошибка при загрузке документа");
