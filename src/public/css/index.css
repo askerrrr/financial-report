@@ -129,41 +129,6 @@ button:active {
   color: #7ddf6c;
 }
 
-.input-file {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-
-.input-file input[type="file"] {
-  position: absolute;
-  z-index: -1;
-  opacity: 0;
-  display: block;
-  width: 0;
-  height: 0;
-}
-
-.input-file span {
-  display: inline-block;
-  padding: 6.4px 12px;
-  background-color: #495057;
-  color: #f8f9fa;
-  border-radius: 4px;
-  transition:
-    background-color 0.2s ease,
-    transform 0.1s ease,
-    box-shadow 0.2s ease;
-}
-
-.input-file:hover span {
-  background-color: #5a6268;
-}
-
-.input-file span:active {
-  transform: scale(0.97);
-}
-
 .download-monthly-reports-button {
   display: block;
   width: 100%;
@@ -226,6 +191,127 @@ button:active {
   align-items: center;
   justify-content: flex-end;
   padding-right: 44px;
+}
+
+#upload-form {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+#upload-form .input-file {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: auto;
+}
+
+#upload-form .input-file input[type="file"] {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  display: block;
+  width: 0;
+  height: 0;
+}
+
+#upload-form .input-file span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  min-width: 72px;
+  width: auto;
+  padding: 0 12.8px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  background-color: rgba(52, 58, 64, 0.8);
+  color: #f8f9fa;
+  border: 1px solid rgba(73, 80, 87, 0.5);
+  border-radius: 4.8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1.6px 6.4px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  white-space: nowrap;
+  gap: 6.4px;
+  flex-shrink: 0;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+#upload-form .input-file span:hover {
+  background-color: #495057;
+  border-color: #6c757d;
+  transform: translateY(-1.6px);
+  box-shadow: 0 3.2px 11.2px rgba(0, 0, 0, 0.35);
+}
+
+#upload-form .input-file span:active {
+  transform: scale(0.97);
+}
+
+#period-button {
+  height: 32px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  #upload-form {
+    height: 27.2px;
+  }
+
+  #upload-form .input-file span {
+    height: 27.2px;
+    min-width: 56px;
+    padding: 0 9.6px;
+    font-size: 0.64rem;
+  }
+
+  #period-button {
+    height: 27.2px;
+  }
+}
+
+@media (max-width: 480px) {
+  #upload-form {
+    height: 24px;
+  }
+
+  #upload-form .input-file span {
+    height: 24px;
+    min-width: 44.8px;
+    padding: 0 6.4px;
+    font-size: 0.56rem;
+    border-radius: 3.2px;
+  }
+
+  #period-button {
+    height: 24px;
+  }
+}
+
+@media (min-width: 1200px) {
+  #upload-form {
+    height: auto;
+  }
+
+  #upload-form .input-file span {
+    height: auto;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    min-height: 32px;
+  }
+
+  #period-button {
+    height: auto;
+    min-height: 32px;
+  }
 }
 
 .top-bar button {

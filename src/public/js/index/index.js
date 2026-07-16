@@ -19,6 +19,8 @@ var main = async () => {
   reportLoadingStatePanelBuilder(userId, reportLoadingState, isMainPageLoad);
   accountedFinancesPanelHandler(reportsWithAccountedFinances);
   logoutButtonHandler(userId)
+
+  fileUploadHandler(userId)
 };
 
 main();

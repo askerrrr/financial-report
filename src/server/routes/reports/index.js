@@ -24,6 +24,8 @@ import checkReportsLoadingProgress from "./controllers/checkReportsLoadingProgre
 import resumeAbandonedReportsLoading from "./controllers/resumeAbandonedReportsLoading.js";
 import changeFinancialAccountingStatus from "./controllers/changeFinancialAccountingStatus.js";
 
+var maxReportFilesCount = 15;
+
 var storage = multer.memoryStorage();
 var upload = multer({ storage, fileFilter });
 
@@ -39,7 +41,7 @@ router.post("/as-xlsx/", joiSchemaValidator(schemas.downloadReportAsXLSX), downl
 
 router.get("/loading-state/:userId/", getReportLoadingState);
 router.post("/loading-state/abandoned/", joiSchemaValidator(schemas.resumeAbandonedReportsLoading), resumeAbandonedReportsLoading);
-router.post("/weekly-financial-report-file", upload.array("file", 10), saveReportFromFile);
+router.post("/files", upload.array("file", maxReportFilesCount), saveReportFromFile);
 
 router.patch("/skus/cost-price", joiSchemaValidator(schemas.setCostPriceToSku), setCostPriceToSku);
 router.patch("/skus/cost-prices", joiSchemaValidator(schemas.setCostPriceToSkus), setCostPriceToSkus);

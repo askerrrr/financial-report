@@ -21,7 +21,7 @@ var updateLastUsedTimestampNow = true;
 var invalidTokenErrorMsg = "Invalid Token";
 var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
 
-var reportsProcessing = async (userId, dateFrom, dateTo, session, reports = [], isReportFromFile = false) => {
+var reportsProcessing = async (userId, dateFrom, dateTo, session, reports, isReportFromFile = false) => {
   if (!isReportFromFile) {
     var currentTimestamp = Date.now() + mskTimeOffsetInMs;
 
@@ -71,8 +71,10 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session, reports = [], 
 
   var { listGoods } = await getListGoodsFromDb(userId, session);
 
-  if (!listGoods.length) {
-    var listGoods = (await listGoodsLoader(userId, token)).listGoodsFromWBAPI;
+  if (!isReportFromFile) {
+    if (!listGoods.length) {
+      var listGoods = (await listGoodsLoader(userId, token)).listGoodsFromWBAPI;
+    }
   }
 
   var { listGoodsWithNewSkus } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearPeriod, startYear, endYear);
@@ -81,7 +83,10 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session, reports = [], 
   await saveReportToDb(userId, report, session);
   await updateReportTree(userId, sortedYears, session);
   await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
-  await setLastReportRequestTimestamp(userId, session);
+
+  if (!isReportFromFile) {
+    await setLastReportRequestTimestamp(userId, session);
+  }
 
   return { reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount };
 };

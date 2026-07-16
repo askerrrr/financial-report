@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/index.css" type="text/css" />
-    <link rel="stylesheet" href="/css/upload.css" type="text/css" />
     <link rel="stylesheet" href="/css/modalWindow.css" type="text/css" />
     <link rel="stylesheet" href="/css/loader.css" type="text/css" />
     <link rel="icon" href="../image/favicon.ico" type="image/x-icon" />
@@ -17,7 +16,19 @@
         <button id="options" onclick="window.location.href = '/tax-params/'">Налоги</button>
         <button id="products-button" onclick="window.location.href = '/goods'">Товары</button>
         <button id="wb-token-page" onclick="window.location.href = '/wbtoken'">Токен</button>
-        <button id="period-button">Загрузить отчёты</button>
+        <button id="period-button">Загрузить отчёты с токеном</button>
+        <form enctype="multipart/form-data" id="upload-form">
+          <label for="fileinput" class="input-file">
+            <input
+              type="file"
+              name="file"
+              id="fileinput"
+              multiple
+              accept="application/zip, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            />
+            <span>Загрузить отчёты файлами</span>
+          </label>
+        </form>
       </div>
       <button id="logout-button" class="logout-button">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -28,22 +39,7 @@
     </div>
     <div id="last-accounted-finances-report"></div>
     <div hidden id="report-loading-state-panel"></div>
-    <!-- <button class="options" id="options" onclick="window.location.href='/tax_params'">Настройки</button
-    ><button class="token-button" id="products-button">Товары</button>
-    <button class="token-button" id="token-button">Загрузить токен</button>
-    <button class="period-button" id="period-button">Загрузить отчёты</button> -->
-    <!-- <form enctype="multipart/form-data" id="upload-form">
-      <label for="fileinput" class="input-file">
-        <input
-          type="file"
-          name="file"
-          id="fileinput"
-          multiple
-          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        />
-        <span>Загрузить файл отчёта</span>
-      </label>
-    </form> -->
+
     <div id="years_container" class="details"></div>
     <script src="/js/index/index.js" type="module"></script>
   </body>

@@ -2,11 +2,9 @@ import calculateAvrgStorageCostForEachReportItem from "./calculateAvrgStorageCos
 
 var mainReportType = 1;
 
-var aggregateSkuData = (workSheet, skuNamesAndIds, reportId, requiredColumnsName, totalStorageCost, dateFrom, dateTo) => {
+var aggregateSkuData = (workSheet, skuNamesAndIds, reportId, requiredColumnsName, dateFrom, dateTo, avrgStorageCostForEachItem = 0) => {
   var skus = [];
   var avrgStorageDataForEachSku = [];
-
-  var { avrgStorageCostForEachItem } = calculateAvrgStorageCostForEachReportItem(totalStorageCost, skuNamesAndIds);
 
   for (var { skuId, skuName, rowNums } of skuNamesAndIds) {
     for (var rowNum of rowNums) {

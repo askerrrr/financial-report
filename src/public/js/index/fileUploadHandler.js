@@ -1,39 +1,43 @@
-var sendUploadFile = async (files, url) => {
-  var res = await fetch(url, {
-    method: "POST",
-    body: files,
-  });
+import { insertNewReportToTree } from "./reportTreeBuilder/index.js";
 
-  return res;
-};
+var url = "/report/files";
+var maxReportFilesCount = 15;
 
-var fileUploadHandler = async () => {
+var sendUploadFile = async (files) => {};
+
+var fileUploadHandler = (userId) => {
   var uploadInput = document.getElementById("fileinput");
 
   return uploadInput.addEventListener("change", async (e) => {
     e.preventDefault();
 
-    var uploadFormData = new FormData();
+    var formData = new FormData();
 
-    if (uploadInput.files.length > 10) {
-      return alert("Одновременно можно загрузить не больше 10 файлов");
+    if (uploadInput.files.length > maxReportFilesCount) {
+      return alert("Максимальное количество файлов для загрузки: " + maxReportFilesCount);
     }
+
+    formData.append("userId", userId);
 
     for (var file of uploadInput.files) {
-      uploadFormData.append("file", file);
+      formData.append("file", file);
     }
 
-    var uploadUrl = uploadInput.files.length == 1 ? "/report/upload/file" : "/report/upload/files";
+    var res = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
 
-    var res = await sendUploadFile(uploadFormData, uploadUrl);
+    if (res.status === 200) {
+      var { reportsData } = await res.json();
 
-    if (!res.ok) {
+      alert("Отчётов добавлено: " + reportsData.length);
+      for (var report of reportsData) {
+        insertNewReportToTree(report);
+      }
+    } else {
       return alert("Произошла ошибка при загрузке документа");
     }
-
-    var { msg } = await res.json();
-
-    alert(msg);
   });
 };
 

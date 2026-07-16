@@ -8,7 +8,7 @@ var getReportPeriod = (workSheet, requiredColumnsName = "M") => {
 
   var dateFrom = workSheet.getCell(dateFromCellAddress).value;
   var dateTo = workSheet.getCell(dateToCellAddress).value;
-  console.log({ infoFunc: { dateFrom, dateTo } });
+
   return { dateFrom, dateTo };
 };
 

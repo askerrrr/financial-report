@@ -30,7 +30,7 @@ var sellerPayoutAmountTitleText = "К перечислению Продавцу 
 
 var titlesRowNum = 1;
 
-function getRequiredColumnsName(workSheet, columnsNames) {
+function getRequiredColumnsNameFromWeeklyFinanfialReportFile(workSheet, columnsNames) {
   var topCells = [];
   var requiredColumnsName = {};
 
@@ -155,4 +155,4 @@ function getRequiredColumnsName(workSheet, columnsNames) {
   return { requiredColumnsName };
 }
 
-export default getRequiredColumnsName;
+export default getRequiredColumnsNameFromWeeklyFinanfialReportFile;
