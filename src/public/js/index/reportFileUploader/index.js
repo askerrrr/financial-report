@@ -1,11 +1,11 @@
-import { insertNewReportToTree } from "./reportTreeBuilder/index.js";
+import { insertNewReportToTree } from "../reportTreeBuilder/index.js";
 
 var url = "/report/files";
 var maxReportFilesCount = 15;
 
 var sendUploadFile = async (files) => {};
 
-var fileUploadHandler = (userId) => {
+var reportFileUploadFormHandler = (userId) => {
   var uploadInput = document.getElementById("fileinput");
 
   return uploadInput.addEventListener("change", async (e) => {
@@ -41,4 +41,4 @@ var fileUploadHandler = (userId) => {
   });
 };
 
-export default fileUploadHandler;
+export default reportFileUploadFormHandler;
