@@ -3,8 +3,7 @@ import createNewReportsModalWindow from "./createNewReportsModalWindow.js";
 
 var url = "/report/files";
 var maxReportFilesCount = 15;
-
-var sendUploadFile = async (files) => {};
+var allowedFileMimeTypes = ["application/zip", "application/x-zip-compressed", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
 
 var reportFileUploadFormHandler = (userId) => {
   var uploadInput = document.getElementById("fileinput");
@@ -12,16 +11,15 @@ var reportFileUploadFormHandler = (userId) => {
   return uploadInput.addEventListener("change", async (e) => {
     e.preventDefault();
 
+    var count = 1;
     var formData = new FormData();
-
-    if (uploadInput.files.length > maxReportFilesCount) {
-      return alert("Максимальное количество файлов для загрузки: " + maxReportFilesCount);
-    }
-
     formData.append("userId", userId);
 
     for (var file of uploadInput.files) {
-      formData.append("file", file);
+      if (allowedFileMimeTypes.includes(file.type) && count <= maxReportFilesCount) {
+        formData.append("file", file);
+        count++;
+      }
     }
 
     var res = await fetch(url, {
@@ -42,7 +40,7 @@ var reportFileUploadFormHandler = (userId) => {
         alert("Отчёты не были добавлены");
       }
     } else {
-      return alert("Произошла ошибка при загрузке документа");
+      return alert("Произошла ошибка при загрузке документов");
     }
   });
 };
