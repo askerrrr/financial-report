@@ -1,6 +1,8 @@
 import { insertNewReportToTree } from "../reportTreeBuilder/index.js";
 import createNewReportsModalWindow from "./createNewReportsModalWindow.js";
+import showReport from "../../decodeReportWithoutRegistration/showReport.js";
 import { showSpinner, hideSpinner } from "../reportLoaderModalWindow/services/loaderSpinner.js";
+import writeReportToLocalStorage from "../../decodeReportWithoutRegistration/writeReportToLocalStorage.js";
 
 var maxFilesCount = 15;
 var selectedFiles = [];
@@ -107,11 +109,31 @@ function handleFiles(files) {
   var count = 0;
   var validFiles = [];
 
-  for (var file of files) {
-    if (fileIsValid(file)) {
-      validFiles.push(file);
+  if (window.location.pathname === "/decode-report-without-registration/") {
+    var paidStorageReportAdded = false;
+    var weeklyFinancialReportAdded = false;
 
-      count++;
+    for (var file of files) {
+      if (fileIsValid(file) && file.name.startsWith(weeklyFinancialReportFileName)) {
+        if (!weeklyFinancialReportAdded) {
+          validFiles.push(file);
+          weeklyFinancialReportAdded = true;
+        }
+      }
+      if (fileIsValid(file) && file.name.startsWith(paidStorageReportFileName)) {
+        if (!paidStorageReportAdded) {
+          validFiles.push(file);
+          paidStorageReportAdded = true;
+        }
+      }
+    }
+  } else {
+    for (var file of files) {
+      if (fileIsValid(file)) {
+        validFiles.push(file);
+
+        count++;
+      }
     }
   }
 
@@ -206,6 +228,10 @@ var createUploadBtn = () => {
 
     selectedFiles.forEach((file) => formData.append("file", file));
 
+    if (window.location.pathname === "/decode-report-without-registration/") {
+      url = "/decode-report-without-registration/files";
+    }
+
     closeModal();
     showSpinner();
 
@@ -217,16 +243,26 @@ var createUploadBtn = () => {
     hideSpinner();
 
     if (res.status === 200) {
-      var { reportsData } = await res.json();
-
-      if (reportsData.length) {
-        createNewReportsModalWindow(reportsData);
-
-        for (var report of reportsData) {
-          insertNewReportToTree(report);
+      if (window.location.pathname === "/decode-report-without-registration/") {
+        var { report, reportPeriodIsEmpty } = await res.json();
+        if (reportPeriodIsEmpty) {
+          alert("Отчётный период пуст");
+        } else {
+          writeReportToLocalStorage(report);
+          showReport(report);
         }
       } else {
-        alert("Отчёты не были добавлены");
+        var { reportsData } = await res.json();
+
+        if (reportsData.length) {
+          createNewReportsModalWindow(reportsData);
+
+          for (var report of reportsData) {
+            insertNewReportToTree(report);
+          }
+        } else {
+          alert("Отчёты не были добавлены");
+        }
       }
     } else {
       return alert("Произошла ошибка при загрузке документов");
@@ -249,7 +285,27 @@ var createModalFooterButtons = () => {
 };
 
 var createUploadModalBodyDescription = () => {
-  var uploaderModalBodyDescription = `
+  var uploaderModalBodyDescription;
+
+  if (window.location.pathname === "/decode-report-without-registration/") {
+    uploaderModalBodyDescription = `
+    <div class="upload-description">
+            <p class="upload-description-text">
+              Загрузите файлы отчётов Wildberries в формате <strong>ZIP</strong> или <strong>XLSX</strong>. 
+            </p>
+             <p class="upload-description-text">
+              Поддерживаются следующие типы отчётов:
+            </p>
+            <ul class="upload-description-list">
+              <li>Еженедельный детализированный отчет</li>
+              <li>Отчёт по платному хранению (номенклатуры) за тот же отчётный период.</li>
+              </ul>
+            <p class="upload-description-note">
+              <strong>Примечания:<br> </strong><br>За один раз можно загрузить <br> - Еженедельный детализированный отчет - 1 шт.<br> - Отчёт по платному хранению (номенклатуры) за тот же отчётный период  - 1 шт.<br><br>Загрузка отчёта по платному хранению носит рекомендательный характер.
+            </p>
+          </div>`;
+  } else {
+    uploaderModalBodyDescription = `
     <div class="upload-description">
             <p class="upload-description-text">
               Загрузите файлы отчётов Wildberries в формате <strong>ZIP</strong> или <strong>XLSX</strong>. 
@@ -265,6 +321,7 @@ var createUploadModalBodyDescription = () => {
               <strong>Примечания:<br> </strong><br> - За один раз можно загрузить не более 15 файлов.<br> - Загрузка отчёта по платному хранению носит рекомендательный характер.
             </p>
           </div>`;
+  }
 
   return { uploaderModalBodyDescription };
 };

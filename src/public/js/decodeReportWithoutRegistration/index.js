@@ -2,6 +2,7 @@ import showReport from "./showReport.js";
 import checkTaxRate from "./checkTaxRate.js";
 import sendReportData from "./sendReportData.js";
 import sendTokenForValidation from "./sendTokenForValidation.js";
+import uploadFilesButtonHandler from "./uploadFilesButtonHandler.js";
 import writeReportToLocalStorage from "./writeReportToLocalStorage.js";
 import checkDateTo from "../index/reportLoaderModalWindow/services/checkDateTo.js";
 import checkDateFrom from "../index/reportLoaderModalWindow/services/checkDateFrom.js";
@@ -13,6 +14,8 @@ var tablesContainer = document.getElementById("tables-container");
 
 var main = async () => {
   try {
+    uploadFilesButtonHandler();
+
     getReportBtn.onclick = async () => {
       localStorage.clear();
 
