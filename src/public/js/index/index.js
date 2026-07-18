@@ -1,10 +1,10 @@
 import logoutButtonHandler from "./logout/index.js";
 import getMainPageData from "./utils/getMainPageData.js";
 import { createReportTree } from "./reportTreeBuilder/index.js";
-import reportFileUploadFormHandler from "./reportFileUploader/index.js";
 import accountedFinancesPanelHandler from "./accountedFinancesPanel/index.js";
 import reportLoaderModalWindowHandler from "./reportLoaderModalWindow/index.js";
 import reportLoadingStatePanelBuilder from "./reportLoadingStatePanel/index.js";
+import reportFileUploadModalWindow from "./reportFileUploadModalWindow/index.js";
 
 var isMainPageLoad = true;
 var userId = document.cookie.split("=")[1];
@@ -20,7 +20,7 @@ var main = async () => {
   accountedFinancesPanelHandler(reportsWithAccountedFinances);
   logoutButtonHandler(userId);
 
-  reportFileUploadFormHandler(userId);
+  reportFileUploadModalWindow(userId);
 };
 
 main();

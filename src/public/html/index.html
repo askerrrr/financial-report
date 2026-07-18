@@ -17,18 +17,7 @@
         <button id="products-button" onclick="window.location.href = '/goods'">Товары</button>
         <button id="wb-token-page" onclick="window.location.href = '/wbtoken'">Токен</button>
         <button id="period-button">Загрузить отчёты с токеном</button>
-        <form enctype="multipart/form-data" id="upload-form">
-          <label for="fileinput" class="input-file">
-            <input
-              type="file"
-              name="file"
-              id="fileinput"
-              multiple
-              accept="application/zip, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            />
-            <span>Загрузить отчёты файлами</span>
-          </label>
-        </form>
+        <button id="upload-files-btn">Загрузить отчёты файлами</button>
       </div>
       <button id="logout-button" class="logout-button">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -39,7 +28,6 @@
     </div>
     <div id="last-accounted-finances-report"></div>
     <div hidden id="report-loading-state-panel"></div>
-
     <div id="years_container" class="details"></div>
     <script src="/js/index/index.js" type="module"></script>
   </body>
