@@ -19,6 +19,8 @@
     "joi": "^18.0.2",
     "jose": "^6.2.1",
     "jszip": "^3.10.1",
+    "mongodb": "^6.20.0",
+    "mongodb-client-encryption": "^6.5.0",
     "mongoose": "^8.14.1",
     "multer": "^1.4.5-lts.2"
   },
