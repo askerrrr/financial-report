@@ -20,7 +20,7 @@ var sendUploadFile = async (file) => {
 var input = document.getElementById("input-field");
 var button = document.getElementById("upload-weekly-prices-and-discounts-file");
 
-var fileUploadHandler = (userId) => {
+var reportFileUploadFormHandler = (userId) => {
   button.onclick = (e) => {
     e.preventDefault();
     input.click();
@@ -41,4 +41,4 @@ var fileUploadHandler = (userId) => {
   };
 };
 
-export default fileUploadHandler;
+export default reportFileUploadFormHandler;

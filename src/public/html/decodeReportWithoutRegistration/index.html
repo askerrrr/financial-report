@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="/css/loader.css" type="text/css" />
     <link rel="stylesheet" href="/css/modalWindow.css" type="text/css" />
+    <link rel="stylesheet" href="/css/uploadFilesModal.css" type="text/css" />
     <link rel="stylesheet" href="/css/decodeReportWithoutRegistration.css" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Расшифровка финансового отчета wildberries без регистрации</title>
@@ -16,8 +17,10 @@
     </div>
     <dialog id="dialog">
       <form>
-        <p>Для получения отчета необходим токен с тремя категориями: Аналитика, Продвижение, Статистика, Цены и скидки</p>
+        <p>Для получения отчета необходим токен с тремя категориями: Аналитика, Продвижение, Статистика</p>
         <p>Важно понимать, что я не сохраняю токен, введённый вами</p>
+        <p>Если не доверяете свой токен этому сайту, тогда можете загрузить файлы</p>
+        <button type="button" id="upload-files-btn">Загрузить файлы</button>
         <label for="token">Введите токен</label>
         <input type="text" id="token" />
         <label for="dateFrom">Введите начало периода</label>

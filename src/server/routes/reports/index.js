@@ -14,6 +14,7 @@ import setCostPriceToSku from "./controllers/setCostPriceToSku.js";
 import deleteReportsTree from "./controllers/deleteReportsTree.js";
 import checkReportExists from "./controllers/checkReportExists.js";
 import reportLoadDelegate from "./controllers/reportLoadDelegate.js";
+import saveReportFromFile from "./controllers/saveReportFromFile.js";
 import setCostPriceToSkus from "./controllers/setCostPriceToSkus.js";
 import downloadReportAsXLSX from "./controllers/downloadReportAsXLSX.js";
 import downloadReportsAsZip from "./controllers/downloadReportsAsZip.js";
@@ -22,6 +23,8 @@ import getReportLoadingState from "./controllers/getReportLoadingState.js";
 import checkReportsLoadingProgress from "./controllers/checkReportsLoadingProgress.js";
 import resumeAbandonedReportsLoading from "./controllers/resumeAbandonedReportsLoading.js";
 import changeFinancialAccountingStatus from "./controllers/changeFinancialAccountingStatus.js";
+
+var maxReportFilesCount = 15;
 
 var storage = multer.memoryStorage();
 var upload = multer({ storage, fileFilter });
@@ -38,6 +41,7 @@ router.post("/as-xlsx/", joiSchemaValidator(schemas.downloadReportAsXLSX), downl
 
 router.get("/loading-state/:userId/", getReportLoadingState);
 router.post("/loading-state/abandoned/", joiSchemaValidator(schemas.resumeAbandonedReportsLoading), resumeAbandonedReportsLoading);
+router.post("/files", upload.array("file", maxReportFilesCount), saveReportFromFile);
 
 router.patch("/skus/cost-price", joiSchemaValidator(schemas.setCostPriceToSku), setCostPriceToSku);
 router.patch("/skus/cost-prices", joiSchemaValidator(schemas.setCostPriceToSkus), setCostPriceToSkus);

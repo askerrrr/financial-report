@@ -1,11 +1,16 @@
 import mongoose from "mongoose";
+import { dataKeyId } from "./keyManager.js";
 import serverEmitter from "../customEvent/index.js";
+import { schemaMap } from "./encryptedFieldsSchemaMap.js";
 
 var timerId = null;
 var connectionAttempts = 0;
 var eventsConfigured = false;
 var mongooseReconnected = false;
 var MAX_CONNECTION_ATTEMPTS = 5;
+var keyVaultNamespace = process.env.KEY_VAULT_NAME_SPACE;
+var kmsProviders = { local: { key: process.env.MONGO_LOCAL_MASTER_KEY } };
+var extraOptions = { cryptSharedLibPath: process.env.MONGO_CRYPT_SHARED_PATH, cryptSharedLibRequired: true };
 
 var dbClient = mongoose.connection;
 
@@ -15,7 +20,14 @@ var mongooseConnection = async () => {
 
     await mongoose.connect(mongoUri, JSON.parse(process.env.MONGO_OPTIONS));
   } else {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI, {
+      autoEncryption: {
+        schemaMap,
+        kmsProviders,
+        extraOptions,
+        keyVaultNamespace,
+      },
+    });
   }
 };
 

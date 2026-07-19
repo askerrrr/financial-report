@@ -12,16 +12,16 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 70px;
+  height: 49px;
   background: rgba(34, 39, 46, 0.97);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(73, 80, 87, 0.6);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 30px;
+  padding: 0 21px;
   z-index: 1000;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 5.6px 21px rgba(0, 0, 0, 0.5);
 }
 
 .inline-form {
@@ -33,9 +33,9 @@ body {
 #report-info {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 12.6px;
   color: #ced4da;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -50,20 +50,20 @@ body {
 }
 
 .top-btn {
-  min-height: 44px;
-  padding: 0 20px;
+  min-height: 30.8px;
+  padding: 0 14px;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
+  border-radius: 7px;
+  font-size: 11.2px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2.8px 8.4px rgba(0, 0, 0, 0.3);
 }
 
 .top-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+  transform: translateY(-1.4px);
+  box-shadow: 0 5.6px 14px rgba(0, 0, 0, 0.45);
 }
 
 .main-btn {
@@ -97,25 +97,25 @@ body {
 
 .right-buttons {
   display: flex;
-  gap: 14px;
+  gap: 9.8px;
   align-items: center;
 }
 
 table {
   width: 100%;
-  max-width: 1700px;
-  margin: 150px auto 60px;
+  max-width: 1190px;
+  margin: 105px auto 42px;
   border-collapse: separate;
   border-spacing: 0;
   background: #2d3439;
-  border-radius: 16px;
+  border-radius: 11.2px;
   overflow: hidden;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10.5px 31.5px rgba(0, 0, 0, 0.6);
 }
 
 th,
 td {
-  padding: 18px 14px;
+  padding: 12.6px 9.8px;
   text-align: center;
   vertical-align: middle;
   border-bottom: 1px solid #40484f;
@@ -126,9 +126,9 @@ th {
   background: linear-gradient(to bottom, #40484f, #343a40);
   color: #dee2e6;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.56px;
 }
 
 tbody tr:nth-child(even) {
@@ -137,7 +137,7 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
   background-color: rgba(80, 90, 100, 0.7);
-  transform: scale(1.004);
+  transform: scale(1.0028);
 }
 
 td:last-child,
@@ -146,11 +146,11 @@ th:last-child {
 }
 
 .sku-photo-uploader {
-  width: 100px;
-  height: 80px;
+  width: 70px;
+  height: 56px;
   background: #343a40;
   border: 2px dashed #555;
-  border-radius: 10px;
+  border-radius: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -166,17 +166,17 @@ th:last-child {
 
 .report-summary-label-wrapper {
   text-align: center;
-  margin-top: 150px;
-  margin-bottom: -110px;
+  margin-top: 105px;
+  margin-bottom: -77px;
 }
 
 .report-summary-label {
   display: inline-block;
-  font-size: 30px;
+  font-size: 21px;
   font-weight: 600;
   color: #71b7ff;
-  padding: 8px 20px;
+  padding: 5.6px 14px;
   background: rgba(13, 110, 253, 0.15);
-  border-radius: 4px;
-  letter-spacing: 0.5px;
+  border-radius: 2.8px;
+  letter-spacing: 0.35px;
 }
