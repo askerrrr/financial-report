@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { dataKeyId } from "./keyManager.js";
 import serverEmitter from "../customEvent/index.js";
 import { schemaMap } from "./encryptedFieldsSchemaMap.js";
 
