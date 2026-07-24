@@ -1,4 +1,4 @@
-import reportFileUploadFormHandler from "./reportFileUploadFormHandler.js";
+import fileUploadHandler from "./fileUploadHandler.js";
 import showListGoodsTable from "./showListGoodsTable.js";
 import downloadSkusMetricsFileButtonHandler from "./downloadSkusMetricsFileButtonHandler.js";
 import downloadWeeklyPricesFileButtonHandler from "./downloadWeeklyPricesFileButtonHandler.js";
@@ -6,6 +6,6 @@ import downloadWeeklyPricesFileButtonHandler from "./downloadWeeklyPricesFileBut
 var userId = document.cookie.split("=")[1];
 
 showListGoodsTable();
-reportFileUploadFormHandler(userId);
+fileUploadHandler(userId);
 downloadSkusMetricsFileButtonHandler(userId);
 downloadWeeklyPricesFileButtonHandler(userId);
