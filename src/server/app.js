@@ -7,7 +7,7 @@ import notFoundHandler from "./middleware/notFoundHandler/index.js";
 import verifyAuthorization from "./middleware/verifyAuthorization.js";
 import verifyAuthentication from "./middleware/verifyAuthentication.js";
 
-import serverEmitter from "./customEvent/index.js";
+import { serverEmitter } from "./customEvent/index.js";
 
 import { runDB } from "./database/index.js";
 

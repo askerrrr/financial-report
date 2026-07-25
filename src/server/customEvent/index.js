@@ -2,4 +2,7 @@ import EventEmitter from "node:events";
 class ServerEmitter extends EventEmitter {}
 var serverEmitter = new ServerEmitter();
 
-export default serverEmitter;
+class DatabaseEmitter extends EventEmitter {}
+var databaseEmitter = new DatabaseEmitter();
+
+export { serverEmitter, databaseEmitter };

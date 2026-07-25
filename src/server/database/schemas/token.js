@@ -1,5 +1,4 @@
 import { Schema } from "mongoose";
-import { dataKeyId } from "../keyManager.js";
 
 var tokenSchema = new Schema({
   userId: { type: String, required: true },

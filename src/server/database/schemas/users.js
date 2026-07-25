@@ -1,5 +1,4 @@
 import { Schema } from "mongoose";
-import { dataKeyId } from "../keyManager.js";
 
 var usersSchema = new Schema({
   schemaVersion: { type: Number },
