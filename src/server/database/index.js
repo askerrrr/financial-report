@@ -1,98 +1,53 @@
 import mongoose from "mongoose";
-import serverEmitter from "../customEvent/index.js";
-import { schemaMap } from "./encryptedFieldsSchemaMap.js";
+import setupDbEvents from "./setupDbEvents.js";
+import { serverEmitter, databaseEmitter } from "../customEvent/index.js";
+import { MongoClient, ClientEncryption } from "mongodb";
+import getEncryptionFieldsSchemaMap from "./encryptedFieldsSchemaMap.js";
 
-var timerId = null;
-var connectionAttempts = 0;
-var eventsConfigured = false;
-var mongooseReconnected = false;
-var MAX_CONNECTION_ATTEMPTS = 5;
+var dataKeyId;
+var dbClient = mongoose.connection;
+var dbClientToEncryption = new MongoClient(process.env.MONGO_URI);
+
 var keyVaultNamespace = process.env.KEY_VAULT_NAME_SPACE;
 var kmsProviders = { local: { key: process.env.MONGO_LOCAL_MASTER_KEY } };
 var extraOptions = { cryptSharedLibPath: process.env.MONGO_CRYPT_SHARED_PATH, cryptSharedLibRequired: true };
 
-var dbClient = mongoose.connection;
-
-var mongooseConnection = async () => {
-  if (process.env.MONGO_HOST) {
-    var mongoUri = `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.DB_NAME}`;
-
-    await mongoose.connect(mongoUri, JSON.parse(process.env.MONGO_OPTIONS));
-  } else {
-    await mongoose.connect(process.env.MONGO_URI, {
-      autoEncryption: {
-        schemaMap,
-        kmsProviders,
-        extraOptions,
-        keyVaultNamespace,
-      },
-    });
-  }
-};
-
-var setupMongooseEvents = () => {
-  if (eventsConfigured) {
-    return;
-  }
-
-  eventsConfigured = true;
-  console.log("connection to mongodb...\n");
-
-  dbClient.on("error", (e) => {
-    console.log("mongodb connection error: ", { name: e.name, msg: e.message });
-    mongoose.disconnect();
-  });
-
-  dbClient.on("disconnected", async () => {
-    console.log("mongodb disconnected\n");
-
-    if (timerId) {
-      clearTimeout(timerId);
-      timerId = null;
-    }
-
-    timerId = setTimeout(mongooseConnection, 1000);
-    serverEmitter.emit("close");
-    console.log({ connectionAttempts });
-    if (connectionAttempts === MAX_CONNECTION_ATTEMPTS) {
-      clearTimeout(timerId);
-      timerId = null;
-      dbClient.removeAllListeners();
-      console.log("mongodb connection was been destroed");
-
-      return;
-    }
-
-    connectionAttempts++;
-  });
-
-  dbClient.on("connected", async () => {
-    if (timerId) {
-      console.clear();
-      console.log("mongodb reconnected\n");
-
-      mongooseReconnected = true;
-      clearTimeout(timerId);
-      timerId = null;
-      serverEmitter.emit("start");
-    }
-
-    if (!mongooseReconnected) {
-      console.clear();
-      console.log("mongodb connected\n");
-    }
-
-    mongooseReconnected = false;
-    connectionAttempts = 0;
-  });
-};
-
 var killAllSessions = async () => await dbClient.db.command({ killAllSessions: [] }).then(() => console.log("old sessions killed"));
 
 var runDB = async () => {
-  setupMongooseEvents();
-  await mongooseConnection();
-  await killAllSessions();
+  await setupDbEvents(mongoose, dbClientToEncryption);
+
+  try {
+    await dbClientToEncryption.connect();
+
+    var keyVault = dbClientToEncryption.db(process.env.KEY_VAULT_DATABASE_NAME).collection(process.env.KEY_VAULT_COLLECTION_NAME);
+    var existingKey = await keyVault.findOne({
+      keyAltNames: process.env.MONGO_KEY_ALT_NAME,
+    });
+
+    if (!existingKey) {
+      var encryption = new ClientEncryption(dbClientToEncryption, { kmsProviders, keyVaultNamespace });
+      dataKeyId = await encryption.createDataKey("local", { keyAltNames: [process.env.MONGO_KEY_ALT_NAME] });
+    } else {
+      dataKeyId = existingKey._id;
+    }
+
+    await dbClientToEncryption.close();
+
+    var { schemaMap } = getEncryptionFieldsSchemaMap(dataKeyId);
+    var options = { autoEncryption: { schemaMap, kmsProviders, extraOptions, keyVaultNamespace } };
+
+    await mongoose.connect(process.env.MONGO_URI, options);
+
+    await killAllSessions();
+  } catch (e) {
+    console.log(e.message.toUpperCase());
+
+    if (e.message.startsWith("connect ECONNREFUSED")) {
+      mongoose.connection.emit("close");
+      databaseEmitter.emit("connection_error");
+    }
+  }
 
   //await runDBMigration().then(() => console.log("\n     migration completed\n-------------------------\n"));
 };
