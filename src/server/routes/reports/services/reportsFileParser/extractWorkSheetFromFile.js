@@ -8,7 +8,7 @@ import getRequiredColumnsNameFromPaidStorageReportFile from "./getRequiredColumn
 import getRequiredColumnsNameFromWeeklyFinanfialReportFile from "./getRequiredColumnsNameFromWeeklyFinanfialReportFile.js";
 
 var requiredColumnsCountToPaidStorageReport = 4;
-var requiredColumnsCountToWeeklyFinancialReport = 14;
+var requiredColumnsCountToWeeklyFinancialReport = 15;
 
 var requiredWeeklyFinancialReportFileWorkSheetName = "Sheet1";
 var requiredPaidStorageReportFileWorkSheetName = "Детальная информация";

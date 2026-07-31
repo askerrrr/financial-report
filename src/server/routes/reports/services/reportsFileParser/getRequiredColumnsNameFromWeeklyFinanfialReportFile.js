@@ -1,19 +1,21 @@
 var expectedQtyTitleColumnName = "N";
-var expectedStorageCostTitleColumnName = "BH";
-var expectedSaleDateTitleColumnName = "M";
+var expectedCountryTitleName = "AY";
 var expectedFinesTitleColumnName = "AO";
+var expectedOrderDateTitleColumnName = "L";
+var expectedSaleDateTitleColumnName = "M";
 var expectedDocTypeNameTitleColumnName = "J";
 var expectedRetailPriceTitleColumnName = "O";
-var expectedDeductionOrPaymentTitleColumnName = "BI";
-var expectedReturnAmountTitleColumnName = "AJ";
-var expectedOrderDateTitleColumnName = "L";
-var expectedPaidAcceptanceTitleColumnName = "BJ";
 var expectedRetailAmountTitleColumnName = "P";
+var expectedStorageCostTitleColumnName = "BH";
+var expectedReturnAmountTitleColumnName = "AJ";
 var expectedDeliveryCostTitleColumnName = "AK";
+var expectedPaidAcceptanceTitleColumnName = "BJ";
 var expectedAdditionalPaymentTitleColumnName = "AP";
 var expectedSellerPayoutAmountTitleColumnName = "AH";
+var expectedDeductionOrPaymentTitleColumnName = "BI";
 
 var qtyTitleText = "Кол-во";
+var countryTitleText = "Страна";
 var storageCostTitleText = "Хранение";
 var saleDateTitleText = "Дата продажи";
 var finesTitleText = "Общая сумма штрафов";
@@ -47,6 +49,14 @@ function getRequiredColumnsNameFromWeeklyFinanfialReportFile(workSheet, columnsN
     qtyColumn = expectedQtyTitleColumnName;
   }
   requiredColumnsName.qtyColumn = qtyColumn;
+
+  var countryColumn = workSheet.getCell(expectedCountryTitleName + titlesRowNum).value === countryTitleText;
+  if (!countryColumn) {
+    countryColumn = topCells.find((colName) => colName.colTitle === countryTitleText).colTitle;
+  } else {
+    countryColumn = expectedCountryTitleName;
+  }
+  requiredColumnsName.countryColumn = countryColumn;
 
   var saleDateColumn = workSheet.getCell(expectedSaleDateTitleColumnName + titlesRowNum).value === saleDateTitleText;
   if (!saleDateColumn) {

@@ -8,7 +8,9 @@ var removeDublicateFiles = (files) => {
   var uniqueFiles = new Map();
 
   for (var { buffer, mimetype, originalname } of files) {
-    if (originalname.startsWith(weeklyFinancialReportFileName)) {
+    var decodedFileName = Buffer.from(originalname, "latin1").toString("utf8");
+
+    if (originalname.startsWith(weeklyFinancialReportFileName) || decodedFileName.startsWith(weeklyFinancialReportFileName)) {
       var { reportId } = getReportIdFromFileName(originalname);
 
       if (!uniqueFiles.has(reportId)) {

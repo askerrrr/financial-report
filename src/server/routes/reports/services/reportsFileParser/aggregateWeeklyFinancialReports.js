@@ -4,8 +4,6 @@ import calculateTotalStorageCost from "./calculateTotalStorageCost.js";
 import checkReportExistsInTree from "../different/checkReportExistsInTree.js";
 import calculateAvrgStorageCostForEachReportItem from "./calculateAvrgStorageCostForEachReportItem.js";
 
-var buybackReportType = 2;
-
 var aggregateWeeklyFinancialReports = (weeklyFinancialReports, paidStorageReport) => {
   var weeklyFinancialReport = [];
 
@@ -22,15 +20,7 @@ var aggregateWeeklyFinancialReports = (weeklyFinancialReports, paidStorageReport
       var { totalStorageCost } = calculateTotalStorageCost(workSheet, requiredColumnsName.storageCostColumn);
       var { avrgStorageCostForEachItem } = calculateAvrgStorageCostForEachReportItem(totalStorageCost, skuNamesAndIds);
 
-      var { skus, avrgStorageDataForEachSku } = aggregateSkuData(
-        workSheet,
-        skuNamesAndIds,
-        reportId,
-        requiredColumnsName,
-        dateFrom,
-        dateTo,
-        avrgStorageCostForEachItem,
-      );
+      var { skus, avrgStorageDataForEachSku } = aggregateSkuData(workSheet, skuNamesAndIds, reportId, requiredColumnsName, dateFrom, dateTo, avrgStorageCostForEachItem);
 
       paidStorageReport.push(...avrgStorageDataForEachSku);
       weeklyFinancialReport.push(...skus);
@@ -38,10 +28,6 @@ var aggregateWeeklyFinancialReports = (weeklyFinancialReports, paidStorageReport
       var { skus } = aggregateSkuData(workSheet, skuNamesAndIds, reportId, requiredColumnsName, dateFrom, dateTo);
       weeklyFinancialReport.push(...skus);
     }
-  }
-
-  if (weeklyFinancialReports.length > 1) {
-    weeklyFinancialReport[0].reportType = buybackReportType;
   }
 
   return { weeklyFinancialReport, paidStorageReport };
