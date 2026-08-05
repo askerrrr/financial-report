@@ -42,7 +42,7 @@ var getReportsByUserId = async (collection, userId, session, selectedFields, rep
     return { reports };
   }
 
-  var data = await collection.findOne({ userId }, null, { session, session });
+  var data = await collection.findOne({ userId }, null, { session: session });
 
   return { reports: data.toObject().reports };
 };
