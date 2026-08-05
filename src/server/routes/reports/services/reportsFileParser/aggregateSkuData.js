@@ -1,6 +1,8 @@
 import calculateAvrgStorageCostForEachReportItem from "./calculateAvrgStorageCostForEachReportItem.js";
 
 var mainReportType = 1;
+var buybackReportType = 2;
+var eaeuCountries = ["Армения", "Беларусь", "Казахстан", "Кыргызстан"];
 
 var aggregateSkuData = (workSheet, skuNamesAndIds, reportId, requiredColumnsName, dateFrom, dateTo, avrgStorageCostForEachItem = 0) => {
   var skus = [];
@@ -18,6 +20,7 @@ var aggregateSkuData = (workSheet, skuNamesAndIds, reportId, requiredColumnsName
 
       var qtyCellAddress = requiredColumnsName.qtyColumn + rowNum;
       var finesCellAddress = requiredColumnsName.finesColumn + rowNum;
+      var countryCellAddress = requiredColumnsName.countryColumn + rowNum;
       var saleDateCellAddress = requiredColumnsName.saleDateColumn + rowNum;
       var orderDateCellAddress = requiredColumnsName.orderDateColumn + rowNum;
       var retailPriceCellAddress = requiredColumnsName.retailPriceColumn + rowNum;
@@ -26,11 +29,10 @@ var aggregateSkuData = (workSheet, skuNamesAndIds, reportId, requiredColumnsName
       var retailAmountCellAddress = requiredColumnsName.retailAmountColumn + rowNum;
       var returnAmountCellAddress = requiredColumnsName.returnAmountColumn + rowNum;
       var deliveryCostCellAddress = requiredColumnsName.deliveryCostColumn + rowNum;
+      var paidAcceptanceCellAddress = requiredColumnsName.paidAcceptanceColumn + rowNum;
       var additionalPaymentCellAddress = requiredColumnsName.additionalPaymentColumn + rowNum;
       var deductionOrPaymentCellAddress = requiredColumnsName.deductionOrPaymentColumn + rowNum;
-      var paidAcceptanceCellAddress = requiredColumnsName.paidAcceptanceColumn + rowNum;
 
-      sku.reportType = mainReportType;
       sku.paidStorage = avrgStorageCostForEachItem;
       sku.quantity = workSheet.getCell(qtyCellAddress).value || 0;
       sku.penalty = workSheet.getCell(finesCellAddress).value || 0;
@@ -43,6 +45,9 @@ var aggregateSkuData = (workSheet, skuNamesAndIds, reportId, requiredColumnsName
       sku.deduction = workSheet.getCell(deductionOrPaymentCellAddress).value || 0;
       sku.paidAcceptance = workSheet.getCell(paidAcceptanceCellAddress).value || 0;
       sku.additionalPayment = workSheet.getCell(additionalPaymentCellAddress).value || 0;
+
+      var countryName = workSheet.getCell(countryCellAddress).value;
+      sku.reportType = eaeuCountries.includes(countryName) ? buybackReportType : mainReportType;
 
       skus.push(sku);
     }
