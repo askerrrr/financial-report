@@ -77,12 +77,15 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session, reports, isRep
     }
   }
 
-  var { listGoodsWithNewSkus } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearPeriod, startYear, endYear);
-  var { listGoodsWithUpdatedSkuMetrics } = await updateListGoodsMetrics(report, listGoodsWithNewSkus);
+  var { listGoodsWithNewSkus } = addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearPeriod, startYear, endYear);
+  var { listGoodsWithUpdatedSkuMetrics } = updateListGoodsMetrics(report, listGoodsWithNewSkus);
 
   await saveReportToDb(userId, report, session);
   await updateReportTree(userId, sortedYears, session);
-  await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
+
+  if (listGoodsWithUpdatedSkuMetrics.length) {
+    await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
+  }
 
   if (!isReportFromFile) {
     await setLastReportRequestTimestamp(userId, session);

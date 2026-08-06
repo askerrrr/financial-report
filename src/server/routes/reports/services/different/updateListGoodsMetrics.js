@@ -1,5 +1,8 @@
 import truncateNum from "../reportParsing/truncateNum.js";
 
+var startYearPropPostfix = "InCurrentYear";
+var endYearPropPostfix = "InNextYear";
+
 var aggregateSkuMetrics = (skuMetrics, sku, postfix = "") => {
   skuMetrics.qty += sku["qty" + postfix];
   skuMetrics.tax += sku["tax" + postfix];
@@ -21,9 +24,10 @@ var aggregateSkuMetrics = (skuMetrics, sku, postfix = "") => {
   return skuMetrics;
 };
 
-var updateListGoodsMetrics = async (report, listGoods) => {
-  var startYearPropPostfix = "InCurrentYear";
-  var endYearPropPostfix = "InNextYear";
+var updateListGoodsMetrics = (report, listGoods) => {
+  if (!report.skus.length || !listGoods.length) {
+    return { listGoodsWithUpdatedSkuMetrics: [] };
+  }
 
   if (report.isCrossYearPeriod) {
     var startYear = +report.dateFrom.split("-")[0];
