@@ -65,8 +65,9 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session, reports, isRep
   report.userId = userId;
   report.dateFrom = dateFrom;
   report.reportId = reportId;
-  report.isCrossYearPeriod = isCrossYearPeriod;
+  report.reportIsEmpty = report.skus.length;
   report.schemaVersion = reportSchemaVersion;
+  report.isCrossYearPeriod = isCrossYearPeriod;
   report.recordedTo = { year, month, schemaVersion: recordedToSchemaVersion };
 
   var { listGoods } = await getListGoodsFromDb(userId, session);
