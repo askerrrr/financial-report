@@ -175,6 +175,7 @@ var reportSchema = new Schema(
     totalProfitMarginInNextYear: nonRequiredNumberOptions,
     isFinancesAccounted: { type: Boolean, default: false },
     skus: [{ type: skuSchema, required: true }],
+    reportIsEmpty: { type: Boolean, default: false },
   },
   { _id: false },
 );
