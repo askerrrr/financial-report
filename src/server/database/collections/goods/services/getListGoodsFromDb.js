@@ -34,11 +34,11 @@ var getListGoodsFromDb = async (collection, userId, skuNames, session) => {
       { ...sessionOption },
     );
 
-    return { listGoods: data[0].listGoods };
+    return { listGoods: data.length ? data[0].listGoods : [] };
   } else {
     var data = await collection.findOne({ userId }, null, { ...sessionOption });
 
-    return { listGoods: data.listGoods.toObject() };
+    return { listGoods: data.length ? data.listGoods.toObject() : [] };
   }
 };
 
