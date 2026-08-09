@@ -30,18 +30,24 @@ var recalculateMetrics = (skuMetrics, sku, postfix = "") => {
 };
 
 var recalculateSkuMetricsAfterReportDeletion = (startYear, endYear, listGoods, report) => {
+  if (!listGoods.length || !listGoods) {
+    return { listGoodsWithRecalculatedSkuMetrics: [] };
+  }
+
   for (var sku of report.skus) {
     var skuFromListGoods = listGoods.find((i) => i.id === sku.id && i.skuName === sku.skuName);
 
-    if (report.isCrossYearPeriod) {
-      var startYearMetrics = skuFromListGoods.metrics.find((i) => i.year === startYear);
-      var endYearMetrics = skuFromListGoods.metrics.find((i) => i.year === endYear);
+    if (skuFromListGoods) {
+      if (report.isCrossYearPeriod) {
+        var startYearMetrics = skuFromListGoods.metrics.find((i) => i.year === startYear);
+        var endYearMetrics = skuFromListGoods.metrics.find((i) => i.year === endYear);
 
-      startYearMetrics = recalculateMetrics(startYearMetrics, sku, startYearPostfix);
-      endYearMetrics = recalculateMetrics(endYearMetrics, sku, endYearPostfix);
-    } else {
-      var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === startYear);
-      skuMetrics = recalculateMetrics(skuMetrics, sku);
+        startYearMetrics = recalculateMetrics(startYearMetrics, sku, startYearPostfix);
+        endYearMetrics = recalculateMetrics(endYearMetrics, sku, endYearPostfix);
+      } else {
+        var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === startYear);
+        skuMetrics = recalculateMetrics(skuMetrics, sku);
+      }
     }
   }
 

@@ -1,11 +1,13 @@
 var deleteReportFromDb = async (collection, userId, reportId, session) => {
-  var doc = await collection.findOneAndUpdate(
+  var { reports } = await collection.findOneAndUpdate(
     { userId },
     { $pull: { reports: { reportId }, reportsWithAccountedFinances: { reportId } } },
     { returnDocument: "before", session: session },
   );
 
-  return { reportBeforeDeletion: doc.reports[0].toObject() };
+  var reportBeforeDeletion = reports.find((report) => report.reportId === reportId).toObject();
+
+  return { reportBeforeDeletion };
 };
 
 export default deleteReportFromDb;
