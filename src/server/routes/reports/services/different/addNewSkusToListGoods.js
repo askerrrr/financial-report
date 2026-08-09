@@ -1,6 +1,10 @@
 import addDefaultMetricsToSku from "./addDefaultMetricsToSku.js";
 
-var addNewSkusToListGoods = async (listGoods, skusFromFinancialReports, isCrossYearPeriod, startYear, endYear) => {
+var addNewSkusToListGoods = (listGoods, skusFromFinancialReports, isCrossYearPeriod, startYear, endYear) => {
+  if (!listGoods.length) {
+    return { listGoodsWithNewSkus: [] };
+  }
+
   var metrics = [];
 
   for (var { name, id } of skusFromFinancialReports) {

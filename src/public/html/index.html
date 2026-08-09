@@ -19,6 +19,7 @@
         <button id="wb-token-page" onclick="window.location.href = '/wbtoken'">Токен</button>
         <button id="period-button">Загрузить отчёты с токеном</button>
         <button id="upload-files-btn">Загрузить отчёты файлами</button>
+        <button onclick="window.open('https://t.me/wbreportscanner', '_blank')">Вступить в группу Telegram</button>
       </div>
       <button id="logout-button" class="logout-button">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -31,5 +32,10 @@
     <div hidden id="report-loading-state-panel"></div>
     <div id="years_container" class="details"></div>
     <script src="/js/index/index.js" type="module"></script>
+    <script>
+      if (window.innerWidth < 768) {
+        alert("В настоящий момент сайт для\nмобильного устройства не адаптирован.\n\nПожалуйста, воспользуйтесь десктопным устройством.\n\nСпасибо.");
+      }
+    </script>
   </body>
 </html>

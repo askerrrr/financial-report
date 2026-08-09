@@ -178,7 +178,7 @@ button:active {
   border-bottom: 1px solid rgba(73, 80, 87, 0.6);
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   padding: 0 24px;
   z-index: 1000;
   box-shadow: 0 6.4px 24px rgba(0, 0, 0, 0.5);
@@ -186,11 +186,12 @@ button:active {
 
 .top-actions {
   display: flex;
-  gap: 8px;
+  gap: 28px;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
-  padding-right: 44px;
+  justify-content: center;
+  padding: 0;
+  margin: 0 auto;
 }
 
 #upload-form {
@@ -923,7 +924,7 @@ button:active {
   }
 
   .top-actions {
-    gap: 11.2px;
+    gap: 28px;
   }
 
   .top-actions button {

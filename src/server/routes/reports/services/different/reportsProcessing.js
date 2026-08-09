@@ -65,8 +65,9 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session, reports, isRep
   report.userId = userId;
   report.dateFrom = dateFrom;
   report.reportId = reportId;
-  report.isCrossYearPeriod = isCrossYearPeriod;
+  report.reportIsEmpty = !report.skus.length;
   report.schemaVersion = reportSchemaVersion;
+  report.isCrossYearPeriod = isCrossYearPeriod;
   report.recordedTo = { year, month, schemaVersion: recordedToSchemaVersion };
 
   var { listGoods } = await getListGoodsFromDb(userId, session);
@@ -77,12 +78,15 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session, reports, isRep
     }
   }
 
-  var { listGoodsWithNewSkus } = await addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearPeriod, startYear, endYear);
-  var { listGoodsWithUpdatedSkuMetrics } = await updateListGoodsMetrics(report, listGoodsWithNewSkus);
+  var { listGoodsWithNewSkus } = addNewSkusToListGoods(listGoods, skuNamesAndIds, isCrossYearPeriod, startYear, endYear);
+  var { listGoodsWithUpdatedSkuMetrics } = updateListGoodsMetrics(report, listGoodsWithNewSkus);
 
   await saveReportToDb(userId, report, session);
   await updateReportTree(userId, sortedYears, session);
-  await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
+
+  if (listGoodsWithUpdatedSkuMetrics.length) {
+    await saveListGoodsToDb(userId, listGoodsWithUpdatedSkuMetrics, session);
+  }
 
   if (!isReportFromFile) {
     await setLastReportRequestTimestamp(userId, session);
