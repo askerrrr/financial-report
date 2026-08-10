@@ -11,7 +11,7 @@ import addReportToEmptyReportPeriods from "./services/addReportToEmptyReportPeri
 import updateReportLoadingStoppedStatus from "./services/updateReportLoadingStoppedStatus.js";
 
 var reportLoadingStatesCollectionServices = {
-  getEmptyReportPeriods: (userId) => getEmptyReportPeriods(reportLoadingStatesCollection, userId),
+  getEmptyReportPeriods: (userId, session) => getEmptyReportPeriods(reportLoadingStatesCollection, userId, session),
   getReportLoadingState: (userId, session, selectedFields) => getReportLoadingState(reportLoadingStatesCollection, userId, session, selectedFields),
   deleteReportLoadingStates: (userId, session) => deleteReportLoadingStates(reportLoadingStatesCollection, userId, session),
   prependToReportsQueue: (userId, dateFrom, dateTo) => prependToReportsQueue(reportLoadingStatesCollection, userId, dateFrom, dateTo),
