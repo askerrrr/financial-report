@@ -22,13 +22,13 @@ var main = async () => {
   document.getElementById("mandatory-insurance-fee").placeholder = "сейчас сумма равна " + mandatoryInsuranceFee + "р.";
   document.getElementById("mandatory-insurance-fee-rate").placeholder = "сейчас процент равен " + mandatoryInsuranceFeeRate;
 
-  await createTaxTable(taxParams);
+  createTaxTable(taxParams);
 
-  await taxRateHandler();
-  await mandatoryInsuranceFeeHandler();
-  await mandatoryInsuranceRateHandler();
-  await handleTaxYearSelection(taxParams);
-  await insertTaxYearsToSelectElem(taxParams);
+  taxRateHandler();
+  mandatoryInsuranceFeeHandler();
+  mandatoryInsuranceRateHandler();
+  handleTaxYearSelection(taxParams);
+  insertTaxYearsToSelectElem(taxParams);
 };
 
 main();

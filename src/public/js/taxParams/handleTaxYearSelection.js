@@ -1,7 +1,7 @@
-var handleTaxYearSelection = async (taxParams) => {
+var handleTaxYearSelection = (taxParams) => {
   var select = document.getElementById("tax-year");
 
-  select.onchange = async (e) => {
+  select.onchange = (e) => {
     var options = document.querySelectorAll("option");
 
     for (var option of options) {
