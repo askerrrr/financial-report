@@ -6,6 +6,7 @@ import resetAbandonedReports from "./services/resetAbandonedReports.js";
 import prependToReportsQueue from "./services/prependToReportsQueue.js";
 import deleteReportLoadingStates from "./services/deleteReportLoadingStates.js";
 import setLastReportRequestTimestamp from "./services/setLastReportRequestTimestamp.js";
+import addReportToEmptyReportPeriods from "./services/addReportToEmptyReportPeriods.js";
 import updateReportLoadingStoppedStatus from "./services/updateReportLoadingStoppedStatus.js";
 
 var reportLoadingStatesCollectionServices = {
@@ -13,6 +14,9 @@ var reportLoadingStatesCollectionServices = {
   deleteReportLoadingStates: (userId, session) => deleteReportLoadingStates(reportLoadingStatesCollection, userId, session),
   prependToReportsQueue: (userId, dateFrom, dateTo) => prependToReportsQueue(reportLoadingStatesCollection, userId, dateFrom, dateTo),
   setLastReportRequestTimestamp: (userId, session) => setLastReportRequestTimestamp(reportLoadingStatesCollection, userId, session),
+
+  addReportToEmptyReportPeriods: (userId, dateFrom, dateTo, session) =>
+    addReportToEmptyReportPeriods(reportLoadingStatesCollection, userId, dateFrom, dateTo, session),
 
   pushToReportsQueue: (userId, periods, session, needToResetAbandonedReports) =>
     pushToReportsQueue(reportLoadingStatesCollection, userId, periods, session, needToResetAbandonedReports),

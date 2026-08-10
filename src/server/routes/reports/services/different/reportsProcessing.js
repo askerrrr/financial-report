@@ -14,8 +14,8 @@ var { getWBTokenByUserId } = dbutils.tokenCollectionServices;
 var { saveReportToDb } = dbutils.reportCollectionServices;
 var { getListGoodsFromDb, saveListGoodsToDb } = dbutils.goodsCollectionServices;
 var { getReportTree, updateReportTree } = dbutils.reportsTreeCollectionServices;
-var { setLastReportRequestTimestamp } = dbutils.reportLoadingStatesCollectionServices;
 var { addNewTaxYearToDb, changeTaxParamsToDb } = dbutils.taxParamsCollectionServices;
+var { setLastReportRequestTimestamp, addReportToEmptyReportPeriods } = dbutils.reportLoadingStatesCollectionServices;
 
 var updateLastUsedTimestampNow = true;
 var invalidTokenErrorMsg = "Invalid Token";
@@ -36,15 +36,11 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session, reports, isRep
     reports = await wbapi.getReports(userId, dateFrom, dateTo, token);
   }
 
+  var reportPeriodIsEmpty = false;
   var startYear = +dateFrom.split("-")[0];
   var endYear = +dateTo.split("-")[0];
   var isCrossYearPeriod = startYear !== endYear;
   var { reportId } = reports.weeklyFinancialReport[0];
-
-  var { reportTree } = await getReportTree(userId, session);
-
-  var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
-  var sortedYears = sortYearsTree(years);
 
   if (isCrossYearPeriod) {
     var startYearTaxParams = await addNewTaxYearToDb(userId, startYear, session);
@@ -52,14 +48,31 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session, reports, isRep
     var taxParams = { startYearTaxParams, endYearTaxParams };
 
     var { report, skuNamesAndIds, recalculatedTaxParams } = await parseReports(reports, taxParams, isCrossYearPeriod);
+    reportPeriodIsEmpty = !report.skus.length;
 
-    await changeTaxParamsToDb(userId, session, recalculatedTaxParams.startYearTaxParams, recalculatedTaxParams.endYearTaxParams);
+    if (!reportPeriodIsEmpty) {
+      await changeTaxParamsToDb(userId, session, recalculatedTaxParams.startYearTaxParams, recalculatedTaxParams.endYearTaxParams);
+    }
   } else {
-    var taxParams = await addNewTaxYearToDb(userId, year, session);
+    var taxParams = await addNewTaxYearToDb(userId, startYear, session);
     var { report, skuNamesAndIds, recalculatedTaxParams } = await parseReports(reports, taxParams);
 
-    await changeTaxParamsToDb(userId, session, recalculatedTaxParams);
+    reportPeriodIsEmpty = !report.skus.length;
+
+    if (!reportPeriodIsEmpty) {
+      await changeTaxParamsToDb(userId, session, recalculatedTaxParams);
+    }
   }
+
+  if (reportPeriodIsEmpty) {
+    await addReportToEmptyReportPeriods(userId, dateFrom, dateTo, session);
+    return { reportPeriodIsEmpty, reportData: {} };
+  }
+
+  var { reportTree } = await getReportTree(userId, session);
+
+  var { years, year, month } = await insertReportToReportTree(dateFrom, dateTo, reportId, reportTree);
+  var sortedYears = sortYearsTree(years);
 
   report.dateTo = dateTo;
   report.userId = userId;
@@ -92,7 +105,7 @@ var reportsProcessing = async (userId, dateFrom, dateTo, session, reports, isRep
     await setLastReportRequestTimestamp(userId, session);
   }
 
-  return { reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount };
+  return { reportPeriodIsEmpty, reportData: { reportId, year, month, dateFrom, dateTo, totalTaxAmount: report.totalTaxAmount } };
 };
 
 export default reportsProcessing;

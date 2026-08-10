@@ -5,12 +5,14 @@ import getWeeklyFinancialReportFromWBAPI from "./getWeeklyFinancialReportFromWBA
 import checkPaidStorageReportCreationStatus from "./checkPaidStorageReportCreationStatus.js";
 import getPaidStorageReportByTaskIdFromWBAPI from "./getPaidStorageReportByTaskIdFromWBAPI.js";
 
+var catNotCreatePaidStorageReportTaskMsg = "Не удалось создать отчет о платном хранении";
+
 var getReports = async (userId, dateFrom, dateTo, token) => {
   var { taskId } = await createPaidStorageReportTask(dateFrom, dateTo, token, userId);
   var { statusIsDone } = await checkPaidStorageReportCreationStatus(taskId, token, userId);
 
   if (!statusIsDone) {
-    throw new WBAPIError(userId, 304, "can not create paid storage report task");
+    throw new WBAPIError(userId, 304, catNotCreatePaidStorageReportTaskMsg);
   }
 
   var [weeklyFinancialReport, paidStorageReport, advertisingReport] = await Promise.all([
@@ -18,10 +20,6 @@ var getReports = async (userId, dateFrom, dateTo, token) => {
     getPaidStorageReportByTaskIdFromWBAPI(taskId, token, userId),
     getAdvertisingCostsReportFromWBAPI(dateFrom, dateTo, token, userId),
   ]);
-
-  if ([weeklyFinancialReport, paidStorageReport, advertisingReport].every((i) => !i.length)) {
-    throw new WBAPIError(userId, 404, "Нет отчетов за выбранный период");
-  }
 
   return { weeklyFinancialReport, paidStorageReport, advertisingReport };
 };

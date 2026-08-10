@@ -10,8 +10,9 @@ var saveReports = async (req, res, next) => {
   try {
     var session = await dbClient.startSession(sessionOptions);
     await session.withTransaction(async () => {
-      var reportData = await reportsProcessing(userId, dateFrom, dateTo, session);
-      return res.json(reportData);
+      var { reportData, reportPeriodIsEmpty } = await reportsProcessing(userId, dateFrom, dateTo, session);
+
+      return reportPeriodIsEmpty ? res.sendStatus(204) : res.json({ reportData });
     });
   } catch (e) {
     throw e;

@@ -25,7 +25,7 @@ var queueItemSchema = new Schema(
 
 var emptyReportPeriodItemSchema = new Schema(
   {
-    index: { type: Number, required: true },
+    index: { type: Number, required: false },
     dateTo: { type: String, required: true },
     dateFrom: { type: String, required: true },
   },
