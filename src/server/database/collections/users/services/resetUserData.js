@@ -16,9 +16,9 @@ var defaultReportLoadingState = {
   isReportLoadingDelayed: false,
   isReportLoadingIsStopped: false,
   loadingStopReason: "",
-  emptyReportPeriodsIndexes: [],
   reportsQueue: [],
   abandonedReports: [],
+  emptyReportPeriods: [],
 };
 
 var resetUserData = async (userId) => {

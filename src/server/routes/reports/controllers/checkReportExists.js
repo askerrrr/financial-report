@@ -1,9 +1,19 @@
-import dbUtils from '../../../database/collections/index.js'
+import dbUtils from "../../../database/collections/index.js";
 import checkReportExistsInTree from "../services/different/checkReportExistsInTree.js";
+
+var { getReportTree } = dbUtils.reportsTreeCollectionServices;
+var { getEmptyReportPeriods } = dbUtils.reportLoadingStatesCollectionServices;
 
 var checkReportExists = async (req, res, next) => {
   var { dateFrom, userId } = req.body;
-  var { getReportTree } = dbUtils.reportsTreeCollectionServices;
+
+  var { emptyReportPeriods } = await getEmptyReportPeriods(userId);
+
+  var emptyReportPeriodIsExist = emptyReportPeriods.find((item) => item.dateFrom === dateFrom);
+
+  if (emptyReportPeriodIsExist) {
+    return res.sendStatus(204);
+  }
 
   var { reportTree } = await getReportTree(userId);
   var { reportIsExist } = checkReportExistsInTree(dateFrom, reportTree);
