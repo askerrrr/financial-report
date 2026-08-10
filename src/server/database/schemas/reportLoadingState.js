@@ -16,8 +16,8 @@ var lastLoadedReportSchema = new Schema(
 var queueItemSchema = new Schema(
   {
     index: { type: Number, required: true },
-    dateTo: { type: String, required: true },
     dateFrom: { type: String, required: true },
+    dateTo: { type: String, required: true },
     failedCount: { type: Number, required: true, default: 0, min: 0, max: 3 },
   },
   { _id: false },

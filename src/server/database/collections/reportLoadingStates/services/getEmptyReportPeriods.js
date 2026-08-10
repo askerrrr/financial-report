@@ -1,5 +1,7 @@
-var getEmptyReportPeriods = async (collection, userId) => {
-  var data = await collection.findOne({ userId }).select("emptyReportPeriods");
+var getEmptyReportPeriods = async (collection, userId, session) => {
+  var sessionOptions = session ? { session } : {};
+
+  var data = await collection.findOne({ userId }, null, { ...sessionOptions }).select("emptyReportPeriods");
   return { emptyReportPeriods: data?.emptyReportPeriods || [] };
 };
 
