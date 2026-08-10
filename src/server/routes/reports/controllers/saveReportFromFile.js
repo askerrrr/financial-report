@@ -8,12 +8,13 @@ import extractReportsFileBufferFromZip from "../services/reportsFileParser/extra
 import extractReportDataFromWorkSheets from "../services/reportsFileParser/extractReportDataFromWorkSheets.js";
 
 var { getReportTree } = dbUtils.reportsTreeCollectionServices;
+var { getEmptyReportPeriods, addReportToEmptyReportPeriods } = dbUtils.reportLoadingStatesCollectionServices;
 
 var isReportFromFile = true;
 
 var saveReportFromFile = async (req, res, next) => {
   var { userId } = req.body;
-  
+
   var { deduplicatedFiles } = removeDublicateFiles(req.files);
 
   var { weeklyFinancialReportsBuffer, paidStorageReportsBuffer } = await extractReportsFileBufferFromZip(deduplicatedFiles);
@@ -26,16 +27,28 @@ var saveReportFromFile = async (req, res, next) => {
   try {
     await session.withTransaction(async () => {
       var { reportTree } = await getReportTree(userId, session);
+      var { emptyReportPeriods } = await getEmptyReportPeriods(userId, session);
 
       for (var { dateFrom, dateTo, reportId, onePeriodReports } of workSheets) {
-        var { reportIsExist } = checkReportExistsInTree(dateFrom, reportTree);
+        var reportExistInEmptyReportPeriods = emptyReportPeriods.find((item) => item.dateFrom === dateFrom);
 
-        if (!reportIsExist) {
-          var { reports, reportPeriodIsEmpty } = await extractReportDataFromWorkSheets(userId, onePeriodReports);
+        if (!reportExistInEmptyReportPeriods) {
+          var { reportIsExist } = checkReportExistsInTree(dateFrom, reportTree);
 
-          if (!reportPeriodIsEmpty) {
-            var reportData = await reportsProcessing(userId, dateFrom, dateTo, session, reports, isReportFromFile);
-            reportsData.push(reportData);
+          if (!reportIsExist) {
+            var { reports, reportPeriodIsEmpty } = await extractReportDataFromWorkSheets(userId, onePeriodReports);
+
+            if (!reportPeriodIsEmpty) {
+              var resultOfReportProcessing = await reportsProcessing(userId, dateFrom, dateTo, session, reports, isReportFromFile);
+
+              if (resultOfReportProcessing.reportPeriodIsEmpty) {
+                await addReportToEmptyReportPeriods(userId, dateFrom, dateTo, session);
+              } else {
+                reportsData.push(resultOfReportProcessing.reportData);
+              }
+            } else {
+              await addReportToEmptyReportPeriods(userId, dateFrom, dateTo, session);
+            }
           }
         }
       }
