@@ -1,7 +1,4 @@
-import Joi from "joi";
-import dbUtils from '../../../database/collections/index.js'
-
-var schema = Joi.object({ userId: Joi.string().required(), reportIds: Joi.array().items(Joi.number().required()).required() });
+import dbUtils from "../../../database/collections/index.js";
 
 var projectonFields = [
   "reports.reportId",
@@ -13,12 +10,6 @@ var projectonFields = [
 
 var getReports = async (req, res, next) => {
   var { userId, reportIds } = req.body;
-
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
 
   var { getReportsByUserId } = dbUtils.reportCollectionServices;
 
