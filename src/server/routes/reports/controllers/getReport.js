@@ -1,17 +1,8 @@
-import Joi from "joi";
 import dbUtils from "../../../database/collections/index.js";
 import collectImagesAsBase64 from "../services/different/collectImagesAsBase64.js";
 import filterCostsForReportSkus from "../services/different/filterCostsForReportSkus.js";
 
-var schema = Joi.object({ userId: Joi.string().required(), reportId: Joi.number().required() });
-
 var getReport = async (req, res, next) => {
-  var { error } = schema.validate(req.params);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
   var { userId, reportId } = req.params;
 
   var { getReportById } = dbUtils.reportCollectionServices;

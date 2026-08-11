@@ -1,6 +1,6 @@
 import multer from "multer";
 import { Router } from "express";
-import schemas from "./JoiSchemas/index.js";
+import * as joiSchemas from "./JoiSchemas/index.js";
 import fileFilter from "./services/fileFilter/index.js";
 import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
 
@@ -25,6 +25,7 @@ import resumeAbandonedReportsLoading from "./controllers/resumeAbandonedReportsL
 import changeFinancialAccountingStatus from "./controllers/changeFinancialAccountingStatus.js";
 
 var maxReportFilesCount = 15;
+var needToValidateReqParams = true;
 
 var storage = multer.memoryStorage();
 var upload = multer({ storage, fileFilter });
@@ -32,26 +33,26 @@ var upload = multer({ storage, fileFilter });
 var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/:id", getReportPage);
-router.get("/:userId/:reportId", getReport);
-router.post("/", joiSchemaValidator(schemas.saveReports), reportLoadDelegate, checkReportExists, checkReportsLoadingProgress, saveReports);
-router.delete("/", joiSchemaValidator(schemas.deleteReport), deleteReport);
+router.get("/:userId/:reportId", joiSchemaValidator(joiSchemas.getReportSchema, needToValidateReqParams), getReport);
+router.post("/", joiSchemaValidator(joiSchemas.saveReportsSchema), reportLoadDelegate, checkReportExists, checkReportsLoadingProgress, saveReports);
+router.delete("/", joiSchemaValidator(joiSchemas.deleteReportSchema), deleteReport);
 
-router.post("/as-zip/", joiSchemaValidator(schemas.downloadReportsAsZip), downloadReportsAsZip);
-router.post("/as-xlsx/", joiSchemaValidator(schemas.downloadReportAsXLSX), downloadReportAsXLSX);
+router.post("/as-zip/", joiSchemaValidator(joiSchemas.downloadReportsAsZipSchema), downloadReportsAsZip);
+router.post("/as-xlsx/", joiSchemaValidator(joiSchemas.downloadReportAsXLSXSchema), downloadReportAsXLSX);
 
-router.get("/loading-state/:userId/", getReportLoadingState);
-router.post("/loading-state/abandoned/", joiSchemaValidator(schemas.resumeAbandonedReportsLoading), resumeAbandonedReportsLoading);
+router.get("/loading-state/:userId/", joiSchemaValidator(joiSchemas.getReportLoadingStateSchema, needToValidateReqParams), getReportLoadingState);
+router.post("/loading-state/abandoned/", joiSchemaValidator(joiSchemas.resumeAbandonedReportsLoadingSchema), resumeAbandonedReportsLoading);
 router.post("/files", upload.array("file", maxReportFilesCount), saveReportFromFile);
 
-router.patch("/skus/cost-price", joiSchemaValidator(schemas.setCostPriceToSku), setCostPriceToSku);
-router.patch("/skus/cost-prices", joiSchemaValidator(schemas.setCostPriceToSkus), setCostPriceToSkus);
-router.patch("/skus/other-expenses", joiSchemaValidator(schemas.setOtherExpensesToSku), setOtherExpensesToSku);
+router.patch("/skus/cost-price", joiSchemaValidator(joiSchemas.setCostPriceToSkuSchema), setCostPriceToSku);
+router.patch("/skus/cost-prices", joiSchemaValidator(joiSchemas.setCostPriceToSkusSchema), setCostPriceToSkus);
+router.patch("/skus/other-expenses", joiSchemaValidator(joiSchemas.setOtherExpensesToSkuSchema), setOtherExpensesToSku);
 
-router.patch("/financial-accounting-status/", joiSchemaValidator(schemas.changeFinancialAccountingStatus), changeFinancialAccountingStatus);
+router.patch("/financial-accounting-status/", joiSchemaValidator(joiSchemas.changeFinancialAccountingStatusSchema), changeFinancialAccountingStatus);
 
 router.delete("/delete_all_reporting_periods/:userId", deleteReportsTree);
 
 router.post("/image/", upload.single("sku-photo"), skuPhotoUpload);
-router.delete("/image/", joiSchemaValidator(schemas.deleteImage), deleteImage);
+router.delete("/image/", joiSchemaValidator(joiSchemas.deleteImageSchema), deleteImage);
 
 export default router;
