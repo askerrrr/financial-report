@@ -13,7 +13,7 @@ var userId = document.cookie.split("=")[1];
 var main = async () => {
   var { taxParams } = await getTaxParams(userId);
 
-  if (taxParams.length == 0) {
+  if (!taxParams.length) {
     return;
   }
 
@@ -26,9 +26,9 @@ var main = async () => {
 
   createTaxTable(taxParams);
 
-  taxRateHandler();
-  mandatoryInsuranceFeeHandler();
-  mandatoryInsuranceRateHandler();
+  taxRateHandler(userId);
+  mandatoryInsuranceFeeHandler(userId);
+  mandatoryInsuranceRateHandler(userId);
   handleTaxYearSelection(taxParams);
   insertTaxYearsToSelectElem(taxParams);
 };
