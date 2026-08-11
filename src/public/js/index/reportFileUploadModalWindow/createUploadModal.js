@@ -12,6 +12,17 @@ var paidStorageReportFileName = "Отчёт по платному хранени
 var weeklyFinancialReportFileName = "Еженедельный детализированный отчет №";
 var allowedFileMimeTypes = ["application/zip", "application/x-zip-compressed", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
 
+var isDecodeReportWithoutRegistrationPage = () => {
+  var sources = [];
+  var folderName = "decodeReportWithoutRegistration";
+
+  for (var { src } of document.scripts) {
+    sources.push(src);
+  }
+
+  return sources.every((src) => src.split("/")[4] === folderName);
+};
+
 var closeModal = () => {
   selectedFiles = [];
 
@@ -109,7 +120,7 @@ function handleFiles(files) {
   var count = 0;
   var validFiles = [];
 
-  if (window.location.pathname === "/decode-report-without-registration/") {
+  if (isDecodeReportWithoutRegistrationPage()) {
     var paidStorageReportAdded = false;
     var weeklyFinancialReportAdded = false;
 
@@ -228,7 +239,7 @@ var createUploadBtn = () => {
 
     selectedFiles.forEach((file) => formData.append("file", file));
 
-    if (window.location.pathname === "/decode-report-without-registration/") {
+    if (isDecodeReportWithoutRegistrationPage()) {
       url = "/decode-report-without-registration/files";
     }
 
@@ -243,7 +254,7 @@ var createUploadBtn = () => {
     hideSpinner();
 
     if (res.status === 200) {
-      if (window.location.pathname === "/decode-report-without-registration/") {
+      if (isDecodeReportWithoutRegistrationPage()) {
         var { report, reportPeriodIsEmpty } = await res.json();
         if (reportPeriodIsEmpty) {
           alert("Отчётный период пуст");
@@ -287,7 +298,7 @@ var createModalFooterButtons = () => {
 var createUploadModalBodyDescription = () => {
   var uploaderModalBodyDescription;
 
-  if (window.location.pathname === "/decode-report-without-registration/") {
+  if (isDecodeReportWithoutRegistrationPage()) {
     uploaderModalBodyDescription = `
     <div class="upload-description">
             <p class="upload-description-text">
