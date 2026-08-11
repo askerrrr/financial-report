@@ -8,8 +8,10 @@ import mandatoryInsuranceRateHandler from "./mandatoryInsuranceRateHandler.js";
 
 import writeTaxParamsToLocalStorage from "./writeTaxParamsToLocalStorage.js";
 
+var userId = document.cookie.split("=")[1];
+
 var main = async () => {
-  var { taxParams } = await getTaxParams();
+  var { taxParams } = await getTaxParams(userId);
 
   if (taxParams.length == 0) {
     return;
