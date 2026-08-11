@@ -8,8 +8,7 @@ import reportFileUploadModalWindow from "./reportFileUploadModalWindow/index.js"
 
 var isMainPageLoad = true;
 var userId = document.cookie.split("=")[1];
-
-var main = async () => {
+var bootstrapUserPage = async () => {
   var { lastReports, reportTree, reportLoadingState, reportsWithAccountedFinances } = await getMainPageData(userId);
 
   createReportTree(userId, lastReports, reportTree);
@@ -23,4 +22,4 @@ var main = async () => {
   reportFileUploadModalWindow(userId);
 };
 
-main();
+bootstrapUserPage();
