@@ -21,6 +21,10 @@ var extractWorkSheetFromFile = async (weeklyFinancialReportsBuffer, paidStorageR
     await wb.xlsx.load(buffer);
     var workSheet = wb.getWorksheet(requiredWeeklyFinancialReportFileWorkSheetName);
 
+    if (!workSheet.actualColumnCount) {
+      continue;
+    }
+
     var { columnsNames } = generateColumnNames(workSheet.actualColumnCount);
     var { requiredColumnsName } = getRequiredColumnsNameFromWeeklyFinanfialReportFile(workSheet, columnsNames);
 
@@ -60,6 +64,10 @@ var extractWorkSheetFromFile = async (weeklyFinancialReportsBuffer, paidStorageR
       var wb = new ExcelJs.Workbook();
       await wb.xlsx.load(buffer);
       var workSheet = wb.getWorksheet(requiredPaidStorageReportFileWorkSheetName);
+
+      if (!workSheet.actualColumnCount) {
+        continue;
+      }
 
       var { columnsNames } = generateColumnNames(workSheet.actualColumnCount);
       var { requiredColumnsName } = getRequiredColumnsNameFromPaidStorageReportFile(workSheet, columnsNames);
