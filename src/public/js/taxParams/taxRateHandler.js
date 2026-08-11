@@ -1,34 +1,24 @@
-import getTaxParams from "./getTaxParams.js";
+import sendNewTaxParam from "./sendNewTaxParam.js";
 import getSelectedTaxYear from "./getSelectedTaxYear.js";
+import updateTaxParamsIntoLocalStorage from "./updateTaxParamsIntoLocalStorage.js";
+import getSelectedYearTaxParamsFromLocalStorage from "./getSelectedYearTaxParamsFromLocalStorage.js";
 
-var sendTaxRate = async (taxRate, recalculate, year) => {
-  var res = await fetch("/tax_params/taxrate", {
-    method: "POST",
-    body: JSON.stringify({ taxRate, recalculate, year }),
-    headers: { "Content-Type": "application/json" },
-  });
-
-  return res.ok;
-};
-
-var taxRateHandler = async () => {
+var taxRateHandler = () => {
   var input = document.getElementById("tax-rate");
 
-  var radioButton = document.getElementById(
-    "recalculate-all-reports-tax-amount"
-  );
+  var radioButton = document.getElementById("recalculate-all-reports-tax-amount");
 
   var button = document.getElementById("tax-rate-button");
 
   button.onclick = async (e) => {
     e.preventDefault();
 
-    var selectedYear = await getSelectedTaxYear();
-    var taxParams = await getTaxParams();
+    var selectedYear = getSelectedTaxYear();
+    var { selectedYearTaxParams } = getSelectedYearTaxParamsFromLocalStorage(selectedYear);
 
-    var yearTaxParams = taxParams.find((date) => date.year == selectedYear);
-    var currentTaxRate = yearTaxParams.taxRate;
-    var recalculate = radioButton.checked;
+    var currentTaxRate = selectedYearTaxParams.taxRate;
+
+    var reportsNeedRecalculation = radioButton.checked;
     var newTaxRate = +input.value;
 
     if (typeof newTaxRate === "number" && isNaN(newTaxRate)) {
@@ -43,7 +33,7 @@ var taxRateHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var success = await sendTaxRate(newTaxRate, recalculate, selectedYear);
+    var success = await sendNewTaxParam(selectedYear, reportsNeedRecalculation, selectedYearTaxParams, { taxRate: newTaxRate });
 
     input.value = "";
 
@@ -52,6 +42,8 @@ var taxRateHandler = async () => {
 
       var taxRateTdElement = document.getElementById("taxRate-" + selectedYear);
       taxRateTdElement.textContent = newTaxRate;
+
+      updateTaxParamsIntoLocalStorage(selectedYear, "taxRate", newTaxRate);
 
       return alert("Изменение успешно применено");
     }

@@ -1,24 +1,16 @@
-var { join } = require("node:path");
-var getImageToBase64 = require("./getImageToBase64");
+import s3 from "../s3/index.js";
 
 var collectImagesAsBase64 = async (userId, skus) => {
-  var array = [];
+  var skuImages = [];
 
-  for (var sku of skus) {
-    var { skuName } = sku;
+  for (var { skuName } of skus) {
+    var objectKey = "skuname=" + skuName + ";" + "userId=" + userId;
 
-    var fileName = skuName + ".png";
-
-    var userDir = "userId_" + userId;
-
-    var filePath = join("/var", "report_skus_photo", userDir, fileName);
-
-    var base64 = await getImageToBase64(filePath);
-
-    array.push({ skuName, base64 });
+    var base64 = await s3.getFile(objectKey);
+    skuImages.push({ skuName, base64 });
   }
 
-  return array;
+  return { skuImages };
 };
 
-module.exports = collectImagesAsBase64;
+export default collectImagesAsBase64;

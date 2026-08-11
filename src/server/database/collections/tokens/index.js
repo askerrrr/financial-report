@@ -1,14 +1,18 @@
-var { tokenCollection } = require("../../connections");
-var updateWBToken = require("./services/updateWBToken");
-var getWBTokenByUserId = require("./services/getWBTokenByUserId");
-var createTokenCollectionEntity = require("./services/createTokenCollectionEntity");
+import { tokenCollection } from "../../connections/index.js";
+
+import saveWBTokenToDb from "./services/saveWBTokenToDb.js";
+import removeTokenFromDb from "./services/removeTokenFromDb.js";
+import getWBTokenByUserId from "./services/getWBTokenByUserId.js";
+import updateLastUsedTimestamp from "./services/updateLastUsedTimestamp.js";
 
 var tokenCollectionServices = {
-  updateWBToken: (userId, token) => updateWBToken(tokenCollection, userId, token),
+  getWBTokenByUserId: (userId, session, updateLastUsedNow) => getWBTokenByUserId(tokenCollection, userId, session, updateLastUsedNow),
 
-  getWBTokenByUserId: (userId) => getWBTokenByUserId(tokenCollection, userId),
+  saveWBTokenToDb: (userId, token, session) => saveWBTokenToDb(tokenCollection, userId, token, session),
 
-  createTokenCollectionEntity: (userId) => createTokenCollectionEntity(tokenCollection, userId),
+  updateLastUsedTimestamp: (userId, session) => updateLastUsedTimestamp(tokenCollection, userId, session),
+
+  removeTokenFromDb: (userId) => removeTokenFromDb(tokenCollection, userId),
 };
 
-module.exports = tokenCollectionServices;
+export default tokenCollectionServices;

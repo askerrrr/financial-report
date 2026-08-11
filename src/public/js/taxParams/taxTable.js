@@ -1,42 +1,62 @@
-import createTdElement from "../report/row/services/createTdElement.js";
+import createTdElement from "../report/table/services/createTdElement.js";
 
-var createTaxTable = async (taxParams) => {
+var createTaxTable = (taxParams) => {
   var tbody = document.getElementById("tax-tbody");
 
-  for (var taxYear of taxParams) {
+  var sortedByYearTaxParams = taxParams.sort((a, b) => a.year - b.year);
+
+  for (var taxYear of sortedByYearTaxParams) {
     var tr = document.createElement("tr");
 
     var {
       year,
       taxRate,
+      finalProfit,
+      retailAmount,
+      paidTaxAmount,
+      taxableAmount,
       paidInsuranceFee,
       mandatoryInsuranceFee,
-      insuranceFeePercentage,
+      additionalInsuranceFee,
+      mandatoryInsuranceFeeRate,
     } = taxYear;
 
-    var yearTd = await createTdElement(year, "year-" + year);
-    var taxRateTd = await createTdElement(taxRate, "taxRate-" + year);
-    var mandatoryInsuranceFeeTd = await createTdElement(
-      mandatoryInsuranceFee,
-      "mandatoryInsuranceFee-" + year
-    );
+    var reportPeriodYearTdId = "year-" + year;
+    var reportPeriodYearTdId = createTdElement(year, reportPeriodYearTdId);
 
-    var insuranceFeePercentageTd = await createTdElement(
-      insuranceFeePercentage,
-      "insuranceFeePercentage-" + year
-    );
+    var taxRateTdId = "taxRate-" + year;
+    var taxRateTd = createTdElement(taxRate, taxRateTdId);
 
-    var paidInsuranceFeeTd = await createTdElement(
-      paidInsuranceFee,
-      "paidInsuranceFee-" + year
-    );
+    var insuranceFeeInfoElemId = "mandatoryInsuranceFee-" + year;
+    var insuranceFeeInfoContent = `${paidInsuranceFee} / ${mandatoryInsuranceFee}`;
+    var insuranceFeeInfoTdElem = createTdElement(insuranceFeeInfoContent, insuranceFeeInfoElemId);
+
+    var mandatoryInsuranceFeeRateTdId = "mandatoryInsuranceFeeRate-" + year;
+    var mandatoryInsuranceFeeRateTd = createTdElement(mandatoryInsuranceFeeRate, mandatoryInsuranceFeeRateTdId);
+
+    var retailAmountTd = createTdElement(retailAmount);
+    var taxableAmountTd = createTdElement(taxableAmount);
+
+    if (paidTaxAmount <= 0) {
+      paidTaxAmount = 0;
+    }
+
+    var paidTaxAmountTd = createTdElement(paidTaxAmount);
+
+    var additionalInsuranceFeeTd = createTdElement(additionalInsuranceFee);
+
+    var finalProfitTd = createTdElement(finalProfit);
 
     tr.append(
-      yearTd,
+      reportPeriodYearTdId,
       taxRateTd,
-      mandatoryInsuranceFeeTd,
-      paidInsuranceFeeTd,
-      insuranceFeePercentageTd
+      insuranceFeeInfoTdElem,
+      mandatoryInsuranceFeeRateTd,
+      retailAmountTd,
+      taxableAmountTd,
+      paidTaxAmountTd,
+      additionalInsuranceFeeTd,
+      finalProfitTd,
     );
     tbody.append(tr);
   }

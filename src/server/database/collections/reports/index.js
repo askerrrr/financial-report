@@ -1,32 +1,32 @@
-var { reportCollection } = require("../../connections/");
+import { reportCollection } from "../../connections/index.js";
 
-var getReportById = require("./services/getReportById");
-var saveReportToDb = require("./services/saveReportToDb");
-var saveUpdatedReport = require("./services/saveUpdatedReport");
-var saveUpdatedReports = require("./services/saveUpdatedReports");
-var deleteReportFromDb = require("./services/deleteReportFromDb");
-var createReportsEntity = require("./services/createReportsEntity");
-var getReportsByUserId = require("./services/getReportsByUserId");
-var updateReportPeriod = require("./services/updateReportPeriod");
-var deleteAllReportsByUserId = require("./services/deleteAllReportsByUserId");
+import getReportById from "./services/getReportById.js";
+import saveReportToDb from "./services/saveReportToDb.js";
+import saveUpdatedReport from "./services/saveUpdatedReport.js";
+import saveUpdatedReports from "./services/saveUpdatedReports.js";
+import deleteReportFromDb from "./services/deleteReportFromDb.js";
+import getReportsByUserId from "./services/getReportsByUserId.js";
+import addReportToAccounted from "./services/addReportToAccounted.js";
+import checkReportExistsToDb from "./services/checkReportExistsToDb.js";
+import removeReportFromAccounted from "./services/removeReportFromAccounted.js";
+import getAllDataFromReportCollection from "./services/getAllDataFromReportCollection.js";
 
 var reportCollectionServices = {
-  saveReportToDb: (userId, report) => saveReportToDb(reportCollection, userId, report),
+  addReportToAccounted: (userId, reportId) => addReportToAccounted(reportCollection, userId, reportId),
 
-  getReportById: (userId, reportId) => getReportById(reportCollection, userId, reportId),
+  getAllDataFromReportCollection: () => getAllDataFromReportCollection(reportCollection),
+  getReportById: (userId, reportId, session) => getReportById(reportCollection, userId, reportId, session),
+  getReportsByUserId: (userId, session, projectQuery, reportIds) => getReportsByUserId(reportCollection, userId, session, projectQuery, reportIds),
 
-  createReportsEntity: (userId) => createReportsEntity(reportCollection, userId),
-
-  getReportsByUserId: (userId, year) => getReportsByUserId(reportCollection, userId, year),
-
-  saveUpdatedReport: (userId, reportId, report) => saveUpdatedReport(reportCollection, userId, reportId, report),
-
+  saveReportToDb: (userId, report, session) => saveReportToDb(reportCollection, userId, report, session),
   saveUpdatedReports: (userId, reports) => saveUpdatedReports(reportCollection, userId, reports),
 
-  updateReportPeriod: (userId, reportId, period) => updateReportPeriod(reportCollection, userId, reportId, period),
+  saveUpdatedReport: (userId, reportId, report, session) => saveUpdatedReport(reportCollection, userId, reportId, report, session),
 
-  deleteReportFromDb: (userId, reportId) => deleteReportFromDb(reportCollection, userId, reportId),
+  checkReportExistsToDb: (userId, dateFrom, dateTo) => checkReportExistsToDb(reportCollection, userId, dateFrom, dateTo),
 
-  deleteAllReportsByUserId: (userId) => deleteAllReportsByUserId(reportCollection, userId),
+  removeReportFromAccounted: (userId, reportId) => removeReportFromAccounted(reportCollection, userId, reportId),
+  deleteReportFromDb: (userId, reportId, session) => deleteReportFromDb(reportCollection, userId, reportId, session),
 };
-module.exports = reportCollectionServices;
+
+export default reportCollectionServices;

@@ -1,18 +1,16 @@
-var { DatabaseError } = require("../../../../customError");
+var updateReportsTree = async (collection, userId, years, session) => {
+  var sessionOptions = session ? { session } : {};
 
-var updateReportsTree = async (collection, userId, years) => {
-  try {
-    var result = await collection.updateOne(
-      { userId },
-      {
-        $set: { years: years },
-      }
-    );
+  var result = await collection.updateOne(
+    { userId },
+    {
+      $set: { years: years },
+    },
+    {
+      ...sessionOptions,
+    },
+  );
 
-    return result.modifiedCount;
-  } catch (e) {
-    throw new DatabaseError(userId, e);
-  }
+  return result.modifiedCount;
 };
-
-module.exports = updateReportsTree;
+export default updateReportsTree;

@@ -1,11 +1,15 @@
+import dbUtils from "../../../database/collections/index.js";
+
 var checkTokenExists = async (req, res, next) => {
-  var userId = req.app.locals.userId;
+  var { userId } = req.params;
 
-  var { getWBTokenByUserId } = req.app.locals.tokenCollectionServices;
+  var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
 
-  var token = await getWBTokenByUserId(userId);
+  var { token } = await getWBTokenByUserId(userId);
 
-  return token.length ? res.sendStatus(200) : res.sendStatus(404);
+  var tokenIsExist = false;
+
+  return token.length ? res.json({ tokenIsExist: true }) : res.json({ tokenIsExist });
 };
 
-module.exports = checkTokenExists;
+export default checkTokenExists;

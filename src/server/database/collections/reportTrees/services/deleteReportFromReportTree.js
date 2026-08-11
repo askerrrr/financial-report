@@ -1,7 +1,9 @@
-var { DatabaseError } = require("../../../../customError");
+import { DatabaseError } from "../../../../customError/index.js";
 
-var deleteReportFromReportTree = async (collection, userId, year, month, reportId) => {
+var deleteReportFromReportTree = async (collection, userId, year, month, reportId, session) => {
   try {
+    var sessionOpt = session ? { session: session } : {};
+
     var result = await collection.updateOne(
       {
         userId,
@@ -16,7 +18,8 @@ var deleteReportFromReportTree = async (collection, userId, year, month, reportI
       },
       {
         arrayFilters: [{ "y.year": year }, { "m.month": month }, { "r.reportId": reportId }],
-      }
+        ...sessionOpt,
+      },
     );
 
     return result.modifiedCount;
@@ -25,4 +28,4 @@ var deleteReportFromReportTree = async (collection, userId, year, month, reportI
   }
 };
 
-module.exports = deleteReportFromReportTree;
+export default deleteReportFromReportTree;

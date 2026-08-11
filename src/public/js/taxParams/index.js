@@ -4,33 +4,31 @@ import taxRateHandler from "./taxRateHandler.js";
 import handleTaxYearSelection from "./handleTaxYearSelection.js";
 import insertTaxYearsToSelectElem from "./insertTaxYearsToSelectElem.js";
 import mandatoryInsuranceFeeHandler from "./mandatoryInsuranceFeeHandler.js";
-import insuranceFeePercentageHandler from "./insuranceFeePercentageHandler.js";
+import mandatoryInsuranceRateHandler from "./mandatoryInsuranceRateHandler.js";
+
+import writeTaxParamsToLocalStorage from "./writeTaxParamsToLocalStorage.js";
 
 var main = async () => {
-  var taxParams = await getTaxParams();
+  var { taxParams } = await getTaxParams();
 
   if (taxParams.length == 0) {
     return;
   }
 
-  var { taxRate, insuranceFeePercentage, mandatoryInsuranceFee } = taxParams[0];
+  var { taxRate, mandatoryInsuranceFeeRate, mandatoryInsuranceFee } = taxParams[0];
 
-  document.getElementById("tax-rate").placeholder =
-    "сейчас процент равен " + taxRate;
+  writeTaxParamsToLocalStorage(taxParams);
+  document.getElementById("tax-rate").placeholder = "сейчас процент равен " + taxRate;
+  document.getElementById("mandatory-insurance-fee").placeholder = "сейчас сумма равна " + mandatoryInsuranceFee + "р.";
+  document.getElementById("mandatory-insurance-fee-rate").placeholder = "сейчас процент равен " + mandatoryInsuranceFeeRate;
 
-  document.getElementById("mandatory-insurance-premiums").placeholder =
-    "сейчас сумма равна " + mandatoryInsuranceFee + "р.";
+  createTaxTable(taxParams);
 
-  document.getElementById("insurance-fee-percentage").placeholder =
-    "сейчас процент равен " + insuranceFeePercentage;
-
-  await createTaxTable(taxParams);
-
-  await taxRateHandler();
-  await mandatoryInsuranceFeeHandler();
-  await insuranceFeePercentageHandler();
-  await handleTaxYearSelection(taxParams);
-  await insertTaxYearsToSelectElem(taxParams);
+  taxRateHandler();
+  mandatoryInsuranceFeeHandler();
+  mandatoryInsuranceRateHandler();
+  handleTaxYearSelection(taxParams);
+  insertTaxYearsToSelectElem(taxParams);
 };
 
 main();

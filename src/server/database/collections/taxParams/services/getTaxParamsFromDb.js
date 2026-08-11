@@ -1,17 +1,18 @@
-var { DatabaseError } = require("../../../../customError");
+import { DatabaseError } from "../../../../customError/index.js";
 
-var getTaxParamsFromDb = async (collection, userId, year) => {
+var getTaxParamsFromDb = async (collection, userId, year, session) => {
   try {
-    var { years } = await collection.findOne({ userId });
+    var sessionOpt = session ? { session: session } : {};
+    var data = await collection.findOne({ userId }, null, { ...sessionOpt });
 
     if (year) {
-      return years.find((date) => date.year == year);
+      return data.toObject().years.find((date) => date.year == year);
     }
 
-    return years;
+    return data.toObject().years;
   } catch (e) {
-    throw new DatabaseError();
+    throw new DatabaseError(userId, e);
   }
 };
 
-module.exports = getTaxParamsFromDb;
+export default getTaxParamsFromDb;

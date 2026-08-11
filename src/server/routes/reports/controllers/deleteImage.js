@@ -1,21 +1,10 @@
-var { rm } = require("node:fs/promises");
+import s3 from "../services/s3/index.js";
 
 var deleteImage = async (req, res, next) => {
   var { userId, skuName } = req.body;
-
-  var filePath = `/var/report_skus_photo/userId_${userId}/${skuName}.png`;
-
-  var successDeleteImg;
-
-  try {
-    await rm(filePath);
-
-    successDeleteImg = true;
-  } catch {
-    successDeleteImg = false;
-  }
-
-  return successDeleteImg ? res.sendStatus(200) : res.sendStatus(304);
+  var objectKey = "skuname=" + skuName + ";" + "userId=" + userId;
+  var success = await s3.deleteFile(objectKey);
+  return success ? res.sendStatus(200) : res.sendStatus(304);
 };
 
-module.exports = deleteImage;
+export default deleteImage;

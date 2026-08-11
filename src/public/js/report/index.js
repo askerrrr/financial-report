@@ -1,18 +1,26 @@
-import createSKUsTable from "./row/createSKUsTable.js";
-import createTotalsTable from "./row/createTotalsTable.js";
-import getReportInfo from "./row/services/getReportInfo.js";
-import deleteReportHandler from "./row/deleteReportHandler.js";
-import getCookieValueByName from "../index/services/getCookieValueByName.js";
-import injectBase64IntoImgTags from "./row/services/injectBase64IntoImgTags.js";
+import reportInfo from "./reportInfo.js";
+import createSKUsTable from "./table/createSKUsTable.js";
+import createTotalsTable from "./table/createTotalsTable.js";
+import deleteReportHandler from "./deleteReportHandler.js";
+import splitReportByYear from "./table/services/splitReportByYear.js";
+import injectBase64IntoImgTags from "./table/services/injectBase64IntoImgTags.js";
 import downloadReportAsXLSXButtonHandler from "./downloadReportAsXLSXButtonHandler.js";
+import getReportPeriodText from "../index/accountedFinancesPanel/getReportPeriodText.js";
+import setSkusLastCostPricesButtonHandler from "./setSkusLastCostPricesButtonHandler.js";
+import financialAccountingStatusButtonHander from "./financialAccountingStatusButtonHander.js";
 
-var userId = await getCookieValueByName("userId");
+var postfixStub = "";
+var yearValueStub = "";
+var reportSummaryLabelTextStub = "";
+var currentYearPostfix = "InCurrentYear";
+var nextYearPostfix = "InNextYear";
+var userId = document.cookie.split("=")[1];
 
 var pathParts = window.location.pathname.split("/");
 
 var reportId = pathParts.at(-1);
 
-var url = "/reports/" + userId + "/" + reportId;
+var url = "/report/" + userId + "/" + reportId;
 
 var getReportData = async () => {
   var res = await fetch(url);
@@ -28,15 +36,46 @@ var getReportData = async () => {
 };
 
 var main = async () => {
-  var { report, imageCollection, downloadReportLink } = await getReportData();
+  var { report, skuImages, skusLastCostPrice } = await getReportData();
+  var { reportId, dateFrom, dateTo, recordedTo, skus, isCrossYearPeriod } = report;
+  var { year } = recordedTo;
 
-  await getReportInfo(report);
-  await createSKUsTable(report);
-  await injectBase64IntoImgTags(imageCollection);
-  await createTotalsTable(report);
+  if (isCrossYearPeriod) {
+    var startYear = dateFrom.split("-")[0];
+    var endYear = dateTo.split("-")[0];
 
-  await deleteReportHandler(report);
-  await downloadReportAsXLSXButtonHandler(report, downloadReportLink);
+    var fullPeriod = startYear + "-" + endYear;
+    var fullReportPeriodText = getReportPeriodText(dateFrom, dateTo).reportPeriodText;
+    createTotalsTable(report, yearValueStub, isCrossYearPeriod, fullReportPeriodText, postfixStub);
+
+    var { startYearReportData, endYearReportData } = splitReportByYear(report);
+
+    var startReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateFrom).reportPeriodText;
+    createTotalsTable(startYearReportData, startYear, isCrossYearPeriod, startReportPeriodText, currentYearPostfix);
+    createSKUsTable(startYearReportData, currentYearPostfix, startYear);
+
+    var endReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateTo).reportPeriodText;
+    createTotalsTable(endYearReportData, endYear, isCrossYearPeriod, endReportPeriodText, nextYearPostfix);
+    createSKUsTable(endYearReportData, nextYearPostfix, endYear);
+  } else {
+    createTotalsTable(report, yearValueStub, isCrossYearPeriod, reportSummaryLabelTextStub, postfixStub);
+    createSKUsTable(report, postfixStub, year);
+  }
+
+  setSkusLastCostPricesButtonHandler(skus, reportId, year, skusLastCostPrice);
+
+  reportInfo(report);
+
+  injectBase64IntoImgTags(skuImages);
+
+  downloadReportAsXLSXButtonHandler(report);
+  deleteReportHandler(userId, reportId, skus);
+
+  var isFinancesAccountingEditable = skus.find((sku) => sku.isCostPriceSet);
+
+  if (isFinancesAccountingEditable) {
+    financialAccountingStatusButtonHander(userId, reportId);
+  }
 };
 
 main();

@@ -1,1 +1,5 @@
 /node_modules
+/src/server/env.js
+src/server/routes/reports/services/WBAPI/reports/reports.js
+/coverage
+.env

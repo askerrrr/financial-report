@@ -5,6 +5,12 @@ var sendRegistationData = async (login, passwd) => {
     headers: { "Content-Type": "application/json" },
   });
 
+  if(res.status === 400){
+    var {msg} = await res.json()
+    alert(msg)
+    return 
+  }
+
   if (res.status == 409) {
     alert(`Пользователь с ником ${login} уже существует`);
     return;

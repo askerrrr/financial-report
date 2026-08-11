@@ -1,10 +1,12 @@
-var { Schema } = require("mongoose");
+import { Schema } from "mongoose";
 
 var usersSchema = new Schema({
-  userId: { type: String, required: true },
+  schemaVersion: { type: Number },
   login: { type: String, required: true },
+  userId: { type: String, required: true },
   passwd: { type: String, required: true },
-  role: { type: String, required: true, default: "user" },
+  registeredAt: { type: Date, required: true },
+  role: { type: String, required: true, default: "user", enum: ["user", "admin"] },
 });
 
-module.exports = usersSchema;
+export default usersSchema;

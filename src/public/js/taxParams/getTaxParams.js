@@ -1,9 +1,9 @@
 var getTaxParams = async () => {
-  var res = await fetch("/tax_params/api");
+  var res = await fetch("/tax-params/api");
 
   var { taxParams } = await res.json();
 
-  return taxParams;
+  return { taxParams };
 };
 
 export default getTaxParams;

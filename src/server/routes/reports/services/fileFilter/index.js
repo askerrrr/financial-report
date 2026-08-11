@@ -1,20 +1,11 @@
-module.exports = (req, file, cb) => {
-  var validMimeType;
+export default (req, file, cb) => {
+  var validMimeTypes;
 
-  if (req.path == "/upload/file" || req.path == "/upload/files") {
-    validMimeType =
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-    return file.mimetype == validMimeType
-      ? cb(null, (req.fileMimeTypeIsValid = true))
-      : cb(null, (req.fileMimeTypeIsValid = false));
+  if (req.originalUrl === "/report/image") {
+    validMimeTypes = ["image/jpg", "image/jpeg", "image/png"];
+  } else if (req.originalUrl === "/report/files" || "/decode-report-without-registration/files") {
+    validMimeTypes = ["application/zip", "application/x-zip-compressed", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
   }
 
-  if (req.path.startsWith("/item-photo-upload/")) {
-    validMimeType = ["image/jpg", "image/jpeg", "image/png"];
-
-    return validMimeType.includes(file.mimetype)
-      ? cb(null, (req.fileMimeTypeIsValid = true))
-      : cb(null, (req.fileMimeTypeIsValid = false));
-  }
+  return validMimeTypes?.includes(file.mimetype) ? cb(null, (req.fileMimeTypeIsValid = true)) : cb(null, (req.fileMimeTypeIsValid = false));
 };

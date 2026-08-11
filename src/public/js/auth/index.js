@@ -1,5 +1,5 @@
 var sendAuthData = async (login, passwd) => {
-  var res = await fetch("/auth/check", {
+  var res = await fetch("/auth", {
     method: "POST",
     body: JSON.stringify({ login, passwd }),
     headers: { "Content-Type": "application/json" },

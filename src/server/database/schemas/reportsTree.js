@@ -1,41 +1,37 @@
-var { Schema } = require("mongoose");
-
-var fullPeriodSchema = new Schema(
-  {
-    dateFrom: { type: String, required: true },
-    dateTo: { type: String, required: true },
-  },
-  { _id: false }
-);
+import { Schema } from "mongoose";
 
 var reportSchema = new Schema(
   {
-    reportId: { type: String, required: true },
-    fullPeriod: { type: fullPeriodSchema, required: true },
+    reportId: { type: Number, required: true },
+    dateFrom: { type: String, required: true },
+    dateTo: { type: String, required: true },
+    schemaVersion: { type: Number },
   },
-  { _id: false }
+  { _id: false },
 );
 
 var monthPeriodSchema = new Schema(
   {
     month: { type: String, required: false },
     reportIds: [{ type: reportSchema, required: false }],
+    schemaVersion: { type: Number },
   },
-
-  { _id: false }
+  { _id: false },
 );
 
 var yearsPeriodSchema = new Schema(
   {
-    year: { type: String, required: false },
+    year: { type: Number, required: false },
     months: [{ type: monthPeriodSchema }],
+    schemaVersion: { type: Number },
   },
-  { _id: false }
+  { _id: false },
 );
 
 var reportsTreeSchema = new Schema({
   userId: { type: String, required: true },
   years: [{ type: yearsPeriodSchema, required: false }],
+  schemaVersion: { type: Number },
 });
 
-module.exports = reportsTreeSchema;
+export default reportsTreeSchema;

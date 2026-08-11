@@ -1,56 +1,105 @@
-import createTdElement from "../report/row/services/createTdElement.js";
-import createInputField from "../report/row/services/createInputField.js";
+import createTdElement from "../report/table/services/createTdElement.js";
+import openCostPriceModal from "../report/table/services/modal/openCostPriceModal.js";
+import openOtherExpensesModal from "../report/table/services/modal/openOtherExpensesModal.js";
 
-var table = document.getElementById("skus-table");
+var isGuestAccess = true;
 
-var createSKUsTable = async (id, report, url) => {
-  var tbody = document.getElementById("skus-tbody");
+var createSKUsTable = (report, postfix, reportPeriodYear) => {
+  var skuIndex = 0;
+  var tableBody = document.createElement("tbody");
 
-  var { reportId, skus } = report;
+  var { userId, reportId, skus } = report;
 
-  for (var [skuIndex, sku] of Object.entries(skus)) {
-    var tr = document.createElement("tr");
+  for (var sku of skus) {
+    var tableRow = document.createElement("tr");
+    var skuName = createTdElement(sku.skuName);
+    var qty = createTdElement(sku.qty);
+    var returnAmount = createTdElement(sku.returnAmount);
 
-    var skuName = await createTdElement(sku.skuName);
-    var qty = await createTdElement(sku.qty);
-    var returnAmount = await createTdElement(sku.returnAmountPerSKU);
+    var data = {
+      userId,
+      reportId,
+      skuIndex,
+      skuId: sku.id,
+      skuName: sku.skuName,
+      year: reportPeriodYear,
+      taxRate: report.taxRate,
+      dateFrom: report.dateFrom,
+      dateTo: report.dateTo,
+      ["costPrice" + postfix]: sku.costPrice,
+      ["otherExpenses" + postfix]: sku.otherExpenses,
+    };
 
-    var dataToChange = { id, skuIndex, reportId, fieldName: "costPrice", costPrice: sku.costPrice, url };
+    var costPriceInputField = openCostPriceModal(data, isGuestAccess, postfix);
+    var otherExpensesInputField = openOtherExpensesModal(data, isGuestAccess, postfix);
 
-    var costPriceInputField = await createInputField(dataToChange);
-    var costPrice = await createTdElement(costPriceInputField);
-    var retailPrice = await createTdElement(sku.averageRetailPrice);
-    var deliveryCost = await createTdElement(sku.deliveryCostPerSKU);
-    var fines = await createTdElement(sku.finesPerSKU);
-    var storageCostPerSKU = await createTdElement(sku.storageCostPerSKU);
-    var acceptancePerSKU = await createTdElement(sku.acceptancePerSKU);
-    var profitPerSKU = await createTdElement(sku.profitPerSKU);
-    var averageProfitPerSKU = await createTdElement(sku.averageProfitPerSKU);
-    var profitMargin = await createTdElement(sku.profitMargin, "profitMargin", skuIndex);
-    var finalProfitPerSKU = await createTdElement(sku.finalProfitPerSKU, "finalProfitPerSKU", skuIndex);
+    var costPrice = createTdElement(costPriceInputField);
+    var otherExpenses = createTdElement(otherExpensesInputField);
+    var deliveryCost = createTdElement(sku.deliveryCost);
+    var deductionOrPayment = createTdElement(sku.deductionOrPayment);
+    var fines = createTdElement(sku.fines);
+    var storageCost = createTdElement(sku.storageCost);
+    var acceptance = createTdElement(sku.acceptance);
+    var profit = createTdElement(sku.profit);
 
-    tr.append(
+    var profitMarginTdId = "profitMargin" + postfix + "-" + skuIndex + "-" + reportPeriodYear;
+    var profitMargin = createTdElement(sku.profitMargin, profitMarginTdId);
+
+    var finalProfitTdId = "finalProfit" + postfix + "-" + skuIndex + "-" + reportPeriodYear;
+    var finalProfit = createTdElement(sku.finalProfit, finalProfitTdId);
+
+    tableRow.append(
       skuName,
       qty,
       returnAmount,
-      costPrice,
-      retailPrice,
       deliveryCost,
+      deductionOrPayment,
       fines,
-      storageCostPerSKU,
-      acceptancePerSKU,
-      profitPerSKU,
-      averageProfitPerSKU,
+      storageCost,
+      acceptance,
+      profit,
+      costPrice,
+      otherExpenses,
       profitMargin,
-      finalProfitPerSKU
+      finalProfit,
     );
 
-    tbody.append(tr);
+    tableBody.append(tableRow);
+    skuIndex++;
   }
 
-  table.append(tbody);
+  var table = document.createElement("table");
+  table.id = "skus-table-" + reportPeriodYear;
 
-  return table;
+  var { tableHead } = createSkusTableHead();
+
+  table.append(tableHead, tableBody);
+
+  var tablesContainer = document.getElementById("tables-container");
+  tablesContainer.append(table);
 };
 
 export default createSKUsTable;
+
+var tableHeadContent = `
+   <tr>
+          <th>Артикул</th>
+          <th>Количество</th>
+          <th>Возвраты</th>
+          <th>Доставка</th>
+          <th>Удержания/Выплаты</th>
+          <th>Штрафы</th>
+          <th>Хранение</th>
+          <th>Приёмка</th>
+          <th>Выплата с вычетом всех услуг WB</th>
+          <th>Себестоимость</th>
+          <th>Прочие расходы</th>
+          <th>Маржинальность %</th>
+          <th>Итого</th>
+  </tr>`;
+
+function createSkusTableHead() {
+  var tableHead = document.createElement("thead");
+  tableHead.innerHTML = tableHeadContent;
+  return { tableHead };
+}

@@ -1,29 +1,20 @@
-var { Router } = require("express");
+import { Router } from "express";
+import getTaxParams from "./controllers/getTaxParams.js";
+import getReportYears from "./controllers/getReportYears.js";
+import changeTaxParams from "./controllers/changeTaxParams.js";
+import getTaxParamsPage from "./controllers/getTaxParamsPage.js";
+import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
+
+import changeTaxParamsControllerSchema from "./joiSchemas/changeTaxParams-controller-schema.js";
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.get("/", require("./controllers/getTaxParamsPage"));
+router.get("/", getTaxParamsPage);
 
-router.get("/api", require("./controllers/getTaxParams"));
+router.get("/api", getTaxParams);
 
-router.get("/years", require("./controllers/getReportYears"));
+router.get("/years", getReportYears);
 
-router.post(
-  "/taxrate",
-  require("./controllers/changeTaxRate"),
-  require("./controllers/recalculateReportsParamsAfterChangingTaxRate")
-);
+router.post("/", joiSchemaValidator(changeTaxParamsControllerSchema), changeTaxParams);
 
-router.post(
-  "/insurance-fee-percentage",
-  require("./controllers/changeInsuranceFeePercentage"),
-  require("./controllers/recalculateReportsParamsAfterChangingInsuranceFeePergentage")
-);
-
-router.post(
-  "/mandatory-insurance-premiums",
-  require("./controllers/changeMandatoryInsuranceFee"),
-  require("./controllers/recalculateReportsParamsAfterChangingMandatoryInsuranceFee")
-);
-
-module.exports = router;
+export default router;

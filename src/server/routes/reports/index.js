@@ -1,61 +1,57 @@
-var multer = require("multer");
-var { Router } = require("express");
-var writeReport = require("./controllers/writeReport");
-var writeReports = require("./controllers/writeReports");
-var fileFilter = require("./services/fileFilter");
+import multer from "multer";
+import { Router } from "express";
+import schemas from "./JoiSchemas/index.js";
+import fileFilter from "./services/fileFilter/index.js";
+import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
 
-var reportStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "/var/report_uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
+import getReport from "./controllers/getReport.js";
+import deleteImage from "./controllers/deleteImage.js";
+import saveReports from "./controllers/saveReports.js";
+import deleteReport from "./controllers/deleteReport.js";
+import getReportPage from "./controllers/getReportPage.js";
+import skuPhotoUpload from "./controllers/skuPhotoUpload.js";
+import setCostPriceToSku from "./controllers/setCostPriceToSku.js";
+import deleteReportsTree from "./controllers/deleteReportsTree.js";
+import checkReportExists from "./controllers/checkReportExists.js";
+import reportLoadDelegate from "./controllers/reportLoadDelegate.js";
+import saveReportFromFile from "./controllers/saveReportFromFile.js";
+import setCostPriceToSkus from "./controllers/setCostPriceToSkus.js";
+import downloadReportAsXLSX from "./controllers/downloadReportAsXLSX.js";
+import downloadReportsAsZip from "./controllers/downloadReportsAsZip.js";
+import setOtherExpensesToSku from "./controllers/setOtherExpensesToSku.js";
+import getReportLoadingState from "./controllers/getReportLoadingState.js";
+import checkReportsLoadingProgress from "./controllers/checkReportsLoadingProgress.js";
+import resumeAbandonedReportsLoading from "./controllers/resumeAbandonedReportsLoading.js";
+import changeFinancialAccountingStatus from "./controllers/changeFinancialAccountingStatus.js";
 
-var temporaryItemsPhotoStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "/var/temporary-photo-storage/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
+var maxReportFilesCount = 15;
 
-var updoadReports = multer({ storage: reportStorage, fileFilter });
-var uploadItemPhotos = multer({
-  storage: temporaryItemsPhotoStorage,
-  fileFilter,
-});
+var storage = multer.memoryStorage();
+var upload = multer({ storage, fileFilter });
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.get("/:id", require("./controllers/getReportHTML"));
+router.get("/:id", getReportPage);
+router.get("/:userId/:reportId", getReport);
+router.post("/", joiSchemaValidator(schemas.saveReports), reportLoadDelegate, checkReportExists, checkReportsLoadingProgress, saveReports);
+router.delete("/", joiSchemaValidator(schemas.deleteReport), deleteReport);
 
-router.get("/:userId/:id", require("./controllers/getReport"));
+router.post("/as-zip/", joiSchemaValidator(schemas.downloadReportsAsZip), downloadReportsAsZip);
+router.post("/as-xlsx/", joiSchemaValidator(schemas.downloadReportAsXLSX), downloadReportAsXLSX);
 
-router.get("/download-report-as-xlsx/:userId/:reportId", require("./controllers/downloadReportAsXLSX"));
+router.get("/loading-state/:userId/", getReportLoadingState);
+router.post("/loading-state/abandoned/", joiSchemaValidator(schemas.resumeAbandonedReportsLoading), resumeAbandonedReportsLoading);
+router.post("/files", upload.array("file", maxReportFilesCount), saveReportFromFile);
 
-router.post("/download-reports-as-zip/", require("./controllers/checkAllCostPricesNonZero"), require("./controllers/downloadReportsAsZip"));
+router.patch("/skus/cost-price", joiSchemaValidator(schemas.setCostPriceToSku), setCostPriceToSku);
+router.patch("/skus/cost-prices", joiSchemaValidator(schemas.setCostPriceToSkus), setCostPriceToSkus);
+router.patch("/skus/other-expenses", joiSchemaValidator(schemas.setOtherExpensesToSku), setOtherExpensesToSku);
 
-router.post("/period", require("./controllers/changeReportPeriod"));
+router.patch("/financial-accounting-status/", joiSchemaValidator(schemas.changeFinancialAccountingStatus), changeFinancialAccountingStatus);
 
-router.post("/upload/file", updoadReports.single("file"), writeReport);
+router.delete("/delete_all_reporting_periods/:userId", deleteReportsTree);
 
-router.post("/upload/files", updoadReports.array("file", 10), writeReports);
+router.post("/image/", upload.single("sku-photo"), skuPhotoUpload);
+router.delete("/image/", joiSchemaValidator(schemas.deleteImage), deleteImage);
 
-router.put("/wbapi", require("./controllers/getReportFromWBAPI"), require("./controllers/writeReportFromWBAPI"));
-
-router.post("/change", require("./controllers/changeReportDetail"));
-
-router.post("/item-photo-upload/:itemname", uploadItemPhotos.single("item-photo"), require("./controllers/itemPhotoUpload"));
-
-router.delete("/delete/", require("./controllers/deleteReport"));
-
-router.delete("/delete_all_reports/:userId", require("./controllers/deleteAllReports"));
-
-router.delete("/delete_all_reporting_periods/:userId", require("./controllers/deleteReportsTree"));
-
-router.delete("/delete-image/", require("./controllers/deleteImage"));
-
-module.exports = router;
+export default router;

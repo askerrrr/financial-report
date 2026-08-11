@@ -1,5 +1,5 @@
-var { join } = require("node:path");
+import { join } from "node:path";
 
-var getAdminAuthPage = async (req, res, next) => res.sendFile(join(__dirname, "../../../../public/html/admin/index.html"));
+var getAdminAuthPage = async (req, res, next) => res.sendFile(join(import.meta.dirname, "../../../../public/html/admin/auth.html"));
 
-module.exports = getAdminAuthPage;
+export default getAdminAuthPage;

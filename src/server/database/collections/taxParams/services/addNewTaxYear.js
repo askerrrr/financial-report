@@ -1,36 +1,31 @@
-var { DatabaseError } = require("../../../../customError");
+import defaultTaxParams from "../../../defaultTaxParams.js";
+import { DatabaseError } from "../../../../customError/index.js";
 
-var addNewTaxYearToDb = async (collection, userId, year) => {
+var addNewTaxYearToDb = async (collection, userId, year, session) => {
   try {
-    var { years } = await collection.findOne({ userId });
+    var data = await collection.findOne({ userId }, null, { session: session });
+    var taxYears = data.toObject().years;
 
-    var existYear = years.find((date) => date.year == year);
+    var existTaxParams = taxYears.find((params) => params.year === year);
+    if (existTaxParams) {
+      var nextYear = year + 1;
+      var nextYearTaxParams = taxYears.find((params) => params.year === nextYear);
+      if (!nextYearTaxParams) {
+        var defaultNextYearTaxParams = defaultTaxParams.find((i) => i.year === nextYear);
+        await collection.updateOne({ userId }, { $push: { years: { ...defaultNextYearTaxParams } } }, { session: session });
+      }
 
-    if (existYear) {
-      return existYear;
+      return existTaxParams;
     }
 
-    await collection.updateOne(
-      { userId },
-      {
-        $push: { years: { year } },
-      }
-    );
+    var defaultCurrentYearTaxParams = defaultTaxParams.find((i) => i.year === year);
 
-    var defaultTaxOptions = {
-      year,
-      taxRate: 6,
-      paidTaxAmount: 0,
-      paidInsuranceFee: 0,
-      mandatoryInsuranceFee: 0,
-      isInsuranceFeePaid: false,
-      insuranceFeePercentage: 10,
-    };
+    await collection.updateOne({ userId }, { $push: { years: { ...defaultCurrentYearTaxParams } } }, { session: session });
 
-    return defaultTaxOptions;
+    return defaultCurrentYearTaxParams;
   } catch (e) {
     throw new DatabaseError(userId, e);
   }
 };
 
-module.exports = addNewTaxYearToDb;
+export default addNewTaxYearToDb;

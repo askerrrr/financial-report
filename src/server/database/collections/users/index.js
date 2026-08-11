@@ -1,15 +1,26 @@
-var { userCollection } = require("../../connections");
+import { userCollection } from "../../connections/index.js";
 
-var getUserByLogin = require("./services/getUserByLogin");
-var createUserToDb = require("./services/createUserToDb");
-var getUserById = require("./services/getUserByUserId");
+import resetUserData from "./services/resetUserData.js";
+import getUserById from "./services/getUserByUserId.js";
+import getUserByLogin from "./services/getUserByLogin.js";
+import getAllUsersFromDb from "./services/getAllUsers.js";
+import createUserToDb from "./services/createUserToDb.js";
+import deleteUserFromDb from "./services/deleteUserFromDb.js";
+import deleteUsersFromDb from "./services/deleteUsersFromDb.js";
 
 var userCollectionServices = {
-  createUserToDb: (user) => createUserToDb(userCollection, user),
+  createUserToDb: (user, session) => createUserToDb(user, session),
 
-  getUserByLogin: (login) => getUserByLogin(userCollection, login),
+  getUserByLogin: (login, session) => getUserByLogin(userCollection, login, session),
 
   getUserById: (userId) => getUserById(userCollection, userId),
+
+  getAllUsersFromDb: () => getAllUsersFromDb(userCollection),
+
+  resetUserData: (userId) => resetUserData(userId),
+
+  deleteUserFromDb: (userId, session) => deleteUserFromDb(userId, session),
+  deleteUsersFromDb: (session) => deleteUsersFromDb(session),
 };
 
-module.exports = userCollectionServices;
+export default userCollectionServices;

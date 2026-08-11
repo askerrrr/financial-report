@@ -1,28 +1,33 @@
-var decodeReportWithoutRegistrationButtonHandler = async () => {
-  var skusTbody = document.getElementById("skus-tbody");
-  var totalTbody = document.getElementById("totals-tbody");
-  var skusTable = document.getElementById("skus-table");
-  var totalsTable = document.getElementById("totals-table");
-  var downloadReportAsXLSXButton = document.getElementById("download-report-as-xlsx-button");
-  var decodeReportWithoutRegistrationButton = document.getElementById("decode-report-without-registration-button");
+import { disableDownloadReportAsXLSXButton } from "./downloadReportAsXLSXButton.js";
 
-  decodeReportWithoutRegistrationButton.onclick = async () => {
-    if (skusTbody.childNodes.length) {
+var tablesContainer = document.getElementById("tables-container");
+var downloadReportAsXLSXButton = document.getElementById("download-report-as-xlsx-button");
+var decodeReportWithoutRegistrationButton = document.getElementById("decode-report-without-registration-button");
+
+var newTextContentToDecodeReportWithoutRegistrationButton = "Расшифровка отчета без регистрации";
+
+var decodeReportWithoutRegistrationButtonHandler = () => {
+  decodeReportWithoutRegistrationButton.onclick = () => {
+    var reportSummaryLabels = document.querySelectorAll(".report-summary-label-wrapper");
+
+    if (tablesContainer.childNodes.length) {
       var confirmed = confirm("Получение нового отчета привёдет к потере текущего.\nПродолжить?");
 
       if (confirmed) {
-        skusTbody.innerHTML = "";
-        totalTbody.innerHTML = "";
+        localStorage.clear();
+        tablesContainer.innerHTML = "";
+        reportSummaryLabels.forEach((label) => label.remove());
+        decodeReportWithoutRegistrationButton.textContent = newTextContentToDecodeReportWithoutRegistrationButton;
 
-        skusTable.style.display = "none";
-        totalsTable.style.display = "none";
-        downloadReportAsXLSXButton.style.display = "none";
+        disableDownloadReportAsXLSXButton();
+
+        document.querySelectorAll('table[id^="skus-table-"], table[id^="totals-table-"]').forEach((table) => table.remove());
+
+        window["dialog"].show();
       }
-
-      return;
+    } else {
+      window["dialog"].show();
     }
-
-    window["dialog"].show();
   };
 };
 

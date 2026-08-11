@@ -1,34 +1,44 @@
 var requiredSKUsFieldsName = [
   "skuName",
   "qty",
-  "returnAmountPerSKU",
+  "returnAmount",
   "costPrice",
   "averageRetailPrice",
-  "deliveryCostPerSKU",
+  "deliveryCost",
   "deductionOrPayment",
-  "storageCostPerSKU",
-  "acceptancePerSKU",
-  "profitPerSKU",
+  "storageCost",
+  "acceptance",
+  "otherExpenses",
+  "profit",
+  "taxableAmount",
+  "tax",
+  "insuranceFee",
+  "additionalInsuranceFee",
   "profitMargin",
-  "finalProfitPerSKU",
+  "finalProfit",
 ];
 
-var getRequiredSKUFieldsName = async (skus) =>
+var getRequiredSKUFieldsName = (skus) =>
   skus.map((sku) => {
     return {
       skuName: sku.skuName,
       qty: sku.qty,
       costPrice: sku.costPrice,
-      returnAmountPerSKU: sku.returnAmountPerSKU,
+      returnAmount: sku.returnAmount,
       averageRetailPrice: sku.averageRetailPrice,
-      deliveryCostPerSKU: sku.deliveryCostPerSKU,
+      deliveryCost: sku.deliveryCost,
       deductionOrPayment: sku.deductionOrPayment,
-      storageCostPerSKU: sku.storageCostPerSKU,
-      acceptancePerSKU: sku.acceptancePerSKU,
-      profitPerSKU: sku.profitPerSKU,
+      storageCost: sku.storageCost,
+      acceptance: sku.acceptance,
+      otherExpenses: sku.otherExpenses,
+      profit: sku.profit,
+      taxableAmount: sku.taxableAmount,
+      tax: sku.tax,
+      insuranceFee: sku.insuranceFee,
+      additionalInsuranceFee: sku.additionalInsuranceFee,
       profitMargin: sku.profitMargin,
-      finalProfitPerSKU: sku.finalProfitPerSKU,
+      finalProfit: sku.finalProfit,
     };
   });
 
-module.exports = { getRequiredSKUFieldsName, requiredSKUsFieldsName };
+export { getRequiredSKUFieldsName, requiredSKUsFieldsName };

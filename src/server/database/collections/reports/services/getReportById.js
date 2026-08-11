@@ -1,16 +1,15 @@
-var { DatabaseError, ReportNotFoundError } = require("../../../../customError");
+import { DatabaseError, ReportNotFoundError } from "../../../../customError/index.js";
 
-var getReportById = async (collection, userId, id) => {
+var getReportById = async (collection, userId, reportId, session) => {
+  var sessionOpt = session ? { session: session } : {};
   try {
-    var data = await collection.findOne({ userId, "reports.reportId": id });
+    var data = await collection.findOne({ userId, "reports.reportId": reportId }, { "reports.$": 1 }, { ...sessionOpt });
 
-    if (!data) {
-      throw new ReportNotFoundError(id);
+    if (!data?.reports.length) {
+      throw new ReportNotFoundError(userId, reportId);
     }
 
-    var report = data.reports.find((report) => report.reportId == id);
-
-    return report.toObject();
+    return { report: data.reports[0].toObject() };
   } catch (e) {
     if (e instanceof ReportNotFoundError) {
       throw e;
@@ -20,4 +19,4 @@ var getReportById = async (collection, userId, id) => {
   }
 };
 
-module.exports = getReportById;
+export default getReportById;

@@ -1,4 +1,4 @@
-var insertTaxYearsToSelectElem = async (years) => {
+var insertTaxYearsToSelectElem = (years) => {
   var selects = document.getElementById("tax-year");
 
   for (var { year } of years) {

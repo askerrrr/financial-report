@@ -1,6 +1,5 @@
-var { DatabaseError } = require("../../../../customError");
-
-var saveReportToDb = async (collection, userId, report) => {
+import { DatabaseError } from "../../../../customError/index.js";
+var saveReportToDb = async (collection, userId, report, session) => {
   try {
     var result = await collection.updateOne(
       { userId },
@@ -8,7 +7,10 @@ var saveReportToDb = async (collection, userId, report) => {
         $push: {
           reports: { $each: [report], $position: 0 },
         },
-      }
+      },
+      {
+        session: session,
+      },
     );
 
     return result.acknowledged;
@@ -17,4 +19,4 @@ var saveReportToDb = async (collection, userId, report) => {
   }
 };
 
-module.exports = saveReportToDb;
+export default saveReportToDb;

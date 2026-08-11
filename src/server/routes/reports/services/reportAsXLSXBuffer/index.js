@@ -1,9 +1,9 @@
-var ExcelJS = require("exceljs");
-var createSKUsSheet = require("./services/createSKUsSheet");
-var getMonthlySummary = require("./services/getMonthlySummary");
-var createTotalsSheet = require("./services/createTotalsSheet");
-var writeTotalsTitleToSheet = require("./services/writeTotalsTitleToSheet");
-var writeTotalValuesToSheet = require("./services/writeTotalValuesToSheet");
+import ExcelJS from "exceljs";
+import createSKUsSheet from "./services/createSKUsSheet.js";
+import getMonthlySummary from "./services/getMonthlySummary.js";
+import createTotalsSheet from "./services/createTotalsSheet.js";
+import writeTotalsTitleToSheet from "./services/writeTotalsTitleToSheet.js";
+import writeTotalValuesToSheet from "./services/writeTotalValuesToSheet.js";
 
 var getReportAsXLSXBuffer = async (report) => {
   var workbook = new ExcelJS.Workbook();
@@ -18,7 +18,7 @@ var getReportAsXLSXBuffer = async (report) => {
 
   var buffer = await workbook.xlsx.writeBuffer();
 
-  return buffer;
+  return { buffer };
 };
 
 var getMonthlySummaryAsXLSXBuffer = async (reports) => {
@@ -34,9 +34,28 @@ var getMonthlySummaryAsXLSXBuffer = async (reports) => {
 
   sheet = await writeTotalValuesToSheet(sheet, indent, monthlySummary);
 
+  var isCrossYearPeriodReport = reports.filter((report) => report.isCrossYearPeriod);
+
+  if (isCrossYearPeriodReport.length) {
+    var currentYearPostfix = "InCurrentYear";
+    var nextYearPostfix = "InNextYear";
+
+    var startYear = isCrossYearPeriodReport[0].dateFrom.split("-")[0];
+    var currentYearSheet = workbook.addWorksheet("Сводка за " + startYear);
+    var currentYearMonthlySummary = await getMonthlySummary(isCrossYearPeriodReport, currentYearPostfix);
+    currentYearSheet = await writeTotalsTitleToSheet(currentYearSheet, indent);
+    currentYearSheet = await writeTotalValuesToSheet(currentYearSheet, indent, currentYearMonthlySummary);
+
+    var endYear = isCrossYearPeriodReport[0].dateTo.split("-")[0];
+    var nextYearSheet = workbook.addWorksheet("Сводка за " + endYear);
+    var nextYearMonthlySummary = await getMonthlySummary(isCrossYearPeriodReport, nextYearPostfix);
+    nextYearSheet = await writeTotalsTitleToSheet(nextYearSheet, indent);
+    nextYearSheet = await writeTotalValuesToSheet(nextYearSheet, indent, nextYearMonthlySummary);
+  }
+
   var buffer = await workbook.xlsx.writeBuffer();
 
-  return buffer;
+  return { buffer };
 };
 
-module.exports = { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer };
+export { getReportAsXLSXBuffer, getMonthlySummaryAsXLSXBuffer };

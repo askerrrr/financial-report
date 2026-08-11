@@ -1,4 +1,4 @@
-var getSelectedTaxYear = async () => {
+var getSelectedTaxYear = () => {
   var options = document.querySelectorAll("option");
 
   var selectedYear;

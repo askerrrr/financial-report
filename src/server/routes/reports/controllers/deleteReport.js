@@ -1,23 +1,59 @@
+import { dbClient } from "../../../database/index.js";
+import dbUtils from "../../../database/collections/index.js";
+import recalculateTaxParamsAfterReportDeletion from "../services/different/recalculateTaxParamsAfterReportDeletion.js";
+import recalculateSkuMetricsAfterReportDeletion from "../services/different/recalculateSkuMetricsAfterReportDeletion.js";
+
+var currentYearPropPostfix = "InCurrentYear";
+var nextYearPropPostfix = "InNextYear";
+
 var deleteReport = async (req, res, next) => {
-  var { deleteReportFromDb } = req.app.locals.reportCollectionServices;
-  var { deleteReportFromReportTree } = req.app.locals.reportsTreeCollectionServices;
-  var { getTaxParamsFromDb, changePaidTaxAmountToDb, changePaidInsuranceFeeToDb } = req.app.locals.taxParamsCollectionServices;
+  var { userId, reportId, skuNames } = req.body;
 
-  var { userId, reportId, year, month, totalTaxAmount, totalInsuranceFee } = req.body;
+  var { deleteReportFromDb } = dbUtils.reportCollectionServices;
+  var { deleteReportFromReportTree } = dbUtils.reportsTreeCollectionServices;
+  var { getTaxParamsFromDb, changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
+  var { getListGoodsFromDb, updateSkusMetricsInListGoods } = dbUtils.goodsCollectionServices;
 
-  var deletedFromTree = await deleteReportFromReportTree(userId, year, month, reportId);
+  var session = await dbClient.startSession();
+  try {
+    await session.withTransaction(async () => {
+      var { listGoods } = await getListGoodsFromDb(userId, skuNames, session);
+      var taxParams = await getTaxParamsFromDb(userId, null, session);
 
-  var deleteFromReports = await deleteReportFromDb(userId, reportId);
+      var { reportBeforeDeletion } = await deleteReportFromDb(userId, reportId, session);
+      var { year, month } = reportBeforeDeletion.recordedTo;
+      var startYear = +reportBeforeDeletion.dateFrom.split("-")[0];
+      var endYear = +reportBeforeDeletion.dateTo.split("-")[0];
 
-  var taxParams = await getTaxParamsFromDb(userId, year);
+      if (reportBeforeDeletion.isCrossYearPeriod) {
+        var startYearTaxParams = taxParams.find((params) => params.year === startYear);
+        var endYearTaxParams = taxParams.find((params) => params.year === endYear);
 
-  taxParams.paidTaxAmount -= totalTaxAmount;
-  taxParams.paidInsuranceFee -= totalInsuranceFee;
+        startYearTaxParams = recalculateTaxParamsAfterReportDeletion(startYearTaxParams, reportBeforeDeletion, currentYearPropPostfix).updatedTaxParams;
 
-  await changePaidTaxAmountToDb(userId, year, taxParams.paidTaxAmount);
-  await changePaidInsuranceFeeToDb(userId, year, taxParams.paidInsuranceFee);
+        endYearTaxParams = recalculateTaxParamsAfterReportDeletion(endYearTaxParams, reportBeforeDeletion, nextYearPropPostfix).updatedTaxParams;
 
-  return deleteFromReports && deletedFromTree ? res.sendStatus(200) : res.sendStatus(304);
+        await changeTaxParamsToDb(userId, session, startYearTaxParams, endYearTaxParams);
+      } else {
+        var taxParamsOfYear = taxParams.find((params) => params.year === year);
+
+        var { updatedTaxParams } = recalculateTaxParamsAfterReportDeletion(taxParamsOfYear, reportBeforeDeletion);
+        await changeTaxParamsToDb(userId, session, updatedTaxParams);
+      }
+
+      var { listGoodsWithRecalculatedSkuMetrics } = recalculateSkuMetricsAfterReportDeletion(startYear, endYear, listGoods, reportBeforeDeletion);
+
+      await deleteReportFromReportTree(userId, year, month, reportId, session);
+      await updateSkusMetricsInListGoods(userId, listGoodsWithRecalculatedSkuMetrics, session);
+    });
+
+    return res.sendStatus(200);
+  } catch (e) {
+    console.log({ e });
+    res.sendStatus(304);
+  } finally {
+    await session.endSession();
+  }
 };
 
-module.exports = deleteReport;
+export default deleteReport;

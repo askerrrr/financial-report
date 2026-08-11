@@ -13,10 +13,10 @@ var writeTotalValuesToSheet = async (sheet, cellNum, totalValues) => {
     var currentCell = cellName + cellNum;
     cellNum++;
 
-    sheet.getCell(currentCell).value = value;
+    sheet.getCell(currentCell).value = value ?? "";
   }
 
   return sheet;
 };
 
-module.exports = writeTotalValuesToSheet;
+export default writeTotalValuesToSheet;

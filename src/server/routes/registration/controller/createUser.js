@@ -1,47 +1,58 @@
-var env = require("../../../env");
-var JWT = require("jsonwebtoken");
-var { randomBytes } = require("node:crypto");
-var createUserReportPhotosFolder = require("../services/createUserReportPhotosFolder");
+var jose = import("jose");
+import { randomBytes } from "node:crypto";
+import checkLogin from "../services/checkLogin.js";
+import checkPasswd from "../services/checkPasswd.js";
+import { dbClient } from "../../../database/index.js";
+import dbUtils from "../../../database/collections/index.js";
+
+var alg = "RS256";
+var oneDayMs = 24 * 3600 * 1000;
 
 var createUser = async (req, res, next) => {
-  var { createReportsEntity } = req.app.locals.reportCollectionServices;
-  var { createTaxParamsEntity } = req.app.locals.taxParamsCollectionServices;
-  var { createUserToDb, getUserByLogin } = req.app.locals.userCollectionServices;
-  var { createTokenCollectionEntity } = req.app.locals.tokenCollectionServices;
-  var { createReportsTreeEntity } = req.app.locals.reportsTreeCollectionServices;
+  var candidate = req.body;
 
-  var user = req.body;
+  await checkLogin(candidate.login);
+  await checkPasswd(candidate.passwd);
 
-  var userIsExist = await getUserByLogin(user.login);
+  var session = await dbClient.startSession();
+  var { createUserToDb, getUserByLogin } = dbUtils.userCollectionServices;
 
-  if (userIsExist) {
-    return res.sendStatus(409);
-  }
+  try {
+    await session.withTransaction(async () => {
+      try {
+        var userIsExist = await getUserByLogin(candidate.login, session);
 
-  var userId = randomBytes(10).toString("hex");
+        if (userIsExist) {
+          return res.sendStatus(409);
+        }
 
-  await createReportsEntity(userId);
-  await createTaxParamsEntity(userId);
-  await createReportsTreeEntity(userId);
-  await createTokenCollectionEntity(userId);
-  await createUserReportPhotosFolder(userId);
+        var userId = randomBytes(10).toString("hex");
+        candidate.userId = userId;
+        candidate.role = candidate.login === process.env.adminName ? "admin" : "user";
 
-  user.userId = userId;
+        await createUserToDb(candidate, session);
 
-  var success = await createUserToDb(user);
+        jose = await jose;
+        var payload = { userId, role: candidate.role };
+        var privateKey = await jose.importPKCS8(process.env.pkcs8, alg);
+        var token = await new jose.SignJWT(payload).setExpirationTime("1 day").setProtectedHeader({ alg }).sign(privateKey);
 
-  if (!success) {
+        return res
+          .cookie("token", token, { httpOnly: true, maxAge: oneDayMs })
+          .cookie("userId", userId, { httpOnly: false, maxAge: oneDayMs })
+          .json({ redirectUrl: "/" });
+      } catch (e) {
+        console.log(e);
+        return res.status(500).json({ msg: "cannot create user" });
+      }
+    });
+  } catch (e) {
     return res.status(500).json({ msg: "cannot create user" });
+  } finally {
+    if (session) {
+      await session.endSession();
+    }
   }
-
-  var payload = { userId, role: "user" };
-
-  var token = JWT.sign(payload, env.secretKey, { expiresIn: "2h" });
-
-  return res
-    .cookie("token", token, { httpOnly: true, maxAge: 2000 * 60 * 60 })
-    .cookie("userId", userId, { httpOnly: false, maxAge: 2000 * 60 * 60 })
-    .json({ redirectUrl: "/" });
 };
 
-module.exports = createUser;
+export default createUser;

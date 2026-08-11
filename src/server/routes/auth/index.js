@@ -1,9 +1,14 @@
-var { Router } = require("express");
+import { Router } from "express";
+import getAuthFormPage from "./controllers/getAuthFormPage.js";
+import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
+import checkUserCredentials from "./controllers/checkUserCredentials.js";
+
+import schemas from "./JoiSchemas/index.js";
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.get("/", require("./controllers/getAuthFormFile"));
+router.get("/", getAuthFormPage);
 
-router.post("/check", require("./controllers/checkUserCredentials"));
+router.post("/", joiSchemaValidator(schemas.checkUserCredentials), checkUserCredentials);
 
-module.exports = router;
+export default router;

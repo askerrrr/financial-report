@@ -49,10 +49,3 @@
 .input-file input[type="file"]:disabled + span {
   background-color: #eee;
 }
-
-/* .period-button {
-  position: fixed;
-  top: 80px;
-  right: 20px;
-  z-index: 1000;
-} */

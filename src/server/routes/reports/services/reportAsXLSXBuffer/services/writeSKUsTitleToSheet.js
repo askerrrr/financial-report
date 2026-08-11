@@ -1,4 +1,4 @@
-var { columns } = require("./writeSKUsToSheet");
+import { columns } from "./writeSKUsToSheet.js";
 
 var titles = [
   "Артикул",
@@ -10,7 +10,12 @@ var titles = [
   "Удержания/    выплаты",
   "Хранение",
   "Приемка",
+  "Прочите расходы",
   "Выплата с вычетом всех услуг WB",
+  "Налогооблагаемая база",
+  "Налоги",
+  "Cтраховые взносы",
+  "Доп. страховые взносы",
   "Маржинальность %",
   "Итого",
 ];
@@ -45,4 +50,4 @@ var writeSKUsTitleToSheet = async (sheet) => {
   return sheet;
 };
 
-module.exports = writeSKUsTitleToSheet;
+export default writeSKUsTitleToSheet;

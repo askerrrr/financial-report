@@ -1,35 +1,26 @@
 var button = document.getElementById("download-report-as-xlsx-button");
+var url = "/report/as-xlsx/";
 
-var getCostPricesValueFromTable = async (skusQty) => {
-  var costPrices = [];
-
-  for (var i = 0; i < skusQty; i++) {
-    var costPrice = document.getElementById("costprice-" + i).textContent;
-
-    costPrices.push(+costPrice);
-  }
-
-  return costPrices;
-};
-
-var downloadReportAsXLSXButtonHandler = async (report, url) =>
+var downloadReportAsXLSXButtonHandler = (report, url, isGuestAccess) =>
   (button.onclick = async (e) => {
     e.preventDefault();
 
-    var { dateFrom, dateTo } = report;
+    var { userId, reportId, dateFrom, dateTo } = report;
+    var body;
 
-    var costPrices = await getCostPricesValueFromTable(report.skus.length);
-
-    var allCostPricesNonZero = costPrices.every((costPrice) => costPrice > 0);
-
-    if (!allCostPricesNonZero) {
-      return alert("Для скачивания файла нужно установить себестоимости для товаров");
+    if (isGuestAccess) {
+      body = JSON.stringify({ report: JSON.parse(localStorage.getItem(report.userId)) });
+    } else {
+      body = JSON.stringify({ userId, reportId });
     }
 
-    var res = await fetch(url);
+    var res = await fetch(url, { method: "POST", body, headers: { "Content-Type": "application/json" } });
+
+    if (res.status !== 200) {
+      return alert("Не удалось скачать отчет...");
+    }
 
     var blob = await res.blob();
-
     var downloadUrl = window.URL.createObjectURL(blob);
 
     var a = document.createElement("a");

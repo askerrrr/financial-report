@@ -1,11 +1,15 @@
+import dbUtils from "../../../database/collections/index.js";
+import excludeFutureTaxParams from "../services/excludeFutureTaxParams.js";
+
 var getTaxParams = async (req, res, next) => {
-  var { getTaxParamsFromDb } = req.app.locals.taxParamsCollectionServices;
+  var { getTaxParamsFromDb } = dbUtils.taxParamsCollectionServices;
 
   var userId = req.app.locals.userId;
 
   var taxParams = await getTaxParamsFromDb(userId);
+  var { filteredTaxParams } = excludeFutureTaxParams(taxParams);
 
-  return res.json({ taxParams });
+  return res.json({ taxParams: filteredTaxParams });
 };
 
-module.exports = getTaxParams;
+export default getTaxParams;

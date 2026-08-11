@@ -1,57 +1,148 @@
-var env = require("./env");
-var express = require("express");
-var { join } = require("node:path");
-var { mkdir } = require("node:fs/promises");
-var cookieParser = require("cookie-parser");
-var checkDBState = require("./middleware/mongoose");
-var userCollectionServices = require("./database/collections/users");
-var adminCollectionServices = require('./database/collections/admins')
-var tokenCollectionServices = require("./database/collections/tokens");
-var reportCollectionServices = require("./database/collections/reports");
-var taxParamsCollectionServices = require("./database/collections/taxParams");
-var reportsTreeCollectionServices = require("./database/collections/reportTrees");
+import express from "express";
+import { join } from "node:path";
+import cookieParser from "cookie-parser";
+import checkRoles from "./middleware/checkRoles.js";
+import errorHandler from "./middleware/errorHandler/index.js";
+import notFoundHandler from "./middleware/notFoundHandler/index.js";
+import verifyAuthorization from "./middleware/verifyAuthorization.js";
+import verifyAuthentication from "./middleware/verifyAuthentication.js";
 
-var app = express();
+import { serverEmitter } from "./customEvent/index.js";
 
-(async () => {
-  await mkdir("/var/report_uploads/", { recursive: true });
-  await mkdir("/var/report_skus_photo/", { recursive: true });
-  await mkdir("/var/temporary-photo-storage/", { recursive: true });
+import { runDB } from "./database/index.js";
 
-  app.locals.userCollectionServices = userCollectionServices;
-  app.locals.adminCollectionServices = adminCollectionServices
-  app.locals.reportCollectionServices = reportCollectionServices;
-  app.locals.tokenCollectionServices = tokenCollectionServices;
-  app.locals.taxParamsCollectionServices = taxParamsCollectionServices;
-  app.locals.reportsTreeCollectionServices = reportsTreeCollectionServices;
+import authRouter from "./routes/auth/index.js";
+import rootRouter from "./routes/index/index.js";
+import goodsRouter from "./routes/goods/index.js";
+import adminRouter from "./routes/admin/index.js";
+import tokenRouter from "./routes/WBToken/index.js";
+import reportsRouter from "./routes/reports/index.js";
+import userDeleteRouter from "./routes/delete/index.js";
+import taxParamsRouter from "./routes/taxParams/index.js";
+import registrationRouter from "./routes/registration/index.js";
+import personalAccountRouter from "./routes/personalAccount/index.js";
+import backgroundTasksRouter from "./routes/backgroundTasks/index.js";
+import decodeReportWithoutRegistrationRouter from "./routes/decodeReportWithoutRegistration/index.js";
 
-  app.listen(env.PORT, env.HOST, () => console.log("server running"));
-})();
+var mainServerIsListen = false;
+var errorServerIsListen = false;
 
-app.disable("x-powered-by");
-app.use(express.urlencoded());
-app.use(express.json());
-app.use(express.static(join(__dirname, "../public")));
+var mainServerInstance = null;
+var errorServerInstance = null;
 
-app.use(checkDBState);
+var createServer = () => {
+  var app = express();
+  return app;
+};
 
-app.use("/decode-report-without-registration/", require("./routes/decodeReportWithoutRegistration"));
-app.use("/auth", require("./routes/auth/"));
-app.use("/admin", require("./routes/admin/"));
-app.use("/reg", require("./routes/registration/"));
+var runErrorServer = async () => {
+  if (errorServerInstance) {
+    await new Promise((resolve) => {
+      if (errorServerInstance && errorServerInstance.close) {
+        errorServerInstance.close(() => {
+          errorServerInstance.removeAllListeners();
+          errorServerInstance = null;
+          errorServerIsListen = false;
+          resolve();
+        });
+      }
+    });
+  }
 
-app.use(cookieParser());
+  var errorApp = createServer();
+  errorApp.get("/", (_, res) => res.set({ "Content-Type": "text/html" }).send("<p>Сервер временно недоступен</p>"));
+  errorServerIsListen = true;
+  errorServerInstance = errorApp.listen(process.env.PORT, process.env.HOST, () => console.log("Сервер временно недоступен."));
+};
 
-app.use(require("./middleware/verifyJWTToken"));
+var runServer = async () => {
+  if (mainServerInstance) {
+    await new Promise((resolve) => {
+      if (mainServerInstance && mainServerInstance.close) {
+        mainServerInstance.close(() => {
+          mainServerInstance.removeAllListeners();
+          mainServerInstance = null;
+          mainServerIsListen = false;
+          resolve();
+        });
+      }
+    });
+  }
 
-app.use("/", require("./routes/root/"));
+  process.env.NODE_ENV = "production";
+  var app = createServer();
 
-app.use("/token", require("./routes/WBToken/"));
+  app.disable("x-powered-by");
+  app.use(express.urlencoded());
+  app.use(express.json());
+  app.use(express.static(join(import.meta.dirname, "../public")));
 
-app.use("/tax_params", require("./routes/taxParams/"));
+  app.use("/auth", authRouter);
+  app.use("/reg", registrationRouter);
+  app.use("/background-tasks", backgroundTasksRouter);
+  app.use("/decode-report-without-registration/", decodeReportWithoutRegistrationRouter);
 
-app.use("/reports", require("./routes/reports/"));
+  app.use(cookieParser());
+  app.use(verifyAuthentication, verifyAuthorization);
+  app.use("/", checkRoles(["admin", "user"]), rootRouter);
+  app.use("/wbtoken", checkRoles(["admin", "user"]), tokenRouter);
+  app.use("/admin", checkRoles(["admin"]), adminRouter);
+  app.use("/tax-params", checkRoles(["admin", "user"]), taxParamsRouter);
+  app.use("/report", checkRoles(["admin", "user"]), reportsRouter);
+  app.use("/goods", checkRoles(["admin", "user"]), goodsRouter);
+  app.use("/personal-account", checkRoles(["admin", "user"]), personalAccountRouter);
+  app.use("/delete", userDeleteRouter);
 
-app.all(/.*/, require("./middleware/notFoundHandler/"));
+  app.all(/.*/, notFoundHandler);
 
-app.use(require("./middleware/errorHandler/"));
+  app.use(errorHandler);
+
+  mainServerIsListen = true;
+  mainServerInstance = app.listen(process.env.PORT, process.env.HOST, async () => console.log("server running"));
+};
+
+var startApp = async () => {
+  try {
+    await runDB();
+    await runServer();
+  } catch (e) {
+    console.log(e);
+    if (e.name !== "MongooseServerSelectionError" || e.name !== "MongoServerSelectionError") {
+      await runErrorServer();
+    }
+  }
+};
+
+startApp();
+
+serverEmitter.on("start", async () => {
+  if (errorServerIsListen) {
+    await new Promise((resolve) => {
+      errorServerInstance.close(() => {
+        errorServerInstance.removeAllListeners();
+        errorServerInstance = null;
+        errorServerIsListen = false;
+        resolve();
+      });
+    });
+  }
+  return await runServer();
+});
+
+serverEmitter.on("close", async () => {
+  if (mainServerIsListen) {
+    await new Promise((resolve) => {
+      mainServerInstance.close(() => {
+        mainServerInstance.removeAllListeners();
+        mainServerInstance = null;
+        mainServerIsListen = false;
+        resolve();
+      });
+    });
+  }
+  return await runErrorServer();
+});
+
+process.on("unhandledRejection", async (reason, promise) => {
+  //console.log("reason name: ", reason.name);
+});

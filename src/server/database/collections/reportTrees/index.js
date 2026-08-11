@@ -1,21 +1,19 @@
-var { reportsTreeCollection } = require("../../connections");
+import { reportsTreeCollection } from "../../connections/index.js";
 
-var getReportsTree = require("./services/getReportsTree");
-var updateReportTree = require("./services/updateReportTree");
-var createReportsTreeEntity = require("./services/createReportsTreeEntity");
-var deleteReportsTreeByUserId = require("./services/deleteReportsTreeByUserId");
-var deleteReportFromReportTree = require("./services/deleteReportFromReportTree");
+import getReportTree from "./services/getReportTree.js";
+import updateReportTree from "./services/updateReportTree.js";
+import deleteReportTreeByUserId from "./services/deleteReportTreeByUserId.js";
+import deleteReportFromReportTree from "./services/deleteReportFromReportTree.js";
 
 var reportsTreeCollectionServices = {
-  createReportsTreeEntity: (userId) => createReportsTreeEntity(reportsTreeCollection, userId),
+  updateReportTree: (userId, years, session) => updateReportTree(reportsTreeCollection, userId, years, session),
 
-  updateReportTree: (userId, years) => updateReportTree(reportsTreeCollection, userId, years),
+  getReportTree: (userId, session) => getReportTree(reportsTreeCollection, userId, session),
 
-  getReportsTree: (userId) => getReportsTree(reportsTreeCollection, userId),
+  deleteReportFromReportTree: (userId, year, month, reportId, session) =>
+    deleteReportFromReportTree(reportsTreeCollection, userId, year, month, reportId, session),
 
-  deleteReportFromReportTree: (userId, year, month, reportId) => deleteReportFromReportTree(reportsTreeCollection, userId, year, month, reportId),
-
-  deleteReportsTreeByUserId: (userId) => deleteReportsTreeByUserId(reportsTreeCollection, userId),
+  deleteReportTreeByUserId: (userId) => deleteReportTreeByUserId(reportsTreeCollection, userId),
 };
 
-module.exports = reportsTreeCollectionServices;
+export default reportsTreeCollectionServices;

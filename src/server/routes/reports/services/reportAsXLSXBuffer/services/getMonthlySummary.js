@@ -1,52 +1,49 @@
-var totalRetailAmount = 0,
-  totalSellerPayoutAmount = 0,
-  totalSold = 0,
-  totalDeliveryCost = 0,
-  totalStorageCost = 0,
-  totalPaidAcceptance = 0,
-  totalFines = 0,
-  totalDeductionOrPayment = 0,
-  totalAdCampaignCosts = 0,
-  totalProductsCosts = 0,
-  totalTaxAmount = 0,
-  totalProfitMargin = 0,
-  totalFinalProfit = 0;
+import getZeroedReportTotals from "./getZeroedReportTotals.js";
 
-var getMonthlySummary = async (reports) => {
-  for (var report of reports) {
-    totalRetailAmount += report.totalRetailAmount;
-    totalSellerPayoutAmount += report.totalSellerPayoutAmount;
-    totalSold += report.totalSold;
-    totalDeliveryCost += report.totalDeliveryCost;
-    totalStorageCost += report.totalStorageCost;
-    totalPaidAcceptance += report.totalPaidAcceptance;
-    totalFines += report.totalFines;
-    totalDeductionOrPayment += report.totalDeductionOrPayment;
-    totalAdCampaignCosts += report.totalAdCampaignCosts;
-    totalProductsCosts += report.totalProductCosts;
-    totalTaxAmount += report.totalTaxAmount;
-    totalProfitMargin += report.totalProfitMargin;
-    totalFinalProfit += report.totalFinalProfit;
+var getMonthlySummary = async (reports, totalPropPostfix = "") => {
+  var monthlySummary = getZeroedReportTotals();
+
+  var { dateFrom, dateTo } = reports[0];
+
+  if (totalPropPostfix) {
+    var currentYearPostfix = "InCurrentYear";
+
+    if (totalPropPostfix === currentYearPostfix) {
+      var startYear = dateFrom.split("-")[0];
+
+      monthlySummary.dateFrom = dateFrom;
+      monthlySummary.dateTo = startYear + "-12-31";
+    } else {
+      var nextYear = dateTo.split("-")[0];
+      monthlySummary.dateFrom = nextYear + "-01-01";
+      monthlySummary.dateTo = dateTo;
+    }
+  } else {
+    monthlySummary.dateFrom = dateFrom;
+    monthlySummary.dateTo = dateTo;
   }
 
-  return {
-    reportId: reports[0].reportId,
-    dateFrom: reports.at(-1).dateFrom,
-    dateTo: reports[0].dateTo,
-    totalRetailAmount,
-    totalSellerPayoutAmount,
-    totalSold,
-    totalDeliveryCost,
-    totalStorageCost,
-    totalPaidAcceptance,
-    totalFines,
-    totalDeductionOrPayment,
-    totalAdCampaignCosts,
-    totalProductsCosts,
-    totalTaxAmount,
-    totalProfitMargin,
-    totalFinalProfit,
-  };
+  for (var report of reports) {
+    monthlySummary.reportIds += report.reportId + "; ";
+    monthlySummary.totalRetailAmount += report["totalRetailAmount" + totalPropPostfix];
+    monthlySummary.totalSellerPayoutAmount += report["totalSellerPayoutAmount" + totalPropPostfix];
+    monthlySummary.totalSold += report["totalSold" + totalPropPostfix];
+    monthlySummary.totalReturnAmount += report["totalReturnAmount" + totalPropPostfix];
+    monthlySummary.totalDeliveryCost += report["totalDeliveryCost" + totalPropPostfix];
+    monthlySummary.totalStorageCost += report["totalStorageCost" + totalPropPostfix];
+    monthlySummary.totalPaidAcceptance += report["totalPaidAcceptance" + totalPropPostfix];
+    monthlySummary.totalFines += report["totalFines" + totalPropPostfix];
+    monthlySummary.totalOtherExpenses += report["totalOtherExpenses" + totalPropPostfix];
+    monthlySummary.totalDeductionOrPayment += report["totalDeductionOrPayment" + totalPropPostfix];
+    monthlySummary.totalAdvertisingCosts += report["totalAdvertisingCosts" + totalPropPostfix];
+    monthlySummary.totalProductsCosts += report["totalProductCosts" + totalPropPostfix] ?? 0;
+    monthlySummary.totalTaxableAmount += report["totalTaxableAmount" + totalPropPostfix];
+    monthlySummary.totalTaxAmount += report["totalTaxAmount" + totalPropPostfix];
+    monthlySummary.totalProfitMargin += report["totalProfitMargin" + totalPropPostfix] ?? 0;
+    monthlySummary.totalFinalProfit += report["totalFinalProfit" + totalPropPostfix];
+  }
+
+  return monthlySummary;
 };
 
-module.exports = getMonthlySummary;
+export default getMonthlySummary;

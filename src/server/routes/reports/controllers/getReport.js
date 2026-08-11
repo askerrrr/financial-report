@@ -1,17 +1,30 @@
-var collectImagesAsBase64 = require("../services/different/collectImagesAsBase64");
+import Joi from "joi";
+import dbUtils from "../../../database/collections/index.js";
+import collectImagesAsBase64 from "../services/different/collectImagesAsBase64.js";
+import filterCostsForReportSkus from "../services/different/filterCostsForReportSkus.js";
+
+var schema = Joi.object({ userId: Joi.string().required(), reportId: Joi.number().required() });
 
 var getReport = async (req, res, next) => {
-  var { userId, id } = req.params;
+  var { error } = schema.validate(req.params);
 
-  var { getReportById } = req.app.locals.reportCollectionServices;
+  if (error) {
+    return res.sendStatus(400);
+  }
 
-  var report = await getReportById(userId, id);
+  var { userId, reportId } = req.params;
 
-  var imageCollection = await collectImagesAsBase64(userId, report.skus);
+  var { getReportById } = dbUtils.reportCollectionServices;
+  var { getSkusLastCostPrice } = dbUtils.goodsCollectionServices;
 
-  var downloadReportLink = "/reports/download-report-as-xlsx/" + userId + "/" + id;
+  var { report } = await getReportById(userId, reportId);
+  var { skusLastCostPrice } = await getSkusLastCostPrice(userId);
 
-  return res.json({ report, imageCollection, downloadReportLink });
+  var { skuImages } = await collectImagesAsBase64(userId, report.skus);
+
+  var { skusLastCostPrice } = await filterCostsForReportSkus(report.skus, skusLastCostPrice);
+
+  return res.json({ report, skuImages, skusLastCostPrice });
 };
 
-module.exports = getReport;
+export default getReport;

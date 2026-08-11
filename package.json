@@ -3,22 +3,26 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch src/server/app.js"
+    "start": "node --watch --env-file=.env src/server/app.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.876.0",
     "argon2": "^0.43.0",
     "cookie-parser": "^1.4.7",
-    "exceljs": "^4.4.0",
+    "exceljs": "^3.4.0",
     "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
+    "joi": "^18.0.2",
+    "jose": "^6.2.1",
     "jszip": "^3.10.1",
-    "mongodb": "^6.16.0",
-    "mongoose": "^8.14.1",
+    "mongodb": "^7.5.0",
+    "mongodb-client-encryption": "^7.2.0",
+    "mongoose": "^9.7.4",
     "multer": "^1.4.5-lts.2"
   },
-  "type": "commonjs"
+  "type": "module"
 }

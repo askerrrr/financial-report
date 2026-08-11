@@ -1,48 +1,75 @@
-var { randomBytes } = require("node:crypto");
-var parseReports = require("../../reports/services/writeAndCalcReportDataFromWBAPI");
-var getReportByPeriodFromWBAPI = require("../../reports/services/different/getReportByPeriodFromWBAPI");
-var createPaidStorageReportTask = require("../../reports/services/different/createPaidStorageReportTask");
-var getAdvertisingCostsForPeriod = require("../../reports/services/different/getAdvertisingCostsForPeriod");
-var checkPaidStorageReportCreationStatus = require("../../reports/services/different/checkPaidStorageReportCreationStatus");
-var getPaidStorageReportByTaskIdFromWBAPI = require("../../reports/services/different/getPaidStorageReportByTaskIdFromWBAPI");
+import Joi from "joi";
+import { randomBytes } from "node:crypto";
+import wbapi from "../../reports/services/WBAPI/index.js";
+import parseReports from "../../reports/services/reportParsing/index.js";
+
+var schema = Joi.object({
+  dateFrom: Joi.string().required(),
+  dateTo: Joi.string().required(),
+  token: Joi.string().required(),
+  taxRate: Joi.number().required(),
+});
+
+var taxParamsStub = {
+  finalProfit: 0,
+  retailAmount: 0,
+  paidTaxAmount: 0,
+  paidInsuranceFee: 0,
+  excessInsuranceRate: 1,
+  maxInsuranceFee: 300000,
+  mandatoryInsuranceFee: 0,
+  isInsuranceFeePaid: false,
+  additionalInsuranceFee: 0,
+  insuranceFeePercentage: 10,
+  mandatoryInsuranceFeeRate: 10,
+  hasExcessIncomeForInsurance: false,
+  mandatoryInsuranceFeeIsPaid: false,
+  additionalInsuranceFeeIsPaid: false,
+  requiresAdditionalInsuranceFee: false,
+  excessIncomeForAdditionalInsuranceFee: 300000,
+};
 
 var getReportFromWBAPI = async (req, res, next) => {
-  var { dateFrom, dateTo, token, taxRate } = req.body;
+  var { error } = schema.validate(req.body);
 
-  var taskId = await createPaidStorageReportTask(dateFrom, dateTo, token, "");
-  var statusIsDone = await checkPaidStorageReportCreationStatus(taskId, token);
-
-  if (!statusIsDone) {
-    return res.sendStatus(304);
+  if (error) {
+    return res.sendStatus(400);
   }
 
-  var mainReport = await getReportByPeriodFromWBAPI(dateFrom, dateTo, token, "");
-  var storageReport = await getPaidStorageReportByTaskIdFromWBAPI(taskId, token, "");
-  var totalAdvertisingCosts = await getAdvertisingCostsForPeriod(dateFrom, dateTo, token, "");
+  var { dateFrom, dateTo, token, taxRate } = req.body;
 
-  var reports = { mainReport, storageReport, totalAdvertisingCosts };
+  var startYear = +dateFrom.split("-")[0];
+  var endYear = +dateTo.split("-")[0];
+  var isCrossYearPeriod = startYear !== endYear;
 
-  var report = await parseReports({ taxRate }, reports);
+  var reports = await wbapi.getReports("decode-without-auth", dateFrom, dateTo, token);
+  var { reportId } = reports.weeklyFinancialReport[0];
 
+  if (isCrossYearPeriod) {
+    var startYearTaxParamsStub = Object.assign({}, { taxRate, year: startYear, ...taxParamsStub });
+    var endYearTaxParamsStub = Object.assign({}, { taxRate, year: endYear, ...taxParamsStub });
+
+    var taxParams = { startYearTaxParams: startYearTaxParamsStub, endYearTaxParams: endYearTaxParamsStub };
+
+    var { report } = await parseReports(reports, taxParams, isCrossYearPeriod);
+  } else {
+    var { report } = await parseReports(reports, { taxRate, year: startYear, ...taxParamsStub });
+  }
+
+  var userId = randomBytes(15).toString("hex");
+
+  report.userId = userId;
   report.dateTo = dateTo;
+  report.taxRate = taxRate;
   report.dateFrom = dateFrom;
+  report.reportId = reportId;
   report.totalFinalProfit = 0;
   report.totalProductCosts = 0;
   report.totalProfitMargin = 0;
-  report.reportId = mainReport[0].realizationreport_id;
+  report.totalOtherExpenses = 0;
+  report.isCrossYearPeriod = isCrossYearPeriod;
 
-  report.skus.map((sku) => {
-    (sku.costPrice = 0), (sku.finalProfitPerSKU = 0), (sku.profitMargin = 0);
-  });
-
-  var id = randomBytes(15).toString("hex");
-
-  req.app.locals.reports = [{ id, taxRate, report }];
-
-  var setCostPriceLink = "/decode-report-without-registration/report/set-cost-price";
-  var downloadReportLink = "/decode-report-without-registration/xlsx/" + id + "/" + report.reportId;
-
-  return res.json({ id, report, setCostPriceLink, downloadReportLink });
+  return res.json({ report });
 };
 
-module.exports = getReportFromWBAPI;
+export default getReportFromWBAPI;
