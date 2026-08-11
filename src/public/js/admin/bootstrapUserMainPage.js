@@ -1,4 +1,3 @@
-import logoutButtonHandler from "../index/logout/index.js";
 import getMainPageData from "../index/utils/getMainPageData.js";
 import { createReportTree } from "../index/reportTreeBuilder/index.js";
 import accountedFinancesPanelHandler from "../index/accountedFinancesPanel/index.js";
@@ -13,12 +12,9 @@ var userId = window.location.pathname.split("/").at(-1);
 var bootstrapUserMainPage = async () => {
   var { lastReports, reportTree, reportLoadingState, reportsWithAccountedFinances } = await getMainPageData(userId);
 
-  createReportTree(userId, lastReports, reportTree);
-
-  accountedFinancesPanelHandler(reportsWithAccountedFinances);
-  logoutButtonHandler(userId);
-
   updateLinks(userId);
+  createReportTree(userId, lastReports, reportTree);
+  accountedFinancesPanelHandler(reportsWithAccountedFinances);
 };
 
 bootstrapUserMainPage();
