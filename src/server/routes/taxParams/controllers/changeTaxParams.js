@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { dbClient } from "../../../database/index.js";
 import dbUtils from "../../../database/collections/index.js";
 import getTaxParamKeyName from "../services/getTaxParamKeyName.js";
@@ -7,9 +6,7 @@ import recalculateReportsWithNewTaxRate from "../services/recalculateReportsWith
 import recalculateReportsWithNewMandatoryInsuranceRate from "../services/recalculateReportsWithNewMandatoryInsuranceRate.js";
 
 var changeTaxParams = async (req, res, next) => {
-  var userId = req.app.locals.userId;
-
-  var { year, oldTaxParams, reportsNeedRecalculation, data } = req.body;
+  var { userId, year, oldTaxParams, reportsNeedRecalculation, data } = req.body;
   var { changeTaxParamsToDb } = dbUtils.taxParamsCollectionServices;
   var { getListGoodsFromDb, saveListGoodsToDb } = dbUtils.goodsCollectionServices;
   var { getReportsByUserId, saveUpdatedReports } = dbUtils.reportCollectionServices;
@@ -75,13 +72,8 @@ var changeTaxParams = async (req, res, next) => {
 
           if (requiredReports.length) {
             var { mandatoryInsuranceFee } = oldTaxParams;
-            var { updatedReports, listGoodsWithUpdatedSkuMetrics, finalProfit, paidInsuranceFee, mandatoryInsuranceFeeIsPaid } = recalculateReportsWithNewMandatoryInsuranceRate(
-              year,
-              requiredReports,
-              listGoods,
-              mandatoryInsuranceFee,
-              newMandatoryInsuranceFeeRate,
-            );
+            var { updatedReports, listGoodsWithUpdatedSkuMetrics, finalProfit, paidInsuranceFee, mandatoryInsuranceFeeIsPaid } =
+              recalculateReportsWithNewMandatoryInsuranceRate(year, requiredReports, listGoods, mandatoryInsuranceFee, newMandatoryInsuranceFeeRate);
 
             await saveUpdatedReports(userId, updatedReports, session);
 

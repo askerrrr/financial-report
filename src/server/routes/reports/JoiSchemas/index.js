@@ -7,22 +7,23 @@ import setCostPriceToSkuSchema from "./setCostPriceToSku.js";
 import setCostPriceToSkusSchema from "./setCostPriceToSkus.js";
 import downloadReportAsXLSXSchema from "./downloadReportAsXLSX.js";
 import downloadReportsAsZipSchema from "./downloadReportsAsZip.js";
+import getReportLoadingStateSchema from "./getReportLoadingState.js";
 import setOtherExpensesToSkuSchema from "./setOtherExpensesToSku.js";
 import resumeAbandonedReportsLoadingSchema from "./resumeAbandonedReportsLoading.js";
 import changeFinancialAccountingStatusSchema from "./changeFinancialAccountingStatus.js";
 
-var schema = {};
-
-schema.saveReports = saveReportsSchema;
-schema.deleteImage = deleteImageSchema;
-schema.deleteReport = deleteReportSchema;
-schema.skuPhotoUpload = skuPhotoUploadSchema;
-schema.setCostPriceToSku = setCostPriceToSkuSchema;
-schema.setCostPriceToSkus = setCostPriceToSkusSchema;
-schema.downloadReportsAsZip = downloadReportsAsZipSchema;
-schema.downloadReportAsXLSX = downloadReportAsXLSXSchema;
-schema.setOtherExpensesToSku = setOtherExpensesToSkuSchema;
-schema.resumeAbandonedReportsLoading = resumeAbandonedReportsLoadingSchema;
-schema.changeFinancialAccountingStatus = changeFinancialAccountingStatusSchema;
-
-export default schema;
+export {
+  getReportSchema,
+  saveReportsSchema,
+  deleteImageSchema,
+  deleteReportSchema,
+  skuPhotoUploadSchema,
+  setCostPriceToSkuSchema,
+  setCostPriceToSkusSchema,
+  downloadReportsAsZipSchema,
+  downloadReportAsXLSXSchema,
+  getReportLoadingStateSchema,
+  setOtherExpensesToSkuSchema,
+  resumeAbandonedReportsLoadingSchema,
+  changeFinancialAccountingStatusSchema,
+};
