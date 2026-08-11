@@ -18,7 +18,7 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
 
     for (var sku of report.skus) {
       var skuFromListGoods = listGoods.find((i) => i.id === sku.id && i.skuName === sku.skuName);
-      var skuMetrics = skuFromListGoods.metrics.find((i) => i.year === taxYear);
+      var skuMetrics = skuFromListGoods?.metrics.find((i) => i.year === taxYear);
 
       if (report.isCrossYearPeriod) {
         var prevSkuInsuranceFee = sku["insuranceFee" + postfix];
@@ -45,11 +45,13 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
           sku.insuranceFee = sku.insuranceFeeInCurrentYear + sku.insuranceFeeInNextYear;
           sku.finalProfit = sku.finalProfitInCurrentYear + sku.finalProfitInNextYear;
 
-          var recalculatedInsuranceFeeForSkuMetrics = skuMetrics.insuranceFee - prevSkuInsuranceFee + newSkuInsuranceFee;
-          var recalculatedNetProfitForSkuMetrics = skuMetrics.newProfit - prevSkuFinalProfit + sku["finalProfit" + postfix];
+          if (skuMetrics) {
+            var recalculatedInsuranceFeeForSkuMetrics = skuMetrics.insuranceFee - prevSkuInsuranceFee + newSkuInsuranceFee;
+            var recalculatedNetProfitForSkuMetrics = skuMetrics.newProfit - prevSkuFinalProfit + sku["finalProfit" + postfix];
 
-          skuMetrics.insuranceFee = truncateNum(recalculatedInsuranceFeeForSkuMetrics);
-          skuMetrics.newProfit = truncateNum(recalculatedNetProfitForSkuMetrics);
+            skuMetrics.insuranceFee = truncateNum(recalculatedInsuranceFeeForSkuMetrics);
+            skuMetrics.newProfit = truncateNum(recalculatedNetProfitForSkuMetrics);
+          }
 
           finalProfit += sku["finalProfit" + postfix];
         }
@@ -75,11 +77,13 @@ var recalculateReportsWithNewMandatoryInsuranceRate = (taxYear, reports, listGoo
           sku.insuranceFee = newSkuInsuranceFee;
           sku.finalProfit = calc.finalProfit(sku, postfix);
 
-          var recalculatedInsuranceFeeForSkuMetrics = skuMetrics.insuranceFee - prevSkuInsuranceFee + newSkuInsuranceFee;
-          var recalculatedNetProfitForSkuMetrics = skuMetrics.netProfit - prevSkuFinalProfit + sku.finalProfit;
+          if (skuMetrics) {
+            var recalculatedInsuranceFeeForSkuMetrics = skuMetrics.insuranceFee - prevSkuInsuranceFee + newSkuInsuranceFee;
+            var recalculatedNetProfitForSkuMetrics = skuMetrics.netProfit - prevSkuFinalProfit + sku.finalProfit;
 
-          skuMetrics.insuranceFee = truncateNum(recalculatedInsuranceFeeForSkuMetrics);
-          skuMetrics.netProfit = truncateNum(recalculatedNetProfitForSkuMetrics);
+            skuMetrics.insuranceFee = truncateNum(recalculatedInsuranceFeeForSkuMetrics);
+            skuMetrics.netProfit = truncateNum(recalculatedNetProfitForSkuMetrics);
+          }
 
           finalProfit += sku.finalProfit;
         }

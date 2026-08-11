@@ -8,10 +8,12 @@ import mandatoryInsuranceRateHandler from "./mandatoryInsuranceRateHandler.js";
 
 import writeTaxParamsToLocalStorage from "./writeTaxParamsToLocalStorage.js";
 
-var main = async () => {
-  var { taxParams } = await getTaxParams();
+var userId = document.cookie.split("=")[1];
 
-  if (taxParams.length == 0) {
+var main = async () => {
+  var { taxParams } = await getTaxParams(userId);
+
+  if (!taxParams.length) {
     return;
   }
 
@@ -24,9 +26,9 @@ var main = async () => {
 
   createTaxTable(taxParams);
 
-  taxRateHandler();
-  mandatoryInsuranceFeeHandler();
-  mandatoryInsuranceRateHandler();
+  taxRateHandler(userId);
+  mandatoryInsuranceFeeHandler(userId);
+  mandatoryInsuranceRateHandler(userId);
   handleTaxYearSelection(taxParams);
   insertTaxYearsToSelectElem(taxParams);
 };

@@ -10,8 +10,8 @@ var createReportTree = async (userId, lastReports, reportTree) => {
 
   var lastMonthData = reportTree[0].months.shift();
 
-  fillYearContainer(reportTree);
-  insertLastReportsToTree(reportTree, lastReports, lastMonthData);
+  fillYearContainer(userId, reportTree);
+  insertLastReportsToTree(userId, reportTree, lastReports, lastMonthData);
 
   deleteEmptyMonth(userId);
 };

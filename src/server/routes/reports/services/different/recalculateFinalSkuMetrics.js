@@ -2,14 +2,14 @@ import calc from "../calcServices/index.js";
 import truncateNum from "../reportParsing/truncateNum.js";
 
 var recalculateFinalSkuMetrics = (year, skuFromListGoods, sku, prevSkuData, postfix = "") => {
-  if (!skuFromListGoods.length) {
-    return [];
+  if (!skuFromListGoods) {
+    return { metrics: [] };
   }
 
   var skuMetrics = skuFromListGoods?.metrics?.find((i) => i.year === year);
 
   if (!skuMetrics) {
-    return skuFromListGoods;
+    return { metrics: [] };
   }
 
   var recalculatedOtherExpenses = skuMetrics.otherExpenses - prevSkuData["otherExpenses" + postfix] + sku["otherExpenses" + postfix];

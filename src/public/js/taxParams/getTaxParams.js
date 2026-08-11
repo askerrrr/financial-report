@@ -1,5 +1,5 @@
-var getTaxParams = async () => {
-  var res = await fetch("/tax-params/api");
+var getTaxParams = async (userId) => {
+  var res = await fetch("/tax-params/api/" + userId);
 
   var { taxParams } = await res.json();
 
