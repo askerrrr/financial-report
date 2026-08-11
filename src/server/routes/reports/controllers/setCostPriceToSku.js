@@ -66,7 +66,10 @@ var setCostPriceToSku = async (req, res, next) => {
 
       await changeTaxParamsToDb(userId, session, taxParams);
       await saveUpdatedReport(userId, reportId, { skus, ...totalParams }, session);
-      await updateSkuInListGoods(userId, skuId, skuName, { lastCostPrice, metrics }, session);
+
+      if (metrics.length) {
+        await updateSkuInListGoods(userId, skuId, skuName, { lastCostPrice, metrics }, session);
+      }
 
       var years = [];
       var skuDataToClient = excludeEqualParams(prevSkuData, skus[skuIndex]);
