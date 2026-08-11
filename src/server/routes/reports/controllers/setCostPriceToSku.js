@@ -86,7 +86,6 @@ var setCostPriceToSku = async (req, res, next) => {
       });
     });
   } catch (err) {
-    await session.abortTransaction();
     console.log(err);
     //log error
     return res.sendStatus(304);
