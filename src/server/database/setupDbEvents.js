@@ -114,7 +114,7 @@ var setupDbEvents = async (dbInstance, dbClientToEncryption) => {
       }
       var { schemaMap } = getEncryptionFieldsSchemaMap(dataKeyId);
 
-      options = { autoEncryption: { schemaMap, kmsProviders, extraOptions, keyVaultNamespace } };
+      options = { autoEncryption: { schemaMap, kmsProviders, extraOptions, keyVaultNamespace }, ...JSON.parse(process.env.MONGO_AUTH_OPTIONS) };
 
       await dbClientToEncryption.close();
 

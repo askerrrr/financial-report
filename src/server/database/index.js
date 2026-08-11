@@ -35,7 +35,7 @@ var runDB = async () => {
     await dbClientToEncryption.close();
 
     var { schemaMap } = getEncryptionFieldsSchemaMap(dataKeyId);
-    var options = { autoEncryption: { schemaMap, kmsProviders, extraOptions, keyVaultNamespace } };
+    var options = { autoEncryption: { schemaMap, kmsProviders, extraOptions, keyVaultNamespace }, ...JSON.parse(process.env.MONGO_AUTH_OPTIONS) };
 
     await mongoose.connect(process.env.MONGO_URI, options);
 
