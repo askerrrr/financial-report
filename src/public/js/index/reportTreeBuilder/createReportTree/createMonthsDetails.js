@@ -1,11 +1,9 @@
 import createReportsTable from "./createReportsTable.js";
 import createMonthlyReportDownloadButton from "./createMonthlyReportDownloadButton.js";
 
-var userId = document.cookie.split("=")[1];
+var url = "/api/required-reports/";
 
-var getRequiredReports = async (reportIds) => {
-  var url = "/api/required-reports/";
-
+var getRequiredReports = async (userId, reportIds) => {
   var res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -17,7 +15,7 @@ var getRequiredReports = async (reportIds) => {
   return { reports };
 };
 
-var createDetailsToReportsContainer = (year, month, reportIds) => {
+var createDetailsToReportsContainer = (userId, year, month, reportIds) => {
   var summaryToMonthReportsContainer = document.createElement("summary");
   summaryToMonthReportsContainer.append(month);
 
@@ -32,11 +30,10 @@ var createDetailsToReportsContainer = (year, month, reportIds) => {
       var reportTbodyId = `tbody_year_${year}_month_${month}`;
 
       if (!document.getElementById(reportTbodyId)) {
-        var { reports } = await getRequiredReports(reportIds);
-
+        var { reports } = await getRequiredReports(userId, reportIds);
         var [reportsTable, downloadBtn] = await Promise.all([
           createReportsTable(year, month, reportIds, reports),
-          createMonthlyReportDownloadButton(reportIds, year, month),
+          createMonthlyReportDownloadButton(userId, reportIds, year, month),
         ]);
 
         monthReportsContainer.append(reportsTable, downloadBtn);
@@ -48,13 +45,13 @@ var createDetailsToReportsContainer = (year, month, reportIds) => {
   return monthReportsContainer;
 };
 
-var createMonthsDetails = (months, year) => {
+var createMonthsDetails = (userId, months, year) => {
   var monthsContainer = document.createElement("div");
   monthsContainer.class = "details";
   monthsContainer.id = `months_container_${year}`;
 
   for (var { month, reportIds } of months) {
-    var reportsContainer = createDetailsToReportsContainer(year, month, reportIds);
+    var reportsContainer = createDetailsToReportsContainer(userId, year, month, reportIds);
     monthsContainer.append(reportsContainer);
   }
 

@@ -1,25 +1,27 @@
-import reportInfo from "./reportInfo.js";
-import createSKUsTable from "./table/createSKUsTable.js";
-import createTotalsTable from "./table/createTotalsTable.js";
-import deleteReportHandler from "./deleteReportHandler.js";
-import splitReportByYear from "./table/services/splitReportByYear.js";
-import injectBase64IntoImgTags from "./table/services/injectBase64IntoImgTags.js";
-import downloadReportAsXLSXButtonHandler from "./downloadReportAsXLSXButtonHandler.js";
+import reportInfo from "../report/reportInfo.js";
+import createSKUsTable from "../report/table/createSKUsTable.js";
+import createTotalsTable from "../report/table/createTotalsTable.js";
+import deleteReportHandler from "../report/deleteReportHandler.js";
+import splitReportByYear from "../report/table/services/splitReportByYear.js";
+import injectBase64IntoImgTags from "../report/table/services/injectBase64IntoImgTags.js";
+import downloadReportAsXLSXButtonHandler from "../report/downloadReportAsXLSXButtonHandler.js";
 import getReportPeriodText from "../index/accountedFinancesPanel/getReportPeriodText.js";
-import setSkusLastCostPricesButtonHandler from "./setSkusLastCostPricesButtonHandler.js";
-import financialAccountingStatusButtonHander from "./financialAccountingStatusButtonHander.js";
+import setSkusLastCostPricesButtonHandler from "../report/setSkusLastCostPricesButtonHandler.js";
+import financialAccountingStatusButtonHander from "../report/financialAccountingStatusButtonHander.js";
 
 var postfixStub = "";
 var yearValueStub = "";
 var reportSummaryLabelTextStub = "";
 var currentYearPostfix = "InCurrentYear";
 var nextYearPostfix = "InNextYear";
-var splitedPathName = window.location.pathname.split("/");
-var userId = splitedPathName.includes("user") ? splitedPathName[3] : document.cookie.split("=")[1];
+var btnToUserMainPage = document.getElementById("back-to-main-page-btn");
 
-var pathParts = window.location.pathname.split("/");
+var splitedPathParts = window.location.pathname.split("/");
 
-var reportId = pathParts.at(-1);
+var reportId = splitedPathParts.at(-1);
+var userId = splitedPathParts.includes("user") ? splitedPathParts[3] : document.cookie.split("=")[1];
+console.log({ userId });
+btnToUserMainPage.onclick = () => (window.location.href = "/admin/user/" + userId);
 
 var url = "/report/" + userId + "/" + reportId;
 

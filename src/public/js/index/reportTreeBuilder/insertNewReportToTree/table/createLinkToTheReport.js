@@ -1,3 +1,5 @@
+var splitedPathName = window.location.pathname.split("/");
+
 var createLinkToTheReport = (reportId) => {
   var button = document.createElement("button");
   var form = document.createElement("form");
@@ -5,7 +7,10 @@ var createLinkToTheReport = (reportId) => {
   button.append("Открыть отчет");
 
   form.append(button);
-  form.action = "/report/" + reportId;
+
+  var url = splitedPathName.includes("user") ? `/admin/user/${splitedPathName.at(-1)}/report/${reportId}` : "/report/" + reportId;
+
+  form.action = url;
 
   return form;
 };

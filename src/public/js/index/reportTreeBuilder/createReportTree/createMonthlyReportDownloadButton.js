@@ -1,4 +1,6 @@
-var createMonthlyReportDownloadButton = (reportIds, year, month) => {
+var url = "/report/as-zip/";
+
+var createMonthlyReportDownloadButton = (userId, reportIds, year, month) => {
   reportIds = extractNumericReportIds(reportIds);
 
   var button = document.createElement("button");
@@ -9,10 +11,6 @@ var createMonthlyReportDownloadButton = (reportIds, year, month) => {
 
   button.addEventListener("click", async (e) => {
     e.preventDefault();
-
-    var userId = document.cookie.split("=")[1];
-
-    var url = "/report/as-zip/";
 
     var res = await fetch(url, {
       method: "POST",
