@@ -3,10 +3,12 @@ var createQuery = (skus) => {
   var arrayFilters = [];
 
   for (var { id, skuName, metrics } of skus) {
-    query[`listGoods.$[sku${id}].metrics`] = metrics;
+    if (metrics.length) {
+      query[`listGoods.$[sku${id}].metrics`] = metrics;
 
-    var arrayFilterObj = { [`sku${id}.skuName`]: skuName };
-    arrayFilters.push(arrayFilterObj);
+      var arrayFilterObj = { [`sku${id}.skuName`]: skuName };
+      arrayFilters.push(arrayFilterObj);
+    }
   }
 
   return { query, arrayFilters };

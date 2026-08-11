@@ -1,7 +1,7 @@
 import createReportsTable from "./createReportsTable.js";
 import createMonthlyReportDownloadButton from "./createMonthlyReportDownloadButton.js";
 
-var insertLastReportsToTree = (tree, lastReports, lastMonthData) => {
+var insertLastReportsToTree = (userId, tree, lastReports, lastMonthData) => {
   var { year } = tree[0];
   var { month, reportIds } = lastMonthData;
 
@@ -15,7 +15,7 @@ var insertLastReportsToTree = (tree, lastReports, lastMonthData) => {
   monthReportsContainer.id = monthReportsContainerId;
 
   var lastReportIds = lastReports.map(({ reportId }) => reportId);
-  var downloadBtn = createMonthlyReportDownloadButton(lastReportIds, year, month);
+  var downloadBtn = createMonthlyReportDownloadButton(userId, lastReportIds, year, month);
 
   monthReportsContainer.append(summary, table, downloadBtn);
   monthReportsContainer.open = true;

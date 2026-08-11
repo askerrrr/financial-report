@@ -22,7 +22,11 @@ var deleteReportHandler = (userId, reportId, skus) =>
 
       if (success) {
         alert("Отчет успешно удален");
-        window.location.href = "/";
+        var splitedPathName = window.location.pathname.split("/");
+
+        var urlToMainPage = splitedPathName.includes("user") ? "/admin/user/" + userId : "/";
+
+        window.location.href = urlToMainPage;
       } else {
         alert("Не удалось удалить отчет...");
       }
