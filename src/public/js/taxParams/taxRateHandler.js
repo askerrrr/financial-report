@@ -3,7 +3,7 @@ import getSelectedTaxYear from "./getSelectedTaxYear.js";
 import updateTaxParamsIntoLocalStorage from "./updateTaxParamsIntoLocalStorage.js";
 import getSelectedYearTaxParamsFromLocalStorage from "./getSelectedYearTaxParamsFromLocalStorage.js";
 
-var taxRateHandler = async () => {
+var taxRateHandler = (userId) => {
   var input = document.getElementById("tax-rate");
 
   var radioButton = document.getElementById("recalculate-all-reports-tax-amount");
@@ -13,7 +13,7 @@ var taxRateHandler = async () => {
   button.onclick = async (e) => {
     e.preventDefault();
 
-    var selectedYear = await getSelectedTaxYear();
+    var selectedYear = getSelectedTaxYear();
     var { selectedYearTaxParams } = getSelectedYearTaxParamsFromLocalStorage(selectedYear);
 
     var currentTaxRate = selectedYearTaxParams.taxRate;
@@ -33,7 +33,7 @@ var taxRateHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var success = await sendNewTaxParam(selectedYear, reportsNeedRecalculation, selectedYearTaxParams, { taxRate: newTaxRate });
+    var success = await sendNewTaxParam(userId, selectedYear, reportsNeedRecalculation, selectedYearTaxParams, { taxRate: newTaxRate });
 
     input.value = "";
 

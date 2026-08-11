@@ -3,7 +3,7 @@ import getSelectedTaxYear from "./getSelectedTaxYear.js";
 import updateTaxParamsIntoLocalStorage from "./updateTaxParamsIntoLocalStorage.js";
 import getSelectedYearTaxParamsFromLocalStorage from "./getSelectedYearTaxParamsFromLocalStorage.js";
 
-var mandatoryInsuranceFeeHandler = async () => {
+var mandatoryInsuranceFeeHandler = (userId) => {
   var input = document.getElementById("mandatory-insurance-fee");
 
   var button = document.getElementById("mandatory-insurance-fee-button");
@@ -11,7 +11,7 @@ var mandatoryInsuranceFeeHandler = async () => {
   button.onclick = async (e) => {
     e.preventDefault();
 
-    var selectedYear = await getSelectedTaxYear();
+    var selectedYear = getSelectedTaxYear();
     var { selectedYearTaxParams } = getSelectedYearTaxParamsFromLocalStorage(selectedYear);
 
     var currentMandatoryInsuranceFee = selectedYearTaxParams.mandatoryInsuranceFee;
@@ -29,7 +29,7 @@ var mandatoryInsuranceFeeHandler = async () => {
       return alert("Недопустимое значение");
     }
 
-    var success = await sendNewTaxParam(selectedYear, false, selectedYearTaxParams, {
+    var success = await sendNewTaxParam(userId, selectedYear, false, selectedYearTaxParams, {
       mandatoryInsuranceFee: newMandatoryInsuranceFee,
     });
 

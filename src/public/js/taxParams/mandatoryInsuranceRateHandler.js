@@ -3,7 +3,7 @@ import getSelectedTaxYear from "./getSelectedTaxYear.js";
 import updateTaxParamsIntoLocalStorage from "./updateTaxParamsIntoLocalStorage.js";
 import getSelectedYearTaxParamsFromLocalStorage from "./getSelectedYearTaxParamsFromLocalStorage.js";
 
-var mandatoryInsuranceRateHandler = async () => {
+var mandatoryInsuranceRateHandler = (userId) => {
   var input = document.getElementById("mandatory-insurance-fee-rate");
 
   var radioButton = document.getElementById("recalculate-all-reports-mandatory-insurance-fee-rate");
@@ -13,7 +13,7 @@ var mandatoryInsuranceRateHandler = async () => {
   button.onclick = async (e) => {
     e.preventDefault();
 
-    var selectedYear = await getSelectedTaxYear();
+    var selectedYear = getSelectedTaxYear();
     var { selectedYearTaxParams } = getSelectedYearTaxParamsFromLocalStorage(selectedYear);
 
     var currentPercent = selectedYearTaxParams.mandatoryInsuranceFeeRate;
@@ -31,7 +31,7 @@ var mandatoryInsuranceRateHandler = async () => {
     if (newPercent <= 0 && newPercent >= 100) {
       return alert("Недопустимое значение");
     }
-    var success = await sendNewTaxParam(selectedYear, reportsNeedRecalculation, selectedYearTaxParams, {
+    var success = await sendNewTaxParam(userId, selectedYear, reportsNeedRecalculation, selectedYearTaxParams, {
       mandatoryInsuranceFeeRate: newPercent,
     });
 

@@ -8,10 +8,12 @@ import mandatoryInsuranceRateHandler from "./mandatoryInsuranceRateHandler.js";
 
 import writeTaxParamsToLocalStorage from "./writeTaxParamsToLocalStorage.js";
 
-var main = async () => {
-  var { taxParams } = await getTaxParams();
+var userId = document.cookie.split("=")[1];
 
-  if (taxParams.length == 0) {
+var main = async () => {
+  var { taxParams } = await getTaxParams(userId);
+
+  if (!taxParams.length) {
     return;
   }
 
@@ -22,13 +24,13 @@ var main = async () => {
   document.getElementById("mandatory-insurance-fee").placeholder = "сейчас сумма равна " + mandatoryInsuranceFee + "р.";
   document.getElementById("mandatory-insurance-fee-rate").placeholder = "сейчас процент равен " + mandatoryInsuranceFeeRate;
 
-  await createTaxTable(taxParams);
+  createTaxTable(taxParams);
 
-  await taxRateHandler();
-  await mandatoryInsuranceFeeHandler();
-  await mandatoryInsuranceRateHandler();
-  await handleTaxYearSelection(taxParams);
-  await insertTaxYearsToSelectElem(taxParams);
+  taxRateHandler(userId);
+  mandatoryInsuranceFeeHandler(userId);
+  mandatoryInsuranceRateHandler(userId);
+  handleTaxYearSelection(taxParams);
+  insertTaxYearsToSelectElem(taxParams);
 };
 
 main();

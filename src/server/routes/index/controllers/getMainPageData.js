@@ -26,11 +26,7 @@ var selectedFieldsToLoadingState = [
 ];
 
 var getMainPageData = async (req, res, next) => {
-  var userId = req.params?.userId;
-
-  if (!userId) {
-    return res.sendStatus(400);
-  }
+  var userId = req.params.userId;
 
   var reportLoadingStateUrl = "/report/loading-state/" + userId + "/";
 
