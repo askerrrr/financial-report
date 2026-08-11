@@ -6,13 +6,13 @@ import changeTaxParams from "./controllers/changeTaxParams.js";
 import getTaxParamsPage from "./controllers/getTaxParamsPage.js";
 import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
 
-import changeTaxParamsControllerSchema from "./joiSchemas/changeTaxParams.schema.js";
+var needToValidateReqParams = true;
 
 var router = Router({ caseSensitive: true, strict: true });
 
 router.get("/", getTaxParamsPage);
 
-router.get("/api", joiSchemaValidator(joiSchemas.getTaxParamsSchema), getTaxParams);
+router.get("/api/:userId", joiSchemaValidator(joiSchemas.getTaxParamsSchema, needToValidateReqParams), getTaxParams);
 
 router.get("/years", getReportYears);
 
