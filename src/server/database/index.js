@@ -6,7 +6,7 @@ import getEncryptionFieldsSchemaMap from "./encryptedFieldsSchemaMap.js";
 
 var dataKeyId;
 var dbClient = mongoose.connection;
-var dbClientToEncryption = new MongoClient(process.env.MONGO_URI);
+var dbClientToEncryption = new MongoClient(process.env.MONGO_URI, { ...JSON.parse(process.env.MONGO_AUTH_OPTIONS) });
 
 var keyVaultNamespace = process.env.KEY_VAULT_NAME_SPACE;
 var kmsProviders = { local: { key: process.env.MONGO_LOCAL_MASTER_KEY } };
@@ -35,7 +35,7 @@ var runDB = async () => {
     await dbClientToEncryption.close();
 
     var { schemaMap } = getEncryptionFieldsSchemaMap(dataKeyId);
-    var options = { autoEncryption: { schemaMap, kmsProviders, extraOptions, keyVaultNamespace } };
+    var options = { autoEncryption: { schemaMap, kmsProviders, extraOptions, keyVaultNamespace }, ...JSON.parse(process.env.MONGO_AUTH_OPTIONS) };
 
     await mongoose.connect(process.env.MONGO_URI, options);
 
