@@ -65,7 +65,7 @@ var setupDbEvents = async (dbInstance, dbClientToEncryption) => {
 
         dbReconnectionAttempts++;
 
-        await dbInstance.connect(process.env.MONGO_URI);
+        await dbInstance.connect();
       }, NEXT_CONNECTION_MS);
     }
   });
@@ -79,7 +79,7 @@ var setupDbEvents = async (dbInstance, dbClientToEncryption) => {
         console.log({ dbReconnectionAttempts });
         dbReconnectionAttempts++;
 
-        await dbClientToEncryption.connect(process.env.MONGO_URI);
+        await dbClientToEncryption.connect();
       }, NEXT_CONNECTION_MS);
     }
   });
@@ -114,11 +114,11 @@ var setupDbEvents = async (dbInstance, dbClientToEncryption) => {
       }
       var { schemaMap } = getEncryptionFieldsSchemaMap(dataKeyId);
 
-      options = { autoEncryption: { schemaMap, kmsProviders, extraOptions, keyVaultNamespace } };
+      options = { autoEncryption: { schemaMap, kmsProviders, extraOptions, keyVaultNamespace }, ...JSON.parse(process.env.MONGO_AUTH_OPTIONS) };
 
       await dbClientToEncryption.close();
 
-      await dbInstance.connect(process.env.MONGO_URI, options);
+      await dbInstance.connect();
       serverEmitter.emit("start");
       console.log({ dataKeyId });
     } catch (e) {

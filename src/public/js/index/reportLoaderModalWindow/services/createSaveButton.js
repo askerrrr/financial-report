@@ -24,7 +24,7 @@ var createSaveButton = (userId, modal, dateFromInputElem, dateToInputElem, uploa
         var dateFrom = "";
         var dateTo = "";
         var isPeriodWithinSameWeek = false;
-        await sendReportPeriod(userId, validDateFrom, validDateTo, isPeriodWithinSameWeek, needToLoadAllReports);
+        await sendReportPeriod(userId, dateFrom, dateTo, isPeriodWithinSameWeek, needToLoadAllReports);
 
         setTimeout(() => reportLoadingStatePanelBuilder(userId, reportLoadState, isMainPageLoad), 3000);
       } else {

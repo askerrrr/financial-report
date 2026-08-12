@@ -58,7 +58,9 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
         updatedReport = { ...totalParams, skus };
 
-        await updateSkuInListGoods(userId, skuId, skuName, { metrics: result.updatedSkuMetrics });
+        if (result.updatedSkuMetrics.length) {
+          await updateSkuInListGoods(userId, skuId, skuName, { metrics: result.updatedSkuMetrics });
+        }
       } else {
         var result = await processOfSkuCostPriceSetting(skus[skuIndex], skuFromListGoods, taxParams, prevSkuData, postfix);
 
@@ -70,7 +72,9 @@ var setOtherExpensesToSku = async (req, res, next) => {
 
         updatedReport = { ...totalParams, skus };
 
-        await updateSkuInListGoods(userId, skuId, skuName, { metrics: result.updatedSkuMetrics });
+        if (result.updatedSkuMetrics.length) {
+          await updateSkuInListGoods(userId, skuId, skuName, { metrics: result.updatedSkuMetrics });
+        }
       }
 
       await changeTaxParamsToDb(userId, session, taxParams);
