@@ -1,15 +1,8 @@
 import { dbClient } from "../../../database/index.js";
 import getTokenDetails from "./utils/getTokenDetails.js";
 import dbUtils from "../../../database/modelsUtil/index.js";
-import listGoodsLoader from "../../goods/services/utils/listGoodsLoader.js";
-import extractNewSkusFromLIstGoods from "../../goods/services/utils/extractNewSkusFromLIstGoods.js";
-
-var skuNamesStub = [];
-var selectedFieldsStub = null;
 
 var { getWBTokenByUserId, saveWBTokenToDb } = dbUtils.tokenModelUtils;
-var { saveListGoodsToDb, getListGoodsFromDb, saveNewSkusToDb } =
-  dbUtils.goodsModelUtils;
 
 var saveTokenService = async (userId, newToken, tokenPayload) => {
   var session = await dbClient.startSession();
@@ -26,25 +19,6 @@ var saveTokenService = async (userId, newToken, tokenPayload) => {
     }
 
     await saveWBTokenToDb(userId, newToken, session);
-
-    var { listGoods } = await getListGoodsFromDb(
-      userId,
-      skuNamesStub,
-      selectedFieldsStub,
-      session,
-    );
-    var { listGoodsFromWBAPI } = await listGoodsLoader(userId, newToken);
-
-    if (!listGoods.length) {
-      await saveListGoodsToDb(userId, listGoodsFromWBAPI, session);
-    } else {
-      var { newSkus } = extractNewSkusFromLIstGoods(
-        listGoodsFromWBAPI,
-        listGoods,
-      );
-
-      await saveNewSkusToDb(userId, newSkus, session);
-    }
 
     tokenDetails = getTokenDetails(tokenPayload);
 
