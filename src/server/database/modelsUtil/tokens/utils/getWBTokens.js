@@ -1,6 +1,6 @@
 import { tokenModel } from "../../../models/index.js";
 
-var getUserWBTokens = async (userId, session) => {
+var getWBTokens = async (userId, session) => {
   var sessionOpt = session ? { session } : {};
 
   var tokens = await tokenModel.find({ userId }, {}, { ...sessionOpt });
@@ -8,4 +8,4 @@ var getUserWBTokens = async (userId, session) => {
   return { tokens };
 };
 
-export default getUserWBTokens;
+export default getWBTokens;
