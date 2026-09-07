@@ -26,7 +26,7 @@ var saveTokenService = async (userId, newToken, tokenPayload) => {
     var { tokenCategories } = getTokenCategoriesFromBitMask(bitmask);
     var { type } = getTokenTypeByCategories(tokenCategories);
 
-    await saveWBTokenToDb(userId, newToken, type, bitmask, session);
+    await saveWBTokenToDb(userId, newToken, type, session);
 
     tokenDetails = getTokenDetails(tokenPayload);
 
