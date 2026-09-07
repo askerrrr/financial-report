@@ -3,13 +3,13 @@ import { tokenModel } from "../../../models/index.js";
 var getWBTokenByType = async (userId, tokenType, session) => {
   var sessionOpt = session ? { session } : {};
 
-  var token = await tokenModel.findOne(
+  var data = await tokenModel.findOne(
     { userId, type: tokenType },
-    {},
+    { _id: 0 },
     { ...sessionOpt },
   );
 
-  return { token };
+  return { token: data?.token };
 };
 
 export default getWBTokenByType;
