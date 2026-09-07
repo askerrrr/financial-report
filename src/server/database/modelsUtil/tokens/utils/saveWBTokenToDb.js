@@ -1,12 +1,12 @@
 import { tokenModel } from "../../../models/index.js";
 
-var saveWBTokenToDb = async (userId, token, type, session) => {
+var saveWBTokenToDb = async (userId, token, type, bitmask, session) => {
   var sessionOpt = session ? { session: session } : {};
 
   await tokenModel.updateOne(
     { userId, type },
     {
-      $set: { token },
+      $set: { token, bitmask },
       $setOnInsert: {
         type,
         userId,

@@ -22,10 +22,11 @@ var saveTokenService = async (userId, newToken, tokenPayload) => {
       return { isEqualToken, tokenDetails };
     }
 
-    var { tokenCategories } = getTokenCategoriesFromBitMask(tokenPayload.s);
+    var bitmask = tokenPayload.s;
+    var { tokenCategories } = getTokenCategoriesFromBitMask(bitmask);
     var { type } = getTokenTypeByCategories(tokenCategories);
 
-    await saveWBTokenToDb(userId, newToken, type, session);
+    await saveWBTokenToDb(userId, newToken, type, bitmask, session);
 
     tokenDetails = getTokenDetails(tokenPayload);
 

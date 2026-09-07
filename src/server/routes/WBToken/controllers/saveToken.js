@@ -13,7 +13,6 @@ var saveTokenController = async (req, res, next) => {
     return res.sendStatus(409);
   }
 
-  console.log({ tokenDetails });
   res.json({ tokenDetails });
 
   next();
