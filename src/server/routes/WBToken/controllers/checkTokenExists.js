@@ -18,6 +18,8 @@ var checkTokenExistsController = async (req, res, next) => {
   if (tokenIsMissing) {
     if (requiredTokenType === "read") {
       tokenMissingMsg += "\nТип токена: Только чтение";
+    } else {
+      tokenMissingMsg += "\nТип токена: Чтение и запись";
     }
 
     return res.json({ errorText: tokenMissingMsg });
