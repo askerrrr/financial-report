@@ -1,0 +1,1 @@
+var createTokenCard = (token) 
