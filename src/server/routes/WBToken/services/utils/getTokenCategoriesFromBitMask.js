@@ -15,20 +15,29 @@ var categoryMap = {
   30: "Токен только на чтение",
 };
 
-var getTokenCategories = (bitmask) => {
-  var bitArr = bitmask.toString(2).split("").map(Number);
+var allowedBitValue = 1;
 
+var getTokenCategoriesFromBitMask = (bitmask) => {
+  var bitsArr = bitmask.toString(2).split("").reverse().map(Number);
+
+  var bitPos = 0;
   var tokenCategories = [];
 
-  for (var i = 1; i <= bitArr.length; i++) {
-    var category = categoryMap[i];
+  while (bitPos < bitsArr.length) {
+    var categoryIsAllowed = bitsArr[bitPos] === allowedBitValue;
 
-    if (typeof category === "string") {
-      tokenCategories.push(category);
+    if (categoryIsAllowed) {
+      var category = categoryMap[bitPos];
+
+      if (category) {
+        tokenCategories.push(category);
+      }
     }
+
+    ++bitPos;
   }
 
   return { tokenCategories };
 };
 
-export default getTokenCategories;
+export default getTokenCategoriesFromBitMask;
