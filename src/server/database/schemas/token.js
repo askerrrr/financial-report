@@ -5,7 +5,12 @@ var tokenSchema = new Schema({
   lastUsed: { type: Date, required: false },
   token: { type: String, required: false, default: "" },
   tokenHasBeenRemoved: { type: Boolean, default: false, required: true },
-  type: { type: String, required: false, default: "", enum: ["read", "set"] },
+  type: {
+    type: String,
+    required: false,
+    default: "read",
+    enum: ["read", "set"],
+  },
 });
 
 export default tokenSchema;
