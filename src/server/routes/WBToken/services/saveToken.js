@@ -1,8 +1,10 @@
 import { dbClient } from "../../../database/index.js";
 import getTokenDetails from "./utils/getTokenDetails.js";
 import dbUtils from "../../../database/modelsUtil/index.js";
+import getTokenTypeByCategories from "./utils/getTokenTypeByCategories.js";
+import getTokenCategoriesFromBitMask from "./utils/getTokenCategoriesFromBitMask.js";
 
-var { getWBTokenByUserId, saveWBTokenToDb } = dbUtils.tokenModelUtils;
+var { getWBTokens, saveWBTokenToDb } = dbUtils.tokenModelUtils;
 
 var saveTokenService = async (userId, newToken, tokenPayload) => {
   var session = await dbClient.startSession();
@@ -11,14 +13,19 @@ var saveTokenService = async (userId, newToken, tokenPayload) => {
     var tokenDetails = null;
     var isEqualToken = false;
 
-    var { token } = await getWBTokenByUserId(userId, session);
+    var { tokens } = await getWBTokens(userId, session);
 
-    if (newToken === token) {
+    var currentToken = tokens.find((item) => item.token === newToken)?.token;
+
+    if (newToken === currentToken) {
       isEqualToken = true;
       return { isEqualToken, tokenDetails };
     }
 
-    await saveWBTokenToDb(userId, newToken, session);
+    var { tokenCategories } = getTokenCategoriesFromBitMask(tokenPayload.s);
+    var { type } = getTokenTypeByCategories(tokenCategories);
+
+    await saveWBTokenToDb(userId, newToken, type, session);
 
     tokenDetails = getTokenDetails(tokenPayload);
 

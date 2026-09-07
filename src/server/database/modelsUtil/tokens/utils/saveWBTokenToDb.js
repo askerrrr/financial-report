@@ -1,17 +1,20 @@
 import { tokenModel } from "../../../models/index.js";
 
-var saveWBTokenToDb = async (userId, token, session) => {
-  var result = await tokenModel.updateOne(
-    { userId },
-    {
-      $set: { token, lastUsed: new Date(), tokenHasBeenRemoved: false },
-    },
-    {
-      session: session,
-    },
-  );
+var saveWBTokenToDb = async (userId, token, type, session) => {
+  var sessionOpt = session ? { session: session } : {};
 
-  return result.modifiedCount;
+  await tokenModel.updateOne(
+    { userId, type },
+    {
+      $set: { token },
+      $setOnInsert: {
+        type,
+        userId,
+        addedAt: new Date(),
+      },
+    },
+    { upsert: true, ...sessionOpt },
+  );
 };
 
 export default saveWBTokenToDb;
