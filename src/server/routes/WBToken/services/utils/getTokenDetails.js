@@ -1,14 +1,30 @@
 import checkTokenExpiry from "./checkTokenExpiry.js";
+import getTokenCategoriesFromBitMask from "./getTokenCategoriesFromBitMask.js";
 
 var msInOneSec = 1000;
 var tokenIsExist = true;
 var msInDay = 86_400_000;
-var monthList = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+var monthList = [
+  "января",
+  "февраля",
+  "марта",
+  "апреля",
+  "мая",
+  "июня",
+  "июля",
+  "августа",
+  "сентября",
+  "октября",
+  "ноября",
+  "декабря",
+];
 
 var getTokenDetails = (tokenPayload) => {
-  var { exp, id } = tokenPayload;
+  var tokenExp = tokenPayload.exp;
+  var bsitmask = tokenPayload.s;
+  var { tokenCategories } = getTokenCategoriesFromBitMask(bsitmask);
 
-  var expInMs = exp * msInOneSec;
+  var expInMs = tokenExp * msInOneSec;
   var currentTimestamp = Date.now();
   var { isExpired } = checkTokenExpiry(tokenPayload);
 
@@ -38,7 +54,15 @@ var getTokenDetails = (tokenPayload) => {
     expiredToday = true;
   }
 
-  return { id, daysLeft, validUntil, isExpired, expiredToday, tokenIsExist };
+  return {
+    daysLeft,
+    validUntil,
+    isExpired,
+    expiredToday,
+    tokenIsExist,
+    id: tokenPayload.id,
+    categories: tokenCategories,
+  };
 };
 
 export default getTokenDetails;

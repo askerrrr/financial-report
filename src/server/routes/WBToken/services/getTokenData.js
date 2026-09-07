@@ -1,20 +1,30 @@
 import parseJwt from "./utils/parseJwt.js";
 import getTokenDetails from "./utils/getTokenDetails.js";
-import { getWBTokenByUserId } from "../../../database/modelsUtil/tokens/index.js";
+import { getWBTokens } from "../../../database/modelsUtil/tokens/index.js";
 
 var getTokenDataService = async (userId) => {
-  var { token, lastUsed } = await getWBTokenByUserId(userId);
+  var { tokens } = await getWBTokens(userId);
 
-  if (!token.length) {
-    return { tokenIsExist: false, tokenDetails: null };
+  if (!tokens.length) {
+    return { tokensIsExist: false, tokensDetails: null };
   }
 
-  var tokenPayload = parseJwt(token);
-  var tokenDetails = getTokenDetails(tokenPayload);
+  var tokensDetails = [];
 
-  tokenDetails.lastUsed = lastUsed;
+  for (var { token, lastUsed, addedAt, type } of tokens) {
+    var tokenPayload = parseJwt(token);
+    var tokenDetails = getTokenDetails(tokenPayload);
 
-  return { tokenDetails, tokenIsExist: true };
+    tokenDetails.type = type;
+    tokenDetails.lastUsed = lastUsed;
+    tokenDetails.addedAt = addedAt.toLocaleString("ru-RU", {
+      timeZone: "Europe/Moscow",
+    });
+
+    tokensDetails.push(tokenDetails);
+  }
+
+  return { tokensIsExist: false, tokensDetails: null };
 };
 
 export default getTokenDataService;
