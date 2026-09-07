@@ -4,6 +4,7 @@ var tokenSchema = new Schema({
   userId: { type: String, required: true, unique: true },
   lastUsed: { type: Date, required: false },
   token: { type: String, required: false, default: "" },
+  reportReadToken: { type: String, required: false, default: "" },
   tokenHasBeenRemoved: { type: Boolean, default: false, required: true },
 });
 
