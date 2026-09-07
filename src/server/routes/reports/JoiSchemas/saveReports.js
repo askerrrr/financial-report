@@ -6,6 +6,7 @@ var schema = Joi.object({
   dateTo: Joi.string().allow("").required(),
   needToLoadAllReports: Joi.boolean().required(),
   isPeriodWithinSameWeek: Joi.boolean().required(),
+  requiredTokenType: Joi.string().valid("read").required(),
 });
 
 export default schema;

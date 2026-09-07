@@ -1,4 +1,5 @@
 var url = "/report/";
+var requiredTokenType = "read";
 
 var sendReportPeriod = async (
   userId,
@@ -16,6 +17,7 @@ var sendReportPeriod = async (
       dateTo,
       isPeriodWithinSameWeek,
       needToLoadAllReports,
+      requiredTokenType,
     }),
   });
 

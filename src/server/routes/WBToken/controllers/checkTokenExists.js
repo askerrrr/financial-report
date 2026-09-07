@@ -4,10 +4,12 @@ var tokenMissingMsg = "Отсутствует токен личного каби
 var tokenExpiryMsg = "Истек срок действия токена личного кабинета WB";
 
 var checkTokenExistsController = async (req, res, next) => {
-  var { userId } = req.body;
+  var { userId, requiredTokenType } = req.body;
 
-  var { isExpired, tokenIsMissing, token } =
-    await checkTokenExistService(userId);
+  var { isExpired, tokenIsMissing, token } = await checkTokenExistService(
+    userId,
+    requiredTokenType,
+  );
 
   if (isExpired) {
     return res.json({ errorText: tokenExpiryMsg });

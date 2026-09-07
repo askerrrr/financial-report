@@ -1,9 +1,9 @@
 import parseJwt from "./utils/parseJwt.js";
 import checkTokenExpiry from "./utils/checkTokenExpiry.js";
-import { getWBTokenByUserId } from "../../../database/modelsUtil/tokens/index.js";
+import { getWBTokenByType } from "../../../database/modelsUtil/tokens/index.js";
 
-var checkTokenExistService = async (userId) => {
-  var { token } = await getWBTokenByUserId(userId);
+var checkTokenExistService = async (userId, requiredTokenType) => {
+  var { token } = await getWBTokenByType(userId, requiredTokenType);
 
   if (!token) {
     return { tokenIsMissing: true, isExpired: false, token: "" };
