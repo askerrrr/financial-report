@@ -1,5 +1,4 @@
 import checkTokenExpiry from "./checkTokenExpiry.js";
-import getTokenCategoriesFromBitMask from "./getTokenCategoriesFromBitMask.js";
 
 var msInOneSec = 1000;
 var tokenIsExist = true;
@@ -21,8 +20,6 @@ var monthList = [
 
 var getTokenDetails = (tokenPayload) => {
   var tokenExp = tokenPayload.exp;
-  var bsitmask = tokenPayload.s;
-  var { tokenCategories } = getTokenCategoriesFromBitMask(bsitmask);
 
   var expInMs = tokenExp * msInOneSec;
   var currentTimestamp = Date.now();
@@ -61,7 +58,6 @@ var getTokenDetails = (tokenPayload) => {
     expiredToday,
     tokenIsExist,
     id: tokenPayload.id,
-    categories: tokenCategories,
   };
 };
 

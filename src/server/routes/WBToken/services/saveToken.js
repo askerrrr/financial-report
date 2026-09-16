@@ -29,10 +29,11 @@ var saveTokenService = async (userId, newToken, tokenPayload) => {
     var { addedAt } = await saveWBTokenToDb(userId, newToken, type, session);
 
     tokenDetails = getTokenDetails(tokenPayload);
+    tokenDetails.categories = tokenCategories;
 
     tokenDetails.type = type;
 
-    tokenDetails.addedAt = new Date().toLocaleString("ru-RU", {
+    tokenDetails.addedAt = new Date(addedAt).toLocaleString("ru-RU", {
       timeZone: "Europe/Moscow",
     });
 
