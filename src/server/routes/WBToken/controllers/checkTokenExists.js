@@ -16,13 +16,15 @@ var checkTokenExistsController = async (req, res, next) => {
   }
 
   if (tokenIsMissing) {
+    var errorText;
+
     if (requiredTokenType === "read") {
-      tokenMissingMsg += "\nТип токена: Только чтение";
+      errorText = tokenMissingMsg + "\nТип токена: Только чтение";
     } else {
-      tokenMissingMsg += "\nТип токена: Чтение и запись";
+      errorText = tokenMissingMsg + "\nТип токена: Чтение и запись";
     }
 
-    return res.json({ errorText: tokenMissingMsg });
+    return res.json({ errorText });
   }
 
   req.body.wbtoken = token;
