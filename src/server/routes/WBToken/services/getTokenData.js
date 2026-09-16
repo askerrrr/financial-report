@@ -5,11 +5,11 @@ import { getWBTokens } from "../../../database/modelsUtil/tokens/index.js";
 var getTokenDataService = async (userId) => {
   var { tokens } = await getWBTokens(userId);
 
-  if (!tokens.length) {
-    return { tokensIsExist: false, tokensDetails: null };
-  }
-
   var tokensDetails = [];
+
+  if (!tokens.length) {
+    return { tokensDetails };
+  }
 
   for (var { token, lastUsed, addedAt, type } of tokens) {
     var tokenPayload = parseJwt(token);
@@ -24,7 +24,7 @@ var getTokenDataService = async (userId) => {
     tokensDetails.push(tokenDetails);
   }
 
-  return { tokensIsExist: false, tokensDetails: null };
+  return { tokensDetails };
 };
 
 export default getTokenDataService;

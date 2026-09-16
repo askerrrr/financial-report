@@ -26,11 +26,13 @@ var saveTokenService = async (userId, newToken, tokenPayload) => {
     var { tokenCategories } = getTokenCategoriesFromBitMask(bitmask);
     var { type } = getTokenTypeByCategories(tokenCategories);
 
-    await saveWBTokenToDb(userId, newToken, type, session);
+    var { addedAt } = await saveWBTokenToDb(userId, newToken, type, session);
 
     tokenDetails = getTokenDetails(tokenPayload);
 
-    tokenDetails.lastUsed = new Date().toLocaleString("ru-RU", {
+    tokenDetails.type = type;
+
+    tokenDetails.addedAt = new Date().toLocaleString("ru-RU", {
       timeZone: "Europe/Moscow",
     });
 

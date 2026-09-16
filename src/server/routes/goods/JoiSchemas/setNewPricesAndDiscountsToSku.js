@@ -20,6 +20,7 @@ var schema = Joi.object({
   setNewPriceNow: Joi.boolean().required(),
   expectedPriceExists: Joi.boolean().required(),
   checkedWeekDays: checkedWeekDaysArraySchema,
+  requiredTokenType: Joi.string().valid("set").required(),
 });
 
 export default schema;

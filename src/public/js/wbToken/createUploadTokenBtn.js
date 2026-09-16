@@ -1,14 +1,20 @@
+import createTokenCard from "./tokenCard/createTokenCard.js";
 import isPresumablyJwtToken from "./isPresumablyJwtToken.js";
-import { insertDataToTokenDataTable } from "./tokenDataTable.js";
-import { enableTokenDataTable } from "./toggleVisibilityOfTokenDataTable.js";
-import { enableRemoveTokenButton } from "./toggleVisibilityOfRemoveTokenButton.js";
+import { updateTokenCardInfo } from "./tokenCard/updateTokenCardInfo.js";
+import { updateTokenCategoriesToGrid } from "./tokenCard/updateTokenCategoriesToGrid.js";
 
-var createSaveButton = (userId, input, modal) => {
-  var saveButton = document.createElement("button");
-  saveButton.className = "modal-button modal-button-save";
-  saveButton.textContent = "Сохранить";
+var tokenCardContainer = document.getElementById("token-card-container");
 
-  saveButton.onclick = async () => {
+var createUploadTokenBtn = (userId, input, modal) => {
+  var button = document.createElement("button");
+  button.className = "modal-button modal-button-save";
+  button.textContent = "Сохранить";
+
+  button.onclick = uploadTokenBtnHandler;
+
+  return button;
+
+  async function uploadTokenBtnHandler() {
     if (input.value.length < 1) {
       return alert("Нельзя отправить пустое поле");
     }
@@ -30,12 +36,21 @@ var createSaveButton = (userId, input, modal) => {
 
       if (res.status === 200) {
         modal.remove();
-        enableRemoveTokenButton();
         setTimeout(() => alert("Токен успешно сохранен"));
 
         var { tokenDetails } = await res.json();
-        enableTokenDataTable();
-        insertDataToTokenDataTable(tokenDetails);
+
+        var tokenCardExist = document.getElementById(tokenDetails.type);
+
+        if (tokenCardExist) {
+          updateTokenCardInfo(tokenDetails);
+          updateTokenCategoriesToGrid(tokenDetails);
+          return;
+        }
+
+        var { tokenCard } = createTokenCard(userId, tokenDetails);
+
+        tokenCardContainer.append(tokenCard);
       } else if (res.status === 409) {
         alert("Токен совпадает с предыдущим");
         input.value = "";
@@ -49,14 +64,13 @@ var createSaveButton = (userId, input, modal) => {
         alert("Произошла ошибка при попытке сохранить токен ...");
         input.value = "";
       }
-    } catch {
+    } catch (e) {
+      console.log(e);
       alert("Что-то пошло не так ...");
       modal.remove();
       return;
     }
-  };
-
-  return saveButton;
+  }
 };
 
-export default createSaveButton;
+export default createUploadTokenBtn;

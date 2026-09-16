@@ -20,6 +20,7 @@ var sendPriceAndDiscount = async (
       checkedWeekDays,
       setNewPriceNow,
       expectedPriceExists,
+      requiredTokenType: "set",
     }),
   });
 

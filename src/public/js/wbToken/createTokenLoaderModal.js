@@ -1,20 +1,20 @@
-import createSaveButton from "./createSaveButton.js";
+import createUploadTokenBtn from "./createUploadTokenBtn.js";
 import createTitle from "../index/utils/modalWindowUtils/createTitle.js";
 import createModal from "../index/utils/modalWindowUtils/createModal.js";
 import createInputField from "../index/utils/modalWindowUtils/createInputField.js";
-import createCancelButton from "../index/utils/modalWindowUtils/createCancelButton.js";
+import closeModalButton from "../index/utils/modalWindowUtils/createCancelButton.js";
 import createButtonsContainer from "../index/utils/modalWindowUtils/createButtonsContainer.js";
 
-var openTokenLoaderModal = (userId) => {
+var createTokenLoaderModal = (userId) => {
   var input = createInputField("token");
   input.type = "text";
 
   var modal = createModal("modal-overlay");
   modal.id = "token-modal";
 
-  var saveButton = createSaveButton(userId, input, modal);
+  var saveButton = createUploadTokenBtn(userId, input, modal);
 
-  var cancelButton = createCancelButton(modal);
+  var cancelButton = closeModalButton(modal);
 
   var buttonsContainer = createButtonsContainer(cancelButton, saveButton);
 
@@ -32,4 +32,4 @@ var openTokenLoaderModal = (userId) => {
   input.focus();
 };
 
-export default openTokenLoaderModal;
+export default createTokenLoaderModal;

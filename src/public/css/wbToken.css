@@ -8,8 +8,8 @@
   --secondary: #6c757d;
   --success: #28a745;
   --danger: #dc3545;
-  --radius: 6px;
-  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   --transition: all 0.2s ease;
 }
 
@@ -23,26 +23,31 @@ body {
   font-family: var(--font);
   background: var(--bg);
   color: var(--text);
-  padding: 20px;
+  padding: 24px;
   line-height: 1.5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   min-height: 100vh;
 }
 
-/* Кнопка "На главную" */
+.page-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
 .btn-to-main {
   align-self: flex-start;
   background: white;
   color: var(--text);
   border: 1px solid var(--border);
-  padding: 8px 14px;
+  padding: 8px 16px;
   font-size: 13px;
   border-radius: var(--radius);
   cursor: pointer;
   transition: var(--transition);
-  margin-bottom: 20px;
 }
 
 .btn-to-main:hover {
@@ -51,46 +56,62 @@ body {
   color: var(--primary);
 }
 
-/* Основные блоки */
+.no-tokens {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--secondary);
+  font-size: 15px;
+  background: white;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
 #required-token-categories {
   width: 100%;
-  max-width: 500px;
-  margin-bottom: 20px;
+  max-width: 320px;
 }
 
-.token-data {
-  width: 100%;
-  max-width: 510px;
+#required-token-categories fieldset {
   background: white;
-  padding: 20px;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
+  padding: 20px 24px;
   box-shadow: var(--shadow);
-  margin-bottom: 25px;
+  margin: 0;
 }
 
-.token-data table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.token-data td {
-  padding: 12px 10px;
-  border-bottom: 1px solid var(--border);
-}
-
-.token-data td:first-child {
+#required-token-categories legend {
   font-weight: 600;
-  color: #495057;
-  width: 45%;
+  font-size: 15px;
+  padding: 0 12px;
+  color: var(--text);
+  background: white;
 }
 
-/* Кнопки */
+#required-token-categories div {
+  padding: 6px 4px;
+  color: #495057;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#required-token-categories div::before {
+  content: "✓";
+  color: var(--success);
+  font-weight: 600;
+  margin-right: 4px;
+}
+
 .buttons-container {
   width: 100%;
-  max-width: 500px;
+  max-width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 #token-button,
@@ -122,7 +143,17 @@ body {
   background: #c82333;
 }
 
-/* ==================== МОДАЛЬНОЕ ОКНО ==================== */
+@media (max-width: 768px) {
+  body {
+    padding: 16px;
+  }
+
+  #required-token-categories,
+  .buttons-container {
+    max-width: 100%;
+  }
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -228,7 +259,6 @@ body {
   background: var(--primary-hover);
 }
 
-/* Защита от перекрытия другими элементами */
 .buttons-container,
 .token-data,
 #required-token-categories {
@@ -236,7 +266,6 @@ body {
   z-index: 1;
 }
 
-/* Адаптив */
 @media (max-width: 600px) {
   body {
     padding: 15px;
@@ -253,32 +282,120 @@ body {
   }
 }
 
-/* ==================== БЛОК НЕОБХОДИМЫХ КАТЕГОРИЙ ==================== */
-#required-token-categories fieldset {
+#open-upload-token-modal {
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  width: 100%;
+}
+
+#open-upload-token-modal:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
+}
+
+#open-upload-token-modal:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow);
+}
+
+#open-upload-token-modal:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+}
+
+/* ===== Информативная панель токенов ===== */
+.token-info-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 380px));
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 8px auto 32px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.token-info-card {
   background: white;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 22px 26px;
   box-shadow: var(--shadow);
-  margin: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  transition: var(--transition);
 }
 
-#required-token-categories legend {
-  font-weight: 600;
+.token-info-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.token-info-card .token-name-group {
+  padding: 20px 22px 12px;
+}
+
+.token-info-card .token-name {
   font-size: 16px;
-  padding: 0 14px;
-  color: #212529;
-  background: white;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
 }
 
-#required-token-categories div {
-  padding: 7px 4px;
+.token-info-card .token-name ul {
+  margin: 10px 0 0 0;
+  padding-left: 18px;
+  list-style-type: disc;
+}
+
+.token-info-card .token-name li {
+  font-size: 13.5px;
+  font-weight: 400;
   color: #495057;
-  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 3px;
 }
 
-#required-token-categories div::before {
-  content: "✔";
-  color: var(--success);
-  margin-right: 10px;
+.token-info-card .token-name li:last-child {
+  margin-bottom: 0;
+}
+
+.optional-label {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--secondary);
+}
+
+.token-info-card .required-token-categories {
+  padding: 16px 22px 20px;
+  border-top: 1px solid var(--border);
+  background: #fafbfc;
+  min-height: auto;
+  flex: 0 0 auto;
+}
+
+.token-info-card .categories-title {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--secondary);
+}
+
+/* Адаптив */
+@media (max-width: 800px) {
+  .token-info-panel {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
 }

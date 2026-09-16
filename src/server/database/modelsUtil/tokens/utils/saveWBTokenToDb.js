@@ -3,6 +3,8 @@ import { tokenModel } from "../../../models/index.js";
 var saveWBTokenToDb = async (userId, token, type, session) => {
   var sessionOpt = session ? { session: session } : {};
 
+  var addedAt = new Date();
+
   await tokenModel.updateOne(
     { userId, type },
     {
@@ -10,11 +12,13 @@ var saveWBTokenToDb = async (userId, token, type, session) => {
       $setOnInsert: {
         type,
         userId,
-        addedAt: new Date(),
+        addedAt,
       },
     },
     { upsert: true, ...sessionOpt },
   );
+
+  return { addedAt };
 };
 
 export default saveWBTokenToDb;

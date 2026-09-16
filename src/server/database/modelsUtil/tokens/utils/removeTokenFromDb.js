@@ -1,9 +1,7 @@
 import { tokenModel } from "../../../models/index.js";
 
-var removeTokenFromDb = async (userId) => {
-  var { token } = await tokenModel.findOneAndUpdate({ userId }, { $set: { token: "", tokenHasBeenRemoved: true } }, { returnDocument: "before" });
-
-  return { removedToken: token };
+var removeTokenFromDb = async (userId, type) => {
+  await tokenModel.deleteOne({ userId, type });
 };
 
 export default removeTokenFromDb;
