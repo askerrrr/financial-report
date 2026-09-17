@@ -19,7 +19,7 @@ var getTokenDataService = async (userId) => {
 
     tokenDetails.type = type;
     tokenDetails.lastUsed = lastUsed;
-    tokenDetails.categories = tokenCategories;
+    tokenDetails.categories = categories;
     tokenDetails.addedAt = addedAt.toLocaleString("ru-RU", {
       timeZone: "Europe/Moscow",
     });

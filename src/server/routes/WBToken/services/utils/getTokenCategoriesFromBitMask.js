@@ -40,4 +40,5 @@ var getTokenCategoriesFromBitMask = (bitmask) => {
   return { categories };
 };
 
+getTokenCategoriesFromBitMask(1073823486)
 export default getTokenCategoriesFromBitMask;
