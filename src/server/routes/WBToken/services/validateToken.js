@@ -10,7 +10,7 @@ import findMissingCategoriesByTokenType from "./utils/findMissingCategoriesByTok
 var validateTokenService = async (token) => {
   if (!isPresumablyJwtToken(token)) {
     return {
-      errorText: "This is not a JWT token.",
+      errorText: "Переданное значение не является JWT-токеном",
       tokenPayload: {},
       type: "",
       categories: [],
@@ -23,7 +23,7 @@ var validateTokenService = async (token) => {
 
   if (payloadIsInvalid) {
     return {
-      errorText: "JWT payload is invalid",
+      errorText: "Содержимое токена недействительно",
       tokenPayload: {},
       type: "",
       categories: [],
@@ -32,7 +32,7 @@ var validateTokenService = async (token) => {
 
   if (isTestToken(tokenPayload)) {
     return {
-      errorText: "The test token is not supported",
+      errorText: "Тестовый токен не поддерживается",
       tokenPayload: {},
       type: "",
       categories: [],
@@ -43,7 +43,7 @@ var validateTokenService = async (token) => {
 
   if (isExpired) {
     return {
-      errorText: "Token is expired",
+      errorText: "Срок действия токена истёк",
       tokenPayload: {},
       type: "",
       categories: [],
@@ -62,7 +62,7 @@ var validateTokenService = async (token) => {
 
   if (missingCategories.length) {
     return {
-      errorText: `Missing categories: ${missingCategories.join(", ")}`,
+      errorText: `В токене отсутствуют категории: ${missingCategories.join(", ")}`,
       tokenPayload: {},
       type: "",
       categories: [],

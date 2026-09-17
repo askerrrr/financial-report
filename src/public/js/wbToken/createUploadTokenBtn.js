@@ -55,7 +55,8 @@ var createUploadTokenBtn = (userId, input, modal) => {
         alert("Токен совпадает с предыдущим");
         input.value = "";
       } else if (res.status === 400) {
-        alert("Неправильный запрос");
+        var { errorText } = await res.json();
+        alert(errorText);
         input.value = "";
       } else if (res.status === 401) {
         alert("Токен не валиден");
