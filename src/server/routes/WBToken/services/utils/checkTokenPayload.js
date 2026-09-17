@@ -4,7 +4,7 @@ var tokenPayloadSchema = Joi.object({
   acc: Joi.number().integer().required(),
   ent: Joi.number().integer().required(),
   exp: Joi.number().integer().required(),
-  for: Joi.string().valid("self").required(),
+  for: Joi.string(),
   id: Joi.string().uuid().required(),
   iid: Joi.number().integer().required(),
   oid: Joi.number().integer().required(),
