@@ -18,9 +18,9 @@ var saveTokenService = async (
     var isEqualToken = false;
 
     var { tokens } = await getWBTokens(userId, session);
-    console.log(tokens);
+
     var currentToken = tokens.find((item) => item.token === newToken)?.token;
-    console.log({ type, currentToken });
+
     if (newToken === currentToken) {
       isEqualToken = true;
       return { isEqualToken, tokenDetails };
