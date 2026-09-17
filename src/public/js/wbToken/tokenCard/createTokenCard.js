@@ -12,7 +12,7 @@ var createTokenCard = (userId, token) => {
 
   var tokenCard = document.createElement("div");
   tokenCard.id = token.type;
-  tokenCard.className = "token-card";
+  tokenCard.className = "token-card card";
 
   tokenCard.append(
     // tokenHeader,
@@ -42,18 +42,19 @@ var getTokenHeaderText = (ending) =>
 var getTokenRequiredCategoriesGrid = (ending) => {
   var requiredTokenCategoriesGrid = document.createElement("div");
   requiredTokenCategoriesGrid.id = "required-token-categories";
-  requiredTokenCategoriesGrid.className = "required-token-categories";
+  requiredTokenCategoriesGrid.className =
+    "required-token-categories token-categories";
 
   var requiredTokenCategories =
     ending === readOnlyEnding
       ? `   <div class="categories-title">Необходимые категории</div>
-            <span class="category-tag">Финансы</span>
-            <span class="category-tag">Аналитика</span>
-            <span class="category-tag">Продвижение</span
-            ><span class="category-tag">Цены и скидки</span>
+            <span class="category-tag badge">Финансы</span>
+            <span class="category-tag badge">Аналитика</span>
+            <span class="category-tag badge">Продвижение</span
+            ><span class="category-tag badge">Цены и скидки</span>
           `
       : `   <div class="categories-title">Необходимые категории</div>
-            <span class="category-tag"> Цены и скидки</span>
+            <span class="category-tag badge"> Цены и скидки</span>
           `;
 
   requiredTokenCategoriesGrid.innerHTML = requiredTokenCategories;
@@ -133,7 +134,7 @@ var createTokenInfoBlock = function (token) {
   tokenCardInfo.id = "token-info-" + type;
 
   var tokenTypeBadge = document.createElement("div");
-  tokenTypeBadge.className = "token-type-badge " + token.type;
+  tokenTypeBadge.className = "token-type-badge badge " + token.type;
   tokenTypeBadge.textContent = getTokenTypeBadgeText(token.type);
 
   tokenCardInfo.append(
@@ -161,7 +162,7 @@ var createTokenCategoriesGrid = function (token) {
   for (var category of token.categories) {
     var categoryTagElem = document.createElement("span");
     categoryTagElem.textContent = category;
-    categoryTagElem.className = "category-tag";
+    categoryTagElem.className = "category-tag badge";
 
     tokenCategoriesGrid.append(categoryTagElem);
   }
@@ -172,7 +173,7 @@ var createTokenCategoriesGrid = function (token) {
 var createRemoveTokenBtn = (userId, tokenType, url = "/wbtoken/") => {
   var button = document.createElement("button");
 
-  button.className = "btn-delete";
+  button.className = "btn-delete button-danger";
   button.id = "btn-delete-" + tokenType;
   button.textContent = "×";
 

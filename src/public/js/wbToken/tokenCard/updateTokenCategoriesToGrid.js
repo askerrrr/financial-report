@@ -8,7 +8,7 @@ export var updateTokenCategoriesToGrid = (token) => {
   for (var category of token.categories) {
     var categoryTagElem = document.createElement("span");
     categoryTagElem.textContent = category;
-    categoryTagElem.className = "category-tag";
+    categoryTagElem.className = "category-tag badge";
 
     tokenCategoriesGrid.append(categoryTagElem);
   }
