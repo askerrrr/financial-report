@@ -3,12 +3,18 @@ import isTestToken from "./utils/isTestToken.js";
 import checkTokenExpiry from "./utils/checkTokenExpiry.js";
 import checkTokenPayload from "./utils/checkTokenPayload.js";
 import isPresumablyJwtToken from "./utils/isPresumablyJwtToken.js";
+import getTokenTypeByCategories from "./utils/getTokenTypeByCategories.js";
+import getTokenCategoriesFromBitMask from "./utils/getTokenCategoriesFromBitMask.js";
+import findMissingCategoriesByTokenType from "./utils/findMissingCategoriesByTokenType.js";
 
 var validateTokenService = async (token) => {
-  var tokenIsValid = false;
-
   if (!isPresumablyJwtToken(token)) {
-    return { tokenIsValid, tokenPayload: {} };
+    return {
+      errorText: "This is not a JWT token.",
+      tokenPayload: {},
+      type: "",
+      categories: [],
+    };
   }
 
   var tokenPayload = parseJwt(token);
@@ -16,50 +22,54 @@ var validateTokenService = async (token) => {
   var { payloadIsInvalid } = checkTokenPayload(tokenPayload);
 
   if (payloadIsInvalid) {
-    return { tokenIsValid, tokenPayload: {} };
+    return {
+      errorText: "JWT payload is invalid",
+      tokenPayload: {},
+      type: "",
+      categories: [],
+    };
   }
 
   if (isTestToken(tokenPayload)) {
-    return { tokenIsValid, tokenPayload: {} };
+    return {
+      errorText: "The test token is not supported",
+      tokenPayload: {},
+      type: "",
+      categories: [],
+    };
   }
 
   var { isExpired } = checkTokenExpiry(tokenPayload);
 
   if (isExpired) {
-    return { tokenIsValid, tokenPayload: {} };
+    return {
+      errorText: "Token is expired",
+      tokenPayload: {},
+      type: "",
+      categories: [],
+    };
   }
 
-  var options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  };
+  var bitmask = tokenPayload.s;
+  var { categories } = getTokenCategoriesFromBitMask(bitmask);
 
-  var responses = await Promise.all([
-    fetch("https://advert-api.wildberries.ru/ping", options),
-    fetch("https://statistics-api.wildberries.ru/ping", options),
-    fetch("https://seller-analytics-api.wildberries.ru/ping", options),
-    fetch("https://discounts-prices-api.wildberries.ru/ping", options),
-  ]);
+  var { type } = getTokenTypeByCategories(categories);
 
-  var tokenAuthFailed = false;
+  var { missingCategories } = findMissingCategoriesByTokenType(
+    type,
+    categories,
+  );
 
-  for (var response of responses) {
-    var status = (await response.json())?.Status;
-
-    if (status !== "OK") {
-      tokenAuthFailed = true;
-      break;
-    }
+  if (missingCategories.length) {
+    return {
+      errorText: `Missing categories: ${missingCategories.join(", ")}`,
+      tokenPayload: {},
+      type: "",
+      categories: [],
+    };
   }
 
-  if (tokenAuthFailed) {
-    return { tokenIsValid, tokenPayload: {} };
-  }
-
-  return { tokenIsValid: true, tokenPayload };
+  return { errorText: "", tokenPayload, type, categories };
 };
 
 export default validateTokenService;

@@ -21,7 +21,7 @@ var getTokenCategoriesFromBitMask = (bitmask) => {
   var bitsArr = bitmask.toString(2).split("").reverse().map(Number);
 
   var bitPos = 0;
-  var tokenCategories = [];
+  var categories = [];
 
   while (bitPos < bitsArr.length) {
     var categoryIsAllowed = bitsArr[bitPos] === allowedBitValue;
@@ -30,14 +30,14 @@ var getTokenCategoriesFromBitMask = (bitmask) => {
       var category = categoryMap[bitPos];
 
       if (category) {
-        tokenCategories.push(category);
+        categories.push(category);
       }
     }
 
     ++bitPos;
   }
 
-  return { tokenCategories };
+  return { categories };
 };
 
 export default getTokenCategoriesFromBitMask;

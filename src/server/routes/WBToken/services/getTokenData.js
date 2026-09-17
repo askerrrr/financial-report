@@ -15,7 +15,7 @@ var getTokenDataService = async (userId) => {
   for (var { token, lastUsed, addedAt, type } of tokens) {
     var tokenPayload = parseJwt(token);
     var tokenDetails = getTokenDetails(tokenPayload);
-    var { tokenCategories } = getTokenCategoriesFromBitMask(tokenPayload.s);
+    var { categories } = getTokenCategoriesFromBitMask(tokenPayload.s);
 
     tokenDetails.type = type;
     tokenDetails.lastUsed = lastUsed;

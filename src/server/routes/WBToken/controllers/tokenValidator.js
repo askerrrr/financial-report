@@ -3,12 +3,15 @@ import validateTokenService from "../services/validateToken.js";
 var tokenValidatorController = async (req, res, next) => {
   var { token } = req.body;
 
-  var { tokenIsValid, tokenPayload } = await validateTokenService(token);
+  var { errorText, tokenPayload, type, categories } =
+    await validateTokenService(token);
 
-  if (!tokenIsValid) {
-    return res.sendStatus(400);
+  if (errorText) {
+    return res.status(400).json({ errorText });
   }
 
+  req.body.type = type;
+  req.body.categories = categories;
   req.body.tokenPayload = tokenPayload;
 
   next();
