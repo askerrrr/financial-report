@@ -14,17 +14,7 @@ body {
   line-height: 1.5;
 }
 
-.top-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin: 24px auto 32px;
-  flex-wrap: wrap;
-  max-width: 1600px;
-  width: 100%;
-}
-
+/* ===== Верхняя панель управления ===== */
 .top-controls {
   display: flex;
   justify-content: center;
@@ -33,9 +23,10 @@ body {
   margin: 24px auto 32px;
   padding-top: 48px;
   flex-wrap: wrap;
-  max-width: 1600px;
+  max-width: 500px;
   width: 100%;
   position: relative;
+  z-index: 1;
 }
 
 .top-controls button {
@@ -56,10 +47,16 @@ body {
   color: var(--text-primary);
 }
 
+/* ===== Кнопка "На главную" ===== */
 .btn-to-main {
   position: absolute;
   top: 60px;
   left: 100px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   background: rgba(52, 58, 64, 0.8);
   color: var(--text-primary);
   border: 1px solid rgba(73, 80, 87, 0.5);
@@ -69,13 +66,6 @@ body {
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: var(--transition-base);
-}
-
-.btn-to-main {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
 }
 
 .btn-to-main::before {
@@ -91,6 +81,12 @@ body {
   transition: transform var(--transition-fast);
 }
 
+.btn-to-main:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
 .btn-to-main:hover::before {
   transform: translateX(-2px);
 }
@@ -104,11 +100,14 @@ body {
   outline-offset: 2px;
 }
 
+/* ===== Скрытые элементы ===== */
 #download-weekly-prices-file[hidden],
-#load-list-goods[hidden] {
+#load-list-goods[hidden],
+#week-days[hidden] {
   display: none !important;
 }
 
+/* ===== Форма загрузки ===== */
 #upload-form {
   margin: 16px 0;
 }
@@ -138,6 +137,7 @@ body {
   color: var(--accent-hover);
 }
 
+/* ===== Таблицы ===== */
 .skus-table {
   width: 100%;
   max-width: 1600px;
@@ -295,6 +295,7 @@ body {
   cursor: pointer;
 }
 
+/* ===== Модалка на странице goods ===== */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -486,33 +487,7 @@ body {
   border-radius: 4px;
 }
 
-@media (max-width: 600px) {
-  .top-controls {
-    justify-content: center;
-  }
-  .skus-table th,
-  .skus-table td {
-    padding: 6px 8px;
-    font-size: 12px;
-  }
-
-  .skus-table th {
-    font-size: 10px;
-  }
-  .modal,
-  .modal-buttons {
-    width: 95%;
-  }
-  .modal > label:has(select) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .modal select.input[multiple] {
-    height: 100px;
-    width: 100%;
-  }
-}
-
+/* ===== Чекбоксы ===== */
 .modal fieldset {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
@@ -606,23 +581,7 @@ body {
   color: var(--accent-hover);
 }
 
-@media (max-width: 600px) {
-  .modal fieldset > div {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .modal .checkbox + label {
-    padding-left: 26px;
-  }
-
-  .modal .checkbox + label::before,
-  .modal .checkbox + label::after {
-    left: 2px;
-  }
-}
-
+/* ===== Кнопка загрузки списка товаров ===== */
 #upload-list-goods {
   position: fixed;
   left: 50%;
@@ -641,6 +600,7 @@ body {
   transition: var(--transition-base);
 }
 
+/* ===== Выбор дней недели ===== */
 #week-days {
   display: flex;
   align-items: center;
@@ -691,16 +651,71 @@ body {
   color: var(--text-primary);
 }
 
+/* ===== Адаптив ===== */
+@media (max-width: 768px) {
+  .btn-to-main {
+    position: static;
+    display: inline-flex;
+    margin: 0 0 16px 0;
+  }
+
+  .top-controls {
+    padding-top: 0;
+    margin-top: 8px;
+  }
+}
+
 @media (max-width: 600px) {
+  .top-controls {
+    justify-content: center;
+  }
+
+  .skus-table th,
+  .skus-table td {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .skus-table th {
+    font-size: 10px;
+  }
+
+  .modal,
+  .modal-buttons {
+    width: 95%;
+  }
+
+  .modal > label:has(select) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .modal select.input[multiple] {
+    height: 100px;
+    width: 100%;
+  }
+
+  .modal fieldset > div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .modal .checkbox + label {
+    padding-left: 26px;
+  }
+
+  .modal .checkbox + label::before,
+  .modal .checkbox + label::after {
+    left: 2px;
+  }
+
   #week-days {
     justify-content: center;
   }
+
   #week-days-select {
     width: 100%;
     max-width: 260px;
   }
-}
-
-#week-days[hidden] {
-  display: none !important;
 }
