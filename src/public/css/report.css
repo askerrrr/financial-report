@@ -9,6 +9,7 @@ body {
   min-height: 100vh;
 }
 
+/* ===== Верхняя панель ===== */
 .top-bar {
   position: fixed;
   top: 0;
@@ -21,9 +22,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   padding: 0 21px;
   z-index: 1000;
   box-shadow: 0 5.6px 21px rgba(0, 0, 0, 0.5);
+}
+
+/* Обёртка формы кнопки «На главную» */
+.inline-form {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 #report-info {
@@ -33,6 +44,10 @@ body {
   color: #ced4da;
   font-size: 14px;
   font-weight: 500;
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 #report-info span {
@@ -45,6 +60,7 @@ body {
   font-weight: bold;
 }
 
+/* ===== Кнопки ===== */
 .top-btn {
   min-height: 32px;
   padding: 0 12px;
@@ -65,18 +81,18 @@ body {
   transform: translateY(-1px);
 }
 
-.main-btn {
-  background: rgba(52, 58, 64, 0.8);
+.top-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
+/* Кнопка «На главную» — теперь в потоке .top-bar */
 .top-btn.main-btn {
-  position: absolute;
-  top: 60px;
-  left: 100px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  white-space: nowrap;
 }
 
 .top-btn.main-btn::before {
@@ -100,13 +116,10 @@ body {
   display: flex;
   gap: 9.8px;
   align-items: center;
+  flex-shrink: 0;
 }
 
-.top-btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
+/* ===== Таблица ===== */
 table {
   width: 100%;
   max-width: 1190px;
@@ -151,6 +164,7 @@ th:last-child {
   border-right: none;
 }
 
+/* ===== Загрузчик фото SKU ===== */
 .sku-photo-uploader {
   width: 70px;
   height: 56px;
