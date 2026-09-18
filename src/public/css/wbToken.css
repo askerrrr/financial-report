@@ -19,13 +19,60 @@ body {
   width: 100%;
 }
 
+/* ===== Кнопка "На главную" ===== */
 .btn-to-main {
   position: absolute;
   top: 60px;
   left: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: rgba(52, 58, 64, 0.8);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 0 12px;
+  height: 32px;
+  font-size: 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-base);
   margin-bottom: 32px;
 }
 
+.btn-to-main::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f8f9fa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 12H5M12 19l-7-7 7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: transform var(--transition-fast);
+}
+
+.btn-to-main:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.btn-to-main:hover::before {
+  transform: translateX(-2px);
+}
+
+.btn-to-main:active {
+  transform: scale(0.97);
+}
+
+.btn-to-main:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== Шапка страницы ===== */
 .wbtoken-header {
   display: flex;
   align-items: center;
@@ -64,6 +111,7 @@ body {
   font-size: 16px;
 }
 
+/* ===== Кнопка "Добавить токен" ===== */
 .add-token-button {
   display: inline-flex;
   align-items: center;
@@ -99,6 +147,7 @@ body {
   outline-offset: 2px;
 }
 
+/* ===== Секция токенов ===== */
 .tokens-section {
   margin-top: 48px;
   width: 100%;
@@ -124,57 +173,7 @@ body {
   font-weight: 400;
 }
 
-.btn-to-main {
-  position: absolute;
-  top: 60px;
-  left: 100px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  background: rgba(52, 58, 64, 0.8);
-  color: var(--text-primary);
-  border: 1px solid var(--border);
-  padding: 0 12px;
-  height: 32px;
-  font-size: 12px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: var(--transition-base);
-}
-
-.btn-to-main::before {
-  content: "";
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f8f9fa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 12H5M12 19l-7-7 7-7'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  transition: transform var(--transition-fast);
-}
-
-.btn-to-main:hover {
-  background: var(--bg-hover);
-  border-color: var(--border-strong);
-  color: var(--text-primary);
-}
-
-.btn-to-main:hover::before {
-  transform: translateX(-2px);
-}
-
-.btn-to-main:active {
-  transform: scale(0.97);
-}
-
-.btn-to-main:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
+/* ===== Пустое состояние ===== */
 .no-tokens {
   width: 100%;
   max-width: 400px;
@@ -187,6 +186,7 @@ body {
   border-radius: var(--radius-sm);
 }
 
+/* ===== Требуемые категории (fieldset) ===== */
 #required-token-categories {
   width: 100%;
   max-width: 320px;
@@ -225,6 +225,7 @@ body {
   margin-right: 4px;
 }
 
+/* ===== Контейнер кнопок ===== */
 .buttons-container {
   width: 100%;
   max-width: 320px;
@@ -262,34 +263,6 @@ body {
   background: #c82333;
 }
 
-@media (max-width: 768px) {
-  .btn-to-main {
-    position: static;
-    display: inline-flex;
-    margin-bottom: 30px;
-  }
-
-  .wbtoken-header {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 32px;
-  }
-
-  .wbtoken-header h1 {
-    font-size: 28px;
-  }
-
-  .add-token-button {
-    width: 100%;
-  }
-
-  #required-token-categories,
-  .buttons-container {
-    max-width: 100%;
-  }
-}
-
 /* ===== Модальное окно ===== */
 .modal-overlay {
   position: fixed;
@@ -299,19 +272,16 @@ body {
   height: 100vh;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(14px);
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   z-index: 10000;
-  opacity: 1;
+  opacity: 0;
   transition: opacity 0.2s ease;
 }
 
-.modal-overlay:not(.active) {
-  display: none;
-}
-
 .modal-overlay.active {
+  display: flex;
   opacity: 1;
 }
 
@@ -364,7 +334,7 @@ body {
   color: var(--text-primary);
   font-size: 15px;
   box-sizing: border-box;
-  text-align: left; /* ← было center, теперь left */
+  text-align: left;
 }
 
 .modal-input:focus {
@@ -410,26 +380,7 @@ body {
   background: var(--accent-hover);
 }
 
-.buttons-container,
-.token-data,
-#required-token-categories {
-  position: relative;
-  z-index: 1;
-}
-
-@media (max-width: 600px) {
-  .token-data,
-  .buttons-container,
-  #required-token-categories {
-    max-width: 100%;
-  }
-
-  .modal-content {
-    margin: 15px;
-    max-width: calc(100% - 30px);
-  }
-}
-
+/* ===== Кнопка открытия модалки ===== */
 #open-upload-token-modal {
   width: auto;
 }
@@ -530,22 +481,6 @@ body {
   color: var(--text-secondary);
 }
 
-@media (max-width: 800px) {
-  .token-info-panel {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .wbtoken-header h1 {
-    font-size: 24px;
-  }
-
-  .wbtoken-subtitle {
-    font-size: 14px;
-  }
-}
-
 /* ===== Модалка: радио ===== */
 .modal-radios {
   display: flex;
@@ -642,4 +577,61 @@ body {
 
 .modal-categories-list li:last-child {
   border-bottom: none;
+}
+
+/* ===== Адаптив ===== */
+@media (max-width: 800px) {
+  .token-info-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .btn-to-main {
+    position: static;
+    display: inline-flex;
+    margin-bottom: 30px;
+  }
+
+  .wbtoken-header {
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .wbtoken-header h1 {
+    font-size: 28px;
+  }
+
+  .add-token-button {
+    width: 100%;
+  }
+
+  #required-token-categories,
+  .buttons-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .token-data,
+  .buttons-container,
+  #required-token-categories {
+    max-width: 100%;
+  }
+
+  .modal-content {
+    margin: 15px;
+    max-width: calc(100% - 30px);
+  }
+}
+
+@media (max-width: 480px) {
+  .wbtoken-header h1 {
+    font-size: 24px;
+  }
+
+  .wbtoken-subtitle {
+    font-size: 14px;
+  }
 }
