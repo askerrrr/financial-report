@@ -7,8 +7,6 @@ var { getListGoodsFromDb } = dbUtils.goodsModelUtils;
 var { getReportsByUserId } = dbUtils.reportModelUtils;
 
 var getSkusMetricsFileService = async (userId) => {
-  var { userId } = req.params;
-
   var { reports } = await getReportsByUserId(userId);
   var { listGoods } = await getListGoodsFromDb(userId);
 
