@@ -1,3 +1,5 @@
+@import url("./theme.css");
+
 :root {
   --bg-color: #212529;
   --card-bg: #2b3035;
@@ -23,25 +25,55 @@ body {
   position: absolute;
   top: 60px;
   left: 100px;
-  padding: 12px 24px;
-  background-color: var(--button-bg);
+  padding: 0 12px;
+  height: 32px;
+  background-color: rgba(52, 58, 64, 0.8);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  font-size: 15px;
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+  font-size: 12px;
   cursor: pointer;
   color: var(--text-light);
-  transition: background-color 0.3s ease, transform 0.3s ease,
-    box-shadow 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  transition: var(--transition-base);
+  text-transform: none;
+  letter-spacing: normal;
   font-weight: 500;
 }
 
 #main:hover {
-  background-color: #495057;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background-color: var(--bg-hover);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+  box-shadow: none;
+}
+
+#main {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+#main::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f8f9fa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 12H5M12 19l-7-7 7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: transform var(--transition-fast);
+}
+
+#main:hover::before {
+  transform: translateX(-2px);
+}
+
+#main:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 form {
@@ -196,8 +228,9 @@ form button:active {
 
   #main {
     position: static;
-    margin-bottom: 30px;
-    width: 100%;
+    display: block;
+    width: fit-content;
+    margin: 0 auto 30px;
   }
 
   form {

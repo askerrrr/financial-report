@@ -8,57 +8,72 @@
     <title>Токены доступа</title>
   </head>
   <body>
-    <body>
-      <div class="page-wrapper">
-        <button class="btn-to-main" onclick="window.location.href = '/'">
-          ← На главную
-        </button>
+    <main class="wbtoken-page">
+      <button class="btn-to-main" onclick="window.location.href = '/'">
+        На главную
+      </button>
+
+      <header class="wbtoken-header">
         <div>
-          <button id="open-upload-token-modal">Добавить токен</button>
+          <p class="wbtoken-eyebrow">Wildberries API</p>
+          <h1>Управление токенами</h1>
+          <p class="wbtoken-subtitle">
+            Добавьте токены для работы с товарами, отчётами и ценами.
+          </p>
         </div>
-        <div class="token-info-panel">
-          <div class="token-info-card">
-            <div class="token-name-group">
-              <div class="token-name">
-                Токен для получения
-                <ul>
-                  <li>списка товаров</li>
-                  <li>еженедельного фин. отчета</li>
-                  <li>отчета о платном хранении</li>
-                  <li>отчета о затратах на рекламу</li>
-                </ul>
-              </div>
-            </div>
+        <button id="open-upload-token-modal" class="add-token-button">
+          Добавить токен
+        </button>
+      </header>
 
-            <div class="required-token-categories">
-              <div class="categories-title">Необходимые категории</div>
-              <span class="category-tag">Финансы</span>
-              <span class="category-tag">Аналитика</span>
-              <span class="category-tag">Продвижение</span>
-              <span class="category-tag">Цены и скидки</span>
+      <section class="token-info-panel" aria-label="Типы токенов">
+        <article class="token-info-card">
+          <div class="token-name-group">
+            <p class="token-card-kicker">Токен для чтения</p>
+            <div class="token-name">
+              Получение данных
+              <ul>
+                <li>список товаров и цены</li>
+                <li>финансовые и рекламные отчёты</li>
+                <li>аналитика и платное хранение</li>
+              </ul>
             </div>
           </div>
-
-          <div class="token-info-card">
-            <div class="token-name-group">
-              <div class="token-name">
-                Токен для установки цен на товары
-                <span class="optional-label">(опционально)</span>
-              </div>
-            </div>
-
-            <div class="required-token-categories">
-              <div class="categories-title">Необходимые категории</div>
-              <span class="category-tag">Цены и скидки</span>
+          <div class="required-token-categories">
+            <div class="categories-title">Доступные категории</div>
+            <span class="category-tag">Финансы</span>
+            <span class="category-tag">Аналитика</span>
+            <span class="category-tag">Продвижение</span>
+            <span class="category-tag">Цены и скидки</span>
+          </div>
+        </article>
+        <article class="token-info-card">
+          <div class="token-name-group">
+            <p class="token-card-kicker">Токен для чтения и записи</p>
+            <div class="token-name">
+              Управление ценами
+              <span class="optional-label">Опционально</span>
             </div>
           </div>
-        </div>
+          <div class="required-token-categories">
+            <div class="categories-title">Доступная категория</div>
+            <span class="category-tag">Цены и скидки</span>
+          </div>
+        </article>
+      </section>
 
+      <section class="tokens-section" aria-labelledby="tokens-section-title">
+        <div class="section-heading">
+          <div>
+            <p class="wbtoken-eyebrow">Сохранённые подключения</p>
+            <h2 id="tokens-section-title">
+              Ваши токены <span id="token-count" aria-live="polite">(0)</span>
+            </h2>
+          </div>
+        </div>
         <div id="token-card-container"></div>
-      </div>
-
-      <script src="/js/wbToken/index.js" type="module"></script>
-    </body>
+      </section>
+    </main>
 
     <script src="/js/wbToken/index.js" type="module"></script>
   </body>

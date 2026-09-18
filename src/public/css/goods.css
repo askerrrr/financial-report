@@ -1,17 +1,4 @@
-:root {
-  --font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  --bg: #f8f9fa;
-  --text: #212529;
-  --border: #dee2e6;
-  --primary: #007bff;
-  --primary-hover: #0056b3;
-  --secondary: #6c757d;
-  --secondary-hover: #545b62;
-  --success: #28a745;
-  --radius: 6px;
-  --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  --transition: all 0.2s ease;
-}
+@import url("./theme.css");
 
 * {
   box-sizing: border-box;
@@ -20,47 +7,101 @@
 }
 
 body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--font-family);
+  background: var(--bg-base);
+  color: var(--text-primary);
   padding: 20px;
   line-height: 1.5;
 }
 
 .top-controls {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
   gap: 12px;
-  margin-bottom: 16px;
+  margin: 24px auto 32px;
   flex-wrap: wrap;
+  max-width: 1600px;
+  width: 100%;
+}
+
+.top-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 24px auto 32px;
+  padding-top: 48px;
+  flex-wrap: wrap;
+  max-width: 1600px;
+  width: 100%;
+  position: relative;
 }
 
 .top-controls button {
-  background: white;
-  color: var(--text);
-  border: 1px solid var(--border);
-  padding: 8px 14px;
-  font-size: 13px;
-  border-radius: var(--radius);
+  background: rgba(52, 58, 64, 0.8);
+  color: var(--text-primary);
+  border: 1px solid rgba(73, 80, 87, 0.5);
+  padding: 0 12px;
+  height: 32px;
+  font-size: 12px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: var(--transition);
+  transition: var(--transition-base);
 }
 
 .top-controls button:hover {
-  background: #f1f3f5;
-  border-color: var(--primary);
-  color: var(--primary);
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
 }
 
 .btn-to-main {
-  background: white;
-  color: var(--text);
-  border: 1px solid var(--border);
-  padding: 8px 14px;
-  font-size: 13px;
-  border-radius: var(--radius);
+  position: absolute;
+  top: 60px;
+  left: 100px;
+  background: rgba(52, 58, 64, 0.8);
+  color: var(--text-primary);
+  border: 1px solid rgba(73, 80, 87, 0.5);
+  padding: 0 12px;
+  height: 32px;
+  font-size: 12px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: var(--transition);
+  transition: var(--transition-base);
+}
+
+.btn-to-main {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-to-main::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f8f9fa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 12H5M12 19l-7-7 7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transition: transform var(--transition-fast);
+}
+
+.btn-to-main:hover::before {
+  transform: translateX(-2px);
+}
+
+.btn-to-main:active {
+  transform: scale(0.97);
+}
+
+.btn-to-main:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 #download-weekly-prices-file[hidden],
@@ -83,45 +124,62 @@ body {
 
 .input-file span {
   display: inline-block;
-  background: white;
+  background: var(--bg-surface);
   border: 1px dashed var(--border);
-  color: var(--text);
+  color: var(--text-primary);
   padding: 8px 16px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   font-size: 14px;
-  transition: var(--transition);
+  transition: var(--transition-base);
 }
 
 .input-file:hover span {
-  border-color: var(--primary);
-  color: var(--primary);
+  border-color: var(--accent);
+  color: var(--accent-hover);
 }
 
 .skus-table {
   width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: var(--radius);
+  max-width: 1600px;
+  min-width: 1000px;
+  margin: 24px auto;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: var(--shadow);
-  margin-top: 16px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border);
 }
 
 .skus-table th,
 .skus-table td {
-  padding: 12px 10px;
+  padding: 12px 14px;
   text-align: left;
   border-bottom: 1px solid var(--border);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .skus-table th {
-  background: #f1f3f5;
-  font-weight: 600;
-  color: #495057;
-  text-transform: uppercase;
-  font-size: 12px;
+  background: var(--bg-hover);
+  font-weight: 500;
+  color: var(--text-primary);
+  text-transform: none;
+  font-size: 13px;
   letter-spacing: 0.5px;
+  line-height: 1.35;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.skus-table th + th,
+.skus-table td + td {
+  border-left: 1px solid var(--border);
+}
+
+.skus-table tbody tr:last-child td {
+  border-bottom: 0;
 }
 
 .skus-table th[colspan] {
@@ -133,7 +191,7 @@ body {
 }
 
 .skus-table tbody tr:hover {
-  background: #f5f7fa;
+  background: var(--bg-hover);
 }
 
 .skus-table tbody td {
@@ -144,25 +202,81 @@ body {
   text-align: center;
 }
 
+#enabled-skus-table th:nth-child(1),
+#enabled-skus-table td:nth-child(1) {
+  width: 20%;
+}
+
+#enabled-skus-table th:nth-child(2),
+#enabled-skus-table td:nth-child(2),
+#enabled-skus-table th:nth-child(3),
+#enabled-skus-table td:nth-child(3) {
+  width: 10%;
+}
+
+#enabled-skus-table th:nth-child(4),
+#enabled-skus-table td:nth-child(4) {
+  width: 12%;
+}
+
+#enabled-skus-table th:nth-child(5),
+#enabled-skus-table td:nth-child(5) {
+  width: 18%;
+}
+
+#enabled-skus-table th:nth-child(6),
+#enabled-skus-table td:nth-child(6),
+#enabled-skus-table th:nth-child(7),
+#enabled-skus-table td:nth-child(7) {
+  width: 15%;
+}
+
+#enabled-skus-table td:nth-child(2),
+#enabled-skus-table td:nth-child(3),
+#enabled-skus-table td:nth-child(4),
+#enabled-skus-table td:nth-child(5) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#enabled-skus-table th:nth-child(2),
+#enabled-skus-table td:nth-child(2),
+#enabled-skus-table th:nth-child(6),
+#enabled-skus-table td:nth-child(6) {
+  border-left-color: var(--border-strong);
+}
+
 .skus-table tbody td:has(button.item) {
   text-align: center;
 }
 
 .skus-table tbody button.item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 104px;
+  height: 34px;
+  padding: 0 12px;
   background: transparent;
-  color: var(--primary);
+  color: var(--text-primary);
   font-size: 13px;
-  padding: 4px 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  font-weight: 500;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: var(--transition);
+  transition: var(--transition-base);
   white-space: nowrap;
 }
 
 .skus-table tbody button.item:hover {
-  background: #e7f0ff;
-  border-color: var(--primary);
+  background: rgba(13, 110, 253, 0.15);
+  border-color: var(--accent);
+  color: var(--accent-hover);
+}
+
+.skus-table tbody button.item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .skus-table tbody td:last-child {
@@ -203,11 +317,11 @@ body {
 }
 
 .modal {
-  background: white;
-  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  border-radius: var(--radius-lg);
   width: 90%;
   max-width: 420px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
   animation: modalFadeIn 0.25s ease;
 }
@@ -225,11 +339,11 @@ body {
 
 .modal-header {
   padding: 16px 20px;
-  background: #f8f9fa;
+  background: var(--bg-surface);
   border-bottom: 1px solid var(--border);
   font-weight: 600;
   font-size: 16px;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 .modal > label {
@@ -243,7 +357,7 @@ body {
 .modal > label span.label-text {
   font-size: 14px;
   font-weight: 500;
-  color: var(--text);
+  color: var(--text-primary);
   margin-bottom: 4px;
 }
 
@@ -258,7 +372,7 @@ body {
   content: "Установить цену на";
   font-size: 14px;
   font-weight: 500;
-  color: var(--text);
+  color: var(--text-primary);
   white-space: nowrap;
 }
 
@@ -271,15 +385,15 @@ body {
   padding: 8px 10px;
   margin-top: 6px;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   font-size: 14px;
-  transition: var(--transition);
+  transition: var(--transition-base);
 }
 
 .modal input.input:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
 }
 
 .discountedPrice {
@@ -308,20 +422,20 @@ body {
   padding: 12px;
   font-size: 14px;
   border: none;
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   font-weight: 500;
   cursor: pointer;
-  transition: var(--transition);
+  transition: var(--transition-base);
 }
 
 .modal-buttons #cancelBtn {
-  background: var(--secondary);
-  color: white;
+  background: var(--border-strong);
+  color: var(--text-primary);
 }
 
 .modal-buttons #confirmBtn {
-  background: var(--primary);
-  color: white;
+  background: var(--accent);
+  color: var(--text-primary);
 }
 
 .modal-buttons button:hover {
@@ -335,12 +449,12 @@ body {
   padding: 8px 32px 8px 10px;
   margin: 0;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   font-size: 14px;
-  background: white;
-  color: var(--text);
+  background: var(--bg-base);
+  color: var(--text-primary);
   cursor: pointer;
-  transition: var(--transition);
+  transition: var(--transition-base);
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -356,17 +470,17 @@ body {
 
 .modal select.input:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
 }
 
 .modal select.input:hover {
-  border-color: var(--primary);
+  border-color: var(--accent);
 }
 
 .modal select option {
-  background: white;
-  color: var(--text);
+  background: var(--bg-base);
+  color: var(--text-primary);
   padding: 8px 12px;
   font-size: 14px;
   border-radius: 4px;
@@ -378,8 +492,12 @@ body {
   }
   .skus-table th,
   .skus-table td {
-    padding: 8px 6px;
-    font-size: 13px;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .skus-table th {
+    font-size: 10px;
   }
   .modal,
   .modal-buttons {
@@ -397,17 +515,17 @@ body {
 
 .modal fieldset {
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-sm);
   padding: 16px 20px 12px;
   margin: 0 0 16px;
-  background: #fcfdff;
+  background: var(--bg-surface);
 }
 
 .modal fieldset legend {
   padding: 0 8px;
   font-weight: 600;
   font-size: 14px;
-  color: var(--text);
+  color: var(--text-primary);
   float: none;
   width: auto;
 }
@@ -431,9 +549,9 @@ body {
   padding-left: 28px;
   cursor: pointer;
   font-size: 14px;
-  color: var(--text);
+  color: var(--text-primary);
   user-select: none;
-  transition: var(--transition);
+  transition: var(--transition-base);
   display: flex;
   align-items: center;
 }
@@ -447,9 +565,9 @@ body {
   width: 18px;
   height: 18px;
   border: 2px solid var(--border);
-  border-radius: 4px;
-  background: white;
-  transition: var(--transition);
+  border-radius: var(--radius-sm);
+  background: var(--bg-base);
+  transition: var(--transition-base);
 }
 
 .modal .checkbox + label::after {
@@ -460,19 +578,19 @@ body {
   transform: translateY(-50%) rotate(45deg) scale(0);
   width: 6px;
   height: 10px;
-  border: solid white;
+  border: solid var(--text-primary);
   border-width: 0 2px 2px 0;
   transition: transform 0.15s ease;
 }
 
 .modal .checkbox + label:hover::before {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
 }
 
 .modal .checkbox:checked + label::before {
-  background: var(--primary);
-  border-color: var(--primary);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .modal .checkbox:checked + label::after {
@@ -480,12 +598,12 @@ body {
 }
 
 .modal .checkbox:focus-visible + label::before {
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.3);
 }
 
 .modal .checkbox[name="На всю неделю"] + label {
   font-weight: 600;
-  color: var(--primary);
+  color: var(--accent-hover);
 }
 
 @media (max-width: 600px) {
@@ -511,16 +629,16 @@ body {
   top: 40%;
   transform: translate(-50%, -50%);
   z-index: 9999;
-  background: var(--primary);
-  color: white;
+  background: var(--accent);
+  color: var(--text-primary);
   font-weight: 600;
   font-size: 18px;
   padding: 18px 48px;
   border: none;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
   cursor: pointer;
-  transition: var(--transition);
+  transition: var(--transition-base);
 }
 
 #week-days {
@@ -530,7 +648,7 @@ body {
   flex-wrap: wrap;
   margin-bottom: 16px;
   font-size: 14px;
-  color: var(--text);
+  color: var(--text-primary);
 }
 
 #week-days label {
@@ -542,13 +660,13 @@ body {
   min-width: 180px;
   padding: 9px 32px 9px 12px;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: white;
-  color: var(--text);
+  border-radius: var(--radius-sm);
+  background: var(--bg-base);
+  color: var(--text-primary);
   font-size: 14px;
   font-family: inherit;
   cursor: pointer;
-  transition: var(--transition);
+  transition: var(--transition-base);
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -557,20 +675,20 @@ body {
 }
 
 #week-days-select:hover {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
 }
 
 #week-days-select:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
 }
 
 #week-days-select option {
   padding: 8px 12px;
-  background: white;
-  color: var(--text);
+  background: var(--bg-base);
+  color: var(--text-primary);
 }
 
 @media (max-width: 600px) {

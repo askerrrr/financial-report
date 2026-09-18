@@ -175,7 +175,7 @@ var createRemoveTokenBtn = (userId, tokenType, url = "/wbtoken/") => {
 
   button.className = "btn-delete button-danger";
   button.id = "btn-delete-" + tokenType;
-  button.textContent = "×";
+  button.textContent = "Удалить";
 
   button.addEventListener("click", async () => {
     var confirmed = confirm("Удалить токен ?");
