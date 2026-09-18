@@ -1,4 +1,4 @@
-var extractRequiredListGoodsData = async (rawListGoods) => {
+var extractRequiredListGoodsData = (rawListGoods) => {
   var listGoods = rawListGoods.map((item) => {
     return {
       id: item.nmID,

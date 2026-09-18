@@ -55,9 +55,8 @@ var updateDataIntoListGoodsController = async (req, res, next) => {
                   listGoodsIds,
                 );
 
-              var listGoodsFromWBAPI = (
-                await extractRequiredListGoodsData(rawListGoods)
-              ).listGoods;
+              var listGoodsFromWBAPI =
+                extractRequiredListGoodsData(rawListGoods).listGoods;
               var { newSkus, updatedSkus } = splitListGoodsByExistence(
                 listGoodsSkuNamesAndIds,
                 listGoodsFromWBAPI,

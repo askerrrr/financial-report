@@ -3,7 +3,7 @@ import extractRequiredListGoodsData from "./extractRequiredListGoodsData.js";
 
 var listGoodsLoader = async (userId, token) => {
   var { rawListGoogs } = await wbapi.getListGoods(userId, token);
-  var { listGoods } = await extractRequiredListGoodsData(rawListGoogs);
+  var { listGoods } = extractRequiredListGoodsData(rawListGoogs);
 
   return { listGoodsFromWBAPI: listGoods };
 };
