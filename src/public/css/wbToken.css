@@ -10,28 +10,30 @@ body {
   font-family: var(--font-family);
   background: var(--bg-base);
   color: var(--text-primary);
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 24px 24px;
   line-height: 1.5;
   min-height: 100vh;
   width: 100%;
 }
 
-.wbtoken-page {
-  width: min(1200px, 100%);
-  margin: 0 auto;
-  padding: 24px;
-}
-
 .btn-to-main {
-  position: static;
+  position: absolute;
+  top: 60px;
+  left: 100px;
   margin-bottom: 32px;
 }
 
 .wbtoken-header {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
   gap: 24px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
   margin-bottom: 40px;
 }
 
@@ -99,6 +101,8 @@ body {
 
 .tokens-section {
   margin-top: 48px;
+  width: 100%;
+  max-width: 1040px;
 }
 
 .section-heading {
@@ -121,7 +125,9 @@ body {
 }
 
 .btn-to-main {
-  position: static;
+  position: absolute;
+  top: 60px;
+  left: 100px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -257,8 +263,10 @@ body {
 }
 
 @media (max-width: 768px) {
-  .wbtoken-page {
-    padding: 20px 16px;
+  .btn-to-main {
+    position: static;
+    display: inline-flex;
+    margin-bottom: 30px;
   }
 
   .wbtoken-header {
@@ -282,6 +290,7 @@ body {
   }
 }
 
+/* ===== Модальное окно ===== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -315,6 +324,11 @@ body {
   overflow: hidden;
   animation: modalFadeIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   margin: 20px;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 @keyframes modalFadeIn {
@@ -329,6 +343,7 @@ body {
 }
 
 .modal-title {
+  width: 100%;
   padding: 22px 24px 16px;
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border);
@@ -336,6 +351,7 @@ body {
   font-weight: 600;
   color: #71b7ff;
   margin: 0;
+  text-align: center;
 }
 
 .modal-input {
@@ -348,6 +364,7 @@ body {
   color: var(--text-primary);
   font-size: 15px;
   box-sizing: border-box;
+  text-align: left; /* ← было center, теперь left */
 }
 
 .modal-input:focus {
@@ -360,7 +377,8 @@ body {
   display: flex;
   gap: 12px;
   padding: 10px 24px 24px;
-  justify-content: flex-end;
+  justify-content: center;
+  width: 100%;
 }
 
 .modal-button {
@@ -378,6 +396,7 @@ body {
   background: var(--text-secondary);
   color: var(--text-primary);
 }
+
 .modal-button-cancel:hover {
   background: #5a6268;
 }
@@ -386,6 +405,7 @@ body {
   background: var(--accent);
   color: var(--text-primary);
 }
+
 .modal-button-save:hover {
   background: var(--accent-hover);
 }
@@ -450,6 +470,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 500px;
   transition: var(--transition-base);
 }
 
@@ -509,7 +530,6 @@ body {
   color: var(--text-secondary);
 }
 
-/* Адаптив */
 @media (max-width: 800px) {
   .token-info-panel {
     grid-template-columns: 1fr;
@@ -517,10 +537,6 @@ body {
 }
 
 @media (max-width: 480px) {
-  .wbtoken-page {
-    padding: 16px 12px;
-  }
-
   .wbtoken-header h1 {
     font-size: 24px;
   }
@@ -528,4 +544,102 @@ body {
   .wbtoken-subtitle {
     font-size: 14px;
   }
+}
+
+/* ===== Модалка: радио ===== */
+.modal-radios {
+  display: flex;
+  gap: 20px;
+  padding: 0 24px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.modal-radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14.5px;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.modal-radio input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-strong, #555);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition-base);
+  flex-shrink: 0;
+}
+
+.modal-radio input[type="radio"]:hover {
+  border-color: var(--accent-hover);
+}
+
+.modal-radio input[type="radio"]:checked {
+  border-color: var(--accent);
+}
+
+.modal-radio input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+}
+
+.modal-radio input[type="radio"]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== Заголовок категорий ===== */
+.modal-categories-title {
+  padding: 60px 24px 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  width: 100%;
+}
+
+/* ===== Список категорий ===== */
+.modal-categories-list {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0 24px 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.modal-categories-list li {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.4;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  width: 100%;
+}
+
+.modal-categories-list li:last-child {
+  border-bottom: none;
 }
