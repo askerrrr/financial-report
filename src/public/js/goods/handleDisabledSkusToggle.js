@@ -5,7 +5,7 @@ var handleDisabledSkusToggle = () => {
   toggleDisabledSkusButton.addEventListener("click", () => {
     if (disablesSkusTable.hidden === true) {
       disablesSkusTable.hidden = false;
-      toggleDisabledSkusButton.textContent = "Убрать скрытие товары";
+      toggleDisabledSkusButton.textContent = "Убрать скрытые товары";
     } else {
       disablesSkusTable.hidden = true;
       toggleDisabledSkusButton.textContent = "Показать скрытые товары";
