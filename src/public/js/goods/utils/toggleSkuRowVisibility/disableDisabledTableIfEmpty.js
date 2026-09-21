@@ -1,9 +1,11 @@
-var disableDisabledTableIfEmpty = () => {
-  var disabledSkuTbody = document.getElementById("disabled-skus-tbody");
+var disabledSkuTbody = document.getElementById("disabled-skus-tbody");
+var disabledSkuTable = document.getElementById("disabled-skus-table");
+var toggleDisabledSkusButton = document.getElementById("toggle-disabled-skus");
 
+var disableDisabledTableIfEmpty = () => {
   if (!disabledSkuTbody.hasChildNodes()) {
-    var disabledSkuTable = document.getElementById("disabled-skus-table");
     disabledSkuTable.hidden = true;
+    toggleDisabledSkusButton.hidden = true;
   }
 };
 

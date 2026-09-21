@@ -14,7 +14,7 @@ var loadListGoodsButtonHandler = () => {
 
     var res = await fetch(url, {
       method: "POST",
-      body: JSON.stringify({ userId, requiredTokenType: "read" }),
+      body: JSON.stringify({ userId, requiredTokenType: "set" }),
       headers: { "content-type": "application/json" },
     });
 

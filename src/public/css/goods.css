@@ -137,7 +137,7 @@ body {
   color: var(--accent-hover);
 }
 
-/* ===== Таблицы ===== */
+/* ===== Таблицы (общие стили) ===== */
 .skus-table {
   width: 100%;
   max-width: 1600px;
@@ -202,50 +202,54 @@ body {
   text-align: center;
 }
 
-#enabled-skus-table th:nth-child(1),
-#enabled-skus-table td:nth-child(1) {
+/* ===== Единая ширина колонок для ВСЕХ skus-table ===== */
+.skus-table th:nth-child(1),
+.skus-table td:nth-child(1) {
   width: 20%;
 }
 
-#enabled-skus-table th:nth-child(2),
-#enabled-skus-table td:nth-child(2),
-#enabled-skus-table th:nth-child(3),
-#enabled-skus-table td:nth-child(3) {
+.skus-table th:nth-child(2),
+.skus-table td:nth-child(2),
+.skus-table th:nth-child(3),
+.skus-table td:nth-child(3) {
   width: 10%;
 }
 
-#enabled-skus-table th:nth-child(4),
-#enabled-skus-table td:nth-child(4) {
+.skus-table th:nth-child(4),
+.skus-table td:nth-child(4) {
   width: 12%;
 }
 
-#enabled-skus-table th:nth-child(5),
-#enabled-skus-table td:nth-child(5) {
+.skus-table th:nth-child(5),
+.skus-table td:nth-child(5) {
   width: 18%;
 }
 
-#enabled-skus-table th:nth-child(6),
-#enabled-skus-table td:nth-child(6),
-#enabled-skus-table th:nth-child(7),
-#enabled-skus-table td:nth-child(7) {
+.skus-table th:nth-child(6),
+.skus-table td:nth-child(6),
+.skus-table th:nth-child(7),
+.skus-table td:nth-child(7) {
   width: 15%;
 }
 
-#enabled-skus-table td:nth-child(2),
-#enabled-skus-table td:nth-child(3),
-#enabled-skus-table td:nth-child(4),
-#enabled-skus-table td:nth-child(5) {
+/* ===== Выравнивание числовых колонок ===== */
+.skus-table td:nth-child(2),
+.skus-table td:nth-child(3),
+.skus-table td:nth-child(4),
+.skus-table td:nth-child(5) {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#enabled-skus-table th:nth-child(2),
-#enabled-skus-table td:nth-child(2),
-#enabled-skus-table th:nth-child(6),
-#enabled-skus-table td:nth-child(6) {
+/* ===== Акцентные вертикальные границы ===== */
+.skus-table th:nth-child(2),
+.skus-table td:nth-child(2),
+.skus-table th:nth-child(6),
+.skus-table td:nth-child(6) {
   border-left-color: var(--border-strong);
 }
 
+/* ===== Кнопки внутри таблиц ===== */
 .skus-table tbody td:has(button.item) {
   text-align: center;
 }
@@ -295,7 +299,7 @@ body {
   cursor: pointer;
 }
 
-/* ===== Модалка на странице goods ===== */
+/* ===== Модалка ===== */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -718,4 +722,23 @@ body {
     width: 100%;
     max-width: 260px;
   }
+}
+
+/* ===== Стили для отключённой таблицы ===== */
+#disabled-skus-table {
+  opacity: 0.75;
+}
+
+#disabled-skus-table th {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+}
+
+#disabled-skus-table tbody td {
+  color: var(--text-secondary);
+}
+
+#disabled-skus-table tbody tr:hover {
+  background: var(--bg-surface);
+  opacity: 1;
 }

@@ -8,11 +8,18 @@
     <title>Товары</title>
   </head>
   <body>
-    <button class="btn-to-main" onclick="window.location.href = '/'">На главную</button>
+    <button class="btn-to-main" onclick="window.location.href = '/'">
+      На главную
+    </button>
     <div class="top-controls">
-      <button id="download-weekly-prices-file" hidden>Скачать цены на неделю</button>
+      <button id="download-weekly-prices-file" hidden>
+        Скачать цены на неделю
+      </button>
       <button id="download-skus-metrics" hidden>Скачать статистику</button>
-      <button id="upload-weekly-prices-and-discounts-file" type="button" hidden>Загрузить цены на неделю</button>
+      <button id="upload-weekly-prices-and-discounts-file" type="button" hidden>
+        Загрузить цены на неделю
+      </button>
+      <button id="toggle-disabled-skus" hidden>Показать скрытые товары</button>
     </div>
     <div id="week-days" hidden>
       <label for="week-days-select">Показать цены на:</label>
@@ -26,7 +33,9 @@
         <option value="6">воскресенье</option>
       </select>
     </div>
-    <button id="upload-list-goods" type="button" hidden>Загрузить список товаров</button>
+    <button id="upload-list-goods" type="button" hidden>
+      Загрузить список товаров
+    </button>
     <table id="enabled-skus-table" class="skus-table" hidden>
       <thead id="enabled-skus-thead">
         <tr id="enabled-skus-thead-row">
@@ -34,7 +43,9 @@
           <th id="price-th">Цена</th>
           <th id="discount-th">Скидка продавца</th>
           <th id="discountedPrice-th">Цена со скидкой</th>
-          <th id="clubDiscounted-price-th">Цена со скидкой, включая скидку WB Клуба</th>
+          <th id="clubDiscounted-price-th">
+            Цена со скидкой, включая скидку WB Клуба
+          </th>
           <th>Действие с ценой</th>
           <th>Скрыть товар</th>
         </tr>
@@ -45,14 +56,27 @@
       <thead id="disabled-skus-thead">
         <tr>
           <th>Артикул</th>
-          <th>||</th>
+          <th id="price-th">Цена</th>
+          <th id="discount-th">Скидка продавца</th>
+          <th id="discountedPrice-th">Цена со скидкой</th>
+          <th id="clubDiscounted-price-th">
+            Цена со скидкой, включая скидку WB Клуба
+          </th>
+          <th>Действие с ценой</th>
+          <th>Скрыть товар</th>
         </tr>
       </thead>
       <tbody id="disabled-skus-tbody"></tbody>
     </table>
     <form enctype="multipart/form-data" id="upload-form" hidden>
       <label for="input-field" class="input-file">
-        <input type="file" name="file" id="input-field" multiple accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+        <input
+          type="file"
+          name="file"
+          id="input-field"
+          multiple
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        />
       </label>
     </form>
     <script src="/js/goods/index.js" type="module"></script>
