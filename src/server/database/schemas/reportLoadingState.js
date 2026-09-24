@@ -2,7 +2,6 @@ import { Schema } from "mongoose";
 
 var lastLoadedReportSchema = new Schema(
   {
-    periodIndex: { type: Number },
     year: { type: Number, required: true },
     month: { type: String, required: true },
     dateTo: { type: String, required: true },
@@ -14,7 +13,6 @@ var lastLoadedReportSchema = new Schema(
 
 var queueItemSchema = new Schema(
   {
-    index: { type: Number, required: true },
     dateFrom: { type: String, required: true },
     dateTo: { type: String, required: true },
     failedCount: { type: Number, required: true, default: 0, min: 0, max: 3 },
@@ -24,7 +22,6 @@ var queueItemSchema = new Schema(
 
 var emptyReportPeriodItemSchema = new Schema(
   {
-    index: { type: Number, required: false },
     dateTo: { type: String, required: true },
     dateFrom: { type: String, required: true },
   },
