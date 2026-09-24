@@ -4,7 +4,7 @@ import openOtherExpensesModal from "../report/table/services/modal/otherExpenses
 
 var isGuestAccess = true;
 
-var createSKUsTable = (report, skus, year) => {
+var createSkusTable = (report, skus, year) => {
   var tableBody = document.createElement("tbody");
   var { userId, taxRate, dateFrom, dateTo } = report;
 
@@ -87,7 +87,7 @@ var createSKUsTable = (report, skus, year) => {
   tablesContainer.append(table);
 };
 
-export default createSKUsTable;
+export default createSkusTable;
 
 var tableHeadContent = `
    <tr>

@@ -1,4 +1,4 @@
-import createSKUsTable from "./createSKUsTable.js";
+import createSkusTable from "./createSkusTable.js";
 import createTotalsTable from "./createTotalsTable.js";
 import calcReportTotalsFromSkus from "../report/table/calcReportTotalsFromSkus.js";
 import { enableDownloadReportAsXLSXButton } from "./downloadReportAsXLSXButton.js";
@@ -9,8 +9,11 @@ var yearValueStub = "";
 var isGuestAccess = true;
 var reportSummaryLabelTextStub = "";
 var downloadReportLink = "/decode-report-without-registration/xlsx/";
-var newTextContentToDecodeReportWithoutRegistrationButton = "Получить новый отчёт";
-var decodeReportWithoutRegistrationButton = document.getElementById("decode-report-without-registration-button");
+var newTextContentToDecodeReportWithoutRegistrationButton =
+  "Получить новый отчёт";
+var decodeReportWithoutRegistrationButton = document.getElementById(
+  "decode-report-without-registration-button",
+);
 
 var showReport = async (report) => {
   var { dateFrom, dateTo, isCrossYearPeriod, skus } = report;
@@ -24,24 +27,57 @@ var showReport = async (report) => {
     var startYearSkus = skus.filter((sku) => sku.year === startYear);
     var endYearSkus = skus.filter((sku) => sku.year === endYear);
 
-    var fullReportPeriodText = getReportPeriodText(dateFrom, dateTo).reportPeriodText;
+    var fullReportPeriodText = getReportPeriodText(
+      dateFrom,
+      dateTo,
+    ).reportPeriodText;
 
-    createTotalsTable(reportTotals, yearValueStub, isCrossYearPeriod, fullReportPeriodText);
+    createTotalsTable(
+      reportTotals,
+      yearValueStub,
+      isCrossYearPeriod,
+      fullReportPeriodText,
+    );
 
-    var startYearReportTotals = calcReportTotalsFromSkus(startYearSkus).reportTotals;
-    var startReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateFrom).reportPeriodText;
+    var startYearReportTotals =
+      calcReportTotalsFromSkus(startYearSkus).reportTotals;
+    var startReportPeriodText = getReportPeriodText(
+      dateFrom,
+      dateTo,
+      dateFrom,
+    ).reportPeriodText;
 
-    createTotalsTable(startYearReportTotals, startYear, isCrossYearPeriod, startReportPeriodText);
-    createSKUsTable(report, startYearSkus, startYear);
+    createTotalsTable(
+      startYearReportTotals,
+      startYear,
+      isCrossYearPeriod,
+      startReportPeriodText,
+    );
+    createSkusTable(report, startYearSkus, startYear);
 
-    var endYearReportTotals = calcReportTotalsFromSkus(endYearSkus).reportTotals;
-    var endReportPeriodText = getReportPeriodText(dateFrom, dateTo, dateTo).reportPeriodText;
+    var endYearReportTotals =
+      calcReportTotalsFromSkus(endYearSkus).reportTotals;
+    var endReportPeriodText = getReportPeriodText(
+      dateFrom,
+      dateTo,
+      dateTo,
+    ).reportPeriodText;
 
-    createTotalsTable(endYearReportTotals, endYear, isCrossYearPeriod, endReportPeriodText);
-    createSKUsTable(report, endYearSkus, endYear);
+    createTotalsTable(
+      endYearReportTotals,
+      endYear,
+      isCrossYearPeriod,
+      endReportPeriodText,
+    );
+    createSkusTable(report, endYearSkus, endYear);
   } else {
-    createTotalsTable(reportTotals, yearValueStub, isCrossYearPeriod, reportSummaryLabelTextStub);
-    createSKUsTable(report, skus, startYear);
+    createTotalsTable(
+      reportTotals,
+      yearValueStub,
+      isCrossYearPeriod,
+      reportSummaryLabelTextStub,
+    );
+    createSkusTable(report, skus, startYear);
   }
 
   enableDownloadReportAsXLSXButton();
@@ -53,7 +89,8 @@ var showReport = async (report) => {
     window.scrollTo({ top: 900, behavior: "smooth" });
   }
 
-  decodeReportWithoutRegistrationButton.textContent = newTextContentToDecodeReportWithoutRegistrationButton;
+  decodeReportWithoutRegistrationButton.textContent =
+    newTextContentToDecodeReportWithoutRegistrationButton;
 };
 
 export default showReport;
