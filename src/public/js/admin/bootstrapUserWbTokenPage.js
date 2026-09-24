@@ -1,29 +1,23 @@
 import getTokenData from "../wbToken/getTokenData.js";
-import renameSaveButton from "../wbToken/renameSaveButton.js";
-import loadTokenButtonHander from "../wbToken/loadTokenButtonHander.js";
-import { insertDataToTokenDataTable } from "../wbToken/tokenDataTable.js";
-import removeTokenButtonHandler from "../wbToken/removeTokenButtonHandler.js";
-import { enableTokenDataTable } from "../wbToken/toggleVisibilityOfTokenDataTable.js";
-import { enableRemoveTokenButton } from "../wbToken/toggleVisibilityOfRemoveTokenButton.js";
+import createTokenCard from "../wbToken/tokenCard/createTokenCard.js";
+import uploadTokenModalHandler from "../wbToken/uploadTokenModalHandler.js";
 
 var userId = window.location.pathname.split("/").at(-1);
+var tokenCardContainer = document.getElementById("token-card-container");
 var btnBackToMainPage = document.getElementById("back-to-main-page-btn");
 
 var bootstrapUserWbTokenPage = async () => {
-  var { tokenData } = await getTokenData(userId);
+  var { tokensDetails } = await getTokenData(userId);
 
-  if (tokenData.tokenIsExist) {
-    renameSaveButton();
-    enableTokenDataTable();
-    enableRemoveTokenButton();
-    insertDataToTokenDataTable(tokenData);
+  tokensDetails.forEach((token) => {
+    var { tokenCard } = createTokenCard(userId, token);
+    tokenCardContainer.append(tokenCard);
+  });
 
-    removeTokenButtonHandler(userId);
-  }
+  uploadTokenModalHandler(userId);
 
-  loadTokenButtonHander(userId);
-
-  btnBackToMainPage.onclick = () => (window.location.href = "/admin/user/" + userId);
+  btnBackToMainPage.onclick = () =>
+    (window.location.href = "/admin/user/" + userId);
 };
 
 bootstrapUserWbTokenPage();
