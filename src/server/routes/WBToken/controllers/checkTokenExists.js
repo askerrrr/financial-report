@@ -1,15 +1,35 @@
-import dbUtils from "../../../database/collections/index.js";
+import checkTokenExistService from "../services/checkTokenExist.js";
 
-var checkTokenExists = async (req, res, next) => {
-  var { userId } = req.params;
+var tokenMissingMsg = "Отсутствует токен личного кабинета WB";
+var tokenExpiryMsg = "Истек срок действия токена личного кабинета WB";
 
-  var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
+var checkTokenExistsController = async (req, res, next) => {
+  var { userId, requiredTokenType } = req.body;
 
-  var { token } = await getWBTokenByUserId(userId);
+  var { isExpired, tokenIsMissing, token } = await checkTokenExistService(
+    userId,
+    requiredTokenType,
+  );
 
-  var tokenIsExist = false;
+  if (isExpired) {
+    return res.json({ errorText: tokenExpiryMsg });
+  }
 
-  return token.length ? res.json({ tokenIsExist: true }) : res.json({ tokenIsExist });
+  if (tokenIsMissing) {
+    var errorText;
+
+    if (requiredTokenType === "read") {
+      errorText = tokenMissingMsg + "\nТип токена: Только чтение";
+    } else {
+      errorText = tokenMissingMsg + "\nТип токена: Чтение и запись";
+    }
+
+    return res.json({ errorText });
+  }
+
+  req.body.wbtoken = token;
+
+  next();
 };
 
-export default checkTokenExists;
+export default checkTokenExistsController;

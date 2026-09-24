@@ -1,28 +1,27 @@
-import dbUtils from "../../../database/collections/index.js";
-import checkReportExistsInTree from "../services/different/checkReportExistsInTree.js";
+import checkReportExistsService from "../services/checkReportExists.js";
 
-var { getReportTree } = dbUtils.reportsTreeCollectionServices;
-var { getEmptyReportPeriods } = dbUtils.reportLoadingStatesCollectionServices;
+var checkReportExistsController = async (req, res, next) => {
+  var { reportIsExist, reportIsEmpty } = await checkReportExistsService(
+    req.body,
+  );
 
-var checkReportExists = async (req, res, next) => {
-  var { dateFrom, userId } = req.body;
-
-  var { emptyReportPeriods } = await getEmptyReportPeriods(userId);
-
-  var emptyReportPeriodIsExist = emptyReportPeriods.find((item) => item.dateFrom === dateFrom);
-
-  if (emptyReportPeriodIsExist) {
-    return res.sendStatus(204);
+  if (reportIsEmpty) {
+    return res.json({
+      infoText: "Нет данных за отчетный период",
+      errorText: "",
+      reportData: {},
+    });
   }
 
-  var { reportTree } = await getReportTree(userId);
-  var { reportIsExist } = checkReportExistsInTree(dateFrom, reportTree);
-
   if (reportIsExist) {
-    return res.status(409).json({ msg: "Отчет за данный период уже существует.\nЧтобы загрузить отчет еще раз, необходимо его удалить." });
+    return res.json({
+      infoText: "Отчет за данный период уже существует.",
+      errorText: "",
+      reportData: {},
+    });
   }
 
   next();
 };
 
-export default checkReportExists;
+export default checkReportExistsController;

@@ -1,9 +1,9 @@
-import dbUtils from "../../../database/collections/index.js";
-import excludeFutureTaxParams from "../services/excludeFutureTaxParams.js";
+import dbUtils from "../../../database/modelsUtil/index.js";
+import excludeFutureTaxParams from "../services/utils/excludeFutureTaxParams.js";
 
-var { getTaxParamsFromDb } = dbUtils.taxParamsCollectionServices;
+var { getTaxParamsFromDb } = dbUtils.taxParamsModelUtils;
 
-var getTaxParams = async (req, res, next) => {
+var getTaxParamsController = async (req, res, next) => {
   var { userId } = req.params;
 
   var taxParams = await getTaxParamsFromDb(userId);
@@ -12,4 +12,4 @@ var getTaxParams = async (req, res, next) => {
   return res.json({ taxParams: filteredTaxParams });
 };
 
-export default getTaxParams;
+export default getTaxParamsController;

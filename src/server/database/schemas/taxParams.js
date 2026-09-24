@@ -22,15 +22,13 @@ var taxYear = new Schema(
     mandatoryInsuranceFeeIsPaid: { type: Boolean, default: false },
     additionalInsuranceFeeIsPaid: { type: Boolean, default: false },
     excessInsuranceRate: { type: Number, default: 1 },
-    schemaVersion: { type: Number },
   },
   { _id: false },
 );
 
 var taxParamsSchema = new Schema({
-  userId: { type: String, required: true },
+  userId: { type: String, required: true, unique: true },
   years: [{ type: taxYear, required: false }],
-  schemaVersion: { type: Number },
 });
 
 export default taxParamsSchema;

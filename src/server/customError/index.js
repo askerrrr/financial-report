@@ -1,24 +1,3 @@
-class DatabaseError extends Error {
-  constructor(userId, e, message) {
-    super(message);
-    this.status = 500;
-    this.userId = userId;
-    this.cause = e?.cause ?? "";
-    this.stack = e?.stack ?? "";
-    this.message = e?.message || message;
-    this.name = this.constructor.name;
-  }
-}
-
-class DatabaseConnectionError extends Error {
-  constructor(message) {
-    super(message);
-    this.status = 500;
-    this.message = "Database connection is not established";
-    this.name = this.constructor.name;
-  }
-}
-
 class WBAPIError extends Error {
   constructor(userId, status, message) {
     super(message);
@@ -29,36 +8,4 @@ class WBAPIError extends Error {
   }
 }
 
-class ReportNotFoundError extends Error {
-  constructor(userId, reportId, message) {
-    super(message);
-    this.status = 404;
-    this.userId = userId;
-    this.message = `the report with id ${reportId} the was not found`;
-    this.name = this.constructor.name;
-  }
-}
-
-class FormDataError extends Error {
-  constructor(message, invalidField) {
-    super(message);
-    this.status = 400;
-    this.message = message;
-    this.invalidField = invalidField;
-    this.name = this.constructor.name;
-  }
-}
-
-class DBMigrationError extends Error {
-  constructor(userId, reportIds, message) {
-    super(message);
-
-    this.status = 500;
-    this.userId = userId;
-    this.reportIds = reportIds;
-    this.name = this.constructor.name;
-    this.message = "Error: Migration is failed, see the details in the error.log";
-  }
-}
-
-export { WBAPIError, FormDataError, DatabaseError, DBMigrationError, ReportNotFoundError, DatabaseConnectionError };
+export { WBAPIError };

@@ -1,11 +1,11 @@
-import tokenCollectionServices from "../../../database/collections/tokens/index.js";
+import { removeTokenFromDb } from "../../../database/modelsUtil/tokens/index.js";
 
-var removeToken = async (req, res) => {
-  var { userId } = req.body;
+var removeTokenController = async (req, res) => {
+  var { userId, tokenType } = req.body;
 
-  var success = await tokenCollectionServices.removeTokenFromDb(userId);
+  await removeTokenFromDb(userId, tokenType);
 
-  return success ? res.sendStatus(200) : res.sendStatus(304);
+  return res.sendStatus(200);
 };
 
-export default removeToken;
+export default removeTokenController;

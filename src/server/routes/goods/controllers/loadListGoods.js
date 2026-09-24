@@ -1,37 +1,9 @@
-import { dbClient } from "../../../database/index.js";
-import listGoodsLoader from "../services/listGoodsLoader.js";
-import dbUtils from "../../../database/collections/index.js";
+import loadListGoodsService from "../services/loadListGoods.js";
 
-var updateLastUsedTimestampNow = true;
+var loadListGoodsController = async (req, res, next) => {
+  var { listGoods, errorText } = await loadListGoodsService(req.body);
 
-var loadListGoods = async (req, res, next) => {
-  var { userId } = req.body;
-  var { saveListGoodsToDb } = dbUtils.goodsCollectionServices;
-  var { getWBTokenByUserId, updateLastUsedTimestamp } = dbUtils.tokenCollectionServices;
-
-  var session = await dbClient.startSession();
-
-  try {
-    await session.withTransaction(async () => {
-      var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
-
-      if (!token) {
-        return res.status(400).json({ msg: "В первую очередь нужно загрузить токен личного кабинета WB" });
-      } else {
-        var { listGoodsFromWBAPI } = await listGoodsLoader(userId, token);
-
-        await saveListGoodsToDb(userId, listGoodsFromWBAPI, session);
-
-        return res.json({ listGoods: listGoodsFromWBAPI });
-      }
-    });
-  } catch (e) {
-    return res.sendStatus(304);
-  } finally {
-    if (session) {
-      await session.endSession();
-    }
-  }
+  return res.json({ listGoods, errorText });
 };
 
-export default loadListGoods;
+export default loadListGoodsController;

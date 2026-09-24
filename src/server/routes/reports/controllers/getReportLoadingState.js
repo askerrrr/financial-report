@@ -1,24 +1,11 @@
-import reportLoadingStatesCollectionServices from "../../../database/collections/reportLoadingStates/index.js";
+import getReportLoadingStateService from "../services/getReportLoadingState.js";
 
-var session = null;
-
-var selectedFieldsToLoadingState = [
-  "queueLength",
-  "reportsQueue",
-  "queueCapacity",
-  "abandonedReports",
-  "loadingInProgress",
-  "loadingStopReason",
-  "isReportLoadingDelayed",
-  "isReportLoadingIsStopped",
-];
-
-var getReportLoadingState = async (req, res, next) => {
+var getReportLoadingStateController = async (req, res, next) => {
   var { userId } = req.params;
 
-  var reportLoadingState = await reportLoadingStatesCollectionServices.getReportLoadingState(userId, session, selectedFieldsToLoadingState);
+  var { reportLoadingState } = await getReportLoadingStateService(userId);
 
   return res.json(reportLoadingState);
 };
 
-export default getReportLoadingState;
+export default getReportLoadingStateController;

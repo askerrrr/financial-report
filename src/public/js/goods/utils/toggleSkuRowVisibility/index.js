@@ -4,9 +4,8 @@ import insertSkuRowToTable from "./insertSkuRowToTable.js";
 import sendNewDisableStatus from "./sendNewDisableStatus.js";
 import deleteSkuRowFromTable from "./deleteSkuRowFromTable.js";
 import disableDisabledTableIfEmpty from "./disableDisabledTableIfEmpty.js";
-import changeHiddenStatusOfSkusTable from "./changeSkuTableHiddenStatus.js";
+import { toggleDisabledSkusButtonVisibility } from "../visibilityToggle/index.js";
 import changeDisableStatusOfModalButton from "./changeDisableStatusOfModalButton.js";
-import toggleSkuElementsVisibility from "../visibilityToggle/toggleSkuElementsVisibility.js";
 
 /**
  * @param {'to-enable' | 'to-disable'} msg
@@ -23,7 +22,11 @@ var createSkuRowVisibilityButtonHandler = (skuName, id) => {
 
       if (confirmed) {
         var hasDisblAttribute = button.hasAttribute("disbl");
-        var statusIsUpdated = await sendNewDisableStatus(skuName, id, hasDisblAttribute);
+        var statusIsUpdated = await sendNewDisableStatus(
+          skuName,
+          id,
+          hasDisblAttribute,
+        );
 
         if (statusIsUpdated) {
           var skuRow = document.getElementById(skuName);
@@ -31,28 +34,29 @@ var createSkuRowVisibilityButtonHandler = (skuName, id) => {
           if (hasDisblAttribute) {
             button.removeAttribute("disbl");
             button.textContent = "скрыть";
+
             changeDisableStatusOfModalButton(skuName, "off");
             deleteSkuRowFromTable(skuRow, "disabled-skus-tbody");
             insertSkuRowToTable(skuRow, "enabled-skus-tbody");
-            toggleSkuElementsVisibility(skuName, "unhide");
-            msg = getConfirmMessage(skuName, "to-disable");
-            disableDisabledTableIfEmpty();
-            return;
-          }
 
-          button.setAttribute("disbl", "");
-          button.textContent = "включить";
-          changeDisableStatusOfModalButton(skuName, "on");
-          deleteSkuRowFromTable(skuRow, "enabled-skus-tbody");
-          insertSkuRowToTable(skuRow, "disabled-skus-tbody");
-          msg = getConfirmMessage(skuName, "to-enable");
-          changeHiddenStatusOfSkusTable("disabled-skus-table", "off");
-          disableDisabledTableIfEmpty();
-          toggleSkuElementsVisibility(skuName, "hide");
+            msg = getConfirmMessage(skuName, "to-disable");
+
+            disableDisabledTableIfEmpty();
+          } else {
+            button.setAttribute("disbl", "");
+            button.textContent = "включить";
+
+            changeDisableStatusOfModalButton(skuName, "on");
+            deleteSkuRowFromTable(skuRow, "enabled-skus-tbody");
+            insertSkuRowToTable(skuRow, "disabled-skus-tbody");
+
+            msg = getConfirmMessage(skuName, "to-enable");
+
+            disableDisabledTableIfEmpty();
+            toggleDisabledSkusButtonVisibility("enable");
+          }
         }
       }
-
-      return;
     },
   };
 

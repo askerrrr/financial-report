@@ -1,14 +1,20 @@
 import { dbClient } from "../../../database/index.js";
-import wbapi from "../../reports/services/WBAPI/index.js";
-import dbUtils from "../../../database/collections/index.js";
+import parseJwt from "../../WBToken/services/utils/parseJwt.js";
+import wbapi from "../../reports/services/utils/WBAPI/index.js";
+import dbUtils from "../../../database/modelsUtil/index.js";
+import checkTokenExpiry from "../../WBToken/services/utils/checkTokenExpiry.js";
 
-var updateLastUsedTimestampNow = true;
+var statusOfReportLoadingStop = true;
+var updateWBTokenLastUsedTimestampNow = true;
 
-var checkProcessingOfPricesAndDiscounts = async (req, res, next) => {
-  var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
-  var { setPriceUpdateTimestampAndUpdateStatus } = dbUtils.goodsCollectionServices;
-  var { getAllUserWeeklyPricesAndDiscounts } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
+var { setPriceUpdateTimestampAndUpdateStatus } = dbUtils.goodsModelUtils;
+var { updateReportLoadingStoppedStatus } = dbUtils.reportLoadingStateModelUtils;
+var { getWBTokenByUserId, updateWBTokenLastUsedTimestamp } =
+  dbUtils.tokenModelUtils;
+var { getAllUserWeeklyPricesAndDiscounts } =
+  dbUtils.weeklyPricesAndDiscountsModelUtils;
 
+var checkProcessingOfPricesAndDiscountsController = async (req, res, next) => {
   var data = await getAllUserWeeklyPricesAndDiscounts();
 
   for (var { userId, uploadId } of data) {
@@ -17,15 +23,51 @@ var checkProcessingOfPricesAndDiscounts = async (req, res, next) => {
     try {
       await session.withTransaction(async () => {
         if (uploadId) {
-          var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
+          var { token } = await getWBTokenByUserId(
+            userId,
+            session,
+            updateWBTokenLastUsedTimestampNow,
+          );
 
-          var { historyGoods } = await wbapi.getPriceUploadDetails(userId, uploadId, token);
+          if (!token) {
+            var loadingStopReason = "isTokenMissing";
+            await updateReportLoadingStoppedStatus(
+              userId,
+              statusOfReportLoadingStop,
+              loadingStopReason,
+              session,
+            );
+          } else {
+            var tokenPayload = parseJwt(token);
+            var { isExpired } = checkTokenExpiry(tokenPayload);
 
-          await setPriceUpdateTimestampAndUpdateStatus(userId, historyGoods, session);
+            if (isExpired) {
+              var loadingStopReason = "tokenIsExpired";
+              await dbUtils.updateReportLoadingStoppedStatus(
+                userId,
+                statusOfReportLoadingStop,
+                loadingStopReason,
+                session,
+              );
+            } else {
+              await updateWBTokenLastUsedTimestamp(userId, session);
+
+              var { historyGoods } = await wbapi.getPriceUploadDetails(
+                userId,
+                uploadId,
+                token,
+              );
+
+              await setPriceUpdateTimestampAndUpdateStatus(
+                userId,
+                historyGoods,
+                session,
+              );
+            }
+          }
         }
       });
     } catch (e) {
-      throw e;
     } finally {
       if (session) {
         await session.endSession();
@@ -36,4 +78,4 @@ var checkProcessingOfPricesAndDiscounts = async (req, res, next) => {
   return res.sendStatus(200);
 };
 
-export default checkProcessingOfPricesAndDiscounts;
+export default checkProcessingOfPricesAndDiscountsController;

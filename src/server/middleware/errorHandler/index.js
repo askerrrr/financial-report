@@ -1,5 +1,5 @@
 import { MulterError } from "multer";
-import { WBAPIError, FormDataError, DatabaseError, ReportNotFoundError, DatabaseConnectionError } from "../../customError/index.js";
+import { WBAPIError } from "../../customError/index.js";
 
 var errorHandler = async (e, req, res, next) => {
   console.error({
@@ -14,21 +14,10 @@ var errorHandler = async (e, req, res, next) => {
     return res.sendStatus(500);
   }
 
-  if (e instanceof DatabaseError && DatabaseConnectionError) {
-    return res.sendStatus(e.status);
-  }
-
   if (e instanceof WBAPIError) {
     return res.status(e.status).json({ msg: e.message });
   }
 
-  if (e instanceof ReportNotFoundError) {
-    return res.status(e.status).json({ msg: e.message });
-  }
-
-  if (e instanceof FormDataError) {
-    return res.status(e.status).json({ msg: e.message, invalidField: e.invalidField });
-  }
   console.log(e.cause);
   res.status(e?.status || 500).json({ msg: "Произошла ошибка..." });
 };

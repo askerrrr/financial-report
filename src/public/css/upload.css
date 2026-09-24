@@ -1,3 +1,5 @@
+@import url("./theme.css");
+
 .input-file {
   position: fixed;
   top: 120px;
@@ -12,17 +14,17 @@
   text-decoration: none;
   font-size: 14px;
   vertical-align: middle;
-  color: rgb(0, 0, 0);
+  color: var(--text-primary);
   text-align: center;
-  border-radius: 10px;
-  background-color: #dcd8dd;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface);
   line-height: 22px;
   height: 40px;
   padding: 10px 20px;
   box-sizing: border-box;
-  border: none;
+  border: 1px solid var(--border);
   margin: 0;
-  transition: background-color 0.2s;
+  transition: var(--transition-base);
 }
 
 .input-file input[type="file"] {
@@ -35,17 +37,18 @@
 }
 
 .input-file input[type="file"]:focus + span {
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
 }
 
 .input-file:hover span {
-  background-color: #c0b9c5;
+  background-color: var(--bg-hover);
 }
 
 .input-file:active span {
-  background-color: #6d04dd;
+  background-color: var(--accent-hover);
 }
 
 .input-file input[type="file"]:disabled + span {
-  background-color: #eee;
+  background-color: var(--bg-elevated);
+  color: var(--text-muted);
 }

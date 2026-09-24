@@ -1,15 +1,9 @@
-import dbUtils from "../../../database/collections/index.js";
+import changeSkuDisableStatusService from "../services/changeSkuDisableStatus.js";
 
-var changeSkuDisableStatus = async (req, res, next) => {
-  var { updateSkuDisableStatusToDb } = dbUtils.goodsCollectionServices;
-  var { userId, skuName, disableStatus } = req.body;
-  var success = await updateSkuDisableStatusToDb(userId, skuName, disableStatus);
+var changeSkuDisableStatusController = async (req, res, next) => {
+  var { success } = await changeSkuDisableStatusService(req.body);
 
-  if (!success) {
-    return res.sendStatus(304);
-  }
-
-  return res.sendStatus(200);
+  return success ? res.sendStatus(200) : res.sendStatus(304);
 };
 
-export default changeSkuDisableStatus;
+export default changeSkuDisableStatusController;

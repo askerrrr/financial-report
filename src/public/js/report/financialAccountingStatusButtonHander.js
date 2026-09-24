@@ -1,18 +1,10 @@
-var buttonsContainer = document.getElementById("buttons-container");
-
 var url = "/report/financial-accounting-status/";
+var button = document.getElementById("financial-accounting-status-button");
 
 var yes = "Да";
 var no = "Нет";
 
-var financialAccountingStatusButtonHander = (userId, reportId) => {
-  var button = document.createElement("button");
-  button.id = "financial-accounting-status-button";
-  button.textContent = "Изменить статус учета финансов";
-  button.className = "top-btn financial-accounting-status-btn";
-
-  buttonsContainer.prepend(button);
-
+var financialAccountingStatusButtonHander = (userId, reportId, dateFrom, dateTo) => {
   button.onclick = async () => {
     var financialAccountingStatusSpanElem = document.getElementById("financial-accounting-status");
     var currentStatus = false;
@@ -28,7 +20,7 @@ var financialAccountingStatusButtonHander = (userId, reportId) => {
     var confirmed = confirm(message);
 
     if (confirmed) {
-      var success = await sendNewFinancialAccountingStatus(userId, reportId, newStatusIsTrue);
+      var success = await sendNewFinancialAccountingStatus(userId, reportId, dateFrom, dateTo, newStatusIsTrue);
 
       if (!success) {
         alert("Не удалось изменить статус...");
@@ -48,10 +40,10 @@ var financialAccountingStatusButtonHander = (userId, reportId) => {
 
 export default financialAccountingStatusButtonHander;
 
-async function sendNewFinancialAccountingStatus(userId, reportId, newStatus) {
+async function sendNewFinancialAccountingStatus(userId, reportId, dateFrom, dateTo, newStatus) {
   var res = await fetch(url, {
     method: "PATCH",
-    body: JSON.stringify({ userId, reportId, newStatus }),
+    body: JSON.stringify({ userId, reportId, dateFrom, dateTo, newStatus }),
     headers: { "Content-type": "application/json" },
   });
   return res.status === 200;

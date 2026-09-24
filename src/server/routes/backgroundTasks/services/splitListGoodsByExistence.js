@@ -1,14 +1,24 @@
-var splitListGoodsByExistence = (listGoodsIds, newListGoodsData) => {
+var splitListGoodsByExistence = (listGoodsFromDb, listGoodsFromWBAPI) => {
   var newSkus = [];
   var updatedSkus = [];
 
-  for (var sku of newListGoodsData) {
-    var existSku = listGoodsIds.find((id) => id === sku.id);
+  for (var skuFromWBAPI of listGoodsFromWBAPI) {
+    var existSku = listGoodsFromDb.find((item) => item.skuName === skuFromWBAPI.skuName && item.id === skuFromWBAPI.id);
 
     if (existSku) {
-      updatedSkus.push(sku);
+      var updatedSku = {
+        skuName: existSku.skuName,
+        data: {
+          price: skuFromWBAPI.price,
+          discount: skuFromWBAPI.discount,
+          discountedPrice: skuFromWBAPI.discountedPrice,
+          clubDiscountedPrice: skuFromWBAPI.clubDiscountedPrice,
+        },
+      };
+
+      updatedSkus.push(updatedSku);
     } else {
-      newSkus.push(sku);
+      newSkus.push(skuFromWBAPI);
     }
   }
 

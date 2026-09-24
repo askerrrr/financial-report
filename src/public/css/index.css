@@ -1,3 +1,5 @@
+@import url("./theme.css");
+
 *,
 *::before,
 *::after {
@@ -5,12 +7,12 @@
 }
 
 body {
-  background-color: #212529;
-  color: #f8f9fa;
-  font-family: Arial, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-family);
   margin: 0;
   padding: 12px;
-  padding-top: 68px;
+  padding-top: calc(var(--top-bar-height) + 12px);
 }
 
 .container {
@@ -37,16 +39,16 @@ details {
   max-width: 720px;
   font-size: x-large;
   width: 100%;
-  background-color: #343a40;
-  border: 1px solid #495057;
-  border-radius: 4px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   padding: 8px;
   margin: 0 0 8px 0;
   transition: background-color 0.2s ease;
 }
 
 details[open] {
-  background-color: #3a4047;
+  background-color: var(--bg-elevated);
 }
 
 #years_container {
@@ -67,7 +69,7 @@ summary {
 
 details[open] summary {
   margin-bottom: 8px;
-  border-bottom: 1px solid #495057;
+  border-bottom: 1px solid var(--border);
 }
 
 table {
@@ -76,40 +78,36 @@ table {
   max-width: 100%;
   margin: 8px 0;
   border-collapse: collapse;
-  font-size: 12.8px;
-  background-color: #343a40;
-  color: #f8f9fa;
+  font-size: 13px;
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
 }
 
 th,
 td {
   padding: 12px;
-  border: 1px solid #495057;
+  border: 1px solid var(--border);
   text-align: center;
   vertical-align: middle;
 }
 
 th {
-  background-color: #495057;
+  background-color: var(--bg-hover);
   font-weight: bold;
 }
 
-tbody tr:nth-child(even) {
-  background-color: #3e444a;
-}
-
 tbody tr:hover {
-  background-color: #4a4f55;
+  background-color: var(--bg-hover);
 }
 
 button {
   background-color: transparent;
-  color: #ffffff;
-  border: 2px solid #212529;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
   padding: 4px 8px;
-  font-family: Arial, sans-serif;
-  border-radius: 4px;
-  font-size: 11.2px;
+  font-family: var(--font-family);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
   cursor: pointer;
   transition:
     background-color 0.2s ease,
@@ -125,20 +123,25 @@ button:active {
   transform: scale(0.97);
 }
 
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .totalFinalProfit {
-  color: #7ddf6c;
+  color: var(--success);
 }
 
 .download-monthly-reports-button {
   display: block;
   width: 100%;
-  padding: 9.6px 16px;
+  padding: 10px 16px;
   margin: 12px 0;
   background-color: #495057;
   color: #f8f9fa;
   border: 2px solid #343a40;
   border-radius: 4px;
-  font-size: 12.8px;
+  font-size: 13px;
   font-weight: bold;
   text-align: center;
   cursor: pointer;
@@ -157,14 +160,14 @@ button:active {
 .download-monthly-reports-button::before {
   content: "";
   display: inline-block;
-  width: 12.8px;
-  height: 12.8px;
-  margin-right: 6.4px;
+  width: 13px;
+  height: 13px;
+  margin-right: 6px;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23f8f9fa"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>');
   background-repeat: no-repeat;
   vertical-align: middle;
   position: relative;
-  top: -0.8px;
+  top: -1px;
 }
 
 .top-bar {
@@ -172,7 +175,7 @@ button:active {
   top: 0;
   left: 0;
   right: 0;
-  height: 56px;
+  height: var(--top-bar-height);
   background: rgba(34, 39, 46, 0.97);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(73, 80, 87, 0.6);
@@ -181,7 +184,13 @@ button:active {
   justify-content: center;
   padding: 0 24px;
   z-index: 1000;
-  box-shadow: 0 6.4px 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .top-bar {
+    background: #22272e;
+  }
 }
 
 .top-actions {
@@ -228,19 +237,19 @@ button:active {
   height: 32px;
   min-width: 72px;
   width: auto;
-  padding: 0 12.8px;
-  font-size: 0.72rem;
+  padding: 0 13px;
+  font-size: 12px;
   font-weight: 500;
   background-color: rgba(52, 58, 64, 0.8);
   color: #f8f9fa;
   border: 1px solid rgba(73, 80, 87, 0.5);
-  border-radius: 4.8px;
+  border-radius: 5px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 1.6px 6.4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
   white-space: nowrap;
-  gap: 6.4px;
+  gap: 6px;
   flex-shrink: 0;
   line-height: 1;
   box-sizing: border-box;
@@ -249,8 +258,8 @@ button:active {
 #upload-form .input-file span:hover {
   background-color: #495057;
   border-color: #6c757d;
-  transform: translateY(-1.6px);
-  box-shadow: 0 3.2px 11.2px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 11px rgba(0, 0, 0, 0.35);
 }
 
 #upload-form .input-file span:active {
@@ -264,18 +273,18 @@ button:active {
 
 @media (max-width: 768px) {
   #upload-form {
-    height: 27.2px;
+    height: 27px;
   }
 
   #upload-form .input-file span {
-    height: 27.2px;
+    height: 27px;
     min-width: 56px;
-    padding: 0 9.6px;
-    font-size: 0.64rem;
+    padding: 0 10px;
+    font-size: 11px;
   }
 
   #period-button {
-    height: 27.2px;
+    height: 27px;
   }
 }
 
@@ -286,10 +295,10 @@ button:active {
 
   #upload-form .input-file span {
     height: 24px;
-    min-width: 44.8px;
-    padding: 0 6.4px;
-    font-size: 0.56rem;
-    border-radius: 3.2px;
+    min-width: 45px;
+    padding: 0 6px;
+    font-size: 9px;
+    border-radius: 3px;
   }
 
   #period-button {
@@ -305,7 +314,7 @@ button:active {
   #upload-form .input-file span {
     height: auto;
     padding: 8px 16px;
-    font-size: 0.8rem;
+    font-size: 13px;
     min-height: 32px;
   }
 
@@ -318,36 +327,38 @@ button:active {
 .top-bar button {
   height: 32px;
   min-width: 72px;
-  padding: 0 12.8px;
-  font-size: 0.72rem;
+  padding: 0 12px;
+  font-size: 12px;
   font-weight: 500;
-  border-radius: 4.8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 1.6px 6.4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(4px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6.4px;
+  gap: 6px;
   white-space: nowrap;
-}
-
-.top-bar button:not(.primary):not(.logout-button) {
   background-color: rgba(52, 58, 64, 0.8);
-  color: #f8f9fa;
+  color: var(--text-primary);
   border: 1px solid rgba(73, 80, 87, 0.5);
 }
 
-.top-bar button:not(.primary):not(.logout-button):hover {
+.top-bar button:hover {
   background-color: #495057;
   border-color: #6c757d;
-  transform: translateY(-1.6px);
-  box-shadow: 0 3.2px 11.2px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 11px rgba(0, 0, 0, 0.35);
 }
 
-.top-bar button:not(.primary):not(.logout-button):active {
+.top-bar button:active {
   transform: scale(0.97);
+}
+
+.top-bar button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .top-bar button.primary {
@@ -358,8 +369,8 @@ button:active {
 
 .top-bar button.primary:hover {
   background-color: #0b5ed7;
-  transform: translateY(-1.6px);
-  box-shadow: 0 3.2px 11.2px rgba(13, 110, 253, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 11px rgba(13, 110, 253, 0.4);
 }
 
 .top-bar button.primary:active {
@@ -375,8 +386,8 @@ button:active {
 .top-bar .logout-button:hover {
   background-color: #dc3545;
   border-color: #bd2130;
-  transform: translateY(-1.6px);
-  box-shadow: 0 3.2px 11.2px rgba(220, 53, 69, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 11px rgba(220, 53, 69, 0.4);
 }
 
 .top-bar .logout-button:active {
@@ -384,68 +395,63 @@ button:active {
 }
 
 .top-bar .logout-button svg {
-  width: 14.4px;
-  height: 14.4px;
+  width: 14px;
+  height: 14px;
   fill: currentColor;
   flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
   .top-bar button {
-    height: 27.2px;
+    height: 27px;
     min-width: 56px;
-    padding: 0 9.6px;
-    font-size: 0.64rem;
+    padding: 0 10px;
+    font-size: 11px;
   }
 
   .top-bar .logout-button svg {
-    width: 12.8px;
-    height: 12.8px;
+    width: 13px;
+    height: 13px;
   }
 }
 
 @media (max-width: 480px) {
   .top-bar button {
     height: 24px;
-    min-width: 44.8px;
-    padding: 0 6.4px;
-    font-size: 0.56rem;
-    border-radius: 3.2px;
+    min-width: 45px;
+    padding: 0 6px;
+    font-size: 9px;
+    border-radius: 3px;
   }
 
   .top-bar .logout-button svg {
-    width: 11.2px;
-    height: 11.2px;
+    width: 11px;
+    height: 11px;
   }
 }
 
 #last-accounted-finances-report {
-  background-color: #343a40;
-  border: 1px solid #495057;
-  border-radius: 4px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   padding: 0;
   margin: 0 0 16px 0;
   max-width: 800px;
-  width: fit-content;
-  min-width: 240px;
+  width: 100%;
   overflow: hidden;
 }
 
 #last-accounted-finances-report-header {
-  background-color: #495057;
-  padding: 9.6px 16px;
-  font-size: 0.88rem;
+  background-color: var(--bg-hover);
+  padding: 10px 16px;
+  font-size: 14px;
   font-weight: bold;
-  color: #f8f9fa;
-  border-bottom: 1px solid #495057;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-}
-
-#last-accounted-finances-report-header::before {
-  content: "ðŸ“Š ";
 }
 
 #last-accounted-finances-report-body {
@@ -453,31 +459,23 @@ button:active {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 9.6px;
+  gap: 10px;
 }
 
 #report-period {
-  color: #f8f9fa;
-  font-size: 12.8px;
-  padding: 3.2px 0;
+  color: var(--text-primary);
+  font-size: 13px;
+  padding: 3px 0;
   text-align: center;
   width: 100%;
-}
-
-#report-period::before {
-  content: "ðŸ“… ";
 }
 
 #finances-accounted-at {
-  color: #7ddf6c;
-  font-size: 12.8px;
-  padding: 3.2px 0;
+  color: var(--success);
+  font-size: 13px;
+  padding: 3px 0;
   text-align: center;
   width: 100%;
-}
-
-#finances-accounted-at::before {
-  content: "âœ… ";
 }
 
 .last-accounted-finances-report-link-wrapper {
@@ -485,8 +483,8 @@ button:active {
   gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 6.4px;
-  padding: 3.2px 0;
+  margin-top: 6px;
+  padding: 3px 0;
   width: 100%;
 }
 
@@ -494,7 +492,7 @@ button:active {
   color: #6ea8fe;
   text-decoration: none;
   font-weight: 500;
-  padding: 6.4px 16px;
+  padding: 6px 16px;
   border-radius: 4px;
   transition: all 0.2s ease;
   background-color: rgba(13, 110, 253, 0.15);
@@ -507,24 +505,20 @@ button:active {
 .link-to-report:hover {
   background-color: rgba(13, 110, 253, 0.3);
   color: #9ec5fe;
-  transform: translateY(-0.8px);
-}
-
-.link-to-report::before {
-  content: "ðŸ”— ";
+  transform: translateY(-1px);
 }
 
 #other-accounted-finances-reports {
   background-color: rgba(52, 58, 64, 0.8);
   color: #f8f9fa;
   border: 1px solid rgba(73, 80, 87, 0.5);
-  border-radius: 4.8px;
-  padding: 6.4px 16px;
-  font-size: 0.72rem;
+  border-radius: 5px;
+  padding: 6px 16px;
+  font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 1.6px 6.4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   font-family: Arial, sans-serif;
   display: inline-block;
   text-align: center;
@@ -534,16 +528,12 @@ button:active {
 #other-accounted-finances-reports:hover {
   background-color: #495057;
   border-color: #6c757d;
-  transform: translateY(-1.6px);
-  box-shadow: 0 3.2px 11.2px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 11px rgba(0, 0, 0, 0.35);
 }
 
 #other-accounted-finances-reports:active {
   transform: scale(0.97);
-}
-
-#other-accounted-finances-reports::before {
-  content: "ðŸ“‹ ";
 }
 
 .modal-overlay {
@@ -561,7 +551,7 @@ button:active {
   background: #2b3238;
   color: #e9ecef;
   padding: 24px;
-  border-radius: 9.6px;
+  border-radius: 10px;
   width: 90vw;
   max-width: 1120px;
   min-width: 640px;
@@ -576,7 +566,7 @@ button:active {
 .modal-title {
   margin: 0 0 16px;
   text-align: center;
-  font-size: 14.4px;
+  font-size: 14px;
   color: #71b7ff;
   font-weight: 600;
   flex-shrink: 0;
@@ -585,18 +575,18 @@ button:active {
 .modal-buttons {
   display: flex;
   justify-content: flex-end;
-  gap: 9.6px;
-  margin-top: 19.2px;
+  gap: 10px;
+  margin-top: 19px;
   flex-shrink: 0;
 }
 
 .modal-button {
-  padding: 8px 17.6px;
+  padding: 8px 18px;
   border: none;
-  border-radius: 4.8px;
+  border-radius: 5px;
   font-weight: 600;
   cursor: pointer;
-  font-size: 11.2px;
+  font-size: 11px;
 }
 
 .modal-button-cancel {
@@ -614,7 +604,7 @@ button:active {
   max-width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
-  font-size: 11.2px;
+  font-size: 11px;
   background-color: #2b3238;
   color: #e9ecef;
   margin: 0;
@@ -625,19 +615,19 @@ button:active {
   background-color: #40484f;
   color: #f8f9fa;
   font-weight: bold;
-  padding: 11.2px 12.8px;
+  padding: 11px 13px;
   text-align: center;
   border: 1px solid #4a535a;
-  font-size: 11.2px;
+  font-size: 11px;
   word-wrap: break-word;
 }
 
 #other-accounted-finances-reports-table tbody td {
-  padding: 11.2px 12.8px;
+  padding: 11px 13px;
   text-align: center;
   border: 1px solid #4a535a;
   vertical-align: middle;
-  font-size: 11.2px;
+  font-size: 11px;
   word-wrap: break-word;
 }
 
@@ -653,24 +643,20 @@ button:active {
   color: #6ea8fe;
   text-decoration: none;
   font-weight: 500;
-  padding: 4.8px 11.2px;
+  padding: 5px 11px;
   border-radius: 4px;
   transition: all 0.2s ease;
   background-color: rgba(13, 110, 253, 0.15);
   border: 1px solid rgba(13, 110, 253, 0.3);
   display: inline-block;
-  font-size: 10.4px;
+  font-size: 10px;
   white-space: nowrap;
 }
 
 #other-accounted-finances-reports-table .link-to-report:hover {
   background-color: rgba(13, 110, 253, 0.3);
   color: #9ec5fe;
-  transform: translateY(-0.8px);
-}
-
-#other-accounted-finances-reports-table .link-to-report::before {
-  content: "ðŸ”— ";
+  transform: translateY(-1px);
 }
 
 #other-accounted-finances-reports-table .last-accounted-finances-report-link-wrapper {
@@ -686,13 +672,13 @@ button:active {
   }
 
   #other-accounted-finances-reports-table thead th {
-    font-size: 10.4px;
-    padding: 8px 9.6px;
+    font-size: 10px;
+    padding: 8px 10px;
   }
 
   #other-accounted-finances-reports-table tbody td {
-    font-size: 10.4px;
-    padding: 8px 9.6px;
+    font-size: 10px;
+    padding: 8px 10px;
   }
 }
 
@@ -712,17 +698,17 @@ button:active {
   }
 
   .top-actions {
-    gap: 4.8px;
+    gap: 5px;
   }
 
   .top-actions button {
-    padding: 4.8px 9.6px;
-    font-size: 0.64rem;
+    padding: 5px 10px;
+    font-size: 11px;
   }
 
   .download-monthly-reports-button {
-    padding: 6.4px 12px;
-    font-size: 11.2px;
+    padding: 6px 12px;
+    font-size: 11px;
   }
 
   #last-accounted-finances-report {
@@ -732,32 +718,32 @@ button:active {
 
   #last-accounted-finances-report-header {
     padding: 8px 12px;
-    font-size: 0.8rem;
+    font-size: 13px;
   }
 
   #last-accounted-finances-report-body {
-    padding: 12px 14.4px;
+    padding: 12px 14px;
     gap: 8px;
   }
 
   #report-period,
   #finances-accounted-at {
-    font-size: 11.2px;
+    font-size: 11px;
   }
 
   .last-accounted-finances-report-link-wrapper {
-    gap: 9.6px;
+    gap: 10px;
   }
 
   .link-to-report {
-    padding: 4.8px 12.8px;
-    font-size: 11.2px;
+    padding: 5px 13px;
+    font-size: 11px;
     min-width: 96px;
   }
 
   #other-accounted-finances-reports {
-    padding: 4.8px 12.8px;
-    font-size: 0.64rem;
+    padding: 5px 13px;
+    font-size: 11px;
     min-width: 96px;
   }
 
@@ -768,37 +754,37 @@ button:active {
   }
 
   .modal-title {
-    font-size: 12.8px;
-    margin: 0 0 12.8px;
+    font-size: 13px;
+    margin: 0 0 13px;
   }
 
   .modal-buttons {
-    margin-top: 14.4px;
+    margin-top: 14px;
     gap: 8px;
   }
 
   .modal-button {
-    padding: 6.4px 12.8px;
-    font-size: 10.4px;
+    padding: 6px 13px;
+    font-size: 10px;
   }
 
   #other-accounted-finances-reports-table {
-    font-size: 10.4px;
+    font-size: 10px;
   }
 
   #other-accounted-finances-reports-table thead th {
-    padding: 6.4px 8px;
-    font-size: 9.6px;
+    padding: 6px 8px;
+    font-size: 10px;
   }
 
   #other-accounted-finances-reports-table tbody td {
-    padding: 6.4px 8px;
-    font-size: 9.6px;
+    padding: 6px 8px;
+    font-size: 10px;
   }
 
   #other-accounted-finances-reports-table .link-to-report {
-    padding: 3.2px 8px;
-    font-size: 9.6px;
+    padding: 3px 8px;
+    font-size: 10px;
   }
 }
 
@@ -814,51 +800,51 @@ button:active {
   }
 
   .top-actions {
-    gap: 3.2px;
+    gap: 3px;
   }
 
   .top-actions button {
-    padding: 3.2px 6.4px;
-    font-size: 0.56rem;
-    border-radius: 3.2px;
+    padding: 3px 6px;
+    font-size: 9px;
+    border-radius: 3px;
   }
 
   .download-monthly-reports-button {
-    font-size: 11.2px;
+    font-size: 11px;
     padding: 8px;
   }
 
   #last-accounted-finances-report-header {
-    padding: 6.4px 9.6px;
-    font-size: 0.72rem;
+    padding: 6px 10px;
+    font-size: 12px;
   }
 
   #last-accounted-finances-report-body {
-    padding: 9.6px 11.2px;
-    gap: 6.4px;
+    padding: 10px 11px;
+    gap: 6px;
   }
 
   #report-period,
   #finances-accounted-at {
-    font-size: 10.4px;
+    font-size: 10px;
   }
 
   .last-accounted-finances-report-link-wrapper {
     flex-direction: column;
-    gap: 6.4px;
+    gap: 6px;
     align-items: center;
   }
 
   .link-to-report {
-    padding: 4.8px 11.2px;
-    font-size: 10.4px;
+    padding: 5px 11px;
+    font-size: 10px;
     min-width: 100%;
     width: 100%;
   }
 
   #other-accounted-finances-reports {
-    padding: 4.8px 11.2px;
-    font-size: 0.6rem;
+    padding: 5px 11px;
+    font-size: 10px;
     min-width: 100%;
     width: 100%;
   }
@@ -868,43 +854,43 @@ button:active {
   }
 
   .modal-content {
-    padding: 11.2px;
+    padding: 11px;
     width: 100vw;
     min-width: 100%;
     max-height: 95vh;
   }
 
   .modal-title {
-    font-size: 11.2px;
-    margin: 0 0 11.2px;
+    font-size: 11px;
+    margin: 0 0 11px;
   }
 
   .modal-buttons {
-    margin-top: 12.8px;
-    gap: 6.4px;
+    margin-top: 13px;
+    gap: 6px;
   }
 
   .modal-button {
-    padding: 5.6px 11.2px;
-    font-size: 9.6px;
+    padding: 6px 11px;
+    font-size: 10px;
   }
 
   #other-accounted-finances-reports-table {
-    font-size: 8.8px;
+    font-size: 9px;
   }
 
   #other-accounted-finances-reports-table thead th {
-    padding: 4.8px 4.8px;
+    padding: 5px 5px;
     font-size: 8px;
   }
 
   #other-accounted-finances-reports-table tbody td {
-    padding: 4.8px 4.8px;
-    font-size: 8.8px;
+    padding: 5px 5px;
+    font-size: 9px;
   }
 
   #other-accounted-finances-reports-table .link-to-report {
-    padding: 2.4px 6.4px;
+    padding: 2px 6px;
     font-size: 8px;
   }
 }
@@ -929,6 +915,6 @@ button:active {
 
   .top-actions button {
     padding: 8px 16px;
-    font-size: 0.8rem;
+    font-size: 13px;
   }
 }

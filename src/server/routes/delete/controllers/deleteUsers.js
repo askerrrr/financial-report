@@ -1,8 +1,9 @@
 import { dbClient } from "../../../database/index.js";
-import dbUtils from "../../../database/collections/index.js";
+import dbUtils from "../../../database/modelsUtil/index.js";
 
-var deleteUsers = async (req, res, next) => {
-  var { deleteUsersFromDb } = dbUtils.userCollectionServices;
+var { deleteUsersFromDb } = dbUtils.userModelUtils;
+
+var deleteUsersController = async (req, res, next) => {
   var session = await dbClient.startSession();
 
   try {
@@ -20,4 +21,4 @@ var deleteUsers = async (req, res, next) => {
   }
 };
 
-export default deleteUsers;
+export default deleteUsersController;

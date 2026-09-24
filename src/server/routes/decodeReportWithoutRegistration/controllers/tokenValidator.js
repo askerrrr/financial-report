@@ -1,9 +1,8 @@
-import parseJwt from "../../WBToken/services/parseJwt.js";
-import isPresumablyJwtToken from "../../WBToken/services/isPresumablyJwtToken.js";
+import parseJwt from "../../WBToken/services/utils/parseJwt.js";
+import checkTokenExpiry from "../../WBToken/services/utils/checkTokenExpiry.js";
+import isPresumablyJwtToken from "../../WBToken/services/utils/isPresumablyJwtToken.js";
 
-var mskTimeOffsetInMs = 3 * 60 * 60 * 1000;
-
-var tokenValidator = async (req, res) => {
+var tokenValidatorController = async (req, res) => {
   var token = req.body.token;
 
   if (!token) {
@@ -14,8 +13,21 @@ var tokenValidator = async (req, res) => {
     return res.sendStatus(400);
   }
 
-  var currentTimestamp = Date.now() + mskTimeOffsetInMs;
-  var options = { method: "GET", headers: { "Content-Type": "application/json", Authorization: "Bearer " + token } };
+  var tokenPayload = parseJwt(token);
+
+  var { isExpired } = checkTokenExpiry(tokenPayload);
+
+  if (isExpired) {
+    return res.sendStatus(400);
+  }
+
+  var options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
 
   var responses = await Promise.all([
     fetch("https://advert-api.wildberries.ru/ping", options),
@@ -35,13 +47,10 @@ var tokenValidator = async (req, res) => {
     }
   }
 
-  var tokenPayload = parseJwt(token);
-  var tokenIsExpired = tokenPayload?.exp * 1000 <= currentTimestamp;
-
-  if (tokenAuthFailed || tokenIsExpired) {
-    return res.sendStatus(400);
+  if (tokenAuthFailed) {
+    return res.sendStatus(401);
   }
 
   return res.sendStatus(200);
 };
-export default tokenValidator;
+export default tokenValidatorController;

@@ -1,12 +1,9 @@
-import dbUtils from "../../../database/collections/index.js";
+import changeStatusOfParticipationInPromoService from "../services/changeStatusOfParticipationInPromo.js";
 
-var changeStatusOfParticipationInPromo = async (req, res, next) => {
-  var { userId, skuId, skuDataToUpdate, checkedWeekDays } = req.body;
-  var { updatePriceAndDiscount } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
-
-  var success = await updatePriceAndDiscount(userId, skuId, skuDataToUpdate, checkedWeekDays);
+var changeStatusOfParticipationInPromoController = async (req, res, next) => {
+  var { success } = await changeStatusOfParticipationInPromoService(req.body);
 
   return success ? res.sendStatus(200) : res.sendStatus(304);
 };
 
-export default changeStatusOfParticipationInPromo;
+export default changeStatusOfParticipationInPromoController;

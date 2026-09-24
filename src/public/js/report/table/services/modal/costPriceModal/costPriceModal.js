@@ -1,0 +1,69 @@
+import createDiv from "../utils/createDiv.js";
+import createTitle from "../utils/createTitle.js";
+import createInput from "../utils/createInput.js";
+import createButton from "../utils/createButton.js";
+import sendChangedData from "../../sendChangedData.js";
+import getPrevSkuFieldsValue from "../../getPrevSkuFieldsValue.js";
+import updateSkusTableFields from "../../updateSkusTableFields.js";
+import updateTotalsTableFields from "../../updateTotalsTableFields.js";
+import updateReportFromLocalStorage from "../../updateReportFromLocalStorage.js";
+
+var event = "click";
+
+var costPriceModal = (skuData, costPriceDisplayElement, isGuestAccess) => {
+  var modal = createDiv("modal-overlay");
+  var modalContent = createDiv("modal-content");
+
+  var titleContent = `Изменить себестоимость для "${skuData.skuName}"`;
+  var title = createTitle("modal-title", titleContent);
+
+  var costPriceInput = createInput("modal-input", costPriceDisplayElement);
+
+  var buttonsContainer = createDiv("modal-buttons");
+
+  var saveButtonTextContent = "Сохранить";
+
+  var saveCb = async () => {
+    document.body.removeChild(modal);
+
+    skuData.costPrice = +costPriceInput.value;
+
+    var data = await sendChangedData(skuData, isGuestAccess, "setcostprice");
+
+    if (!data) {
+      return;
+    }
+
+    costPriceDisplayElement.textContent = costPriceInput.value;
+
+    var { sku, years, isCrossYearPeriod } = data;
+    var { prevSkuFieldsValue } = getPrevSkuFieldsValue(sku);
+    updateSkusTableFields(sku);
+    updateTotalsTableFields(sku.data, years, prevSkuFieldsValue, isCrossYearPeriod);
+
+    if (isGuestAccess) {
+      updateReportFromLocalStorage(data);
+    }
+  };
+
+  var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb: saveCb });
+
+  var cancelButtonTextContent = "Отмена";
+  var cancelCb = () => document.body.removeChild(modal);
+  var cancelButton = createButton("modal-button modal-button-cancel", cancelButtonTextContent, { event, cb: cancelCb });
+
+  buttonsContainer.append(cancelButton, saveButton);
+  modalContent.append(title, costPriceInput, buttonsContainer);
+  modal.append(modalContent);
+  document.body.append(modal);
+
+  costPriceInput.focus();
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      document.body.removeChild(modal);
+    }
+  });
+};
+
+export default costPriceModal;

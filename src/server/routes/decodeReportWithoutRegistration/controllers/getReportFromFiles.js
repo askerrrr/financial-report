@@ -1,9 +1,9 @@
 import { randomBytes } from "node:crypto";
-import parseReports from "../../reports/services/reportParsing/index.js";
-import removeDublicateFiles from "../../reports/services/reportsFileParser/removeDublicateFiles.js";
-import extractWorkSheetFromFile from "../../reports/services/reportsFileParser/extractWorkSheetFromFile.js";
-import extractReportsFileBufferFromZip from "../../reports/services/reportsFileParser/extractReportsFileBufferFromZip.js";
-import extractReportDataFromWorkSheets from "../../reports/services/reportsFileParser/extractReportDataFromWorkSheets.js";
+import processReportSkus from "../../reports/services/utils/reportParsing/index.js";
+import removeDublicateFiles from "../../reports/services/utils/reportsFileParser/removeDublicateFiles.js";
+import extractWorkSheetFromFile from "../../reports/services/utils/reportsFileParser/extractWorkSheetFromFile.js";
+import extractReportsFileBufferFromZip from "../../reports/services/utils/reportsFileParser/extractReportsFileBufferFromZip.js";
+import extractReportDataFromWorkSheets from "../../reports/services/utils/reportsFileParser/extractReportDataFromWorkSheets.js";
 
 var taxParamsStub = {
   taxRate: 6,
@@ -25,49 +25,55 @@ var taxParamsStub = {
   excessIncomeForAdditionalInsuranceFee: 300000,
 };
 
-var getReportFromFiles = async (req, res) => {
+var getReportFromFilesController = async (req, res) => {
   var { deduplicatedFiles } = removeDublicateFiles(req.files);
 
-  var { weeklyFinancialReportsBuffer, paidStorageReportsBuffer } = await extractReportsFileBufferFromZip(deduplicatedFiles);
-  var { workSheets } = await extractWorkSheetFromFile(weeklyFinancialReportsBuffer, paidStorageReportsBuffer);
+  var { weeklyFinancialReportsBuffer, paidStorageReportsBuffer } =
+    await extractReportsFileBufferFromZip(deduplicatedFiles);
+  var { workSheets } = await extractWorkSheetFromFile(
+    weeklyFinancialReportsBuffer,
+    paidStorageReportsBuffer,
+  );
 
   if (!workSheets.length) {
     return res.json({ report: {}, reportPeriodIsEmpty: true });
   }
+
   var { dateFrom, dateTo, onePeriodReports } = workSheets[0];
 
   var startYear = +dateFrom.split("-")[0];
   var endYear = +dateTo.split("-")[0];
   var isCrossYearPeriod = startYear !== endYear;
 
-  var userId = randomBytes(15).toString("hex");
+  var { reports, reportPeriodIsEmpty } =
+    await extractReportDataFromWorkSheets(onePeriodReports);
 
-  var { reports, reportPeriodIsEmpty } = await extractReportDataFromWorkSheets(userId, onePeriodReports);
-  var { reportId } = reports.weeklyFinancialReport[0];
-
-  if (isCrossYearPeriod) {
-    var startYearTaxParamsStub = Object.assign({}, { year: startYear, ...taxParamsStub });
-    var endYearTaxParamsStub = Object.assign({}, { year: endYear, ...taxParamsStub });
-
-    var taxParams = { startYearTaxParams: startYearTaxParamsStub, endYearTaxParams: endYearTaxParamsStub };
-
-    var { report } = await parseReports(reports, taxParams, isCrossYearPeriod);
-  } else {
-    var { report } = await parseReports(reports, { year: startYear, ...taxParamsStub });
+  if (reportPeriodIsEmpty) {
+    return res.json({ reports, reportPeriodIsEmpty });
   }
 
-  report.userId = userId;
+  var reportSkus = [];
+
+  for (var currentYear = startYear; currentYear <= endYear; currentYear++) {
+    var { skus } = await processReportSkus(
+      reports,
+      { year: currentYear, ...taxParamsStub },
+      isCrossYearPeriod,
+    );
+    reportSkus.push(...skus);
+  }
+
+  var report = {};
+
   report.dateTo = dateTo;
+  report.skus = reportSkus;
   report.dateFrom = dateFrom;
-  report.reportId = reportId;
-  report.totalFinalProfit = 0;
-  report.totalProductCosts = 0;
-  report.totalProfitMargin = 0;
-  report.totalOtherExpenses = 0;
   report.taxRate = taxParamsStub.taxRate;
   report.isCrossYearPeriod = isCrossYearPeriod;
+  report.userId = randomBytes(15).toString("hex");
+  report.reportId = reports.weeklyFinancialReport[0];
 
   return res.json({ report, reportPeriodIsEmpty });
 };
 
-export default getReportFromFiles;
+export default getReportFromFilesController;

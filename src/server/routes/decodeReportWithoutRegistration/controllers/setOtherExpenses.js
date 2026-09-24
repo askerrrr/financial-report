@@ -1,13 +1,5 @@
-import Joi from "joi";
-import calc from "../../reports/services/calcServices/index.js";
-import getPrevSkuData from "../../reports/services/different/getPrevSkuData.js";
-import getPrevTotalsData from "../../reports/services/different/getPrevTotalsData.js";
-import excludeEqualParams from "../../reports/services/different/excludeEqualParams.js";
-import processOfSkuCostPriceSetting from "../../reports/services/different/processOfSkuCostPriceSetting.js";
-
-var skuFromListGoodsStub = [];
-var currentYearPostfix = "InCurrentYear";
-var endYearPostfix = "InNextYear";
+import calc from "../../reports/services/utils/calcServices/index.js";
+import getPrevSkuData from "../../reports/services/utils/different/getPrevSkuData.js";
 
 var taxParamsStub = {
   finalProfit: 0,
@@ -27,47 +19,39 @@ var taxParamsStub = {
   requiresAdditionalInsuranceFee: false,
   excessIncomeForAdditionalInsuranceFee: 300000,
 };
-var setOtherExpensesToSku = async (req, res, next) => {
-  var { dateFrom, dateTo, userId, reportId, skuIndex, sku, totals, taxRate, year } = req.body;
 
-  var { isCrossYearPeriod } = totals;
+var setOtherExpensesToSkuController = async (req, res, next) => {
+  var { dateFrom, dateTo, userId, skuName, sku, taxRate, year, isCrossYearPeriod } = req.body;
 
-  var years = [];
-  var postfix = "";
-  var startYear = +dateFrom.split("-")[0];
-  var endYear = +dateTo.split("-")[0];
-
-  if (isCrossYearPeriod) {
-    years = [startYear, endYear];
-    postfix = year === startYear ? currentYearPostfix : endYearPostfix;
-  }
-
-  if (sku["otherExpenses" + postfix] === req.body["otherExpenses" + postfix]) {
+  if (sku.otherExpenses === req.body.otherExpenses) {
     return res.sendStatus(409);
   }
 
+  var years = [];
+
+  if (isCrossYearPeriod) {
+    var startYear = +dateFrom.split("-")[0];
+    var endYear = +dateTo.split("-")[0];
+    var requiredYear = year === startYear ? startYear : endYear;
+    years = [requiredYear];
+  }
+
   var prevSkuData = getPrevSkuData(sku);
-  var prevReportTotals = getPrevTotalsData(totals);
 
-  sku["otherExpenses" + postfix] = req.body["otherExpenses" + postfix];
+  sku.otherExpenses = req.body.otherExpenses;
 
-  var { updatedSku } = await processOfSkuCostPriceSetting(sku, skuFromListGoodsStub, { taxRate, ...taxParamsStub }, prevSkuData, postfix);
-
-  var { updatedTotals } = calc.total.restParams(totals, prevSkuData, sku, isCrossYearPeriod, postfix);
-
-  var skuDataToClient = excludeEqualParams(prevSkuData, updatedSku);
-  var totalsDataToClient = excludeEqualParams(prevReportTotals, updatedTotals);
+  var { updatedSkuFields } = calc.sku.restParams(sku, prevSkuData, { taxRate, ...taxParamsStub }, prevSkuData);
 
   return res.json({
     userId,
     years,
+    isCrossYearPeriod,
     sku: {
       year,
-      skuIndex,
-      data: skuDataToClient,
+      skuName,
+      data: updatedSkuFields,
     },
-    totals: { data: totalsDataToClient },
   });
 };
 
-export default setOtherExpensesToSku;
+export default setOtherExpensesToSkuController;

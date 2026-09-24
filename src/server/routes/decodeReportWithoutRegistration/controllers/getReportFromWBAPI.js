@@ -1,14 +1,6 @@
-import Joi from "joi";
 import { randomBytes } from "node:crypto";
-import wbapi from "../../reports/services/WBAPI/index.js";
-import parseReports from "../../reports/services/reportParsing/index.js";
-
-var schema = Joi.object({
-  dateFrom: Joi.string().required(),
-  dateTo: Joi.string().required(),
-  token: Joi.string().required(),
-  taxRate: Joi.number().required(),
-});
+import wbapi from "../../reports/services/utils/WBAPI/index.js";
+import processReportSkus from "../../reports/services/utils/reportParsing/index.js";
 
 var taxParamsStub = {
   finalProfit: 0,
@@ -29,47 +21,42 @@ var taxParamsStub = {
   excessIncomeForAdditionalInsuranceFee: 300000,
 };
 
-var getReportFromWBAPI = async (req, res, next) => {
-  var { error } = schema.validate(req.body);
-
-  if (error) {
-    return res.sendStatus(400);
-  }
-
+var getReportFromWBAPIController = async (req, res, next) => {
   var { dateFrom, dateTo, token, taxRate } = req.body;
 
   var startYear = +dateFrom.split("-")[0];
   var endYear = +dateTo.split("-")[0];
   var isCrossYearPeriod = startYear !== endYear;
 
-  var reports = await wbapi.getReports("decode-without-auth", dateFrom, dateTo, token);
-  var { reportId } = reports.weeklyFinancialReport[0];
+  var reports = await wbapi.getReports(
+    "decode-without-auth",
+    dateFrom,
+    dateTo,
+    token,
+  );
 
-  if (isCrossYearPeriod) {
-    var startYearTaxParamsStub = Object.assign({}, { taxRate, year: startYear, ...taxParamsStub });
-    var endYearTaxParamsStub = Object.assign({}, { taxRate, year: endYear, ...taxParamsStub });
+  var reportSkus = [];
 
-    var taxParams = { startYearTaxParams: startYearTaxParamsStub, endYearTaxParams: endYearTaxParamsStub };
-
-    var { report } = await parseReports(reports, taxParams, isCrossYearPeriod);
-  } else {
-    var { report } = await parseReports(reports, { taxRate, year: startYear, ...taxParamsStub });
+  for (var currentYear = startYear; currentYear <= endYear; currentYear++) {
+    var { skus } = await processReportSkus(
+      reports,
+      { year: currentYear, ...taxParamsStub, taxRate },
+      isCrossYearPeriod,
+    );
+    reportSkus.push(...skus);
   }
 
-  var userId = randomBytes(15).toString("hex");
+  var report = {};
 
-  report.userId = userId;
   report.dateTo = dateTo;
-  report.taxRate = taxRate;
   report.dateFrom = dateFrom;
-  report.reportId = reportId;
-  report.totalFinalProfit = 0;
-  report.totalProductCosts = 0;
-  report.totalProfitMargin = 0;
-  report.totalOtherExpenses = 0;
+  report.taxRate = taxRate;
+  report.skus = reportSkus;
   report.isCrossYearPeriod = isCrossYearPeriod;
+  report.userId = randomBytes(15).toString("hex");
+  report.reportId = reports.weeklyFinancialReport[0];
 
   return res.json({ report });
 };
 
-export default getReportFromWBAPI;
+export default getReportFromWBAPIController;

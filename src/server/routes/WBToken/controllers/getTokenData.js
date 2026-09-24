@@ -1,26 +1,11 @@
-import parseJwt from "../services/parseJwt.js";
-import getTokenDetails from "../services/getTokenDetails.js";
-import tokenCollectionServices from "../../../database/collections/tokens/index.js";
+import getTokenDataService from "../services/getTokenData.js";
 
-var getTokenData = async (req, res, next) => {
-  var userId = req.params.userId;
+var getTokenDataController = async (req, res, next) => {
+  var { userId } = req.params;
 
-  if (!userId) {
-    return res.sendStatus(400);
-  }
+  var { tokensDetails } = await getTokenDataService(userId);
 
-  var { token, lastUsed } = await tokenCollectionServices.getWBTokenByUserId(userId);
-
-  if (!token.length) {
-    return res.json({ tokenIsExist: false });
-  }
-
-  var tokenPayload = parseJwt(token);
-  var tokenDetails = getTokenDetails(tokenPayload);
-
-  tokenDetails.lastUsed = lastUsed;
-
-  return res.json(tokenDetails);
+  return res.json({ tokensDetails });
 };
 
-export default getTokenData;
+export default getTokenDataController;

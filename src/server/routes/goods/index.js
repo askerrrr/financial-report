@@ -1,17 +1,19 @@
 import multer from "multer";
 import { Router } from "express";
-import fileFilter from "./services/fileFilter/index.js";
-import getListGoods from "./controllers/getListGoods.js";
-import loadListGoods from "./controllers/loadListGoods.js";
-import getListGoodsPage from "./controllers/getListGoodsPage.js";
-import getSkusMetricsFile from "./controllers/getSkusMetricsFile.js";
-import getWeeklyPricesFile from "./controllers/getWeeklyPricesFile.js";
-import changeSkuDisableStatus from "./controllers/changeSkuDisableStatus.js";
-import getListGoodsAndWeeklyPrices from "./controllers/getListGoodsAndWeeklyPrices.js";
-import uploadPricesAndDiscountsFile from "./controllers/uploadPricesAndDiscountsFile.js";
-import changeWeeklyPricesOrDiscounts from "./controllers/changeWeeklyPricesOrDiscounts.js";
-import setNewPricesAndDiscountsToSku from "./controllers/setNewPricesAndDiscountsToSku.js";
-import changeStatusOfParticipationInPromo from "./controllers/changeStatusOfParticipationInPromo.js";
+import fileFilter from "./services/utils/fileFilter/index.js";
+import getListGoodsController from "./controllers/getListGoods.js";
+import loadListGoodsController from "./controllers/loadListGoods.js";
+import getListGoodsPageController from "./controllers/getListGoodsPage.js";
+import getSkusMetricsFileController from "./controllers/getSkusMetricsFile.js";
+import getWeeklyPricesFileController from "./controllers/getWeeklyPricesFile.js";
+import changeSkuDisableStatusController from "./controllers/changeSkuDisableStatus.js";
+import getListGoodsAndWeeklyPricesController from "./controllers/getListGoodsAndWeeklyPrices.js";
+import uploadPricesAndDiscountsFileController from "./controllers/uploadPricesAndDiscountsFile.js";
+import changeWeeklyPricesOrDiscountsController from "./controllers/changeWeeklyPricesOrDiscounts.js";
+import setNewPricesAndDiscountsToSkuController from "./controllers/setNewPricesAndDiscountsToSku.js";
+import changeStatusOfParticipationInPromoController from "./controllers/changeStatusOfParticipationInPromo.js";
+
+import checkTokenExists from "../WBToken/controllers/checkTokenExists.js";
 
 import schemas from "./JoiSchemas/index.js";
 import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
@@ -19,30 +21,70 @@ import joiSchemaValidator from "../../middleware/joiSchemaValidator.js";
 var storage = multer.memoryStorage();
 var upload = multer({ storage, fileFilter });
 
+var needToValidateReqParams = true;
+
 var router = Router({ caseSensitive: true, strict: true });
 
-router.get("/", getListGoodsPage);
-router.get("/listgoodsonly/:userId", getListGoods);
-router.get("/metrics/download/:userId", getSkusMetricsFile);
-router.get("/api/:userId", getListGoodsAndWeeklyPrices);
-router.get("/prices-discounts/file/:userId", getWeeklyPricesFile);
+export default router;
 
-router.post("/", joiSchemaValidator(schemas.loadListGoods), loadListGoods);
-router.post("/sku-disable-status", joiSchemaValidator(schemas.changeSkuDisableStatus), changeSkuDisableStatus);
+router.get("/", getListGoodsPageController);
 
-router.post("/prices-discounts/upload/", upload.single("file"), uploadPricesAndDiscountsFile);
+router.get(
+  "/listgoodsonly/:userId",
+  joiSchemaValidator(schemas.getlistGoods, needToValidateReqParams),
+  getListGoodsController,
+);
+
+router.get(
+  "/metrics/download/:userId",
+  joiSchemaValidator(schemas.getSkusMetricsFile, needToValidateReqParams),
+  getSkusMetricsFileController,
+);
+
+router.get(
+  "/api/:userId",
+  joiSchemaValidator(
+    schemas.getListGoodsAndWeeklyPrices,
+    needToValidateReqParams,
+  ),
+  getListGoodsAndWeeklyPricesController,
+);
+
+router.get(
+  "/prices-discounts/file/:userId",
+  joiSchemaValidator(schemas.getWeeklyPricesFile, needToValidateReqParams),
+  getWeeklyPricesFileController,
+);
+
+router.post(
+  "/",
+  joiSchemaValidator(schemas.loadListGoods),
+  checkTokenExists,
+  loadListGoodsController,
+);
+
+router.post(
+  "/sku-disable-status",
+  joiSchemaValidator(schemas.changeSkuDisableStatus),
+  changeSkuDisableStatusController,
+);
+
+router.post(
+  "/prices-discounts/upload/",
+  upload.single("file"),
+  uploadPricesAndDiscountsFileController,
+);
 
 router.patch(
   "/status-of-participation-in-promo/",
   joiSchemaValidator(schemas.changeStatusOfParticipationInPromo),
-  changeStatusOfParticipationInPromo,
+  changeStatusOfParticipationInPromoController,
 );
 
 router.patch(
   "/prices-discounts/",
   joiSchemaValidator(schemas.setNewPricesAndDiscountsToSku),
-  setNewPricesAndDiscountsToSku,
-  changeWeeklyPricesOrDiscounts,
+  checkTokenExists,
+  setNewPricesAndDiscountsToSkuController,
+  changeWeeklyPricesOrDiscountsController,
 );
-
-export default router;

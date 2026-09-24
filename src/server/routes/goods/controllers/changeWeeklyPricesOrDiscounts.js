@@ -1,12 +1,9 @@
-import dbUtils from "../../../database/collections/index.js";
+import changeWeeklyPricesOrDiscountsService from "../services/changeWeeklyPricesOrDiscounts.js";
 
-var changeWeeklyPricesOrDiscounts = async (req, res, next) => {
-  var { updatePriceAndDiscount } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
+var changeWeeklyPricesOrDiscountsController = async (req, res, next) => {
+  await changeWeeklyPricesOrDiscountsService(req.body);
 
-  var { userId, skuId, skuDataToUpdate, checkedWeekDays } = req.body;
-
-  await updatePriceAndDiscount(userId, skuId, skuDataToUpdate, checkedWeekDays);
-  return res.sendStatus(200);
+  return res.json({ errorText: "" });
 };
 
-export default changeWeeklyPricesOrDiscounts;
+export default changeWeeklyPricesOrDiscountsController;

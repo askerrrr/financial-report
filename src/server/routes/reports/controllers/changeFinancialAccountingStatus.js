@@ -1,17 +1,9 @@
-import dbUtils from "../../../database/collections/index.js";
+import changeFinancialAccountingStatusService from "../services/changeFinancialAccountingStatus.js";
 
-var changeFinancialAccountingStatus = async (req, res) => {
-  var { userId, reportId, newStatus } = req.body;
-
-  var { addReportToAccounted, removeReportFromAccounted } = dbUtils.reportCollectionServices;
-
-  if (newStatus) {
-    await addReportToAccounted(userId, reportId);
-  } else {
-    await removeReportFromAccounted(userId, reportId);
-  }
+var changeFinancialAccountingStatusController = async (req, res) => {
+  await changeFinancialAccountingStatusService(req.body);
 
   return res.sendStatus(200);
 };
 
-export default changeFinancialAccountingStatus;
+export default changeFinancialAccountingStatusController;

@@ -1,16 +1,19 @@
-import dbUtils from "../../../database/collections/index.js";
-import splitSkuByDisabledStatus from "../services/splitSkuByDisabledStatus.js";
+import dbUtils from "../../../database/modelsUtil/index.js";
+import splitSkuByDisabledStatus from "../services/utils/splitSkuByDisabledStatus.js";
 
-var getListGoodsAndWeeklyPrices = async (req, res, next) => {
+var { getListGoodsFromDb } = dbUtils.goodsModelUtils;
+var { getWeeklyPricesAndDiscounts } =
+  dbUtils.weeklyPricesAndDiscountsModelUtils;
+
+var getListGoodsAndWeeklyPricesController = async (req, res, next) => {
   var { userId } = req.params;
-  var { getListGoodsFromDb } = dbUtils.goodsCollectionServices;
-  var { getWeeklyPricesAndDiscountsFromDb } = dbUtils.weeklyPricesAndDiscountsCollectionServices;
 
   var { listGoods } = await getListGoodsFromDb(userId);
+
   var { listGoods } = splitSkuByDisabledStatus(listGoods);
-  var { weeklyPricesAndDiscounts } = await getWeeklyPricesAndDiscountsFromDb(userId);
+  var { weeklyPricesAndDiscounts } = await getWeeklyPricesAndDiscounts(userId);
 
   return res.json({ listGoods, weeklyPricesAndDiscounts });
 };
 
-export default getListGoodsAndWeeklyPrices;
+export default getListGoodsAndWeeklyPricesController;

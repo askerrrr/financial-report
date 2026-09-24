@@ -1,35 +1,74 @@
 import { dbClient } from "../../../database/index.js";
-import wbapi from "../../reports/services/WBAPI/index.js";
-import dbUtils from "../../../database/collections/index.js";
+import parseJwt from "../../WBToken/services/utils/parseJwt.js";
+import wbapi from "../../reports/services/utils/WBAPI/index.js";
+import dbUtils from "../../../database/modelsUtil/index.js";
+import checkTokenExpiry from "../../WBToken/services/utils/checkTokenExpiry.js";
 import splitListGoodsByExistence from "../services/splitListGoodsByExistence.js";
-import extractRequiredListGoodsData from "../../goods/services/extractRequiredListGoodsData.js";
+import extractRequiredListGoodsData from "../../goods/services/utils/extractRequiredListGoodsData.js";
 
-var updateLastUsedTimestampNow = true;
+var statusOfReportLoadingStop = true;
 
-var updateDataIntoListGoods = async (req, res, next) => {
-  var { getWBTokenByUserId } = dbUtils.tokenCollectionServices;
-  var { getAllUserListGoodsIds, saveNewSkusToDb, updateSkusFields } = dbUtils.goodsCollectionServices;
+var { updateReportLoadingStoppedStatus } = dbUtils.reportLoadingStateModelUtils;
+var { getWBTokenByUserId, updateWBTokenLastUsedTimestamp } =
+  dbUtils.tokenModelUtils;
+var { getAllUserListGoodsIds, saveNewSkusToDb, updateSkusInListGoods } =
+  dbUtils.goodsModelUtils;
 
+var updateDataIntoListGoodsController = async (req, res, next) => {
   var data = await getAllUserListGoodsIds();
 
-  for (var { userId, listGoodsIds } of data) {
+  for (var { userId, listGoodsIds, listGoodsSkuNamesAndIds } of data) {
     var session = await dbClient.startSession();
 
     try {
       await session.withTransaction(async () => {
-        if (listGoodsIds.length) {
-          var { token } = await getWBTokenByUserId(userId, session, updateLastUsedTimestampNow);
+        var { token } = await getWBTokenByUserId(userId, session);
 
-          var { rawListGoods } = await wbapi.getPricesAndDiscountsByListGoods(userId, token, listGoodsIds);
+        if (!token) {
+          var loadingStopReason = "isTokenMissing";
+          await updateReportLoadingStoppedStatus(
+            userId,
+            statusOfReportLoadingStop,
+            loadingStopReason,
+            session,
+          );
+        } else {
+          var tokenPayload = parseJwt(token);
+          var { isExpired } = checkTokenExpiry(tokenPayload);
 
-          var { listGoods } = await extractRequiredListGoodsData(rawListGoods);
-          var { newSkus, updatedSkus } = splitListGoodsByExistence(listGoodsIds, listGoods);
+          if (isExpired) {
+            var loadingStopReason = "tokenIsExpired";
+            await dbUtils.updateReportLoadingStoppedStatus(
+              userId,
+              statusOfReportLoadingStop,
+              loadingStopReason,
+              session,
+            );
+          } else {
+            if (listGoodsIds.length) {
+              await updateWBTokenLastUsedTimestamp(userId, session);
 
-          if (newSkus.length) {
-            await saveNewSkusToDb(userId, newSkus, session);
+              var { rawListGoods } =
+                await wbapi.getPricesAndDiscountsByListGoods(
+                  userId,
+                  token,
+                  listGoodsIds,
+                );
+
+              var listGoodsFromWBAPI =
+                extractRequiredListGoodsData(rawListGoods).listGoods;
+              var { newSkus, updatedSkus } = splitListGoodsByExistence(
+                listGoodsSkuNamesAndIds,
+                listGoodsFromWBAPI,
+              );
+
+              if (newSkus.length) {
+                await saveNewSkusToDb(userId, newSkus, session);
+              }
+
+              await updateSkusInListGoods(userId, updatedSkus, session);
+            }
           }
-
-          await updateSkusFields(userId, updatedSkus, session);
         }
       });
     } catch (e) {
@@ -43,4 +82,4 @@ var updateDataIntoListGoods = async (req, res, next) => {
   return res.sendStatus(200);
 };
 
-export default updateDataIntoListGoods;
+export default updateDataIntoListGoodsController;

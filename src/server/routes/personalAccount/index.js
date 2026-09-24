@@ -1,9 +1,10 @@
 import { Router } from "express";
-
-import resetUserData from "./controllers/resetUserData.js";
+import deleteUserController from "./controllers/deleteUser.js";
+import resetUserDataController from "./controllers/resetUserData.js";
 
 var router = Router({ caseSensitive: true, strict: true });
 
-router.post("/", resetUserData);
+router.post("/", resetUserDataController);
+router.delete("/", deleteUserController);
 
 export default router;

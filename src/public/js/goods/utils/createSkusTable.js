@@ -13,7 +13,8 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
   var tbody = document.getElementById(tbodyID);
 
   for (var sku of skus) {
-    let { id, skuName, price, discount, discountedPrice, clubDiscountedPrice } = sku;
+    let { id, skuName, price, discount, discountedPrice, clubDiscountedPrice } =
+      sku;
 
     var tr = document.createElement("tr");
     tr.id = skuName;
@@ -25,13 +26,26 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
 
     var actualPriceTd = createTdElement(price, skuName, "price", lastFetchTime);
     var actualDiscountTd = createTdElement(discount, skuName, "discount");
-    var actualDiscountedPriceTd = createTdElement(discountedPrice, skuName, "discountedPrice");
-    var actualClubDiscountedPriceTd = createTdElement(clubDiscountedPrice, skuName, "clubDiscountedPrice");
+    var actualDiscountedPriceTd = createTdElement(
+      discountedPrice,
+      skuName,
+      "discountedPrice",
+    );
+    var actualClubDiscountedPriceTd = createTdElement(
+      clubDiscountedPrice,
+      skuName,
+      "clubDiscountedPrice",
+    );
 
     var modalButton = await openModalButton(sku);
     var modalButtonTdElem = createTdElement(modalButton);
-    var skuRowVisibilityButtonHandler = createSkuRowVisibilityButtonHandler(skuName, id);
-    var skuRowVisibilityButtonHandlerTdElem = createTdElement(skuRowVisibilityButtonHandler);
+    var skuRowVisibilityButtonHandler = createSkuRowVisibilityButtonHandler(
+      skuName,
+      id,
+    );
+    var skuRowVisibilityButtonHandlerTdElem = createTdElement(
+      skuRowVisibilityButtonHandler,
+    );
 
     if (currentDayData) {
       var skuDataOfCurrentDay = currentDayData.find((item) => item.nmID === id);
@@ -39,9 +53,18 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
       var expectedPriceTitle = "установлено последний раз ";
       var lastUpdatedTime = getTime(sku?.lastUpdated, expectedPriceTitle);
 
-      var expectedPriceTd = createTdElement(skuDataOfCurrentDay?.data.price || "", skuName, "price-expected", lastUpdatedTime);
+      var expectedPriceTd = createTdElement(
+        skuDataOfCurrentDay?.data.price || "",
+        skuName,
+        "price-expected",
+        lastUpdatedTime,
+      );
 
-      var expectedDiscountTd = createTdElement(skuDataOfCurrentDay?.data.discount || "", skuName, "discount-expected");
+      var expectedDiscountTd = createTdElement(
+        skuDataOfCurrentDay?.data.discount || "",
+        skuName,
+        "discount-expected",
+      );
 
       var expectedDiscountedPrice;
 
@@ -51,23 +74,21 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
         expectedDiscountedPrice = "";
       }
 
-      var expectedDiscountedPriceTd = createTdElement(expectedDiscountedPrice, skuName, "discountedPrice-expected");
+      var expectedDiscountedPriceTd = createTdElement(
+        expectedDiscountedPrice,
+        skuName,
+        "discountedPrice-expected",
+      );
 
-      var expectedClubDiscountedPriceTd = createTdElement(expectedDiscountedPrice, skuName, "clubDiscountedPrice-expected");
+      var expectedClubDiscountedPriceTd = createTdElement(
+        expectedDiscountedPrice,
+        skuName,
+        "clubDiscountedPrice-expected",
+      );
 
       if (tbodyID === "disabled-skus-tbody") {
-        actualPriceTd.hidden = true;
-        actualDiscountTd.hidden = true;
-        actualDiscountedPriceTd.hidden = true;
-        actualClubDiscountedPriceTd.hidden = true;
-        expectedPriceTd.hidden = true;
-        expectedDiscountTd.hidden = true;
-        expectedDiscountedPriceTd.hidden = true;
-        expectedClubDiscountedPriceTd.hidden = true;
-
         skuRowVisibilityButtonHandler.setAttribute("disbl", "");
         skuRowVisibilityButtonHandler.textContent = "включить";
-        modalButton.hidden = true;
       }
 
       tr.append(
@@ -85,8 +106,14 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
       );
 
       if (skuDataOfCurrentDay) {
-        var participationInPromoCheckbox = createCheckboxForParticipationInPromo(sku, skuDataOfCurrentDay.changePriceIfInPromo);
-        var participationInPromoCheckboxTdElem = createTdElement(participationInPromoCheckbox);
+        var participationInPromoCheckbox =
+          createCheckboxForParticipationInPromo(
+            sku,
+            skuDataOfCurrentDay.changePriceIfInPromo,
+          );
+        var participationInPromoCheckboxTdElem = createTdElement(
+          participationInPromoCheckbox,
+        );
         tr.append(participationInPromoCheckboxTdElem);
       }
 
@@ -95,14 +122,8 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
     }
 
     if (tbodyID === "disabled-skus-tbody") {
-      actualPriceTd.hidden = true;
-      actualDiscountTd.hidden = true;
-      actualDiscountedPriceTd.hidden = true;
-      actualClubDiscountedPriceTd.hidden = true;
-
       skuRowVisibilityButtonHandler.setAttribute("disbl", "");
       skuRowVisibilityButtonHandler.textContent = "включить";
-      modalButton.hidden = true;
     }
 
     tr.append(

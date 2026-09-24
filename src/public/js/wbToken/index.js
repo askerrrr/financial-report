@@ -1,26 +1,19 @@
 import getTokenData from "./getTokenData.js";
-import renameSaveButton from "./renameSaveButton.js";
-import loadTokenButtonHander from "./loadTokenButtonHander.js";
-import { insertDataToTokenDataTable } from "./tokenDataTable.js";
-import removeTokenButtonHandler from "./removeTokenButtonHandler.js";
-import { enableTokenDataTable } from "./toggleVisibilityOfTokenDataTable.js";
-import { enableRemoveTokenButton } from "./toggleVisibilityOfRemoveTokenButton.js";
+import createTokenCard from "./tokenCard/createTokenCard.js";
+import uploadTokenModalHandler from "./uploadTokenModalHandler.js";
 
 var userId = document.cookie.split("=")[1];
+var tokenCardContainer = document.getElementById("token-card-container");
 
 var main = async () => {
-  var { tokenData } = await getTokenData(userId);
+  var { tokensDetails } = await getTokenData(userId);
 
-  if (tokenData.tokenIsExist) {
-    renameSaveButton();
-    enableTokenDataTable();
-    enableRemoveTokenButton();
-    insertDataToTokenDataTable(tokenData);
+  tokensDetails.forEach((token) => {
+    var { tokenCard } = createTokenCard(userId, token);
+    tokenCardContainer.append(tokenCard);
+  });
 
-    removeTokenButtonHandler(userId);
-  }
-
-  loadTokenButtonHander(userId);
+  uploadTokenModalHandler(userId);
 };
 
 main();

@@ -1,11 +1,12 @@
-import dbUtils from "../../../database/collections/index.js";
+import dbUtils from "../../../database/modelsUtil/index.js";
+var { getListGoodsFromDb } = dbUtils.goodsModelUtils;
 
-var getListGoods = async (req, res) => {
+var getListGoodsController = async (req, res) => {
   var { userId } = req.params;
-  var { getListGoodsFromDb } = dbUtils.goodsCollectionServices;
 
   var { listGoods } = await getListGoodsFromDb(userId);
-  res.json({ listGoodsLength: listGoods.length, listGoods });
+
+  return res.json({ listGoodsLength: listGoods.length, listGoods });
 };
 
-export default getListGoods;
+export default getListGoodsController;
