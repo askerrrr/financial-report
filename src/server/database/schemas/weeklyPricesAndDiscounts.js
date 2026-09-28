@@ -28,11 +28,14 @@ var skuSchema = new Schema(
   { _id: false },
 );
 
-var weeklyPricesAndDiscountsSchema = new Schema({
-  userId: { type: String, required: true, unique: true },
-  uploadId: { type: Number, required: false },
-  weeklyPricesAndDiscounts: [{ type: [skuSchema], required: false }],
-});
+var weeklyPricesAndDiscountsSchema = new Schema(
+  {
+    userId: { type: String, required: true, unique: true },
+    uploadId: { type: Number, required: false },
+    weeklyPricesAndDiscounts: [{ type: [skuSchema], required: false }],
+  },
+  { autoIndex: false },
+);
 
 weeklyPricesAndDiscountsSchema.index({ userId: 1 }, { unique: true });
 
