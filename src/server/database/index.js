@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 import { MongoClient } from "mongodb";
 import setupDbEvents from "./setupDbEvents.js";
-import killAllSessions from "./killAllSessions.js";
+import killSessions from "./killSessions.js";
 import getMongooseOptions from "./getMongooseOptions.js";
 import { databaseEmitter, serverEmitter } from "../customEvent/index.js";
 
 var dbClient = mongoose.connection;
 var authOptions = JSON.parse(process.env.MONGO_AUTH_OPTIONS);
-var dbClientToEncryption = new MongoClient(process.env.MONGO_URI, { ...authOptions });
+var dbClientToEncryption = new MongoClient(process.env.MONGO_URI, {
+  ...authOptions,
+});
 
 var runDB = async () => {
   setupDbEvents(mongoose, dbClientToEncryption);
@@ -16,7 +18,7 @@ var runDB = async () => {
     var options = await getMongooseOptions(dbClientToEncryption);
 
     await mongoose.connect(process.env.MONGO_URI, options);
-    await killAllSessions(dbClient);
+    await killSessions(dbClient);
 
     serverEmitter.emit("start");
   } catch (e) {
