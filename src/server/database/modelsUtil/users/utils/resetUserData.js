@@ -1,5 +1,6 @@
 import { dbClient } from "../../../index.js";
 import * as models from "../../../models/index.js";
+import killSessions from "../../../killSessions.js";
 
 var defaultReportLoadingState = {
   queueLength: 0,
@@ -16,6 +17,8 @@ var defaultReportLoadingState = {
 
 var resetUserData = async (userId) => {
   var success = true;
+  // await killSessions(dbClient)
+
   var session = await dbClient.startSession();
 
   try {

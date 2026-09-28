@@ -34,4 +34,6 @@ var weeklyPricesAndDiscountsSchema = new Schema({
   weeklyPricesAndDiscounts: [{ type: [skuSchema], required: false }],
 });
 
+weeklyPricesAndDiscountsSchema.index({ userId: 1 }, { unique: true });
+
 export default weeklyPricesAndDiscountsSchema;

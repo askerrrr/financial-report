@@ -5,25 +5,38 @@ import showReportLoadingStatePanel from "./showReportLoadingStatePanel.js";
 import refreshReportLoadingStateStatus from "./refreshReportLoadingStateStatus.js";
 import { enableParentReportLoadingStatePanel } from "./toggleVisibilityOfParentReportLoadingStatePanel.js";
 
+var nextRequestDelay = 5000;
 var builderWasCalled = false;
+var reportsQueueTbodyId = "reports-queue-tbody";
+var abandonedReportsTbodyId = "abandoned-reports-tbody";
 
-var reportLoadingStatePanelBuilder = async (userId, reportLoadingState, isMainPageLoad) => {
+var reportLoadingStatePanelBuilder = async (
+  userId,
+  reportLoadingState,
+  isMainPageLoad,
+) => {
   if (!builderWasCalled) {
     builderWasCalled = true;
 
     if (!isMainPageLoad) {
-      reportLoadingState = await getReportLoadingState(userId);
+      await new Promise((resolve) => {
+        var timerId = setInterval(async () => {
+          reportLoadingState = await getReportLoadingState(userId);
+
+          if (reportLoadingState.loadingInProgress) {
+            clearInterval(timerId);
+            resolve();
+          }
+        }, nextRequestDelay);
+      });
     }
 
-    var { reportsQueue, abandonedReports, loadingInProgress } = reportLoadingState;
+    if (reportLoadingState.loadingInProgress) {
+      var { reportsQueue, abandonedReports } = reportLoadingState;
 
-    if (loadingInProgress) {
       enableParentReportLoadingStatePanel();
       await showReportLoadingStatePanel();
       await updateLoadingProgressText(reportLoadingState);
-
-      var reportsQueueTbodyId = "reports-queue-tbody";
-      var abandonedReportsTbodyId = "abandoned-reports-tbody";
 
       insertDataToTable(reportsQueue, reportsQueueTbodyId);
       insertDataToTable(abandonedReports, abandonedReportsTbodyId);

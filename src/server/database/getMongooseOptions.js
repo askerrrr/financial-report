@@ -37,6 +37,7 @@ var getMongooseOptions = async (dbClientToEncryption) => {
       keyVaultNamespace,
     },
     ...authOptions,
+    autoIndex: false,
     serverSelectionTimeoutMS: 30_000,
   };
 
