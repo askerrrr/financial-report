@@ -42,18 +42,21 @@ var recordedToSchema = new Schema(
   { _id: false },
 );
 
-var reportSchema = new Schema({
-  userId: { type: String, required: true },
-  reportId: { type: Number, required: true },
-  dateFrom: { type: String, required: true },
-  dateTo: { type: String, required: true },
-  isCrossYearPeriod: { type: Boolean, default: false },
-  recordedTo: { type: recordedToSchema, required: true },
-  buybackReportIsExist: { type: Boolean, default: false },
-  isFinancesAccounted: { type: Boolean, default: false },
-  reportIsEmpty: { type: Boolean, default: false },
-  skus: [{ type: skuSchema, required: true }],
-});
+var reportSchema = new Schema(
+  {
+    userId: { type: String, required: true },
+    reportId: { type: Number, required: true },
+    dateFrom: { type: String, required: true },
+    dateTo: { type: String, required: true },
+    isCrossYearPeriod: { type: Boolean, default: false },
+    recordedTo: { type: recordedToSchema, required: true },
+    buybackReportIsExist: { type: Boolean, default: false },
+    isFinancesAccounted: { type: Boolean, default: false },
+    reportIsEmpty: { type: Boolean, default: false },
+    skus: [{ type: skuSchema, required: true }],
+  },
+  { autoIndex: false },
+);
 
 reportSchema.index({ userId: 1 });
 reportSchema.index({ userId: 1, reportId: 1 }, { unique: true });

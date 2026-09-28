@@ -24,13 +24,16 @@ var reportSchema = new Schema(
     monthName: { type: String, required: true, enum: monthList },
     monthIndex: { type: Number, required: true, min: 0, max: 11 },
   },
-  { _id: false },
+  { _id: false, autoIndex: false },
 );
 
-var reportPeriodsSchema = new Schema({
-  userId: { type: String, required: true },
-  reportPeriods: { type: [reportSchema], default: [] },
-});
+var reportPeriodsSchema = new Schema(
+  {
+    userId: { type: String, required: true },
+    reportPeriods: { type: [reportSchema], default: [] },
+  },
+  { autoIndex: false },
+);
 
 reportPeriodsSchema.index({ userId: 1 }, { unique: true });
 reportPeriodsSchema.index(
