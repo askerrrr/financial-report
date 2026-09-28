@@ -18,7 +18,7 @@ var runDB = async () => {
     var options = await getMongooseOptions(dbClientToEncryption);
 
     await mongoose.connect(process.env.MONGO_URI, options);
-    await killSessions(dbClient);
+    await mongoose.syncIndexes();
 
     serverEmitter.emit("start");
   } catch (e) {
