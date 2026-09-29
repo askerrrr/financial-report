@@ -1,6 +1,6 @@
 src/server/routes/reports/services/WBAPI/reports/reports.js
 /node_modules
-/logs
+logs/*
 .httpd.conf
 .compose.yaml
 .env
