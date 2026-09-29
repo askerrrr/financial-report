@@ -1,4 +1,5 @@
 import { MulterError } from "multer";
+import { errorLogger } from "../../../logger.js";
 import { WBAPIError } from "../../customError/index.js";
 
 var errorHandler = async (e, req, res, next) => {
