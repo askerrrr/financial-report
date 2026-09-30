@@ -30,7 +30,51 @@ var errorServerIsListen = false;
 var mainServerInstance = null;
 var errorServerInstance = null;
 
-var runErrorServer = async () => {
+var startApp = async () => {
+  try {
+    await runDB();
+  } catch (e) {
+    console.log(e);
+    if (
+      e.name !== "MongooseServerSelectionError" ||
+      e.name !== "MongoServerSelectionError"
+    ) {
+      await runErrorServer();
+    }
+  }
+};
+
+startApp();
+
+serverEmitter.on("start", async () => {
+  if (errorServerIsListen) {
+    await new Promise((resolve) => {
+      errorServerInstance.close(() => {
+        errorServerInstance.removeAllListeners();
+        errorServerInstance = null;
+        errorServerIsListen = false;
+        resolve();
+      });
+    });
+  }
+  return await runMainServer();
+});
+
+serverEmitter.on("close", async () => {
+  if (mainServerIsListen) {
+    await new Promise((resolve) => {
+      mainServerInstance.close(() => {
+        mainServerInstance.removeAllListeners();
+        mainServerInstance = null;
+        mainServerIsListen = false;
+        resolve();
+      });
+    });
+  }
+  return await runErrorServer();
+});
+
+async function runErrorServer() {
   if (errorServerInstance) {
     await new Promise((resolve) => {
       if (errorServerInstance && errorServerInstance.close) {
@@ -56,9 +100,9 @@ var runErrorServer = async () => {
     process.env.HOST,
     () => console.log("Сервер временно недоступен."),
   );
-};
+}
 
-var runServer = async () => {
+async function runMainServer() {
   if (mainServerInstance) {
     await new Promise((resolve) => {
       if (mainServerInstance && mainServerInstance.close) {
@@ -113,48 +157,4 @@ var runServer = async () => {
     process.env.HOST,
     async () => console.log("server running"),
   );
-};
-
-var startApp = async () => {
-  try {
-    await runDB();
-  } catch (e) {
-    console.log(e);
-    if (
-      e.name !== "MongooseServerSelectionError" ||
-      e.name !== "MongoServerSelectionError"
-    ) {
-      await runErrorServer();
-    }
-  }
-};
-
-startApp();
-
-serverEmitter.on("start", async () => {
-  if (errorServerIsListen) {
-    await new Promise((resolve) => {
-      errorServerInstance.close(() => {
-        errorServerInstance.removeAllListeners();
-        errorServerInstance = null;
-        errorServerIsListen = false;
-        resolve();
-      });
-    });
-  }
-  return await runServer();
-});
-
-serverEmitter.on("close", async () => {
-  if (mainServerIsListen) {
-    await new Promise((resolve) => {
-      mainServerInstance.close(() => {
-        mainServerInstance.removeAllListeners();
-        mainServerInstance = null;
-        mainServerIsListen = false;
-        resolve();
-      });
-    });
-  }
-  return await runErrorServer();
-});
+}
