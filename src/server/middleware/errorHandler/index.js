@@ -5,15 +5,15 @@ import { WBAPIError } from "../../customError/index.js";
 var errorHandler = async (err, req, res, next) => {
   errorLogger.fatal({ err });
 
-  if (e instanceof MulterError) {
+  if (err instanceof MulterError) {
     return res.sendStatus(500);
   }
 
-  if (e instanceof WBAPIError) {
-    return res.status(e.status).json({ msg: e.message });
+  if (err instanceof WBAPIError) {
+    return res.status(err.status).json({ msg: err.message });
   }
 
-  res.status(e?.status || 500).json({ msg: "Произошла ошибка..." });
+  res.status(err?.status || 500).json({ msg: "Произошла ошибка..." });
 };
 
 export default errorHandler;
