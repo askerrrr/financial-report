@@ -160,6 +160,3 @@ serverEmitter.on("close", async () => {
   return await runErrorServer();
 });
 
-process.on("unhandledRejection", async (reason, promise) => {
-  //console.log("reason name: ", reason.name);
-});
