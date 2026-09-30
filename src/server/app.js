@@ -118,7 +118,6 @@ var runServer = async () => {
 var startApp = async () => {
   try {
     await runDB();
-    await runServer();
   } catch (e) {
     console.log(e);
     if (
@@ -159,4 +158,3 @@ serverEmitter.on("close", async () => {
   }
   return await runErrorServer();
 });
-
