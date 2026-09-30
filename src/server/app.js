@@ -31,17 +31,7 @@ var mainServerInstance = null;
 var errorServerInstance = null;
 
 var startApp = async () => {
-  try {
-    await runDB();
-  } catch (e) {
-    console.log(e);
-    if (
-      e.name !== "MongooseServerSelectionError" ||
-      e.name !== "MongoServerSelectionError"
-    ) {
-      await runErrorServer();
-    }
-  }
+  await runDB();
 };
 
 startApp();
