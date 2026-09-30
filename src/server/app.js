@@ -1,5 +1,6 @@
 import express from "express";
 import { join } from "node:path";
+import { logger } from "../logger.js";
 import cookieParser from "cookie-parser";
 import checkRoles from "./middleware/checkRoles.js";
 import errorHandler from "./middleware/errorHandler/index.js";
@@ -43,6 +44,7 @@ serverEmitter.on("start", async () => {
         errorServerInstance.removeAllListeners();
         errorServerInstance = null;
         errorServerIsListen = false;
+         logger.info("---------- ERROR SERVER CLOSED ----------");
         resolve();
       });
     });
@@ -57,6 +59,7 @@ serverEmitter.on("close", async () => {
         mainServerInstance.removeAllListeners();
         mainServerInstance = null;
         mainServerIsListen = false;
+        logger.fatal("---------- SERVER CLOSED ----------");
         resolve();
       });
     });
@@ -84,12 +87,10 @@ async function runErrorServer() {
       .set({ "Content-Type": "text/html" })
       .send("<p>Сервер временно недоступен</p>"),
   );
+
   errorServerIsListen = true;
-  errorServerInstance = errorApp.listen(
-    process.env.PORT,
-    process.env.HOST,
-    () => console.log("Сервер временно недоступен."),
-  );
+  errorServerInstance = errorApp.listen(process.env.PORT, process.env.HOST);
+  logger.warn("---------- ERROR SERVER RUN ----------");
 }
 
 async function runMainServer() {
@@ -142,9 +143,6 @@ async function runMainServer() {
   app.use(errorHandler);
 
   mainServerIsListen = true;
-  mainServerInstance = app.listen(
-    process.env.PORT,
-    process.env.HOST,
-    async () => console.log("server running"),
-  );
+  mainServerInstance = app.listen(process.env.PORT, process.env.HOST);
+  logger.info("---------- SERVER RUN ----------");
 }
