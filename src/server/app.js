@@ -30,11 +30,6 @@ var errorServerIsListen = false;
 var mainServerInstance = null;
 var errorServerInstance = null;
 
-var createServer = () => {
-  var app = express();
-  return app;
-};
-
 var runErrorServer = async () => {
   if (errorServerInstance) {
     await new Promise((resolve) => {
@@ -49,7 +44,7 @@ var runErrorServer = async () => {
     });
   }
 
-  var errorApp = createServer();
+  var errorApp = express();
   errorApp.get("/", (_, res) =>
     res
       .set({ "Content-Type": "text/html" })
@@ -78,7 +73,7 @@ var runServer = async () => {
   }
 
   process.env.NODE_ENV = "production";
-  var app = createServer();
+  var app = express();
 
   app.disable("x-powered-by");
   app.use(express.urlencoded());
