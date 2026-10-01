@@ -4,9 +4,10 @@ import { logger } from "../logger.js";
 import cookieParser from "cookie-parser";
 import checkRoles from "./middleware/checkRoles.js";
 import errorHandler from "./middleware/errorHandler/index.js";
-import pageNotFoundHandler from "./middleware/pageNotFoundHandler/index.js";
 import verifyAuthorization from "./middleware/verifyAuthorization.js";
 import verifyAuthentication from "./middleware/verifyAuthentication.js";
+import pageNotFoundHandler from "./middleware/pageNotFoundHandler/index.js";
+import temporarilyUnavailableHandler from "./middleware/temporarilyUnavailableHandler/index.js";
 
 import { serverEmitter } from "./customEvent/index.js";
 
@@ -44,7 +45,7 @@ serverEmitter.on("start", async () => {
         errorServerInstance.removeAllListeners();
         errorServerInstance = null;
         errorServerIsListen = false;
-         logger.info("---------- ERROR SERVER CLOSED ----------");
+        logger.info("---------- ERROR SERVER CLOSED ----------");
         resolve();
       });
     });
@@ -82,11 +83,19 @@ async function runErrorServer() {
   }
 
   var errorApp = express();
-  errorApp.get("/", (_, res) =>
-    res
-      .set({ "Content-Type": "text/html" })
-      .send("<p>Сервер временно недоступен</p>"),
+  errorApp.disable("x-powered-by");
+  errorApp.use(express.urlencoded());
+  errorApp.use(express.json());
+  errorApp.use(express.static(join(import.meta.dirname, "../public")));
+
+  errorApp.use(
+    "/decode-report-without-registration/",
+    decodeReportWithoutRegistrationRouter,
   );
+
+  errorApp.all(/.*/, temporarilyUnavailableHandler);
+
+  errorApp.use(errorHandler);
 
   errorServerIsListen = true;
   errorServerInstance = errorApp.listen(process.env.PORT, process.env.HOST);
