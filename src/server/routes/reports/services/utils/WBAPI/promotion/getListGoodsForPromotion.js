@@ -1,6 +1,25 @@
-var getListGoodsForPromotion = async (token, promoId, inAction = true, limit = 1000, offset = 0) => {
+import { WBAPIError } from "../../../../../../customError/index.js";
+
+var WBAPIUnavailableMsg =
+  "Сервис Wildberries API временно недоступен. Попробуйте позже.";
+
+var getListGoodsForPromotion = async (
+  token,
+  promoId,
+  inAction = true,
+  limit = 1000,
+  offset = 0,
+) => {
   var url = `https://dp-calendar-api.wildberries.ru/api/v1/calendar/promotions/nomenclatures?promotionID=${promoId}&inAction=${inAction}&offset=${offset}&limit=${limit}`;
-  var res = await fetch(url, { method: "GET", headers: { "Content-Type": "application/json", Authorization: "Bearer " + token } });
+  var res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  }).catch(() => {
+    throw new WBAPIError(userId, 500, WBAPIUnavailableMsg);
+  });
 
   if (res.status === 200) {
     var { data } = await res.json();

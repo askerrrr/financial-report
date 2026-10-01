@@ -25,6 +25,9 @@ var requriedFields = [
 var period = "weekly";
 var MAX_NUMBERS_OF_ROWS = 100_000;
 var NEXT_REQUEST_DELAY_MS = 65_000;
+var WBAPIUnavailableMsg =
+  "Сервис Wildberries API временно недоступен. Попробуйте позже.";
+
 var url =
   "https://finance-api.wildberries.ru/api/finance/v1/sales-reports/detailed";
 var nextRequestDelay = async () =>
@@ -45,6 +48,8 @@ var doRequest = async (token, dateFrom, dateTo, period, rrdId, limit) =>
       Authorization: "Bearer " + token,
       "Content-Type": "application/json",
     },
+  }).catch(() => {
+    throw new WBAPIError(userId, 500, WBAPIUnavailableMsg);
   });
 
 var getWeeklyFinancialReportFromWBAPI = async (

@@ -10,7 +10,7 @@ var errorHandler = async (err, req, res, next) => {
   }
 
   if (err instanceof WBAPIError) {
-    return res.status(err.status).json({ msg: err.message });
+    return res.json({ errorText: err.message });
   }
 
   res.status(err?.status || 500).json({ msg: "Произошла ошибка..." });
