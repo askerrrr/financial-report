@@ -2,6 +2,8 @@ import { randomBytes } from "node:crypto";
 import wbapi from "../../reports/services/utils/WBAPI/index.js";
 import processReportSkus from "../../reports/services/utils/reportParsing/index.js";
 
+var errorText = "";
+
 var taxParamsStub = {
   finalProfit: 0,
   retailAmount: 0,
@@ -56,7 +58,7 @@ var getReportFromWBAPIController = async (req, res, next) => {
   report.userId = randomBytes(15).toString("hex");
   report.reportId = reports.weeklyFinancialReport[0];
 
-  return res.json({ report });
+  return res.json({ report, errorText });
 };
 
 export default getReportFromWBAPIController;

@@ -1,56 +1,22 @@
-import parseJwt from "../../WBToken/services/utils/parseJwt.js";
-import checkTokenExpiry from "../../WBToken/services/utils/checkTokenExpiry.js";
-import isPresumablyJwtToken from "../../WBToken/services/utils/isPresumablyJwtToken.js";
+import validateTokenService from "../../WBToken/services/validateToken.js";
 
-var tokenValidatorController = async (req, res) => {
-  var token = req.body.token;
+var requiredTokenType = "read";
+var invalidTokenTypeMsg =
+  "Неправильный тип токена.\n\nОжидаемый тип токена - Только Чтение.\n\nНеобходимые категории:\n- Финансы\n- Аналитика\n- Продвижение";
 
-  if (!token) {
-    return res.sendStatus(400);
+var tokenValidatorController = async (req, res, next) => {
+  var { token } = req.body;
+
+  var { errorText, type } = await validateTokenService(token);
+
+  if (type !== requiredTokenType) {
+    errorText = invalidTokenTypeMsg;
   }
 
-  if (!isPresumablyJwtToken(token)) {
-    return res.sendStatus(400);
+  if (errorText) {
+    return res.json({ errorText, report: {} });
   }
 
-  var tokenPayload = parseJwt(token);
-
-  var { isExpired } = checkTokenExpiry(tokenPayload);
-
-  if (isExpired) {
-    return res.sendStatus(400);
-  }
-
-  var options = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  };
-
-  var responses = await Promise.all([
-    fetch("https://advert-api.wildberries.ru/ping", options),
-    fetch("https://statistics-api.wildberries.ru/ping", options),
-    fetch("https://seller-analytics-api.wildberries.ru/ping", options),
-    fetch("https://discounts-prices-api.wildberries.ru/ping", options),
-  ]);
-
-  var tokenAuthFailed = false;
-
-  for (var response of responses) {
-    var status = (await response.json())?.Status;
-
-    if (status !== "OK") {
-      tokenAuthFailed = true;
-      break;
-    }
-  }
-
-  if (tokenAuthFailed) {
-    return res.sendStatus(401);
-  }
-
-  return res.sendStatus(200);
+  next();
 };
 export default tokenValidatorController;

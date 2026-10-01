@@ -26,6 +26,7 @@ router.post("/xlsx/", downloadReportAsXLSXController);
 router.post(
   "/",
   joiSchemaValidator(schemas.reportsFromWBAPI),
+  tokenValidatorController,
   getReportFromWBAPIController,
 );
 
@@ -40,8 +41,6 @@ router.patch(
   joiSchemaValidator(schemas.setCostPrice),
   setOtherExpensesController,
 );
-
-router.post("/token/", tokenValidatorController);
 
 router.post("/files", upload.array("file"), getReportFromFilesController);
 
