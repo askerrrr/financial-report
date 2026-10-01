@@ -10,19 +10,14 @@ export var longRangeReportProducer = async ({
   dateTo,
   needToLoadAllReports,
 }) => {
-  var success = true;
-
-  try {
-    await channel.publish(
+  await channel
+    .publish(
       exchangeName,
       routingKey,
       { userId, dateFrom, dateTo, needToLoadAllReports },
       { persistent: true },
+    )
+    .catch((err) =>
+      errorLogger.fatal({ userId, dateFrom, dateTo, routingKey, err }),
     );
-  } catch (err) {
-    errorLogger.warn({ err });
-    success = false;
-  }
-
-  return { success };
 };

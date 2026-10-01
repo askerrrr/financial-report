@@ -5,9 +5,7 @@ var routingKey = "abandoned";
 var exchangeName = "report-loader";
 
 export var abandonedReportProducer = async (userId) => {
-  try {
-    channel.publish(exchangeName, routingKey, { userId }, { persistent: true });
-  } catch (err) {
-    errorLogger.warn({ err });
-  }
+  channel
+    .publish(exchangeName, routingKey, { userId }, { persistent: true })
+    .catch((err) => errorLogger.fatal({ userId, routingKey, err }));
 };
