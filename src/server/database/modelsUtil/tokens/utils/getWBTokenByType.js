@@ -1,12 +1,14 @@
 import { tokenModel } from "../../../models/index.js";
 
 var getWBTokenByType = async (userId, tokenType, session) => {
-  var sessionOpt = session ? { session } : {};
+  var sessionOptions = session
+    ? { session }
+    : { readPreference: "secondaryPreferred" };
 
   var data = await tokenModel.findOne(
     { userId, type: tokenType },
     { _id: 0 },
-    { ...sessionOpt },
+    { ...sessionOptions },
   );
 
   return { token: data?.token };

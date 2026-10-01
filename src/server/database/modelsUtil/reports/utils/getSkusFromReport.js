@@ -1,6 +1,10 @@
 import { reportModel } from "../../../models/index.js";
 
 var getSkusFromReport = async (userId, reportId, skuNames, session) => {
+  var sessionOptions = session
+    ? { session }
+    : { readPreference: "secondaryPreferred" };
+
   var data = await reportModel.aggregate(
     [
       { $match: { userId, reportId } },
@@ -11,11 +15,17 @@ var getSkusFromReport = async (userId, reportId, skuNames, session) => {
           dateFrom: 1,
           dateTo: 1,
           isCrossYearPeriod: 1,
-          skus: { $filter: { input: "$skus", as: "sku", cond: { $in: ["$$sku.skuName", skuNames] } } },
+          skus: {
+            $filter: {
+              input: "$skus",
+              as: "sku",
+              cond: { $in: ["$$sku.skuName", skuNames] },
+            },
+          },
         },
       },
     ],
-    { session },
+    { ...sessionOptions },
   );
 
   return { report: data[0] };

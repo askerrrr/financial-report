@@ -1,9 +1,13 @@
 import { goodsModel } from "../../../models/index.js";
 
 var getListGoodsFromDb = async (userId, skuNames, selectedFields, session) => {
-  var sessionOptions = session ? { session } : {};
+  var sessionOptions = session
+    ? { session }
+    : { readPreference: "secondaryPreferred" };
 
-  var data = await goodsModel.findOne({ userId }, null, { ...sessionOptions }).select(selectedFields);
+  var data = await goodsModel
+    .findOne({ userId }, null, { ...sessionOptions })
+    .select(selectedFields);
 
   if (Array.isArray(skuNames) && skuNames.length) {
     var requiredSkusFromListGoods = [];

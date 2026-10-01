@@ -1,15 +1,27 @@
 import { reportModel } from "../../../models/index.js";
 
-var getReportsByUserId = async (userId, session, selectedFields = null, reportIds) => {
-  var sessionOptions = session ? { session } : {};
+var getReportsByUserId = async (
+  userId,
+  session,
+  selectedFields = null,
+  reportIds,
+) => {
+  var sessionOptions = session
+    ? { session }
+    : { readPreference: "secondaryPreferred" };
 
   if (reportIds) {
-    var data = await reportModel.find({ userId, reportId: { $in: reportIds } }, {});
+    var data = await reportModel.find(
+      { userId, reportId: { $in: reportIds } },
+      {},
+    );
     return { reports: data };
   }
 
   if (selectedFields) {
-    var { reports } = await reportModel.find({ userId }, null, { ...sessionOptions }).select(selectedFields);
+    var { reports } = await reportModel
+      .find({ userId }, null, { ...sessionOptions })
+      .select(selectedFields);
 
     return { reports };
   }

@@ -1,14 +1,20 @@
 import { tokenModel } from "../../../models/index.js";
 
 var getWBTokenByUserId = async (userId, session, updateLastUsedNow = false) => {
-  var sessionOpt = session ? { session: session } : {};
+  var sessionOptions = session
+    ? { session }
+    : { readPreference: "secondaryPreferred" };
 
   var data;
 
   if (updateLastUsedNow) {
-    data = await tokenModel.findOneAndUpdate({ userId }, { $set: { lastUsed: new Date() } }, { returnDocument: "before", ...sessionOpt });
+    data = await tokenModel.findOneAndUpdate(
+      { userId },
+      { $set: { lastUsed: new Date() } },
+      { returnDocument: "before", ...sessionOptions },
+    );
   } else {
-    data = await tokenModel.findOne({ userId }, null, { ...sessionOpt });
+    data = await tokenModel.findOne({ userId }, null, { ...sessionOptions });
   }
 
   var { token, lastUsed } = data;

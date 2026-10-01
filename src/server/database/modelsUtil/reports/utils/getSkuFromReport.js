@@ -1,8 +1,9 @@
 import { reportModel } from "../../../models/index.js";
 
 var getSkuFromReport = async (userId, reportId, skuName, session) => {
-  var sessionOpt = session ? { session } : {};
-
+  var sessionOptions = session
+    ? { session }
+    : { readPreference: "secondaryPreferred" };
   var data = await reportModel.aggregate(
     [
       {
@@ -28,7 +29,7 @@ var getSkuFromReport = async (userId, reportId, skuName, session) => {
         },
       },
     ],
-    { ...sessionOpt },
+    { ...sessionOptions },
   );
 
   return { report: data[0] };
