@@ -1,7 +1,10 @@
 var injectBase64IntoImgTags = (imageCollection) => {
   for (var { skuName, base64 } of imageCollection) {
+
     if (base64) {
-      var deleteImgButton = document.getElementById("delete-img-button-" + skuName);
+      var deleteImgButton = document.getElementById(
+        "delete-img-button-" + skuName,
+      );
 
       if (deleteImgButton) {
         deleteImgButton.style.display = "block";
