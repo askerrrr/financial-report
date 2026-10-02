@@ -12,6 +12,8 @@ var event = "click";
 
 var costPriceModal = (skuData, costPriceDisplayElement, isGuestAccess) => {
   var modal = createDiv("modal-overlay");
+  modal.id = "modal-window";
+
   var modalContent = createDiv("modal-content");
 
   var titleContent = `Изменить себестоимость для "${skuData.skuName}"`;
@@ -38,19 +40,34 @@ var costPriceModal = (skuData, costPriceDisplayElement, isGuestAccess) => {
 
     var { sku, years, isCrossYearPeriod } = data;
     var { prevSkuFieldsValue } = getPrevSkuFieldsValue(sku);
+
     updateSkusTableFields(sku);
-    updateTotalsTableFields(sku.data, years, prevSkuFieldsValue, isCrossYearPeriod);
+    
+    updateTotalsTableFields(
+      sku.data,
+      years,
+      prevSkuFieldsValue,
+      isCrossYearPeriod,
+    );
 
     if (isGuestAccess) {
       updateReportFromLocalStorage(data);
     }
   };
 
-  var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb: saveCb });
+  var saveButton = createButton(
+    "modal-button modal-button-save",
+    saveButtonTextContent,
+    { event, cb: saveCb },
+  );
 
   var cancelButtonTextContent = "Отмена";
   var cancelCb = () => document.body.removeChild(modal);
-  var cancelButton = createButton("modal-button modal-button-cancel", cancelButtonTextContent, { event, cb: cancelCb });
+  var cancelButton = createButton(
+    "modal-button modal-button-cancel",
+    cancelButtonTextContent,
+    { event, cb: cancelCb },
+  );
 
   buttonsContainer.append(cancelButton, saveButton);
   modalContent.append(title, costPriceInput, buttonsContainer);

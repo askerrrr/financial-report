@@ -11,9 +11,19 @@ var openOtherExpensesModal = (skuData, isGuestAccess) => {
   otherExpensesTdElement.id = `otherExpenses-${skuData.skuName}-${skuData.year}`;
 
   var event = "click";
-  var cb = () => otherExpensesModal(skuData, otherExpensesTdElement, isGuestAccess);
+  var cb = () => {
+    var hasActiveModal = document.getElementById("modal-window");
+
+    if (!hasActiveModal) {
+      otherExpensesModal(skuData, otherExpensesTdElement, isGuestAccess);
+    }
+  };
   var buttonTextContent = "Изменить";
-  var openOtherExpensesModalButton = createButton("editable-field-button", buttonTextContent, { event, cb });
+  var openOtherExpensesModalButton = createButton(
+    "editable-field-button",
+    buttonTextContent,
+    { event, cb },
+  );
 
   container.append(otherExpensesTdElement, openOtherExpensesModalButton);
   return container;

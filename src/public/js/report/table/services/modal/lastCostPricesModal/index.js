@@ -16,6 +16,7 @@ var titleContent = `Последние себестоимости для:`;
 
 var skusLastCostPriceModal = (years, skusLastCostPrice) => {
   var modal = createDiv("modal-overlay");
+  modal.id = "modal-window";
   var modalContent = createDiv("modal-content");
 
   var title = createTitle("modal-title", titleContent);
@@ -34,25 +35,45 @@ var skusLastCostPriceModal = (years, skusLastCostPrice) => {
       return;
     }
 
-    var { skusDataToClient, years, isCrossYearPeriod } = await sendCostPrices(selectedYear, skusLastCostPrice);
+    var { skusDataToClient, years, isCrossYearPeriod } = await sendCostPrices(
+      selectedYear,
+      skusLastCostPrice,
+    );
     console.log({ isCrossYearPeriod });
     skusDataToClient.forEach((sku) => {
       var { prevSkuFieldsValue } = getPrevSkuFieldsValue(sku);
 
       updateSkusTableFields(sku, years);
-      updateTotalsTableFields(sku.data, years, prevSkuFieldsValue, isCrossYearPeriod);
+      updateTotalsTableFields(
+        sku.data,
+        years,
+        prevSkuFieldsValue,
+        isCrossYearPeriod,
+      );
     });
 
     document.body.removeChild(modal);
   };
 
-  var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb });
+  var saveButton = createButton(
+    "modal-button modal-button-save",
+    saveButtonTextContent,
+    { event, cb },
+  );
 
   cb = () => document.body.removeChild(modal);
-  var cancelButton = createButton("modal-button modal-button-cancel", cancelButtonTextContent, { event, cb });
+  var cancelButton = createButton(
+    "modal-button modal-button-cancel",
+    cancelButtonTextContent,
+    { event, cb },
+  );
 
   buttonsContainer.append(cancelButton, saveButton);
-  modalContent.append(title, createSkusCostPriceContainer(skusLastCostPrice, years), buttonsContainer);
+  modalContent.append(
+    title,
+    createSkusCostPriceContainer(skusLastCostPrice, years),
+    buttonsContainer,
+  );
   modal.append(modalContent);
   document.body.append(modal);
 

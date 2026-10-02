@@ -11,9 +11,20 @@ var openCostPriceModal = (skuData, isGuestAccess) => {
   costPriceDisplayElement.id = `costPrice-${skuData.skuName}-${skuData.year}`;
 
   var event = "click";
-  var cb = () => costPriceModal(skuData, costPriceDisplayElement, isGuestAccess);
+  var cb = () => {
+    var hasActiveModal = document.getElementById("modal-window");
+
+    if (!hasActiveModal) {
+      costPriceModal(skuData, costPriceDisplayElement, isGuestAccess);
+    }
+  };
+
   var buttonTextContent = "Изменить";
-  var openCostPriceModalButton = createButton("editable-field-button", buttonTextContent, { event, cb });
+  var openCostPriceModalButton = createButton(
+    "editable-field-button",
+    buttonTextContent,
+    { event, cb },
+  );
 
   container.append(costPriceDisplayElement, openCostPriceModalButton);
   return container;
