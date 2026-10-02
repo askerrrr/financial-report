@@ -7,7 +7,11 @@ var exp = Date.now() + oneDayMs;
 
 var checkUserCredentialsController = async (req, res) => {
   var { login, passwd } = req.body;
-  var { credentialInvalid, userId } = await validateUser(login, passwd);
+  var { credentialInvalid, userNotExist, userId } = await validateUser(login, passwd);
+
+  if (userNotExist) {
+    return res.sendStatus(404);
+  }
 
   if (credentialInvalid) {
     return res.sendStatus(401);
@@ -18,10 +22,7 @@ var checkUserCredentialsController = async (req, res) => {
   var payload = { role, userId };
 
   var privateKey = await jose.importPKCS8(process.env.pkcs8, alg);
-  var token = await new jose.SignJWT(payload)
-    .setExpirationTime(exp)
-    .setProtectedHeader({ alg })
-    .sign(privateKey, {});
+  var token = await new jose.SignJWT(payload).setExpirationTime(exp).setProtectedHeader({ alg }).sign(privateKey, {});
 
   return res
     .cookie("token", token, { httpOnly: true, maxAge: oneDayMs })
