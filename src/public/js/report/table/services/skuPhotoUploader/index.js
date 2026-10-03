@@ -5,11 +5,11 @@ import createImageElement from "./createImageElement.js";
 import createLabelElement from "./createLabelElement.js";
 import createDeleteImgButton from "./createDeleteImgButton.js";
 
-var createSKUPhotoUploader = (id, skuName, imgData) => {
+var createSkuPhotoUploader = (userId, reportId, skuName, imgData) => {
   var input = createInputElement(skuName);
   var span = createSpanElement(skuName);
   var img = createImageElement(imgData, skuName);
-  var deleteImgButton = createDeleteImgButton(skuName);
+  var deleteImgButton = createDeleteImgButton(userId, skuName);
 
   if (imgData) {
     img.style.display = "block";
@@ -22,7 +22,7 @@ var createSKUPhotoUploader = (id, skuName, imgData) => {
   var label = createLabelElement(skuName);
   label.append(input, img, span);
 
-  var form = createFormElement(id, skuName);
+  var form = createFormElement(reportId, skuName);
   form.append(label);
 
   var container = document.createElement("div");
@@ -33,4 +33,4 @@ var createSKUPhotoUploader = (id, skuName, imgData) => {
   return container;
 };
 
-export default createSKUPhotoUploader;
+export default createSkuPhotoUploader;

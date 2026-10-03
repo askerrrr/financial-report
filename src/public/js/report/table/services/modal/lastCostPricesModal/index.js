@@ -16,43 +16,33 @@ var titleContent = `Последние себестоимости для:`;
 
 var skusLastCostPriceModal = (years, skusLastCostPrice) => {
   var modal = createDiv("modal-overlay");
+  modal.id = "modal-window";
   var modalContent = createDiv("modal-content");
 
   var title = createTitle("modal-title", titleContent);
 
   var buttonsContainer = createDiv("modal-buttons");
 
-  var cb = async () => {
-    var { selectedYear } = getSelectedYear();
+  var saveButton = createButton(
+    "modal-button modal-button-save",
+    saveButtonTextContent,
+    { event, cb: saveButtonHandler },
+  );
 
-    var { selectedLastCostPrices } = getSelectedLastCostPrices(selectedYear);
+  var cancelButton = createButton(
+    "modal-button modal-button-cancel",
+    cancelButtonTextContent,
+    { event, cb: cancelButtonHandler },
+  );
 
-    console.log({ selectedYear });
-
-    if (!selectedLastCostPrices.length) {
-      alert("Для выбранного периода нет последних себестоимостей.");
-      return;
-    }
-
-    var { skusDataToClient, years, isCrossYearPeriod } = await sendCostPrices(selectedYear, skusLastCostPrice);
-    console.log({ isCrossYearPeriod });
-    skusDataToClient.forEach((sku) => {
-      var { prevSkuFieldsValue } = getPrevSkuFieldsValue(sku);
-
-      updateSkusTableFields(sku, years);
-      updateTotalsTableFields(sku.data, years, prevSkuFieldsValue, isCrossYearPeriod);
-    });
-
-    document.body.removeChild(modal);
-  };
-
-  var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb });
-
-  cb = () => document.body.removeChild(modal);
-  var cancelButton = createButton("modal-button modal-button-cancel", cancelButtonTextContent, { event, cb });
+  var skusCostPriceContainer = createSkusCostPriceContainer(
+    skusLastCostPrice,
+    years,
+  );
 
   buttonsContainer.append(cancelButton, saveButton);
-  modalContent.append(title, createSkusCostPriceContainer(skusLastCostPrice, years), buttonsContainer);
+  modalContent.append(title, skusCostPriceContainer, buttonsContainer);
+
   modal.append(modalContent);
   document.body.append(modal);
 
@@ -61,6 +51,40 @@ var skusLastCostPriceModal = (years, skusLastCostPrice) => {
       document.body.removeChild(modal);
     }
   });
+
+  async function saveButtonHandler() {
+    var { selectedYear } = getSelectedYear();
+
+    var { selectedLastCostPrices } = getSelectedLastCostPrices(selectedYear);
+
+    if (!selectedLastCostPrices.length) {
+      alert("Для выбранного периода нет последних себестоимостей.");
+      return;
+    }
+
+    var { skusDataToClient, years, isCrossYearPeriod } = await sendCostPrices(
+      selectedYear,
+      skusLastCostPrice,
+    );
+
+    skusDataToClient.forEach((sku) => {
+      var { prevSkuFieldsValue } = getPrevSkuFieldsValue(sku);
+
+      updateSkusTableFields(sku, years);
+      updateTotalsTableFields(
+        sku.data,
+        years,
+        prevSkuFieldsValue,
+        isCrossYearPeriod,
+      );
+    });
+
+    document.body.removeChild(modal);
+  }
+
+  function cancelButtonHandler() {
+    document.body.removeChild(modal);
+  }
 };
 
 export default skusLastCostPriceModal;

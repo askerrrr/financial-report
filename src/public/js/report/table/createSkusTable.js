@@ -1,5 +1,5 @@
 import createTdElement from "./services/createTdElement.js";
-import createSKUPhotoUploader from "./services/skuPhotoUploader/index.js";
+import createSkuPhotoUploader from "./services/skuPhotoUploader/index.js";
 import openCostPriceModal from "./services/modal/costPriceModal/openCostPriceModal.js";
 import openOtherExpensesModal from "./services/modal/otherExpensesModal/openOtherExpensesModal.js";
 
@@ -24,10 +24,18 @@ var createSkusTable = (userId, reportId, year, skus) => {
 
     var costPriceInputField = openCostPriceModal(data, isGuestAccess);
     var otherExpensesInputField = openOtherExpensesModal(data, isGuestAccess);
-    var skuPhotoUploader = createSKUPhotoUploader(reportId, sku.skuName);
+    var skuPhotoUploader = createSkuPhotoUploader(
+      userId,
+      reportId,
+      sku.skuName,
+    );
 
     var photoElemId = "photo-cell-" + sku.skuName + "-" + year;
-    var skuPhotoUploaderTd = createTdElement(skuPhotoUploader, photoElemId, "photo-cell");
+    var skuPhotoUploaderTd = createTdElement(
+      skuPhotoUploader,
+      photoElemId,
+      "photo-cell",
+    );
 
     var skuName = createTdElement(sku.skuName);
     var qty = createTdElement(sku.qty);

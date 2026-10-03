@@ -4,7 +4,7 @@ var collectImagesAsBase64 = async (userId, skus) => {
   var skuImages = [];
 
   for (var { skuName } of skus) {
-    var objectKey = "skuname=" + skuName + ";" + "userId=" + userId;
+    var objectKey = userId + ";" + skuName;
 
     var base64 = await s3.getFile(objectKey);
     skuImages.push({ skuName, base64 });

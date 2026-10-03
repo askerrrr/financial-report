@@ -1,9 +1,11 @@
 import { tokenModel } from "../../../models/index.js";
 
 var getWBTokens = async (userId, session) => {
-  var sessionOpt = session ? { session } : {};
+  var sessionOptions = session
+    ? { session }
+    : { readPreference: "secondaryPreferred" };
 
-  var tokens = await tokenModel.find({ userId }, {}, { ...sessionOpt });
+  var tokens = await tokenModel.find({ userId }, {}, { ...sessionOptions });
 
   return { tokens };
 };

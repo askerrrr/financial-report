@@ -1,3 +1,4 @@
+import { logger } from "../../logger.js";
 import getMongooseOptions from "./getMongooseOptions.js";
 import { serverEmitter, databaseEmitter } from "../customEvent/index.js";
 
@@ -34,20 +35,16 @@ var scheduleReconnect = (dbInstance, dbClientToEncryption) => {
     if (!isReconnecting) return;
 
     reconnectAttempts += 1;
-    console.log({
-      attempt: reconnectAttempts,
-      delayBeforeThisAttempt: currentDelay,
-    });
+    logger.info({ reconnectAttempts });
 
     try {
       var options = await getMongooseOptions(dbClientToEncryption);
 
       await dbInstance.connect(process.env.MONGO_URI, options);
     } catch (err) {
-      console.error("Reconnect attempt failed:", err?.message || err);
+      logger.fatal(`Reconnect attempt failed: ${err?.message || err}`);
 
       currentDelay = Math.min(currentDelay * 2, MAX_DELAY_MS);
-      console.log({ nextDelayMs: currentDelay });
 
       reconnectTimer = setTimeout(tryConnect, currentDelay);
     }
@@ -60,31 +57,31 @@ var setupDbEvents = (dbInstance, dbClientToEncryption) => {
   if (eventsConfigured) return;
   eventsConfigured = true;
 
-  dbInstance.connection.on("error", (err) => {
-    console.error("mongoose connection error:", err?.message || err);
-  });
+  dbInstance.connection.on("error", (err) =>
+    logger.fatal(`mongoose connection error: ${err?.message || err}`),
+  );
 
   dbInstance.connection.on("disconnected", () => {
-    console.log("mongoose disconnected");
+    logger.warn("---------- DB DISCONNECTED ----------");
     scheduleReconnect(dbInstance, dbClientToEncryption);
   });
 
   dbInstance.connection.on("connected", () => {
     if (isReconnecting) {
-      console.log("mongoose reconnected");
+      logger.info("---------- DB RECONNECTED ----------");
       serverEmitter.emit("start");
     } else {
-      console.log("mongoose connected");
+      logger.info("---------- DB CONNECTED ----------");
     }
     resetReconnectState();
   });
 
   dbClientToEncryption.on("error", (err) => {
-    console.error("encryption client error:", err?.message || err);
+    logger.fatal(`encryption client error: ${err?.message || err}`);
   });
 
   databaseEmitter.on("connection_error", () => {
-    console.log("databaseEmitter: connection_error");
+    logger.fatal("---------- DB CONNECTION ERROR ----------");
     scheduleReconnect(dbInstance, dbClientToEncryption);
   });
 };

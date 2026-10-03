@@ -1,5 +1,8 @@
 import { WBAPIError } from "../../../../../../customError/index.js";
 
+var WBAPIUnavailableMsg =
+  "Сервис Wildberries API временно недоступен. Попробуйте позже.";
+
 var getPaidStorageReportByTaskIdFromWBAPI = async (taskId, token, userId) => {
   var url = `https://seller-analytics-api.wildberries.ru/api/v1/paid_storage/tasks/${taskId}/download`;
 
@@ -8,6 +11,8 @@ var getPaidStorageReportByTaskIdFromWBAPI = async (taskId, token, userId) => {
     headers: {
       Authorization: "Bearer " + token,
     },
+  }).catch(() => {
+    throw new WBAPIError(userId, 500, WBAPIUnavailableMsg);
   });
 
   if (res.status === 204) {

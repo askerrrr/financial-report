@@ -8,14 +8,23 @@ import updateSkusTableFields from "../../updateSkusTableFields.js";
 import updateTotalsTableFields from "../../updateTotalsTableFields.js";
 import updateReportFromLocalStorage from "../../updateReportFromLocalStorage.js";
 
-var otherExpensesModal = (skuData, otherExpensesDisplayElement, isGuestAccess) => {
+var otherExpensesModal = (
+  skuData,
+  otherExpensesDisplayElement,
+  isGuestAccess,
+) => {
   var modal = createDiv("modal-overlay");
+  modal.id = "modal-window";
+
   var modalContent = createDiv("modal-content");
 
   var titleContent = `Изменить прочие расходы для "${skuData.skuName}"`;
   var title = createTitle("modal-title", titleContent);
 
-  var otherExpensesInput = createInput("modal-input", otherExpensesDisplayElement);
+  var otherExpensesInput = createInput(
+    "modal-input",
+    otherExpensesDisplayElement,
+  );
 
   var buttonsContainer = createDiv("modal-buttons");
 
@@ -26,7 +35,11 @@ var otherExpensesModal = (skuData, otherExpensesDisplayElement, isGuestAccess) =
 
     skuData.otherExpenses = +otherExpensesInput.value;
 
-    var data = await sendChangedData(skuData, isGuestAccess, "setotherexpenses");
+    var data = await sendChangedData(
+      skuData,
+      isGuestAccess,
+      "setotherexpenses",
+    );
 
     if (!data) {
       return;
@@ -38,18 +51,32 @@ var otherExpensesModal = (skuData, otherExpensesDisplayElement, isGuestAccess) =
     var { prevSkuFieldsValue } = getPrevSkuFieldsValue(sku);
 
     updateSkusTableFields(sku, years);
-    updateTotalsTableFields(sku.data, years, prevSkuFieldsValue, isCrossYearPeriod);
+
+    updateTotalsTableFields(
+      sku.data,
+      years,
+      prevSkuFieldsValue,
+      isCrossYearPeriod,
+    );
 
     if (isGuestAccess) {
       updateReportFromLocalStorage(data);
     }
   };
 
-  var saveButton = createButton("modal-button modal-button-save", saveButtonTextContent, { event, cb });
+  var saveButton = createButton(
+    "modal-button modal-button-save",
+    saveButtonTextContent,
+    { event, cb },
+  );
 
   cb = () => document.body.removeChild(modal);
   var cancelButtonTextContent = "Отмена";
-  var cancelButton = createButton("modal-button modal-button-cancel", cancelButtonTextContent, { event, cb });
+  var cancelButton = createButton(
+    "modal-button modal-button-cancel",
+    cancelButtonTextContent,
+    { event, cb },
+  );
 
   buttonsContainer.append(cancelButton, saveButton);
   modalContent.append(title, otherExpensesInput, buttonsContainer);

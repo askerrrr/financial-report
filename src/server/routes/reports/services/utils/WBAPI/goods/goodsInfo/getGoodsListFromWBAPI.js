@@ -1,5 +1,8 @@
 import { WBAPIError } from "../../../../../../../customError/index.js";
 
+var WBAPIUnavailableMsg =
+  "Сервис Wildberries API временно недоступен. Попробуйте позже.";
+
 var getGoodsListFromWBAPI = async (userId, token) => {
   var url =
     "https://discounts-prices-api.wildberries.ru/api/v2/list/goods/filter?limit=1000";
@@ -7,6 +10,8 @@ var getGoodsListFromWBAPI = async (userId, token) => {
   var res = await fetch(url, {
     method: "GET",
     headers: { Authorization: "Bearer " + token },
+  }).catch(() => {
+    throw new WBAPIError(userId, 500, WBAPIUnavailableMsg);
   });
 
   var data = await res.json();

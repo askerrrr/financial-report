@@ -1,8 +1,11 @@
 import { taxParamModel } from "../../../models/index.js";
 
 var getTaxParamsFromDb = async (userId, year, session) => {
-  var sessionOpt = session ? { session: session } : {};
-  var data = await taxParamModel.findOne({ userId }, null, { ...sessionOpt });
+  var sessionOptions = session
+    ? { session }
+    : { readPreference: "secondaryPreferred" };
+
+  var data = await taxParamModel.findOne({ userId }, null, { ...sessionOptions });
 
   if (year) {
     return data.toObject().years.find((date) => date.year == year);

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { MongoClient } from "mongodb";
+import { logger } from "../../logger.js";
 import setupDbEvents from "./setupDbEvents.js";
 import killSessions from "./killSessions.js";
 import getMongooseOptions from "./getMongooseOptions.js";
@@ -22,7 +23,7 @@ var runDB = async () => {
 
     serverEmitter.emit("start");
   } catch (e) {
-    console.error(e.message?.toUpperCase() || e);
+    logger.fatal(e);
 
     databaseEmitter.emit("connection_error");
   }

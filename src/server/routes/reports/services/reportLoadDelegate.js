@@ -1,3 +1,4 @@
+import { errorLogger } from "../../../../logger.js";
 import dbUtils from "../../../database/modelsUtil/index.js";
 import isLastRequestTooRecent from "./utils/different/isLastRequestTooRecent.js";
 import sendReportPeriodsToReportLoader from "./utils/different/sendReportPeriodsToReportLoader.js";
@@ -15,8 +16,8 @@ var reportLoadDelegateService = async (data) => {
         reportData: {},
         callNext: false,
       };
-    } catch (e) {
-      console.log({ e });
+    } catch (err) {
+      errorLogger.warn({ userId: data.userId, err });
 
       return {
         errorText:
@@ -45,8 +46,8 @@ var reportLoadDelegateService = async (data) => {
         reportData: {},
         callNext: false,
       };
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      errorLogger.warn({ userId: data.userId, err });
 
       return {
         errorText:

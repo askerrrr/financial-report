@@ -1,4 +1,4 @@
-import { randomBytes } from "node:crypto";
+import { randomUUID } from "node:crypto";
 import processReportSkus from "../../reports/services/utils/reportParsing/index.js";
 import removeDublicateFiles from "../../reports/services/utils/reportsFileParser/removeDublicateFiles.js";
 import extractWorkSheetFromFile from "../../reports/services/utils/reportsFileParser/extractWorkSheetFromFile.js";
@@ -70,8 +70,8 @@ var getReportFromFilesController = async (req, res) => {
   report.dateFrom = dateFrom;
   report.taxRate = taxParamsStub.taxRate;
   report.isCrossYearPeriod = isCrossYearPeriod;
-  report.userId = randomBytes(15).toString("hex");
-  report.reportId = reports.weeklyFinancialReport[0];
+  report.userId = randomUUID();
+  report.reportId = reports.weeklyFinancialReport[0].reportId;
 
   return res.json({ report, reportPeriodIsEmpty });
 };

@@ -1,25 +1,19 @@
 import { MulterError } from "multer";
+import { errorLogger } from "../../../logger.js";
 import { WBAPIError } from "../../customError/index.js";
 
-var errorHandler = async (e, req, res, next) => {
-  console.error({
-    msg: e.message,
-    errName: e.name,
-    status: e?.status || 500,
-    stack: e.stack,
-    cause: e?.cause || null,
-  });
+var errorHandler = async (err, req, res, next) => {
+  errorLogger.fatal({ err });
 
-  if (e instanceof MulterError) {
+  if (err instanceof MulterError) {
     return res.sendStatus(500);
   }
 
-  if (e instanceof WBAPIError) {
-    return res.status(e.status).json({ msg: e.message });
+  if (err instanceof WBAPIError) {
+    return res.json({ errorText: err.message });
   }
 
-  console.log(e.cause);
-  res.status(e?.status || 500).json({ msg: "Произошла ошибка..." });
+  res.status(err?.status || 500).json({ msg: "Произошла ошибка..." });
 };
 
 export default errorHandler;

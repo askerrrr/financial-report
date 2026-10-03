@@ -1,9 +1,15 @@
 import { reportPeriodModel } from "../../../models/index.js";
 
 var getReportPeriods = async (userId, session) => {
-  var sessionOption = session ? { session } : {};
+  var sessionOptions = session
+    ? { session }
+    : { readPreference: "secondaryPreferred" };
 
-  var { reportPeriods } = await reportPeriodModel.findOne({ userId }, {}, { ...sessionOption });
+  var { reportPeriods } = await reportPeriodModel.findOne(
+    { userId },
+    {},
+    { ...sessionOptions },
+  );
 
   return { reportPeriods };
 };

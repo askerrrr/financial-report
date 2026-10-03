@@ -1,11 +1,13 @@
 import express from "express";
 import { join } from "node:path";
+import { logger } from "../logger.js";
 import cookieParser from "cookie-parser";
 import checkRoles from "./middleware/checkRoles.js";
 import errorHandler from "./middleware/errorHandler/index.js";
-import pageNotFoundHandler from "./middleware/pageNotFoundHandler/index.js";
 import verifyAuthorization from "./middleware/verifyAuthorization.js";
 import verifyAuthentication from "./middleware/verifyAuthentication.js";
+import pageNotFoundHandler from "./middleware/pageNotFoundHandler/index.js";
+import temporarilyUnavailableHandler from "./middleware/temporarilyUnavailableHandler/index.js";
 
 import { serverEmitter } from "./customEvent/index.js";
 
@@ -30,12 +32,43 @@ var errorServerIsListen = false;
 var mainServerInstance = null;
 var errorServerInstance = null;
 
-var createServer = () => {
-  var app = express();
-  return app;
+var startApp = async () => {
+  await runDB();
 };
 
-var runErrorServer = async () => {
+startApp();
+
+serverEmitter.on("start", async () => {
+  if (errorServerIsListen) {
+    await new Promise((resolve) => {
+      errorServerInstance.close(() => {
+        errorServerInstance.removeAllListeners();
+        errorServerInstance = null;
+        errorServerIsListen = false;
+        logger.info("---------- ERROR SERVER CLOSED ----------");
+        resolve();
+      });
+    });
+  }
+  return await runMainServer();
+});
+
+serverEmitter.on("close", async () => {
+  if (mainServerIsListen) {
+    await new Promise((resolve) => {
+      mainServerInstance.close(() => {
+        mainServerInstance.removeAllListeners();
+        mainServerInstance = null;
+        mainServerIsListen = false;
+        logger.fatal("---------- SERVER CLOSED ----------");
+        resolve();
+      });
+    });
+  }
+  return await runErrorServer();
+});
+
+async function runErrorServer() {
   if (errorServerInstance) {
     await new Promise((resolve) => {
       if (errorServerInstance && errorServerInstance.close) {
@@ -49,21 +82,27 @@ var runErrorServer = async () => {
     });
   }
 
-  var errorApp = createServer();
-  errorApp.get("/", (_, res) =>
-    res
-      .set({ "Content-Type": "text/html" })
-      .send("<p>Сервер временно недоступен</p>"),
-  );
-  errorServerIsListen = true;
-  errorServerInstance = errorApp.listen(
-    process.env.PORT,
-    process.env.HOST,
-    () => console.log("Сервер временно недоступен."),
-  );
-};
+  var errorApp = express();
+  errorApp.disable("x-powered-by");
+  errorApp.use(express.urlencoded());
+  errorApp.use(express.json());
+  errorApp.use(express.static(join(import.meta.dirname, "../public")));
 
-var runServer = async () => {
+  errorApp.use(
+    "/decode-report-without-registration/",
+    decodeReportWithoutRegistrationRouter,
+  );
+
+  errorApp.all(/.*/, temporarilyUnavailableHandler);
+
+  errorApp.use(errorHandler);
+
+  errorServerIsListen = true;
+  errorServerInstance = errorApp.listen(process.env.PORT, process.env.HOST);
+  logger.warn("---------- ERROR SERVER RUN ----------");
+}
+
+async function runMainServer() {
   if (mainServerInstance) {
     await new Promise((resolve) => {
       if (mainServerInstance && mainServerInstance.close) {
@@ -78,7 +117,7 @@ var runServer = async () => {
   }
 
   process.env.NODE_ENV = "production";
-  var app = createServer();
+  var app = express();
 
   app.disable("x-powered-by");
   app.use(express.urlencoded());
@@ -113,58 +152,6 @@ var runServer = async () => {
   app.use(errorHandler);
 
   mainServerIsListen = true;
-  mainServerInstance = app.listen(
-    process.env.PORT,
-    process.env.HOST,
-    async () => console.log("server running"),
-  );
-};
-
-var startApp = async () => {
-  try {
-    await runDB();
-    await runServer();
-  } catch (e) {
-    console.log(e);
-    if (
-      e.name !== "MongooseServerSelectionError" ||
-      e.name !== "MongoServerSelectionError"
-    ) {
-      await runErrorServer();
-    }
-  }
-};
-
-startApp();
-
-serverEmitter.on("start", async () => {
-  if (errorServerIsListen) {
-    await new Promise((resolve) => {
-      errorServerInstance.close(() => {
-        errorServerInstance.removeAllListeners();
-        errorServerInstance = null;
-        errorServerIsListen = false;
-        resolve();
-      });
-    });
-  }
-  return await runServer();
-});
-
-serverEmitter.on("close", async () => {
-  if (mainServerIsListen) {
-    await new Promise((resolve) => {
-      mainServerInstance.close(() => {
-        mainServerInstance.removeAllListeners();
-        mainServerInstance = null;
-        mainServerIsListen = false;
-        resolve();
-      });
-    });
-  }
-  return await runErrorServer();
-});
-
-process.on("unhandledRejection", async (reason, promise) => {
-  //console.log("reason name: ", reason.name);
-});
+  mainServerInstance = app.listen(process.env.PORT, process.env.HOST);
+  logger.info("---------- SERVER RUN ----------");
+}
