@@ -25,40 +25,10 @@ var costPriceModal = (skuData, costPriceDisplayElement, isGuestAccess) => {
 
   var saveButtonTextContent = "Сохранить";
 
-  var saveCb = async () => {
-    document.body.removeChild(modal);
-
-    skuData.costPrice = +costPriceInput.value;
-
-    var data = await sendChangedData(skuData, isGuestAccess, "setcostprice");
-
-    if (!data) {
-      return;
-    }
-
-    costPriceDisplayElement.textContent = costPriceInput.value;
-
-    var { sku, years, isCrossYearPeriod } = data;
-    var { prevSkuFieldsValue } = getPrevSkuFieldsValue(sku);
-
-    updateSkusTableFields(sku);
-    
-    updateTotalsTableFields(
-      sku.data,
-      years,
-      prevSkuFieldsValue,
-      isCrossYearPeriod,
-    );
-
-    if (isGuestAccess) {
-      updateReportFromLocalStorage(data);
-    }
-  };
-
   var saveButton = createButton(
     "modal-button modal-button-save",
     saveButtonTextContent,
-    { event, cb: saveCb },
+    { event, cb: saveButtonHandler },
   );
 
   var cancelButtonTextContent = "Отмена";
@@ -81,6 +51,36 @@ var costPriceModal = (skuData, costPriceDisplayElement, isGuestAccess) => {
       document.body.removeChild(modal);
     }
   });
+
+  async function saveButtonHandler() {
+    document.body.removeChild(modal);
+
+    skuData.costPrice = +costPriceInput.value;
+
+    var data = await sendChangedData(skuData, isGuestAccess, "setcostprice");
+
+    if (!data) {
+      return;
+    }
+
+    costPriceDisplayElement.textContent = costPriceInput.value;
+
+    var { sku, years, isCrossYearPeriod } = data;
+    var { prevSkuFieldsValue } = getPrevSkuFieldsValue(sku);
+
+    updateSkusTableFields(sku);
+
+    updateTotalsTableFields(
+      sku.data,
+      years,
+      prevSkuFieldsValue,
+      isCrossYearPeriod,
+    );
+
+    if (isGuestAccess) {
+      updateReportFromLocalStorage(data);
+    }
+  }
 };
 
 export default costPriceModal;
