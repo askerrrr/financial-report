@@ -56,7 +56,7 @@ var getReportFromWBAPIController = async (req, res, next) => {
   report.skus = reportSkus;
   report.userId = randomUUID();
   report.isCrossYearPeriod = isCrossYearPeriod;
-  report.reportId = reports.weeklyFinancialReport[0];
+  report.reportId = reports.weeklyFinancialReport[0].reportId;
 
   return res.json({ report, errorText });
 };
