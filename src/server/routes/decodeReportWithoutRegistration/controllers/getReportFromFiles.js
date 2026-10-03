@@ -71,7 +71,7 @@ var getReportFromFilesController = async (req, res) => {
   report.taxRate = taxParamsStub.taxRate;
   report.isCrossYearPeriod = isCrossYearPeriod;
   report.userId = randomUUID();
-  report.reportId = reports.weeklyFinancialReport[0];
+  report.reportId = reports.weeklyFinancialReport[0].reportId;
 
   return res.json({ report, reportPeriodIsEmpty });
 };
