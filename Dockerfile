@@ -28,5 +28,6 @@ RUN apt-get update \
 
 
 COPY . .
+USER node
 EXPOSE 5000
 CMD npm start
