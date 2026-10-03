@@ -23,12 +23,39 @@ var skusLastCostPriceModal = (years, skusLastCostPrice) => {
 
   var buttonsContainer = createDiv("modal-buttons");
 
-  var cb = async () => {
+  var saveButton = createButton(
+    "modal-button modal-button-save",
+    saveButtonTextContent,
+    { event, cb: saveButtonHandler },
+  );
+
+  var cancelButton = createButton(
+    "modal-button modal-button-cancel",
+    cancelButtonTextContent,
+    { event, cb: cancelButtonHandler },
+  );
+
+  var skusCostPriceContainer = createSkusCostPriceContainer(
+    skusLastCostPrice,
+    years,
+  );
+
+  buttonsContainer.append(cancelButton, saveButton);
+  modalContent.append(title, skusCostPriceContainer, buttonsContainer);
+
+  modal.append(modalContent);
+  document.body.append(modal);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      document.body.removeChild(modal);
+    }
+  });
+
+  async function saveButtonHandler() {
     var { selectedYear } = getSelectedYear();
 
     var { selectedLastCostPrices } = getSelectedLastCostPrices(selectedYear);
-
-    console.log({ selectedYear });
 
     if (!selectedLastCostPrices.length) {
       alert("Для выбранного периода нет последних себестоимостей.");
@@ -39,7 +66,7 @@ var skusLastCostPriceModal = (years, skusLastCostPrice) => {
       selectedYear,
       skusLastCostPrice,
     );
-    console.log({ isCrossYearPeriod });
+
     skusDataToClient.forEach((sku) => {
       var { prevSkuFieldsValue } = getPrevSkuFieldsValue(sku);
 
@@ -53,35 +80,11 @@ var skusLastCostPriceModal = (years, skusLastCostPrice) => {
     });
 
     document.body.removeChild(modal);
-  };
+  }
 
-  var saveButton = createButton(
-    "modal-button modal-button-save",
-    saveButtonTextContent,
-    { event, cb },
-  );
-
-  cb = () => document.body.removeChild(modal);
-  var cancelButton = createButton(
-    "modal-button modal-button-cancel",
-    cancelButtonTextContent,
-    { event, cb },
-  );
-
-  buttonsContainer.append(cancelButton, saveButton);
-  modalContent.append(
-    title,
-    createSkusCostPriceContainer(skusLastCostPrice, years),
-    buttonsContainer,
-  );
-  modal.append(modalContent);
-  document.body.append(modal);
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      document.body.removeChild(modal);
-    }
-  });
+  function cancelButtonHandler() {
+    document.body.removeChild(modal);
+  }
 };
 
 export default skusLastCostPriceModal;
