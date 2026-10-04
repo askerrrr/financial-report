@@ -42,8 +42,6 @@ var getMongooseOptions = async (dbClientToEncryption) => {
 
   var { schemaMap } = getEncryptionFieldsSchemaMap(dataKeyId);
 
-  var authOptions = JSON.parse(process.env.MONGO_AUTH_OPTIONS);
-
   cachedOptions = {
     auth,
     autoEncryption: {
@@ -52,7 +50,6 @@ var getMongooseOptions = async (dbClientToEncryption) => {
       extraOptions,
       keyVaultNamespace,
     },
-    ...authOptions,
     autoIndex: false,
     serverSelectionTimeoutMS: 30_000,
     authSource: process.env.MONGO_AUTH_DB,
