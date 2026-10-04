@@ -2,7 +2,7 @@ services:
   app:
     container_name: report_app
     build:
-      context: ./financial-report/
+      context: .
       dockerfile: Dockerfile
     expose:
       - "5000"
