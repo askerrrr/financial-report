@@ -1,5 +1,5 @@
 import { logger } from "../../logger.js";
-import getMongooseOptions from "./getMongooseOptions.js";
+import getMongooseOptions from "./getClientOptions.js";
 import { serverEmitter, databaseEmitter } from "../customEvent/index.js";
 
 var MAX_DELAY_MS = 60_000;

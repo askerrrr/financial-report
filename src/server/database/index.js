@@ -3,7 +3,7 @@ import { MongoClient } from "mongodb";
 import { logger } from "../../logger.js";
 import setupDbEvents from "./setupDbEvents.js";
 import killSessions from "./killSessions.js";
-import getMongooseOptions from "./getMongooseOptions.js";
+import getMongooseOptions from "./getClientOptions.js";
 import { databaseEmitter, serverEmitter } from "../customEvent/index.js";
 
 var auth = {
