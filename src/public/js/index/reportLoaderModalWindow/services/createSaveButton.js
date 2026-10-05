@@ -16,7 +16,7 @@ var createSaveButton = (
   uploadAllReportsCheckbox,
 ) => {
   var button = document.createElement("button");
-  button.className = "modal-button modal-button-save";
+  button.className = "modal-btn modal-btn-primary";
   button.textContent = "Отправить";
 
   button.onclick = async () => {
@@ -24,7 +24,7 @@ var createSaveButton = (
 
     var needToLoadAllReports = uploadAllReportsCheckbox.checked;
     console.log({ needToLoadAllReports });
-    
+
     try {
       if (needToLoadAllReports) {
         await handleAllReportsLoading(userId);
