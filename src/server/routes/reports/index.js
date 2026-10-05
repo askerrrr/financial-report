@@ -13,6 +13,7 @@ import skuPhotoUploadController from "./controllers/skuPhotoUpload.js";
 import setCostPriceToSkuController from "./controllers/setCostPriceToSku.js";
 import checkReportExistsController from "./controllers/checkReportExists.js";
 import reportLoadDelegateController from "./controllers/reportLoadDelegate.js";
+import checkReportPeriodsController from "./controllers/checkReportPeriods.js";
 import saveReportFromFileController from "./controllers/saveReportFromFile.js";
 import setCostPriceToSkusController from "./controllers/setCostPriceToSkus.js";
 import downloadReportAsXLSXController from "./controllers/downloadReportAsXLSX.js";
@@ -46,6 +47,7 @@ router.get(
 router.post(
   "/",
   joiSchemaValidator(joiSchemas.saveReportsSchema),
+  checkReportPeriodsController,
   checkTokenExists,
   reportLoadDelegateController,
   checkReportExistsController,

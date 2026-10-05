@@ -1,6 +1,6 @@
+import isMonday from "./isMonday.js";
 import everyIsNum from "./everyIsNum.js";
 import isFutureDate from "./isFutureDate.js";
-import isMonday from "../../utils/dateUtils/services/isMonday.js";
 
 var startDayFromMS = new Date("2024-01-29").getTime();
 
