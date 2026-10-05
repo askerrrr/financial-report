@@ -20,13 +20,12 @@ var createSaveButton = (
   button.textContent = "Отправить";
 
   button.onclick = async () => {
-    document.body.removeChild(modal);
-
     var needToLoadAllReports = uploadAllReportsCheckbox.checked;
 
     try {
       if (needToLoadAllReports) {
         await handleAllReportsLoading(userId);
+        document.body.removeChild(modal);
       } else {
         var dateFrom = dateFromInputElem?.value;
         var { validDateFrom, errorText } = checkDateFrom(dateFrom);
@@ -57,6 +56,8 @@ var createSaveButton = (
         } else {
           handleNonSameWeekPeriod(userId, validDateFrom, validDateTo);
         }
+
+        document.body.removeChild(modal);
       }
     } catch (e) {
       await hideSpinner();
