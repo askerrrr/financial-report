@@ -1,3 +1,4 @@
+import everyIsNum from "./everyIsNum.js";
 import isFutureDate from "./isFutureDate.js";
 import getDateToByDateFrom from "../../utils/dateUtils/index.js";
 
@@ -20,12 +21,7 @@ var checkDateTo = (dateTo, dateFrom) => {
     };
   }
 
-  var everyIsNum = dateTo
-    .split("-")
-    .map(Number)
-    .every((num) => typeof num === "number" && !isNaN(num));
-
-  if (!everyIsNum) {
+  if (!everyIsNum(dateTo)) {
     return {
       validDateTo: "",
       isPeriodWithinSameWeek: true,

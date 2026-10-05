@@ -23,7 +23,6 @@ var createSaveButton = (
     document.body.removeChild(modal);
 
     var needToLoadAllReports = uploadAllReportsCheckbox.checked;
-    console.log({ needToLoadAllReports });
 
     try {
       if (needToLoadAllReports) {

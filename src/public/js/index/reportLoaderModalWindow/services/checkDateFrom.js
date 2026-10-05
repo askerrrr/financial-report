@@ -1,3 +1,4 @@
+import everyIsNum from "./everyIsNum.js";
 import isFutureDate from "./isFutureDate.js";
 import { isMonday } from "../../utils/dateUtils/services/getMondaysOrSundaysOfMonth.js";
 
@@ -8,12 +9,7 @@ var checkDateFrom = (dateFrom) => {
     return { validDateFrom: "", errorText: "Неккоректный период" };
   }
 
-  var everyIsNum = dateFrom
-    .split("-")
-    .map(Number)
-    .every((num) => typeof num === "number" && !isNaN(num));
-
-  if (!everyIsNum) {
+  if (!everyIsNum(dateFrom)) {
     return { validDateFrom: "", errorText: "Неккоректный период" };
   }
 
