@@ -26,14 +26,27 @@ var openReportPeriodModalWindow = (userId) => {
   var modalBody = document.createElement("div");
   modalBody.className = "modal-body";
 
-  var dateFromInput = createInputField(
-    "dateFromInput",
-    "начало в формате гггг.мм.дд - 2025.04.21",
-  );
-  var dateToInput = createInputField(
-    "dateToInput",
-    "конец в формате гггг.мм.дд - 2025.04.27",
-  );
+  var dateFromInput = createInputField("dateFromInput");
+  var dateToInput = createInputField("dateToInput");
+
+  var periodFieldsRow = document.createElement("div");
+  periodFieldsRow.className = "report-period-fields";
+
+  var dateFromGroup = document.createElement("div");
+  dateFromGroup.className = "report-period-field";
+  var dateFromLabel = document.createElement("span");
+  dateFromLabel.className = "report-period-field-label";
+  dateFromLabel.textContent = "начало";
+  dateFromGroup.append(dateFromLabel, dateFromInput);
+
+  var dateToGroup = document.createElement("div");
+  dateToGroup.className = "report-period-field";
+  var dateToLabel = document.createElement("span");
+  dateToLabel.className = "report-period-field-label";
+  dateToLabel.textContent = "конец";
+  dateToGroup.append(dateToLabel, dateToInput);
+
+  periodFieldsRow.append(dateFromGroup, dateToGroup);
 
   var uploadAllReportsCheckbox = createUploadAllReportsCheckbox();
   var label = createLabel("загрузить все отчеты", uploadAllReportsCheckbox);
@@ -54,7 +67,7 @@ var openReportPeriodModalWindow = (userId) => {
   buttonsContainer.className = "modal-footer";
 
   modalHeader.append(title, closeButton);
-  modalBody.append(dateFromInput, dateToInput, label);
+  modalBody.append(periodFieldsRow, label);
   modalContent.append(modalHeader, modalBody, buttonsContainer);
 
   modal.append(modalContent);

@@ -357,9 +357,31 @@
 #report-period-modal .modal-body {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   padding: 24px;
   background: #2b3238;
+}
+
+#report-period-modal .report-period-fields {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+#report-period-modal .report-period-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+#report-period-modal .report-period-field-label {
+  display: block;
+  color: #ced4da;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 #report-period-modal .modal-input {
@@ -508,6 +530,11 @@
 
   #report-period-modal .modal-body {
     padding: 16px;
+  }
+
+  #report-period-modal .report-period-fields {
+    flex-direction: column;
+    gap: 12px;
   }
 
   #report-period-modal .modal-footer {
