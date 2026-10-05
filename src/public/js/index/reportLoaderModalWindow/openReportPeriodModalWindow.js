@@ -61,6 +61,33 @@ var openReportPeriodModalWindow = (userId) => {
   document.body.append(modal);
 
   dateFromInput.focus();
+
+  new Datepicker(dateFromInput, {
+    language: "ru",
+    format: "yyyy-mm-dd",
+    todayHighlight: false,
+    beforeShowDay: (date) => {
+      var isMonday = date.getDay() === 1;
+
+      return {
+        enabled: isMonday,
+      };
+    },
+  });
+
+  new Datepicker(dateToInput, {
+    language: "ru",
+    format: "yyyy-mm-dd",
+    autoFocus: false,
+    todayHighlight: false,
+    beforeShowDay: (date) => {
+      var isMonday = date.getDay() === 0;
+
+      return {
+        enabled: isMonday,
+      };
+    },
+  });
 };
 
 export default openReportPeriodModalWindow;
