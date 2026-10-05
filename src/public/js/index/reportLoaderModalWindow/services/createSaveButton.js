@@ -42,6 +42,11 @@ var createSaveButton = (
           validDateFrom,
         );
 
+        if (new Date(validDateFrom) >= new Date(validDateTo)) {
+          alert("Неккоректный период");
+          return;
+        }
+
         if (errorText) {
           alert(errorText);
           return;
