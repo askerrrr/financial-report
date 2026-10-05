@@ -383,20 +383,66 @@
 }
 
 #report-period-modal .modal-checkbox-label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   margin-top: 4px;
   color: #ced4da;
   font-size: 14px;
+  line-height: 1.5;
   cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
 }
 
-#report-period-modal .modal-checkbox-label input[type="checkbox"] {
+#report-period-modal .modal-checkbox-label:hover {
+  color: #f8f9fa;
+}
+
+#uploadAllReportsCheckbox {
+  appearance: none;
+  -webkit-appearance: none;
   width: 16px;
   height: 16px;
-  accent-color: #0d6efd;
+  min-width: 16px;
+  min-height: 16px;
+  background: #323a40;
+  border: 1px solid #495057;
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
   cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+#uploadAllReportsCheckbox:hover {
+  border-color: #6c757d;
+}
+
+#uploadAllReportsCheckbox:focus-visible {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+#uploadAllReportsCheckbox:checked {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+#uploadAllReportsCheckbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
 #report-period-modal .modal-footer {
