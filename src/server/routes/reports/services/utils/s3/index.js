@@ -8,7 +8,7 @@ var client = new S3Client(JSON.parse(process.env.S3_CLIENT_OPTIONS));
 
 export default {
   getFile: (key) => getFile(client, key),
-  uploadFile: (key, body) => uploadFile(client, key, body),
+  uploadFile: (key, fileType) => uploadFile(client, key, fileType),
   deleteFile: (key) => deleteFile(client, key),
   checkBucketExist: () => checkBucketExist(client),
 };

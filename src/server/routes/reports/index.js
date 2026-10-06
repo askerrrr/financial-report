@@ -118,7 +118,11 @@ router.patch(
   changeFinancialAccountingStatusController,
 );
 
-router.post("/image/", upload.single("sku-photo"), skuPhotoUploadController);
+router.post(
+  "/image/upload-url",
+  joiSchemaValidator(joiSchemas.skuPhotoUploadSchema),
+  skuPhotoUploadController,
+);
 
 router.delete(
   "/image/",

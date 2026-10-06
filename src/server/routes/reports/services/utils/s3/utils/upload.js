@@ -1,12 +1,19 @@
 import checkBucketExist from "./checkBucketExist.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-var uploadFile = async (client, Key, Body) => {
+var uploadFile = async (client, Key, fileType) => {
   await checkBucketExist(client);
 
-  var command = new PutObjectCommand({ Bucket: process.env.BUCKET_NAME, Key, Body, ContentType: "image/png" });
-  var res = await client.send(command);
-  return { httpStatusCode: res["$metadata"].httpStatusCode };
+  var command = new PutObjectCommand({
+    Key,
+    ContentType: fileType,
+    Bucket: process.env.BUCKET_NAME,
+  });
+
+  var presignedUrl = await getSignedUrl(client, command);
+
+  return { presignedUrl };
 };
 
 export default uploadFile;
