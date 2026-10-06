@@ -22,7 +22,6 @@ var reportId = splitedPathParts.at(-1);
 var userId = splitedPathParts.includes("user")
   ? splitedPathParts[3]
   : document.cookie.split("=")[1];
-console.log({ userId });
 btnToUserMainPage.onclick = () =>
   (window.location.href = "/admin/user/" + userId);
 

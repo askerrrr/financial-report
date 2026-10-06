@@ -41,7 +41,6 @@ var getReportData = async () => {
 
 var main = async () => {
   var { report, signedUrls, skusWithLastCostPrices } = await getReportData();
-  console.log(signedUrls)
   var {
     reportId,
     dateFrom,

@@ -10,8 +10,6 @@ export var addEventToDeleteButton = (
   var deleteBtn = document.getElementById(btnId);
 
   deleteBtn.addEventListener("click", async () => {
-    console.log("delete click" + ending);
-
     var confirmed = confirm("Удалить токен ?");
 
     if (confirmed) {
