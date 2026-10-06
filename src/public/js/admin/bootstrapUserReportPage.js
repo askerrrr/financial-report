@@ -3,7 +3,7 @@ import createSkusTable from "../report/table/createSkusTable.js";
 import createTotalsTable from "../report/table/createTotalsTable.js";
 import deleteReportHandler from "../report/deleteReportHandler.js";
 import splitReportByYear from "../report/table/services/splitReportByYear.js";
-import injectBase64IntoImgTags from "../report/table/services/injectBase64IntoImgTags.js";
+import injectSignedUrlsIntoImgTags from "../report/table/services/injectSignedUrlsIntoImgTags.js";
 import downloadReportAsXLSXButtonHandler from "../report/downloadReportAsXLSXButtonHandler.js";
 import getReportPeriodText from "../index/accountedFinancesPanel/getReportPeriodText.js";
 import setSkusLastCostPricesButtonHandler from "../report/setSkusLastCostPricesButtonHandler.js";
@@ -108,7 +108,7 @@ var main = async () => {
 
   reportInfo(report);
 
-  injectBase64IntoImgTags(skuImages);
+  injectSignedUrlsIntoImgTags(skuImages);
 
   downloadReportAsXLSXButtonHandler(report);
   deleteReportHandler(userId, reportId, skus);

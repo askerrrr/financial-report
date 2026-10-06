@@ -1,13 +1,27 @@
-import { GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { GetObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 
 var getFile = async (client, Key) => {
+  var headObjCommand = new HeadObjectCommand({
+    Bucket: process.env.BUCKET_NAME,
+    Key,
+  });
+
   try {
-    var command = new GetObjectCommand({ Bucket: process.env.BUCKET_NAME, Key });
-    var { Body } = await client.send(command);
-    var base64 = Body.transformToString("base64");
-    return base64;
+    await client.send(headObjCommand);
+
+    var getObjCommand = new GetObjectCommand({
+      Bucket: process.env.BUCKET_NAME,
+      Key,
+    });
+
+    var signedUrl = await getSignedUrl(client, getObjCommand, {
+      expiresIn: 300,
+    });
+
+    return { signedUrl };
   } catch (e) {
-    return null;
+    return { signedUrl: null };
   }
 };
 
