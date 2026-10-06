@@ -27,7 +27,7 @@ var isDecodeReportWithoutRegistrationPage = () => {
     sources.push(src);
   }
 
-  return sources.every((src) => src.split("/")[4] === folderName);
+  return sources.some((src) => src.split("/")[4] === folderName);
 };
 
 var closeModal = () => {

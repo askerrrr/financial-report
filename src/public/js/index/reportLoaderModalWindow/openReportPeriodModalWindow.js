@@ -96,10 +96,10 @@ var openReportPeriodModalWindow = (userId) => {
     autoFocus: false,
     todayHighlight: false,
     beforeShowDay: (date) => {
-      var isMonday = date.getDay() === 0;
+      var isSunday = date.getDay() === 0;
 
       return {
-        enabled: isMonday,
+        enabled: isSunday,
       };
     },
   });
