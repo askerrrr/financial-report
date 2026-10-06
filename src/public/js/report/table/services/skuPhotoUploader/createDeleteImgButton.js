@@ -25,10 +25,8 @@ var createDeleteImgButton = (userId, skuName) => {
       img.src = null;
 
       button.style.display = "none";
-
-      alert("Фото успешно удалено");
     } else {
-      alert("Не удалось удалить фото");
+      alert("Не удалось удалить фото.\nПопробуйте еще раз.");
     }
   });
 
