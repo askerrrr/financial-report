@@ -187,6 +187,59 @@ th:last-child {
   object-fit: contain;
 }
 
+.photo-cell-container {
+  position: relative;
+}
+
+.delete-img-button {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  box-sizing: border-box;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  margin: 0;
+  z-index: 1;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--danger);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.delete-img-button::before {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin: auto;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v6m6-6v6'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v6m6-6v6'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+.delete-img-button:hover {
+  border-color: rgba(220, 53, 69, 0.4);
+  background: rgba(220, 53, 69, 0.12);
+  color: #ff6b7a;
+}
+
+.delete-img-button:focus-visible {
+  outline: 2px solid var(--danger);
+  outline-offset: 2px;
+}
+
+.delete-img-button:active {
+  background: rgba(220, 53, 69, 0.2);
+}
+
 .sku-photo-uploader:hover {
   border-color: #0d6efd;
   background: #383d44;
