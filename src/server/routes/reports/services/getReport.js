@@ -1,5 +1,5 @@
 import dbUtils from "../../../database/modelsUtil/index.js";
-import collectSignedUrlToImages from "./utils/different/collectSignedUrlToImages.js";
+import getSignedUrlsToSkuImages from "./utils/different/getSignedUrlsToSkuImages.js";
 import filterCostsForReportSkus from "./utils/different/filterCostsForReportSkus.js";
 
 var { getReportById } = dbUtils.reportModelUtils;
@@ -15,13 +15,13 @@ var getReportService = async (data) => {
   if (!report) {
     return {
       report: {},
-      skuImages: [],
+      signedUrls: [],
       reportNotFound: true,
       skusWithLastCostPrices: [],
     };
   }
 
-  var { skuImages } = await collectSignedUrlToImages(userId, report.skus);
+  var { signedUrls } = await getSignedUrlsToSkuImages(userId, report.skus);
 
   var skuNames = report.skus.map((sku) => sku.skuName);
 
@@ -38,7 +38,7 @@ var getReportService = async (data) => {
 
   return {
     report,
-    skuImages,
+    signedUrls,
     reportNotFound: false,
     skusWithLastCostPrices: filteredSkusWithLastCostPrices,
   };

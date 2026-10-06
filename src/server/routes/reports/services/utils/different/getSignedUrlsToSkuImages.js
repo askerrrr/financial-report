@@ -1,7 +1,7 @@
 import s3 from "../s3/index.js";
 
-var collectSignedUrlToImages = async (userId, skus) => {
-  var skuImages = [];
+var getSignedUrlsToSkuImages = async (userId, skus) => {
+  var signedUrls = [];
 
   for (var { skuName } of skus) {
     var objectKey = userId + ";" + skuName;
@@ -9,11 +9,11 @@ var collectSignedUrlToImages = async (userId, skus) => {
     var { signedUrl } = await s3.getFile(objectKey);
 
     if (signedUrl) {
-      skuImages.push({ skuName, signedUrl });
+      signedUrls.push({ skuName, signedUrl });
     }
   }
 
-  return { skuImages };
+  return { signedUrls };
 };
 
-export default collectSignedUrlToImages;
+export default getSignedUrlsToSkuImages;

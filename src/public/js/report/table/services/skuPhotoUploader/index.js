@@ -26,6 +26,7 @@ var createSkuPhotoUploader = (userId, reportId, skuName, imgData) => {
   form.append(label);
 
   var container = document.createElement("div");
+  container.id = "photo-cell-container-" + skuName;
   container.className = "photo-cell-container";
 
   container.append(form, deleteImgButton);

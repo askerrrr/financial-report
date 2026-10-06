@@ -40,8 +40,8 @@ var getReportData = async () => {
 };
 
 var main = async () => {
-  var { report, skuImages, skusWithLastCostPrices } = await getReportData();
-
+  var { report, signedUrls, skusWithLastCostPrices } = await getReportData();
+  console.log(signedUrls)
   var {
     reportId,
     dateFrom,
@@ -117,11 +117,11 @@ var main = async () => {
   }
 
   reportInfo(report);
-  injectSignedUrlsIntoImgTags(skuImages);
-  downloadReportAsXLSXButtonHandler(report, urlToDownloadReportAsXLSX);
   deleteReportHandler(userId, reportId);
-  financialAccountingStatusButtonHander(userId, reportId, dateFrom, dateTo);
+  injectSignedUrlsIntoImgTags(userId, signedUrls);
   setSkusLastCostPricesButtonHandler(years, skusWithLastCostPrices);
+  downloadReportAsXLSXButtonHandler(report, urlToDownloadReportAsXLSX);
+  financialAccountingStatusButtonHander(userId, reportId, dateFrom, dateTo);
 };
 
 main();

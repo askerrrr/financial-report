@@ -1,5 +1,7 @@
-var injectSignedUrlsIntoImgTags = (imageCollection) => {
-  for (var { skuName, signedUrl } of imageCollection) {
+import createDeleteImgButton from "./skuPhotoUploader/createDeleteImgButton.js";
+
+var injectSignedUrlsIntoImgTags = (userId, signedUrls) => {
+  for (var { skuName, signedUrl } of signedUrls) {
     var imageTagId = "img-" + skuName;
 
     var image = document.getElementById(imageTagId);
@@ -17,9 +19,14 @@ var injectSignedUrlsIntoImgTags = (imageCollection) => {
       "delete-image-button-" + skuName,
     );
 
-    if (deleteImageButton) {
-      deleteImageButton.style.display = "block";
-    }
+    var photoCellContainer = document.getElementById(
+      "photo-cell-container-" + skuName,
+    );
+
+    var deleteImageButton = createDeleteImgButton(userId, skuName);
+
+    deleteImageButton.style.display = "block";
+    photoCellContainer.append(deleteImageButton);
   }
 };
 
