@@ -3,7 +3,7 @@ body {
   color: #f8f9fa;
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 100px;
+  padding: 0;
   min-height: 100vh;
 }
 
@@ -26,20 +26,20 @@ body {
 #auth {
   background-color: transparent;
   color: #ffffff;
-  border: 2px solid #495057;
-  padding: 16px 32px;
-  border-radius: 5px;
-  font-size: 14px;
+  border: 1.6px solid #495057;
+  padding: 12.8px 25.6px;
+  border-radius: 4px;
+  font-size: 11.2px;
   cursor: pointer;
 }
 
 #registration {
   background-color: #495057;
   color: #ffffff;
-  border: 2px solid #495057;
-  padding: 16px 32px;
-  border-radius: 5px;
-  font-size: 14px;
+  border: 1.6px solid #495057;
+  padding: 12.8px 25.6px;
+  border-radius: 4px;
+  font-size: 11.2px;
   cursor: pointer;
 }
 
@@ -51,10 +51,10 @@ body {
 #decode-report-without-registration-button {
   background-color: #343a40;
   color: #ffffff;
-  border: 2px solid #495057;
-  padding: 24px 48px;
-  border-radius: 8px;
-  font-size: 18px;
+  border: 1.6px solid #495057;
+  padding: 19.2px 38.4px;
+  border-radius: 6.4px;
+  font-size: 14.4px;
   cursor: pointer;
   transition: all 0.3s;
   position: absolute;
@@ -120,14 +120,18 @@ body {
 #dialog button {
   background-color: #495057;
   color: #ffffff;
-  border: 2px solid #495057;
-  padding: 16px 32px;
-  border-radius: 6px;
-  font-size: 16px;
+  border: 1px solid #495057;
+  padding: 0 12px;
+  min-height: 32px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 0;
   transition: all 0.3s;
-  width: 100%;
+  min-width: 120px;
+  width: auto;
+  align-self: center;
 }
 
 #dialog p {
@@ -152,10 +156,12 @@ body {
 #download-report-as-xlsx-button {
   background-color: #343a40;
   color: #ffffff;
-  border: 2px solid #495057;
-  padding: 24px 48px;
-  border-radius: 8px;
-  font-size: 18px;
+  border: 1px solid #495057;
+  padding: 0 12px;
+  min-height: 32px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s;
   position: absolute;
@@ -167,19 +173,19 @@ body {
 
 table {
   width: 100%;
-  max-width: 1800px;
-  margin: 150px auto 60px;
+  max-width: 1190px;
+  margin: 105px auto 42px;
   border-collapse: separate;
   border-spacing: 0;
   background: #2d3439;
-  border-radius: 16px;
+  border-radius: 11.2px;
   overflow: hidden;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10.5px 31.5px rgba(0, 0, 0, 0.6);
 }
 
 th,
 td {
-  padding: 18px 14px;
+  padding: 12.6px 9.8px;
   text-align: center;
   vertical-align: middle;
   border-bottom: 1px solid #40484f;
@@ -190,9 +196,9 @@ th {
   background: linear-gradient(to bottom, #40484f, #343a40);
   color: #dee2e6;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.56px;
 }
 
 tbody tr:nth-child(even) {
@@ -201,7 +207,7 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
   background-color: rgba(80, 90, 100, 0.7);
-  transform: scale(1.004);
+  transform: scale(1.0028);
 }
 
 td:last-child,
@@ -211,19 +217,19 @@ th:last-child {
 
 .report-summary-label-wrapper {
   text-align: center;
-  margin-top: 150px;
-  margin-bottom: -110px;
+  margin-top: 105px;
+  margin-bottom: -77px;
 }
 
 .report-summary-label {
   display: inline-block;
-  font-size: 30px;
+  font-size: 21px;
   font-weight: 600;
   color: #71b7ff;
-  padding: 8px 20px;
+  padding: 5.6px 14px;
   background: rgba(13, 110, 253, 0.15);
-  border-radius: 4px;
-  letter-spacing: 0.5px;
+  border-radius: 2.8px;
+  letter-spacing: 0.35px;
 }
 
 #tables-container {
