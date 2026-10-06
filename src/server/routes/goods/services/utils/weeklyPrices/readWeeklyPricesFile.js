@@ -1,4 +1,4 @@
-import Exceljs from "exceljs";
+import Exceljs from "exceljs-community";
 import checkPriceAndDiscount from "./utils/checkPriceAndDiscount.js";
 
 var MAX_NUMBER_COLUMNS_FOR_READING = 8;
@@ -19,10 +19,15 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
     var cell = ws.getCell(skuNameCellAddress);
 
     if (cell?.value) {
-      var existSku = listGoods.find((sku) => sku.skuName === cell.value.toLowerCase());
+      var existSku = listGoods.find(
+        (sku) => sku.skuName === cell.value.toLowerCase(),
+      );
 
       if (existSku && !existSku?.disabled) {
-        skuNamesAndIds.push({ skuName: cell.value.toLowerCase(), nmID: existSku.id });
+        skuNamesAndIds.push({
+          skuName: cell.value.toLowerCase(),
+          nmID: existSku.id,
+        });
       }
     }
 
@@ -55,7 +60,8 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
     for (var i = 0; i < skuNamesAndIds.length; i++) {
       priceCellAddress = columns[columnCount] + priceIndent;
       discountCellAddress = columns[columnCount] + discountIndent;
-      promoParticipationCellAddress = columns[columnCount] + promoParticipationIndent;
+      promoParticipationCellAddress =
+        columns[columnCount] + promoParticipationIndent;
 
       price = ws.getCell(priceCellAddress)?.value;
       discount = ws.getCell(discountCellAddress)?.value;

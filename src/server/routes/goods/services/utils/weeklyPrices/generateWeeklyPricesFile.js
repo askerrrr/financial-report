@@ -1,4 +1,4 @@
-import Exceljs from "exceljs";
+import Exceljs from "exceljs-community";
 import writeSKU from "./utils/writeSKU.js";
 import writeTitles from "./utils/writeTitles.js";
 import setStylesToSheet from "./utils/setStylesToSheet.js";
