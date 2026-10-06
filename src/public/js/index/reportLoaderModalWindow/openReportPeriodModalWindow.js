@@ -7,6 +7,8 @@ import createCancelButton from "../utils/modalWindowUtils/createCancelButton.js"
 import createButtonsContainer from "../utils/modalWindowUtils/createButtonsContainer.js";
 import createUploadAllReportsCheckbox from "./services/createUploadAllReportsCheckbox.js";
 
+var placeholder = "гггг-мм-дд";
+
 var openReportPeriodModalWindow = (userId) => {
   var modal = createModal("modal-overlay");
   modal.id = "report-period-modal";
@@ -26,8 +28,8 @@ var openReportPeriodModalWindow = (userId) => {
   var modalBody = document.createElement("div");
   modalBody.className = "modal-body";
 
-  var dateFromInput = createInputField("dateFromInput");
-  var dateToInput = createInputField("dateToInput");
+  var dateFromInput = createInputField("dateFromInput", placeholder);
+  var dateToInput = createInputField("dateToInput", placeholder);
 
   var periodFieldsRow = document.createElement("div");
   periodFieldsRow.className = "report-period-fields";
