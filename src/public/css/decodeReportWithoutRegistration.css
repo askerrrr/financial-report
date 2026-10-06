@@ -174,12 +174,43 @@ body {
   max-width: 180px;
 }
 
-#dialog p {
+.dialog-information {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dialog-information-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #40484f;
+}
+
+.dialog-information-item:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.dialog-information-item h2 {
+  margin: 0;
+  color: #f8f9fa;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dialog-information-item p {
   color: #adb5bd;
   font-size: 14px;
   line-height: 1.5;
   margin: 0;
   padding: 0;
+}
+
+.dialog-information-item strong {
+  color: #9ec5fe;
+  font-weight: 600;
 }
 
 @media (max-width: 600px) {

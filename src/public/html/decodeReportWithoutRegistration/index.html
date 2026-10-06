@@ -25,14 +25,24 @@
     </div>
     <dialog id="dialog">
       <form>
-        <p>
-          Для получения отчета необходим токен с тремя категориями: Финансы,
-          Продвижение, Аналитика
-        </p>
-        <p>Важно понимать, что я не сохраняю токен, введённый вами</p>
-        <p>
-          Если не доверяете свой токен этому сайту, тогда можете загрузить файлы
-        </p>
+        <div class="dialog-information">
+          <section class="dialog-information-item">
+            <h2>Какие права нужны</h2>
+            <p>
+              Для получения отчета необходим токен с категориями
+              <strong>Финансы</strong>, <strong>Продвижение</strong> и
+              <strong>Аналитика</strong>.
+            </p>
+          </section>
+          <section class="dialog-information-item">
+            <h2>Конфиденциальность</h2>
+            <p>Введённый вами токен не сохраняется.</p>
+          </section>
+          <section class="dialog-information-item">
+            <h2>Нет доверяете свой токен?</h2>
+            <p>Вы можете загрузить файлы вместо токена.</p>
+          </section>
+        </div>
         <button type="button" id="upload-files-btn">Загрузить файлы</button>
         <label for="token">Введите токен</label>
         <input type="text" id="token" />
