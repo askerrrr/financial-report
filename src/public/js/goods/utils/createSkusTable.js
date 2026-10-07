@@ -19,6 +19,12 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
     var tr = document.createElement("tr");
     tr.id = skuName;
 
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+
+    var customClass = tbodyID === "enabled-skus-tbody" ? "enbl" : "dsbl";
+    checkbox.className = `${customClass} sku-checkbox`;
+
     var skuNameTd = createTdElement(skuName, skuName, "skuName");
 
     var priceTitle = "актуальная на ";
@@ -92,6 +98,7 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
       }
 
       tr.append(
+        // checkbox,
         skuNameTd,
         actualPriceTd,
         expectedPriceTd,
@@ -127,6 +134,7 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
     }
 
     tr.append(
+      // checkbox,
       skuNameTd,
       actualPriceTd,
       actualDiscountTd,

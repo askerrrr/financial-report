@@ -2,7 +2,9 @@ import setThColSpan from "./utils/setThColSpan.js";
 import getGoodsData from "./utils/getGoodsData.js";
 import createSkusTable from "./utils/createSkusTable.js";
 import getCurrentDayMSK from "./utils/getCurrentDayMSK.js";
+import getCheckedSkuCheckboxes from "./utils/getCheckedSkuCheckboxes.js";
 import weekDaySelectorHandler from "./utils/weekDaySelector/index.js";
+import multipleDisableHandling from "./utils/multipleDisableHandling.js";
 import loadListGoodsButtonHandler from "./loadListGoodsButtonHandler.js";
 import prependHeaderRowToTbody from "./utils/prependHeaderRowToTbody.js";
 import setWeekDaySelectorToCurrentDay from "./utils/setWeekDaySelectorToCurrentDay.js";
@@ -62,14 +64,17 @@ var handleEmptyEnabledSkus = async function (disabledSku) {
 
 var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
   setWeekDaySelectorToCurrentDay(currentDayName);
+
   toggleSkuTableVisibillity("enabled-skus-table", "enable");
   toggleSkusMetricsFileUploadButtonVisibility("enable");
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
+
   await createSkusTable(enabledSku, "enabled-skus-tbody");
 
   if (disabledSku.length) {
     toggleDisabledSkusButtonVisibility("enable");
+
     await createSkusTable(disabledSku, "disabled-skus-tbody");
   }
 };
