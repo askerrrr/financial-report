@@ -15,7 +15,7 @@ body {
 }
 
 /* ===== Обёртка таблиц ===== */
-.skus-table-wrapper {
+.table-scroll {
   width: 100%;
   max-width: 1600px;
   margin: 24px auto;
@@ -28,7 +28,7 @@ body {
 }
 
 /* Скрываем обёртку, если таблица скрыта */
-.skus-table-wrapper:has(table[hidden]) {
+.table-scroll:has(table[hidden]) {
   display: none;
 }
 
