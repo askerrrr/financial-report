@@ -3,7 +3,7 @@ import dbUtils from "../../../database/modelsUtil/index.js";
 import { readWeeklyPricesFile } from "./utils/weeklyPrices/index.js";
 
 var { getListGoodsFromDb } = dbUtils.goodsModelUtils;
-var { setWeeklyPricesAndDiscountsToDb } =
+var { setWeeklyPricesAndDiscounts } =
   dbUtils.weeklyPricesAndDiscountsModelUtils;
 
 var uploadPricesAndDiscountsFileService = async (userId, fileBuffer) => {
@@ -33,7 +33,7 @@ var uploadPricesAndDiscountsFileService = async (userId, fileBuffer) => {
       listGoods,
     );
 
-    await setWeeklyPricesAndDiscountsToDb(
+    await setWeeklyPricesAndDiscounts(
       userId,
       weeklyPricesAndDiscounts,
       session,
