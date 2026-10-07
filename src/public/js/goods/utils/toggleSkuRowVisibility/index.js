@@ -1,10 +1,9 @@
 import createButton from "../modal/createButton.js";
 import getConfirmMessage from "./getConfirmMessage.js";
 import insertSkuRowToTable from "./insertSkuRowToTable.js";
+import disableSkusTableIfEmpty from "./disableSkusTableIfEmpty.js";
 import sendNewDisableStatus from "./sendNewDisableStatus.js";
 import deleteSkuRowFromTable from "./deleteSkuRowFromTable.js";
-import disableDisabledTableIfEmpty from "./disableDisabledTableIfEmpty.js";
-import { toggleDisabledSkusButtonVisibility } from "../visibilityToggle/index.js";
 import changeDisableStatusOfModalButton from "./changeDisableStatusOfModalButton.js";
 
 /**
@@ -21,17 +20,17 @@ var createSkuRowVisibilityButtonHandler = (skuName, id) => {
       var confirmed = confirm(msg);
 
       if (confirmed) {
-        var hasDisblAttribute = button.hasAttribute("disbl");
+        var hasDsblAttribute = button.hasAttribute("disbl");
         var statusIsUpdated = await sendNewDisableStatus(
           skuName,
           id,
-          hasDisblAttribute,
+          hasDsblAttribute,
         );
 
         if (statusIsUpdated) {
           var skuRow = document.getElementById(skuName);
 
-          if (hasDisblAttribute) {
+          if (hasDsblAttribute) {
             button.removeAttribute("disbl");
             button.textContent = "скрыть";
 
@@ -40,8 +39,6 @@ var createSkuRowVisibilityButtonHandler = (skuName, id) => {
             insertSkuRowToTable(skuRow, "enabled-skus-tbody");
 
             msg = getConfirmMessage(skuName, "to-disable");
-
-            disableDisabledTableIfEmpty();
           } else {
             button.setAttribute("disbl", "");
             button.textContent = "включить";
@@ -51,10 +48,9 @@ var createSkuRowVisibilityButtonHandler = (skuName, id) => {
             insertSkuRowToTable(skuRow, "disabled-skus-tbody");
 
             msg = getConfirmMessage(skuName, "to-enable");
-
-            disableDisabledTableIfEmpty();
-            toggleDisabledSkusButtonVisibility("enable");
           }
+
+          disableSkusTableIfEmpty(hasDsblAttribute);
         }
       }
     },

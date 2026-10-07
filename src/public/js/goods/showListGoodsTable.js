@@ -2,6 +2,7 @@ import setThColSpan from "./utils/setThColSpan.js";
 import getGoodsData from "./utils/getGoodsData.js";
 import createSkusTable from "./utils/createSkusTable.js";
 import getCurrentDayMSK from "./utils/getCurrentDayMSK.js";
+import switchToActiveTable from "./utils/switchToActiveTable.js";
 import getCheckedSkuCheckboxes from "./utils/getCheckedSkuCheckboxes.js";
 import weekDaySelectorHandler from "./utils/weekDaySelector/index.js";
 import multipleDisableHandling from "./utils/multipleDisableHandling.js";
@@ -10,9 +11,9 @@ import prependHeaderRowToTbody from "./utils/prependHeaderRowToTbody.js";
 import setWeekDaySelectorToCurrentDay from "./utils/setWeekDaySelectorToCurrentDay.js";
 import addTableHeadRowToCheckboxForParticipationInPromo from "./utils/addTableHeadRowToCheckboxForParticipationInPromo.js";
 import {
+  toggleTableScrollVisibillity,
   toggleSkuTableVisibillity,
   toggleWeekDaysSelectorVisibility,
-  toggleDisabledSkusButtonVisibility,
   toggleUploadListGoodsButtonVisibility,
   toggleSkusMetricsFileUploadButtonVisibility,
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility,
@@ -24,6 +25,8 @@ var { currentDayName, currentDayIndex } = getCurrentDayMSK();
 var showListGoodsTable = async () => {
   var { listGoods, weeklyPricesAndDiscounts } = await getGoodsData();
   var { enabledSku, disabledSku } = listGoods;
+
+  switchToActiveTable(enabledSku, disabledSku);
 
   if (!enabledSku.length && !disabledSku.length) {
     handleEmptySkus();
@@ -49,13 +52,17 @@ var showListGoodsTable = async () => {
 export default showListGoodsTable;
 
 var handleEmptySkus = function () {
-  toggleUploadListGoodsButtonVisibility("enable");
+  // toggleUploadListGoodsButtonVisibility("enable");
   loadListGoodsButtonHandler();
+
+  toggleTableScrollVisibillity("enabled-skus-table-scroll", "disable");
+  toggleTableScrollVisibillity("disabled-skus-table-scroll", "disable");
 };
 
 var handleEmptyEnabledSkus = async function (disabledSku) {
-  toggleDisabledSkusButtonVisibility("enable");
   toggleSkusMetricsFileUploadButtonVisibility("enable");
+  toggleTableScrollVisibillity("enabled-skus-table-scroll", "disable");
+  toggleTableScrollVisibillity("disabled-skus-table-scroll", "enable");
 
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
@@ -65,6 +72,7 @@ var handleEmptyEnabledSkus = async function (disabledSku) {
 var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
   setWeekDaySelectorToCurrentDay(currentDayName);
 
+  toggleTableScrollVisibillity("enabled-skus-table-scroll", "enable");
   toggleSkuTableVisibillity("enabled-skus-table", "enable");
   toggleSkusMetricsFileUploadButtonVisibility("enable");
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
@@ -73,9 +81,11 @@ var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
   await createSkusTable(enabledSku, "enabled-skus-tbody");
 
   if (disabledSku.length) {
-    toggleDisabledSkusButtonVisibility("enable");
+    toggleTableScrollVisibillity("disabled-skus-table-scroll", "enable");
 
     await createSkusTable(disabledSku, "disabled-skus-tbody");
+  } else {
+    toggleTableScrollVisibillity("disabled-skus-table-scroll", "disable");
   }
 };
 
@@ -103,7 +113,6 @@ var handleNonEmptyWeeklyPricesAndDiscounts = async function (
   );
 
   if (disabledSku.length) {
-    toggleDisabledSkusButtonVisibility("enable");
     await createSkusTable(disabledSku, "disabled-skus-tbody", currentDayData);
   }
 };

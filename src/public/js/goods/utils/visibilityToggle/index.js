@@ -1,6 +1,6 @@
 import toggleSkuTableVisibillity from "./toggleSkuTableVisibillity.js";
+import toggleTableScrollVisibillity from "./toggleTableScrollVisibillity.js";
 import toggleWeekDaysSelectorVisibility from "./toggleWeekDaysSelectorVisibility.js";
-import toggleDisabledSkusButtonVisibility from "./toggleDisabledSkusButtonVisibility.js";
 import toggleUploadListGoodsButtonVisibility from "./toggleUploadListGoodsButtonVisibility.js";
 import toggleSkusMetricsFileUploadButtonVisibility from "./toggleSkusMetricsFileUploadButtonVisibility.js";
 import toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility from "./toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility.js";
@@ -8,8 +8,8 @@ import toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility from "./toggle
 
 export {
   toggleSkuTableVisibillity,
+  toggleTableScrollVisibillity,
   toggleWeekDaysSelectorVisibility,
-  toggleDisabledSkusButtonVisibility,
   toggleUploadListGoodsButtonVisibility,
   toggleSkusMetricsFileUploadButtonVisibility,
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility,

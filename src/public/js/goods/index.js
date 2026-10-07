@@ -1,5 +1,7 @@
 import fileUploadHandler from "./fileUploadHandler.js";
 import showListGoodsTable from "./showListGoodsTable.js";
+import switchSkuTables from "./utils/switchSkuTables.js";
+import observeSkusTables from "./utils/observeSkusTables.js";
 import handleDisabledSkusToggle from "./handleDisabledSkusToggle.js";
 import downloadSkusMetricsFileButtonHandler from "./downloadSkusMetricsFileButtonHandler.js";
 import downloadWeeklyPricesFileButtonHandler from "./downloadWeeklyPricesFileButtonHandler.js";
@@ -11,3 +13,6 @@ fileUploadHandler(userId);
 handleDisabledSkusToggle();
 downloadSkusMetricsFileButtonHandler(userId);
 downloadWeeklyPricesFileButtonHandler(userId);
+
+switchSkuTables()
+// observeSkusTables()
