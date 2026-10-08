@@ -27,7 +27,7 @@ var getCellContent = (
     var expectedValSpan = document.createElement("span");
     expectedValSpan.id = skuName + "-" + fieldName + "-expected";
     expectedValSpan.textContent = expectedVal;
-    expectedValSpan.title = "ожидаемая";
+    expectedValSpan.title = "запланированная";
 
     var arrowElem = "&rarr;";
     var arrowElemSpan = document.createElement("span");
