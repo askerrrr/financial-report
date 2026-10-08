@@ -1,4 +1,3 @@
-import setThColSpan from "./utils/setThColSpan.js";
 import getGoodsData from "./utils/getGoodsData.js";
 import createSkusTable from "./utils/createSkusTableNew.js";
 import getCurrentDayMSK from "./utils/getCurrentDayMSK.js";
@@ -7,7 +6,6 @@ import getCheckedSkuCheckboxes from "./utils/getCheckedSkuCheckboxes.js";
 import weekDaySelectorHandler from "./utils/weekDaySelector/index.js";
 import multipleDisableHandling from "./utils/multipleDisableHandling.js";
 import loadListGoodsButtonHandler from "./loadListGoodsButtonHandler.js";
-import prependHeaderRowToTbody from "./utils/prependHeaderRowToTbody.js";
 import setWeekDaySelectorToCurrentDay from "./utils/setWeekDaySelectorToCurrentDay.js";
 import addTableHeadRowToCheckboxForParticipationInPromo from "./utils/addTableHeadRowToCheckboxForParticipationInPromo.js";
 import {
@@ -90,8 +88,6 @@ var handleNonEmptyWeeklyPricesAndDiscounts = function (
   { enabledSku, disabledSku },
   weeklyPricesAndDiscounts,
 ) {
-  // setThColSpan();
-  // prependHeaderRowToTbody();
   toggleWeekDaysSelectorVisibility("enable");
   toggleSkuTableVisibillity("enabled-skus-table", "enable");
   setWeekDaySelectorToCurrentDay(currentDayName);
