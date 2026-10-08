@@ -99,7 +99,7 @@ var handleNonEmptyWeeklyPricesAndDiscounts = async function (
   toggleSkuTableVisibillity("enabled-skus-table", "enable");
   setWeekDaySelectorToCurrentDay(currentDayName);
   toggleSkusMetricsFileUploadButtonVisibility("enable");
-  addTableHeadRowToCheckboxForParticipationInPromo();
+  // addTableHeadRowToCheckboxForParticipationInPromo();
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
 
