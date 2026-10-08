@@ -6,13 +6,13 @@ var sendUploadFile = async (file) => {
     body: file,
   });
 
-  if (!res.ok) {
-    alert("Произошла ошибка при загрузке документа");
-    return;
-  }
+  var { infoText, weeklyPricesAndDiscounts } = await res.json();
 
-  var { weeklyPricesAndDiscounts } = await res.json();
-  alert("Цены успешно установлены");
+  if (infoText) {
+    alert(infoText);
+  } else {
+    alert("Цены успешно установлены");
+  }
 
   return { weeklyPricesAndDiscounts };
 };
@@ -36,7 +36,7 @@ var uploadWeelkyPricesAndDiscountsFileButtonHandler = (userId) => {
       uploadFormData.append("userId", userId);
       uploadFormData.append("file", input.files[0]);
 
-      await sendUploadFile(uploadFormData);
+      var { weeklyPricesAndDiscounts } = await sendUploadFile(uploadFormData);
     };
   };
 };

@@ -1,17 +1,15 @@
 var checkPriceAndDiscount = (price, discount) => {
-  if (!price || price <= 0) {
-    return;
+  var dataIsValid = false;
+
+  if (!Number.isFinite(price) || price <= 0) {
+    return { dataIsValid };
   }
 
-  if (!discount || discount < 0) {
-    return;
+  if (!Number.isFinite(discount) || discount < 0 || discount > 100) {
+    return { dataIsValid };
   }
 
-  if (price <= discount) {
-    return;
-  }
-
-  return true;
+  return { dataIsValid: true };
 };
 
 export default checkPriceAndDiscount;

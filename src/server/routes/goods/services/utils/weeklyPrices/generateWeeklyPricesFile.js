@@ -13,8 +13,6 @@ var generateWeeklyPricesFile = async (listGoods) => {
   ws = writeTitles(ws);
 
   ws.addRow([]); //empty array is a indent
-  ws.addRow([]);
-  ws.addRow([]);
 
   var indentToSkuName = 5;
 
@@ -27,7 +25,7 @@ var generateWeeklyPricesFile = async (listGoods) => {
     ws.addRow([]);
     ws.addRow([]);
 
-    indentToSkuName += 8;
+    indentToSkuName += 6;
   }
 
   ws = setStylesToSheet(ws);
