@@ -16,7 +16,7 @@ var expectedItemEndings = [
   "-clubDiscountedPrice-expected",
 ];
 
-var weekDaySelectorHandler = async (
+var weekDaySelectorHandler = (
   skus,
   weeklyPricesAndDiscounts,
   currentDayIndex,

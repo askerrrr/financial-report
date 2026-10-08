@@ -34,15 +34,12 @@ var showListGoodsTable = async () => {
   }
 
   if (!enabledSku.length && disabledSku.length) {
-    await handleEmptyEnabledSkus(disabledSku);
+    handleEmptyEnabledSkus(disabledSku);
     return;
   }
 
   if (weeklyPricesAndDiscounts.length) {
-    await handleNonEmptyWeeklyPricesAndDiscounts(
-      listGoods,
-      weeklyPricesAndDiscounts,
-    );
+    handleNonEmptyWeeklyPricesAndDiscounts(listGoods, weeklyPricesAndDiscounts);
     return;
   }
 
@@ -59,17 +56,17 @@ var handleEmptySkus = function () {
   toggleTableScrollVisibillity("disabled-skus-table-scroll", "disable");
 };
 
-var handleEmptyEnabledSkus = async function (disabledSku) {
+var handleEmptyEnabledSkus = function (disabledSku) {
   toggleSkusMetricsFileUploadButtonVisibility("enable");
   toggleTableScrollVisibillity("enabled-skus-table-scroll", "disable");
   toggleTableScrollVisibillity("disabled-skus-table-scroll", "enable");
 
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
-  await createSkusTable(disabledSku, "disabled-skus-tbody");
+  createSkusTable(disabledSku, "disabled-skus-tbody");
 };
 
-var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
+var handleNonEmptyEnabledSkus = function ({ enabledSku, disabledSku }) {
   setWeekDaySelectorToCurrentDay(currentDayName);
 
   toggleTableScrollVisibillity("enabled-skus-table-scroll", "enable");
@@ -78,18 +75,18 @@ var handleNonEmptyEnabledSkus = async function ({ enabledSku, disabledSku }) {
   toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
 
-  await createSkusTable(enabledSku, "enabled-skus-tbody");
+  createSkusTable(enabledSku, "enabled-skus-tbody");
 
   if (disabledSku.length) {
     toggleTableScrollVisibillity("disabled-skus-table-scroll", "enable");
 
-    await createSkusTable(disabledSku, "disabled-skus-tbody");
+    createSkusTable(disabledSku, "disabled-skus-tbody");
   } else {
     toggleTableScrollVisibillity("disabled-skus-table-scroll", "disable");
   }
 };
 
-var handleNonEmptyWeeklyPricesAndDiscounts = async function (
+var handleNonEmptyWeeklyPricesAndDiscounts = function (
   { enabledSku, disabledSku },
   weeklyPricesAndDiscounts,
 ) {
@@ -104,15 +101,11 @@ var handleNonEmptyWeeklyPricesAndDiscounts = async function (
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
 
   var currentDayData = weeklyPricesAndDiscounts[currentDayIndex];
-  console.log(currentDayData)
-  await createSkusTable(enabledSku, "enabled-skus-tbody", currentDayData);
-  await weekDaySelectorHandler(
-    enabledSku,
-    weeklyPricesAndDiscounts,
-    currentDayIndex,
-  );
+  console.log(currentDayData);
+  createSkusTable(enabledSku, "enabled-skus-tbody", currentDayData);
+  weekDaySelectorHandler(enabledSku, weeklyPricesAndDiscounts, currentDayIndex);
 
   if (disabledSku.length) {
-    await createSkusTable(disabledSku, "disabled-skus-tbody", currentDayData);
+    createSkusTable(disabledSku, "disabled-skus-tbody", currentDayData);
   }
 };

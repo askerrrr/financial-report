@@ -42,7 +42,7 @@ var getCellContent = (
   return cellContentSpan;
 };
 
-var createSkusTable = async (skus, tableBodyId, currentDayData) => {
+var createSkusTable = (skus, tableBodyId, currentDayData) => {
   var tableBody = document.getElementById(tableBodyId);
 
   for (var sku of skus) {
