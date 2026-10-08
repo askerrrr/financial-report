@@ -20,14 +20,14 @@ import {
 
 var { currentDayName, currentDayIndex } = getCurrentDayMSK();
 
-var showListGoodsTable = async () => {
+var showListGoodsTable = async (userId) => {
   var { listGoods, weeklyPricesAndDiscounts } = await getGoodsData();
   var { enabledSku, disabledSku } = listGoods;
 
   switchToActiveTable(enabledSku, disabledSku);
 
   if (!enabledSku.length && !disabledSku.length) {
-    handleEmptySkus();
+    handleEmptySkus(userId);
     return;
   }
 
@@ -46,9 +46,9 @@ var showListGoodsTable = async () => {
 
 export default showListGoodsTable;
 
-var handleEmptySkus = function () {
-  // toggleUploadListGoodsButtonVisibility("enable");
-  loadListGoodsButtonHandler();
+var handleEmptySkus = function (userId) {
+  toggleUploadListGoodsButtonVisibility("enable");
+  loadListGoodsButtonHandler(userId);
 
   toggleTableScrollVisibillity("enabled-skus-table-scroll", "disable");
   toggleTableScrollVisibillity("disabled-skus-table-scroll", "disable");

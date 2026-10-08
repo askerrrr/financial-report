@@ -8,11 +8,11 @@ import uploadWeelkyPricesAndDiscountsFileButtonHandler from "./uploadWeelkyPrice
 
 var userId = document.cookie.split("=")[1];
 
-showListGoodsTable();
-uploadWeelkyPricesAndDiscountsFileButtonHandler(userId);
+showListGoodsTable(userId);
 handleDisabledSkusToggle();
 downloadSkusMetricsFileButtonHandler(userId);
 downloadWeeklyPricesFileButtonHandler(userId);
+uploadWeelkyPricesAndDiscountsFileButtonHandler(userId);
 
 switchSkuTables();
 // observeSkusTables()
