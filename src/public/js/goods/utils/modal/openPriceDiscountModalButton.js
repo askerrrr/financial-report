@@ -1,7 +1,7 @@
 import createModal from "./index.js";
 import createButton from "./createButton.js";
 
-var openModalButton = async (item) => {
+var openPriceDiscountModalButton = (item) => {
   var buttonHandler = {
     event: "click",
     cb: () => {
@@ -18,4 +18,4 @@ var openModalButton = async (item) => {
   return button;
 };
 
-export default openModalButton;
+export default openPriceDiscountModalButton;

@@ -1,13 +1,46 @@
 import getTime from "./getTime.js";
 import createTdElement from "./createTdElement.js";
-import openModalButton from "./modal/openModalButton.js";
 import calcDiscountedPrice from "./weekDaySelector/calcDiscountedPrice.js";
+import openPriceDiscountModalButton from "./modal/openPriceDiscountModalButton.js";
 import createSkuRowVisibilityButtonHandler from "./toggleSkuRowVisibility/index.js";
 import createCheckboxForParticipationInPromo from "./createCheckboxForParticipationInPromo.js";
 
 /**
  * @param {'enabled-skus-tbody' | 'disabled-skus-tbody'} tableBodyId
  */
+
+var getCellContent = (
+  skuName,
+  fieldName,
+  lastFetch,
+  currentVal,
+  expectedVal,
+) => {
+  var currentValSpan = document.createElement("span");
+  currentValSpan.id = skuName + "-" + fieldName;
+  currentValSpan.textContent = currentVal;
+  currentValSpan.title = lastFetch;
+
+  var cellContentSpan = document.createElement("span");
+
+  if (expectedVal) {
+    var expectedValSpan = document.createElement("span");
+    expectedValSpan.id = skuName + "-" + fieldName + "-expected";
+    expectedValSpan.textContent = expectedVal;
+    expectedValSpan.title = "ожидаемая";
+
+    var arrowElem = "&rarr;";
+    var arrowElemSpan = document.createElement("span");
+    arrowElemSpan.innerHTML = arrowElem;
+    arrowElemSpan.style.margin = "0 16px";
+
+    cellContentSpan.append(currentValSpan, arrowElemSpan, expectedValSpan);
+  } else {
+    cellContentSpan.append(currentValSpan);
+  }
+
+  return cellContentSpan;
+};
 
 var createSkusTable = async (skus, tableBodyId, currentDayData) => {
   var tableBody = document.getElementById(tableBodyId);
@@ -27,31 +60,61 @@ var createSkusTable = async (skus, tableBodyId, currentDayData) => {
 
     var skuNameTd = createTdElement(skuName, skuName, "skuName");
 
-    var priceText = price;
-    var discountText = discount;
-    var discountedPriceText = discountedPrice;
-    var clubDiscountedPriceText = clubDiscountedPrice;
+    var priceTitle = "актуальная на ";
+    var lastFetchTime = getTime(sku?.lastFetch, priceTitle);
 
-    var skuCurrentDayData = currentDayData?.find(
-      (item) => item.skuName === skuName,
+    var priceText = getCellContent(skuName, "price", lastFetchTime, price);
+    var discountText = getCellContent(
+      skuName,
+      "discount",
+      lastFetchTime,
+      discount,
     );
+    var discountedPriceText = getCellContent(
+      skuName,
+      "discountedPrice",
+      "",
+      discountedPrice,
+    );
+
+    var clubDiscountedPriceText = getCellContent(
+      skuName,
+      "clubDiscountedPrice",
+      lastFetchTime,
+      clubDiscountedPrice,
+    );
+
+    var skuCurrentDayData = currentDayData?.find((i) => i.skuName === skuName);
 
     if (currentDayData && skuCurrentDayData) {
       var expectedPrice = skuCurrentDayData.data.price;
       var expectedDiscount = skuCurrentDayData.data.discount;
-      var expectedDiscountedPrice = skuCurrentDayData.data.discountedPrice;
-      var expectedClubDiscountedPrice =
-        skuCurrentDayData.data.clubDiscountedPrice;
+      var expectedDiscountedPrice = calcDiscountedPrice(skuCurrentDayData.data);
 
-      priceText += " --> " + expectedPrice;
-      discountText += " --> " + expectedDiscount;
-      discountedPriceText += " --> " + expectedDiscountedPrice;
-      clubDiscountedPriceText += " --> " + expectedClubDiscountedPrice;
+      priceText = getCellContent(
+        skuName,
+        "price",
+        lastFetchTime,
+        price,
+        expectedPrice,
+      );
+
+      discountText = getCellContent(
+        skuName,
+        "discount",
+        lastFetchTime,
+        discount,
+        expectedDiscount,
+      );
+
+      discountedPriceText = getCellContent(
+        skuName,
+        "discountedPrice",
+        "",
+        discountedPrice,
+        expectedDiscountedPrice,
+      );
     }
-
-    console.log({ priceText, discountText });
-    var priceTitle = "актуальная на ";
-    var lastFetchTime = getTime(sku?.lastFetch, priceTitle);
 
     var priceTd = createTdElement(priceText, skuName, "price", lastFetchTime);
     var discountTd = createTdElement(discountText, skuName, "discount");
@@ -66,7 +129,7 @@ var createSkusTable = async (skus, tableBodyId, currentDayData) => {
       "clubDiscountedPrice",
     );
 
-    var modalButton = await openModalButton(sku);
+    var modalButton = openPriceDiscountModalButton(sku);
     var modalButtonTdElem = createTdElement(modalButton);
     var skuRowVisibilityButtonHandler = createSkuRowVisibilityButtonHandler(
       skuName,

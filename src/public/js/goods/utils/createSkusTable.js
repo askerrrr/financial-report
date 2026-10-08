@@ -1,6 +1,6 @@
 import getTime from "./getTime.js";
 import createTdElement from "./createTdElement.js";
-import openModalButton from "./modal/openModalButton.js";
+import openModalButton from "./modal/openPriceDiscountModalButton.js";
 import calcDiscountedPrice from "./weekDaySelector/calcDiscountedPrice.js";
 import createSkuRowVisibilityButtonHandler from "./toggleSkuRowVisibility/index.js";
 import createCheckboxForParticipationInPromo from "./createCheckboxForParticipationInPromo.js";
@@ -30,8 +30,6 @@ var createSkusTable = async (skus, tableBodyId, currentDayData) => {
     var priceTitle = "актуальная на ";
     var lastFetchTime = getTime(sku?.lastFetch, priceTitle);
 
-    
-
     var actualPriceTd = createTdElement(price, skuName, "price", lastFetchTime);
     var actualDiscountTd = createTdElement(discount, skuName, "discount");
     var actualDiscountedPriceTd = createTdElement(
@@ -57,7 +55,7 @@ var createSkusTable = async (skus, tableBodyId, currentDayData) => {
 
     if (currentDayData) {
       var skuDataOfCurrentDay = currentDayData.find((item) => item.nmID === id);
-      
+
       var expectedPriceTitle = "установлено последний раз ";
       var lastUpdatedTime = getTime(sku?.lastUpdated, expectedPriceTitle);
 

@@ -1,6 +1,6 @@
 import setThColSpan from "./utils/setThColSpan.js";
 import getGoodsData from "./utils/getGoodsData.js";
-import createSkusTable from "./utils/createSkusTable.js";
+import createSkusTable from "./utils/createSkusTableNew.js";
 import getCurrentDayMSK from "./utils/getCurrentDayMSK.js";
 import switchToActiveTable from "./utils/switchToActiveTable.js";
 import getCheckedSkuCheckboxes from "./utils/getCheckedSkuCheckboxes.js";
@@ -93,8 +93,8 @@ var handleNonEmptyWeeklyPricesAndDiscounts = async function (
   { enabledSku, disabledSku },
   weeklyPricesAndDiscounts,
 ) {
-  setThColSpan();
-  prependHeaderRowToTbody();
+  // setThColSpan();
+  // prependHeaderRowToTbody();
   toggleWeekDaysSelectorVisibility("enable");
   toggleSkuTableVisibillity("enabled-skus-table", "enable");
   setWeekDaySelectorToCurrentDay(currentDayName);
@@ -104,7 +104,7 @@ var handleNonEmptyWeeklyPricesAndDiscounts = async function (
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
 
   var currentDayData = weeklyPricesAndDiscounts[currentDayIndex];
-
+  console.log(currentDayData)
   await createSkusTable(enabledSku, "enabled-skus-tbody", currentDayData);
   await weekDaySelectorHandler(
     enabledSku,

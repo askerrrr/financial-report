@@ -1069,3 +1069,16 @@ body {
     max-width: 260px;
   }
 }
+
+.flash {
+  animation: flashHighlight 0.7s ease;
+}
+
+@keyframes flashHighlight {
+  0% {
+    background: rgba(32, 178, 170, 0.3);
+  }
+  100% {
+    background: transparent;
+  }
+}

@@ -1,9 +1,13 @@
 import createButton from "../modal/createButton.js";
 import getConfirmMessage from "./getConfirmMessage.js";
 import insertSkuRowToTable from "./insertSkuRowToTable.js";
-import disableSkusTableIfEmpty from "./disableSkusTableIfEmpty.js";
 import sendNewDisableStatus from "./sendNewDisableStatus.js";
 import deleteSkuRowFromTable from "./deleteSkuRowFromTable.js";
+import {
+  blockPriceDiscountModalOpening,
+  unlockPriceDiscountModalOpening,
+} from "./priceDiscountModalOpening.js";
+import disableSkusTableIfEmpty from "./disableSkusTableIfEmpty.js";
 import changeDisableStatusOfModalButton from "./changeDisableStatusOfModalButton.js";
 
 /**
@@ -34,6 +38,7 @@ var createSkuRowVisibilityButtonHandler = (skuName, id) => {
             button.removeAttribute("disbl");
             button.textContent = "скрыть";
 
+            unlockPriceDiscountModalOpening(skuName);
             changeDisableStatusOfModalButton(skuName, "off");
             deleteSkuRowFromTable(skuRow, "disabled-skus-tbody");
             insertSkuRowToTable(skuRow, "enabled-skus-tbody");
@@ -43,6 +48,7 @@ var createSkuRowVisibilityButtonHandler = (skuName, id) => {
             button.setAttribute("disbl", "");
             button.textContent = "включить";
 
+            blockPriceDiscountModalOpening(skuName);
             changeDisableStatusOfModalButton(skuName, "on");
             deleteSkuRowFromTable(skuRow, "enabled-skus-tbody");
             insertSkuRowToTable(skuRow, "disabled-skus-tbody");
