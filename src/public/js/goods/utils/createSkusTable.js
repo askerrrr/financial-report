@@ -6,29 +6,31 @@ import createSkuRowVisibilityButtonHandler from "./toggleSkuRowVisibility/index.
 import createCheckboxForParticipationInPromo from "./createCheckboxForParticipationInPromo.js";
 
 /**
- * @param {'enabled-skus-tbody' | 'disabled-skus-tbody'} tbodyID
+ * @param {'enabled-skus-tbody' | 'disabled-skus-tbody'} tableBodyId
  */
 
-var createSkusTable = async (skus, tbodyID, currentDayData) => {
-  var tbody = document.getElementById(tbodyID);
+var createSkusTable = async (skus, tableBodyId, currentDayData) => {
+  var tableBody = document.getElementById(tableBodyId);
 
   for (var sku of skus) {
     let { id, skuName, price, discount, discountedPrice, clubDiscountedPrice } =
       sku;
 
-    var tr = document.createElement("tr");
-    tr.id = skuName;
+    var tableRow = document.createElement("tr");
+    tableRow.id = skuName;
 
     var checkbox = document.createElement("input");
     checkbox.type = "checkbox";
 
-    var customClass = tbodyID === "enabled-skus-tbody" ? "enbl" : "dsbl";
+    var customClass = tableBodyId === "enabled-skus-tbody" ? "enbl" : "dsbl";
     checkbox.className = `${customClass} sku-checkbox`;
 
     var skuNameTd = createTdElement(skuName, skuName, "skuName");
 
     var priceTitle = "актуальная на ";
     var lastFetchTime = getTime(sku?.lastFetch, priceTitle);
+
+    
 
     var actualPriceTd = createTdElement(price, skuName, "price", lastFetchTime);
     var actualDiscountTd = createTdElement(discount, skuName, "discount");
@@ -55,7 +57,7 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
 
     if (currentDayData) {
       var skuDataOfCurrentDay = currentDayData.find((item) => item.nmID === id);
-
+      
       var expectedPriceTitle = "установлено последний раз ";
       var lastUpdatedTime = getTime(sku?.lastUpdated, expectedPriceTitle);
 
@@ -92,12 +94,12 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
         "clubDiscountedPrice-expected",
       );
 
-      if (tbodyID === "disabled-skus-tbody") {
+      if (tableBodyId === "disabled-skus-tbody") {
         skuRowVisibilityButtonHandler.setAttribute("disbl", "");
         skuRowVisibilityButtonHandler.textContent = "включить";
       }
 
-      tr.append(
+      tableRow.append(
         // checkbox,
         skuNameTd,
         actualPriceTd,
@@ -121,19 +123,19 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
         var participationInPromoCheckboxTdElem = createTdElement(
           participationInPromoCheckbox,
         );
-        tr.append(participationInPromoCheckboxTdElem);
+        tableRow.append(participationInPromoCheckboxTdElem);
       }
 
-      tbody.append(tr);
+      tableBody.append(tableRow);
       continue;
     }
 
-    if (tbodyID === "disabled-skus-tbody") {
+    if (tableBodyId === "disabled-skus-tbody") {
       skuRowVisibilityButtonHandler.setAttribute("disbl", "");
       skuRowVisibilityButtonHandler.textContent = "включить";
     }
 
-    tr.append(
+    tableRow.append(
       // checkbox,
       skuNameTd,
       actualPriceTd,
@@ -144,7 +146,7 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
       skuRowVisibilityButtonHandlerTdElem,
     );
 
-    tbody.append(tr);
+    tableBody.append(tableRow);
   }
 };
 
