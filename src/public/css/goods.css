@@ -422,7 +422,7 @@ body {
 .skus-table th,
 .skus-table td {
   padding: 6px 10px;
-  text-align: left;
+  text-align: center; /* изменено с left на center */
   border-bottom: 1px solid var(--border);
   font-size: 13px;
   overflow-wrap: break-word;
@@ -534,7 +534,7 @@ body {
   width: 7%;
 }
 
-/* Числовые колонки — выравнивание вправо */
+/* Числовые колонки — выравнивание по центру (убрано правое выравнивание) */
 .skus-table tbody td:nth-child(2),
 .skus-table tbody td:nth-child(3),
 .skus-table tbody td:nth-child(4),
@@ -543,7 +543,7 @@ body {
 .skus-table tbody td:nth-child(7),
 .skus-table tbody td:nth-child(8),
 .skus-table tbody td:nth-child(9) {
-  text-align: right;
+  text-align: center; /* изменено с right на center */
   font-variant-numeric: tabular-nums;
 }
 
