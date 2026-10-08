@@ -46,6 +46,7 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
 
           var nmID = existSku.id;
           var dayIndex = colCount;
+          var skuName = existSku.skuName;
           var data = { nmID, price, discount };
 
           var { dataIsValid } = checkPriceAndDiscount(price, discount);
@@ -56,7 +57,7 @@ var readWeeklyPricesFile = async (xlsxFileBuffer, listGoods) => {
           if (dataIsValid) {
             var currentDayArr = weeklyPricesAndDiscounts[dayIndex];
 
-            currentDayArr.push({ dayIndex, nmID, data });
+            currentDayArr.push({ nmID, skuName, dayIndex, data });
           }
         }
 
