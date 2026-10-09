@@ -21,7 +21,7 @@ var pathParts = window.location.pathname.split("/");
 var reportId = pathParts.at(-1);
 
 var url = "/report/" + userId + "/" + reportId;
-var urlToDownloadReportAsXLSX = "/report/as-xlsx/";
+var urlToDownloadReportAsXLSX = "/report/xlsx/";
 
 var getReportData = async () => {
   var res = await fetch(url);

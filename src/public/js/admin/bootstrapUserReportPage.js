@@ -11,7 +11,7 @@ import financialAccountingStatusButtonHander from "../report/financialAccounting
 
 var yearValueStub = "";
 var reportSummaryLabelTextStub = "";
-var urlToDownloadReportAsXLSX = "/report/as-xlsx/";
+var urlToDownloadReportAsXLSX = "/report/xlsx/";
 var btnToUserMainPage = document.getElementById("back-to-main-page-btn");
 
 var splitedPathParts = window.location.pathname.split("/");

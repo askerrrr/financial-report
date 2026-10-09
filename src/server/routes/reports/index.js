@@ -63,13 +63,13 @@ router.delete(
 );
 
 router.post(
-  "/as-zip/",
+  "/zip/",
   joiSchemaValidator(joiSchemas.downloadReportsAsZipSchema),
   downloadReportsAsZipController,
 );
 
 router.post(
-  "/as-xlsx/",
+  "/xlsx/",
   joiSchemaValidator(joiSchemas.downloadReportAsXLSXSchema),
   downloadReportAsXLSXController,
 );
