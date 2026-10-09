@@ -14,6 +14,9 @@ import changeDisableStatusOfModalButton from "./changeDisableStatusOfModalButton
  * @param {'to-enable' | 'to-disable'} msg
  */
 
+var enabledCountElem = document.getElementById("enabled-count");
+var disabledCountElem = document.getElementById("disabled-count");
+
 var createSkuRowVisibilityButtonHandler = (skuName, id) => {
   var btnId = skuName + "-disable";
   var msg = getConfirmMessage(skuName, "to-disable");
@@ -44,6 +47,12 @@ var createSkuRowVisibilityButtonHandler = (skuName, id) => {
             insertSkuRowToTable(skuRow, "enabled-skus-tbody");
 
             msg = getConfirmMessage(skuName, "to-disable");
+
+            var currentEnabledCount = +enabledCountElem.textContent || 0;
+            var currentDisabledCount = +disabledCountElem.textContent || 0;
+
+            enabledCountElem.textContent = currentEnabledCount + 1;
+            disabledCountElem.textContent = currentDisabledCount - 1;
           } else {
             button.setAttribute("disbl", "");
             button.textContent = "включить";
@@ -54,6 +63,12 @@ var createSkuRowVisibilityButtonHandler = (skuName, id) => {
             insertSkuRowToTable(skuRow, "disabled-skus-tbody");
 
             msg = getConfirmMessage(skuName, "to-enable");
+
+            var currentEnabledCount = +enabledCountElem.textContent || 0;
+            var currentDisabledCount = +disabledCountElem.textContent || 0;
+
+            enabledCountElem.textContent = currentEnabledCount - 1;
+            disabledCountElem.textContent = currentDisabledCount + 1;
           }
 
           disableSkusTableIfEmpty(hasDsblAttribute);

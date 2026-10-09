@@ -18,6 +18,9 @@ import {
   toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility,
 } from "./utils/visibilityToggle/index.js";
 
+var enabledCountElem = document.getElementById("enabled-count");
+var disabledCountElem = document.getElementById("disabled-count");
+
 var { currentDayName, currentDayIndex } = getCurrentDayMSK();
 
 var showListGoodsTable = async (userId) => {
@@ -25,6 +28,8 @@ var showListGoodsTable = async (userId) => {
   var { enabledSku, disabledSku } = listGoods;
 
   switchToActiveTable(enabledSku, disabledSku);
+  enabledCountElem.textContent = enabledSku.length;
+  disabledCountElem.textContent = disabledSku.length
 
   if (!enabledSku.length && !disabledSku.length) {
     handleEmptySkus(userId);
