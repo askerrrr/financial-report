@@ -22,7 +22,7 @@ var getReportAsXLSXBuffer = async (report) => {
   var skusSheet = workbook.addWorksheet("Товары");
   var totalsSheet = workbook.addWorksheet("Сводка");
 
-  var indentToTotalsData = skus.length + 2;
+  var indentToTotalsData = 2; 
 
   skusSheet = await createSKUsSheet(skus, skusSheet);
   totalsSheet = await createTotalsSheet(
