@@ -76,11 +76,13 @@ var main = async () => {
 
     var startYearReportTotals =
       calcReportTotalsFromSkus(startYearSkus).reportTotals;
+
     var startReportPeriodText = getReportPeriodText(
       dateFrom,
       dateTo,
       dateFrom,
     ).reportPeriodText;
+
     createTotalsTable(
       startYearReportTotals,
       startYear,
@@ -92,6 +94,7 @@ var main = async () => {
 
     var endYearReportTotals =
       calcReportTotalsFromSkus(endYearSkus).reportTotals;
+
     var endReportPeriodText = getReportPeriodText(
       dateFrom,
       dateTo,
