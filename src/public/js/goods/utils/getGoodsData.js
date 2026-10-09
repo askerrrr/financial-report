@@ -1,5 +1,4 @@
-var getGoodsData = async () => {
-  var userId = document.cookie.split("=")[1];
+var getGoodsData = async (userId) => {
   var url = "/goods/api/" + userId;
 
   var res = await fetch(url);

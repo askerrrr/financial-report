@@ -1,6 +1,7 @@
 import setNewPricesAndDiscountsToSkuService from "../services/setNewPricesAndDiscountsToSku.js";
 
 var setNewPricesAndDiscountsToSkuController = async (req, res, next) => {
+  return res.json({ msg: "Скоро будет доступно" });
   var { callNext, errorText } = await setNewPricesAndDiscountsToSkuService(
     req.body,
   );

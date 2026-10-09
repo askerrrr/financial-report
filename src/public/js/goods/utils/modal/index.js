@@ -44,7 +44,7 @@ var createModal = (item) => {
     priceLabel,
     discountLabel,
     discountedPriceField,
-    createCheckboxForParticipationInPromo(item, changePriceIfInPromo, needWrapIntoFieldset),
+    // createCheckboxForParticipationInPromo(item, changePriceIfInPromo, needWrapIntoFieldset),
     weekDaysPicker,
     modalButtons,
   );

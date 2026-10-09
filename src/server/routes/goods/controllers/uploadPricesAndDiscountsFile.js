@@ -1,21 +1,25 @@
 import uploadPricesAndDiscountsFileService from "../services/uploadPricesAndDiscountsFile.js";
 
 var uploadPricesAndDiscountsFileController = async (req, res, next) => {
+  return res.json({ msg: "Скоро будет доступно" });
   var userId = req.body.userId;
   var fileBuffer = req.file.buffer;
 
   var { userNotFound, listGoodsIsEmpty, weeklyPricesAndDiscounts } =
     await uploadPricesAndDiscountsFileService(userId, fileBuffer);
 
+  var infoText = "";
+
   if (userNotFound) {
-    return res.sendStatus(404);
+    infoText = "Нет пользователя с таким ID";
   }
 
   if (listGoodsIsEmpty) {
-    return res.sendStatus(400);
+    infoText =
+      "Не удалось установить цены не неделю.\nНеобходимо загрузить товары.";
   }
 
-  return res.json({ weeklyPricesAndDiscounts });
+  return res.json({ infoText, weeklyPricesAndDiscounts });
 };
 
 export default uploadPricesAndDiscountsFileController;
