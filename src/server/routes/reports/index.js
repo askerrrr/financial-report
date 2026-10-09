@@ -22,6 +22,7 @@ import setOtherExpensesToSkuController from "./controllers/setOtherExpensesToSku
 import getReportLoadingStateController from "./controllers/getReportLoadingState.js";
 import checkReportsLoadingProgressController from "./controllers/checkReportsLoadingProgress.js";
 import resumeAbandonedReportsLoadingController from "./controllers/resumeAbandonedReportsLoading.js";
+import getReportFieldsDescriptionPageController from "./controllers/getReportFieldsDescriptionPage.js";
 import changeFinancialAccountingStatusController from "./controllers/changeFinancialAccountingStatus.js";
 
 import checkTokenExists from "../WBToken/controllers/checkTokenExists.js";
@@ -129,3 +130,5 @@ router.delete(
   joiSchemaValidator(joiSchemas.deleteImageSchema),
   deleteImageController,
 );
+
+router.get("/fields-descrition/", getReportFieldsDescriptionPageController);

@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Объяснение полей отчёта</title>
+    <link rel="stylesheet" href="/css/theme.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="/css/reportFieldsDescription.css"
+      type="text/css"
+    />
+  </head>
+
+  <body>
+    <header class="top-bar">
+      <h1 class="top-bar__title">Объяснение полей отчёта</h1>
+      <span class="top-bar__badge">WB · расчёты</span>
+    </header>
+    <main class="container">
+      <!-- Оглавление -->
+      <nav class="toc">
+        <div class="toc__title">Содержание</div>
+        <ul class="toc__list">
+          <li><a href="#p1">1. WB реализовал</a></li>
+          <li><a href="#p2">2. Налогооблагаемая база</a></li>
+          <li><a href="#p3">3. Продано</a></li>
+          <li><a href="#p4">4. Возвраты</a></li>
+          <li><a href="#p5">5. Перечисления продавцу</a></li>
+          <li><a href="#p6">6. Себестоимость товаров</a></li>
+          <li><a href="#p7">7. Прочие расходы</a></li>
+          <li><a href="#p8">8. Доставка</a></li>
+          <li><a href="#p9">9. Приёмка</a></li>
+          <li><a href="#p10">10. Штрафы</a></li>
+          <li><a href="#p11">11. Удержания / выплаты</a></li>
+          <li><a href="#p12">12. Хранение</a></li>
+          <li><a href="#p13">13. Реклама</a></li>
+          <li><a href="#p14">14. Налоги</a></li>
+          <li><a href="#p15">15. Страховые взносы</a></li>
+          <li><a href="#p16">16. Доп. страховые взносы</a></li>
+          <li><a href="#p17">17. Итого</a></li>
+          <li><a href="#p18">18. Маржинальность</a></li>
+        </ul>
+      </nav>
+
+      <!-- 1 -->
+      <section class="card" id="p1">
+        <div class="card__header">
+          <span class="card__num">1</span>
+          <h2 class="card__title">WB реализовал</h2>
+        </div>
+        <p class="card__text">
+          Разница между суммой продаж и суммой возвратов по данным Wildberries.
+        </p>
+        <code class="formula"
+          >WB реализовал = «Вайлдберриз реализовал Товар (Пр)» (Продажа) −
+          «Вайлдберриз реализовал Товар (Пр)» (Возврат)</code
+        >
+      </section>
+
+      <!-- 2 -->
+      <section class="card" id="p2">
+        <div class="card__header">
+          <span class="card__num">2</span>
+          <h2 class="card__title">Налогооблагаемая база</h2>
+        </div>
+        <p class="card__text">Показатель зависит от типа отчёта за период.</p>
+
+        <div class="condition">
+          <span class="condition__label">Только отчёт «Основной»</span>
+          <code class="formula"
+            >Налогооблагаемая база = «Вайлдберриз реализовал Товар (Пр)»
+            (Продажа) − «Вайлдберриз реализовал Товар (Пр)» (Возврат)</code
+          >
+        </div>
+
+        <div class="condition">
+          <span class="condition__label">Только отчёт «По выкупам»</span>
+          <code class="formula"
+            >Налогооблагаемая база = «К перечислению продавцу за реализованный
+            товар» − «Стоимость логистики товара»</code
+          >
+        </div>
+
+        <div class="condition">
+          <span class="condition__label">Оба типа отчётов</span>
+          <code class="formula"
+            >Налогооблагаемая база = (расчёт по «Основному») + (расчёт по «По
+            выкупам»)</code
+          >
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section class="card" id="p3">
+        <div class="card__header">
+          <span class="card__num">3</span>
+          <h2 class="card__title">Продано</h2>
+        </div>
+        <p class="card__text">
+          Количество товаров с типом документа <strong>«Продажа»</strong>.
+        </p>
+      </section>
+
+      <!-- 4 -->
+      <section class="card" id="p4">
+        <div class="card__header">
+          <span class="card__num">4</span>
+          <h2 class="card__title">Возвраты</h2>
+        </div>
+        <p class="card__text">
+          Количество товаров с типом документа <strong>«Возврат»</strong>.
+        </p>
+      </section>
+
+      <!-- 5 -->
+      <section class="card" id="p5">
+        <div class="card__header">
+          <span class="card__num">5</span>
+          <h2 class="card__title">Перечисления продавцу</h2>
+        </div>
+        <p class="card__text">
+          Сумма по столбцу «К перечислению Продавцу за реализованный Товар» в
+          детализации.
+        </p>
+        <code class="formula"
+          >Перечисления продавцу = сумма по документам «Продажа» − сумма по
+          документам «Возврат»</code
+        >
+      </section>
+
+      <!-- 6 -->
+      <section class="card" id="p6">
+        <div class="card__header">
+          <span class="card__num">6</span>
+          <h2 class="card__title">Себестоимость товаров</h2>
+        </div>
+        <p class="card__text">Суммарная себестоимость проданных товаров.</p>
+        <code class="formula"
+          >Себестоимость товаров = Σ (себестоимость единицы × количество
+          проданных единиц)</code
+        >
+        <p class="card__text">
+          Суммирование ведётся по всем товарным позициям отчёта.
+        </p>
+      </section>
+
+      <!-- 7 -->
+      <section class="card" id="p7">
+        <div class="card__header">
+          <span class="card__num">7</span>
+          <h2 class="card__title">Прочие расходы</h2>
+        </div>
+        <p class="card__text">
+          Сумма прочих расходов по каждой позиции с последующим суммированием по
+          всем позициям.
+        </p>
+        <code class="formula"
+          >Прочие расходы = Σ (прочие расходы по позиции)</code
+        >
+      </section>
+
+      <!-- 8 -->
+      <section class="card" id="p8">
+        <div class="card__header">
+          <span class="card__num">8</span>
+          <h2 class="card__title">Доставка</h2>
+        </div>
+        <p class="card__text">
+          Сумма всех значений поля <strong>«Стоимость доставки»</strong>.
+        </p>
+      </section>
+
+      <!-- 9 -->
+      <section class="card" id="p9">
+        <div class="card__header">
+          <span class="card__num">9</span>
+          <h2 class="card__title">Приёмка</h2>
+        </div>
+        <p class="card__text">
+          Сумма всех значений поля
+          <strong>«Стоимость операций при приёмке»</strong>.
+        </p>
+      </section>
+
+      <!-- 10 -->
+      <section class="card" id="p10">
+        <div class="card__header">
+          <span class="card__num">10</span>
+          <h2 class="card__title">Штрафы</h2>
+        </div>
+        <p class="card__text">
+          Сумма к оплате по всем видам полученных штрафов по всем позициям.
+        </p>
+      </section>
+
+      <!-- 11 -->
+      <section class="card" id="p11">
+        <div class="card__header">
+          <span class="card__num">11</span>
+          <h2 class="card__title">Удержания / выплаты</h2>
+        </div>
+        <p class="card__text">
+          Сумма прочих удержаний и выплат по всем позициям.
+        </p>
+      </section>
+
+      <!-- 12 -->
+      <section class="card" id="p12">
+        <div class="card__header">
+          <span class="card__num">12</span>
+          <h2 class="card__title">Хранение</h2>
+        </div>
+        <p class="card__text">
+          Для расчёта суммы за хранение по каждому товару запрашивается
+          отдельный отчёт <strong>«О платном хранении»</strong> за тот же
+          отчётный период.
+        </p>
+      </section>
+
+      <!-- 13 -->
+      <section class="card" id="p13">
+        <div class="card__header">
+          <span class="card__num">13</span>
+          <h2 class="card__title">Реклама</h2>
+        </div>
+        <p class="card__text">
+          На текущий момент расходы на рекламу нельзя отнести к каждой единице
+          товара, поэтому рассчитывается среднее значение на одну позицию.
+        </p>
+        <code class="formula"
+          >Реклама = (все рекламные расходы за отчётный период) / (количество
+          позиций)</code
+        >
+        <p class="card__text">
+          где количество позиций — не количество единиц товара.
+        </p>
+        <div class="hint hint--info">
+          <span class="hint__icon">i</span>
+          <span
+            >Источник данных — отчёт «Получение истории затрат» за отчётный
+            период.</span
+          >
+        </div>
+      </section>
+
+      <!-- 14 -->
+      <section class="card" id="p14">
+        <div class="card__header">
+          <span class="card__num">14</span>
+          <h2 class="card__title">Налоги</h2>
+        </div>
+        <code class="formula"
+          >Налоги = (Налогооблагаемая база * процент налогообложения) /
+          100</code
+        >
+      </section>
+
+      <!-- 15 -->
+      <section class="card" id="p15">
+        <div class="card__header">
+          <span class="card__num">15</span>
+          <h2 class="card__title">Страховые взносы</h2>
+        </div>
+        <p class="card__text">
+          Используется процент от прибыли, направляемый на погашение
+          обязательных страховых взносов. По умолчанию — <strong>10 %</strong>.
+          Значение настраивается на странице «Налоги».
+        </p>
+
+        <div class="condition">
+          <span class="condition__label">Прибыль</span>
+          <code class="formula"
+            >Прибыль = Перечисления продавцу − Штрафы − Приёмка −
+            Удержания/Выплаты − Реклама − Хранение − Доставка − Себестоимость −
+            Прочие расходы</code
+          >
+        </div>
+
+        <div class="condition">
+          <span class="condition__label">Расчёт</span>
+          <code class="formula"
+            >Страховые взносы = (Прибыль × Процент) / 100</code
+          >
+        </div>
+      </section>
+
+      <!-- 16 -->
+      <section class="card" id="p16">
+        <div class="card__header">
+          <span class="card__num">16</span>
+          <h2 class="card__title">Доп. страховые взносы</h2>
+        </div>
+        <p class="card__text">
+          Рассчитываются в случае, если доход превышает
+          <strong>300 000 ₽ в год</strong>.
+        </p>
+      </section>
+
+      <!-- 17 -->
+      <section class="card" id="p17">
+        <div class="card__header">
+          <span class="card__num">17</span>
+          <h2 class="card__title">Итого</h2>
+        </div>
+        <code class="formula"
+          >Итого = Перечисления продавцу − Штрафы − Приёмка − Удержания/Выплаты
+          − Реклама − Хранение − Доставка − Себестоимость − Прочие расходы −
+          Налоги − Страховые взносы − Доп. страховые взносы</code
+        >
+      </section>
+
+      <!-- 18 -->
+      <section class="card" id="p18">
+        <div class="card__header">
+          <span class="card__num">18</span>
+          <h2 class="card__title">Маржинальность</h2>
+        </div>
+        <code class="formula"
+          >Маржинальность = (Итого × 100) / WB реализовал</code
+        >
+      </section>
+
+      <hr class="divider" />
+
+      <div class="footer">Объяснение полей отчёта · Wildberries</div>
+    </main>
+  </body>
+</html>
