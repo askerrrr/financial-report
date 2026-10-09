@@ -1,5 +1,4 @@
 var button = document.getElementById("download-report-as-xlsx-button");
-var url = "/report/as-xlsx/";
 
 var downloadReportAsXLSXButtonHandler = (report, url, isGuestAccess) =>
   (button.onclick = async (e) => {

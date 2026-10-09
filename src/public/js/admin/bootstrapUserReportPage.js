@@ -2,7 +2,6 @@ import reportInfo from "../report/reportInfo.js";
 import createSkusTable from "../report/table/createSkusTable.js";
 import createTotalsTable from "../report/table/createTotalsTable.js";
 import deleteReportHandler from "../report/deleteReportHandler.js";
-import splitReportByYear from "../report/table/services/splitReportByYear.js";
 import calcReportTotalsFromSkus from "../report/table/calcReportTotalsFromSkus.js";
 import injectSignedUrlsIntoImgTags from "../report/table/services/injectSignedUrlsIntoImgTags.js";
 import downloadReportAsXLSXButtonHandler from "../report/downloadReportAsXLSXButtonHandler.js";
@@ -12,6 +11,7 @@ import financialAccountingStatusButtonHander from "../report/financialAccounting
 
 var yearValueStub = "";
 var reportSummaryLabelTextStub = "";
+var urlToDownloadReportAsXLSX = "/report/as-xlsx/";
 var btnToUserMainPage = document.getElementById("back-to-main-page-btn");
 
 var splitedPathParts = window.location.pathname.split("/");
@@ -114,8 +114,8 @@ var main = async () => {
 
   reportInfo(report);
   injectSignedUrlsIntoImgTags(userId, signedUrls);
-  downloadReportAsXLSXButtonHandler(report);
   deleteReportHandler(userId, reportId, skus);
+  downloadReportAsXLSXButtonHandler(report, urlToDownloadReportAsXLSX);
   financialAccountingStatusButtonHander(userId, reportId, dateFrom, dateTo);
   setSkusLastCostPricesButtonHandler(skus, reportId, year, skusLastCostPrice);
 };
