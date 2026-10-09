@@ -1,23 +1,29 @@
 import getTime from "./getTime.js";
 import createTdElement from "./createTdElement.js";
-import openModalButton from "./modal/openModalButton.js";
+import openModalButton from "./modal/openPriceDiscountModalButton.js";
 import calcDiscountedPrice from "./weekDaySelector/calcDiscountedPrice.js";
 import createSkuRowVisibilityButtonHandler from "./toggleSkuRowVisibility/index.js";
 import createCheckboxForParticipationInPromo from "./createCheckboxForParticipationInPromo.js";
 
 /**
- * @param {'enabled-skus-tbody' | 'disabled-skus-tbody'} tbodyID
+ * @param {'enabled-skus-tbody' | 'disabled-skus-tbody'} tableBodyId
  */
 
-var createSkusTable = async (skus, tbodyID, currentDayData) => {
-  var tbody = document.getElementById(tbodyID);
+var createSkusTable = async (skus, tableBodyId, currentDayData) => {
+  var tableBody = document.getElementById(tableBodyId);
 
   for (var sku of skus) {
     let { id, skuName, price, discount, discountedPrice, clubDiscountedPrice } =
       sku;
 
-    var tr = document.createElement("tr");
-    tr.id = skuName;
+    var tableRow = document.createElement("tr");
+    tableRow.id = skuName;
+
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+
+    var customClass = tableBodyId === "enabled-skus-tbody" ? "enbl" : "dsbl";
+    checkbox.className = `${customClass} sku-checkbox`;
 
     var skuNameTd = createTdElement(skuName, skuName, "skuName");
 
@@ -86,12 +92,13 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
         "clubDiscountedPrice-expected",
       );
 
-      if (tbodyID === "disabled-skus-tbody") {
+      if (tableBodyId === "disabled-skus-tbody") {
         skuRowVisibilityButtonHandler.setAttribute("disbl", "");
         skuRowVisibilityButtonHandler.textContent = "включить";
       }
 
-      tr.append(
+      tableRow.append(
+        // checkbox,
         skuNameTd,
         actualPriceTd,
         expectedPriceTd,
@@ -114,19 +121,20 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
         var participationInPromoCheckboxTdElem = createTdElement(
           participationInPromoCheckbox,
         );
-        tr.append(participationInPromoCheckboxTdElem);
+        tableRow.append(participationInPromoCheckboxTdElem);
       }
 
-      tbody.append(tr);
+      tableBody.append(tableRow);
       continue;
     }
 
-    if (tbodyID === "disabled-skus-tbody") {
+    if (tableBodyId === "disabled-skus-tbody") {
       skuRowVisibilityButtonHandler.setAttribute("disbl", "");
       skuRowVisibilityButtonHandler.textContent = "включить";
     }
 
-    tr.append(
+    tableRow.append(
+      // checkbox,
       skuNameTd,
       actualPriceTd,
       actualDiscountTd,
@@ -136,7 +144,7 @@ var createSkusTable = async (skus, tbodyID, currentDayData) => {
       skuRowVisibilityButtonHandlerTdElem,
     );
 
-    tbody.append(tr);
+    tableBody.append(tableRow);
   }
 };
 

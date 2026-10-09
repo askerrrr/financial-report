@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,66 +8,160 @@
     <title>Товары</title>
   </head>
   <body>
-    <button class="btn-to-main" onclick="window.location.href = '/'">
-      На главную
-    </button>
-    <div class="top-controls">
-      <button id="download-weekly-prices-file" hidden>
-        Скачать цены на неделю
+    <!-- ============ AppBar ============ -->
+    <header class="app-bar">
+      <button class="btn-to-main" onclick="window.location.href = '/'">
+        На главную
       </button>
-      <button id="download-skus-metrics" hidden>Скачать статистику</button>
-      <button id="upload-weekly-prices-and-discounts-file" type="button" hidden>
-        Загрузить цены на неделю
+
+      <h1 class="app-bar__title">Товары</h1>
+
+      <div class="app-bar__actions">
+        <!-- место под профиль/тему, пока заглушка -->
+        <!-- <button class="icon-btn" type="button" aria-label="Профиль">👤</button> -->
+      </div>
+    </header>
+
+    <!-- ============ Toolbar ============ -->
+    <section class="toolbar" aria-label="Панель управления">
+      <div class="toolbar__group">
+        <button id="download-weekly-prices-file" type="button" hidden>
+          Скачать цены на неделю
+        </button>
+        <button id="download-skus-metrics" type="button" hidden>
+          Скачать статистику
+        </button>
+        <button
+          id="upload-weekly-prices-and-discounts-file"
+          type="button"
+          hidden
+        >
+          Загрузить цены на неделю
+        </button>
+      </div>
+
+      <div class="toolbar__group toolbar__group--right">
+        <div id="week-days" hidden>
+          <label for="week-days-select">День недели:</label>
+          <select name="week-days" id="week-days-select">
+            <option value="0">Пн</option>
+            <option value="1">Вт</option>
+            <option value="2">Ср</option>
+            <option value="3">Чт</option>
+            <option value="4">Пт</option>
+            <option value="5">Сб</option>
+            <option value="6">Вс</option>
+          </select>
+        </div>
+
+        <button
+          id="toggle-disabled-skus"
+          class="icon-btn"
+          type="button"
+          aria-label="Настройки"
+          hidden
+        >
+          ⚙
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ Tabs ============ -->
+    <nav class="tabs" aria-label="Переключение таблиц">
+      <button
+        id="switch-to-enabled"
+        class="tab is-active"
+        type="button"
+        aria-selected="true"
+      >
+        Активные <span class="tab__count" id="enabled-count">0</span>
       </button>
-      <button id="toggle-disabled-skus" hidden>Показать скрытые товары</button>
+      <button
+        id="switch-to-disabled"
+        class="tab"
+        type="button"
+        aria-selected="false"
+      >
+        Скрытые <span class="tab__count" id="disabled-count">0</span>
+      </button>
+    </nav>
+
+    <!-- ============ Поиск / фильтр ============ -->
+    <!-- <section class="filters" aria-label="Поиск и сортировка">
+      <div class="filters__search">
+        <span class="filters__search-icon" aria-hidden="true">🔍</span>
+        <input
+          id="skus-search"
+          type="search"
+          placeholder="Поиск по артикулу…"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="filters__sort">
+        <label for="skus-sort">Сортировка:</label>
+        <select id="skus-sort">
+          <option value="sku">Артикул</option>
+          <option value="price">Цена</option>
+          <option value="discount">Скидка</option>
+        </select>
+      </div>
+    </section> -->
+
+    <!-- ============ Таблицы ============ -->
+    <div class="table-scroll" id="enabled-skus-table-scroll">
+      <table id="enabled-skus-table" class="skus-table" hidden>
+        <thead id="enabled-skus-thead">
+          <tr id="enabled-skus-thead-row">
+            <th>Артикул</th>
+            <th class="price-th" id="price-th" price-can-be-bifurcated>Цена</th>
+            <th class="discount-th" discount-can-be-bifurcated>
+              Скидка продавца
+            </th>
+            <th class="discountedPrice-th" discountedPrice-can-be-bifurcated>
+              Цена со скидкой
+            </th>
+            <th
+              class="clubDiscounted-price-th"
+              clubDiscounted-can-be-bifurcated
+            >
+              Цена со скидкой, включая скидку WB Клуба
+            </th>
+            <th>Действие с ценой</th>
+            <th>Скрыть товар</th>
+          </tr>
+        </thead>
+        <tbody id="enabled-skus-tbody"></tbody>
+      </table>
     </div>
-    <div id="week-days" hidden>
-      <label for="week-days-select">Показать цены на:</label>
-      <select name="week-days" id="week-days-select">
-        <option value="0">понедельник</option>
-        <option value="1">вторник</option>
-        <option value="2">среда</option>
-        <option value="3">четверг</option>
-        <option value="4">пятница</option>
-        <option value="5">суббота</option>
-        <option value="6">воскресенье</option>
-      </select>
+
+    <div class="table-scroll" id="disabled-skus-table-scroll">
+      <table id="disabled-skus-table" class="skus-table" hidden>
+        <thead id="disabled-skus-thead">
+          <tr>
+            <th>Артикул</th>
+            <th class="price-th" id="price-th" price-can-be-bifurcated>Цена</th>
+            <th class="discount-th" discount-can-be-bifurcated>
+              Скидка продавца
+            </th>
+            <th class="discountedPrice-th" discountedPrice-can-be-bifurcated>
+              Цена со скидкой
+            </th>
+            <th
+              class="clubDiscounted-price-th"
+              clubDiscounted-can-be-bifurcated
+            >
+              Цена со скидкой, включая скидку WB Клуба
+            </th>
+            <th>Действие с ценой</th>
+            <th>Включить товар</th>
+          </tr>
+        </thead>
+        <tbody id="disabled-skus-tbody"></tbody>
+      </table>
     </div>
-    <button id="upload-list-goods" type="button" hidden>
-      Загрузить список товаров
-    </button>
-    <table id="enabled-skus-table" class="skus-table" hidden>
-      <thead id="enabled-skus-thead">
-        <tr id="enabled-skus-thead-row">
-          <th>Артикул</th>
-          <th id="price-th">Цена</th>
-          <th id="discount-th">Скидка продавца</th>
-          <th id="discountedPrice-th">Цена со скидкой</th>
-          <th id="clubDiscounted-price-th">
-            Цена со скидкой, включая скидку WB Клуба
-          </th>
-          <th>Действие с ценой</th>
-          <th>Скрыть товар</th>
-        </tr>
-      </thead>
-      <tbody id="enabled-skus-tbody"></tbody>
-    </table>
-    <table id="disabled-skus-table" class="skus-table" hidden>
-      <thead id="disabled-skus-thead">
-        <tr>
-          <th>Артикул</th>
-          <th id="price-th">Цена</th>
-          <th id="discount-th">Скидка продавца</th>
-          <th id="discountedPrice-th">Цена со скидкой</th>
-          <th id="clubDiscounted-price-th">
-            Цена со скидкой, включая скидку WB Клуба
-          </th>
-          <th>Действие с ценой</th>
-          <th>Скрыть товар</th>
-        </tr>
-      </thead>
-      <tbody id="disabled-skus-tbody"></tbody>
-    </table>
+
+    <!-- ============ Форма загрузки ============ -->
     <form enctype="multipart/form-data" id="upload-form" hidden>
       <label for="input-field" class="input-file">
         <input
@@ -79,6 +173,9 @@
         />
       </label>
     </form>
+    <button id="upload-list-goods" type="button" hidden>
+      Загрузить список товаров
+    </button>
     <script src="/js/goods/index.js" type="module"></script>
   </body>
 </html>

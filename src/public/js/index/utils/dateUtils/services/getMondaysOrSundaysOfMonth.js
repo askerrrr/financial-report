@@ -1,4 +1,7 @@
-var checkIfSundaysAreMultipleOfSeven = (sundays) => sundays.map((sanday) => +sanday.split("T")[0].split("-")[2] % 7 === 0).every((i) => i === true);
+var checkIfSundaysAreMultipleOfSeven = (sundays) =>
+  sundays
+    .map((sanday) => +sanday.split("T")[0].split("-")[2] % 7 === 0)
+    .every((i) => i === true);
 
 var getMondaysOrSundaysOfMonth = (date, weekDayName) => {
   var weekDays = [];
@@ -28,10 +31,4 @@ var getMondaysOrSundaysOfMonth = (date, weekDayName) => {
   return { mondays: weekDays };
 };
 
-var isMonday = (dateFrom) => {
-  var { mondays } = getMondaysOrSundaysOfMonth(dateFrom, "monday");
-
-  return mondays.includes(new Date(dateFrom).toISOString());
-};
-
-export { isMonday, getMondaysOrSundaysOfMonth };
+export { getMondaysOrSundaysOfMonth };

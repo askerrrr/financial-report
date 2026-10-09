@@ -1,14 +1,16 @@
 import createSkusTable from "./utils/createSkusTable.js";
-import toggleSkuTableVisibillity from "./utils/visibilityToggle/toggleSkuTableVisibillity.js";
-import toggleUploadListGoodsButtonVisibility from "./utils/visibilityToggle/toggleUploadListGoodsButtonVisibility.js";
-import toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility from "./utils/visibilityToggle/toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility.js";
-import toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility from "./utils/visibilityToggle/toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility.js";
+import {
+  toggleSkuTableVisibillity,
+  toggleTableScrollVisibillity,
+  toggleUploadListGoodsButtonVisibility,
+  toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility,
+  toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility,
+} from "./utils/visibilityToggle/index.js";
 
 var url = "/goods";
-var userId = document.cookie.split("=")[1];
 var uploadListGoodsButton = document.getElementById("upload-list-goods");
 
-var loadListGoodsButtonHandler = () => {
+var loadListGoodsButtonHandler = (userId) => {
   uploadListGoodsButton.addEventListener("click", async (e) => {
     e.preventDefault();
 
@@ -29,9 +31,10 @@ var loadListGoodsButtonHandler = () => {
 
     toggleUploadListGoodsButtonVisibility("disable");
     toggleSkuTableVisibillity("enabled-skus-table", "enable");
+    toggleTableScrollVisibillity("enabled-skus-table-scroll", "enable");
     toggleWeeklyPricesAndDiscountsFileUploadButtonVisibility("enable");
     toggleDownloadWeeklyPricesAndDiscountsFileButtonVisibility("enable");
-    await createSkusTable(listGoods, "enabled-skus-tbody");
+    createSkusTable(listGoods, "enabled-skus-tbody");
   });
 };
 

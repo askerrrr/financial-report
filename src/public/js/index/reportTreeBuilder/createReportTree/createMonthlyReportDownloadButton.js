@@ -1,4 +1,4 @@
-var url = "/report/as-zip/";
+var url = "/report/zip/";
 
 var createMonthlyReportDownloadButton = (userId, reportIds, year, month) => {
   reportIds = extractNumericReportIds(reportIds);

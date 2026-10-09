@@ -1,0 +1,300 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Верхняя панель */
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--top-bar-height);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.top-bar__title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.top-bar__badge {
+  margin-left: 12px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+}
+
+/* Контейнер */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+}
+
+/* Оглавление */
+.toc {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.toc__title {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.toc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 6px 20px;
+}
+
+.toc__list a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.toc__list a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Карточка раздела */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 26px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow-sm);
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+  scroll-margin-top: calc(var(--top-bar-height) + 16px);
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+}
+
+.card__header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.card__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.card__title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.card__text {
+  color: var(--text-secondary);
+  margin: 0 0 10px;
+}
+
+.card__text:last-child {
+  margin-bottom: 0;
+}
+
+/* Формула — одна строка */
+.formula {
+  display: block;
+  margin: 12px 0;
+  padding: 10px 14px;
+  background: var(--bg-base);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  font-family: "Consolas", "Menlo", monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  white-space: nowrap; /* формула не переносится */
+  overflow-x: auto; /* при нехватке места — горизонтальный скролл */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Тонкий скроллбар внутри формулы */
+.formula::-webkit-scrollbar {
+  height: 6px;
+}
+.formula::-webkit-scrollbar-track {
+  background: transparent;
+}
+.formula::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-full);
+}
+
+.formula em {
+  font-style: normal;
+  color: var(--warning);
+}
+
+/* Блок условий */
+.condition {
+  margin: 12px 0;
+  padding: 12px 14px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.condition__label {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.condition .formula {
+  margin: 6px 0 0;
+  background: var(--bg-base);
+}
+
+/* Плашки-подсказки */
+.hint {
+  display: flex;
+  gap: 10px;
+  padding: 10px 14px;
+  margin: 10px 0;
+  background: rgba(255, 193, 7, 0.08);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.hint__icon {
+  color: var(--warning);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.hint--info {
+  background: rgba(13, 110, 253, 0.08);
+  border-color: rgba(13, 110, 253, 0.3);
+}
+.hint--info .hint__icon {
+  color: var(--accent);
+}
+
+/* Инлайн-код */
+code {
+  padding: 2px 6px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: "Consolas", "Menlo", monospace;
+  font-size: 13px;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* Разделитель */
+.divider {
+  height: 1px;
+  background: var(--border);
+  border: 0;
+  margin: 28px 0;
+}
+
+/* Подвал */
+.footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  padding: 20px 0 0;
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 16px 12px 60px;
+  }
+  .card {
+    padding: 18px 16px;
+  }
+  .toc__list {
+    grid-template-columns: 1fr;
+  }
+  .top-bar {
+    padding: 0 16px;
+  }
+}

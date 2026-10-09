@@ -1,4 +1,4 @@
-import exceljs from "exceljs";
+import exceljs from "exceljs-community";
 
 var aggregatePaidStorageReportData = (paidStorageReports) => {
   var paidStorageReport = [];
@@ -16,12 +16,14 @@ var aggregatePaidStorageReportData = (paidStorageReports) => {
       var dateCellAddress = requiredColumnsName.dateColumn + startRowNum;
       var skuIdCellAddress = requiredColumnsName.skuIdColumn + startRowNum;
       var skuNameCellAddress = requiredColumnsName.skuNameColumn + startRowNum;
-      var warehousePriceCellAddress = requiredColumnsName.warehousePriceColumn + startRowNum;
+      var warehousePriceCellAddress =
+        requiredColumnsName.warehousePriceColumn + startRowNum;
 
       var date = workSheet.getCell(dateCellAddress)?.value;
       var nmId = workSheet.getCell(skuIdCellAddress)?.value || 0;
       var vendorCode = workSheet.getCell(skuNameCellAddress)?.value || 0;
-      var warehousePrice = workSheet.getCell(warehousePriceCellAddress)?.value || 0;
+      var warehousePrice =
+        workSheet.getCell(warehousePriceCellAddress)?.value || 0;
 
       paidStorageReport.push({ date, nmId, vendorCode, warehousePrice });
 

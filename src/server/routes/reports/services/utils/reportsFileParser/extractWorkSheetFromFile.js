@@ -1,4 +1,4 @@
-import ExcelJs from "exceljs";
+import ExcelJs from "exceljs-community";
 import getReportPeriod from "./getReportPeriod.js";
 import generateColumnNames from "./generateColumnNames.js";
 import { checkAndFixMonday, checkAndFixSunday } from "./checkDate.js";
@@ -13,30 +13,52 @@ var requiredColumnsCountToWeeklyFinancialReport = 15;
 var requiredWeeklyFinancialReportFileWorkSheetName = "Sheet1";
 var requiredPaidStorageReportFileWorkSheetName = "Детальная информация";
 
-var extractWorkSheetFromFile = async (weeklyFinancialReportsBuffer, paidStorageReportsBuffer) => {
+var extractWorkSheetFromFile = async (
+  weeklyFinancialReportsBuffer,
+  paidStorageReportsBuffer,
+) => {
   var workSheets = [];
 
   for (var { reportId, buffer } of weeklyFinancialReportsBuffer) {
     var wb = new ExcelJs.Workbook();
     await wb.xlsx.load(buffer);
-    var workSheet = wb.getWorksheet(requiredWeeklyFinancialReportFileWorkSheetName);
+    var workSheet = wb.getWorksheet(
+      requiredWeeklyFinancialReportFileWorkSheetName,
+    );
 
     if (!workSheet?.actualColumnCount) {
       continue;
     }
 
     var { columnsNames } = generateColumnNames(workSheet.actualColumnCount);
-    var { requiredColumnsName } = getRequiredColumnsNameFromWeeklyFinanfialReportFile(workSheet, columnsNames);
+    var { requiredColumnsName } =
+      getRequiredColumnsNameFromWeeklyFinanfialReportFile(
+        workSheet,
+        columnsNames,
+      );
 
-    if (requiredColumnsNameCountIsValid(requiredColumnsName, requiredColumnsCountToWeeklyFinancialReport)) {
-      var { dateFrom, dateTo } = getReportPeriod(workSheet, requiredColumnsName);
+    if (
+      requiredColumnsNameCountIsValid(
+        requiredColumnsName,
+        requiredColumnsCountToWeeklyFinancialReport,
+      )
+    ) {
+      var { dateFrom, dateTo } = getReportPeriod(
+        workSheet,
+        requiredColumnsName,
+      );
       var { dateFrom } = checkAndFixMonday(dateFrom);
       var { dateTo } = checkAndFixSunday(dateTo);
 
-      var existReportPeriod = workSheets.find((item) => item?.dateFrom >= dateFrom && item?.dateTo >= dateTo);
+      var existReportPeriod = workSheets.find(
+        (item) => item?.dateFrom >= dateFrom && item?.dateTo >= dateTo,
+      );
 
       if (existReportPeriod) {
-        var equalReportIsExist = existReportPeriod.onePeriodReports.weeklyFinancialReports.find((item) => item.reportId === reportId);
+        var equalReportIsExist =
+          existReportPeriod.onePeriodReports.weeklyFinancialReports.find(
+            (item) => item.reportId === reportId,
+          );
 
         if (!equalReportIsExist) {
           existReportPeriod.onePeriodReports.weeklyFinancialReports.push({
@@ -52,7 +74,15 @@ var extractWorkSheetFromFile = async (weeklyFinancialReportsBuffer, paidStorageR
           dateFrom,
           dateTo,
           onePeriodReports: {
-            weeklyFinancialReports: [{ dateFrom, dateTo, reportId, workSheet, workSheetData: { columnsNames, requiredColumnsName } }],
+            weeklyFinancialReports: [
+              {
+                dateFrom,
+                dateTo,
+                reportId,
+                workSheet,
+                workSheetData: { columnsNames, requiredColumnsName },
+              },
+            ],
           },
         });
       }
@@ -63,21 +93,37 @@ var extractWorkSheetFromFile = async (weeklyFinancialReportsBuffer, paidStorageR
     for (var buffer of paidStorageReportsBuffer) {
       var wb = new ExcelJs.Workbook();
       await wb.xlsx.load(buffer);
-      var workSheet = wb.getWorksheet(requiredPaidStorageReportFileWorkSheetName);
+      var workSheet = wb.getWorksheet(
+        requiredPaidStorageReportFileWorkSheetName,
+      );
 
       if (!workSheet?.actualColumnCount) {
         continue;
       }
 
       var { columnsNames } = generateColumnNames(workSheet.actualColumnCount);
-      var { requiredColumnsName } = getRequiredColumnsNameFromPaidStorageReportFile(workSheet, columnsNames);
+      var { requiredColumnsName } =
+        getRequiredColumnsNameFromPaidStorageReportFile(
+          workSheet,
+          columnsNames,
+        );
 
-      if (requiredColumnsNameCountIsValid(requiredColumnsName, requiredColumnsCountToPaidStorageReport)) {
-        var { dateFrom, dateTo } = getReportPeriodFromPaidStorageReportFile(workSheet, requiredColumnsName);
+      if (
+        requiredColumnsNameCountIsValid(
+          requiredColumnsName,
+          requiredColumnsCountToPaidStorageReport,
+        )
+      ) {
+        var { dateFrom, dateTo } = getReportPeriodFromPaidStorageReportFile(
+          workSheet,
+          requiredColumnsName,
+        );
         var { dateFrom } = checkAndFixMonday(dateFrom);
         var { dateTo } = checkAndFixSunday(dateTo);
 
-        var existReportPeriod = workSheets.find((item) => item?.dateFrom >= dateFrom && item?.dateTo >= dateTo);
+        var existReportPeriod = workSheets.find(
+          (item) => item?.dateFrom >= dateFrom && item?.dateTo >= dateTo,
+        );
 
         if (existReportPeriod) {
           if (!existReportPeriod.onePeriodReports?.paidStorageReports) {
@@ -90,11 +136,15 @@ var extractWorkSheetFromFile = async (weeklyFinancialReportsBuffer, paidStorageR
               },
             ];
 
-            existReportPeriod.onePeriodReports.paidStorageReports = paidStorageReports;
+            existReportPeriod.onePeriodReports.paidStorageReports =
+              paidStorageReports;
           } else {
-            var hasPaidStorageReportForPeriod = existReportPeriod.onePeriodReports.paidStorageReports.find(
-              (paidStorageReport) => paidStorageReport.dateFrom === dateFrom && paidStorageReport.dateTo === dateTo,
-            );
+            var hasPaidStorageReportForPeriod =
+              existReportPeriod.onePeriodReports.paidStorageReports.find(
+                (paidStorageReport) =>
+                  paidStorageReport.dateFrom === dateFrom &&
+                  paidStorageReport.dateTo === dateTo,
+              );
 
             if (!hasPaidStorageReportForPeriod) {
               existReportPeriod.onePeriodReports.paidStorageReports.push({

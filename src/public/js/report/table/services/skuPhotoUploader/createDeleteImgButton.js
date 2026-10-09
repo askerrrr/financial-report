@@ -3,6 +3,9 @@ var createDeleteImgButton = (userId, skuName) => {
 
   button.id = "delete-img-button-" + skuName;
   button.className = "delete-img-button";
+  button.type = "button";
+  button.setAttribute("aria-label", "Удалить фото SKU " + skuName);
+  button.title = "Удалить фото";
   button.style.display = "none";
 
   button.addEventListener("click", async (e) => {
@@ -22,10 +25,8 @@ var createDeleteImgButton = (userId, skuName) => {
       img.src = null;
 
       button.style.display = "none";
-
-      alert("Фото успешно удалено");
     } else {
-      alert("Не удалось удалить фото");
+      alert("Не удалось удалить фото.\nПопробуйте еще раз.");
     }
   });
 

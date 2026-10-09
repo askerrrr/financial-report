@@ -1,7 +1,10 @@
 import { insertNewReportToTree } from "../reportTreeBuilder/index.js";
 import createNewReportsModalWindow from "./createNewReportsModalWindow.js";
 import showReport from "../../decodeReportWithoutRegistration/showReport.js";
-import { showSpinner, hideSpinner } from "../reportLoaderModalWindow/services/loaderSpinner.js";
+import {
+  showSpinner,
+  hideSpinner,
+} from "../reportLoaderModalWindow/services/loaderSpinner.js";
 import writeReportToLocalStorage from "../../decodeReportWithoutRegistration/writeReportToLocalStorage.js";
 
 var maxFilesCount = 15;
@@ -10,7 +13,11 @@ var url = "/report/files";
 var userId = document.cookie.split("=")[1];
 var paidStorageReportFileName = "Отчёт по платному хранению (номенклатуры)";
 var weeklyFinancialReportFileName = "Еженедельный детализированный отчет №";
-var allowedFileMimeTypes = ["application/zip", "application/x-zip-compressed", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
+var allowedFileMimeTypes = [
+  "application/zip",
+  "application/x-zip-compressed",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+];
 
 var isDecodeReportWithoutRegistrationPage = () => {
   var sources = [];
@@ -20,7 +27,7 @@ var isDecodeReportWithoutRegistrationPage = () => {
     sources.push(src);
   }
 
-  return sources.every((src) => src.split("/")[4] === folderName);
+  return sources.some((src) => src.split("/")[4] === folderName);
 };
 
 var closeModal = () => {
@@ -125,13 +132,19 @@ function handleFiles(files) {
     var weeklyFinancialReportAdded = false;
 
     for (var file of files) {
-      if (fileIsValid(file) && file.name.startsWith(weeklyFinancialReportFileName)) {
+      if (
+        fileIsValid(file) &&
+        file.name.startsWith(weeklyFinancialReportFileName)
+      ) {
         if (!weeklyFinancialReportAdded) {
           validFiles.push(file);
           weeklyFinancialReportAdded = true;
         }
       }
-      if (fileIsValid(file) && file.name.startsWith(paidStorageReportFileName)) {
+      if (
+        fileIsValid(file) &&
+        file.name.startsWith(paidStorageReportFileName)
+      ) {
         if (!paidStorageReportAdded) {
           validFiles.push(file);
           paidStorageReportAdded = true;
@@ -167,8 +180,11 @@ function handleFiles(files) {
 
   function fileIsValid(file) {
     var fileMimeTypeIsValid = allowedFileMimeTypes.includes(file.type);
-    var fileExtentionIsValid = file.name.endsWith(".zip") || file.name.endsWith(".xlsx");
-    var fileNameIsValid = file.name.startsWith(weeklyFinancialReportFileName) || file.name.startsWith(paidStorageReportFileName);
+    var fileExtentionIsValid =
+      file.name.endsWith(".zip") || file.name.endsWith(".xlsx");
+    var fileNameIsValid =
+      file.name.startsWith(weeklyFinancialReportFileName) ||
+      file.name.startsWith(paidStorageReportFileName);
 
     return fileMimeTypeIsValid && fileNameIsValid && fileExtentionIsValid;
   }
@@ -256,8 +272,6 @@ var createUploadBtn = () => {
     if (res.status === 200) {
       if (isDecodeReportWithoutRegistrationPage()) {
         var { report, reportPeriodIsEmpty } = await res.json();
-
-        console.log({ reportPeriodIsEmpty });
 
         if (reportPeriodIsEmpty) {
           alert("Отчётный период пуст");

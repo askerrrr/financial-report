@@ -16,7 +16,11 @@ var getSelectedWeekDayIndex = () => {
     }
   }
 
-  if (!selectedWeedDayIndex && typeof selectedWeedDayIndex !== "number" && !isNaN(selectedWeedDayIndex)) {
+  if (
+    !selectedWeedDayIndex &&
+    typeof selectedWeedDayIndex !== "number" &&
+    !isNaN(selectedWeedDayIndex)
+  ) {
     var { currentDayIndex } = getCurrentDayMSK();
     selectedWeedDayIndex = currentDayIndex;
   }
@@ -24,7 +28,11 @@ var getSelectedWeekDayIndex = () => {
   return { selectedWeedDayIndex };
 };
 
-var createCheckboxForParticipationInPromo = (sku, changePriceIfInPromo, needWrapIntoFieldset = false) => {
+var createCheckboxForParticipationInPromo = (
+  sku,
+  changePriceIfInPromo,
+  needWrapIntoFieldset = false,
+) => {
   var { id, skuName } = sku;
 
   var input = document.createElement("input");
@@ -58,7 +66,6 @@ var createCheckboxForParticipationInPromo = (sku, changePriceIfInPromo, needWrap
       });
 
       if (res.status !== 200) {
-        console.log(res.status);
         input.checked = !newStatus;
         labels.forEach((label) => (label.textContent = !newStatus ? yes : no));
         alert("Не удалось изменить статус участия в акции при изменении цены");

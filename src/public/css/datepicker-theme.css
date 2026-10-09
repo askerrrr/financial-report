@@ -1,0 +1,223 @@
+/* ===== Тёмная тема для vanillajs-datepicker ===== */
+
+.datepicker-picker {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.datepicker-dropdown .datepicker-picker {
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.5),
+    0 0 0 1px var(--border);
+}
+
+/* Заголовок (месяц/год) */
+.datepicker-title {
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: inset 0 -1px 1px var(--border);
+}
+
+/* Футер (Today, Clear) */
+.datepicker-footer {
+  background-color: var(--bg-surface);
+  box-shadow: inset 0 1px 1px var(--border);
+}
+
+/* Кнопки навигации и переключения вида */
+.datepicker-controls .button {
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.datepicker-controls .button:hover {
+  background-color: var(--bg-hover);
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.datepicker-controls .button:focus {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.datepicker-controls .button:active {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.datepicker-header .datepicker-controls .button {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--text-primary);
+}
+
+.datepicker-header .datepicker-controls .button:hover {
+  background-color: var(--bg-hover);
+}
+
+.datepicker-header .datepicker-controls .button:active {
+  background-color: var(--bg-elevated);
+}
+
+/* Кнопки в футере — акцентным цветом */
+.datepicker-footer .datepicker-controls .button {
+  color: var(--success);
+  font-weight: 600;
+}
+
+.datepicker-footer .datepicker-controls .button:hover {
+  background-color: var(--bg-hover);
+  color: var(--success);
+}
+
+/* ===== Ячейки с датами ===== */
+.datepicker-cell {
+  color: var(--text-primary);
+}
+
+.datepicker-cell:not(.disabled):hover {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* Базовый focused — до переопределений ниже */
+.datepicker-cell.focused:not(.selected) {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.datepicker-cell.selected,
+.datepicker-cell.selected:hover {
+  background-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.datepicker-cell.disabled {
+  color: #6c757d;
+}
+
+.datepicker-cell.next:not(.disabled),
+.datepicker-cell.prev:not(.disabled) {
+  color: #8a96a3;
+}
+
+.datepicker-cell.next.selected,
+.datepicker-cell.prev.selected {
+  color: #e6e6e6;
+}
+
+/* ===== «Сегодня» — БЕЗ подсветки, включая focused ===== */
+
+/* Базовое состояние «сегодня» */
+.datepicker .datepicker-cell.today:not(.selected) {
+  background-color: transparent;
+  color: var(--text-primary);
+}
+
+/* «Сегодня» при наведении */
+.datepicker .datepicker-cell.today:not(.selected):not(.disabled):hover {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* «Сегодня» в фокусе — гарантированно без белого фона */
+.datepicker .datepicker-cell.today.focused:not(.selected),
+.datepicker .datepicker-cell.focused.today:not(.selected) {
+  background-color: transparent !important;
+  color: var(--text-primary) !important;
+  box-shadow: none !important;
+}
+
+/* «Сегодня» в фокусе + наведение */
+.datepicker .datepicker-cell.today.focused:not(.selected):hover,
+.datepicker .datepicker-cell.focused.today:not(.selected):hover {
+  background-color: var(--bg-hover) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Любая ячейка в фокусе (не сегодня) — тоже без белого фона */
+.datepicker .datepicker-cell.focused:not(.selected) {
+  background-color: transparent !important;
+  color: var(--text-primary) !important;
+  box-shadow: none !important;
+}
+
+.datepicker .datepicker-cell.focused:not(.selected):hover {
+  background-color: var(--bg-hover) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Фокус + selected — оставляем синий */
+.datepicker .datepicker-cell.focused.selected,
+.datepicker .datepicker-cell.selected.focused {
+  background-color: var(--accent) !important;
+  color: #fff !important;
+}
+
+/* «Сегодня» выбрано — стандартная подсветка selected */
+.datepicker .datepicker-cell.today.selected {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/* ===== Подсветка диапазона (DateRangePicker) ===== */
+.datepicker-cell.highlighted:not(.selected):not(.range):not(.today) {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.datepicker-cell.highlighted:not(.selected):not(.range):not(.today):not(
+    .disabled
+  ):hover {
+  background-color: var(--bg-elevated);
+}
+
+.datepicker-cell.highlighted:not(.selected):not(.range):not(.today).focused {
+  background-color: var(--bg-elevated);
+}
+
+.datepicker-cell.range {
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+}
+
+.datepicker-cell.range:not(.disabled):not(.focused):not(.today):hover {
+  background-color: var(--bg-hover);
+}
+
+.datepicker-cell.range.disabled {
+  color: #6c757d;
+}
+
+.datepicker-cell.range-end:not(.selected),
+.datepicker-cell.range-start:not(.selected) {
+  background-color: var(--border);
+  color: var(--text-primary);
+}
+
+/* Дни недели и номера недель */
+.datepicker .dow {
+  color: var(--text-secondary);
+}
+
+.datepicker .week {
+  color: var(--text-secondary);
+}
+
+/* Input в режиме редактирования */
+.datepicker-input.in-edit {
+  border-color: var(--accent);
+}
+
+.datepicker-input.in-edit:active,
+.datepicker-input.in-edit:focus {
+  box-shadow: 0 0 0.25em 0.25em rgba(13, 110, 253, 0.2);
+}
+
+/* ===== Поднять datepicker над модалкой ===== */
+.datepicker-dropdown {
+  z-index: 10001 !important;
+}

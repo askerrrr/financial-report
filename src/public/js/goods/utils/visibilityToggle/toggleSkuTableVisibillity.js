@@ -3,7 +3,9 @@
  * @param {'enable' | 'disable'} action
  */
 
-var toggleSkuTableVisibillity = (tableID, action) =>
-  (document.getElementById(tableID).hidden = action === "disable");
+var toggleSkuTableVisibillity = (tableID, action) => {
+  var skuTable = document.getElementById(tableID);
 
+  skuTable.hidden = action === "disable";
+};
 export default toggleSkuTableVisibillity;

@@ -1,4 +1,4 @@
-var insertImageToImgTag = async (event, skuName) => {
+var insertImageToImgTag = (event, skuName) => {
   var file = event.target.files[0];
 
   var reader = new FileReader();
@@ -13,7 +13,7 @@ var insertImageToImgTag = async (event, skuName) => {
     img.src = e.target.result;
 
     var deleteImgButton = document.getElementById(
-      "delete-img-button-" + skuName
+      "delete-img-button-" + skuName,
     );
 
     deleteImgButton.style.display = "block";

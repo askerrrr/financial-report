@@ -2,13 +2,13 @@ import calcReportTotalsFromSkus from "../../../../reports/services/utils/calcSer
 
 var mergeSkuDataBySkuNameAndYear = (listGoods, sortedSkusBySkuNameAndYear) => {
   var mergedSkus = [];
-
+  
   for (var skuFromListGoods of listGoods) {
     for (var { year, data } of sortedSkusBySkuNameAndYear) {
       var skusFilteredBySkuName = data.filter(
         (sku) => sku.skuName === skuFromListGoods.skuName,
       );
-
+      
       var mergedSkuData = calcReportTotalsFromSkus(
         skusFilteredBySkuName,
       ).reportTotals;

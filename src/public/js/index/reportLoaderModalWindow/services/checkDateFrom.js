@@ -1,42 +1,39 @@
+import everyIsNum from "./everyIsNum.js";
 import isFutureDate from "./isFutureDate.js";
-import standardizeDate from "./standardizeDate.js";
-import { isMonday } from "../../utils/dateUtils/services/getMondaysOrSundaysOfMonth.js";
+import isMonday from "../../utils/dateUtils/services/isMonday.js";
+
+var startDayFromMS = new Date("2024-01-29").getTime();
 
 var checkDateFrom = (dateFrom) => {
   if (!dateFrom) {
     return { validDateFrom: "", errorText: "Неккоректный период" };
   }
 
-  var dateIncludesDot = dateFrom.split("").includes(".");
-
-  if (!dateIncludesDot) {
+  if (!everyIsNum(dateFrom)) {
     return { validDateFrom: "", errorText: "Неккоректный период" };
   }
 
-  var everyIsNum = dateFrom
-    .split(".")
-    .map(Number)
-    .every((num) => typeof num === "number" && !isNaN(num));
+  var dateFromMs = new Date(dateFrom).getTime();
 
-  if (!everyIsNum) {
-    return { validDateFrom: "", errorText: "Неккоректный период" };
+  if (dateFromMs < startDayFromMS) {
+    return {
+      validDateFrom: "",
+      errorText: "Начало периода введено некорректно",
+    };
   }
 
-  var standardizedDateFrom = standardizeDate(dateFrom);
-
-  if (!standardizedDateFrom) {
-    return { validDateFrom: "", errorText: "Начало периода введено некорректно" };
-  }
-
-  if (isFutureDate(standardizedDateFrom)) {
+  if (isFutureDate(dateFrom)) {
     return { validDateFrom: "", errorText: "Отчетный период еще не наступил" };
   }
 
-  if (!isMonday(standardizedDateFrom)) {
-    return { validDateFrom: "", errorText: "Начало периода не является понедельником" };
+  if (!isMonday(dateFrom)) {
+    return {
+      validDateFrom: "",
+      errorText: "Начало периода не является понедельником",
+    };
   }
 
-  return { validDateFrom: standardizedDateFrom, errorText: "" };
+  return { validDateFrom: dateFrom, errorText: "" };
 };
 
 export default checkDateFrom;

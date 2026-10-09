@@ -3,13 +3,19 @@ import getConfirmMessage from "./getConfirmMessage.js";
 import insertSkuRowToTable from "./insertSkuRowToTable.js";
 import sendNewDisableStatus from "./sendNewDisableStatus.js";
 import deleteSkuRowFromTable from "./deleteSkuRowFromTable.js";
-import disableDisabledTableIfEmpty from "./disableDisabledTableIfEmpty.js";
-import { toggleDisabledSkusButtonVisibility } from "../visibilityToggle/index.js";
+import {
+  blockPriceDiscountModalOpening,
+  unlockPriceDiscountModalOpening,
+} from "./priceDiscountModalOpening.js";
+import disableSkusTableIfEmpty from "./disableSkusTableIfEmpty.js";
 import changeDisableStatusOfModalButton from "./changeDisableStatusOfModalButton.js";
 
 /**
  * @param {'to-enable' | 'to-disable'} msg
  */
+
+var enabledCountElem = document.getElementById("enabled-count");
+var disabledCountElem = document.getElementById("disabled-count");
 
 var createSkuRowVisibilityButtonHandler = (skuName, id) => {
   var btnId = skuName + "-disable";
@@ -21,40 +27,51 @@ var createSkuRowVisibilityButtonHandler = (skuName, id) => {
       var confirmed = confirm(msg);
 
       if (confirmed) {
-        var hasDisblAttribute = button.hasAttribute("disbl");
+        var hasDsblAttribute = button.hasAttribute("disbl");
         var statusIsUpdated = await sendNewDisableStatus(
           skuName,
           id,
-          hasDisblAttribute,
+          hasDsblAttribute,
         );
 
         if (statusIsUpdated) {
           var skuRow = document.getElementById(skuName);
 
-          if (hasDisblAttribute) {
+          if (hasDsblAttribute) {
             button.removeAttribute("disbl");
             button.textContent = "скрыть";
 
+            unlockPriceDiscountModalOpening(skuName);
             changeDisableStatusOfModalButton(skuName, "off");
             deleteSkuRowFromTable(skuRow, "disabled-skus-tbody");
             insertSkuRowToTable(skuRow, "enabled-skus-tbody");
 
             msg = getConfirmMessage(skuName, "to-disable");
 
-            disableDisabledTableIfEmpty();
+            var currentEnabledCount = +enabledCountElem.textContent || 0;
+            var currentDisabledCount = +disabledCountElem.textContent || 0;
+
+            enabledCountElem.textContent = currentEnabledCount + 1;
+            disabledCountElem.textContent = currentDisabledCount - 1;
           } else {
             button.setAttribute("disbl", "");
             button.textContent = "включить";
 
+            blockPriceDiscountModalOpening(skuName);
             changeDisableStatusOfModalButton(skuName, "on");
             deleteSkuRowFromTable(skuRow, "enabled-skus-tbody");
             insertSkuRowToTable(skuRow, "disabled-skus-tbody");
 
             msg = getConfirmMessage(skuName, "to-enable");
 
-            disableDisabledTableIfEmpty();
-            toggleDisabledSkusButtonVisibility("enable");
+            var currentEnabledCount = +enabledCountElem.textContent || 0;
+            var currentDisabledCount = +disabledCountElem.textContent || 0;
+
+            enabledCountElem.textContent = currentEnabledCount - 1;
+            disabledCountElem.textContent = currentDisabledCount + 1;
           }
+
+          disableSkusTableIfEmpty(hasDsblAttribute);
         }
       }
     },

@@ -6,7 +6,7 @@ import createLabelElement from "./createLabelElement.js";
 import createDeleteImgButton from "./createDeleteImgButton.js";
 
 var createSkuPhotoUploader = (userId, reportId, skuName, imgData) => {
-  var input = createInputElement(skuName);
+  var input = createInputElement(userId, skuName);
   var span = createSpanElement(skuName);
   var img = createImageElement(imgData, skuName);
   var deleteImgButton = createDeleteImgButton(userId, skuName);
@@ -26,6 +26,7 @@ var createSkuPhotoUploader = (userId, reportId, skuName, imgData) => {
   form.append(label);
 
   var container = document.createElement("div");
+  container.id = "photo-cell-container-" + skuName;
   container.className = "photo-cell-container";
 
   container.append(form, deleteImgButton);

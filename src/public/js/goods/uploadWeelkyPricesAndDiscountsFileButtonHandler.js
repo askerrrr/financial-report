@@ -6,13 +6,13 @@ var sendUploadFile = async (file) => {
     body: file,
   });
 
-  if (!res.ok) {
-    alert("Произошла ошибка при загрузке документа");
-    return;
-  }
+  var { infoText, weeklyPricesAndDiscounts } = await res.json();
 
-  var { weeklyPricesAndDiscounts } = await res.json();
-  alert("Цены успешно установлены");
+  if (infoText) {
+    alert(infoText);
+  } else {
+    alert("Цены успешно установлены");
+  }
 
   return { weeklyPricesAndDiscounts };
 };
@@ -20,9 +20,10 @@ var sendUploadFile = async (file) => {
 var input = document.getElementById("input-field");
 var button = document.getElementById("upload-weekly-prices-and-discounts-file");
 
-var fileUploadHandler = (userId) => {
+var uploadWeelkyPricesAndDiscountsFileButtonHandler = (userId) => {
   button.onclick = (e) => {
-    // alert("Пока недоступно");
+    alert("Скоро будет доступно");
+    return;
 
     e.preventDefault();
     input.click();
@@ -38,9 +39,9 @@ var fileUploadHandler = (userId) => {
       uploadFormData.append("userId", userId);
       uploadFormData.append("file", input.files[0]);
 
-      await sendUploadFile(uploadFormData);
+      var { weeklyPricesAndDiscounts } = await sendUploadFile(uploadFormData);
     };
   };
 };
 
-export default fileUploadHandler;
+export default uploadWeelkyPricesAndDiscountsFileButtonHandler;

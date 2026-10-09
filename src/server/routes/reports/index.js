@@ -13,6 +13,7 @@ import skuPhotoUploadController from "./controllers/skuPhotoUpload.js";
 import setCostPriceToSkuController from "./controllers/setCostPriceToSku.js";
 import checkReportExistsController from "./controllers/checkReportExists.js";
 import reportLoadDelegateController from "./controllers/reportLoadDelegate.js";
+import checkReportPeriodsController from "./controllers/checkReportPeriods.js";
 import saveReportFromFileController from "./controllers/saveReportFromFile.js";
 import setCostPriceToSkusController from "./controllers/setCostPriceToSkus.js";
 import downloadReportAsXLSXController from "./controllers/downloadReportAsXLSX.js";
@@ -21,6 +22,7 @@ import setOtherExpensesToSkuController from "./controllers/setOtherExpensesToSku
 import getReportLoadingStateController from "./controllers/getReportLoadingState.js";
 import checkReportsLoadingProgressController from "./controllers/checkReportsLoadingProgress.js";
 import resumeAbandonedReportsLoadingController from "./controllers/resumeAbandonedReportsLoading.js";
+import getReportFieldsDescriptionPageController from "./controllers/getReportFieldsDescriptionPage.js";
 import changeFinancialAccountingStatusController from "./controllers/changeFinancialAccountingStatus.js";
 
 import checkTokenExists from "../WBToken/controllers/checkTokenExists.js";
@@ -46,6 +48,7 @@ router.get(
 router.post(
   "/",
   joiSchemaValidator(joiSchemas.saveReportsSchema),
+  checkReportPeriodsController,
   checkTokenExists,
   reportLoadDelegateController,
   checkReportExistsController,
@@ -60,13 +63,13 @@ router.delete(
 );
 
 router.post(
-  "/as-zip/",
+  "/zip/",
   joiSchemaValidator(joiSchemas.downloadReportsAsZipSchema),
   downloadReportsAsZipController,
 );
 
 router.post(
-  "/as-xlsx/",
+  "/xlsx/",
   joiSchemaValidator(joiSchemas.downloadReportAsXLSXSchema),
   downloadReportAsXLSXController,
 );
@@ -116,10 +119,16 @@ router.patch(
   changeFinancialAccountingStatusController,
 );
 
-router.post("/image/", upload.single("sku-photo"), skuPhotoUploadController);
+router.post(
+  "/image/upload-url",
+  joiSchemaValidator(joiSchemas.skuPhotoUploadSchema),
+  skuPhotoUploadController,
+);
 
 router.delete(
   "/image/",
   joiSchemaValidator(joiSchemas.deleteImageSchema),
   deleteImageController,
 );
+
+router.get("/fields-descrition/", getReportFieldsDescriptionPageController);

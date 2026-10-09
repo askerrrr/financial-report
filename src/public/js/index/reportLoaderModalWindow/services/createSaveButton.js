@@ -16,18 +16,16 @@ var createSaveButton = (
   uploadAllReportsCheckbox,
 ) => {
   var button = document.createElement("button");
-  button.className = "modal-button modal-button-save";
+  button.className = "modal-btn modal-btn-primary";
   button.textContent = "Отправить";
 
   button.onclick = async () => {
-    document.body.removeChild(modal);
-
     var needToLoadAllReports = uploadAllReportsCheckbox.checked;
-    console.log({ needToLoadAllReports });
-    
+
     try {
       if (needToLoadAllReports) {
         await handleAllReportsLoading(userId);
+        document.body.removeChild(modal);
       } else {
         var dateFrom = dateFromInputElem?.value;
         var { validDateFrom, errorText } = checkDateFrom(dateFrom);
@@ -43,6 +41,11 @@ var createSaveButton = (
           validDateFrom,
         );
 
+        if (new Date(validDateFrom) >= new Date(validDateTo)) {
+          alert("Неккоректный период");
+          return;
+        }
+
         if (errorText) {
           alert(errorText);
           return;
@@ -53,6 +56,8 @@ var createSaveButton = (
         } else {
           handleNonSameWeekPeriod(userId, validDateFrom, validDateTo);
         }
+
+        document.body.removeChild(modal);
       }
     } catch (e) {
       await hideSpinner();

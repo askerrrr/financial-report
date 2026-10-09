@@ -1,4 +1,4 @@
-import Exceljs from "exceljs";
+import Exceljs from "exceljs-community";
 import writeSkuDataToCells from "./writeSkuDataToCells.js";
 import setColumnHeaderWidths from "./setColumnHeaderWidths.js";
 import setStylesToSkuNameCell from "./setStylesToSkuNameCell.js";
