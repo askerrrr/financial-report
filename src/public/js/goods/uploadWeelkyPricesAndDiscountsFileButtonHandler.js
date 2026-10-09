@@ -22,6 +22,9 @@ var button = document.getElementById("upload-weekly-prices-and-discounts-file");
 
 var uploadWeelkyPricesAndDiscountsFileButtonHandler = (userId) => {
   button.onclick = (e) => {
+    alert("Скоро будет доступно");
+    return;
+
     e.preventDefault();
     input.click();
 

@@ -1,6 +1,7 @@
 import uploadPricesAndDiscountsFileService from "../services/uploadPricesAndDiscountsFile.js";
 
 var uploadPricesAndDiscountsFileController = async (req, res, next) => {
+  return res.json({ msg: "Скоро будет доступно" });
   var userId = req.body.userId;
   var fileBuffer = req.file.buffer;
 

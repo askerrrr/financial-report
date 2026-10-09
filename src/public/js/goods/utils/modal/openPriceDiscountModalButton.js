@@ -5,6 +5,8 @@ var openPriceDiscountModalButton = (item) => {
   var buttonHandler = {
     event: "click",
     cb: () => {
+      alert("Скоро будет доступно");
+      return;
       var modalOverlay = createModal(item);
 
       modalOverlay.classList.add("active");

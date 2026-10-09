@@ -1,6 +1,7 @@
 import getWeeklyPricesFileService from "../services/getWeeklyPricesFile.js";
 
 var getWeeklyPricesFileController = async (req, res, next) => {
+  return res.json({ msg: "Скоро будет доступно" });
   var { userId } = req.params;
 
   var { buffer } = await getWeeklyPricesFileService(userId);
