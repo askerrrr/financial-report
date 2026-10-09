@@ -48,7 +48,7 @@ body {
 
 /* Контейнер */
 .container {
-  max-width: 960px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 24px 24px 80px;
 }
@@ -154,20 +154,34 @@ body {
   margin-bottom: 0;
 }
 
-/* Формула */
+/* Формула — одна строка */
 .formula {
   display: block;
   margin: 12px 0;
-  padding: 12px 16px;
+  padding: 10px 14px;
   background: var(--bg-base);
   border-left: 3px solid var(--accent);
   border-radius: var(--radius-sm);
   font-family: "Consolas", "Menlo", monospace;
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1.5;
   color: var(--text-primary);
-  white-space: pre-wrap;
-  word-break: break-word;
-  overflow-x: auto;
+  white-space: nowrap; /* формула не переносится */
+  overflow-x: auto; /* при нехватке места — горизонтальный скролл */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Тонкий скроллбар внутри формулы */
+.formula::-webkit-scrollbar {
+  height: 6px;
+}
+.formula::-webkit-scrollbar-track {
+  background: transparent;
+}
+.formula::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-full);
 }
 
 .formula em {
@@ -178,7 +192,7 @@ body {
 /* Блок условий */
 .condition {
   margin: 12px 0;
-  padding: 14px 16px;
+  padding: 12px 14px;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -235,6 +249,7 @@ code {
   font-family: "Consolas", "Menlo", monospace;
   font-size: 13px;
   color: var(--text-primary);
+  white-space: nowrap;
 }
 
 /* Разделитель */
