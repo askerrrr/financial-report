@@ -21,7 +21,7 @@ import {
 var { currentDayName, currentDayIndex } = getCurrentDayMSK();
 
 var showListGoodsTable = async (userId) => {
-  var { listGoods, weeklyPricesAndDiscounts } = await getGoodsData();
+  var { listGoods, weeklyPricesAndDiscounts } = await getGoodsData(userId);
   var { enabledSku, disabledSku } = listGoods;
 
   switchToActiveTable(enabledSku, disabledSku);
